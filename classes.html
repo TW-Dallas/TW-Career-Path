@@ -408,17 +408,21 @@
         }
     </script>
     <!-- SLIM FOOTER -->
-    <div style="
+        <div style="
         text-align: center;
-        padding: 1.5rem 0;
+        padding: 2rem 0;
         margin-top: 3rem;
         background-color: var(--dark-blue);
         color: white;
-        width: 100%;
-        margin-left: -2rem;
-        margin-right: -2rem;
-        margin-bottom: -2rem;
-        padding-bottom: 2rem; /* Add this so the text doesn't hit the very bottom edge */
+        
+        /* THE NUCLEAR FIX */
+        width: 100vw;          /* Force full screen width */
+        position: relative;    /* Keep it in flow */
+        left: 50%;             /* Move to middle */
+        right: 50%;
+        margin-left: -50vw;    /* Pull it back to center */
+        margin-right: -50vw;
+        margin-bottom: -2rem;  /* Hug bottom */
     ">
         <p style="margin:0; font-size:0.9rem;">&copy; 2026 Team Wow!</p>
         
@@ -429,6 +433,7 @@
 
 </body>
 </html>
+
 
 
 
