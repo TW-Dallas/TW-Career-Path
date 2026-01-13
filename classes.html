@@ -252,8 +252,7 @@
             const now = new Date();
             const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-            // --- 1. PRE-PROCESS DATA ---
-            // Calculate status for each item so we can sort by it
+                        // --- 1. PRE-PROCESS & FILTER ---
             const processedData = data.map(cls => {
                 const openDate = cls.open_date ? new Date(cls.open_date) : null;
                 const closeDate = cls.close_date ? new Date(cls.close_date) : null;
@@ -263,6 +262,24 @@
                 else if (closeDate && todayStart > closeDate) status = 'closed';
                 
                 return { ...cls, _status: status, _openDate: openDate, _closeDate: closeDate };
+            })
+            .filter(cls => {
+                // FILTER LOGIC:
+                // 1. If it's "Future", only show if Open Date is < 45 days away.
+                if (cls._status === 'future' && cls._openDate) {
+                    const diffTime = Math.abs(cls._openDate - todayStart);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    if (diffDays > 45) return false; // Hide it
+                }
+                
+                // 2. If it's "Closed", only show if it closed < 3 days ago.
+                if (cls._status === 'closed' && cls._closeDate) {
+                    const diffTime = Math.abs(todayStart - cls._closeDate);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    if (diffDays > 3) return false; // Hide it (Graveyard cleaning)
+                }
+
+                return true; // Show everything else (Active)
             });
 
             // --- 2. SORTING LOGIC ---
@@ -408,5 +425,6 @@
 
 </body>
 </html>
+
 
 
