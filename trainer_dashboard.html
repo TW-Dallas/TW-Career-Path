@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Dashboard</title>
+    <style>
+        /* --- FONT LOADING --- */
+        @font-face { font-family: 'PizzaPress'; src: url('PizzaPress-Regular.otf') format('opentype'); }
+        @font-face { font-family: 'OneDotCd-Bold'; src: url('OneDotCd-Bold.ttf') format('truetype'); }
+        @font-face { font-family: 'OneDotCd'; src: url('OneDotCd.ttf') format('truetype'); }
+
+        :root {
+            --brand-red: #ff0000;
+            --brand-blue: #0090e2;
+            --dark-blue: #005c91;
+            --crust-light: #faf2e9;
+            --crust-med: #f0decc;
+            --crust-deep: #603913;
+        }
+
+        body {
+            font-family: 'OneDotCd', sans-serif;
+            background-color: var(--crust-light);
+            color: var(--crust-deep);
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'PizzaPress';
+            color: var(--brand-blue);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            font-size: 2.5rem;
+        }
+
+        .controls {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            text-align: center;
+            border-top: 4px solid var(--brand-red);
+        }
+
+        select {
+            padding: 10px;
+            font-size: 1.1rem;
+            border: 2px solid var(--dark-blue);
+            border-radius: 6px;
+            font-family: 'OneDotCd-Bold';
+            width: 80%;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: var(--brand-blue);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: 'OneDotCd-Bold';
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        button:hover { background-color: var(--dark-blue); }
+
+        /* --- TABLE --- */
+        .roster-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: none; /* Hidden until loaded */
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        
+        thead {
+            background-color: var(--dark-blue);
+            color: white;
+            font-family: 'OneDotCd-Bold';
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+
+        .empty-msg {
+            padding: 2rem;
+            text-align: center;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .class-header {
+            background: var(--crust-med);
+            padding: 1rem;
+            text-align: center;
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.2rem;
+            color: var(--crust-deep);
+            border-bottom: 2px solid var(--brand-blue);
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Trainer Dashboard</h1>
+
+    <div class="controls">
+        <label for="classSelect" style="display:block; margin-bottom:0.5rem; font-weight:bold;">Select a Class to View:</label>
+        <select id="classSelect">
+            <option value="">Loading Classes...</option>
+        </select>
+        <br>
+        <button onclick="fetchRoster()">Load Roster</button>
+    </div>
+
+    <div id="rosterView" class="roster-container">
+        <div id="selectedClassName" class="class-header">Class Name</div>
+        <table id="rosterTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Store #</th>
+                    <th>Position</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody id="rosterBody">
+                <!-- Rows go here -->
+            </tbody>
+        </table>
+        <div id="emptyMsg" class="empty-msg" style="display:none;">No signups found for this class.</div>
+    </div>
+
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycby7wgQnR7shWLeL78Fy4f0g0TD-Ch9NgEpIwYnwpUJZYsXvTv0A95IFBGe5k0shg4owEw/exec";
+
+        // 1. Load Class List on Startup
+        window.onload = function() {
+            fetch(API_URL + "?action=getSchedule")
+                .then(r => r.json())
+                .then(data => {
+                    const select = document.getElementById('classSelect');
+                    select.innerHTML = '<option value="">-- Select a Class --</option>';
+                    
+                    // Sort by Date
+                    data.sort((a,b) => new Date(a.isoDate) - new Date(b.isoDate));
+
+                    data.forEach(cls => {
+                        const d = new Date(cls.isoDate);
+                        const dateStr = d.toLocaleDateString("en-US", {month:'short', day:'numeric'});
+                        const timeStr = d.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+                        
+                        const option = document.createElement('option');
+                        option.value = cls.id; // The Unique ID
+                        option.text = `${dateStr} - ${cls.name} (${timeStr})`;
+                        select.appendChild(option);
+                    });
+                });
+        };
+
+        // 2. Fetch Roster for Selected Class
+        function fetchRoster() {
+            const select = document.getElementById('classSelect');
+            const classId = select.value;
+            if(!classId) { alert("Please select a class."); return; }
+
+            const className = select.options[select.selectedIndex].text;
+            document.getElementById('selectedClassName').innerText = className;
+            document.getElementById('rosterView').style.display = 'block';
+            document.getElementById('rosterBody').innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>';
+            document.getElementById('emptyMsg').style.display = 'none';
+
+            fetch(API_URL + "?action=getRoster&classId=" + classId)
+                .then(r => r.json())
+                .then(roster => {
+                    const tbody = document.getElementById('rosterBody');
+                    tbody.innerHTML = ''; // Clear loading
+
+                    if (roster.length === 0) {
+                        document.getElementById('emptyMsg').style.display = 'block';
+                    } else {
+                        roster.forEach(person => {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `
+                                <td>${person.name}</td>
+                                <td>${person.store}</td>
+                                <td>${person.position}</td>
+                                <td><a href="tel:${person.phone}" style="color:var(--brand-blue);">${person.phone}</a></td>
+                            `;
+                            tbody.appendChild(tr);
+                        });
+                    }
+                })
+                .catch(err => alert("Error fetching roster."));
+        }
+    </script>
+
+</body>
+</html>
