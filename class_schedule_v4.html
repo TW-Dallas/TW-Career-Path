@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Schedule - Live Demo</title>
+    <style>
+        /* --- FONT LOADING --- */
+        @font-face { font-family: 'PizzaPress'; src: url('PizzaPress-Regular.otf') format('opentype'); font-weight: normal; }
+        @font-face { font-family: 'OneDotCd-Bold'; src: url('OneDotCd-Bold.ttf') format('truetype'); font-weight: bold; }
+        @font-face { font-family: 'OneDotCd'; src: url('OneDotCd.ttf') format('truetype'); font-weight: normal; }
+
+        :root {
+            --brand-red: #ff0000;
+            --brand-blue: #0090e2;
+            --dark-blue: #005c91;
+            --crust-light: #faf2e9;
+            --crust-med: #f0decc;
+            --crust-deep: #603913;
+            --lvl-1: #0090e2; 
+            --lvl-2: #e6a700; 
+            --lvl-3: #ff0000; 
+        }
+
+        body {
+            font-family: 'OneDotCd', sans-serif;
+            background-color: var(--crust-light);
+            color: var(--crust-deep);
+            padding: 2rem;
+        }
+
+        /* Header / Controls */
+        .header-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .refresh-btn {
+            background: none;
+            border: none;
+            color: var(--brand-blue);
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.9rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid var(--dark-blue);
+            color: var(--dark-blue);
+            font-family: 'OneDotCd-Bold';
+            border-radius: 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .filter-btn.active {
+            background: var(--dark-blue);
+            color: white;
+        }
+
+        /* Grid Layout */
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* --- THE CARD --- */
+        .class-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            border-top: 6px solid var(--border-color, var(--brand-blue));
+            transition: transform 0.2s;
+            animation: fadeIn 0.5s ease-in-out;
+            position: relative; 
+        }
+
+        /* Coming Soon State */
+        .class-card.coming-soon { opacity: 0.8; background: #fdfdfd; }
+        
+        /* Closed State */
+        .class-card.closed { border-top-color: #666; opacity: 0.7; filter: grayscale(0.8); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .class-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .class-card.coming-soon:hover { transform: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .class-card.closed:hover { transform: none; box-shadow: none; }
+
+        .card-body { padding: 1.5rem; flex-grow: 1; }
+
+        .level-badge {
+            display: inline-block;
+            font-family: 'OneDotCd-Bold';
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background-color: var(--bg-color, var(--crust-med));
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Date Block Styling */
+        .date-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 0.8rem;
+        }
+        .day-box {
+            background: var(--crust-med);
+            color: var(--crust-deep);
+            font-family: 'OneDotCd-Bold';
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+        .time-text {
+            color: var(--dark-blue);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        h3 {
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--crust-deep);
+            line-height: 1.2;
+        }
+
+        .details {
+            font-size: 1rem;
+            color: #666;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card-footer {
+            padding: 1rem 1.5rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .slots { font-size: 0.9rem; color: #666; font-weight: bold; }
+        .deadline { font-size: 0.8rem; color: #d9534f; font-weight: bold; font-family: 'OneDotCd-Bold';}
+
+        .signup-btn {
+            background-color: var(--brand-blue);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: 'OneDotCd-Bold';
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .signup-btn:hover { background-color: var(--dark-blue); }
+        .signup-btn:disabled { background-color: #ccc; cursor: not-allowed; }
+
+        /* Button States */
+        .signup-btn.btn-closed { background-color: #666; color: #fff; }
+        .signup-btn.btn-future { background-color: #eee; color: #999; border: 1px solid #ddd; }
+
+        /* Level Variants */
+        .lvl-1 { --border-color: var(--lvl-1); --bg-color: var(--lvl-1); }
+        .lvl-2 { --border-color: var(--lvl-2); --bg-color: var(--lvl-2); }
+        .lvl-3 { --border-color: var(--lvl-3); --bg-color: var(--lvl-3); }
+        
+        #loading-msg { text-align: center; font-style: italic; color: #666; margin-top: 2rem; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header-controls">
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterClasses('all')">All Classes</button>
+            <button class="filter-btn" onclick="filterClasses('McKinney')">McKinney</button>
+            <button class="filter-btn" onclick="filterClasses('Mesquite')">Mesquite</button>
+        </div>
+        <button class="refresh-btn" onclick="fetchClasses()">↻ Refresh Data</button>
+    </div>
+
+    <div id="loading-msg">Connecting to Google Sheet...</div>
+    <div class="class-grid" id="class-grid">
+        <!-- CARDS WILL APPEAR HERE -->
+    </div>
+
+    <script>
+        // --- CONFIG ---
+        const API_URL = "https://script.google.com/macros/s/AKfycby7wgQnR7shWLeL78Fy4f0g0TD-Ch9NgEpIwYnwpUJZYsXvTv0A95IFBGe5k0shg4owEw/exec";
+        
+        let allData = [];
+
+        window.addEventListener('load', fetchClasses);
+
+        function fetchClasses() {
+            document.getElementById('loading-msg').style.display = 'block';
+            document.getElementById('class-grid').innerHTML = '';
+
+            fetch(API_URL)
+                .then(response => response.json())
+                .then(data => {
+                    allData = data;
+                    renderClasses(data);
+                    document.getElementById('loading-msg').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('loading-msg').innerText = "Error loading schedule from Google Sheet.";
+                });
+        }
+
+        function renderClasses(data) {
+            const grid = document.getElementById('class-grid');
+            grid.innerHTML = ''; 
+
+            if (data.length === 0) {
+                grid.innerHTML = '<p style="text-align:center; width:100%;">No classes found in Sheet.</p>';
+                return;
+            }
+            
+            const now = new Date();
+            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+            // --- 1. PRE-PROCESS DATA ---
+            // Calculate status for each item so we can sort by it
+            const processedData = data.map(cls => {
+                const openDate = cls.open_date ? new Date(cls.open_date) : null;
+                const closeDate = cls.close_date ? new Date(cls.close_date) : null;
+                let status = 'active'; 
+
+                if (openDate && todayStart < openDate) status = 'future';
+                else if (closeDate && todayStart > closeDate) status = 'closed';
+                
+                return { ...cls, _status: status, _openDate: openDate, _closeDate: closeDate };
+            });
+
+            // --- 2. SORTING LOGIC ---
+            // Order: Active (top), Future (middle), Closed (bottom)
+            // Within each group, sort by Class Date
+            processedData.sort((a, b) => {
+                const statusOrder = { 'active': 1, 'future': 2, 'closed': 3 };
+                
+                // Primary Sort: Status
+                if (statusOrder[a._status] !== statusOrder[b._status]) {
+                    return statusOrder[a._status] - statusOrder[b._status];
+                }
+                
+                // Secondary Sort: Date
+                return new Date(a.isoDate) - new Date(b.isoDate);
+            });
+
+            // --- 3. RENDER ---
+            processedData.forEach(cls => {
+                // Determine UI Elements based on Status
+                let btnText = "Sign Up";
+                let btnClass = "";
+                let isDisabled = false;
+                let deadlineText = "";
+
+                if (cls._status === 'future') {
+                    btnText = `Opens ${cls._openDate.toLocaleDateString("en-US", {month:'numeric', day:'numeric'})}`;
+                    isDisabled = true;
+                    btnClass = "btn-future";
+                } else if (cls._status === 'closed') {
+                    btnText = "Signup Closed";
+                    isDisabled = true;
+                    btnClass = "btn-closed";
+                } else {
+                    // Active: Show deadline text
+                    if (cls._closeDate) {
+                        deadlineText = `Sign up by: ${cls._closeDate.toLocaleDateString("en-US", {month:'short', day:'numeric'})}`;
+                    }
+                }
+
+                const card = document.createElement('div');
+                card.className = `class-card lvl-${cls.level} ${cls._status === 'future' ? 'coming-soon' : ''} ${cls._status === 'closed' ? 'closed' : ''}`;
+                
+                const classDate = new Date(cls.isoDate);
+                const dayName = classDate.toLocaleDateString("en-US", { weekday: 'short' });
+                const dateStr = classDate.toLocaleDateString("en-US", { month: 'short', day: 'numeric' });
+                const timeStr = classDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+
+                card.innerHTML = `
+                    <div class="card-body">
+                        <span class="level-badge">Level ${cls.level}</span>
+                        
+                        <div class="date-block">
+                            <div class="day-box">${dayName}</div>
+                            <div class="time-text">${dateStr} • ${timeStr}</div>
+                        </div>
+
+                        <h3>${cls.name}</h3>
+                        <div class="details">
+                            <span>📍 ${cls.location}</span>
+                            <span>👨‍🏫 Trainer: ${cls.trainer}</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="footer-left">
+                            <span class="slots">${cls.spots_total - cls.spots_taken} Spots Left</span>
+                            ${deadlineText ? `<span class="deadline">${deadlineText}</span>` : ''}
+                        </div>
+                        <button class="signup-btn ${btnClass}" 
+                                onclick="handleSignup('${cls.name}', '${cls.id}', this)"
+                                ${isDisabled ? 'disabled' : ''}>
+                            ${btnText}
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterClasses(location) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (location === 'all') {
+                renderClasses(allData);
+            } else {
+                const filtered = allData.filter(c => c.location && c.location.includes(location));
+                renderClasses(filtered);
+            }
+        }
+
+        function handleSignup(className, classId, btnElement) { 
+            const name = prompt("Enter Employee Name:");
+            if (!name) return;
+            const store = prompt("Enter Store Number:");
+            if (!store) return;
+            const position = prompt("Enter Position (e.g. CSR, Driver):");
+            if (!position) return;
+            const phone = prompt("Enter Phone Number:");
+            if (!phone) return;
+
+            btnElement.disabled = true;
+            btnElement.innerText = "Processing...";
+
+            const formData = new URLSearchParams();
+            formData.append('name', name);
+            formData.append('store', store);
+            formData.append('position', position); 
+            formData.append('phone', phone);       
+            formData.append('className', className);
+            formData.append('classId', classId); 
+
+            fetch(API_URL, {
+                method: "POST",
+                body: formData,
+                mode: 'no-cors' 
+            }).then(() => {
+                alert(`Success! ${name} signed up for ${className}.`);
+                btnElement.innerText = "Signed Up!";
+                setTimeout(fetchClasses, 1500); 
+            }).catch(err => {
+                alert("Error signing up.");
+                btnElement.disabled = false;
+                btnElement.innerText = "Sign Up";
+            });
+        }
+    </script>
+
+</body>
+</html>
