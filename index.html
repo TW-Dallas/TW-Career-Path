@@ -202,37 +202,100 @@
     </style>
 </head>
 <body>
-        <!-- BUTTON TO LINK TO SCHEDULE -->
-    <div style="text-align: center; margin: 2rem 0;">
-        <a href="classes.html" 
-           style="
-               display: inline-block;
-               background-color: #0090e2; /* Brand Blue */
-               color: white;
-               padding: 12px 24px;
-               text-decoration: none;
-               font-family: 'OneDotCd-Bold', sans-serif;
-               font-size: 1.2rem;
-               border-radius: 8px;
-               text-transform: uppercase;
-               box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-               transition: transform 0.2s;
-           "
-           onmouseover="this.style.transform='translateY(-2px)'"
-           onmouseout="this.style.transform='translateY(0)'">
-           📅 View Class Schedule
-        </a>
-    </div>
     
     <header>
         <div class="logo-container">
-            <!-- UPDATED FILENAME -->
             <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo-img">
         </div>
         <p class="tagline">Growing Leaders. Building Futures.</p>
     </header>
 
     <main>
+        
+                <!-- MARKET NAVIGATION GRID -->
+        <div style="margin-bottom: 2rem;">
+            <h3 style="text-align: center; margin-bottom: 1rem; font-family: 'OneDotCd-Bold'; color: var(--dark-blue); text-transform: uppercase;">Select Your Market Schedule</h3>
+            
+            <div style="
+                display: grid; 
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+                gap: 10px; 
+                max-width: 600px; 
+                margin: 0 auto;
+            ">
+                <!-- DALLAS (Active) -->
+                <a href="classes.html" style="text-decoration: none;">
+                    <div style="
+                        background-color: var(--brand-blue); 
+                        color: white; 
+                        padding: 12px; 
+                        text-align: center; 
+                        border-radius: 8px; 
+                        font-family: 'OneDotCd-Bold'; 
+                        text-transform: uppercase; 
+                        box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+                        transition: transform 0.2s;
+                    " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                        Dallas
+                    </div>
+                </a>
+
+                <!-- DENVER (Placeholder) -->
+                <a href="#" onclick="alert('Denver Schedule Coming Soon!'); return false;" style="text-decoration: none;">
+                    <div style="
+                        background-color: var(--crust-med); 
+                        color: var(--crust-deep); 
+                        padding: 12px; 
+                        text-align: center; 
+                        border-radius: 8px; 
+                        font-family: 'OneDotCd-Bold'; 
+                        text-transform: uppercase; 
+                        box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+                        transition: transform 0.2s;
+                        opacity: 0.8;
+                    " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                        Denver
+                    </div>
+                </a>
+
+                <!-- EL PASO (Placeholder) -->
+                <a href="#" onclick="alert('El Paso Schedule Coming Soon!'); return false;" style="text-decoration: none;">
+                    <div style="
+                        background-color: var(--crust-med); 
+                        color: var(--crust-deep); 
+                        padding: 12px; 
+                        text-align: center; 
+                        border-radius: 8px; 
+                        font-family: 'OneDotCd-Bold'; 
+                        text-transform: uppercase; 
+                        box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+                        transition: transform 0.2s;
+                        opacity: 0.8;
+                    " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                        El Paso
+                    </div>
+                </a>
+
+                <!-- LA (Placeholder) -->
+                <a href="#" onclick="alert('LA Schedule Coming Soon!'); return false;" style="text-decoration: none;">
+                    <div style="
+                        background-color: var(--crust-med); 
+                        color: var(--crust-deep); 
+                        padding: 12px; 
+                        text-align: center; 
+                        border-radius: 8px; 
+                        font-family: 'OneDotCd-Bold'; 
+                        text-transform: uppercase; 
+                        box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+                        transition: transform 0.2s;
+                        opacity: 0.8;
+                    " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                        LA
+                    </div>
+                </a>
+            </div>
+        </div>
+
         <div class="timeline">
             
             <!-- 1. CSR -->
@@ -321,6 +384,3 @@
 
 </body>
 </html>
-
-
-
