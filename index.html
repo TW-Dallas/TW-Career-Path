@@ -209,93 +209,36 @@
         </div>
         <p class="tagline">Growing Leaders. Building Futures.</p>
     </header>
+        <!-- SUB-NAV STRIP -->
+    <div style="
+        background-color: var(--dark-blue);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding: 0.8rem 1rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    ">
+        <span style="font-family: 'OneDotCd-Bold'; color: #88aacc; font-size: 0.9rem; margin-right: 10px; text-transform: uppercase;">Class Schedules:</span>
+        
+        <!-- DALLAS (Active) -->
+        <a href="classes.html" style="
+            color: white;
+            text-decoration: none;
+            font-family: 'OneDotCd-Bold';
+            margin: 0 8px;
+            font-size: 1.1rem;
+            border-bottom: 2px solid var(--brand-red);
+            padding-bottom: 2px;
+        ">DALLAS</a>
+
+        <!-- INACTIVE MARKETS -->
+        <a href="#" onclick="alert('Coming Soon'); return false;" style="color: rgba(255,255,255,0.4); text-decoration: none; font-family: 'OneDotCd-Bold'; margin: 0 8px; font-size: 1.1rem;">DENVER</a>
+        <a href="#" onclick="alert('Coming Soon'); return false;" style="color: rgba(255,255,255,0.4); text-decoration: none; font-family: 'OneDotCd-Bold'; margin: 0 8px; font-size: 1.1rem;">EL PASO</a>
+        <a href="#" onclick="alert('Coming Soon'); return false;" style="color: rgba(255,255,255,0.4); text-decoration: none; font-family: 'OneDotCd-Bold'; margin: 0 8px; font-size: 1.1rem;">LA</a>
+    </div>
 
     <main>
         
-                <!-- MARKET NAVIGATION GRID -->
-        <div style="margin-bottom: 2rem;">
-            <h3 style="text-align: center; margin-bottom: 1rem; font-family: 'OneDotCd-Bold'; color: var(--dark-blue); text-transform: uppercase;">Select Your Market Schedule</h3>
-            
-            <div style="
-                display: grid; 
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
-                gap: 10px; 
-                max-width: 600px; 
-                margin: 0 auto;
-            ">
-                <!-- DALLAS (Active) -->
-                <a href="classes.html" style="text-decoration: none;">
-                    <div style="
-                        background-color: var(--brand-blue); 
-                        color: white; 
-                        padding: 12px; 
-                        text-align: center; 
-                        border-radius: 8px; 
-                        font-family: 'OneDotCd-Bold'; 
-                        text-transform: uppercase; 
-                        box-shadow: 0 3px 5px rgba(0,0,0,0.1);
-                        transition: transform 0.2s;
-                    " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                        Dallas
-                    </div>
-                </a>
-
-                <!-- DENVER (Placeholder) -->
-                <a href="#" onclick="alert('Denver Schedule Coming Soon!'); return false;" style="text-decoration: none;">
-                    <div style="
-                        background-color: var(--crust-med); 
-                        color: var(--crust-deep); 
-                        padding: 12px; 
-                        text-align: center; 
-                        border-radius: 8px; 
-                        font-family: 'OneDotCd-Bold'; 
-                        text-transform: uppercase; 
-                        box-shadow: 0 3px 5px rgba(0,0,0,0.1);
-                        transition: transform 0.2s;
-                        opacity: 0.8;
-                    " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                        Denver
-                    </div>
-                </a>
-
-                <!-- EL PASO (Placeholder) -->
-                <a href="#" onclick="alert('El Paso Schedule Coming Soon!'); return false;" style="text-decoration: none;">
-                    <div style="
-                        background-color: var(--crust-med); 
-                        color: var(--crust-deep); 
-                        padding: 12px; 
-                        text-align: center; 
-                        border-radius: 8px; 
-                        font-family: 'OneDotCd-Bold'; 
-                        text-transform: uppercase; 
-                        box-shadow: 0 3px 5px rgba(0,0,0,0.1);
-                        transition: transform 0.2s;
-                        opacity: 0.8;
-                    " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                        El Paso
-                    </div>
-                </a>
-
-                <!-- LA (Placeholder) -->
-                <a href="#" onclick="alert('LA Schedule Coming Soon!'); return false;" style="text-decoration: none;">
-                    <div style="
-                        background-color: var(--crust-med); 
-                        color: var(--crust-deep); 
-                        padding: 12px; 
-                        text-align: center; 
-                        border-radius: 8px; 
-                        font-family: 'OneDotCd-Bold'; 
-                        text-transform: uppercase; 
-                        box-shadow: 0 3px 5px rgba(0,0,0,0.1);
-                        transition: transform 0.2s;
-                        opacity: 0.8;
-                    " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                        LA
-                    </div>
-                </a>
-            </div>
-        </div>
-
         <div class="timeline">
             
             <!-- 1. CSR -->
@@ -384,3 +327,4 @@
 
 </body>
 </html>
+
