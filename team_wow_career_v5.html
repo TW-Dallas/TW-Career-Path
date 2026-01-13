@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Wow Career Path</title>
+    <style>
+        /* --- FONT LOADING --- */
+        @font-face {
+            font-family: 'PizzaPress';
+            src: url('PizzaPress-Regular.otf') format('opentype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'OneDotCd-Bold';
+            src: url('OneDotCd-Bold.ttf') format('truetype');
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: 'OneDotCd';
+            src: url('OneDotCd.ttf') format('truetype');
+            font-weight: normal;
+        }
+
+        :root {
+            /* Brand Colors */
+            --brand-red: #ff0000;
+            --acc-red: #e70000;
+            --dark-red: #910000;
+            --brand-blue: #0090e2;
+            --acc-blue: #0077bd;
+            --dark-blue: #005c91;
+            
+            /* Crust Palette */
+            --crust-light: #faf2e9;
+            --crust-med: #f0decc;
+            --crust-dark: #c0a588;
+            --crust-deep: #603913;
+            --crust-burnt: #472b10;
+
+            /* UI Config */
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
+            background-color: var(--crust-light);
+            color: var(--crust-deep);
+            line-height: 1.5;
+            font-size: 1.1rem;
+        }
+
+        /* --- Header --- */
+        header {
+            background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue));
+            color: white;
+            padding: 2rem 1rem 1.5rem;
+            text-align: center;
+            border-bottom: 6px solid var(--brand-red);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .logo-container {
+            max-width: 350px;
+            margin: 0 auto 0.2rem;
+        }
+        
+        .logo-img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+        }
+
+        .tagline {
+            font-family: 'PizzaPress', serif;
+            font-size: 1.1rem; /* REDUCED from 1.4rem */
+            letter-spacing: 1px;
+            opacity: 0.95;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            margin-top: 5px; /* Slight breathing room */
+            text-transform: uppercase;
+        }
+
+        /* --- Main Content --- */
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* --- Timeline --- */
+        .timeline {
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--crust-dark);
+            border-radius: 2px;
+        }
+
+        .role-card {
+            background: white;
+            margin-bottom: 1.5rem;
+            margin-left: 50px;
+            padding: 1.5rem; /* INCREASED padding for breathing room */
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--acc-blue);
+            position: relative;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .role-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Timeline Dot */
+        .role-card::before {
+            content: '';
+            position: absolute;
+            left: -56px;
+            top: 24px; /* Adjusted for new padding */
+            width: 16px;
+            height: 16px;
+            background: var(--brand-red);
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px var(--acc-blue);
+            z-index: 2;
+        }
+
+        .role-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2 {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            color: var(--dark-blue);
+            font-size: 1.4rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Executive Level Styling */
+        .role-card.executive h2 {
+            color: var(--brand-red);
+        }
+
+        .role-details {
+            font-family: 'OneDotCd', sans-serif;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            color: #444;
+            font-size: 1.2rem;
+            margin-left: 2px; /* Slight nudge */
+        }
+
+        .role-card.active .role-details {
+            max-height: 600px;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--crust-med);
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background-color: var(--dark-blue);
+            color: white;
+            margin-top: 3rem;
+            font-family: 'OneDotCd', sans-serif;
+        }
+
+        /* --- Desktop --- */
+        @media (min-width: 600px) {
+            .timeline::before { left: 50%; margin-left: -2px; }
+            .role-card { width: 45%; margin-left: 0; }
+            .role-card:nth-child(odd) { margin-left: auto; border-left: none; border-right: 6px solid var(--acc-blue); }
+            .role-card:nth-child(even) { margin-right: auto; }
+            
+            .role-card::before { right: -60px; left: auto; }
+            .role-card:nth-child(odd)::before { left: -60px; right: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <!-- UPDATED FILENAME -->
+            <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo-img">
+        </div>
+        <p class="tagline">Growing Leaders. Building Futures.</p>
+    </header>
+
+    <main>
+        <div class="timeline">
+            
+            <!-- 1. CSR -->
+            <div class="role-card" onclick="this.classList.toggle('active')">
+                <div class="role-header"><h2>CSR to CSR Captain</h2></div>
+                <div class="role-details">
+                    <p>The <b>CSR</b> delivers great service by taking orders, making food, and keeping the store clean and organized. <br>
+                     The <b>CSR Captain</b> leads CSRs on shift by setting the pace for service, accuracy, and teamwork. Expected to train new personnel </p>
+                </div>
+            </div>
+
+            <!-- 2. Driver -->
+            <div class="role-card" onclick="this.classList.toggle('active')">
+                <div class="role-header"><h2>Delivery Expert to Driver Captain</h2></div>
+                <div class="role-details">
+                    <p>The <b>Delivery Expert</b> safely delivers orders on time while providing friendly service and supporting in-store operations & cleaning. <br>
+                    The <b>Driver Captain</b> guides the delivery team to meet service times, safety and operational standards, and is reponsible for training new drivers. </p>
+                </div>
+            </div>
+
+            <!-- 3. Shift Lead -->
+            <div class="role-card" onclick="this.classList.toggle('active')">
+                <div class="role-header"><h2>Shift Lead / AM</h2></div>
+                <div class="role-details">
+                    <p>Running the floor. Managing the rush.</p>
+                </div>
+            </div>
+
+            <!-- 4. Sr. GMIT -->
+            <div class="role-card" onclick="this.classList.toggle('active')">
+                <div class="role-header"><h2>Sr. GMIT / GMIT</h2></div>
+                <div class="role-details">
+                    <p>General Manager in Training. Learning the P&L.</p>
+                </div>
+            </div>
+
+            <!-- 5. SIT -->
+            <div class="role-card" onclick="this.classList.toggle('active')">
+                <div class="role-header"><h2>SIT</h2></div>
+                <div class="role-details">
+                    <p>Supervisor in Training. Multi-unit preparation.</p>
+                </div>
+            </div>
+
+            <!-- 6. DO -->
+            <div class="role-card executive" onclick="this.classList.toggle('active')">
+                <div class="role-header"><h2>DO</h2></div>
+                <div class="role-details">
+                    <p>District Operations. Multi-unit management.</p>
+                </div>
+            </div>
+
+            <!-- 7. VP -->
+            <div class="role-card executive" onclick="this.classList.toggle('active')">
+                <div class="role-header"><h2>VP</h2></div>
+                <div class="role-details">
+                    <p>Vice President. Strategic direction.</p>
+                </div>
+            </div>
+
+            <!-- 8. Franchisee -->
+            <div class="role-card executive" onclick="this.classList.toggle('active')">
+                <div class="role-header"><h2>Franchisee</h2></div>
+                <div class="role-details">
+                    <p>Ownership. The ultimate goal.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Team Wow | Domino's Pizza</p>
+        <p style="margin-top:5px; font-size: 0.7em;">Powered by Crust & Code</p>
+    </footer>
+
+</body>
+</html>
