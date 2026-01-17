@@ -277,41 +277,43 @@
     </style>
 </head>
 <body>
-    <!-- LOGO & NAV -->
-    <div style="text-align: center; margin-bottom: 1rem;">
-        <!-- Replace 'logo.png' with your actual image URL if you have it -->
-        <img src="New_Logo_v2.png" alt="Team Wow Logo" style="max-height: 80px; margin-bottom: 10px;">
+<body style="padding-top: 1rem;">
+
+    <!-- HEADER GRID (Desktop Friendly) -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 10px;">
         
-        <br>
-        
-        <a href="index.html" style="display: inline-block; margin-bottom: 1rem; color: var(--brand-blue); font-family: 'OneDotCd-Bold'; text-decoration: none; font-size: 1rem;">
-            &larr; Back to Main Menu
+        <!-- LEFT: BACK BUTTON -->
+        <a href="index.html" style="text-decoration: none; color: var(--brand-blue); font-family: 'OneDotCd-Bold'; font-size: 1.1rem; display: flex; align-items: center;">
+            &larr; Main Menu
         </a>
+
+        <!-- CENTER: LOGO -->
+        <div style="text-align: center;">
+            <img src="New_Logo_v2.png" alt="Team Wow" style="height: 60px;">
+            <!-- Maps directly under logo, small and tight -->
+            <div style="font-size: 0.8rem; margin-top: 4px;">
+                <a href="https://maps.app.goo.gl/gTCAbbfEduc3xNoG7" target="_blank" style="color:#666; text-decoration:none;">📍 McKinney</a>
+                <span style="color:#ccc; margin:0 4px;">|</span>
+                <a href="https://maps.app.goo.gl/Bwbu5PnDkhwgZZL8A" target="_blank" style="color:#666; text-decoration:none;">📍 Mesquite</a>
+            </div>
+        </div>
+
+        <!-- RIGHT: HELP BUTTON -->
+        <button onclick="document.getElementById('trainer-modal').classList.add('active')" 
+                style="background:none; border: 2px solid var(--brand-blue); border-radius: 20px; padding: 6px 16px; color:var(--brand-blue); font-family:'OneDotCd-Bold'; cursor:pointer;">
+            📞 Need Help?
+        </button>
     </div>
 
-      <div class="header-controls">
-        <!-- TOP ROW: Location & Help -->
-        <div class="location-bar">
-            <a href="https://maps.app.goo.gl/gTCAbbfEduc3xNoG7" target="_blank" class="loc-link">📍 McKinney Map</a>
-            <span style="color:#ccc">|</span>
-            <a href="https://maps.app.goo.gl/Bwbu5PnDkhwgZZL8A" target="_blank" class="loc-link">📍 Mesquite Map</a>
-        </div>
-        
-        <!-- CALL BUTTON (New) -->
-        <button onclick="document.getElementById('trainer-modal').classList.add('active')" 
-                style="background:none; border:none; color:var(--brand-blue); font-family:'OneDotCd-Bold'; cursor:pointer; font-size:1rem; margin-top:-5px; margin-bottom:10px;">
-            📞 Need Help / Contact Trainer
-        </button>
-
-        <!-- FILTERS -->
+    <!-- CONTROL BAR (Filters + Refresh) -->
+    <div class="header-controls" style="flex-direction: row; justify-content: center; gap: 20px; margin-bottom: 1.5rem;">
         <div class="filters">
             <button class="filter-btn active" onclick="filterClasses('all')">All Classes</button>
             <button class="filter-btn" onclick="filterClasses('McKinney')">McKinney</button>
             <button class="filter-btn" onclick="filterClasses('Mesquite')">Mesquite</button>
         </div>
-        
-        <button class="refresh-btn" onclick="fetchClasses()">↻ Refresh Data</button>
-    </div> <!-- END OF HEADER -->
+        <button class="refresh-btn" onclick="fetchClasses()" style="margin-left: 10px; border-left: 1px solid #ccc; padding-left: 15px;">↻ Refresh</button>
+    </div>
 
     <!-- PASTE THE YELLOW BOX HERE -->
     <div style="max-width: 800px; margin: 0 auto 2rem; background: #fff3cd; border: 1px solid #ffeeba; border-left: 6px solid #ffc107; padding: 1.5rem; border-radius: 4px; color: #856404;">
@@ -651,6 +653,7 @@
 
 </body>
 </html>
+
 
 
 
