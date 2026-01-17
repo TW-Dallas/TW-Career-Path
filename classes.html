@@ -26,93 +26,63 @@
             font-family: 'OneDotCd', sans-serif;
             background-color: var(--crust-light);
             color: var(--crust-deep);
-            padding: 2rem;
-            padding-top: 1rem;
-            overflow-x: hidden; /* Fixes the side scroll */
+            padding: 1rem; /* Tightened padding */
+            overflow-x: hidden; 
             max-width: 100%;
         }
 
         /* --- HEADER LAYOUT --- */
         .header-container {
             display: grid;
-            grid-template-columns: 1fr auto 1fr; /* 3 Columns: Left, Logo, Right */
+            grid-template-columns: 1fr 1fr 1fr; /* Perfect Center */
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.5rem; /* TIGHTER */
             width: 100%;
         }
 
         .logo-section {
             grid-column: 2; 
-            text-align: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             width: 100%;
         }
         
         .map-links {
-            font-size: 1rem;
-            margin-top: 6px;
-            display: block;
-            text-align: center;
+            font-size: 0.9rem; /* Slightly smaller to fit under logo */
+            margin-top: 2px;
+            display: block; text-align: center;
         }
 
         .nav-btn {
-            text-decoration: none;
-            color: var(--brand-blue);
-            font-family: 'OneDotCd-Bold';
-            font-size: 1rem;
-            white-space: nowrap;
+            text-decoration: none; color: var(--brand-blue); font-family: 'OneDotCd-Bold';
+            font-size: 1rem; white-space: nowrap;
         }
-
         .nav-left { grid-column: 1; justify-self: start; }
         .nav-right { 
-            grid-column: 3; 
-            justify-self: end; 
-            background: none; 
-            border: 2px solid var(--brand-blue); 
-            border-radius: 20px; 
-            padding: 6px 12px; 
-            cursor: pointer;
+            grid-column: 3; justify-self: end; background: none; 
+            border: 2px solid var(--brand-blue); border-radius: 20px; 
+            padding: 4px 12px; cursor: pointer;
         }
 
-        /* --- MOBILE LAYOUT FIXES --- */
+        /* --- MOBILE LAYOUT --- */
         @media (max-width: 600px) {
-            .header-container {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-            .logo-section { order: 1; margin-bottom: 5px; } 
-            
-            /* FORCE BUTTONS ON SAME LINE */
+            .header-container { display: flex; flex-direction: column; gap: 5px; } /* Super Tight Gap */
+            .logo-section { order: 1; margin-bottom: 0px; } 
             .mobile-nav-row {
-                order: 2;
-                display: flex !important;
-                width: 100%;
-                justify-content: center;
-                gap: 20px;
-                align-items: center;
+                order: 2; display: flex !important; width: 100%; justify-content: center; gap: 15px; align-items: center;
             }
             .nav-left, .nav-right { grid-column: auto; justify-self: auto; }
         }
 
-        /* --- REST OF YOUR STYLES --- */
+        /* --- CONTROLS --- */
         .header-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 2rem;
+            display: flex; justify-content: center; gap: 10px; margin-bottom: 1rem; /* TIGHTER */
         }
-
         .filters { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
         
         .filter-btn {
-            padding: 8px 16px;
-            background: white;
-            border: 2px solid var(--dark-blue);
-            color: var(--dark-blue);
-            font-family: 'OneDotCd-Bold';
-            border-radius: 20px;
-            cursor: pointer;
-            text-transform: uppercase;
+            padding: 6px 14px; /* Slightly smaller pills */
+            background: white; border: 2px solid var(--dark-blue); color: var(--dark-blue);
+            font-family: 'OneDotCd-Bold'; border-radius: 20px; cursor: pointer; text-transform: uppercase;
         }
         .filter-btn.active { background: var(--dark-blue); color: white; }
 
@@ -583,6 +553,7 @@
 
 </body>
 </html>
+
 
 
 
