@@ -278,19 +278,27 @@
 </head>
 <body>
 
-    <div class="header-controls">
-        <!-- New Location Links -->
+      <div class="header-controls">
+        <!-- TOP ROW: Location & Help -->
         <div class="location-bar">
-            <span>Map: </span>
-            <a href="https://maps.app.goo.gl/gTCAbbfEduc3xNoG7" target="_blank" class="loc-link">McKinney Training Center</a>
-            <a href="https://maps.app.goo.gl/Bwbu5PnDkhwgZZL8A" target="_blank" class="loc-link">Mesquite Training Center</a>
+            <a href="https://maps.app.goo.gl/gTCAbbfEduc3xNoG7" target="_blank" class="loc-link">📍 McKinney Map</a>
+            <span style="color:#ccc">|</span>
+            <a href="https://maps.app.goo.gl/Bwbu5PnDkhwgZZL8A" target="_blank" class="loc-link">📍 Mesquite Map</a>
         </div>
+        
+        <!-- CALL BUTTON (New) -->
+        <button onclick="document.getElementById('trainer-modal').classList.add('active')" 
+                style="background:none; border:none; color:var(--brand-blue); font-family:'OneDotCd-Bold'; cursor:pointer; font-size:1rem; margin-top:-5px; margin-bottom:10px;">
+            📞 Need Help / Contact Trainer
+        </button>
 
+        <!-- FILTERS -->
         <div class="filters">
             <button class="filter-btn active" onclick="filterClasses('all')">All Classes</button>
             <button class="filter-btn" onclick="filterClasses('McKinney')">McKinney</button>
             <button class="filter-btn" onclick="filterClasses('Mesquite')">Mesquite</button>
         </div>
+        
         <button class="refresh-btn" onclick="fetchClasses()">↻ Refresh Data</button>
     </div>
 
@@ -573,11 +581,11 @@
         <p style="margin:0; font-size:0.9rem;">&copy; 2026 Team Wow!</p>
         
         <div style="margin-top: 1rem; display: flex; gap: 20px; justify-content: center; font-size: 0.8rem; text-transform:uppercase; letter-spacing:1px;">
-            <a href="#" onclick="document.getElementById('trainer-modal').classList.add('active'); return false;" style="color: rgba(255,255,255,0.7); text-decoration: none;">📞 Need Help?</a>
-            <span style="color: rgba(255,255,255,0.2)">|</span>
             <a href="trainer_dashboard.html" style="color: rgba(255,255,255,0.4); text-decoration: none;">🔒 Trainer Portal</a>
         </div>
+
     </div>
 
 </body>
 </html>
+
