@@ -29,7 +29,7 @@
             padding: 2rem;
         }
 
-        /* Header / Controls */
+        /* --- HEADER & CONTROLS --- */
         .header-controls {
             display: flex;
             flex-direction: column;
@@ -51,6 +51,7 @@
             display: flex;
             gap: 10px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .filter-btn {
@@ -68,7 +69,22 @@
             color: white;
         }
 
-        /* Grid Layout */
+        /* --- LOCATION LINKS --- */
+        .location-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+        .loc-link {
+            font-size: 0.9rem;
+            color: var(--dark-blue);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--dark-blue);
+        }
+        .loc-link:hover { border-bottom: 1px solid var(--brand-red); color: var(--brand-red); }
+
+        /* --- GRID LAYOUT --- */
         .class-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -91,10 +107,8 @@
             position: relative; 
         }
 
-        /* Coming Soon State */
+        /* States */
         .class-card.coming-soon { opacity: 0.8; background: #fdfdfd; }
-        
-        /* Closed State */
         .class-card.closed { border-top-color: #666; opacity: 0.7; filter: grayscale(0.8); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -117,7 +131,6 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Date Block Styling */
         .date-block {
             display: flex;
             align-items: center;
@@ -164,12 +177,7 @@
             align-items: center;
         }
         
-        .footer-left {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
+        .footer-left { display: flex; flex-direction: column; gap: 2px; }
         .slots { font-size: 0.9rem; color: #666; font-weight: bold; }
         .deadline { font-size: 0.8rem; color: #d9534f; font-weight: bold; font-family: 'OneDotCd-Bold';}
 
@@ -185,8 +193,6 @@
         }
         .signup-btn:hover { background-color: var(--dark-blue); }
         .signup-btn:disabled { background-color: #ccc; cursor: not-allowed; }
-
-        /* Button States */
         .signup-btn.btn-closed { background-color: #666; color: #fff; }
         .signup-btn.btn-future { background-color: #eee; color: #999; border: 1px solid #ddd; }
 
@@ -197,11 +203,89 @@
         
         #loading-msg { text-align: center; font-style: italic; color: #666; margin-top: 2rem; }
 
+        /* --- MODAL STYLES --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .modal-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px; right: 15px;
+            background: none; border: none;
+            font-size: 1.5rem; cursor: pointer;
+            color: #666;
+        }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.4rem; font-weight: bold; font-size: 0.9rem; }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 1rem;
+            box-sizing: border-box; /* Fix padding width issue */
+        }
+
+        .modal-title {
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--brand-blue);
+            text-align: center;
+        }
+        
+        .modal-subtitle {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--brand-blue);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        .modal-btn:disabled { background: #999; }
+
     </style>
 </head>
 <body>
 
     <div class="header-controls">
+        <!-- New Location Links -->
+        <div class="location-bar">
+            <span>Map: </span>
+            <a href="https://maps.app.goo.gl/gTCAbbfEduc3xNoG7" target="_blank" class="loc-link">McKinney Training Center</a>
+            <a href="https://maps.app.goo.gl/Bwbu5PnDkhwgZZL8A" target="_blank" class="loc-link">Mesquite Training Center</a>
+        </div>
+
         <div class="filters">
             <button class="filter-btn active" onclick="filterClasses('all')">All Classes</button>
             <button class="filter-btn" onclick="filterClasses('McKinney')">McKinney</button>
@@ -214,6 +298,61 @@
     <div class="class-grid" id="class-grid">
         <!-- CARDS WILL APPEAR HERE -->
     </div>
+
+    <!-- SIGNUP MODAL -->
+    <div class="modal-overlay" id="signup-modal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-title">Class Signup</div>
+            <div class="modal-subtitle" id="modal-class-info">Loading...</div>
+            
+            <form id="signup-form" onsubmit="submitSignup(event)">
+                <input type="hidden" id="modal-class-id" name="classId">
+                <input type="hidden" id="modal-class-name" name="className">
+                
+                <div class="form-group">
+                    <label>Employee Name</label>
+                    <input type="text" id="inp-name" required placeholder="First Last">
+                </div>
+                <div class="form-group">
+                    <label>Store Number</label>
+                    <input type="number" id="inp-store" required placeholder="e.g. 9999">
+                </div>
+                <div class="form-group">
+                    <label>Position</label>
+                    <select id="inp-pos" required>
+                        <option value="">Select...</option>
+                        <option value="CSR">CSR / Insider</option>
+                        <option value="Driver">Driver</option>
+                        <option value="AM">Assistant Manager</option>
+                        <option value="GM">General Manager</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Mobile Phone</label>
+                    <input type="tel" id="inp-phone" required placeholder="555-555-5555">
+                </div>
+
+                <button type="submit" class="modal-btn" id="modal-submit-btn">Confirm Signup</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TRAINER DIRECTORY MODAL -->
+    <div class="modal-overlay" id="trainer-modal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="document.getElementById('trainer-modal').classList.remove('active')">&times;</button>
+            <div class="modal-title">Trainer Directory</div>
+            <div style="text-align: center; color: #333;">
+                <p><strong>McKinney:</strong></p>
+                <p>Trainer Name - (555) 123-4567</p>
+                <hr style="border:0; border-top:1px solid #eee; margin: 10px 0;">
+                <p><strong>Mesquite:</strong></p>
+                <p>Trainer Name - (555) 987-6543</p>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         // --- CONFIG ---
@@ -252,7 +391,6 @@
             const now = new Date();
             const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-                        // --- 1. PRE-PROCESS & FILTER ---
             const processedData = data.map(cls => {
                 const openDate = cls.open_date ? new Date(cls.open_date) : null;
                 const closeDate = cls.close_date ? new Date(cls.close_date) : null;
@@ -264,42 +402,26 @@
                 return { ...cls, _status: status, _openDate: openDate, _closeDate: closeDate };
             })
             .filter(cls => {
-                // FILTER LOGIC:
-                // 1. If it's "Future", only show if Open Date is < 45 days away.
                 if (cls._status === 'future' && cls._openDate) {
                     const diffTime = Math.abs(cls._openDate - todayStart);
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    if (diffDays > 45) return false; // Hide it
+                    if (Math.ceil(diffTime / (86400000)) > 45) return false; 
                 }
-                
-                // 2. If it's "Closed", only show if it closed < 3 days ago.
                 if (cls._status === 'closed' && cls._closeDate) {
                     const diffTime = Math.abs(todayStart - cls._closeDate);
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    if (diffDays > 3) return false; // Hide it (Graveyard cleaning)
+                    if (Math.ceil(diffTime / (86400000)) > 3) return false; 
                 }
-
-                return true; // Show everything else (Active)
+                return true; 
             });
 
-            // --- 2. SORTING LOGIC ---
-            // Order: Active (top), Future (middle), Closed (bottom)
-            // Within each group, sort by Class Date
             processedData.sort((a, b) => {
                 const statusOrder = { 'active': 1, 'future': 2, 'closed': 3 };
-                
-                // Primary Sort: Status
                 if (statusOrder[a._status] !== statusOrder[b._status]) {
                     return statusOrder[a._status] - statusOrder[b._status];
                 }
-                
-                // Secondary Sort: Date
                 return new Date(a.isoDate) - new Date(b.isoDate);
             });
 
-            // --- 3. RENDER ---
             processedData.forEach(cls => {
-                // Determine UI Elements based on Status
                 let btnText = "Sign Up";
                 let btnClass = "";
                 let isDisabled = false;
@@ -314,7 +436,6 @@
                     isDisabled = true;
                     btnClass = "btn-closed";
                 } else {
-                    // Active: Show deadline text
                     if (cls._closeDate) {
                         deadlineText = `Sign up by: ${cls._closeDate.toLocaleDateString("en-US", {month:'short', day:'numeric'})}`;
                     }
@@ -327,16 +448,19 @@
                 const dayName = classDate.toLocaleDateString("en-US", { weekday: 'short' });
                 const dateStr = classDate.toLocaleDateString("en-US", { month: 'short', day: 'numeric' });
                 const timeStr = classDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+                const fullDateStr = `${dayName}, ${dateStr} @ ${timeStr}`;
+
+                // Safe quote escaping for onclick
+                const safeName = cls.name.replace(/'/g, "\\'"); 
+                const safeId = cls.id ? cls.id.toString() : ""; 
 
                 card.innerHTML = `
                     <div class="card-body">
                         <span class="level-badge">Level ${cls.level}</span>
-                        
                         <div class="date-block">
                             <div class="day-box">${dayName}</div>
                             <div class="time-text">${dateStr} • ${timeStr}</div>
                         </div>
-
                         <h3>${cls.name}</h3>
                         <div class="details">
                             <span>📍 ${cls.location}</span>
@@ -349,7 +473,7 @@
                             ${deadlineText ? `<span class="deadline">${deadlineText}</span>` : ''}
                         </div>
                         <button class="signup-btn ${btnClass}" 
-                                onclick="handleSignup('${cls.name}', '${cls.id}', this)"
+                                onclick="openModal('${safeName}', '${safeId}', '${fullDateStr}', this)"
                                 ${isDisabled ? 'disabled' : ''}>
                             ${btnText}
                         </button>
@@ -362,72 +486,96 @@
         function filterClasses(location) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
-
-            if (location === 'all') {
-                renderClasses(allData);
-            } else {
-                const filtered = allData.filter(c => c.location && c.location.includes(location));
-                renderClasses(filtered);
-            }
+            if (location === 'all') renderClasses(allData);
+            else renderClasses(allData.filter(c => c.location && c.location.includes(location)));
         }
 
-        function handleSignup(className, classId, btnElement) { 
-            const name = prompt("Enter Employee Name:");
-            if (!name) return;
-            const store = prompt("Enter Store Number:");
-            if (!store) return;
-            const position = prompt("Enter Position (e.g. CSR, Driver):");
-            if (!position) return;
-            const phone = prompt("Enter Phone Number:");
-            if (!phone) return;
+        // --- NEW MODAL LOGIC ---
+        let currentBtn = null; // Store reference to button to update text later
 
-            btnElement.disabled = true;
-            btnElement.innerText = "Processing...";
+        function openModal(className, classId, dateInfo, btnElement) {
+            document.getElementById('signup-modal').classList.add('active');
+            
+            // Set Hidden values
+            document.getElementById('modal-class-id').value = classId;
+            document.getElementById('modal-class-name').value = className;
+            
+            // Set Visual Info
+            document.getElementById('modal-class-info').innerHTML = `<strong>${className}</strong><br>${dateInfo}`;
+            
+            currentBtn = btnElement;
+        }
 
+        function closeModal() {
+            document.getElementById('signup-modal').classList.remove('active');
+            document.getElementById('signup-form').reset();
+            currentBtn = null;
+        }
+
+        function submitSignup(e) {
+            e.preventDefault();
+            const btn = document.getElementById('modal-submit-btn');
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            const f = document.getElementById('signup-form');
             const formData = new URLSearchParams();
-            formData.append('name', name);
-            formData.append('store', store);
-            formData.append('position', position); 
-            formData.append('phone', phone);       
-            formData.append('className', className);
-            formData.append('classId', classId); 
+            
+            // THESE KEYS MATCH YOUR Code.gs doPost(e)
+            formData.append('classId', document.getElementById('modal-class-id').value);
+            formData.append('className', document.getElementById('modal-class-name').value);
+            formData.append('name', document.getElementById('inp-name').value);
+            formData.append('store', document.getElementById('inp-store').value);
+            formData.append('position', document.getElementById('inp-pos').value);
+            formData.append('phone', document.getElementById('inp-phone').value);
+
+            // Debug log to ensure ID is being sent
+            console.log("Sending Signup:", formData.toString());
 
             fetch(API_URL, {
                 method: "POST",
                 body: formData,
                 mode: 'no-cors' 
             }).then(() => {
-                alert(`Success! ${name} signed up for ${className}.`);
-                btnElement.innerText = "Signed Up!";
+                alert("Success! You are signed up.");
+                closeModal();
+                btn.innerText = "Confirm Signup";
+                btn.disabled = false;
+                
+                // Update the button on the card
+                if(currentBtn) {
+                    currentBtn.innerText = "Signed Up!";
+                    currentBtn.disabled = true;
+                }
+                
+                // Refresh data to show spot taken
                 setTimeout(fetchClasses, 1500); 
+
             }).catch(err => {
-                alert("Error signing up.");
-                btnElement.disabled = false;
-                btnElement.innerText = "Sign Up";
+                console.error(err);
+                alert("Error signing up. Please try again.");
+                btn.innerText = "Confirm Signup";
+                btn.disabled = false;
             });
         }
     </script>
+
     <!-- SLIM FOOTER -->
-        <div style="
+    <div style="
         text-align: center;
         padding: 2rem 0;
         margin-top: 3rem;
         background-color: var(--dark-blue);
         color: white;
-        
-        /* THE NUCLEAR FIX */
-        width: 100vw;          /* Force full screen width */
-        position: relative;    /* Keep it in flow */
-        left: 50%;             /* Move to middle */
-        right: 50%;
-        margin-left: -50vw;    /* Pull it back to center */
-        margin-right: -50vw;
-        margin-bottom: -2rem;  /* Hug bottom */
+        width: 100vw; position: relative; left: 50%; right: 50%;
+        margin-left: -50vw; margin-right: -50vw; margin-bottom: -2rem;
     ">
         <p style="margin:0; font-size:0.9rem;">&copy; 2026 Team Wow!</p>
         
-        <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid rgba(255,255,255,0.1); display:inline-block;">
-            <a href="trainer_dashboard.html" style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem; text-transform:uppercase; letter-spacing:1px;">🔒 Trainer Portal</a>
+        <div style="margin-top: 1rem; display: flex; gap: 20px; justify-content: center; font-size: 0.8rem; text-transform:uppercase; letter-spacing:1px;">
+            <a href="#" onclick="document.getElementById('trainer-modal').classList.add('active'); return false;" style="color: rgba(255,255,255,0.7); text-decoration: none;">📞 Need Help?</a>
+            <span style="color: rgba(255,255,255,0.2)">|</span>
+            <a href="trainer_dashboard.html" style="color: rgba(255,255,255,0.4); text-decoration: none;">🔒 Trainer Portal</a>
         </div>
     </div>
 
