@@ -348,19 +348,60 @@
 
     <!-- TRAINER DIRECTORY MODAL -->
     <div class="modal-overlay" id="trainer-modal">
-        <div class="modal-box">
+                <div class="modal-box" style="text-align: center; max-height: 80vh; overflow-y: auto;">
             <button class="modal-close" onclick="document.getElementById('trainer-modal').classList.remove('active')">&times;</button>
             <div class="modal-title">Trainer Directory</div>
-            <div style="text-align: center; color: #333;">
-                <p><strong>McKinney:</strong></p>
-                <p>Trainer Name - (555) 123-4567</p>
-                <hr style="border:0; border-top:1px solid #eee; margin: 10px 0;">
-                <p><strong>Mesquite:</strong></p>
-                <p>Trainer Name - (555) 987-6543</p>
+            
+            <p style="margin-bottom: 20px; color: #666; font-size: 0.9rem;">Tap a number to call or text.</p>
+
+            <!-- LEADERSHIP -->
+            <div style="background-color: #f0f8ff; padding: 10px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--brand-blue);">
+                <h4 style="margin: 0; color: var(--dark-blue); font-family: 'OneDotCd-Bold'; font-size: 1.1rem; text-transform: uppercase;">Team Wow! Coach</h4>
+                <div style="margin-top: 5px;">
+                    <p style="margin: 5px 0;"><strong>Bobby</strong><br>
+                        <a href="tel:2146094715" style="color: #333; text-decoration: none; font-size: 1.1rem;">(214) 609-4715</a>
+                    </p>
+                </div>
             </div>
+
+            <!-- MCKINNEY SECTION -->
+            <div style="margin-bottom: 20px;">
+                <h4 style="margin: 0; color: var(--brand-blue); font-family: 'OneDotCd-Bold'; font-size: 1.2rem; border-bottom: 2px solid #eee; display: inline-block; padding-bottom: 4px;">📍 McKinney Center</h4>
+                <div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <!-- Grid Layout for names so it's not a mile long -->
+                    <div style="text-align: right; padding-right: 10px; border-right: 1px solid #eee;">
+                        <p style="margin: 8px 0;"><strong>Chris</strong><br><a href="tel:4696748855" style="color: #666; text-decoration: none;">(469) 674-8855</a></p>
+                        <p style="margin: 8px 0;"><strong>Paul</strong><br><a href="tel:4694509169" style="color: #666; text-decoration: none;">(469) 450-9169</a></p>
+                    </div>
+                    <div style="text-align: left; padding-left: 10px;">
+                        <p style="margin: 8px 0;"><strong>Phu</strong><br><a href="tel:2144046535" style="color: #666; text-decoration: none;">(214) 404-6535</a></p>
+                        <p style="margin: 8px 0;"><strong>Rebecca</strong><br><a href="tel:4693908012" style="color: #666; text-decoration: none;">(469) 390-8012</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
+
+            <!-- MESQUITE SECTION -->
+            <div style="margin-bottom: 10px;">
+                <h4 style="margin: 0; color: var(--brand-blue); font-family: 'OneDotCd-Bold'; font-size: 1.2rem; border-bottom: 2px solid #eee; display: inline-block; padding-bottom: 4px;">📍 Mesquite Center</h4>
+                <div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                     <div style="text-align: right; padding-right: 10px; border-right: 1px solid #eee;">
+                        <p style="margin: 8px 0;"><strong>Amanda</strong><br><a href="tel:9728024392" style="color: #666; text-decoration: none;">(972) 802-4392</a></p>
+                        <p style="margin: 8px 0;"><strong>Beans</strong><br><a href="tel:2142442599" style="color: #666; text-decoration: none;">(214) 244-2599</a></p>
+                        <p style="margin: 8px 0;"><strong>Kevin</strong><br><a href="tel:4695155957" style="color: #666; text-decoration: none;">(469) 515-5957</a></p>
+                    </div>
+                    <div style="text-align: left; padding-left: 10px;">
+                        <p style="margin: 8px 0;"><strong>Melissa</strong><br><a href="tel:9722467668" style="color: #666; text-decoration: none;">(972) 246-7668</a></p>
+                        <p style="margin: 8px 0;"><strong>Stephanie</strong><br><a href="tel:8175211016" style="color: #666; text-decoration: none;">(817) 521-1016</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="document.getElementById('trainer-modal').classList.remove('active')" 
+                    class="modal-btn" style="background: #eee; color: #333; margin-top: 20px;">Close Directory</button>
         </div>
     </div>
-
 
     <script>
         // --- CONFIG ---
@@ -588,4 +629,5 @@
 
 </body>
 </html>
+
 
