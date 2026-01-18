@@ -419,6 +419,11 @@
             </div>
         </div>
 
+        <!-- STEP 4: PDF VIEWER -->
+        <div id="view-viewer" class="hidden" style="height: 100%; display: flex; flex-direction: column;">
+            <iframe id="content-frame" src="" style="width: 100%; height: 80vh; border: none; border-radius: 8px; background: white;"></iframe>
+        </div>
+
     </main>
 
     <footer>
@@ -451,11 +456,12 @@
         ];
 
         // --- NAVIGATION LOGIC ---
-        function navigateTo(view) {
+                function navigateTo(view) {
             // Hide all
             document.getElementById('view-lobby').classList.add('hidden');
             document.getElementById('view-categories').classList.add('hidden');
             document.getElementById('view-resources-list').classList.add('hidden');
+            document.getElementById('view-viewer').classList.add('hidden'); // <--- NEW
 
             // Show Target
             if (view === 'lobby') {
@@ -467,8 +473,12 @@
             } else if (view === 'list') {
                 document.getElementById('view-resources-list').classList.remove('hidden');
                 updateNav('back', 'Back to Categories');
+            } else if (view === 'viewer') {  // <--- NEW BLOCK
+                document.getElementById('view-viewer').classList.remove('hidden');
+                updateNav('back', 'Back to Resources');
             }
-
+            
+            // Handle Back Button Logic for Viewer
             currentView = view;
             window.scrollTo(0,0);
         }
@@ -488,13 +498,15 @@
         }
 
         function handleBack(e) {
-            if (currentView === 'lobby') return; // Let the link work normally
+            if (currentView === 'lobby') return;
             
             e.preventDefault();
             if (currentView === 'categories') {
                 navigateTo('lobby');
             } else if (currentView === 'list') {
                 navigateTo('categories');
+            } else if (currentView === 'viewer') { // <--- NEW
+                navigateTo('list');
             }
         }
 
@@ -516,7 +528,7 @@
                             <div class="res-title">${res.title}</div>
                             <div class="res-desc">${res.desc}</div>
                             <div class="res-actions">
-                                <a href="${res.link}" class="action-link" target="_blank">
+                                <a href="#" class="action-link" onclick="openDocument('${res.link}'); return false;">
                                     <span>👁️</span> View
                                 </a>
                                 <a href="#" class="action-link" onclick="alert('Opening Email Client...')">
@@ -532,10 +544,17 @@
             navigateTo('list');
         }
 
+        function openDocument(url) {
+            const frame = document.getElementById('content-frame');
+            frame.src = url;
+            navigateTo('viewer');
+        }
+
     </script>
 </body>
 
 </html>
+
 
 
 
