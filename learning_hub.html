@@ -338,7 +338,7 @@
         <div id="view-lobby" class="grid-view">
 
             <!-- Card 1: LMS -->
-            <div class="lobby-card" onclick="navigateTo('lms')">
+            <div class="lobby-card" onclick="navigateTo('login')">
                 <div class="card-image-area" style="background: var(--crust-med);">
                     <span>🎓</span>
                 </div>
@@ -430,6 +430,18 @@
 
         </div>
 
+        <!-- STEP 4.5: FAKE LOGIN -->
+        <div id="view-login" class="hidden" style="max-width: 400px; margin: 4rem auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
+            <h2 style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue); margin-bottom: 1.5rem;">LMS Secure Login</h2>
+            
+            <input type="text" placeholder="Employee ID" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px;">
+            <input type="password" placeholder="Password" style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px;">
+            
+            <button class="btn" style="width: 100%;" onclick="navigateTo('lms')">Sign In</button>
+            <p style="margin-top: 15px; font-size: 0.8rem; color: #888;">(Demo: Click Sign In to bypass)</p>
+        </div>
+
         <!-- STEP 5: LMS MOCKUP (Vision) -->
         <div id="view-lms" class="hidden" style="animation: fadeIn 0.5s ease-out;">
             <div class="section-header">
@@ -517,8 +529,8 @@
             document.getElementById('view-categories').classList.add('hidden');
             document.getElementById('view-resources-list').classList.add('hidden');
             document.getElementById('view-viewer').classList.add('hidden'); // <--- NEW
+            document.getElementById('view-login').classList.add('hidden'); // <--- NEW
             document.getElementById('view-lms').classList.add('hidden'); // <--- NEW
-
 
             // Show Target
             if (view === 'lobby') {
@@ -533,6 +545,9 @@
             } else if (view === 'viewer') {  // <--- NEW BLOCK
                 document.getElementById('view-viewer').classList.remove('hidden');
                 updateNav('back', 'Back to Resources');
+            } else if (view === 'login') { // <--- NEW BLOCK
+                document.getElementById('view-login').classList.remove('hidden');
+                updateNav('back', 'Back to Lobby');
             } else if (view === 'lms') { // <--- NEW BLOCK
                 document.getElementById('view-lms').classList.remove('hidden');
                 updateNav('back', 'Back to Lobby');
@@ -557,7 +572,7 @@
             }
         }
 
-       function handleBack(e) {
+               function handleBack(e) {
             if (currentView === 'lobby') return;
             
             e.preventDefault();
@@ -567,11 +582,13 @@
             } else if (currentView === 'list') {
                 navigateTo('categories');
             } else if (currentView === 'viewer') {
-                // KILL SWITCH: Stop the video
+                // KILL SWITCH
                 document.getElementById('content-frame').src = ''; 
                 navigateTo('list');
-            } else if (currentView === 'lms') {
+            } else if (currentView === 'login') {
                 navigateTo('lobby');
+            } else if (currentView === 'lms') {
+                navigateTo('login'); // Makes sense to go back to Login, or Lobby (Logout). Your call.
             }
         }
 
@@ -635,6 +652,7 @@
 </body>
 
 </html>
+
 
 
 
