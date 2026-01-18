@@ -199,6 +199,46 @@
             .role-card::before { right: -60px; left: auto; }
             .role-card:nth-child(odd)::before { left: -60px; right: auto; }
         }
+
+        /* Make sure the header knows it is the anchor point */
+        header {
+            position: relative; /* IMPORTANT: This keeps the button inside the blue box */
+        }
+        
+        .learning-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.15); /* Glassy effect */
+            border: 2px solid white;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-family: 'OneDotCd-Bold';
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            z-index: 10;
+        }
+        
+        .learning-btn:hover {
+            background: white;
+            color: var(--brand-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Mobile: Un-stick it and center it */
+        @media (max-width: 768px) {
+            .learning-btn {
+                position: static; /* Stop floating */
+                display: inline-block;
+                margin-top: 1rem; /* Space below tagline */
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -208,6 +248,11 @@
             <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo-img">
         </div>
         <p class="tagline">Growing Leaders. Building Futures.</p>
+        
+        <a href="learning_hub.html" class="learning-btn">
+            🎓 Learning Hub
+        </a>
+
     </header>
         <!-- SUB-NAV STRIP -->
     <div style="
@@ -327,5 +372,6 @@
 
 </body>
 </html>
+
 
 
