@@ -499,21 +499,12 @@
         }
 
         // --- CONTENT LOGIC ---
-                function openCategory(catKey, catTitle) {
-            alert("Step 1: Function Started for " + catKey);
-            
+        function openCategory(catKey, catTitle) {
             const container = document.getElementById('resource-container');
-            if (!container) {
-                alert("CRITICAL ERROR: Container not found!");
-                return;
-            }
-            alert("Step 2: Container Found");
-
             document.getElementById('list-title').innerText = catTitle;
             container.innerHTML = '';
 
             const filtered = resources.filter(r => r.category === catKey);
-            alert("Step 3: Found " + filtered.length + " items");
 
             if (filtered.length === 0) {
                 container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888;">No resources found in this category.</p>';
@@ -537,8 +528,7 @@
                     container.innerHTML += html;
                 });
             }
-            
-            alert("Step 4: Rendering Complete. Navigating now.");
+
             navigateTo('list');
         }
 
@@ -546,6 +536,7 @@
 </body>
 
 </html>
+
 
 
 
