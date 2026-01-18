@@ -367,38 +367,46 @@
         <!-- STEP 2: CATEGORY SELECTOR -->
         <div id="view-categories" class="grid-view hidden">
             
-            <div class="lobby-card" onclick="openCategory('operations', 'Operations')">
-                <div class="card-image-area" style="background-color: #e3f2fd; color: var(--brand-blue);">⚙️</div>
+            <!-- Managers (GMs) -->
+            <div class="lobby-card" onclick="openCategory('managers', 'Manager Resources')">
+                <!-- REPLACE 'img/manager_cover.webp' WITH YOUR FILE -->
+                <div class="card-image-area" style="background-image: url('photo_gm.webp'); background-color: #eee;"></div>
                 <div class="card-content">
-                    <div class="card-title">Operations</div>
-                    <div class="card-desc">Standards, OER Guides, Product Procedures.</div>
+                    <div class="card-title">Managers</div>
+                    <div class="card-desc">OER Guides, Inventory, Cash, & labor.</div>
                 </div>
             </div>
-
-            <div class="lobby-card" onclick="openCategory('service', 'Service')">
-                <div class="card-image-area" style="background-color: #e8f5e9; color: #2e7d32;">⏱️</div>
+        
+            <!-- Drivers -->
+            <div class="lobby-card" onclick="openCategory('drivers', 'Driver Resources')">
+                <!-- REPLACE 'img/driver_cover.webp' WITH YOUR FILE -->
+                <div class="card-image-area" style="background-image: url('photo_driver.jpg'); background-color: #eee;"></div>
                 <div class="card-content">
-                    <div class="card-title">Service</div>
-                    <div class="card-desc">Load Times, Dispatch, Customer Service Scripts.</div>
+                    <div class="card-title">Drivers</div>
+                    <div class="card-desc">Safety Cards, Vehicle Inspections, Maps.</div>
                 </div>
             </div>
-
-            <div class="lobby-card" onclick="openCategory('safety', 'Safety')">
-                <div class="card-image-area" style="background-color: #ffebee; color: var(--brand-red);">🛡️</div>
+        
+            <!-- Insiders (CSRs) -->
+            <div class="lobby-card" onclick="openCategory('insiders', 'Insider Resources')">
+                <!-- REPLACE 'img/csr_cover.webp' WITH YOUR FILE -->
+                <div class="card-image-area" style="background-image: url('photo_csr.jpg'); background-color: #eee;"></div>
                 <div class="card-content">
-                    <div class="card-title">Safety</div>
-                    <div class="card-desc">Driver Safety, Security Protocols, Inspections.</div>
+                    <div class="card-title">Insiders (CSR)</div>
+                    <div class="card-desc">Scripts, Makeline Standards, Oven Tending.</div>
                 </div>
             </div>
-
-            <div class="lobby-card" onclick="openCategory('hr', 'HR / People')">
-                <div class="card-image-area" style="background-color: #fff3e0; color: #ef6c00;">🤝</div>
+        
+            <!-- Training -->
+            <div class="lobby-card" onclick="openCategory('training', 'Training Center')">
+                <!-- REPLACE 'img/training_cover.webp' WITH YOUR FILE -->
+                <div class="card-image-area" style="background-image: url('photo_training.webp'); background-color: #eee;"></div>
                 <div class="card-content">
-                    <div class="card-title">HR / People</div>
-                    <div class="card-desc">Onboarding, Benefits, Culture, Uniforms.</div>
+                    <div class="card-title">Training</div>
+                    <div class="card-desc">Videos, Quizzes, Certification Paths.</div>
                 </div>
             </div>
-
+        
         </div>
 
         <!-- STEP 3: CONTENT GRID -->
@@ -424,13 +432,23 @@
         let currentView = 'lobby'; // lobby, categories, list
         
         // --- DATA ---
+                // --- DATA ---
         const resources = [
-            { id: 1, category: 'operations', type: 'PDF', title: 'OER Standards Guide 2026', desc: 'Complete breakdown of 5-star scoring.', link: '#' },
-            { id: 2, category: 'service', type: 'Video', title: 'Load & Go Procedures', desc: 'Optimizing dispatch times.', link: '#' },
-            { id: 3, category: 'safety', type: 'Checklist', title: 'Vehicle Inspection Card', desc: 'Daily driver safety checks.', link: '#' },
-            { id: 4, category: 'hr', type: 'PDF', title: 'New Hire Packet', desc: 'Forms and welcome guide.', link: '#' },
-            { id: 5, category: 'operations', type: 'Video', title: 'Dough Managment', desc: 'Proofing and stretching techniques.', link: '#' },
-            { id: 6, category: 'service', type: 'PDF', title: 'Phone Scripts', desc: 'Handling customer complaints.', link: '#' },
+            // MANAGERS
+            { id: 1, category: 'managers', type: 'PDF', title: 'OA Standards 2026', desc: '5-Star scoring guide.', link: '#' },
+            { id: 2, category: 'managers', type: 'Video', title: 'Inventory 101', desc: 'Variance reduction tips.', link: '#' },
+            
+            // DRIVERS
+            { id: 3, category: 'drivers', type: 'Checklist', title: 'Vehicle Inspection', desc: 'Daily safety check card.', link: '#' },
+            { id: 4, category: 'drivers', type: 'Map', title: 'Delivery Area Map', desc: 'Store boundaries & gates.', link: '#' },
+            
+            // INSIDERS
+            { id: 5, category: 'insiders', type: 'PDF', title: 'Phone Scripts', desc: 'Handling complaints.', link: '#' },
+            { id: 6, category: 'insiders', type: 'Video', title: 'Perfect Pizza Prep', desc: 'Dough stretching guide.', link: '#' },
+            
+            // TRAINING
+            { id: 7, category: 'training', type: 'PDF', title: 'New Hire Packet', desc: 'Onboarding forms.', link: '#' },
+            { id: 8, category: 'training', type: 'Quiz', title: 'Menu Knowledge', desc: 'Test your toppings skills.', link: '#' },
         ];
 
         // --- NAVIGATION LOGIC ---
@@ -517,4 +535,5 @@
 
     </script>
 </body>
+
 </html>
