@@ -336,8 +336,8 @@
     <main>
         
         <!-- STEP 1: MAIN LOBBY -->
-        <div id="view-lobby" class="grid-view">
-            
+        <div id="view-lobby" class="grid-view hidden"> <!-- ADDED class="hidden" -->
+
             <!-- Card 1: LMS -->
             <div class="lobby-card" onclick="alert('The Team Wow LMS is currently under construction. Check back soon!');">
                 <div class="card-image-area" style="background: var(--crust-med);">
@@ -410,7 +410,7 @@
         </div>
 
         <!-- STEP 3: CONTENT GRID -->
-        <div id="view-resources-list" class="hidden">
+        <div id="view-resources-list">
             <div class="section-header">
                 <div class="section-title" id="list-title">Category Name</div>
             </div>
@@ -547,6 +547,7 @@
 </body>
 
 </html>
+
 
 
 
