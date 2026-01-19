@@ -607,7 +607,8 @@
         }
 
        function handleBack(e) {
-           if (currentView === 'lobby') return;
+            console.log("Current View is:", currentView); // <--- ADD THIS
+            if (currentView === 'lobby') return;
             
             e.preventDefault();
             
@@ -686,6 +687,7 @@
 </body>
 
 </html>
+
 
 
 
