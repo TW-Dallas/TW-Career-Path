@@ -606,8 +606,9 @@
             }
         }
 
-               function handleBack(e) {
-            if (currentView === 'lobby') return;
+       function handleBack(e) {
+        console.log("Current View is:", currentView); // <--- ADD THIS
+        if (currentView === 'lobby') return;
             
             e.preventDefault();
             
@@ -660,7 +661,7 @@
             navigateTo('list');
         }
 
-                function openDocument(url) {
+        function openDocument(url) {
             const frame = document.getElementById('content-frame');
             const img = document.getElementById('content-image');
             
@@ -686,5 +687,6 @@
 </body>
 
 </html>
+
 
 
