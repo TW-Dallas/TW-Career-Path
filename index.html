@@ -330,11 +330,18 @@
                 </div>
             </div>
             
-            <!-- 6. SIT -->
-            <div class="role-card" onclick="this.classList.toggle('active')">
-                <div class="role-header"><h2>SIT (Do-IT)</h2></div>
+            <!-- 6. DO-It-->
+            <div class="role-card" onclick="if(!event.target.closest('button')) this.classList.toggle('active')">
+                <div class="role-header"><h2>Do-IT</h2></div>
                 <div class="role-details">
-                    <p>The <b>Supervisor in Training</b> learns multi-store leadership by supporting General Managers and improving store performance.</p>
+                    <p>The <b>DO-it program</b> helps to prepare high-performing managers to tackle a supervisory role. Here, managers will learn multi-store leadership by supporting General Managers and improving store performance.</p>
+                    
+                    <!-- NEW ACTION BUTTON -->
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+                        <button onclick="showSITInfo(event)" style="background: var(--wow-blue); color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold;">
+                            👉 View Requirements & Apply
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -369,9 +376,48 @@
         <p>&copy; 2026 Team Wow! | Domino's Pizza</p>
         <p style="margin-top:5px; font-size: 0.7em;">Powered by Crust & Code</p>
     </footer>
+    
+    <!-- Add this Modal HTML first (hidden by default) -->
+    <div id="sit-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 500px; width: 90%; position: relative; font-family: 'OneDotCd', sans-serif;">
+            
+            <button onclick="closeSITInfo()" style="position: absolute; top: 10px; right: 15px; border: none; background: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            
+            <h2 style="color: var(--dark-blue); margin-bottom: 1rem;">DO-IT Program Requirements</h2>
+            
+            <ul style="text-align: left; margin-bottom: 1.5rem; list-style: none;">
+                <li style="margin-bottom: 10px;">✅ Must have completed all MIT Level 1-3 classes.</li>
+                <li style="margin-bottom: 10px;">✅ Must be in good standing (no write-ups in last 6 months).</li>
+                <li style="margin-bottom: 10px;">✅ Must have Store Manager recommendation.</li>
+            </ul>
+
+            <button onclick="window.open('YOUR_GOOGLE_FORM_LINK_HERE', '_blank')" class="learning-btn" style="position: static; display: block; width: 100%; background: var(--brand-red); text-align: center; margin-bottom: 10px;">
+                Apply Now
+            </button>
+            
+            <button onclick="closeSITInfo()" style="background: #eee; color: #444; border: none; padding: 10px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function showSITInfo(e) {
+            e.stopPropagation(); // Stop the card from toggling
+            document.getElementById('sit-modal').style.display = 'flex';
+        }
+
+        function closeSITInfo() {
+            document.getElementById('sit-modal').style.display = 'none';
+        }
+        
+        // Close modal if clicking outside the box
+        document.getElementById('sit-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSITInfo();
+            }
+        });
+    </script>
 
 </body>
 </html>
-
-
-
