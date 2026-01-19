@@ -239,6 +239,17 @@
             }
         }
 
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+            50% { box-shadow: 0 0 20px rgba(0, 144, 226, 0.6); transform: scale(1.02); }
+            100% { box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        }
+
+        .pulse-card {
+            animation: pulse-glow 2s infinite ease-in-out;
+            z-index: 5; /* Brings it slightly forward so the glow doesn't get clipped */
+        }
+
     </style>
 </head>
 <body>
@@ -331,14 +342,14 @@
             </div>
             
             <!-- 6. DO-It-->
-            <div class="role-card" onclick="if(!event.target.closest('button')) this.classList.toggle('active')">
+            <div class="role-card pulse-card" onclick="if(!event.target.closest('button')) this.classList.toggle('active')">
                 <div class="role-header"><h2>Do-IT</h2></div>
                 <div class="role-details">
                     <p>The <b>DO-it program</b> helps to prepare high-performing managers to tackle a supervisory role. Here, managers will learn multi-store leadership by supporting General Managers and improving store performance.</p>
                     
                     <!-- NEW ACTION BUTTON -->
                     <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
-                        <button onclick="showSITInfo(event)" style="background: var(--wow-blue); color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; width: 100%; font-family: 'OneDotCd-Bold'; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                        <button onclick="showSITInfo(event)" style="background: var(--brand-blue); color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; width: 100%; font-family: 'OneDotCd-Bold'; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">
                             👉 View Requirements & Apply
                         </button>
                     </div>
@@ -421,4 +432,5 @@
 
 </body>
 </html>
+
 
