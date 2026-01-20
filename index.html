@@ -483,13 +483,21 @@
         </div>
     </div>
 
-    <!-- VIEW: PDF Viewer (Hidden by default) -->
-    <div id="view-viewer" class="hidden">
-        <!-- Back button is handled by the main nav, so we just need the frame -->
-        <div class="viewer-container" style="width: 100%; height: 80vh; background: #fff;">
+<!-- VIEW: PDF Viewer Modal -->
+    <div id="view-viewer" class="hidden" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; flex-direction: column; align-items: center; justify-content: center;">
+        
+        <!-- Header Bar -->
+        <div style="width: 90%; max-width: 800px; background: #333; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0;">
+            <span style="font-family: 'OneDotCd-Bold'; text-transform: uppercase;">Document Viewer</span>
+            <button onclick="closeViewer()" style="background: var(--brand-red); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">CLOSE X</button>
+        </div>
+
+        <!-- The Frame -->
+        <div class="viewer-container" style="width: 90%; max-width: 800px; height: 80vh; background: #fff;">
             <iframe id="content-frame" src="" style="width: 100%; height: 100%; border: none;"></iframe>
         </div>
     </div>
+
 
     <script>
         function showSITInfo(e) {
@@ -509,31 +517,25 @@
         });
 
         function viewResource(file, title) {
-            // 1. Set the iframe source
+            // 1. Set the source
             document.getElementById('content-frame').src = file;
             
-            // 2. Switch the view
-            navigateTo('viewer');
-            
-            // 3. Update the Header (Optional)
-            // If you have a header text element, update it here.
-            // document.getElementById('header-title').innerText = title; 
+            // 2. Show the Viewer Div (Make it flex so it centers)
+            const viewer = document.getElementById('view-viewer');
+            viewer.classList.remove('hidden');
+            viewer.style.display = 'flex'; // Force it visible
+        }
+
+        function closeViewer() {
+            // 1. Hide the div
+            const viewer = document.getElementById('view-viewer');
+            viewer.style.display = 'none';
+            viewer.classList.add('hidden');
+
+            // 2. Kill the iframe source (stops video/audio/loading)
+            document.getElementById('content-frame').src = ""; 
         }
 
     </script>
-    
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
