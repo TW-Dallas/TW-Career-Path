@@ -300,31 +300,40 @@
             
             <!-- 1. CSR -->
             <div class="role-card" onclick="this.classList.toggle('active')">
-                <div class="role-header">
-                    <div class="header-text">
-                        <h2>CSR / CSR Captain</h2>
-                        <span class="pay-rate">$9.00 - $12.00 / hr</span> <!-- NEW LINE -->
-                    </div>
-                </div>
+                <div class="role-header"><h2>CSR / CSR Captain</h2></div> 
                 <div class="role-details">
+                    <div class="pay-rate-container" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 10px; font-weight: bold; color: #006491;">
+                        <span>CSR: $9.00 - $12.00</span>
+                        <span style="border-left: 2px solid #ccc; padding-left: 15px;">Captain: $11.00 - $12.00</span>
+                    </div>
                     <p>The <b>CSR</b> delivers great service by taking orders, making food, and keeping the store clean and organized. <br>
                     The <b>CSR Captain</b> leads CSRs on shift by setting the pace for service, accuracy, and teamwork. Expected to train new personnel </p>
                 </div>
             </div>
 
+
             <!-- 2. Driver -->
             <div class="role-card" onclick="this.classList.toggle('active')">
-                <div class="role-header"><h2>Delivery Expert / Driver Captain</h2></div>
+                <div class="role-header"><h2>Driver / Driver Captain</h2></div>
                 <div class="role-details">
+                    <div class="pay-rate-container" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 10px; font-weight: bold; color: #006491;">
+                        <span>Driver: $8.00 - $11.00</span>
+                        <span style="border-left: 2px solid #ccc; padding-left: 15px;">Captain: $11.00 - $12.00</span>
+                    </div>
                     <p>The <b>Delivery Expert</b> safely delivers orders on time while providing friendly service and supporting in-store operations & cleaning. <br>
                     The <b>Driver Captain</b> guides the delivery team to meet service times, safety and operational standards, and is reponsible for training new drivers. </p>
                 </div>
             </div>
 
-            <!-- 3. Shift Lead -->
+            <!-- 3. MIT (Manager in Training) -->
             <div class="role-card" onclick="this.classList.toggle('active')">
-                <div class="role-header"><h2>Shift Lead / AM</h2></div>
+                <div class="role-header"><h2>MIT (Manager In Training)</h2></div>
                 <div class="role-details">
+                    <div class="pay-rate-container" style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; font-weight: bold; color: #006491;">
+                        <span>Level 1: $12.00 - $13.00</span>
+                        <span>Level 2: $13.00 - $14.00</span>
+                        <span>Level 3: $15.00</span>
+                    </div>
                     <p>The <b>Shift Lead</b> runs successful shifts by managing people, product quality, and service standards. <br>
                     The <b>Assistant Manager</b> Supports store operations by developing team members and helping drive sales and performance.</p>
                 </div>
@@ -333,16 +342,23 @@
             <!-- 4. GMIT -->
             <div class="role-card" onclick="this.classList.toggle('active')">
                 <div class="role-header"><h2>GMIT / Sr. GMIT</h2></div>
-                <div class="role-details">
+                <div class="role-details">                    
+                    <div class="pay-rate-container" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 10px; font-weight: bold; color: #006491;">
+                        <span>GMIT: $16.00</span>
+                        <span style="border-left: 2px solid #ccc; padding-left: 15px;">Sr. GMIT: $17.00</span>
+                    </div>
                     <p>The <b>General Manager in Training</b> trains to lead a store by learning operations, people leadership, and business results. <br>
                     The <b>Senior General Manager in Training</b> demonstrates readiness for GM by consistently executing strong leadership, team development, and consistent operational excellence.</p>
                 </div>
             </div>
 
-             <!-- 5. GM -->
+            <!-- 5. GM -->
             <div class="role-card" onclick="this.classList.toggle('active')">
                 <div class="role-header"><h2>GM</h2></div>
                 <div class="role-details">
+                    <div class="pay-rate-container" style="margin-bottom: 10px; font-weight: bold; color: #006491;">
+                        <span>Salary + Bonus</span>
+                    </div>
                     <p>The <b>General Manager</b> leads the store by developing managers, driving results, and delivering great customer experiences.</p>
                 </div>
             </div>
@@ -351,9 +367,10 @@
             <div class="role-card pulse-card" onclick="if(!event.target.closest('button')) this.classList.toggle('active')">
                 <div class="role-header"><h2>Do-IT</h2></div>
                 <div class="role-details">
+                    <div class="pay-rate-container" style="margin-bottom: 10px; font-weight: bold; color: #006491;">
+                        <span>Salary + Bonus</span>
+                    </div>
                     <p>The <b>DO-it program</b> helps to prepare high-performing managers to tackle a supervisory role. Here, managers will learn multi-store leadership by supporting General Managers and improving store performance.</p>
-                    
-                    <!-- NEW ACTION BUTTON -->
                     <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
                         <button onclick="showSITInfo(event)" style="background: var(--brand-blue); color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; width: 100%; font-family: 'OneDotCd-Bold'; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">
                             👉 View Requirements & Apply
@@ -362,10 +379,13 @@
                 </div>
             </div>
 
-            <!-- 7. DO -->
+           <!-- 7. DO -->
             <div class="role-card executive" onclick="this.classList.toggle('active')">
                 <div class="role-header"><h2>DO</h2></div>
                 <div class="role-details">
+                    <div class="pay-rate-container" style="margin-bottom: 10px; font-weight: bold; color: #006491;">
+                        <span>Salary + Bonus</span>
+                    </div>
                     <p>The <b>Director of Operations</b> leads multiple stores by coaching GMs, driving standards, and achieving business goals.</p>
                 </div>
             </div>
@@ -374,6 +394,9 @@
             <div class="role-card executive" onclick="this.classList.toggle('active')">
                 <div class="role-header"><h2>VP</h2></div>
                 <div class="role-details">
+                    <div class="pay-rate-container" style="margin-bottom: 10px; font-weight: bold; color: #006491;">
+                        <span>Salary + Bonus</span>
+                    </div>
                     <p>The <b>Vice President</b> sets regional strategy and leads teams to drive growth, profitability, and brand excellence</p>
                 </div>
             </div>
@@ -382,10 +405,12 @@
             <div class="role-card executive" onclick="this.classList.toggle('active')">
                 <div class="role-header"><h2>Franchisee</h2></div>
                 <div class="role-details">
+                    <div class="pay-rate-container" style="margin-bottom: 10px; font-weight: bold; color: #006491;">
+                        <span>Franchise Based</span>
+                    </div>
                     <p>The <b>Franchisee</b> owns the business, sets vision, and invests in people while growing the Domino’s brand.</p>
                 </div>
             </div>
-
         </div>
     </main>
 
