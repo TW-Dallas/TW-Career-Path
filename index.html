@@ -364,13 +364,18 @@
             </div>
             
             <!-- 6. DO-It-->
-            <div class="role-card pulse-card" onclick="if(!event.target.closest('button')) this.classList.toggle('active')">
+            <div class="role-card pulse-card" onclick="if(!event.target.closest('button') && !event.target.closest('a')) this.classList.toggle('active')">
                 <div class="role-header"><h2>Do-IT</h2></div>
                 <div class="role-details">
                     <div class="pay-rate-container" style="margin-bottom: 10px; font-weight: bold; color: #006491;">
                         <span>Salary + Bonus</span>
                     </div>
                     <p>The <b>DO-it program</b> helps to prepare high-performing managers to tackle a supervisory role. Here, managers will learn multi-store leadership by supporting General Managers and improving store performance.</p>
+                    <div style="margin-top: 10px; margin-bottom: 5px;">
+                        <a href="https://docs.google.com/document/d/1Ef5tJm8UowcAhoQzrGqjgteuXe3mi_u-DiTU5s-U3rY/edit?usp=sharing" target="_blank" style="color: #006491; text-decoration: underline; font-weight: bold; font-size: 0.95rem;">
+                            📄 View Program Syllabus
+                        </a>
+                    </div>
                     <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
                         <button onclick="showSITInfo(event)" style="background: var(--brand-blue); color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; width: 100%; font-family: 'OneDotCd-Bold'; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">
                             👉 View Requirements & Apply
@@ -485,6 +490,7 @@
 
 </body>
 </html>
+
 
 
 
