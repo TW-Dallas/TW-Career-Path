@@ -250,6 +250,19 @@
             z-index: 5; /* Brings it slightly forward so the glow doesn't get clipped */
         }
 
+        /* Viewer Styles */
+        .viewer-container {
+            width: 100%;
+            height: calc(100vh - 140px); /* Adjust based on your header height */
+            background: #fff;
+        }
+        
+        #content-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
     </style>
 </head>
 <body>
@@ -372,9 +385,9 @@
                     </div>
                     <p>The <b>DO-it program</b> helps to prepare high-performing managers to tackle a supervisory role. Here, managers will learn multi-store leadership by supporting General Managers and improving store performance.</p>
                     <div style="margin-top: 10px; margin-bottom: 5px;">
-                        <a href="resources/training/DOIT_Syllabus.pdf" target="_blank" style="color: #006491; text-decoration: underline; font-weight: bold; font-size: 0.95rem;">
-                            📄 View Program Syllabus
-                        </a>
+                        <a href="#" onclick="viewResource('resources/training/DOIT_Syllabus.pdf', 'DO-IT Syllabus'); return false;" style="color: #006491; text-decoration: underline; font-weight: bold; font-size: 0.95rem;">
+                        📄 View Program Syllabus
+                    </a>
                     </div>
                     <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
                         <button onclick="showSITInfo(event)" style="background: var(--brand-blue); color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; width: 100%; font-family: 'OneDotCd-Bold'; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">
@@ -470,6 +483,14 @@
         </div>
     </div>
 
+    <!-- VIEW: PDF Viewer (Hidden by default) -->
+    <div id="view-viewer" class="hidden">
+        <!-- Back button is handled by the main nav, so we just need the frame -->
+        <div class="viewer-container" style="width: 100%; height: 80vh; background: #fff;">
+            <iframe id="content-frame" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+
     <script>
         function showSITInfo(e) {
             e.stopPropagation(); // Stop the card from toggling
@@ -486,10 +507,24 @@
                 closeSITInfo();
             }
         });
-    </script>
 
+        function viewResource(file, title) {
+            // 1. Set the iframe source
+            document.getElementById('content-frame').src = file;
+            
+            // 2. Switch the view
+            navigateTo('viewer');
+            
+            // 3. Update the Header (Optional)
+            // If you have a header text element, update it here.
+            // document.getElementById('header-title').innerText = title; 
+        }
+
+    </script>
+    
 </body>
 </html>
+
 
 
 
