@@ -586,12 +586,22 @@
             const navBtn = document.getElementById('nav-back-btn');
             const navText = document.getElementById('nav-text');
 
+            // CLEAR previous listeners to prevent double-firing
+            // (Cloning the node is the nuclear way to wipe listeners)
+            const newBtn = navBtn.cloneNode(true);
+            navBtn.parentNode.replaceChild(newBtn, navBtn);
+
+            // Re-select the new button
+            const activeBtn = document.getElementById('nav-back-btn');
+
             if (type === 'exit') {
-                navBtn.setAttribute('href', 'index.html'); // Or whatever the career path file is
-                navBtn.onclick = null; // Default link behavior
+                activeBtn.setAttribute('href', 'index.html'); 
+                // No onclick needed, it's a link
                 navText.innerHTML = '&#8592; Back to Career Path';
             } else {
-                navBtn.setAttribute('href', '#');
+                activeBtn.setAttribute('href', '#');
+                // FORCE the listener back on
+                activeBtn.addEventListener('click', handleBack); 
                 navText.innerHTML = '&#8592; ' + text;
             }
         }
@@ -677,6 +687,7 @@
 </body>
 
 </html>
+
 
 
 
