@@ -306,7 +306,10 @@
         
         let allData = [];
 
-        window.addEventListener('load', fetchClasses);
+        window.addEventListener('load', function() {
+            fetchClasses();
+            fetchTrainers();
+        });
 
         function fetchClasses() {
             // Only fetch if URL is set
@@ -570,6 +573,7 @@
 </body>
 
 </html>
+
 
 
 
