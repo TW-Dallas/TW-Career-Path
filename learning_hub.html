@@ -506,11 +506,10 @@
         let currentView = 'lobby'; // lobby, categories, list
         
         // --- DATA ---
-                // --- DATA ---
         const resources = [
             // MANAGERS
             { id: 1, category: 'managers', type: 'PDF', title: 'Product Consistency Changes', desc: 'Information about new product consistency changes.', 
-                 link: 'resources/gm/Changes_Product Consistency.pdf' },
+                 link: 'resources/gm/Changes_Product%20Consistency.pdf' },
             { id: 2, category: 'managers', type: 'PDF', title: 'Dough Management Tool', desc: 'Tool to assist in dough proofing and management.', 
                  link: 'resources/gm/Dough_Management_Tool.pdf' },
             
@@ -529,7 +528,7 @@
 
             // TRAINING
             { id: 7, category: 'training', type: 'PDF', title: 'New Hire Training Packet', desc: 'Comprehensive checklist to aid in new hire training.', 
-                 link: 'resources/training/New Hire In-Store Training Packet 2025.pdf' },
+                 link: 'resources/training/New%20Hire%20In-Store%20Training%20Packet%202025.pdf' },
             { id: 8, category: 'training', type: 'PDF', title: 'OA Standards 2026', desc: '2026 Updated Operations Assessment Guidelines', 
                  link: 'resources/training/2026_OA_Guide.pdf' },
             { id: 9, category: 'training', type: 'Video', title: 'Pizza Grading Tool Tutorial', desc: 'Information regarding use of the new Pizza Grading tool.', 
@@ -537,13 +536,13 @@
 
              // NEW HIRE
             { id: 10, category: 'newhire', type: 'PDF', title: 'New Hire Training Packet', desc: 'Information packet for all new hires.', 
-                 link: 'resources/new hire/New Hire Packet 2025.pdf' },
+                 link: 'resources/new%20hire/New%20Hire%20Packet%202025.pdf' },
 
              // HR
             { id: 11, category: 'hr', type: 'Link', title: 'MyPay FAQ', desc: 'MyPay Support and FAQ', 
                  link: 'https://alliancehcm.com/employee-support' },
             { id: 12, category: 'hr', type: 'PDF', title: 'Netspend FAQ', desc: 'Netspend Skylight ONE Support and FAQ', 
-                 link: 'resources/HR/Netspend FAQ.pdf' },
+                 link: 'resources/HR/Netspend%20FAQ.pdf' },
         ];
 
         // --- NAVIGATION LOGIC ---
@@ -589,6 +588,7 @@
             // CLEAR previous listeners to prevent double-firing
             // (Cloning the node is the nuclear way to wipe listeners)
             const newBtn = navBtn.cloneNode(true);
+            newBtn.removeAttribute('onclick'); // SAFETY: Remove inline handlers to prevent double-click issues
             navBtn.parentNode.replaceChild(newBtn, navBtn);
 
             // Re-select the new button
@@ -685,13 +685,4 @@
 
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
