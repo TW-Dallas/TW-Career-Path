@@ -510,21 +510,28 @@
         }
 
         function fetchTrainers() {
-            // Call the same API but with action=getTrainers
+            console.log("Starting fetchTrainers...");
+            
             fetch(API_URL + "?action=getTrainers")
                 .then(res => res.json())
                 .then(data => {
-                    // Filter for Denver only
+                    console.log("Raw Data Received:", data);
+                    
                     const denverTrainers = data.filter(t => t.location === 'Denver');
+                    console.log("Filtered Denver Trainers:", denverTrainers);
                     
                     const container = document.getElementById('academy-contact-list');
+                    if (!container) {
+                        console.error("Container #academy-contact-list NOT FOUND in HTML");
+                        return;
+                    }
+
                     if(denverTrainers.length === 0) {
-                        container.innerHTML = '<p style="grid-column: span 2;">No contacts found.</p>';
+                        container.innerHTML = '<p style="grid-column: span 2;">No contacts found (Filter returned 0).</p>';
                         return;
                     }
 
                     let html = '';
-                    // Simple logic to split left/right if you want, or just list them
                     denverTrainers.forEach(t => {
                         html += `
                         <div style="text-align: center; padding: 5px; border: 1px solid #eee; border-radius: 4px;">
@@ -534,9 +541,11 @@
                     });
                     
                     container.innerHTML = html;
+                    console.log("HTML Updated!");
                 })
                 .catch(err => console.error("Error loading trainers:", err));
         }
+
     </script>
 
     <!-- SLIM FOOTER -->
@@ -561,6 +570,7 @@
 </body>
 
 </html>
+
 
 
 
