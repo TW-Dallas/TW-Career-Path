@@ -181,7 +181,7 @@
 
     <script>
         // TODO: PASTE YOUR DENVER APPS SCRIPT URL HERE
-        const API_URL = "INSERT_DENVER_SCRIPT_URL_HERE";
+        const API_URL = "https://script.google.com/macros/s/AKfycbzXSlYLzwAM-QKHdxAyEgH_sdunsFY9zc6I46Wy2mQUSG0RiWvwHMQstDHI2X9lL2e_/exec";
 
         function toggleNotice() {
             const body = document.getElementById('noticeBody');
@@ -196,11 +196,7 @@
         }
 
         window.onload = function() {
-            if(API_URL.includes("INSERT")) {
-                alert("https://script.google.com/macros/s/AKfycbzXSlYLzwAM-QKHdxAyEgH_sdunsFY9zc6I46Wy2mQUSG0RiWvwHMQstDHI2X9lL2e_/exec");
-                return;
-            }
-
+       
             fetch(API_URL + "?action=getSchedule")
                 .then(r => r.json())
                 .then(data => {
@@ -261,4 +257,5 @@
         }
     </script>
 </body>
+
 </html>
