@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denver Trainer Dashboard</title>
+    <style>
+        @font-face { font-family: 'PizzaPress'; src: url('PizzaPress-Regular.otf') format('opentype'); }
+        @font-face { font-family: 'OneDotCd-Bold'; src: url('OneDotCd-Bold.ttf') format('truetype'); }
+        @font-face { font-family: 'OneDotCd'; src: url('OneDotCd.ttf') format('truetype'); }
+
+        :root {
+            --brand-red: #ff0000;
+            --brand-blue: #0090e2;
+            --dark-blue: #005c91;
+            --crust-light: #faf2e9;
+            --crust-deep: #603913;
+        }
+
+        body {
+            font-family: 'OneDotCd', sans-serif;
+            background-color: var(--crust-light);
+            color: var(--crust-deep);
+            padding: 1.5rem; /* Reduced padding for mobile */
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'PizzaPress';
+            color: var(--brand-blue);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            font-size: 2rem;
+        }
+
+        /* --- ACCORDION NOTICE --- */
+        .notice-accordion {
+            background-color: #e3f2fd;
+            border-left: 6px solid var(--brand-blue);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .notice-header {
+            padding: 1rem;
+            cursor: pointer;
+            font-family: 'OneDotCd-Bold';
+            color: var(--dark-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .notice-content {
+            display: none; /* Hidden by default */
+            padding: 0 1.5rem 1.5rem;
+            font-size: 1rem;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .notice-content.open { display: block; }
+
+        /* --- CONTROLS --- */
+        .controls {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            text-align: center;
+            border-top: 4px solid var(--brand-red);
+        }
+
+        select {
+            padding: 10px;
+            font-size: 1.1rem;
+            border: 2px solid var(--dark-blue);
+            border-radius: 6px;
+            font-family: 'OneDotCd-Bold';
+            width: 100%;
+            margin-bottom: 1rem;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: var(--brand-blue);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: 'OneDotCd-Bold';
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: 100%; /* Full width on mobile */
+        }
+        button:hover { background-color: var(--dark-blue); }
+
+        /* --- TABLE --- */
+        .roster-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: none; 
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        thead { background-color: var(--dark-blue); color: white; font-family: 'OneDotCd-Bold'; }
+        th, td { padding: 12px 10px; text-align: center; border-bottom: 1px solid #eee; font-size: 0.95rem; width: 25%; }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+
+        .class-header {
+            background: var(--crust-med);
+            padding: 1rem;
+            text-align: center;
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.2rem;
+            color: var(--crust-deep);
+            border-bottom: 2px solid var(--brand-blue);
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Denver Trainer Dashboard</h1>
+
+    <!-- ACCORDION NOTICE -->
+    <div class="notice-accordion">
+        <div class="notice-header" onclick="toggleNotice()">
+            <span>⚠️ Trainer Protocols (Tap to View)</span>
+            <span id="arrow">▼</span>
+        </div>
+        <div id="noticeBody" class="notice-content">
+            <p style="margin-bottom: 0.8rem;">
+                <strong>🛑 Cancellations:</strong> If you have <strong>fewer than 3 enrollments</strong> or need to cancel, you must get <strong>approval from Richard</strong> first. You are responsible for contacting the Team Member or GM.
+            </p>
+            <p style="margin-bottom: 0;">
+                <strong>📅 New Classes:</strong> Contact <strong>Richard</strong> to add a new class.
+            </p>
+        </div>
+    </div>
+
+    <div class="controls">
+        <label for="classSelect" style="display:block; margin-bottom:0.5rem; font-weight:bold;">Select a Class to View:</label>
+        <select id="classSelect">
+            <option value="">Loading Classes...</option>
+        </select>
+        <button onclick="fetchRoster()">Load Roster</button>
+    </div>
+
+    <div id="rosterView" class="roster-container">
+        <div id="selectedClassName" class="class-header">Class Name</div>
+        <div style="overflow-x: auto;"> <!-- Horizontal Scroll for small screens -->
+            <table id="rosterTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Store</th>
+                        <th>Pos</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody id="rosterBody">
+                    <!-- Rows go here -->
+                </tbody>
+            </table>
+        </div>
+        <div id="emptyMsg" style="padding:2rem; text-align:center; display:none;">No signups found.</div>
+    </div>
+
+    <script>
+        // TODO: PASTE YOUR DENVER APPS SCRIPT URL HERE
+        const API_URL = "INSERT_DENVER_SCRIPT_URL_HERE";
+
+        function toggleNotice() {
+            const body = document.getElementById('noticeBody');
+            const arrow = document.getElementById('arrow');
+            if (body.style.display === "block") {
+                body.style.display = "none";
+                arrow.innerHTML = "▼";
+            } else {
+                body.style.display = "block";
+                arrow.innerHTML = "▲";
+            }
+        }
+
+        window.onload = function() {
+            if(API_URL.includes("INSERT")) {
+                alert("https://script.google.com/macros/s/AKfycbzXSlYLzwAM-QKHdxAyEgH_sdunsFY9zc6I46Wy2mQUSG0RiWvwHMQstDHI2X9lL2e_/exec");
+                return;
+            }
+
+            fetch(API_URL + "?action=getSchedule")
+                .then(r => r.json())
+                .then(data => {
+                    const select = document.getElementById('classSelect');
+                    select.innerHTML = '<option value="">-- Select a Class --</option>';
+                    
+                    // Sort logic (same as Dallas)
+                    data.sort((a,b) => new Date(a.isoDate) - new Date(b.isoDate));
+                    
+                    data.forEach(cls => {
+                        const d = new Date(cls.isoDate);
+                        const dateStr = d.toLocaleDateString("en-US", {month:'short', day:'numeric'});
+                        const timeStr = d.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+                        const option = document.createElement('option');
+                        option.value = cls.id;
+                        option.text = `${dateStr} - ${cls.name} (${timeStr})`;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById('classSelect').innerHTML = '<option>Error loading classes</option>';
+                });
+        };
+
+        function fetchRoster() {
+            const select = document.getElementById('classSelect');
+            const classId = select.value;
+            if(!classId) { alert("Please select a class."); return; }
+
+            const className = select.options[select.selectedIndex].text;
+            document.getElementById('selectedClassName').innerText = className;
+            document.getElementById('rosterView').style.display = 'block';
+            document.getElementById('rosterBody').innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>';
+            document.getElementById('emptyMsg').style.display = 'none';
+
+            fetch(API_URL + "?action=getRoster&classId=" + classId)
+                .then(r => r.json())
+                .then(roster => {
+                    const tbody = document.getElementById('rosterBody');
+                    tbody.innerHTML = ''; 
+                    if (roster.length === 0) {
+                        document.getElementById('emptyMsg').style.display = 'block';
+                    } else {
+                        roster.forEach(person => {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `
+                                <td>${person.name}</td>
+                                <td>${person.store}</td>
+                                <td>${person.position}</td>
+                                <td><a href="tel:${person.phone}" style="color:var(--brand-blue); font-weight:bold;">${person.phone}</a></td>
+                            `;
+                            tbody.appendChild(tr);
+                        });
+                    }
+                })
+                .catch(err => alert("Error fetching roster."));
+        }
+    </script>
+</body>
+</html>
