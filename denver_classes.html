@@ -405,7 +405,7 @@
                 }
 
                 const card = document.createElement('div');
-                card.className = `class-card lvl-${cls.level} ${cls._status === 'future' ? 'coming-soon' : ''} ${cls._status === 'closed' ? 'closed' : ''}`;
+                card.className = `class-card ${cls._status === 'future' ? 'coming-soon' : ''} ${cls._status === 'closed' ? 'closed' : ''}`;
                 
                 const classDate = new Date(cls.isoDate);
                 const dayName = classDate.toLocaleDateString("en-US", { weekday: 'short' });
@@ -418,7 +418,6 @@
 
                 card.innerHTML = `
                     <div class="card-body">
-                        <span class="level-badge">Level ${cls.level}</span>
                         <div class="date-block">
                             <div class="day-box">${dayName}</div>
                             <div class="time-text">${dateStr} • ${timeStr}</div>
@@ -573,6 +572,7 @@
 </body>
 
 </html>
+
 
 
 
