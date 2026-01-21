@@ -359,21 +359,28 @@
                 const closeDate = cls.close_date ? new Date(cls.close_date) : null;
                 let status = 'active'; 
 
-                if (openDate && todayStart < openDate) status = 'future';
-                else if (closeDate && todayStart > closeDate) status = 'closed';
-                
+                // Auto-close if class start time has passed OR close_date has passed
+                if ( (closeDate && todayStart > closeDate) || (new Date(cls.isoDate) < now) ) {
+                    status = 'closed';
+                }
+                else if (openDate && todayStart < openDate) {
+                    status = 'future';
+                }
                 return { ...cls, _status: status, _openDate: openDate, _closeDate: closeDate };
             })
             .filter(cls => {
-                // Filter logic to hide old closed or too far future
-                if (cls._status === 'future' && cls._openDate) {
-                    const diffTime = Math.abs(cls._openDate - todayStart);
-                    if (Math.ceil(diffTime / (86400000)) > 45) return false; 
-                }
+                // 1. Hide classes > 60 days in the future
+                const futureLimit = new Date();
+                futureLimit.setDate(todayStart.getDate() + 60); // 60 Days out
+                
+                if (new Date(cls.isoDate) > futureLimit) return false;
+
+                // 2. Hide classes closed > 3 days ago (Keep recent history brief)
                 if (cls._status === 'closed' && cls._closeDate) {
                     const diffTime = Math.abs(todayStart - cls._closeDate);
                     if (Math.ceil(diffTime / (86400000)) > 3) return false; 
                 }
+                
                 return true; 
             });
 
@@ -535,3 +542,4 @@
 </body>
 
 </html>
+
