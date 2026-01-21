@@ -288,23 +288,12 @@
             <!-- ACADEMY SECTION -->
             <div style="margin-bottom: 20px;">
                 <h4 style="margin: 0; color: var(--brand-blue); font-family: 'OneDotCd-Bold'; font-size: 1.2rem; border-bottom: 2px solid #eee; display: inline-block; padding-bottom: 4px;">📍 Denver Academy</h4>
-                <div style="margin-top: 10px; text-align: center;">
-                    <p style="color: #666; font-style: italic;">Contact info coming soon.</p>
-                    <!-- PASTE CONTACT LIST HERE LATER -->
+                
+                <!-- DYNAMIC CONTENT LOADS HERE -->
+                <div id="academy-contact-list" style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <p style="grid-column: span 2; color: #666; font-style: italic;">Loading contacts...</p>
                 </div>
             </div>
-
-            <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
-
-            <!-- VIRTUAL SECTION -->
-            <div style="margin-bottom: 10px;">
-                <h4 style="margin: 0; color: var(--brand-blue); font-family: 'OneDotCd-Bold'; font-size: 1.2rem; border-bottom: 2px solid #eee; display: inline-block; padding-bottom: 4px;">💻 Virtual Support</h4>
-                <div style="margin-top: 10px; text-align: center;">
-                    <p style="color: #666; font-style: italic;">Contact info coming soon.</p>
-                    <!-- PASTE CONTACT LIST HERE LATER -->
-                </div>
-            </div>
-
             <button onclick="document.getElementById('trainer-modal').classList.remove('active')" 
                     class="modal-btn" style="background: #eee; color: #333; margin-top: 20px;">Close Directory</button>
         </div>
@@ -519,6 +508,35 @@
                 btn.disabled = false;
             });
         }
+
+        function fetchTrainers() {
+            // Call the same API but with action=getTrainers
+            fetch(API_URL + "?action=getTrainers")
+                .then(res => res.json())
+                .then(data => {
+                    // Filter for Denver only
+                    const denverTrainers = data.filter(t => t.location === 'Denver');
+                    
+                    const container = document.getElementById('academy-contact-list');
+                    if(denverTrainers.length === 0) {
+                        container.innerHTML = '<p style="grid-column: span 2;">No contacts found.</p>';
+                        return;
+                    }
+
+                    let html = '';
+                    // Simple logic to split left/right if you want, or just list them
+                    denverTrainers.forEach(t => {
+                        html += `
+                        <div style="text-align: center; padding: 5px; border: 1px solid #eee; border-radius: 4px;">
+                            <strong>${t.name}</strong><br>
+                            <a href="tel:${t.phone}" style="color: var(--brand-blue); text-decoration: none;">${t.phone}</a>
+                        </div>`;
+                    });
+                    
+                    container.innerHTML = html;
+                })
+                .catch(err => console.error("Error loading trainers:", err));
+        }
     </script>
 
     <!-- SLIM FOOTER -->
@@ -532,6 +550,7 @@
         margin-left: -50vw; margin-right: -50vw; margin-bottom: -2rem;
     ">
         <p style="margin:0; font-size:0.9rem;">&copy; 2026 Team Wow!</p>
+        <p style="margin-top:5px; font-size: 0.7em;">Powered by Crust & Code</p>
         
         <div style="margin-top: 1rem; display: flex; gap: 20px; justify-content: center; font-size: 0.8rem; text-transform:uppercase; letter-spacing:1px;">
             <a href="trainer_dashboard.html" style="color: rgba(255,255,255,0.4); text-decoration: none;">🔒 Trainer Portal</a>
@@ -542,4 +561,5 @@
 </body>
 
 </html>
+
 
