@@ -50,11 +50,34 @@
             margin-left: 10px; /* Push it right to eat up the empty space on the right side */
         }
 
+        /* MAP LINKS (UNIFIED STYLE) */
         .map-links {
             font-size: 0.9rem;
-            margin-top: 2px;
-            display: block; 
-            text-align: center;
+            margin-top: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-family: 'OneDotCd-Bold', sans-serif; /* Matches the site font */
+        }
+        
+        /* Individual Link Styling */
+        .map-link {
+            color: #666; /* Matching your Dallas Grey text */
+            text-decoration: none;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        
+        .map-link:hover {
+            color: var(--brand-blue); /* Highlight Blue on Hover */
+            text-decoration: underline;
+        }
+        
+        .separator {
+            color: #ccc;
+            margin: 0 4px;
         }
 
         .nav-btn {
@@ -189,14 +212,26 @@
     <!-- HEADER CONTAINER -->
     <div class="header-container">
         
-        <!-- LOGO ROW -->
+                <!-- LOGO ROW -->
         <div class="logo-section">
             <img src="New_Logo_v2.png" alt="Team Wow" style="height: 60px;">
             <div class="map-links"> 
-                <!-- PLACEHOLDERS FOR DENVER LOCATIONS -->
-                <span style="color:#666; cursor: default;">📍 Denver Academy (Location TBD)</span>
-                <span style="color:#ccc; margin:0 4px;">|</span>
-                <span style="color:#666; cursor: default;">💻 Virtual Studio</span>
+                <!-- ACADEMY -->
+                <a href="https://maps.app.goo.gl/dUM9APNsXSVBnEnA9" target="_blank" class="map-link">
+                    📍 Academy
+                </a>
+                <span class="separator">|</span>
+                
+                <!-- PARKER -->
+                <a href="https://maps.app.goo.gl/MSyj9TJfJPZ7BMq29" target="_blank" class="map-link">
+                    📍 Parker
+                </a>
+                <span class="separator">|</span>
+
+                <!-- BOULDER -->
+                <a href="https://maps.app.goo.gl/CyLHstt3t1qQ8V5c6" target="_blank" class="map-link">
+                    📍 Boulder
+                </a>
             </div>
         </div>
 
@@ -572,6 +607,7 @@
 </body>
 
 </html>
+
 
 
 
