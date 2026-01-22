@@ -501,7 +501,7 @@
         <p style="margin-top:5px; font-size: 0.7em;">Powered by Crust & Code</p>
     </footer>
 
-    <script>
+       <script>
         // --- STATE ---
         let currentView = 'lobby'; // lobby, categories, list
         
@@ -547,13 +547,15 @@
 
         // --- NAVIGATION LOGIC ---
         function navigateTo(view) {
+            console.log("Navigating to:", view);
+
             // Hide all
             document.getElementById('view-lobby').classList.add('hidden');
             document.getElementById('view-categories').classList.add('hidden');
             document.getElementById('view-resources-list').classList.add('hidden');
-            document.getElementById('view-viewer').classList.add('hidden'); // <--- NEW
-            document.getElementById('view-login').classList.add('hidden'); // <--- NEW
-            document.getElementById('view-lms').classList.add('hidden'); // <--- NEW
+            document.getElementById('view-viewer').classList.add('hidden');
+            document.getElementById('view-login').classList.add('hidden');
+            document.getElementById('view-lms').classList.add('hidden');
 
             // Show Target
             if (view === 'lobby') {
@@ -565,18 +567,18 @@
             } else if (view === 'list') {
                 document.getElementById('view-resources-list').classList.remove('hidden');
                 updateNav('back', 'Back to Categories');
-            } else if (view === 'viewer') {  // <--- NEW BLOCK
+            } else if (view === 'viewer') {
                 document.getElementById('view-viewer').classList.remove('hidden');
                 updateNav('back', 'Back to Resources');
-            } else if (view === 'login') { // <--- NEW BLOCK
+            } else if (view === 'login') {
                 document.getElementById('view-login').classList.remove('hidden');
                 updateNav('back', 'Back to Lobby');
-            } else if (view === 'lms') { // <--- NEW BLOCK
+            } else if (view === 'lms') {
                 document.getElementById('view-lms').classList.remove('hidden');
                 updateNav('back', 'Log Out');
             }
             
-            // Handle Back Button Logic for Viewer
+            // Update State
             currentView = view;
             window.scrollTo(0,0);
         }
@@ -585,29 +587,24 @@
             const navBtn = document.getElementById('nav-back-btn');
             const navText = document.getElementById('nav-text');
 
-            // CLEAR previous listeners to prevent double-firing
-            // (Cloning the node is the nuclear way to wipe listeners)
+            // Reset listener
             const newBtn = navBtn.cloneNode(true);
-            newBtn.removeAttribute('onclick'); // SAFETY: Remove inline handlers to prevent double-click issues
+            newBtn.removeAttribute('onclick');
             navBtn.parentNode.replaceChild(newBtn, navBtn);
-
-            // Re-select the new button
             const activeBtn = document.getElementById('nav-back-btn');
 
             if (type === 'exit') {
                 activeBtn.setAttribute('href', 'index.html'); 
-                // No onclick needed, it's a link
                 navText.innerHTML = '&#8592; Back to Career Path';
             } else {
                 activeBtn.setAttribute('href', '#');
-                // FORCE the listener back on
                 activeBtn.addEventListener('click', handleBack); 
                 navText.innerHTML = '&#8592; ' + text;
             }
         }
 
        function handleBack(e) {
-            console.log("Current View is:", currentView); // <--- ADD THIS
+            console.log("Current View is:", currentView);
             if (currentView === 'lobby') return;
             
             e.preventDefault();
@@ -617,39 +614,31 @@
             } else if (currentView === 'list') {
                 navigateTo('categories');
             } else if (currentView === 'viewer') {
-                // KILL SWITCH
                 document.getElementById('content-frame').src = ''; 
                 navigateTo('list');
             } else if (currentView === 'login') {
                 navigateTo('lobby');
             } else if (currentView === 'lms') {
-                navigateTo('login'); // Makes sense to go back to Login, or Lobby (Logout). Your call.
+                navigateTo('login');
             }
         }
 
         // --- CONTENT LOGIC ---
         function openCategory(catKey, catTitle) {
-            console.log("--- DEBUG START ---");
-            console.log("Target Category:", catKey);
+            console.log("Opening Category:", catKey);
         
-            // 1. Force the screen to switch to the list view
-            if (typeof navigateTo === "function") {
-                navigateTo('resources-list');
-            } else {
-                console.error("CRITICAL: navigateTo function is missing!");
-            }
+            // 1. Switch Screen (Fixed to use 'list')
+            navigateTo('list');
         
-            // 2. Find the container
+            // 2. Find Container
             const container = document.getElementById('resource-container');
-            console.log("Container Element:", container);
         
-            // 3. Set Title and Clear old content
+            // 3. Set Title and Clear
             document.getElementById('list-title').innerText = catTitle;
             container.innerHTML = '';
         
-            // 4. Filter Data
+            // 4. Filter
             const filtered = resources.filter(r => r.category === catKey);
-            console.log("Items Found:", filtered.length);
         
             // 5. Render
             if (filtered.length === 0) {
@@ -674,10 +663,6 @@
                     container.innerHTML += html;
                 });
             }
-            console.log("--- DEBUG END ---");
-        }
-
-            navigateTo('list');
         }
 
         function openDocument(url) {
@@ -688,12 +673,10 @@
             const isImage = url.match(/\.(jpeg|jpg|gif|png|webp)$/i);
 
             if (isImage) {
-                // IMAGE MODE
                 frame.classList.add('hidden');
                 img.classList.remove('hidden');
                 img.src = url;
             } else {
-                // IFRAME MODE (PDF / Video)
                 img.classList.add('hidden');
                 frame.classList.remove('hidden');
                 frame.src = url;
@@ -701,10 +684,11 @@
 
             navigateTo('viewer');
         }
-
     </script>
+
 </body>
 </html>
+
 
 
 
