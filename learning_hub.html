@@ -584,24 +584,18 @@
 
         function updateNav(type, text) {
             const navBtn = document.getElementById('nav-back-btn');
-            
-            // 1. CLONE & REPLACE (To kill old listeners)
-            const newBtn = navBtn.cloneNode(true);
-            newBtn.removeAttribute('onclick'); 
-            navBtn.parentNode.replaceChild(newBtn, navBtn);
+            const navText = document.getElementById('nav-text');
 
-            // 2. GET FRESH REFERENCES (Crucial!)
-            const activeBtn = document.getElementById('nav-back-btn');
-            const activeText = document.getElementById('nav-text'); // <--- Re-selects the LIVE element
-
-            // 3. UPDATE
             if (type === 'exit') {
-                activeBtn.setAttribute('href', 'index.html'); 
-                activeText.innerHTML = '&#8592; Back to Career Path';
+                // Turn it into a normal link
+                navBtn.onclick = null; 
+                navBtn.href = 'index.html'; 
+                navText.innerHTML = '&#8592; Back to Career Path';
             } else {
-                activeBtn.setAttribute('href', '#');
-                activeBtn.addEventListener('click', handleBack); 
-                activeText.innerHTML = '&#8592; ' + text;
+                // Turn it into a Back Button
+                navBtn.href = '#';
+                navBtn.onclick = handleBack; // This overwrites any previous click logic automatically
+                navText.innerHTML = '&#8592; ' + text;
             }
         }
 
@@ -688,6 +682,7 @@
 
 </body>
 </html>
+
 
 
 
