@@ -50,12 +50,33 @@
             margin-left: 10px; /* Push it right to eat up the empty space on the right side */
         }
 
+        /* MAP LINKS (UNIFIED STYLE) */
         .map-links {
             font-size: 0.9rem;
-            margin-top: 2px;
-            display: block; 
-            text-align: center;
-            /* NUDGE DELETED */
+            margin-top: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-family: 'OneDotCd-Bold', sans-serif;
+        }
+        
+        .map-link {
+            color: #666; 
+            text-decoration: none;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        
+        .map-link:hover {
+            color: var(--brand-blue);
+            text-decoration: underline;
+        }
+        
+        .separator {
+            color: #ccc;
+            margin: 0 4px;
         }
 
         .nav-btn {
@@ -190,13 +211,20 @@
     <!-- HEADER CONTAINER -->
     <div class="header-container">
         
-        <!-- LOGO ROW -->
+       <!-- LOGO ROW -->
         <div class="logo-section">
             <img src="New_Logo_v2.png" alt="Team Wow" style="height: 60px;">
             <div class="map-links"> 
-                <a href="https://maps.app.goo.gl/gTCAbbfEduc3xNoG7" target="_blank" style="color:#666; text-decoration:none;">📍 McKinney</a>
-                <span style="color:#ccc; margin:0 4px;">|</span>
-                <a href="https://maps.app.goo.gl/Bwbu5PnDkhwgZZL8A" target="_blank" style="color:#666; text-decoration:none;">📍 Mesquite</a>
+                <!-- MCKINNEY -->
+                <a href="https://maps.app.goo.gl/gTCAbbfEduc3xNoG7" target="_blank" class="map-link">
+                    📍 McKinney
+                </a>
+                <span class="separator">|</span>
+                
+                <!-- MESQUITE -->
+                <a href="https://maps.app.goo.gl/Bwbu5PnDkhwgZZL8A" target="_blank" class="map-link">
+                    📍 Mesquite
+                </a>
             </div>
         </div>
 
@@ -561,3 +589,4 @@
 
 </body>
 </html>
+
