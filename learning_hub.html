@@ -629,18 +629,27 @@
 
         // --- CONTENT LOGIC ---
         function openCategory(catKey, catTitle) {
-            navigateTo('resources-list'); // <--- ADD THIS LINE
+            console.log("--- DEBUG START ---");
+            console.log("Target Category:", catKey);
+            
+            navigateTo('resources-list');
+            
             const container = document.getElementById('resource-container');
+            console.log("Container Element:", container); // If this says 'null', your HTML ID is wrong.
+        
             document.getElementById('list-title').innerText = catTitle;
             container.innerHTML = '';
-
+        
             const filtered = resources.filter(r => r.category === catKey);
-
+            console.log("Items Found:", filtered.length); // If this is 0, the match failed.
+        
             if (filtered.length === 0) {
-                container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888;">No resources found in this category.</p>';
+                container.innerHTML = '<p>No resources found.</p>';
             } else {
                 filtered.forEach(res => {
-                    const html = `
+                    console.log("Rendering:", res.title); // See if it tries to render.
+                    // ... (keep your existing HTML generation here) ...
+                     const html = `
                         <div class="resource-card">
                             <span class="res-type">${res.type}</span>
                             <div class="res-title">${res.title}</div>
@@ -658,6 +667,8 @@
                     container.innerHTML += html;
                 });
             }
+            console.log("--- DEBUG END ---");
+        }
 
             navigateTo('list');
         }
@@ -687,4 +698,5 @@
     </script>
 </body>
 </html>
+
 
