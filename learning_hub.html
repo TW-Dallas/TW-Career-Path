@@ -628,37 +628,25 @@
             // 1. Navigate
             navigateTo('list');
         
-            // 2. Filter Data
+            // 2. Filter
             const filtered = resources.filter(r => r.category === catKey);
             
-            // 3. THE TRUTH TELLER: This will popup and tell us the count.
-            alert('DEBUG: Found ' + filtered.length + ' files for category: ' + catKey);
-        
-            // 4. Render
+            // 3. Find Container
             const container = document.getElementById('resource-container');
             document.getElementById('list-title').innerText = catTitle;
-            container.innerHTML = '';
+            
+            // 4. NUCLEAR RESET
+            container.innerHTML = ''; 
         
+            // 5. RENDER UGLY MODE
             if (filtered.length === 0) {
-                container.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No resources found.</p>';
+                container.innerHTML = '<h1>NO FILES FOUND</h1>';
             } else {
                 filtered.forEach(res => {
-                    const html = `
-                        <div class="resource-card">
-                            <span class="res-type">${res.type}</span>
-                            <div class="res-title">${res.title}</div>
-                            <div class="res-desc">${res.desc}</div>
-                            <div class="res-actions">
-                                <a href="#" class="action-link" onclick="openDocument('${res.link}'); return false;">
-                                    <span>👁️</span> View
-                                </a>
-                                <a href="#" class="action-link" onclick="alert('Opening Email Client...')">
-                                    <span>✉️</span> Email
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                    container.innerHTML += html;
+                    // Just print a big ugly header to prove we can write to the screen
+                    container.innerHTML += `<div style="background: yellow; border: 2px solid red; padding: 20px; margin: 10px;">
+                        <h1 style="color: red; font-weight: bold;">TEST: ${res.title}</h1>
+                    </div>`;
                 });
             }
         }
@@ -686,6 +674,7 @@
 
 </body>
 </html>
+
 
 
 
