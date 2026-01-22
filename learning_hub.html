@@ -631,25 +631,32 @@
         function openCategory(catKey, catTitle) {
             console.log("--- DEBUG START ---");
             console.log("Target Category:", catKey);
-            
-            navigateTo('resources-list');
-            
-            const container = document.getElementById('resource-container');
-            console.log("Container Element:", container); // If this says 'null', your HTML ID is wrong.
         
+            // 1. Force the screen to switch to the list view
+            if (typeof navigateTo === "function") {
+                navigateTo('resources-list');
+            } else {
+                console.error("CRITICAL: navigateTo function is missing!");
+            }
+        
+            // 2. Find the container
+            const container = document.getElementById('resource-container');
+            console.log("Container Element:", container);
+        
+            // 3. Set Title and Clear old content
             document.getElementById('list-title').innerText = catTitle;
             container.innerHTML = '';
         
+            // 4. Filter Data
             const filtered = resources.filter(r => r.category === catKey);
-            console.log("Items Found:", filtered.length); // If this is 0, the match failed.
+            console.log("Items Found:", filtered.length);
         
+            // 5. Render
             if (filtered.length === 0) {
-                container.innerHTML = '<p>No resources found.</p>';
+                container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888;">No resources found.</p>';
             } else {
                 filtered.forEach(res => {
-                    console.log("Rendering:", res.title); // See if it tries to render.
-                    // ... (keep your existing HTML generation here) ...
-                     const html = `
+                    const html = `
                         <div class="resource-card">
                             <span class="res-type">${res.type}</span>
                             <div class="res-title">${res.title}</div>
@@ -698,5 +705,6 @@
     </script>
 </body>
 </html>
+
 
 
