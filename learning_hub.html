@@ -326,7 +326,7 @@
     <div class="nav-strip">
         <div style="max-width: 1000px; margin: 0 auto; text-align: left; display: flex; align-items: center; justify-content: space-between;">
             <!-- Dynamic Back Link -->
-            <a id="nav-back-btn" href="index.html" class="back-link" onclick="handleBack(event)">
+            <a id="nav-back-btn" href="index.html" class="back-link">
                 <span id="nav-text">&#8592; Back to Career Path</span>
             </a>
         </div>
@@ -625,24 +625,22 @@
 
         // --- CONTENT LOGIC ---
         function openCategory(catKey, catTitle) {
-            console.log("Opening Category:", catKey);
-        
-            // 1. Switch Screen (Fixed to use 'list')
+            // 1. Navigate
             navigateTo('list');
         
-            // 2. Find Container
-            const container = document.getElementById('resource-container');
+            // 2. Filter Data
+            const filtered = resources.filter(r => r.category === catKey);
+            
+            // 3. THE TRUTH TELLER: This will popup and tell us the count.
+            alert('DEBUG: Found ' + filtered.length + ' files for category: ' + catKey);
         
-            // 3. Set Title and Clear
+            // 4. Render
+            const container = document.getElementById('resource-container');
             document.getElementById('list-title').innerText = catTitle;
             container.innerHTML = '';
         
-            // 4. Filter
-            const filtered = resources.filter(r => r.category === catKey);
-        
-            // 5. Render
             if (filtered.length === 0) {
-                container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888;">No resources found.</p>';
+                container.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No resources found.</p>';
             } else {
                 filtered.forEach(res => {
                     const html = `
@@ -688,6 +686,7 @@
 
 </body>
 </html>
+
 
 
 
