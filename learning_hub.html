@@ -548,8 +548,6 @@
 
         // --- NAVIGATION LOGIC ---
         function navigateTo(view) {
-            console.log("Navigating to:", view);
-
             // Hide all
             document.getElementById('view-lobby').classList.add('hidden');
             document.getElementById('view-categories').classList.add('hidden');
@@ -558,16 +556,16 @@
             document.getElementById('view-login').classList.add('hidden');
             document.getElementById('view-lms').classList.add('hidden');
 
-            // Show Target
+            // Show Target & Update Button Text
             if (view === 'lobby') {
                 document.getElementById('view-lobby').classList.remove('hidden');
-                updateNav('exit');
+                updateNav('exit'); // Shows "Back to Career Path"
             } else if (view === 'categories') {
                 document.getElementById('view-categories').classList.remove('hidden');
                 updateNav('back', 'Back to Lobby');
             } else if (view === 'list') {
                 document.getElementById('view-resources-list').classList.remove('hidden');
-                updateNav('back', 'Back to Categories');
+                updateNav('back', 'Back to Resource Library'); // <--- FIXED THIS
             } else if (view === 'viewer') {
                 document.getElementById('view-viewer').classList.remove('hidden');
                 updateNav('back', 'Back to Resources');
@@ -687,6 +685,7 @@
 
 </body>
 </html>
+
 
 
 
