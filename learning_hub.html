@@ -629,6 +629,7 @@
 
         // --- CONTENT LOGIC ---
         function openCategory(catKey, catTitle) {
+            navigateTo('resources-list'); // <--- ADD THIS LINE
             const container = document.getElementById('resource-container');
             document.getElementById('list-title').innerText = catTitle;
             container.innerHTML = '';
@@ -686,3 +687,4 @@
     </script>
 </body>
 </html>
+
