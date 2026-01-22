@@ -584,21 +584,24 @@
 
         function updateNav(type, text) {
             const navBtn = document.getElementById('nav-back-btn');
-            const navText = document.getElementById('nav-text');
-
-            // Reset listener
+            
+            // 1. CLONE & REPLACE (To kill old listeners)
             const newBtn = navBtn.cloneNode(true);
-            newBtn.removeAttribute('onclick');
+            newBtn.removeAttribute('onclick'); 
             navBtn.parentNode.replaceChild(newBtn, navBtn);
-            const activeBtn = document.getElementById('nav-back-btn');
 
+            // 2. GET FRESH REFERENCES (Crucial!)
+            const activeBtn = document.getElementById('nav-back-btn');
+            const activeText = document.getElementById('nav-text'); // <--- Re-selects the LIVE element
+
+            // 3. UPDATE
             if (type === 'exit') {
                 activeBtn.setAttribute('href', 'index.html'); 
-                navText.innerHTML = '&#8592; Back to Career Path';
+                activeText.innerHTML = '&#8592; Back to Career Path';
             } else {
                 activeBtn.setAttribute('href', '#');
                 activeBtn.addEventListener('click', handleBack); 
-                navText.innerHTML = '&#8592; ' + text;
+                activeText.innerHTML = '&#8592; ' + text;
             }
         }
 
@@ -685,6 +688,7 @@
 
 </body>
 </html>
+
 
 
 
