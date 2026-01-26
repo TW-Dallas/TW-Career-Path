@@ -206,28 +206,23 @@
                 .then(data => {
                     const select = document.getElementById('classSelect');
                     select.innerHTML = '<option value="">-- Select a Class --</option>';
+                    
                     const now = new Date();
-                    // Set to midnight so any class today is still "future"/active
                     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
                     data.sort((a, b) => {
                         const dateA = new Date(a.isoDate);
                         const dateB = new Date(b.isoDate);
                         
-                        // Check if dates are in the past (before today)
                         const isPastA = dateA < todayStart;
                         const isPastB = dateB < todayStart;
 
-                        // Logic:
-                        // If A is past and B is future -> B comes first (1)
-                        // If A is future and B is past -> A comes first (-1)
-                        // If both are same category -> Sort by date ascending
-
-                        if (isPastA && !isPastB) return 1;  // Push A to bottom
-                        if (!isPastA && isPastB) return -1; // Keep A at top
+                        if (isPastA && !isPastB) return 1; 
+                        if (!isPastA && isPastB) return -1;
                         
-                        return dateA - dateB; // Standard date sort
+                        return dateA - dateB; 
                     });
+
                     data.forEach(cls => {
                         const d = new Date(cls.isoDate);
                         const dateStr = d.toLocaleDateString("en-US", {month:'short', day:'numeric'});
@@ -237,6 +232,10 @@
                         option.text = `${dateStr} - ${cls.name} (${timeStr})`;
                         select.appendChild(option);
                     });
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById('classSelect').innerHTML = '<option>Error loading classes</option>';
                 });
         };
 
@@ -276,6 +275,7 @@
     </script>
 </body>
 </html>
+
 
 
 
