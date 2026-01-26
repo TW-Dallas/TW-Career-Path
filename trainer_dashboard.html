@@ -206,7 +206,28 @@
                 .then(data => {
                     const select = document.getElementById('classSelect');
                     select.innerHTML = '<option value="">-- Select a Class --</option>';
-                    data.sort((a,b) => new Date(a.isoDate) - new Date(b.isoDate));
+                    const now = new Date();
+                    // Set to midnight so any class today is still "future"/active
+                    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+                    data.sort((a, b) => {
+                        const dateA = new Date(a.isoDate);
+                        const dateB = new Date(b.isoDate);
+                        
+                        // Check if dates are in the past (before today)
+                        const isPastA = dateA < todayStart;
+                        const isPastB = dateB < todayStart;
+
+                        // Logic:
+                        // If A is past and B is future -> B comes first (1)
+                        // If A is future and B is past -> A comes first (-1)
+                        // If both are same category -> Sort by date ascending
+
+                        if (isPastA && !isPastB) return 1;  // Push A to bottom
+                        if (!isPastA && isPastB) return -1; // Keep A at top
+                        
+                        return dateA - dateB; // Standard date sort
+                    });
                     data.forEach(cls => {
                         const d = new Date(cls.isoDate);
                         const dateStr = d.toLocaleDateString("en-US", {month:'short', day:'numeric'});
@@ -255,6 +276,7 @@
     </script>
 </body>
 </html>
+
 
 
 
