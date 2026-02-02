@@ -196,26 +196,42 @@
             z-index: 2000;
         }
 
-        /* DEFAULT (Mobile): Full Screen Overlay */
+        /* PDF Viewer Styling */
         #pdf-view {
+            display: none; 
+            flex-direction: column; 
+            background: white;
+            z-index: 2000; /* Sit on top of everything */
+            
+            /* FLOATING MODAL STYLES (Default for Desktop) */
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 50%; 
+            left: 50%;
+            transform: translate(-50%, -50%); /* Dead Center */
+            
+            width: 90%; 
+            max-width: 1000px;
+            height: 85vh; /* 85% of viewport height */
+            
+            border-radius: 8px;
+            box-shadow: 0 0 0 1000px rgba(0,0,0,0.5); /* This dims the background! */
+            border: 2px solid var(--brand-blue);
         }
 
-        /* DESKTOP (Width > 768px): Centered Modal */
-        @media (min-width: 768px) {
+        /* MOBILE OVERRIDE: Full Screen on Phones */
+        @media (max-width: 768px) {
             #pdf-view {
-                position: fixed;
-                top: 50%; left: 50%;
-                transform: translate(-50%, -50%); /* Center it */
-                width: 80%; height: 85%;
-                max-width: 1000px;
-                border-radius: 8px;
-                box-shadow: 0 0 50px rgba(0,0,0,0.5);
-                border: 2px solid var(--brand-blue);
+                top: 0; 
+                left: 0;
+                transform: none; /* Reset centering */
+                width: 100%; 
+                height: 100%;
+                border-radius: 0;
+                border: none;
+                box-shadow: none;
             }
         }
-
+        
         /* Footer */
         footer {
             background-color: #eee;
@@ -398,3 +414,4 @@
 
 </body>
 </html>
+
