@@ -190,7 +190,15 @@
                     // CACHE DATA FOR ADMIN USE LATER
                     ALL_DRIVERS = data.data; 
 
-                    const driver = data.data.find(d => d.name.toLowerCase().includes(name));
+                    /* NEW FUZZY SEARCH LOGIC */
+                    const searchTerms = name.toLowerCase().split(' '); // ["fred", "nelson"]
+                    
+                    const driver = data.data.find(d => {
+                        const driverName = d.name.toLowerCase();
+                        // Check if EVERY search term appears somewhere in the driver's name
+                        return searchTerms.every(term => driverName.includes(term));
+                    });
+
                     document.getElementById('loading').style.display = 'none';
                     searchBtn.innerText = "Check My Points";
 
@@ -336,4 +344,3 @@
     </script>
 </body>
 </html>
-
