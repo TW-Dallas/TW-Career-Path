@@ -76,12 +76,17 @@
         }
 
         .logo-area {
-            font-family: 'PizzaPress';
-            font-size: 1.5rem;
+            text-align: center;
             margin-bottom: 40px;
-            color: white;
             border-bottom: 2px solid var(--brand-blue);
-            padding-bottom: 10px;
+            padding-bottom: 20px;
+        }
+
+        .sidebar-logo {
+            max-width: 180px; /* Adjust size as needed */
+            height: auto;
+            display: block;
+            margin: 0 auto;
         }
 
         .nav-links {
@@ -271,7 +276,9 @@
 
     <!-- Desktop Sidebar -->
     <nav class="sidebar">
-        <div class="logo-area">TEAM WOW<br><span style="font-size:0.8em; color:var(--crust-med)">Trainer Portal</span></div>
+        <div class="logo-area">
+            <img src="New_Logo_v2.png" alt="Team Wow Logo" class="sidebar-logo">
+        </div>
         <div class="nav-links">
             <a href="#" class="nav-item active">
                 <span class="nav-icon">📊</span> Dashboard
@@ -373,4 +380,5 @@
     </nav>
 
 </body>
+
 </html>
