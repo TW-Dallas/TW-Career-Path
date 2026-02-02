@@ -389,23 +389,30 @@
                 </div>
             </div>
 
-            <!-- Card 3: Recent Activity -->
+            <!-- Card 3: Recent Activity (DEMO STATE) -->
             <div class="card info">
                 <div class="card-header">
                     <span>RECENT FLAGS</span>
                     <span>🚩</span>
                 </div>
                 <div class="card-body">
+                    <p style="font-size:0.9rem; color:var(--dark-blue); margin-bottom:10px;">
+                        <em>(System Demo: Shows trainer notes)</em>
+                    </p>
                     <ul style="list-style: none;">
-                        <li style="border-bottom:1px solid #eee; padding: 5px 0;"><strong>John Doe</strong> - No Show</li>
-                        <li style="border-bottom:1px solid #eee; padding: 5px 0;"><strong>Jane Smith</strong> - Passed Lvl 1</li>
+                        <li style="border-bottom:1px solid #eee; padding: 5px 0;">
+                            <strong>Store 5521</strong> - <span style="color:var(--brand-red)">No Show (x2)</span>
+                        </li>
+                        <li style="border-bottom:1px solid #eee; padding: 5px 0;">
+                            <strong>Jane Doe</strong> - Passed Lvl 1
+                        </li>
+                        <li style="padding: 5px 0;">
+                            <strong>Store 8791</strong> - Req. Training
+                        </li>
                     </ul>
-                    <button class="btn" style="background-color:var(--crust-deep)">View All</button>
+                    <button class="btn" style="background-color:var(--crust-deep)" onclick="alert('This will open the full Notes Database.')">View All</button>
                 </div>
             </div>
-
-        </div>
-    </main>
 
     <!-- Mobile Bottom Nav -->
     <nav class="bottom-nav">
@@ -612,3 +619,4 @@
             if (event.key === "Enter") { event.preventDefault(); handleSearch(); }
         });
     </script>
+
