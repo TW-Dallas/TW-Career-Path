@@ -262,11 +262,40 @@
                 select.innerHTML += `<option value="${d}">${d}</option>`;
             });
 
-            select.onchange = () => filterAdminTable();
+            // When DO changes, populate Stores
+            select.onchange = () => {
+                populateStoreFilter();
+                filterAdminTable();
+            };
+        }
+
+        function populateStoreFilter() {
+            const doName = document.getElementById('adminDoSelect').value;
+            const storeSelect = document.getElementById('adminStoreSelect');
+            
+            if (!doName) {
+                storeSelect.style.display = 'none';
+                return;
+            }
+
+            // Find stores for this DO
+            const stores = [...new Set(ALL_DRIVERS
+                .filter(d => d.doName === doName)
+                .map(d => d.store)
+            )].sort();
+
+            storeSelect.innerHTML = '<option value="">All Stores</option>';
+            stores.forEach(s => {
+                storeSelect.innerHTML += `<option value="${s}">Store #${s}</option>`;
+            });
+
+            storeSelect.style.display = 'inline-block';
+            storeSelect.onchange = () => filterAdminTable();
         }
 
         function filterAdminTable() {
             const doName = document.getElementById('adminDoSelect').value;
+            const storeNum = document.getElementById('adminStoreSelect').value;
             const tbody = document.querySelector('#adminTable tbody');
             
             if (!doName) {
@@ -274,7 +303,13 @@
                 return;
             }
 
-            const filtered = ALL_DRIVERS.filter(d => d.doName === doName);
+            // Filter by DO... AND Store (if selected)
+            let filtered = ALL_DRIVERS.filter(d => d.doName === doName);
+            
+            if (storeNum) {
+                filtered = filtered.filter(d => String(d.store) === String(storeNum));
+            }
+
             // Sort by Points High->Low
             filtered.sort((a, b) => b.points - a.points);
 
@@ -301,3 +336,4 @@
     </script>
 </body>
 </html>
+
