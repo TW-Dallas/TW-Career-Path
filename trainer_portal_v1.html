@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Wow Trainer Portal</title>
+    <style>
+        /* --- FONT LOADING --- */
+        @font-face {
+            font-family: 'PizzaPress';
+            src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'OneDotCd-Bold';
+            src: url('fonts/Dominos Sans Bold.ttf') format('truetype');
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: 'OneDotCd';
+            src: url('fonts/Dominos Sans Body.ttf') format('truetype');
+            font-weight: normal;
+        }
+
+        :root {
+            /* Brand Colors */
+            --brand-red: #ff0000;
+            --acc-red: #e70000;
+            --dark-red: #910000;
+            --brand-blue: #0090e2;
+            --acc-blue: #0077bd;
+            --dark-blue: #005c91;
+            
+            /* Crust Palette */
+            --crust-light: #faf2e9;
+            --crust-med: #f0decc;
+            --crust-dark: #c0a588;
+            --crust-deep: #603913;
+            --crust-burnt: #472b10;
+            
+            /* UI Config */
+            --sidebar-width: 250px;
+            --header-height: 60px;
+            --bottom-nav-height: 60px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'OneDotCd', sans-serif;
+            background-color: var(--crust-light);
+            color: var(--crust-burnt);
+            height: 100vh;
+            display: flex;
+            overflow: hidden; /* Prevent body scroll, handle in main */
+        }
+
+        h1, h2, h3 {
+            font-family: 'PizzaPress', serif;
+            text-transform: uppercase;
+        }
+
+        /* --- SIDEBAR (Desktop) --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--dark-blue);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .logo-area {
+            font-family: 'PizzaPress';
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: white;
+            border-bottom: 2px solid var(--brand-blue);
+            padding-bottom: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            text-decoration: none;
+            color: white;
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.1rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--brand-blue);
+        }
+
+        .nav-icon {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto; /* Scroll inside main area */
+        }
+
+        /* Header */
+        .top-header {
+            background-color: white;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            border-bottom: 4px solid var(--brand-red);
+            justify-content: space-between;
+        }
+
+        .user-welcome {
+            font-family: 'OneDotCd-Bold';
+            color: var(--dark-blue);
+            font-size: 1.2rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-container {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-left: 5px solid var(--crust-med);
+        }
+
+        .card.urgent { border-left-color: var(--brand-red); }
+        .card.info { border-left-color: var(--brand-blue); }
+        .card.action { border-left-color: var(--crust-deep); }
+
+        .card-header {
+            font-family: 'PizzaPress';
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--dark-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-body {
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--brand-blue);
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-family: 'OneDotCd-Bold';
+            margin-top: 15px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover { background-color: var(--acc-blue); }
+
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--crust-med);
+            border-radius: 4px;
+            font-family: 'OneDotCd';
+            font-size: 1rem;
+        }
+
+        /* --- MOBILE BOTTOM NAV (Hidden on Desktop) --- */
+        .bottom-nav {
+            display: none;
+        }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            /* Hide Sidebar */
+            .sidebar {
+                display: none;
+            }
+
+            /* Show Bottom Nav */
+            .bottom-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: var(--bottom-nav-height);
+                background-color: var(--dark-blue);
+                justify-content: space-around;
+                align-items: center;
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+                z-index: 1000;
+            }
+
+            .nav-item-mobile {
+                color: white;
+                text-decoration: none;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-size: 0.8rem;
+                font-family: 'OneDotCd-Bold';
+                opacity: 0.7;
+            }
+
+            .nav-item-mobile.active, .nav-item-mobile:hover {
+                opacity: 1;
+            }
+
+            .mobile-icon {
+                font-size: 1.2rem;
+                margin-bottom: 4px;
+            }
+
+            /* Adjust Main Content for Mobile */
+            .main-content {
+                padding-bottom: var(--bottom-nav-height); /* Make space for nav */
+            }
+
+            .top-header {
+                padding: 0 15px;
+            }
+
+            .dashboard-container {
+                padding: 15px;
+                grid-template-columns: 1fr; /* Stack cards */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Desktop Sidebar -->
+    <nav class="sidebar">
+        <div class="logo-area">TEAM WOW<br><span style="font-size:0.8em; color:var(--crust-med)">Trainer Portal</span></div>
+        <div class="nav-links">
+            <a href="#" class="nav-item active">
+                <span class="nav-icon">📊</span> Dashboard
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">📋</span> Class Roster
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">🔍</span> Trainee Search
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">📚</span> Decks & Resources
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Top Header -->
+        <header class="top-header">
+            <div class="user-welcome">Good Morning, Mike</div>
+            <div style="font-family:'OneDotCd-Bold'; color:var(--brand-red)">FEB 02</div>
+        </header>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-container">
+            
+            <!-- Card 1: Next Class (Urgent) -->
+            <div class="card urgent">
+                <div class="card-header">
+                    <span>NEXT CLASS</span>
+                    <span>⏰</span>
+                </div>
+                <div class="card-body">
+                    <strong>Pizza Prep 101</strong><br>
+                    Tomorrow @ 2:00 PM<br>
+                    <span style="color:var(--dark-blue)">3 Trainees Enrolled</span>
+                    <br>
+                    <button class="btn">View Roster</button>
+                </div>
+            </div>
+
+            <!-- Card 2: Quick Search (Action) -->
+            <div class="card action">
+                <div class="card-header">
+                    <span>QUICK FIND</span>
+                    <span>🔍</span>
+                </div>
+                <div class="card-body">
+                    <p style="margin-bottom:10px;">Find a trainee or resource:</p>
+                    <input type="text" class="search-input" placeholder="Enter Name or ID...">
+                    <button class="btn">Search</button>
+                </div>
+            </div>
+
+            <!-- Card 3: Recent Activity (Info) -->
+            <div class="card info">
+                <div class="card-header">
+                    <span>RECENT FLAGS</span>
+                    <span>🚩</span>
+                </div>
+                <div class="card-body">
+                    <ul style="list-style: none;">
+                        <li style="border-bottom:1px solid #eee; padding: 5px 0;">
+                            <strong>John Doe</strong> - No Show (2/1)
+                        </li>
+                        <li style="border-bottom:1px solid #eee; padding: 5px 0;">
+                            <strong>Jane Smith</strong> - Passed Lvl 1
+                        </li>
+                        <li style="padding: 5px 0;">
+                            <strong>Store 5521</strong> - Req. Training
+                        </li>
+                    </ul>
+                    <button class="btn" style="background-color:var(--crust-deep)">View All</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item-mobile active">
+            <span class="mobile-icon">📊</span>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item-mobile">
+            <span class="mobile-icon">📋</span>
+            <span>Rosters</span>
+        </a>
+        <a href="#" class="nav-item-mobile">
+            <span class="mobile-icon">🔍</span>
+            <span>Search</span>
+        </a>
+        <a href="#" class="nav-item-mobile">
+            <span class="mobile-icon">📚</span>
+            <span>Tools</span>
+        </a>
+    </nav>
+
+</body>
+</html>
