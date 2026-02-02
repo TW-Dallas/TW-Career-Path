@@ -6,238 +6,67 @@
     <title>Driver Rewards</title>
     <style>
         /* --- BRANDING --- */
-        @font-face {
-            font-family: 'PizzaPress';
-            src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
-        }
-        @font-face {
-            font-family: 'OneDotCd-Bold';
-            src: url('fonts/Dominos Sans Bold.ttf') format('truetype');
-        }
-        @font-face {
-            font-family: 'OneDotCd';
-            src: url('fonts/Dominos Sans Body.ttf') format('truetype');
-        }
+        @font-face { font-family: 'PizzaPress'; src: url('fonts/Dominos Sans Header 1.ttf') format('truetype'); }
+        @font-face { font-family: 'OneDotCd-Bold'; src: url('fonts/Dominos Sans Bold.ttf') format('truetype'); }
+        @font-face { font-family: 'OneDotCd'; src: url('fonts/Dominos Sans Body.ttf') format('truetype'); }
 
         :root {
-            /* Team Wow Blue */
-            --brand-blue: #0090e2; 
-            --brand-red: #ff0000;
-            --acc-blue: #0077bd;
-            
-            /* Backgrounds */
-            --off-white: #faf2e9; 
-            --text-dark: #472b10; 
+            --brand-blue: #0090e2; --brand-red: #ff0000; --acc-blue: #0077bd;
+            --off-white: #faf2e9; --text-dark: #472b10; 
         }
 
         * { box-sizing: border-box; }
-
-        body {
-            font-family: 'OneDotCd', sans-serif;
-            background-color: var(--brand-blue);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-        }
+        body { font-family: 'OneDotCd', sans-serif; background-color: var(--brand-blue); margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
 
         /* Mobile Container */
         .app-container {
-            background-color: white;
-            width: 100%;
-            max-width: 480px; 
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            min-height: 100vh;
-            position: relative;
-            z-index: 1;
+            background-color: white; width: 100%; max-width: 480px; 
+            display: flex; flex-direction: column; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.5); min-height: 100vh; 
+            position: relative; z-index: 1;
         }
 
         /* Header */
-        header {
-            background-color: white;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 5px solid var(--brand-red);
-        }
-
-        .logo {
-            max-width: 220px;
-            height: auto;
-            margin-bottom: 5px;
-        }
-
-        h1 {
-            font-family: 'PizzaPress';
-            margin: 0;
-            color: var(--brand-blue);
-            font-size: 1.4rem;
-            text-transform: uppercase;
-        }
+        header { background-color: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--brand-red); }
+        .logo { max-width: 220px; height: auto; margin-bottom: 5px; }
+        h1 { font-family: 'PizzaPress'; margin: 0; color: var(--brand-blue); font-size: 1.4rem; text-transform: uppercase; }
 
         /* Main Body */
-        main {
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+        main { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; gap: 20px; }
 
         /* Inputs */
-        label {
-            font-family: 'OneDotCd-Bold';
-            color: var(--brand-blue);
-            font-size: 1.1rem;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        select, input {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.1rem;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            background: var(--off-white);
-            font-family: 'OneDotCd';
-            margin-bottom: 15px;
-        }
-
-        select:focus, input:focus {
-            border-color: var(--brand-blue);
-            outline: none;
-        }
-
-        .btn-main {
-            background-color: var(--brand-red);
-            color: white;
-            width: 100%;
-            padding: 15px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 8px;
-            font-family: 'PizzaPress';
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 4px 0 #990000;
-        }
-
-        .btn-main:active {
-            transform: translateY(4px);
-            box-shadow: none;
-        }
+        label { font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.1rem; display: block; margin-bottom: 5px; }
+        select, input { width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid #ccc; border-radius: 8px; background: var(--off-white); font-family: 'OneDotCd'; margin-bottom: 15px; }
+        .btn-main { background-color: var(--brand-red); color: white; width: 100%; padding: 15px; font-size: 1.2rem; border: none; border-radius: 8px; font-family: 'PizzaPress'; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 0 #990000; }
+        .btn-main:active { transform: translateY(4px); box-shadow: none; }
 
         /* Results Card */
-        .results-card {
-            background-color: var(--off-white);
-            border: 2px solid var(--brand-blue);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            display: none; 
-            margin-top: 10px;
-        }
+        .results-card { background-color: var(--off-white); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 20px; text-align: center; display: none; margin-top: 10px; }
+        .points-value { font-family: 'PizzaPress'; font-size: 4rem; color: var(--brand-blue); line-height: 1; margin: 10px 0; }
+        .prize-btn { display: block; background-color: var(--brand-blue); color: white; text-decoration: none; padding: 15px; border-radius: 8px; font-family: 'OneDotCd-Bold'; margin-top: 20px; text-align: center; border: none; cursor: pointer; width: 100%; }
 
-        .driver-name {
-            font-family: 'PizzaPress';
-            font-size: 1.5rem;
-            color: var(--text-dark);
-            margin-bottom: 5px;
-        }
+        /* --- ADMIN STYLES --- */
+        .admin-section { display: none; flex-direction: column; gap: 15px; }
+        .admin-header { background: var(--text-dark); color: white; padding: 10px; text-align: center; font-family: 'PizzaPress'; }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 10px; }
+        .data-table th { background: var(--brand-blue); color: white; padding: 8px; text-align: left; }
+        .data-table td { border-bottom: 1px solid #ccc; padding: 8px; }
+        .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .link-btn { background: #ddd; padding: 10px; text-align: center; border-radius: 4px; text-decoration: none; color: black; font-weight: bold; font-size: 0.9rem; display:block; border: 1px solid #ccc; }
 
-        .store-badge {
-            background-color: #ddd;
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .points-label {
-            font-size: 1rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .points-value {
-            font-family: 'PizzaPress';
-            font-size: 4rem;
-            color: var(--brand-blue);
-            line-height: 1;
-            margin: 10px 0;
-        }
-
-        .prize-btn {
-            display: block;
-            background-color: var(--brand-blue);
-            color: white;
-            text-decoration: none;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: 'OneDotCd-Bold';
-            margin-top: 20px;
-            text-align: center;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        /* --- PDF VIEWER STYLING (CORRECTED) --- */
+        /* --- PDF VIEWER STYLING --- */
         #pdf-view {
-            display: none; 
-            flex-direction: column; 
-            background: white;
-            z-index: 2000; /* Sit on top */
-            
-            /* DESKTOP DEFAULT: Floating Modal */
-            position: fixed;
-            top: 50%; 
-            left: 50%;
-            transform: translate(-50%, -50%); /* Dead Center */
-            
-            width: 90%; 
-            max-width: 1000px;
-            height: 85vh; /* 85% of viewport height */
-            
-            border-radius: 8px;
-            box-shadow: 0 0 0 1000px rgba(0,0,0,0.5); /* Dim Background */
-            border: 2px solid var(--brand-blue);
+            display: none; flex-direction: column; background: white; z-index: 2000;
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90%; max-width: 1000px; height: 85vh;
+            border-radius: 8px; box-shadow: 0 0 0 1000px rgba(0,0,0,0.5); border: 2px solid var(--brand-blue);
         }
-
-        /* MOBILE OVERRIDE: Full Screen */
         @media (max-width: 768px) {
-            #pdf-view {
-                top: 0; 
-                left: 0;
-                transform: none; /* Reset centering */
-                width: 100%; 
-                height: 100%;
-                border-radius: 0;
-                border: none;
-                box-shadow: none;
-            }
+            #pdf-view { top: 0; left: 0; transform: none; width: 100%; height: 100%; border-radius: 0; border: none; box-shadow: none; }
         }
 
-        /* Footer */
-        footer {
-            background-color: #eee;
-            padding: 20px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .admin-link {
-            color: #999;
-            text-decoration: none;
-            font-size: 0.8rem;
-        }
-
+        footer { background-color: #eee; padding: 20px; text-align: center; font-size: 0.9rem; }
+        .admin-link { color: #999; text-decoration: none; font-size: 0.8rem; cursor: pointer;}
     </style>
 </head>
 <body>
@@ -250,56 +79,73 @@
         </header>
 
         <main>
-            <!-- Step 1: Select Market -->
-            <div>
-                <label for="marketSelect">1. SELECT MARKET</label>
-                <select id="marketSelect">
-                    <option value="" disabled selected>Tap to choose...</option>
-                    <option value="Dallas">Dallas</option>
-                    <option value="Denver">Denver</option>
-                    <option value="El Paso">El Paso</option>
-                    <option value="LA">LA</option>
+            
+            <!-- VIEW 1: DRIVER SEARCH (Default) -->
+            <div id="driver-view">
+                <div>
+                    <label for="marketSelect">1. SELECT MARKET</label>
+                    <select id="marketSelect">
+                        <option value="" disabled selected>Tap to choose...</option>
+                        <option value="Dallas">Dallas</option>
+                        <option value="Denver">Denver</option>
+                        <option value="El Paso">El Paso</option>
+                        <option value="LA">LA</option>
+                    </select>
+                </div>
+
+                <div id="searchSection" style="opacity:0.5; pointer-events:none;">
+                    <label for="nameInput">2. ENTER NAME</label>
+                    <input type="text" id="nameInput" placeholder="e.g. John Smith">
+                    <button class="btn-main" id="searchBtn">Check My Points</button>
+                </div>
+
+                <div id="loading" style="display:none; text-align:center; padding:20px;"><p>Checking Database...</p></div>
+
+                <div id="resultCard" class="results-card">
+                    <div class="driver-name" id="resName">DRIVER NAME</div>
+                    <div class="store-badge" id="resStore">Store #0000</div>
+                    <div class="points-label">Current Balance</div>
+                    <div class="points-value" id="resPoints">0</div>
+                    <button class="prize-btn" onclick="openPrizePdf()">🎁 VIEW PRIZE LIST</button>
+                </div>
+                <div id="errorMsg" style="color:red; text-align:center; display:none;"></div>
+            </div>
+
+            <!-- VIEW 3: ADMIN DASHBOARD (Hidden) -->
+            <div id="admin-view" class="admin-section">
+                <div class="admin-header">MANAGER DASHBOARD <button onclick="logoutAdmin()" style="float:right; font-size:0.8rem; background:red; color:white; border:none; padding:2px 5px;">LOGOUT</button></div>
+                
+                <label>PURCHASE PRIZES</label>
+                <div id="adminLinks" class="link-grid">
+                    <p>Loading Links...</p>
+                </div>
+
+                <label style="margin-top:20px;">DRIVER LEADERBOARD</label>
+                <select id="adminDoSelect">
+                    <option value="">Filter by DO...</option>
                 </select>
+                <select id="adminStoreSelect" style="display:none;">
+                    <option value="">Filter by Store...</option>
+                </select>
+
+                <div id="adminTableContainer" style="overflow-y:auto; max-height:400px;">
+                    <table class="data-table" id="adminTable">
+                        <thead><tr><th>Name</th><th>Store</th><th>Points</th></tr></thead>
+                        <tbody><tr><td colspan="3">Select a DO to view data.</td></tr></tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- Step 2: Search Name -->
-            <div id="searchSection" style="opacity:0.5; pointer-events:none;">
-                <label for="nameInput">2. ENTER NAME</label>
-                <input type="text" id="nameInput" placeholder="e.g. John Smith">
-                
-                <button class="btn-main" id="searchBtn">Check My Points</button>
-            </div>
-
-            <!-- Loading Spinner -->
-            <div id="loading" style="display:none; text-align:center; padding:20px;">
-                <p>Checking Database...</p>
-            </div>
-
-            <!-- Result Card -->
-            <div id="resultCard" class="results-card">
-                <div class="driver-name" id="resName">DRIVER NAME</div>
-                <div class="store-badge" id="resStore">Store #0000</div>
-                
-                <div class="points-label">Current Balance</div>
-                <div class="points-value" id="resPoints">0</div>
-                
-                <button class="prize-btn" onclick="openPrizePdf()">
-                    🎁 VIEW PRIZE LIST
-                </button>
-            </div>
-
-            <!-- Error Message -->
-            <div id="errorMsg" style="color:red; text-align:center; display:none;"></div>
         </main>
 
         <footer>
             <p>Drive Safe. Earn Points. Win Big.</p>
             <br>
-            <a href="#" onclick="adminLogin()" class="admin-link">Manager / DO Login</a>
+            <a onclick="adminLogin()" class="admin-link">Manager / DO Login</a>
         </footer>
     </div>
 
-    <!-- PDF VIEWER (OUTSIDE APP CONTAINER) -->
+    <!-- PDF VIEWER -->
     <div id="pdf-view">
         <div style="padding:15px; background:var(--brand-blue); color:white; display:flex; justify-content:space-between; align-items:center;">
             <span style="font-family:'PizzaPress'; font-size:1.2rem;">PRIZE LIST</span>
@@ -313,26 +159,23 @@
         const API_URL = "https://script.google.com/macros/s/AKfycbyiaMniI6OvMb2tDjA0ItpPnPXRpA8Bpu7LCvDcZHgG00z2T7IIV-WVAebGEr4WXuI8/exec"; 
         const PDF_URL = "resources/drivosity/driver_prizes.pdf"; 
 
+        // GLOBAL STATE
+        let ALL_DRIVERS = []; // Cache for Admin View
+
+        // --- DRIVER SEARCH LOGIC ---
         const marketSelect = document.getElementById('marketSelect');
-        const searchSection = document.getElementById('searchSection');
         const searchBtn = document.getElementById('searchBtn');
         const nameInput = document.getElementById('nameInput');
 
-        // Unlock Search when market is picked
         marketSelect.addEventListener('change', () => {
-            searchSection.style.opacity = "1";
-            searchSection.style.pointerEvents = "auto";
+            document.getElementById('searchSection').style.opacity = "1";
+            document.getElementById('searchSection').style.pointerEvents = "auto";
         });
 
-        // Search Logic
         searchBtn.addEventListener('click', async () => {
             const market = marketSelect.value;
             const name = nameInput.value.trim().toLowerCase();
-
-            if (!market || !name) {
-                alert("Please select a market and enter your name.");
-                return;
-            }
+            if (!market || !name) { alert("Please select a market and enter your name."); return; }
 
             document.getElementById('loading').style.display = 'block';
             document.getElementById('resultCard').style.display = 'none';
@@ -344,10 +187,10 @@
                 const data = await response.json();
 
                 if (data.status === 'success') {
-                    const driver = data.data.find(d => 
-                        d.name.toLowerCase().includes(name)
-                    );
+                    // CACHE DATA FOR ADMIN USE LATER
+                    ALL_DRIVERS = data.data; 
 
+                    const driver = data.data.find(d => d.name.toLowerCase().includes(name));
                     document.getElementById('loading').style.display = 'none';
                     searchBtn.innerText = "Check My Points";
 
@@ -357,51 +200,104 @@
                         document.getElementById('resPoints').innerText = driver.points;
                         document.getElementById('resultCard').style.display = 'block';
                     } else {
-                        document.getElementById('errorMsg').innerText = "Driver not found in " + market + ". Check spelling.";
+                        document.getElementById('errorMsg').innerText = "Driver not found in " + market + ".";
                         document.getElementById('errorMsg').style.display = 'block';
                     }
                 }
-
             } catch (e) {
                 console.error(e);
-                document.getElementById('loading').style.display = 'none';
-                searchBtn.innerText = "Try Again";
-                alert("System Error. Please try again.");
+                alert("Connection Error.");
             }
         });
-        
-        // VIEW SWITCHER LOGIC
+
+        // --- ADMIN LOGIC ---
+        async function adminLogin() {
+            const pass = prompt("Enter Password:");
+            if (pass === "TeamWow") {
+                // Switch Views
+                document.getElementById('driver-view').style.display = 'none';
+                document.getElementById('admin-view').style.display = 'flex';
+                
+                // Load Links
+                loadAdminLinks();
+                
+                // Check if we have data (if user hasn't searched yet, fetch it)
+                if (ALL_DRIVERS.length === 0 && marketSelect.value) {
+                    // Fetch silently if market is picked
+                     const response = await fetch(`${API_URL}?action=getPoints&market=${marketSelect.value}`);
+                     const data = await response.json();
+                     ALL_DRIVERS = data.data;
+                }
+                
+                // Populate Filters
+                populateDoFilter();
+            } else {
+                alert("Incorrect Password.");
+            }
+        }
+
+        function logoutAdmin() {
+            document.getElementById('admin-view').style.display = 'none';
+            document.getElementById('driver-view').style.display = 'block';
+        }
+
+        async function loadAdminLinks() {
+            const container = document.getElementById('adminLinks');
+            try {
+                const response = await fetch(`${API_URL}?action=getAdminLinks`);
+                const links = await response.json();
+                container.innerHTML = links.map(l => `<a href="${l.url}" target="_blank" class="link-btn">🛒 ${l.name}</a>`).join('');
+            } catch (e) {
+                container.innerHTML = "Error loading links.";
+            }
+        }
+
+        function populateDoFilter() {
+            const select = document.getElementById('adminDoSelect');
+            select.innerHTML = '<option value="">Filter by DO...</option>';
+            
+            // Extract Unique DOs
+            const dos = [...new Set(ALL_DRIVERS.map(d => d.doName).filter(Boolean))].sort();
+            dos.forEach(d => {
+                select.innerHTML += `<option value="${d}">${d}</option>`;
+            });
+
+            select.onchange = () => filterAdminTable();
+        }
+
+        function filterAdminTable() {
+            const doName = document.getElementById('adminDoSelect').value;
+            const tbody = document.querySelector('#adminTable tbody');
+            
+            if (!doName) {
+                tbody.innerHTML = '<tr><td colspan="3">Select a DO to view data.</td></tr>';
+                return;
+            }
+
+            const filtered = ALL_DRIVERS.filter(d => d.doName === doName);
+            // Sort by Points High->Low
+            filtered.sort((a, b) => b.points - a.points);
+
+            tbody.innerHTML = filtered.map(d => `
+                <tr>
+                    <td>${d.name}</td>
+                    <td>${d.store}</td>
+                    <td><strong>${d.points}</strong></td>
+                </tr>
+            `).join('');
+        }
+
+        // --- PDF VIEWERS ---
         function openPrizePdf() {
-            // Show Viewer
             document.getElementById('pdf-view').style.display = 'flex';
-            // Load PDF
             document.getElementById('pdf-frame').src = PDF_URL;
         }
-    
         function closeViewer() {
-            // Hide Viewer
             document.getElementById('pdf-view').style.display = 'none';
-            // Unload PDF
             document.getElementById('pdf-frame').src = "";
         }
-
-        // Search Enter Key
-        nameInput.addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                searchBtn.click();
-            }
-        });
-
-        // Simple Admin Gate
-        function adminLogin() {
-            const pass = prompt("Enter Manager Password:");
-            if (pass === "TeamWow") { 
-                alert("Access Granted.");
-                // window.location.href = "YOUR_PURCHASING_LINK_HERE";
-            }
-        }
+        
+        nameInput.addEventListener("keypress", function(event) { if (event.key === "Enter") searchBtn.click(); });
     </script>
-
 </body>
 </html>
