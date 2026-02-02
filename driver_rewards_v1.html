@@ -20,7 +20,7 @@
         }
 
         :root {
-            /* Restored "Team Wow" Blue */
+            /* Team Wow Blue */
             --brand-blue: #0090e2; 
             --brand-red: #ff0000;
             --acc-blue: #0077bd;
@@ -47,10 +47,12 @@
             background-color: white;
             width: 100%;
             max-width: 480px; 
-            display: flex;      /* This is important for the View Switcher */
+            display: flex;
             flex-direction: column;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
             min-height: 100vh;
+            position: relative;
+            z-index: 1;
         }
 
         /* Header */
@@ -62,15 +64,16 @@
         }
 
         .logo {
-            max-width: 200px;
-            margin-bottom: 10px;
+            max-width: 220px; /* Bigger Logo */
+            height: auto;
+            margin-bottom: 5px;
         }
 
         h1 {
             font-family: 'PizzaPress';
             margin: 0;
             color: var(--brand-blue);
-            font-size: 1.8rem;
+            font-size: 1.4rem; /* Smaller Title */
             text-transform: uppercase;
         }
 
@@ -180,6 +183,37 @@
             font-family: 'OneDotCd-Bold';
             margin-top: 20px;
             text-align: center;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* PDF Viewer Styling */
+        #pdf-view {
+            display: none; 
+            flex-direction: column; 
+            background: white;
+            z-index: 2000;
+        }
+
+        /* DEFAULT (Mobile): Full Screen Overlay */
+        #pdf-view {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+
+        /* DESKTOP (Width > 768px): Centered Modal */
+        @media (min-width: 768px) {
+            #pdf-view {
+                position: fixed;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%); /* Center it */
+                width: 80%; height: 85%;
+                max-width: 1000px;
+                border-radius: 8px;
+                box-shadow: 0 0 50px rgba(0,0,0,0.5);
+                border: 2px solid var(--brand-blue);
+            }
         }
 
         /* Footer */
@@ -200,79 +234,70 @@
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <!-- VIEW A: THE MAIN APP -->
-        <div id="app-view" style="display:flex; flex-direction:column; flex-grow:1;">
-            <header>
-                <!-- Logo Image (Bigger) -->
-                <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo" style="max-width: 220px; height: auto;">
-                
-                <!-- Title Below (Smaller) -->
-                <h1 style="font-size: 1.4rem; margin-top: 10px;">Driver Rewards</h1>
-            </header>
+    <!-- MAIN APP CONTAINER -->
+    <div class="app-container" id="app-view">
+        <header>
+            <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo">
+            <h1>Driver Rewards</h1>
+        </header>
 
-            <main>
-                <!-- Step 1: Select Market -->
-                <div>
-                    <label for="marketSelect">1. SELECT MARKET</label>
-                    <select id="marketSelect">
-                        <option value="" disabled selected>Tap to choose...</option>
-                        <option value="Dallas">Dallas</option>
-                        <option value="Denver">Denver</option>
-                        <option value="El Paso">El Paso</option>
-                        <option value="LA">LA</option>
-                    </select>
-                </div>
-
-                <!-- Step 2: Search Name -->
-                <div id="searchSection" style="opacity:0.5; pointer-events:none;">
-                    <label for="nameInput">2. ENTER NAME</label>
-                    <input type="text" id="nameInput" placeholder="e.g. John Smith">
-                    
-                    <button class="btn-main" id="searchBtn">Check My Points</button>
-                </div>
-
-                <!-- Loading Spinner -->
-                <div id="loading" style="display:none; text-align:center; padding:20px;">
-                    <p>Checking Database...</p>
-                </div>
-
-                <!-- Result Card -->
-                <div id="resultCard" class="results-card">
-                    <div class="driver-name" id="resName">DRIVER NAME</div>
-                    <div class="store-badge" id="resStore">Store #0000</div>
-                    
-                    <div class="points-label">Current Balance</div>
-                    <div class="points-value" id="resPoints">0</div>
-                    
-                    <!-- Button triggers the Viewer -->
-                    <button class="prize-btn" onclick="openPrizePdf()" style="width:100%; border:none; cursor:pointer;">
-                        🎁 VIEW PRIZE LIST
-                    </button>
-                </div>
-
-                <!-- Error Message -->
-                <div id="errorMsg" style="color:red; text-align:center; display:none;"></div>
-            </main>
-
-            <footer>
-                <p>Drive Safe. Earn Points. Win Big.</p>
-                <br>
-                <a href="#" onclick="adminLogin()" class="admin-link">Manager / DO Login</a>
-            </footer>
-        </div>
-
-        <!-- VIEW B: THE PDF VIEWER (Hidden by Default) -->
-        <div id="pdf-view" style="display:none; height:100vh; flex-direction:column; background:white;">
-            <div style="padding:15px; background:var(--brand-red); color:white; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-family:'PizzaPress'; font-size:1.2rem;">PRIZE LIST</span>
-                <button onclick="closeViewer()" style="border:2px solid white; background:transparent; color:white; padding:5px 15px; border-radius:4px; font-weight:bold;">CLOSE X</button>
+        <main>
+            <!-- Step 1: Select Market -->
+            <div>
+                <label for="marketSelect">1. SELECT MARKET</label>
+                <select id="marketSelect">
+                    <option value="" disabled selected>Tap to choose...</option>
+                    <option value="Dallas">Dallas</option>
+                    <option value="Denver">Denver</option>
+                    <option value="El Paso">El Paso</option>
+                    <option value="LA">LA</option>
+                </select>
             </div>
-            <!-- The iFrame -->
-            <iframe id="pdf-frame" src="" style="flex-grow:1; width:100%; border:none;"></iframe>
-        </div>
 
+            <!-- Step 2: Search Name -->
+            <div id="searchSection" style="opacity:0.5; pointer-events:none;">
+                <label for="nameInput">2. ENTER NAME</label>
+                <input type="text" id="nameInput" placeholder="e.g. John Smith">
+                
+                <button class="btn-main" id="searchBtn">Check My Points</button>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loading" style="display:none; text-align:center; padding:20px;">
+                <p>Checking Database...</p>
+            </div>
+
+            <!-- Result Card -->
+            <div id="resultCard" class="results-card">
+                <div class="driver-name" id="resName">DRIVER NAME</div>
+                <div class="store-badge" id="resStore">Store #0000</div>
+                
+                <div class="points-label">Current Balance</div>
+                <div class="points-value" id="resPoints">0</div>
+                
+                <button class="prize-btn" onclick="openPrizePdf()">
+                    🎁 VIEW PRIZE LIST
+                </button>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMsg" style="color:red; text-align:center; display:none;"></div>
+        </main>
+
+        <footer>
+            <p>Drive Safe. Earn Points. Win Big.</p>
+            <br>
+            <a href="#" onclick="adminLogin()" class="admin-link">Manager / DO Login</a>
+        </footer>
+    </div>
+
+    <!-- PDF VIEWER (OUTSIDE APP CONTAINER) -->
+    <div id="pdf-view">
+        <div style="padding:15px; background:var(--brand-red); color:white; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-family:'PizzaPress'; font-size:1.2rem;">PRIZE LIST</span>
+            <button onclick="closeViewer()" style="border:2px solid white; background:transparent; color:white; padding:5px 15px; border-radius:4px; font-weight:bold; cursor:pointer;">CLOSE X</button>
+        </div>
+        <iframe id="pdf-frame" src="" style="flex-grow:1; width:100%; border:none;"></iframe>
     </div>
 
     <script>
@@ -311,8 +336,10 @@
                 const data = await response.json();
 
                 if (data.status === 'success') {
-                    // Filter Logic (Includes)
-                    const driver = data.data.find(d => d.name.toLowerCase().includes(name));
+                    // Filter Logic (Includes + Trim)
+                    const driver = data.data.find(d => 
+                        d.name.toLowerCase().includes(name)
+                    );
 
                     document.getElementById('loading').style.display = 'none';
                     searchBtn.innerText = "Check My Points";
@@ -338,8 +365,6 @@
         
         // VIEW SWITCHER LOGIC
         function openPrizePdf() {
-            // Hide App
-            document.getElementById('app-view').style.display = 'none';
             // Show Viewer
             document.getElementById('pdf-view').style.display = 'flex';
             // Load PDF
@@ -349,18 +374,24 @@
         function closeViewer() {
             // Hide Viewer
             document.getElementById('pdf-view').style.display = 'none';
-            // Stop Loading (Save Data)
+            // Unload PDF
             document.getElementById('pdf-frame').src = "";
-            // Show App
-            document.getElementById('app-view').style.display = 'flex';
         }
+
+        // Search Enter Key
+        nameInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                searchBtn.click();
+            }
+        });
 
         // Simple Admin Gate
         function adminLogin() {
             const pass = prompt("Enter Manager Password:");
             if (pass === "TeamWow") { 
                 alert("Access Granted.");
-                // Add your real link here later
+                // window.location.href = "YOUR_PURCHASING_LINK_HERE";
             }
         }
     </script>
