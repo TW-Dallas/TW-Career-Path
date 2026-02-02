@@ -368,10 +368,11 @@
                     <span>⏰</span>
                 </div>
                 <div class="card-body">
-                    <strong>Pizza Prep 101</strong><br>
-                    Tomorrow @ 2:00 PM<br>
-                    <span style="color:var(--dark-blue)">3 Trainees Enrolled</span>
-                    <button class="btn">View Roster</button>
+                    <strong id="nextClassTitle">Pizza Prep 101</strong><br>
+                    <span id="nextClassTime">Tomorrow @ 2:00 PM</span><br>
+                    <span id="nextClassEnrollment" style="color:var(--dark-blue)">3 Trainees Enrolled</span>
+                    <br>
+                    <button id="nextClassBtn" class="btn">View Roster</button>
                 </div>
             </div>
 
@@ -426,134 +427,188 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // API Configuration
-        const API_URL = "https://script.google.com/macros/s/AKfycbwyjGiK8CCoQWsY1eThGg3_g_8IMw88yq58laaywe0EZYnNcBkvfMCOJW_I2FAqknYKug/exec";
+        // --- CONFIGURATION ---
+        // You will paste your URLs here. 
+        const MARKET_CONFIG = {
+            'Dallas': {
+                // The script we made for Search/Roster
+                rosterUrl: "https://script.google.com/macros/s/AKfycbwyjGiK8CCoQWsY1eThGg3_g_8IMw88yq58laaywe0EZYnNcBkvfMCOJW_I2FAqknYKug/exec", 
+                // The script you just shared (PASTE URL BELOW)
+                scheduleUrl: "https://script.google.com/macros/s/AKfycby7wgQnR7shWLeL78Fy4f0g0TD-Ch9NgEpIwYnwpUJZYsXvTv0A95IFBGe5k0shg4owEw/exec" 
+            },
+            'Denver': {
+                rosterUrl: "", // Add Denver URLs later
+                scheduleUrl: "" 
+            }
+            // Add other markets...
+        };
 
-        // Search Function
+        // --- STATE MANAGEMENT ---
+        let currentMarket = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const select = document.getElementById('marketSelect');
+            
+            // Set Default "Neutral" State
+            select.value = ""; 
+            resetDashboard();
+
+            // Listen for Change
+            select.addEventListener('change', (e) => {
+                const market = e.target.value;
+                if (market && MARKET_CONFIG[market]) {
+                    currentMarket = market;
+                    loadMarketData(market);
+                } else {
+                    resetDashboard();
+                }
+            });
+        });
+
+        function resetDashboard() {
+            // Clear the "Next Class" Card
+            document.getElementById('nextClassTitle').innerText = "Select Market";
+            document.getElementById('nextClassTime').innerHTML = "Choose a market above<br>to see data.";
+            document.getElementById('nextClassEnrollment').innerText = "";
+            document.getElementById('nextClassBtn').style.display = 'none';
+        }
+
+        async function loadMarketData(market) {
+            console.log("Loading " + market);
+            const config = MARKET_CONFIG[market];
+
+            // 1. Update Next Class Card
+            if (config.scheduleUrl) {
+                document.getElementById('nextClassTitle').innerText = "Loading...";
+                fetchNextClass(config.scheduleUrl);
+            } else {
+                document.getElementById('nextClassTitle').innerText = "No Schedule Linked";
+            }
+        }
+
+        // --- FEATURE: NEXT CLASS ---
+        async function fetchNextClass(url) {
+            try {
+                const response = await fetch(url + "?action=getSchedule");
+                const data = await response.json();
+
+                // Filter for FUTURE classes
+                const now = new Date();
+                const upcoming = data.filter(c => new Date(c.isoDate) > now);
+
+                if (upcoming.length > 0) {
+                    // Sort by Date (Ascending)
+                    upcoming.sort((a, b) => new Date(a.isoDate) - new Date(b.isoDate));
+                    const next = upcoming[0];
+                    const dateObj = new Date(next.isoDate);
+
+                    // Update UI
+                    document.getElementById('nextClassTitle').innerText = next.name; // Class Name
+                    document.getElementById('nextClassTime').innerHTML = 
+                        `${dateObj.toLocaleDateString()} @ ${dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+                    
+                    document.getElementById('nextClassEnrollment').innerText = 
+                        `${next.spots_taken || 0} / ${next.spots_total} Enrolled`;
+                    
+                    const btn = document.getElementById('nextClassBtn');
+                    btn.style.display = 'inline-block';
+                    btn.onclick = () => alert("Roster View coming in V2!"); 
+
+                } else {
+                    document.getElementById('nextClassTitle').innerText = "No Upcoming Classes";
+                    document.getElementById('nextClassTime').innerText = "Check the schedule sheet.";
+                }
+
+            } catch (e) {
+                console.error(e);
+                document.getElementById('nextClassTitle').innerText = "Error Loading Schedule";
+            }
+        }
+
+        // --- FEATURE: SEARCH ---
         async function handleSearch() {
-            const query = document.getElementById('searchInput').value;
-            const market = document.getElementById('marketSelect').value;
-            const resultsDiv = document.getElementById('resultsBody');
-            const modal = document.getElementById('resultsModal');
-
-            if(!query) {
-                alert("Please enter a name or store number.");
+            if (!currentMarket) {
+                alert("Please select a market first.");
                 return;
             }
 
-            // Open Modal & Show Loading
+            const query = document.getElementById('searchInput').value;
+            const url = MARKET_CONFIG[currentMarket].rosterUrl;
+            const resultsDiv = document.getElementById('resultsBody');
+            const modal = document.getElementById('resultsModal');
+
+            if(!query) { alert("Enter a name."); return; }
+            if(!url) { alert("Database not connected for " + currentMarket); return; }
+
             modal.style.display = "block";
-            resultsDiv.innerHTML = '<p style="padding:20px; text-align:center;">Searching database... <br> (This may take a few seconds)</p>';
+            resultsDiv.innerHTML = '<p style="padding:20px; text-align:center;">Searching ' + currentMarket + '...<br>(One moment)</p>';
 
             try {
-                // Fetch Data
-                const response = await fetch(`${API_URL}?action=search&market=${market}&query=${query}`);
+                const response = await fetch(`${url}?action=search&market=${currentMarket}&query=${query}`);
                 const data = await response.json();
 
                 if (data.status === 'success') {
                     if (data.count === 0) {
-                        resultsDiv.innerHTML = '<p style="padding:20px;">No results found for "' + query + '" in ' + market + '.</p>';
+                        resultsDiv.innerHTML = '<p style="padding:20px;">No results found.</p>';
                     } else {
-                        // GROUP DATA BY NAME
                         const grouped = groupDataByName(data.data);
-                        
-                        // Build Grouped HTML
-                        let html = `<p style="margin-bottom:10px;">Found ${Object.keys(grouped).length} trainee(s) matching "${query}":</p>`;
+                        let html = `<p style="margin-bottom:10px;">Found ${Object.keys(grouped).length} matches:</p>`;
                         html += '<table class="results-table"><thead><tr><th>Name</th><th>Store</th><th>Classes</th><th>Action</th></tr></thead><tbody>';
                         
                         let index = 0;
                         for (const personName in grouped) {
                             const person = grouped[personName];
                             const rowId = `row-${index}`;
-                            
-                            // Summary Row
                             html += `<tr onclick="toggleRow('${rowId}')" style="cursor:pointer; font-weight:bold;">
                                 <td>${person.name}</td>
                                 <td>${person.store}</td>
-                                <td>${person.history.length} Completed</td>
+                                <td>${person.history.length}</td>
                                 <td>▼</td>
-                            </tr>`;
-
-                            // Details Row (Hidden)
-                            html += `<tr id="${rowId}" style="display:none; background-color:#fff;">
-                                <td colspan="4" style="padding:0;">
-                                    <div style="padding:15px; border-left: 4px solid var(--brand-blue);">
-                                        <h4 style="margin-bottom:5px; font-family:'PizzaPress';">Class History</h4>
-                                        <ul style="padding-left:20px;">
-                                            ${person.history.map(c => `
-                                                <li style="margin-bottom:5px;">
-                                                    <strong>${c.date}</strong>: ${c.class}
-                                                </li>
-                                            `).join('')}
-                                        </ul>
-                                    </div>
-                                </td>
+                            </tr>
+                            <tr id="${rowId}" style="display:none; background-color:#fff;">
+                                <td colspan="4"><div style="padding:10px;">
+                                    <strong>History:</strong><br>
+                                    ${person.history.map(c => `${c.date}: ${c.class}`).join('<br>')}
+                                </div></td>
                             </tr>`;
                             index++;
                         }
-                        
                         html += '</tbody></table>';
                         resultsDiv.innerHTML = html;
                     }
-                } else {
-                    resultsDiv.innerHTML = '<p style="color:red">Error: ' + data.error + '</p>';
                 }
-
             } catch (e) {
-                console.error(e);
-                resultsDiv.innerHTML = '<p style="color:red">Connection Error. Please try again.</p>';
+                resultsDiv.innerHTML = '<p style="color:red">Connection Failed.</p>';
             }
         }
 
-        // Helper: Group Flat Data by Name
+        // --- HELPERS ---
         function groupDataByName(flatList) {
             const groups = {};
             flatList.forEach(item => {
-                // Use Name as key. 
-                // Note: If you have two "John Smiths", this will merge them. 
-                // Ideally we'd use Employee ID, but we work with what we have!
                 const key = item.name.trim(); 
-                
-                if (!groups[key]) {
-                    groups[key] = {
-                        name: item.name,
-                        store: item.store,
-                        history: []
-                    };
-                }
+                if (!groups[key]) groups[key] = { name: item.name, store: item.store, history: [] };
                 groups[key].history.push(item);
             });
             return groups;
         }
 
-        // Toggle Accordion
         function toggleRow(id) {
             const row = document.getElementById(id);
-            if (row.style.display === "none") {
-                row.style.display = "table-row";
-            } else {
-                row.style.display = "none";
-            }
+            row.style.display = (row.style.display === "none") ? "table-row" : "none";
         }
 
-        // Close Modal Logic
         function closeModal() {
             document.getElementById('resultsModal').style.display = "none";
         }
-
-        // Close if clicked outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('resultsModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
         
-        // Enter key to search
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('resultsModal')) closeModal();
+        }
+
+        // Search Enter Key
         document.getElementById("searchInput").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                document.getElementById("searchBtn").click();
-            }
+            if (event.key === "Enter") { event.preventDefault(); handleSearch(); }
         });
     </script>
