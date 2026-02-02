@@ -64,7 +64,7 @@
         }
 
         .logo {
-            max-width: 220px; /* Bigger Logo */
+            max-width: 220px;
             height: auto;
             margin-bottom: 5px;
         }
@@ -73,7 +73,7 @@
             font-family: 'PizzaPress';
             margin: 0;
             color: var(--brand-blue);
-            font-size: 1.4rem; /* Smaller Title */
+            font-size: 1.4rem;
             text-transform: uppercase;
         }
 
@@ -188,22 +188,14 @@
             width: 100%;
         }
 
-        /* PDF Viewer Styling */
+        /* --- PDF VIEWER STYLING (CORRECTED) --- */
         #pdf-view {
             display: none; 
             flex-direction: column; 
             background: white;
-            z-index: 2000;
-        }
-
-        /* PDF Viewer Styling */
-        #pdf-view {
-            display: none; 
-            flex-direction: column; 
-            background: white;
-            z-index: 2000; /* Sit on top of everything */
+            z-index: 2000; /* Sit on top */
             
-            /* FLOATING MODAL STYLES (Default for Desktop) */
+            /* DESKTOP DEFAULT: Floating Modal */
             position: fixed;
             top: 50%; 
             left: 50%;
@@ -214,11 +206,11 @@
             height: 85vh; /* 85% of viewport height */
             
             border-radius: 8px;
-            box-shadow: 0 0 0 1000px rgba(0,0,0,0.5); /* This dims the background! */
+            box-shadow: 0 0 0 1000px rgba(0,0,0,0.5); /* Dim Background */
             border: 2px solid var(--brand-blue);
         }
 
-        /* MOBILE OVERRIDE: Full Screen on Phones */
+        /* MOBILE OVERRIDE: Full Screen */
         @media (max-width: 768px) {
             #pdf-view {
                 top: 0; 
@@ -231,7 +223,7 @@
                 box-shadow: none;
             }
         }
-        
+
         /* Footer */
         footer {
             background-color: #eee;
@@ -309,7 +301,7 @@
 
     <!-- PDF VIEWER (OUTSIDE APP CONTAINER) -->
     <div id="pdf-view">
-        <div style="padding:15px; background:var(--brand-red); color:white; display:flex; justify-content:space-between; align-items:center;">
+        <div style="padding:15px; background:var(--brand-blue); color:white; display:flex; justify-content:space-between; align-items:center;">
             <span style="font-family:'PizzaPress'; font-size:1.2rem;">PRIZE LIST</span>
             <button onclick="closeViewer()" style="border:2px solid white; background:transparent; color:white; padding:5px 15px; border-radius:4px; font-weight:bold; cursor:pointer;">CLOSE X</button>
         </div>
@@ -352,7 +344,6 @@
                 const data = await response.json();
 
                 if (data.status === 'success') {
-                    // Filter Logic (Includes + Trim)
                     const driver = data.data.find(d => 
                         d.name.toLowerCase().includes(name)
                     );
@@ -414,4 +405,3 @@
 
 </body>
 </html>
-
