@@ -26,8 +26,8 @@
             --acc-blue: #0077bd;
             
             /* Backgrounds */
-            --off-white: #faf2e9; /* Crust Light */
-            --text-dark: #472b10; /* Crust Burnt */
+            --off-white: #faf2e9; 
+            --text-dark: #472b10; 
         }
 
         * { box-sizing: border-box; }
@@ -46,8 +46,8 @@
         .app-container {
             background-color: white;
             width: 100%;
-            max-width: 480px; /* Phone Width Limit */
-            display: flex;
+            max-width: 480px; 
+            display: flex;      /* This is important for the View Switcher */
             flex-direction: column;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
             min-height: 100vh;
@@ -134,7 +134,7 @@
             border-radius: 10px;
             padding: 20px;
             text-align: center;
-            display: none; /* Hidden by default */
+            display: none; 
             margin-top: 10px;
         }
 
@@ -182,31 +182,6 @@
             text-align: center;
         }
 
-                /* PDF Modal */
-        .pdf-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-            flex-direction: column;
-        }
-
-        .pdf-header {
-            background: white;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .pdf-frame {
-            flex-grow: 1;
-            width: 100%;
-            border: none;
-            background: white;
-        }
-
         /* Footer */
         footer {
             background-color: #eee;
@@ -226,80 +201,84 @@
 <body>
 
     <div class="app-container">
-        <header>
-            <!-- Logo Image (Bigger) -->
-            <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo" style="max-width: 220px; height: auto;">
-            
-            <!-- Title Below (Smaller) -->
-            <h1 style="font-size: 1.4rem; margin-top: 10px;">Driver Rewards</h1>
-        </header>
-
-        <main>
-            <!-- Step 1: Select Market -->
-            <div>
-                <label for="marketSelect">1. SELECT MARKET</label>
-                <select id="marketSelect">
-                    <option value="" disabled selected>Tap to choose...</option>
-                    <option value="Dallas">Dallas</option>
-                    <option value="Denver">Denver</option>
-                    <option value="El Paso">El Paso</option>
-                    <option value="LA">LA</option>
-                </select>
-            </div>
-
-            <!-- Step 2: Search Name -->
-            <div id="searchSection" style="opacity:0.5; pointer-events:none;">
-                <label for="nameInput">2. ENTER NAME</label>
-                <input type="text" id="nameInput" placeholder="e.g. John Smith">
+        
+        <!-- VIEW A: THE MAIN APP -->
+        <div id="app-view" style="display:flex; flex-direction:column; flex-grow:1;">
+            <header>
+                <!-- Logo Image (Bigger) -->
+                <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo" style="max-width: 220px; height: auto;">
                 
-                <button class="btn-main" id="searchBtn">Check My Points</button>
-            </div>
+                <!-- Title Below (Smaller) -->
+                <h1 style="font-size: 1.4rem; margin-top: 10px;">Driver Rewards</h1>
+            </header>
 
-            <!-- Loading Spinner -->
-            <div id="loading" style="display:none; text-align:center; padding:20px;">
-                <p>Checking Database...</p>
-            </div>
+            <main>
+                <!-- Step 1: Select Market -->
+                <div>
+                    <label for="marketSelect">1. SELECT MARKET</label>
+                    <select id="marketSelect">
+                        <option value="" disabled selected>Tap to choose...</option>
+                        <option value="Dallas">Dallas</option>
+                        <option value="Denver">Denver</option>
+                        <option value="El Paso">El Paso</option>
+                        <option value="LA">LA</option>
+                    </select>
+                </div>
 
-            <!-- Result Card -->
-            <div id="resultCard" class="results-card">
-                <div class="driver-name" id="resName">DRIVER NAME</div>
-                <div class="store-badge" id="resStore">Store #0000</div>
-                
-                <div class="points-label">Current Balance</div>
-                <div class="points-value" id="resPoints">0</div>
-                
-                <!-- Button triggers the modal -->
-                <button class="prize-btn" onclick="openPrizePdf()" style="width:100%; border:none; cursor:pointer;">
-                    🎁 VIEW PRIZE LIST
-                </button>
+                <!-- Step 2: Search Name -->
+                <div id="searchSection" style="opacity:0.5; pointer-events:none;">
+                    <label for="nameInput">2. ENTER NAME</label>
+                    <input type="text" id="nameInput" placeholder="e.g. John Smith">
+                    
+                    <button class="btn-main" id="searchBtn">Check My Points</button>
+                </div>
 
-            </div>
+                <!-- Loading Spinner -->
+                <div id="loading" style="display:none; text-align:center; padding:20px;">
+                    <p>Checking Database...</p>
+                </div>
 
-            <!-- Error Message -->
-            <div id="errorMsg" style="color:red; text-align:center; display:none;"></div>
-        </main>
+                <!-- Result Card -->
+                <div id="resultCard" class="results-card">
+                    <div class="driver-name" id="resName">DRIVER NAME</div>
+                    <div class="store-badge" id="resStore">Store #0000</div>
+                    
+                    <div class="points-label">Current Balance</div>
+                    <div class="points-value" id="resPoints">0</div>
+                    
+                    <!-- Button triggers the Viewer -->
+                    <button class="prize-btn" onclick="openPrizePdf()" style="width:100%; border:none; cursor:pointer;">
+                        🎁 VIEW PRIZE LIST
+                    </button>
+                </div>
 
-        <footer>
-            <p>Drive Safe. Earn Points. Win Big.</p>
-            <br>
-            <a href="#" onclick="adminLogin()" class="admin-link">Manager / DO Login</a>
-        </footer>
-    </div>
-    
-    <!-- PDF VIEWER MODAL -->
-    <div id="pdfModal" class="pdf-modal">
-        <div class="pdf-header">
-            <span style="font-family:'PizzaPress'; color:var(--brand-blue);">PRIZE LIST</span>
-            <button onclick="closePrizePdf()" style="background:var(--brand-red); color:white; border:none; padding:5px 15px; border-radius:4px; font-weight:bold;">X CLOSE</button>
+                <!-- Error Message -->
+                <div id="errorMsg" style="color:red; text-align:center; display:none;"></div>
+            </main>
+
+            <footer>
+                <p>Drive Safe. Earn Points. Win Big.</p>
+                <br>
+                <a href="#" onclick="adminLogin()" class="admin-link">Manager / DO Login</a>
+            </footer>
         </div>
-        <!-- Replace 'prizes.pdf' with your actual GitHub raw URL if needed -->
-        <iframe id="pdfFrame" class="pdf-frame" src=""></iframe>
+
+        <!-- VIEW B: THE PDF VIEWER (Hidden by Default) -->
+        <div id="pdf-view" style="display:none; height:100vh; flex-direction:column; background:white;">
+            <div style="padding:15px; background:var(--brand-red); color:white; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-family:'PizzaPress'; font-size:1.2rem;">PRIZE LIST</span>
+                <button onclick="closeViewer()" style="border:2px solid white; background:transparent; color:white; padding:5px 15px; border-radius:4px; font-weight:bold;">CLOSE X</button>
+            </div>
+            <!-- The iFrame -->
+            <iframe id="pdf-frame" src="" style="flex-grow:1; width:100%; border:none;"></iframe>
+        </div>
+
     </div>
 
     <script>
         // --- CONFIGURATION ---
-        // PASTE YOUR SCRIPT URL HERE
         const API_URL = "https://script.google.com/macros/s/AKfycbyiaMniI6OvMb2tDjA0ItpPnPXRpA8Bpu7LCvDcZHgG00z2T7IIV-WVAebGEr4WXuI8/exec"; 
+        const PDF_URL = "resources/drivosity/driver_prizes.pdf"; 
 
         const marketSelect = document.getElementById('marketSelect');
         const searchSection = document.getElementById('searchSection');
@@ -322,33 +301,28 @@
                 return;
             }
 
-            // UI Loading State
             document.getElementById('loading').style.display = 'block';
             document.getElementById('resultCard').style.display = 'none';
             document.getElementById('errorMsg').style.display = 'none';
             searchBtn.innerText = "Searching...";
 
             try {
-                // Fetch Data
                 const response = await fetch(`${API_URL}?action=getPoints&market=${market}`);
                 const data = await response.json();
 
                 if (data.status === 'success') {
-                    // Client-Side Search (Filter the list)
-                    // We search client side to save calls, assuming list < 2000 people
+                    // Filter Logic (Includes)
                     const driver = data.data.find(d => d.name.toLowerCase().includes(name));
 
                     document.getElementById('loading').style.display = 'none';
                     searchBtn.innerText = "Check My Points";
 
                     if (driver) {
-                        // Found!
                         document.getElementById('resName').innerText = driver.name;
                         document.getElementById('resStore').innerText = "Store #" + driver.store;
                         document.getElementById('resPoints').innerText = driver.points;
                         document.getElementById('resultCard').style.display = 'block';
                     } else {
-                        // Not Found
                         document.getElementById('errorMsg').innerText = "Driver not found in " + market + ". Check spelling.";
                         document.getElementById('errorMsg').style.display = 'block';
                     }
@@ -362,31 +336,34 @@
             }
         });
         
-        // PDF LOGIC
-        // Replace this with your actual PDF filename in the repo
-        const PDF_URL = "resources/drivosity/driver_prizes.pdf"; 
-
+        // VIEW SWITCHER LOGIC
         function openPrizePdf() {
-            document.getElementById('pdfFrame').src = PDF_URL;
-            document.getElementById('pdfModal').style.display = "flex";
+            // Hide App
+            document.getElementById('app-view').style.display = 'none';
+            // Show Viewer
+            document.getElementById('pdf-view').style.display = 'flex';
+            // Load PDF
+            document.getElementById('pdf-frame').src = PDF_URL;
         }
-
-        function closePrizePdf() {
-            document.getElementById('pdfModal').style.display = "none";
-            document.getElementById('pdfFrame').src = ""; // Clear to stop loading
+    
+        function closeViewer() {
+            // Hide Viewer
+            document.getElementById('pdf-view').style.display = 'none';
+            // Stop Loading (Save Data)
+            document.getElementById('pdf-frame').src = "";
+            // Show App
+            document.getElementById('app-view').style.display = 'flex';
         }
 
         // Simple Admin Gate
         function adminLogin() {
             const pass = prompt("Enter Manager Password:");
-            if (pass === "TeamWow") { // Change this password!
-                alert("Access Granted: Redirecting to Purchasing Portal...");
-                // window.location.href = "YOUR_PURCHASING_LINK_HERE";
+            if (pass === "TeamWow") { 
+                alert("Access Granted.");
+                // Add your real link here later
             }
         }
     </script>
 
 </body>
-
 </html>
-
