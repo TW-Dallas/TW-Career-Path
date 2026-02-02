@@ -454,18 +454,43 @@
                     if (data.count === 0) {
                         resultsDiv.innerHTML = '<p style="padding:20px;">No results found for "' + query + '" in ' + market + '.</p>';
                     } else {
-                        // Build Table
-                        let html = `<p style="margin-bottom:10px;">Found ${data.count} records for "${query}":</p>`;
-                        html += '<table class="results-table"><thead><tr><th>Name</th><th>Date</th><th>Class</th><th>Store</th></tr></thead><tbody>';
+                        // GROUP DATA BY NAME
+                        const grouped = groupDataByName(data.data);
                         
-                        data.data.forEach(row => {
-                            html += `<tr>
-                                <td><strong>${row.name}</strong></td>
-                                <td>${row.date}</td>
-                                <td>${row.class}</td>
-                                <td>${row.store}</td>
+                        // Build Grouped HTML
+                        let html = `<p style="margin-bottom:10px;">Found ${Object.keys(grouped).length} trainee(s) matching "${query}":</p>`;
+                        html += '<table class="results-table"><thead><tr><th>Name</th><th>Store</th><th>Classes</th><th>Action</th></tr></thead><tbody>';
+                        
+                        let index = 0;
+                        for (const personName in grouped) {
+                            const person = grouped[personName];
+                            const rowId = `row-${index}`;
+                            
+                            // Summary Row
+                            html += `<tr onclick="toggleRow('${rowId}')" style="cursor:pointer; font-weight:bold;">
+                                <td>${person.name}</td>
+                                <td>${person.store}</td>
+                                <td>${person.history.length} Completed</td>
+                                <td>▼</td>
                             </tr>`;
-                        });
+
+                            // Details Row (Hidden)
+                            html += `<tr id="${rowId}" style="display:none; background-color:#fff;">
+                                <td colspan="4" style="padding:0;">
+                                    <div style="padding:15px; border-left: 4px solid var(--brand-blue);">
+                                        <h4 style="margin-bottom:5px; font-family:'PizzaPress';">Class History</h4>
+                                        <ul style="padding-left:20px;">
+                                            ${person.history.map(c => `
+                                                <li style="margin-bottom:5px;">
+                                                    <strong>${c.date}</strong>: ${c.class}
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>`;
+                            index++;
+                        }
                         
                         html += '</tbody></table>';
                         resultsDiv.innerHTML = html;
@@ -477,6 +502,37 @@
             } catch (e) {
                 console.error(e);
                 resultsDiv.innerHTML = '<p style="color:red">Connection Error. Please try again.</p>';
+            }
+        }
+
+        // Helper: Group Flat Data by Name
+        function groupDataByName(flatList) {
+            const groups = {};
+            flatList.forEach(item => {
+                // Use Name as key. 
+                // Note: If you have two "John Smiths", this will merge them. 
+                // Ideally we'd use Employee ID, but we work with what we have!
+                const key = item.name.trim(); 
+                
+                if (!groups[key]) {
+                    groups[key] = {
+                        name: item.name,
+                        store: item.store,
+                        history: []
+                    };
+                }
+                groups[key].history.push(item);
+            });
+            return groups;
+        }
+
+        // Toggle Accordion
+        function toggleRow(id) {
+            const row = document.getElementById(id);
+            if (row.style.display === "none") {
+                row.style.display = "table-row";
+            } else {
+                row.style.display = "none";
             }
         }
 
@@ -501,6 +557,3 @@
             }
         });
     </script>
-
-</body>
-</html>
