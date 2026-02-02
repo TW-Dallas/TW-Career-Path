@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Wow Trainer Portal</title>
+    <title>Team Wow Trainer Portal v2</title>
     <style>
         /* --- FONT LOADING --- */
         @font-face {
@@ -56,7 +56,7 @@
             color: var(--crust-burnt);
             height: 100vh;
             display: flex;
-            overflow: hidden; /* Prevent body scroll, handle in main */
+            overflow: hidden; 
         }
 
         h1, h2, h3 {
@@ -83,16 +83,16 @@
         }
 
         .sidebar-logo {
-            max-width: 180px; /* Adjust size as needed */
+            max-width: 180px;
             height: auto;
             display: block;
             margin: 0 auto;
         }
-        
+
         .portal-title {
             font-family: 'PizzaPress', serif;
             font-size: 1.2rem;
-            color: var(--crust-med); /* Nice contrast against the dark blue */
+            color: var(--crust-med);
             margin-top: 15px;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -133,7 +133,7 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            overflow-y: auto; /* Scroll inside main area */
+            overflow-y: auto; 
         }
 
         /* Header */
@@ -151,6 +151,16 @@
             font-family: 'OneDotCd-Bold';
             color: var(--dark-blue);
             font-size: 1.2rem;
+        }
+
+        .market-select {
+            padding: 8px;
+            font-family: 'OneDotCd';
+            border-radius: 4px;
+            border: 1px solid var(--crust-dark);
+            background: var(--crust-light);
+            color: var(--crust-deep);
+            font-weight: bold;
         }
 
         /* Dashboard Grid */
@@ -201,6 +211,8 @@
             margin-top: 15px;
             border: none;
             cursor: pointer;
+            width: 100%;
+            text-align: center;
         }
         
         .btn:hover { background-color: var(--acc-blue); }
@@ -212,73 +224,105 @@
             border-radius: 4px;
             font-family: 'OneDotCd';
             font-size: 1rem;
+            margin-bottom: 5px;
         }
 
-        /* --- MOBILE BOTTOM NAV (Hidden on Desktop) --- */
-        .bottom-nav {
-            display: none;
+        /* --- MODAL (POPUP) STYLES --- */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(2px);
         }
 
-        /* --- RESPONSIVE ADJUSTMENTS --- */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-top: 6px solid var(--brand-blue);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Results Table */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .results-table th {
+            text-align: left;
+            padding: 12px;
+            background-color: var(--dark-blue);
+            color: white;
+            font-family: 'OneDotCd-Bold';
+        }
+
+        .results-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .results-table tr:nth-child(even) {background-color: #f2f2f2;}
+        .results-table tr:hover {background-color: var(--crust-med);}
+
+
+        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-
-            /* Hide Sidebar */
-            .sidebar {
-                display: none;
-            }
-
-            /* Show Bottom Nav */
+            body { flex-direction: column; }
+            .sidebar { display: none; }
+            
             .bottom-nav {
                 display: flex;
                 position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
+                bottom: 0; left: 0; width: 100%;
                 height: var(--bottom-nav-height);
                 background-color: var(--dark-blue);
                 justify-content: space-around;
                 align-items: center;
-                box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
                 z-index: 1000;
             }
-
             .nav-item-mobile {
-                color: white;
-                text-decoration: none;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                font-size: 0.8rem;
-                font-family: 'OneDotCd-Bold';
-                opacity: 0.7;
+                color: white; text-decoration: none;
+                display: flex; flex-direction: column;
+                align-items: center; font-size: 0.8rem;
+                font-family: 'OneDotCd-Bold'; opacity: 0.7;
             }
-
-            .nav-item-mobile.active, .nav-item-mobile:hover {
-                opacity: 1;
-            }
-
-            .mobile-icon {
-                font-size: 1.2rem;
-                margin-bottom: 4px;
-            }
-
-            /* Adjust Main Content for Mobile */
-            .main-content {
-                padding-bottom: var(--bottom-nav-height); /* Make space for nav */
-            }
-
-            .top-header {
-                padding: 0 15px;
-            }
-
-            .dashboard-container {
-                padding: 15px;
-                grid-template-columns: 1fr; /* Stack cards */
-            }
+            .nav-item-mobile.active { opacity: 1; }
+            .mobile-icon { font-size: 1.2rem; margin-bottom: 4px; }
+            
+            .main-content { padding-bottom: var(--bottom-nav-height); }
+            .dashboard-container { grid-template-columns: 1fr; }
+            .modal-content { width: 95%; margin: 20% auto; }
         }
+        
+        .bottom-nav { display: none; } /* Default hidden on desktop */
+
     </style>
 </head>
 <body>
@@ -290,28 +334,21 @@
             <div class="portal-title">TRAINER PORTAL</div>
         </div>
         <div class="nav-links">
-            <a href="#" class="nav-item active">
-                <span class="nav-icon">📊</span> Dashboard
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">📋</span> Class Roster
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">🔍</span> Trainee Search
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">📚</span> Decks & Resources
-            </a>
+            <a href="#" class="nav-item active"><span class="nav-icon">📊</span> Dashboard</a>
+            <a href="#" class="nav-item"><span class="nav-icon">📋</span> Class Roster</a>
+            <a href="#" class="nav-item"><span class="nav-icon">🔍</span> Trainee Search</a>
+            <a href="#" class="nav-item"><span class="nav-icon">📚</span> Decks & Resources</a>
         </div>
     </nav>
 
     <!-- Main Content Area -->
     <main class="main-content">
+        <!-- Top Header -->
         <header class="top-header">
             <div class="user-welcome">Good Morning, Mike</div>
             
-            <!-- NEW MARKET SELECTOR -->
-            <select id="marketSelect" style="padding: 5px; font-family:'OneDotCd'; border-radius:4px;">
+            <!-- Market Select -->
+            <select id="marketSelect" class="market-select">
                 <option value="Dallas">Market: Dallas</option>
                 <option value="Denver">Market: Denver</option>
                 <option value="El Paso">Market: El Paso</option>
@@ -324,7 +361,7 @@
         <!-- Dashboard Grid -->
         <div class="dashboard-container">
             
-            <!-- Card 1: Next Class (Urgent) -->
+            <!-- Card 1: Next Class -->
             <div class="card urgent">
                 <div class="card-header">
                     <span>NEXT CLASS</span>
@@ -334,25 +371,24 @@
                     <strong>Pizza Prep 101</strong><br>
                     Tomorrow @ 2:00 PM<br>
                     <span style="color:var(--dark-blue)">3 Trainees Enrolled</span>
-                    <br>
                     <button class="btn">View Roster</button>
                 </div>
             </div>
 
-            <!-- Card 2: Quick Search (Action) -->
+            <!-- Card 2: Quick Search (Functional) -->
             <div class="card action">
                 <div class="card-header">
                     <span>QUICK FIND</span>
                     <span>🔍</span>
                 </div>
                 <div class="card-body">
-                    <p style="margin-bottom:10px;">Find a trainee or resource:</p>
-                    <input type="text" class="search-input" placeholder="Enter Name or ID...">
-                    <button class="btn">Search</button>
+                    <p style="margin-bottom:10px;">Find trainee history:</p>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Enter Name or Store #...">
+                    <button id="searchBtn" class="btn" onclick="handleSearch()">Search</button>
                 </div>
             </div>
 
-            <!-- Card 3: Recent Activity (Info) -->
+            <!-- Card 3: Recent Activity -->
             <div class="card info">
                 <div class="card-header">
                     <span>RECENT FLAGS</span>
@@ -360,15 +396,8 @@
                 </div>
                 <div class="card-body">
                     <ul style="list-style: none;">
-                        <li style="border-bottom:1px solid #eee; padding: 5px 0;">
-                            <strong>John Doe</strong> - No Show (2/1)
-                        </li>
-                        <li style="border-bottom:1px solid #eee; padding: 5px 0;">
-                            <strong>Jane Smith</strong> - Passed Lvl 1
-                        </li>
-                        <li style="padding: 5px 0;">
-                            <strong>Store 5521</strong> - Req. Training
-                        </li>
+                        <li style="border-bottom:1px solid #eee; padding: 5px 0;"><strong>John Doe</strong> - No Show</li>
+                        <li style="border-bottom:1px solid #eee; padding: 5px 0;"><strong>Jane Smith</strong> - Passed Lvl 1</li>
                     </ul>
                     <button class="btn" style="background-color:var(--crust-deep)">View All</button>
                 </div>
@@ -379,26 +408,99 @@
 
     <!-- Mobile Bottom Nav -->
     <nav class="bottom-nav">
-        <a href="#" class="nav-item-mobile active">
-            <span class="mobile-icon">📊</span>
-            <span>Home</span>
-        </a>
-        <a href="#" class="nav-item-mobile">
-            <span class="mobile-icon">📋</span>
-            <span>Rosters</span>
-        </a>
-        <a href="#" class="nav-item-mobile">
-            <span class="mobile-icon">🔍</span>
-            <span>Search</span>
-        </a>
-        <a href="#" class="nav-item-mobile">
-            <span class="mobile-icon">📚</span>
-            <span>Tools</span>
-        </a>
+        <a href="#" class="nav-item-mobile active"><span class="mobile-icon">📊</span><span>Home</span></a>
+        <a href="#" class="nav-item-mobile"><span class="mobile-icon">📋</span><span>Rosters</span></a>
+        <a href="#" class="nav-item-mobile"><span class="mobile-icon">🔍</span><span>Search</span></a>
     </nav>
 
+    <!-- RESULTS MODAL -->
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Search Results</h2>
+            <div id="resultsBody">
+                <!-- Data goes here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // API Configuration
+        const API_URL = "https://script.google.com/macros/s/AKfycbwyjGiK8CCoQWsY1eThGg3_g_8IMw88yq58laaywe0EZYnNcBkvfMCOJW_I2FAqknYKug/exec";
+
+        // Search Function
+        async function handleSearch() {
+            const query = document.getElementById('searchInput').value;
+            const market = document.getElementById('marketSelect').value;
+            const resultsDiv = document.getElementById('resultsBody');
+            const modal = document.getElementById('resultsModal');
+
+            if(!query) {
+                alert("Please enter a name or store number.");
+                return;
+            }
+
+            // Open Modal & Show Loading
+            modal.style.display = "block";
+            resultsDiv.innerHTML = '<p style="padding:20px; text-align:center;">Searching database... <br> (This may take a few seconds)</p>';
+
+            try {
+                // Fetch Data
+                const response = await fetch(`${API_URL}?action=search&market=${market}&query=${query}`);
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    if (data.count === 0) {
+                        resultsDiv.innerHTML = '<p style="padding:20px;">No results found for "' + query + '" in ' + market + '.</p>';
+                    } else {
+                        // Build Table
+                        let html = `<p style="margin-bottom:10px;">Found ${data.count} records for "${query}":</p>`;
+                        html += '<table class="results-table"><thead><tr><th>Name</th><th>Date</th><th>Class</th><th>Store</th></tr></thead><tbody>';
+                        
+                        data.data.forEach(row => {
+                            html += `<tr>
+                                <td><strong>${row.name}</strong></td>
+                                <td>${row.date}</td>
+                                <td>${row.class}</td>
+                                <td>${row.store}</td>
+                            </tr>`;
+                        });
+                        
+                        html += '</tbody></table>';
+                        resultsDiv.innerHTML = html;
+                    }
+                } else {
+                    resultsDiv.innerHTML = '<p style="color:red">Error: ' + data.error + '</p>';
+                }
+
+            } catch (e) {
+                console.error(e);
+                resultsDiv.innerHTML = '<p style="color:red">Connection Error. Please try again.</p>';
+            }
+        }
+
+        // Close Modal Logic
+        function closeModal() {
+            document.getElementById('resultsModal').style.display = "none";
+        }
+
+        // Close if clicked outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('resultsModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        // Enter key to search
+        document.getElementById("searchInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("searchBtn").click();
+            }
+        });
+    </script>
+
 </body>
-
 </html>
-
-
