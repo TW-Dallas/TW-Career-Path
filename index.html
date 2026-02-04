@@ -230,7 +230,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-                /* MODAL STYLES */
+        /* MODAL STYLES */
         .modal-overlay {
             display: none; /* Hidden by default */
             position: fixed;
@@ -306,19 +306,29 @@
             background-color: var(--acc-red);
         }
         
+        /* Footer Button Wrapper */
+        .footer-support-wrapper {
+            text-align: center;
+            padding: 20px;
+            /* Removed background-color: var(--crust-light); */
+            background: transparent; 
+        }
+        
         /* Footer Button Style */
         .footer-support-btn {
-            background: none;
-            border: 1px solid var(--brand-blue);
-            color: var(--brand-blue);
-            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1); /* Slight white tint */
+            border: 1px solid white;
+            color: white;
+            padding: 8px 20px;
             border-radius: 20px;
             cursor: pointer;
             font-family: 'OneDotCd-Bold';
+            transition: all 0.2s ease;
         }
+        
         .footer-support-btn:hover {
-            background-color: var(--brand-blue);
-            color: white;
+            background-color: white;
+            color: var(--brand-blue);
         }
 
         /* Mobile: Un-stick it and center it */
@@ -533,7 +543,7 @@
         <p style="margin-top:5px; font-size: 0.7em;">Powered by Crust & Code</p>
 
          <!-- THE TRIGGER BUTTON (Place this in your Footer) -->
-        <div style="text-align: center; padding: 20px; background-color: var(--crust-light);">
+        <div class="footer-support-wrapper">
             <button onclick="toggleSupportModal()" class="footer-support-btn">Technical Support / Feedback</button>
         </div>
     </footer>
@@ -735,4 +745,5 @@
     </script>
 </body>
 </html>
+
 
