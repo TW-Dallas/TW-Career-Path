@@ -24,6 +24,8 @@
             display: flex; flex-direction: column; 
             box-shadow: 0 0 20px rgba(0,0,0,0.5); min-height: 100dvh; 
             position: relative; z-index: 1;
+            padding-bottom: 40px; /* Give it room to breathe at the bottom */
+            margin-bottom: 20px; /* Push it up from the bottom edge slightly */
         }
 
         /* Header */
@@ -274,14 +276,21 @@
         </main>
 
         <footer>
+            <!-- 1. Slogan -->
             <span class="footer-slogan">Drive Safe. Earn Points. Win Big.</span>
             
-            <a href="#" class="admin-link">Manager / DO Login</a>
-            
+            <!-- 2. Support Button (Promoted!) -->
             <div class="footer-support-wrapper">
                 <button onclick="toggleSupportModal()" class="footer-support-btn">Technical Support / Feedback</button>
             </div>
+        
+            <!-- 3. Spacer -->
+            <div style="height: 20px;"></div>
+        
+            <!-- 4. Admin Link (Demoted to bottom) -->
+            <a href="#" class="admin-link">Manager / DO Login</a>
         </footer>
+
     </div>
 
     <!-- PDF VIEWER -->
@@ -580,6 +589,7 @@
     </script>
 </body>
 </html>
+
 
 
 
