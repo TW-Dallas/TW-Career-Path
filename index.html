@@ -229,7 +229,98 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+
+                /* MODAL STYLES */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+            backdrop-filter: blur(2px);
+        }
         
+        .modal-content {
+            background-color: white;
+            margin: 10% auto; /* 10% from top, centered */
+            padding: 25px;
+            border: 2px solid var(--brand-blue);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            font-family: 'OneDotCd', sans-serif;
+            position: relative;
+        }
+        
+        .close-modal {
+            color: var(--brand-red);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-modal:hover {
+            color: var(--dark-red);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-family: 'OneDotCd-Bold';
+            color: var(--brand-blue);
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--crust-dark);
+            border-radius: 4px;
+            font-family: 'OneDotCd';
+            font-size: 16px;
+            box-sizing: border-box; /* Fixes padding width issues */
+        }
+        
+        #supportSubmitBtn {
+            background-color: var(--brand-red);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-family: 'OneDotCd-Bold';
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        
+        #supportSubmitBtn:hover {
+            background-color: var(--acc-red);
+        }
+        
+        /* Footer Button Style */
+        .footer-support-btn {
+            background: none;
+            border: 1px solid var(--brand-blue);
+            color: var(--brand-blue);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'OneDotCd-Bold';
+        }
+        .footer-support-btn:hover {
+            background-color: var(--brand-blue);
+            color: white;
+        }
+
         /* Mobile: Un-stick it and center it */
         @media (max-width: 768px) {
             .learning-btn {
@@ -440,6 +531,11 @@
     <footer>
         <p>&copy; 2026 Team Wow! | Domino's Pizza</p>
         <p style="margin-top:5px; font-size: 0.7em;">Powered by Crust & Code</p>
+
+         <!-- THE TRIGGER BUTTON (Place this in your Footer) -->
+        <div style="text-align: center; padding: 20px; background-color: var(--crust-light);">
+            <button onclick="toggleSupportModal()" class="footer-support-btn">Technical Support / Feedback</button>
+        </div>
     </footer>
     
     <!-- Add this Modal HTML first (hidden by default) -->
@@ -503,6 +599,39 @@
         </div>
     </div>
 
+    <!-- SUPPORT MODAL -->
+    <div id="supportModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleSupportModal()">&times;</span>
+            <h2 style="font-family: 'PizzaPress'; color: var(--brand-blue);">Report an Issue</h2>
+            <p style="font-family: 'OneDotCd'; color: var(--crust-deep);">Found a bug? Need help? Let us know.</p>
+            
+            <form id="supportForm" onsubmit="submitSupport(event)">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" id="supportName" required placeholder="Your Name">
+                </div>
+    
+                <div class="form-group">
+                    <label>Issue Type</label>
+                    <select name="issueType" id="supportType">
+                        <option value="Bug/Broken Link">Bug / Broken Link</option>
+                        <option value="Typo/Content Error">Typo / Content Error</option>
+                        <option value="Feature Request">Feature Request</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" id="supportMessage" rows="4" required placeholder="Describe the issue..."></textarea>
+                </div>
+    
+                <button type="submit" id="supportSubmitBtn">Send Report</button>
+                <div id="supportStatus"></div>
+            </form>
+        </div>
+    </div>
 
     <script>
         function showSITInfo(e) {
@@ -541,21 +670,68 @@
             document.getElementById('content-frame').src = ""; 
         }
 
+        const SCRIPT_URL = 'PASTE_YOUR_WEB_APP_URL_HERE'; 
+
+        function toggleSupportModal() {
+            const modal = document.getElementById('supportModal');
+            if (modal.style.display === "block") {
+                modal.style.display = "none";
+            } else {
+                modal.style.display = "block";
+            }
+        }
+        
+        // Close modal if user clicks outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('supportModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        function submitSupport(e) {
+            e.preventDefault();
+            const btn = document.getElementById('supportSubmitBtn');
+            const status = document.getElementById('supportStatus');
+            
+            btn.disabled = true;
+            btn.textContent = "Sending...";
+            
+            const formData = new FormData(document.getElementById('supportForm'));
+            
+            // Add parameters manually to URL for GET/POST fetch
+            // Note: We use 'no-cors' mode for GAS, but it's cleaner to just build the URL params
+            const data = new URLSearchParams();
+            for (const pair of formData) {
+                data.append(pair[0], pair[1]);
+            }
+        
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: data
+            })
+            .then(response => {
+                btn.textContent = "Sent!";
+                btn.style.backgroundColor = "var(--brand-blue)";
+                status.innerHTML = "<p style='color: green; text-align: center;'>Thank you! We received your report.</p>";
+                
+                setTimeout(() => {
+                    toggleSupportModal(); // Close modal after 2s
+                    document.getElementById('supportForm').reset(); // Reset form
+                    btn.disabled = false;
+                    btn.textContent = "Send Report";
+                    btn.style.backgroundColor = "var(--brand-red)";
+                    status.innerHTML = "";
+                }, 2000);
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                status.innerHTML = "<p style='color: red;'>Error sending report. Please try again.</p>";
+                btn.disabled = false;
+                btn.textContent = "Try Again";
+            });
+        }
+
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
