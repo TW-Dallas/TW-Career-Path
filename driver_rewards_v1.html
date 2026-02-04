@@ -4,74 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driver Rewards</title>
+    <!-- Favicon (Optional) -->
+    <link rel="icon" type="image/png" href="https://cdn.iconscout.com/icon/free/png-256/free-dominos-pizza-282245.png">
+    
     <style>
-        /* --- BRANDING --- */
-        @font-face { font-family: 'PizzaPress'; src: url('fonts/Dominos Sans Header 1.ttf') format('truetype'); }
-        @font-face { font-family: 'OneDotCd-Bold'; src: url('fonts/Dominos Sans Bold.ttf') format('truetype'); }
-        @font-face { font-family: 'OneDotCd'; src: url('fonts/Dominos Sans Body.ttf') format('truetype'); }
+        /* --- FONTS --- */
+        @font-face { font-family: 'PizzaPress'; src: url('fonts/Dominos Sans Header 1.ttf') format('truetype'); font-weight: normal; }
+        @font-face { font-family: 'OneDotCd-Bold'; src: url('fonts/Dominos Sans Bold.ttf') format('truetype'); font-weight: bold; }
+        @font-face { font-family: 'OneDotCd'; src: url('fonts/Dominos Sans Body.ttf') format('truetype'); font-weight: normal; }
 
+        /* --- BRAND VARIABLES (Matches Main Site) --- */
         :root {
-            --brand-blue: #0090e2; --brand-red: #ff0000; --acc-blue: #0077bd;
-            --off-white: #faf2e9; --text-dark: #472b10; 
+            --brand-red: #ff0000;
+            --brand-blue: #0090e2;
+            --dark-blue: #005c91;
+            --acc-blue: #0077bd;
+            --crust-light: #faf2e9;
+            --crust-dark: #c0a588;
+            --off-white: #faf2e9;
+            --text-dark: #472b10;
         }
 
-        /* --- GLOBAL LAYOUT --- */
+        /* --- LAYOUT --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body { 
             font-family: 'OneDotCd', sans-serif; 
-            background-color: var(--crust-light); /* The Beige Backdrop */
-            margin: 0; padding: 0; 
-            display: flex; justify-content: center; 
+            background-color: var(--crust-light); 
+            display: flex; flex-direction: column; 
             min-height: 100vh; 
         }
+
+        /* --- HEADER (Matches Main Site) --- */
+        header { 
+            background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue));
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 6px solid var(--brand-red);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
         
-        /* --- THE CARD --- */
+        .logo { max-width: 250px; height: auto; margin-bottom: 5px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); }
+        h1 { font-family: 'PizzaPress'; margin: 0; color: white; font-size: 1.4rem; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+
+        /* --- MAIN CARD (Floating on Beige) --- */
         .app-container {
             background-color: white; 
             width: 94%; 
             max-width: 480px; 
-            margin: 20px auto; 
+            margin: 30px auto; 
+            padding: 25px;
             border-radius: 12px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
-            overflow: hidden; 
-            min-height: auto; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
+            flex-grow: 1; 
+            height: fit-content;
             display: flex; flex-direction: column;
         }
+
+        /* --- INPUTS --- */
+        label { font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.1rem; display: block; margin-bottom: 8px; }
+        select, input { width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid #ddd; border-radius: 8px; background: #fff; font-family: 'OneDotCd'; margin-bottom: 20px; color: #333; }
+        select:focus, input:focus { border-color: var(--brand-blue); outline: none; background: #fff; }
         
-        /* --- HEADER --- */
-        header { 
-            background-color: white; /* Keep White if you want the logo on white */
-            /* OR change to var(--brand-blue) and make text white if you want the Blue Header look */
-            padding: 20px; 
-            text-align: center; 
-            border-bottom: 5px solid var(--brand-red); 
-        }
-        .logo { max-width: 220px; height: auto; margin-bottom: 5px; }
-        h1 { font-family: 'PizzaPress'; margin: 0; color: var(--brand-blue); font-size: 1.4rem; text-transform: uppercase; }
-
-        /* Main Body */
-        main { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; gap: 20px; }
-
-        /* Inputs */
-        label { font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.1rem; display: block; margin-bottom: 5px; }
-        select, input { width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid #ccc; border-radius: 8px; background: var(--off-white); font-family: 'OneDotCd'; margin-bottom: 15px; }
-        .btn-main { background-color: var(--brand-red); color: white; width: 100%; padding: 15px; font-size: 1.2rem; border: none; border-radius: 8px; font-family: 'PizzaPress'; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 0 #990000; }
+        .btn-main { background-color: var(--brand-red); color: white; width: 100%; padding: 15px; font-size: 1.3rem; border: none; border-radius: 8px; font-family: 'PizzaPress'; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 0 #b30000; transition: transform 0.1s; }
         .btn-main:active { transform: translateY(4px); box-shadow: none; }
 
-        /* Results Card */
-        .results-card { background-color: var(--off-white); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 20px; text-align: center; display: none; margin-top: 10px; }
+        /* --- RESULTS CARD --- */
+        .results-card { background-color: var(--crust-light); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 20px; text-align: center; display: none; margin-top: 10px; }
         .points-value { font-family: 'PizzaPress'; font-size: 4rem; color: var(--brand-blue); line-height: 1; margin: 10px 0; }
         .prize-btn { display: block; background-color: var(--brand-blue); color: white; text-decoration: none; padding: 15px; border-radius: 8px; font-family: 'OneDotCd-Bold'; margin-top: 20px; text-align: center; border: none; cursor: pointer; width: 100%; }
 
         /* --- ADMIN STYLES --- */
-        .admin-section { display: none; flex-direction: column; gap: 15px; }
+        .admin-section { display: none; flex-direction: column; gap: 15px; margin-top: 20px; }
         .admin-header { background: var(--text-dark); color: white; padding: 10px; text-align: center; font-family: 'PizzaPress'; }
         .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 10px; }
         .data-table th { background: var(--brand-blue); color: white; padding: 8px; text-align: left; }
         .data-table td { border-bottom: 1px solid #ccc; padding: 8px; }
         .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .link-btn { background: #ddd; padding: 10px; text-align: center; border-radius: 4px; text-decoration: none; color: black; font-weight: bold; font-size: 0.9rem; display:block; border: 1px solid #ccc; }
+        .link-btn { background: #eee; padding: 10px; text-align: center; border-radius: 4px; text-decoration: none; color: #333; font-weight: bold; font-size: 0.9rem; display:block; border: 1px solid #ccc; }
 
-        /* --- PDF VIEWER STYLING --- */
+        /* --- PDF VIEWER --- */
         #pdf-view {
             display: none; flex-direction: column; background: white; z-index: 2000;
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -82,112 +95,20 @@
             #pdf-view { top: 0; left: 0; transform: none; width: 100%; height: 100%; border-radius: 0; border: none; box-shadow: none; }
         }
 
-        /* MODAL STYLES */
-        .modal-overlay {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
-            backdrop-filter: blur(2px);
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 10% auto; /* 10% from top, centered */
-            padding: 25px;
-            border: 2px solid var(--brand-blue);
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            font-family: 'OneDotCd', sans-serif;
-            position: relative;
-        }
-        
-        .close-modal {
-            color: var(--brand-red);
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .close-modal:hover {
-            color: var(--dark-red);
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-family: 'OneDotCd-Bold';
-            color: var(--brand-blue);
-        }
-        
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--crust-dark);
-            border-radius: 4px;
-            font-family: 'OneDotCd';
-            font-size: 16px;
-            box-sizing: border-box; /* Fixes padding width issues */
-        }
-        
-        #supportSubmitBtn {
-            background-color: var(--brand-red);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-family: 'OneDotCd-Bold';
-            font-size: 18px;
-            cursor: pointer;
-            width: 100%;
-            border-radius: 4px;
-            transition: background 0.2s;
-        }
-        
-        #supportSubmitBtn:hover {
-            background-color: var(--acc-red);
-        }
-        
+        /* --- FOOTER (Matches Main Site) --- */
         footer {
-            background-color: var(--brand-blue); /* Solid Blue */
-            padding: 20px;
+            background-color: var(--dark-blue); 
+            color: white;
+            padding: 3rem 2rem;
             text-align: center;
             margin-top: auto;
         }
-        
-        /* Slogan - White */
-        .footer-slogan {
-            color: white; 
-            font-family: 'PizzaPress';
-            font-size: 1.2rem;
-            display: block;
-            margin-bottom: 15px;
-        }
-        
-        /* Link - White/Light Blue */
-        .admin-link {
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 25px; 
-            text-decoration: none;
-            font-size: 0.8rem; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .footer-slogan { display: block; font-family: 'PizzaPress'; font-size: 1.2rem; color: white; margin-bottom: 15px; }
+        .admin-link { display: block; margin-bottom: 25px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
         .admin-link:hover { color: white; text-decoration: underline; }
-        
-        /* Button - White Outline (Ghost) */
+
         .footer-support-btn {
-            background: transparent; 
+            background: rgba(255, 255, 255, 0.15); 
             border: 1px solid white;
             color: white;
             padding: 10px 24px; 
@@ -196,28 +117,27 @@
             font-family: 'OneDotCd-Bold';
             font-size: 0.9rem;
             transition: all 0.2s ease;
-            width: 100%; 
-            max-width: 300px;
         }
-        
-        .footer-support-btn:hover {
-            background-color: white;
-            color: var(--brand-blue);
-        }
+        .footer-support-btn:hover { background-color: white; color: var(--brand-blue); }
 
+        /* --- SUPPORT MODAL --- */
+        .modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
+        .modal-content { background-color: white; margin: 10% auto; padding: 25px; border: 2px solid var(--brand-blue); border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); position: relative; }
+        .close-modal { color: var(--brand-red); float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        #supportSubmitBtn { background-color: var(--brand-blue); color: white; width: 100%; padding: 12px; border: none; border-radius: 4px; font-family: 'OneDotCd-Bold'; cursor: pointer; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
+    <!-- HEADER -->
+    <header>
+        <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo">
+        <h1>Driver Rewards</h1>
+    </header>
+
     <!-- MAIN APP CONTAINER -->
     <div class="app-container" id="app-view">
-        <header>
-            <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo">
-            <h1>Driver Rewards</h1>
-        </header>
-
         <main>
-            
             <!-- VIEW 1: DRIVER SEARCH (Default) -->
             <div id="driver-view">
                 <div>
@@ -237,21 +157,22 @@
                     <button class="btn-main" id="searchBtn">Check My Points</button>
                 </div>
 
-                <div id="loading" style="display:none; text-align:center; padding:20px;"><p>Checking Database...</p></div>
+                <div id="loading" style="display:none; text-align:center; padding:20px; color:var(--brand-blue); font-weight:bold;"><p>Checking Database...</p></div>
 
                 <div id="resultCard" class="results-card">
-                    <div class="driver-name" id="resName">DRIVER NAME</div>
-                    <div class="store-badge" id="resStore">Store #0000</div>
-                    <div class="points-label">Current Balance</div>
+                    <div class="driver-name" id="resName" style="font-family:'OneDotCd-Bold'; font-size:1.2rem; margin-bottom:5px;">DRIVER NAME</div>
+                    <div class="store-badge" id="resStore" style="color:#666; margin-bottom:15px;">Store #0000</div>
+                    <div class="points-label" style="text-transform:uppercase; letter-spacing:1px; font-size:0.9rem;">Current Balance</div>
                     <div class="points-value" id="resPoints">0</div>
                     <button class="prize-btn" onclick="openPrizePdf()">🎁 VIEW PRIZE LIST</button>
+                    <button onclick="document.getElementById('resultCard').style.display='none'; document.getElementById('searchSection').style.display='block'; document.getElementById('nameInput').value='';" style="background:transparent; border:none; color:var(--brand-blue); text-decoration:underline; margin-top:15px; cursor:pointer;">Check Another</button>
                 </div>
-                <div id="errorMsg" style="color:red; text-align:center; display:none;"></div>
+                <div id="errorMsg" style="color:red; text-align:center; display:none; margin-top:10px;"></div>
             </div>
 
             <!-- VIEW 3: ADMIN DASHBOARD (Hidden) -->
             <div id="admin-view" class="admin-section">
-                <div class="admin-header">MANAGER DASHBOARD <button onclick="logoutAdmin()" style="float:right; font-size:0.8rem; background:red; color:white; border:none; padding:2px 5px;">LOGOUT</button></div>
+                <div class="admin-header">MANAGER DASHBOARD <button onclick="logoutAdmin()" style="float:right; font-size:0.8rem; background:red; color:white; border:none; padding:2px 5px; cursor:pointer;">LOGOUT</button></div>
                 
                 <label>PURCHASE PRIZES</label>
                 <div id="adminLinks" class="link-grid">
@@ -266,33 +187,30 @@
                     <option value="">Filter by Store...</option>
                 </select>
 
-                <div id="adminTableContainer" style="overflow-y:auto; max-height:400px;">
+                <div id="adminTableContainer" style="overflow-y:auto; max-height:400px; border:1px solid #eee;">
                     <table class="data-table" id="adminTable">
                         <thead><tr><th>Name</th><th>Store</th><th>Points</th></tr></thead>
                         <tbody><tr><td colspan="3">Select a DO to view data.</td></tr></tbody>
                     </table>
                 </div>
             </div>
-
         </main>
-
-        <footer>
-            <!-- 1. Slogan -->
-            <span class="footer-slogan">Drive Safe. Earn Points. Win Big.</span>
-            
-            <!-- 2. Support Button (Promoted!) -->
-            <div class="footer-support-wrapper">
-                <button onclick="toggleSupportModal()" class="footer-support-btn">Technical Support / Feedback</button>
-            </div>
-        
-            <!-- 3. Spacer -->
-            <div style="height: 20px;"></div>
-        
-            <!-- 4. Admin Link (Demoted to bottom) -->
-            <a href="#" class="admin-link">Manager / DO Login</a>
-        </footer>
-
     </div>
+
+    <!-- FOOTER (OUTSIDE Container) -->
+    <footer>
+        <span class="footer-slogan">Drive Safe. Earn Points. Win Big.</span>
+        
+        <div class="footer-support-wrapper">
+            <button onclick="toggleSupportModal()" class="footer-support-btn">Technical Support / Feedback</button>
+        </div>
+    
+        <div style="height: 20px;"></div>
+    
+        <a href="#" class="admin-link" onclick="adminLogin()">Manager / DO Login</a>
+        <p style="font-size: 0.7em; opacity: 0.5;">&copy; 2026 Team Wow! | Domino's Pizza</p>
+        <p style="margin-top:5px; font-size: 0.7em;">Powered by Crust & Code</p>
+    </footer>
 
     <!-- PDF VIEWER -->
     <div id="pdf-view">
@@ -308,14 +226,13 @@
         <div class="modal-content">
             <span class="close-modal" onclick="toggleSupportModal()">&times;</span>
             <h2 style="font-family: 'PizzaPress'; color: var(--brand-blue);">Report an Issue</h2>
-            <p style="font-family: 'OneDotCd'; color: var(--crust-deep);">Found a bug? Need help? Let us know.</p>
+            <p style="font-family: 'OneDotCd'; color: var(--crust-dark);">Missing points? Found a bug?</p>
             
             <form id="supportForm" onsubmit="submitSupport(event)">
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" name="name" id="supportName" required placeholder="Your Name">
                 </div>
-    
                 <div class="form-group">
                     <label>Issue Type</label>
                     <select name="issueType" id="supportType">
@@ -325,12 +242,10 @@
                         <option value="Other">Other</option>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label>Message</label>
                     <textarea name="message" id="supportMessage" rows="4" required placeholder="Describe the issue..."></textarea>
                 </div>
-    
                 <button type="submit" id="supportSubmitBtn">Send Report</button>
                 <div id="supportStatus"></div>
             </form>
@@ -341,6 +256,7 @@
         // --- CONFIGURATION ---
         const API_URL = "https://script.google.com/macros/s/AKfycbyiaMniI6OvMb2tDjA0ItpPnPXRpA8Bpu7LCvDcZHgG00z2T7IIV-WVAebGEr4WXuI8/exec"; 
         const PDF_URL = "resources/drivosity/driver_prizes.pdf"; 
+        const SUPPORT_URL = 'https://script.google.com/macros/s/AKfycbyKhcd3c4j2SwJOTtG5c7yZxDEIC-Mw-d-zYE27CQuALwyd2rmU_6BQMYQwjqVwQ89N/exec';
 
         // GLOBAL STATE
         let ALL_DRIVERS = []; // Cache for Admin View
@@ -374,11 +290,10 @@
                     ALL_DRIVERS = data.data; 
 
                     /* NEW FUZZY SEARCH LOGIC */
-                    const searchTerms = name.toLowerCase().split(' '); // ["fred", "nelson"]
+                    const searchTerms = name.toLowerCase().split(' '); 
                     
                     const driver = data.data.find(d => {
                         const driverName = d.name.toLowerCase();
-                        // Check if EVERY search term appears somewhere in the driver's name
                         return searchTerms.every(term => driverName.includes(term));
                     });
 
@@ -390,6 +305,7 @@
                         document.getElementById('resStore').innerText = "Store #" + driver.store;
                         document.getElementById('resPoints').innerText = driver.points;
                         document.getElementById('resultCard').style.display = 'block';
+                        document.getElementById('searchSection').style.display = 'none';
                     } else {
                         document.getElementById('errorMsg').innerText = "Driver not found in " + market + ".";
                         document.getElementById('errorMsg').style.display = 'block';
@@ -398,6 +314,8 @@
             } catch (e) {
                 console.error(e);
                 alert("Connection Error.");
+                document.getElementById('loading').style.display = 'none';
+                searchBtn.innerText = "Check My Points";
             }
         });
 
@@ -405,22 +323,15 @@
         async function adminLogin() {
             const pass = prompt("Enter Password:");
             if (pass === "TeamWow") {
-                // Switch Views
                 document.getElementById('driver-view').style.display = 'none';
                 document.getElementById('admin-view').style.display = 'flex';
-                
-                // Load Links
                 loadAdminLinks();
                 
-                // Check if we have data (if user hasn't searched yet, fetch it)
                 if (ALL_DRIVERS.length === 0 && marketSelect.value) {
-                    // Fetch silently if market is picked
                      const response = await fetch(`${API_URL}?action=getPoints&market=${marketSelect.value}`);
                      const data = await response.json();
                      ALL_DRIVERS = data.data;
                 }
-                
-                // Populate Filters
                 populateDoFilter();
             } else {
                 alert("Incorrect Password.");
@@ -446,40 +357,18 @@
         function populateDoFilter() {
             const select = document.getElementById('adminDoSelect');
             select.innerHTML = '<option value="">Filter by DO...</option>';
-            
-            // Extract Unique DOs
             const dos = [...new Set(ALL_DRIVERS.map(d => d.doName).filter(Boolean))].sort();
-            dos.forEach(d => {
-                select.innerHTML += `<option value="${d}">${d}</option>`;
-            });
-
-            // When DO changes, populate Stores
-            select.onchange = () => {
-                populateStoreFilter();
-                filterAdminTable();
-            };
+            dos.forEach(d => { select.innerHTML += `<option value="${d}">${d}</option>`; });
+            select.onchange = () => { populateStoreFilter(); filterAdminTable(); };
         }
 
         function populateStoreFilter() {
             const doName = document.getElementById('adminDoSelect').value;
             const storeSelect = document.getElementById('adminStoreSelect');
-            
-            if (!doName) {
-                storeSelect.style.display = 'none';
-                return;
-            }
-
-            // Find stores for this DO
-            const stores = [...new Set(ALL_DRIVERS
-                .filter(d => d.doName === doName)
-                .map(d => d.store)
-            )].sort();
-
+            if (!doName) { storeSelect.style.display = 'none'; return; }
+            const stores = [...new Set(ALL_DRIVERS.filter(d => d.doName === doName).map(d => d.store))].sort();
             storeSelect.innerHTML = '<option value="">All Stores</option>';
-            stores.forEach(s => {
-                storeSelect.innerHTML += `<option value="${s}">Store #${s}</option>`;
-            });
-
+            stores.forEach(s => { storeSelect.innerHTML += `<option value="${s}">Store #${s}</option>`; });
             storeSelect.style.display = 'inline-block';
             storeSelect.onchange = () => filterAdminTable();
         }
@@ -488,29 +377,11 @@
             const doName = document.getElementById('adminDoSelect').value;
             const storeNum = document.getElementById('adminStoreSelect').value;
             const tbody = document.querySelector('#adminTable tbody');
-            
-            if (!doName) {
-                tbody.innerHTML = '<tr><td colspan="3">Select a DO to view data.</td></tr>';
-                return;
-            }
-
-            // Filter by DO... AND Store (if selected)
+            if (!doName) { tbody.innerHTML = '<tr><td colspan="3">Select a DO to view data.</td></tr>'; return; }
             let filtered = ALL_DRIVERS.filter(d => d.doName === doName);
-            
-            if (storeNum) {
-                filtered = filtered.filter(d => String(d.store) === String(storeNum));
-            }
-
-            // Sort by Points High->Low
+            if (storeNum) { filtered = filtered.filter(d => String(d.store) === String(storeNum)); }
             filtered.sort((a, b) => b.points - a.points);
-
-            tbody.innerHTML = filtered.map(d => `
-                <tr>
-                    <td>${d.name}</td>
-                    <td>${d.store}</td>
-                    <td><strong>${d.points}</strong></td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = filtered.map(d => `<tr><td>${d.name}</td><td>${d.store}</td><td><strong>${d.points}</strong></td></tr>`).join('');
         }
 
         // --- PDF VIEWERS ---
@@ -525,76 +396,40 @@
         
         nameInput.addEventListener("keypress", function(event) { if (event.key === "Enter") searchBtn.click(); });
 
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyKhcd3c4j2SwJOTtG5c7yZxDEIC-Mw-d-zYE27CQuALwyd2rmU_6BQMYQwjqVwQ89N/exec'; 
-
+        // --- SUPPORT MODAL LOGIC ---
         function toggleSupportModal() {
             const modal = document.getElementById('supportModal');
-            if (modal.style.display === "block") {
-                modal.style.display = "none";
-            } else {
-                modal.style.display = "block";
-            }
+            modal.style.display = (modal.style.display === "block") ? "none" : "block";
         }
         
-        // Close modal if user clicks outside of it
         window.onclick = function(event) {
             const modal = document.getElementById('supportModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
+            if (event.target == modal) { modal.style.display = "none"; }
         }
         
         function submitSupport(e) {
             e.preventDefault();
             const btn = document.getElementById('supportSubmitBtn');
             const status = document.getElementById('supportStatus');
-            
-            btn.disabled = true;
-            btn.textContent = "Sending...";
+            btn.disabled = true; btn.textContent = "Sending...";
             
             const formData = new FormData(document.getElementById('supportForm'));
-            
-            // Add parameters manually to URL for GET/POST fetch
-            // Note: We use 'no-cors' mode for GAS, but it's cleaner to just build the URL params
             const data = new URLSearchParams();
-            for (const pair of formData) {
-                data.append(pair[0], pair[1]);
-            }
+            for (const pair of formData) { data.append(pair[0], pair[1]); }
         
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: data
-            })
+            fetch(SUPPORT_URL, { method: 'POST', body: data })
             .then(response => {
                 btn.textContent = "Sent!";
                 btn.style.backgroundColor = "var(--brand-blue)";
                 status.innerHTML = "<p style='color: green; text-align: center;'>Thank you! We received your report.</p>";
-                
-                setTimeout(() => {
-                    toggleSupportModal(); // Close modal after 2s
-                    document.getElementById('supportForm').reset(); // Reset form
-                    btn.disabled = false;
-                    btn.textContent = "Send Report";
-                    btn.style.backgroundColor = "var(--brand-red)";
-                    status.innerHTML = "";
-                }, 2000);
+                setTimeout(() => { toggleSupportModal(); document.getElementById('supportForm').reset(); btn.disabled = false; btn.textContent = "Send Report"; btn.style.backgroundColor = "var(--brand-blue)"; status.innerHTML = ""; }, 2000);
             })
             .catch(error => {
                 console.error('Error!', error.message);
                 status.innerHTML = "<p style='color: red;'>Error sending report. Please try again.</p>";
-                btn.disabled = false;
-                btn.textContent = "Try Again";
+                btn.disabled = false; btn.textContent = "Try Again";
             });
         }
-
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
