@@ -15,21 +15,36 @@
             --off-white: #faf2e9; --text-dark: #472b10; 
         }
 
-        * { box-sizing: border-box; }
-        body { font-family: 'OneDotCd', sans-serif; background-color: var(--brand-blue); margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
-
-        /* Mobile Container */
-        .app-container {
-            background-color: white; width: 100%; max-width: 480px; 
-            display: flex; flex-direction: column; 
-            box-shadow: 0 0 20px rgba(0,0,0,0.5); min-height: 100dvh; 
-            position: relative; z-index: 1;
-            padding-bottom: 40px; /* Give it room to breathe at the bottom */
-            margin-bottom: 20px; /* Push it up from the bottom edge slightly */
+        /* --- GLOBAL LAYOUT --- */
+        body { 
+            font-family: 'OneDotCd', sans-serif; 
+            background-color: var(--crust-light); /* The Beige Backdrop */
+            margin: 0; padding: 0; 
+            display: flex; justify-content: center; 
+            min-height: 100vh; 
         }
-
-        /* Header */
-        header { background-color: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--brand-red); }
+        
+        /* --- THE CARD --- */
+        .app-container {
+            background-color: white; 
+            width: 94%; 
+            max-width: 480px; 
+            margin: 20px auto; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+            overflow: hidden; 
+            min-height: auto; 
+            display: flex; flex-direction: column;
+        }
+        
+        /* --- HEADER --- */
+        header { 
+            background-color: white; /* Keep White if you want the logo on white */
+            /* OR change to var(--brand-blue) and make text white if you want the Blue Header look */
+            padding: 20px; 
+            text-align: center; 
+            border-bottom: 5px solid var(--brand-red); 
+        }
         .logo { max-width: 220px; height: auto; margin-bottom: 5px; }
         h1 { font-family: 'PizzaPress'; margin: 0; color: var(--brand-blue); font-size: 1.4rem; text-transform: uppercase; }
 
@@ -143,65 +158,51 @@
             background-color: var(--acc-red);
         }
         
-        /* Update the Footer to match the new clean look */
         footer {
-            background-color: #f4f4f4; /* Light Grey */
-            padding: 20px 15px; /* Comfortable padding */
+            background-color: var(--brand-blue); /* Solid Blue */
+            padding: 20px;
             text-align: center;
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            margin-top: auto; /* Pushes footer to bottom if content is short */
+            margin-top: auto;
         }
         
-        /* Slogan */
+        /* Slogan - White */
         .footer-slogan {
+            color: white; 
+            font-family: 'PizzaPress';
+            font-size: 1.2rem;
             display: block;
-            font-family: 'PizzaPress'; 
-            font-size: 1.2rem; /* Slightly larger */
-            color: var(--brand-blue); 
             margin-bottom: 15px;
         }
         
-        /* Admin Link */
+        /* Link - White/Light Blue */
         .admin-link {
-            display: block;
-            margin-bottom: 25px; /* Push the button down */
-            color: #999;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 25px; 
             text-decoration: none;
             font-size: 0.8rem; 
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+        .admin-link:hover { color: white; text-decoration: underline; }
         
-        /* Support Button Wrapper - Cleaned up */
-        .footer-support-wrapper {
-            padding: 0; 
-            background: transparent; 
-        }
-        
-        /* The Button Itself */
+        /* Button - White Outline (Ghost) */
         .footer-support-btn {
-            background: white; 
-            border: 1px solid var(--brand-blue);
-            color: var(--brand-blue);
-            padding: 10px 24px; /* Bigger touch target for mobile */
-            border-radius: 30px; /* Full Pill shape */
+            background: transparent; 
+            border: 1px solid white;
+            color: white;
+            padding: 10px 24px; 
+            border-radius: 30px; 
             cursor: pointer;
             font-family: 'OneDotCd-Bold';
             font-size: 0.9rem;
             transition: all 0.2s ease;
-            width: 100%; /* Full width on mobile for easy tapping */
-            max-width: 300px; /* But don't get too crazy on desktop */
+            width: 100%; 
+            max-width: 300px;
         }
         
         .footer-support-btn:hover {
-            background-color: var(--brand-blue);
-            color: white;
-        }
-        
-        /* Ensure Mobile sees the blue background at the very bottom if you overscroll */
-        body {
-            background-color: var(--brand-blue);
+            background-color: white;
+            color: var(--brand-blue);
         }
 
     </style>
@@ -589,6 +590,7 @@
     </script>
 </body>
 </html>
+
 
 
 
