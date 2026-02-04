@@ -22,7 +22,7 @@
         .app-container {
             background-color: white; width: 100%; max-width: 480px; 
             display: flex; flex-direction: column; 
-            box-shadow: 0 0 20px rgba(0,0,0,0.5); min-height: 100vh; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.5); min-height: 100dvh; 
             position: relative; z-index: 1;
         }
 
@@ -141,57 +141,65 @@
             background-color: var(--acc-red);
         }
         
+        /* Update the Footer to match the new clean look */
         footer {
-            background-color: #f4f4f4; /* Slightly lighter grey */
-            padding: 20px 15px;
+            background-color: #f4f4f4; /* Light Grey */
+            padding: 20px 15px; /* Comfortable padding */
             text-align: center;
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
+            margin-top: auto; /* Pushes footer to bottom if content is short */
         }
         
-        /* 1. The Slogan: Bold & Proud */
+        /* Slogan */
         .footer-slogan {
             display: block;
-            font-family: 'PizzaPress'; /* Use the headline font if available, or OneDotCd-Bold */
-            font-size: 1.1rem; 
-            color: var(--brand-blue); /* Make it Blue */
+            font-family: 'PizzaPress'; 
+            font-size: 1.2rem; /* Slightly larger */
+            color: var(--brand-blue); 
             margin-bottom: 15px;
         }
         
-        /* 2. The Admin Link: Subtle */
+        /* Admin Link */
         .admin-link {
             display: block;
-            margin-bottom: 20px;
+            margin-bottom: 25px; /* Push the button down */
             color: #999;
             text-decoration: none;
-            font-size: 0.75rem; /* Smaller */
+            font-size: 0.8rem; 
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .admin-link:hover { text-decoration: underline; }
         
+        /* Support Button Wrapper - Cleaned up */
+        .footer-support-wrapper {
+            padding: 0; 
+            background: transparent; 
+        }
+        
+        /* The Button Itself */
         .footer-support-btn {
             background: white; 
             border: 1px solid var(--brand-blue);
             color: var(--brand-blue);
-            padding: 8px 20px;
-            border-radius: 20px;
+            padding: 10px 24px; /* Bigger touch target for mobile */
+            border-radius: 30px; /* Full Pill shape */
             cursor: pointer;
-            font-family: 'OneDotCd-Bold'; /* or sans-serif if font missing */
-            font-size: 0.85rem;
+            font-family: 'OneDotCd-Bold';
+            font-size: 0.9rem;
             transition: all 0.2s ease;
+            width: 100%; /* Full width on mobile for easy tapping */
+            max-width: 300px; /* But don't get too crazy on desktop */
         }
         
         .footer-support-btn:hover {
             background-color: var(--brand-blue);
             color: white;
         }
-
-        .footer-support-wrapper {
-            text-align: center;
-            padding: 20px;
-            /* Removed background-color: var(--crust-light); */
-            background: transparent; 
+        
+        /* Ensure Mobile sees the blue background at the very bottom if you overscroll */
+        body {
+            background-color: var(--brand-blue);
         }
 
     </style>
@@ -572,6 +580,7 @@
     </script>
 </body>
 </html>
+
 
 
 
