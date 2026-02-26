@@ -306,6 +306,15 @@
         </div>
     </div>
 
+    <!-- GENERIC MESSAGE MODAL -->
+    <div class="modal-overlay" id="message-modal">
+        <div class="modal-box" style="text-align: center;">
+            <div class="modal-title" id="msg-title">Notification</div>
+            <div class="modal-subtitle" id="msg-body" style="margin: 20px 0; font-size: 1.1rem;"></div>
+            <button class="modal-btn" onclick="closeMessageModal()">OK</button>
+        </div>
+    </div>
+
     <!-- TRAINER DIRECTORY MODAL -->
     <div class="modal-overlay" id="trainer-modal">
                 <div class="modal-box" style="text-align: center; max-height: 80vh; overflow-y: auto;">
@@ -546,8 +555,8 @@
                 body: formData,
                 mode: 'no-cors' 
             }).then(() => {
-                alert("Success! You are signed up.");
-                closeModal();
+                showMessage("Success!", "You have been signed up.");
+                closeModal(); // Closes the signup form
                 btn.innerText = "Confirm Signup";
                 btn.disabled = false;
                 
@@ -567,6 +576,17 @@
                 btn.disabled = false;
             });
         }
+
+        function showMessage(title, body) {
+            document.getElementById('msg-title').innerText = title;
+            document.getElementById('msg-body').innerText = body;
+            document.getElementById('message-modal').classList.add('active');
+        }
+        
+        function closeMessageModal() {
+            document.getElementById('message-modal').classList.remove('active');
+        }
+
     </script>
 
     <!-- SLIM FOOTER -->
@@ -590,6 +610,7 @@
 
 </body>
 </html>
+
 
 
 
