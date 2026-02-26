@@ -291,13 +291,6 @@
                     <input type="text" id="inp-name" required placeholder="First Last">
                 </div>
             
-                <!-- NEW EMAIL FIELD -->
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="inp-email" required placeholder="name@dominospizza.com">
-                </div>
-                <!-- END NEW FIELD -->
-            
                 <div class="form-group">
                     <label>Store Number</label>
                     <input type="number" id="inp-store" required placeholder="e.g. 9999">
@@ -316,7 +309,14 @@
                     <label>Mobile Phone</label>
                     <input type="tel" id="inp-phone" required placeholder="555-555-5555">
                 </div>
-            
+
+                <!-- NEW EMAIL FIELD -->
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="inp-email" required placeholder="name@dominospizza.com">
+                </div>
+                <!-- END NEW FIELD -->
+                
                 <button type="submit" class="modal-btn" id="modal-submit-btn">Confirm Signup</button>
             </form>
         </div>
@@ -527,10 +527,10 @@
             formData.append('classId', document.getElementById('modal-class-id').value);
             formData.append('className', document.getElementById('modal-class-name').value);
             formData.append('name', document.getElementById('inp-name').value);
-            formData.append('email', document.getElementById('inp-email').value);
             formData.append('store', document.getElementById('inp-store').value);
             formData.append('position', document.getElementById('inp-pos').value);
             formData.append('phone', document.getElementById('inp-phone').value);
+            formData.append('email', document.getElementById('inp-email').value);
 
             fetch(API_URL, {
                 method: "POST",
@@ -618,6 +618,7 @@
 </body>
 
 </html>
+
 
 
 
