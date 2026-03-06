@@ -176,6 +176,7 @@
                         <th>Store</th>
                         <th>Pos</th>
                         <th>Phone</th>
+                        <th>Email</th>
                     </tr>
                 </thead>
                 <tbody id="rosterBody">
@@ -267,6 +268,7 @@
                                 <td>${person.store}</td>
                                 <td>${person.position}</td>
                                 <td><a href="tel:${person.phone}" style="color:var(--brand-blue); font-weight:bold;">${person.phone}</a></td>
+                                <td><a href="mailto:${person.email}" style="color:var(--brand-blue); font-weight:bold;">${person.email}</a></td>
                             `;
                             tbody.appendChild(tr);
                         });
@@ -278,8 +280,3 @@
 </body>
 
 </html>
-
-
-
-
-
