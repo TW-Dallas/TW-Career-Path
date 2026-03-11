@@ -251,7 +251,7 @@
             document.getElementById('rosterBody').innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>';
             document.getElementById('emptyMsg').style.display = 'none';
 
-            fetch(API_URL + "?action=getRoster&classId=" + classId)
+            fetch(API_URL + "?action=getRoster&classId=" + encodeURIComponent(classId))
                 .then(r => r.json())
                 .then(roster => {
                     const tbody = document.getElementById('rosterBody');
@@ -276,6 +276,7 @@
     </script>
 </body>
 </html>
+
 
 
 
