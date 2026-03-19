@@ -365,8 +365,8 @@
 
                     // --- NEW: INJECT PERIOD DATA INTO MODAL ---
                     if (data.periodData) {
-                        document.getElementById('currentPeriodDisplay').innerHTML = `We are currently in ${data.periodData.name} <br><span style="font-size: 0.85em; font-weight: normal; color: #666;">(${data.periodData.dateRange})</span>`;
-                        document.getElementById('nextPeriodDisplay').innerText = data.periodData.nextName;
+                        document.getElementById('currentPeriodDisplay').innerHTML = `We are currently in Period ${data.periodData.name} <br><span style="font-size: 0.85em; font-weight: normal; color: #666;">(${data.periodData.dateRange})</span>`;
+                        document.getElementById('nextPeriodDisplay').innerText = `Period ${data.periodData.nextName}`;
                     } else {
                         document.getElementById('currentPeriodDisplay').innerText = "Current Period Active.";
                     }
