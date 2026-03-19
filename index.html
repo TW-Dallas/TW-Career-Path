@@ -617,12 +617,17 @@
         <div class="modal-content">
             <span class="close-modal" onclick="toggleSupportModal()">&times;</span>
             <h2 style="font-family: 'PizzaPress'; color: var(--brand-blue);">Report an Issue</h2>
-            <p style="font-family: 'OneDotCd'; color: var(--crust-deep);">Found a problem? Need help? Let us know.</p>
+            <p style="font-family: 'OneDotCd'; color: var(--crust-deep); margin-bottom: 20px;">Found a problem? Need help? Let us know.</p>
             
             <form id="supportForm" onsubmit="submitSupport(event)">
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" name="name" id="supportName" required placeholder="Your Name">
+                </div>
+
+                <div class="form-group">
+                    <label>Store Number</label>
+                    <input type="text" name="storeNumber" id="supportStore" required placeholder="e.g. 1234">
                 </div>
                 
                 <div class="form-group">
@@ -650,7 +655,7 @@
             </form>
         </div>
     </div>
-
+    
     <script>
         function showSITInfo(e) {
             e.stopPropagation(); // Stop the card from toggling
