@@ -353,8 +353,14 @@
                         document.getElementById('resPoints').innerText = driver.points;
                         document.getElementById('resultCard').style.display = 'block';
                         document.getElementById('searchSection').style.display = 'none';
-                    } else {
-                        document.getElementById('errorMsg').innerText = "Driver not found in " + market + ".";
+                   } else {
+                        // REFINED ERROR MESSAGE - SOFTER PHRASING
+                        document.getElementById('errorMsg').innerHTML = `
+                            <strong>No points found for ${name} in the ${market} market.</strong><br>
+                            <span style="font-size: 0.85em; color: var(--crust-deep); margin-top: 5px; display: inline-block; line-height: 1.4;">
+                            Please ensure your name matches the Pulse system exactly. If you believe this is an error and you meet all eligibility requirements, please submit a support ticket below.
+                            </span>
+                        `;
                         document.getElementById('errorMsg').style.display = 'block';
                     }
                 }
