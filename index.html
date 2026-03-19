@@ -34,6 +34,7 @@
             --dark-blue: #005c91;
             
             /* Crust Palette */
+            --crust-base: #fefaf6; /* The true "var(--crust-base);" replacement */
             --crust-light: #faf2e9;
             --crust-med: #f0decc;
             --crust-dark: #c0a588;
@@ -58,7 +59,7 @@
         /* --- Header --- */
         header {
             background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue));
-            color: white;
+            color: var(--crust-base);;
             padding: 2rem 1rem 1.5rem;
             text-align: center;
             border-bottom: 6px solid var(--brand-red);
@@ -111,7 +112,7 @@
         }
 
         .role-card {
-            background: white;
+            background: var(--crust-base);;
             margin-bottom: 1.5rem;
             margin-left: 50px;
             padding: 1.5rem; /* INCREASED padding for breathing room */
@@ -137,7 +138,7 @@
             width: 16px;
             height: 16px;
             background: var(--brand-red);
-            border: 3px solid white;
+            border: 3px solid var(--crust-base);;
             border-radius: 50%;
             box-shadow: 0 0 0 3px var(--acc-blue);
             z-index: 2;
@@ -186,7 +187,7 @@
             text-align: center;
             padding: 3rem 2rem;
             background-color: var(--dark-blue);
-            color: white;
+            color: var(--crust-base);;
             margin-top: 3rem;
             font-family: 'OneDotCd', sans-serif;
         }
@@ -212,8 +213,8 @@
             top: 2rem;
             right: 2rem;
             background: rgba(255, 255, 255, 0.15); /* Glassy effect */
-            border: 2px solid white;
-            color: white;
+            border: 2px solid var(--crust-light);;
+            color: var(--crust-base);;
             padding: 0.6rem 1.2rem;
             border-radius: 8px;
             text-decoration: none;
@@ -246,8 +247,7 @@
         }
         
         .modal-content {
-            background-color: white;
-            margin: 10% auto; /* 10% from top, centered */
+            background-color: var(--crust-base); /* Brand-safe var(--crust-base); replacement */
             padding: 25px;
             border: 2px solid var(--brand-blue);
             border-radius: 8px;
@@ -255,9 +255,37 @@
             max-width: 500px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             font-family: 'OneDotCd', sans-serif;
-            position: relative;
-            max-height: 90vh; /* ADD THIS */
-            overflow-y: auto; /* ADD THIS */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-height: 85vh; 
+            overflow-y: auto; 
+        }
+
+        /* FORCE all general paragraph text to be burnt crust */
+        .modal-content p {
+            color: var(--crust-burnt) !important;
+        }
+
+        /* Style the input boxes using the Crust palette */
+        .modal-content input, 
+        .modal-content select, 
+        .modal-content textarea {
+            background-color: var(--crust-light); /* Slightly darker than base for contrast */
+            border: 1px solid var(--crust-dark); /* Defined warm border */
+            color: var(--crust-burnt); /* Typed text color */
+            border-radius: 4px; 
+            padding: 10px; 
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+        
+        /* Placeholder text */
+        .modal-content input::placeholder, 
+        .modal-content textarea::placeholder {
+            color: var(--crust-deep);
+            opacity: 0.7; 
         }
         
         .close-modal {
@@ -295,7 +323,7 @@
         
         #supportSubmitBtn {
             background-color: var(--brand-red);
-            color: white;
+            color:  var(--crust-base);
             border: none;
             padding: 12px 20px;
             font-family: 'OneDotCd-Bold';
@@ -320,9 +348,9 @@
         
         /* Footer Button Style */
         .footer-support-btn {
-            background: rgba(255, 255, 255, 0.15); /* Slight white tint */
-            border: 1px solid white;
-            color: white;
+            background: rgba(255, 255, 255, 0.15); /* Slight var(--crust-base); tint */
+            border: 1px solid var(--crust-base);;
+            color: var(--crust-base);;
             padding: 8px 20px;
             border-radius: 20px;
             cursor: pointer;
@@ -331,7 +359,7 @@
         }
         
         .footer-support-btn:hover {
-            background-color: white;
+            background-color: var(--crust-base);
             color: var(--brand-blue);
         }
 
@@ -396,7 +424,7 @@
         
                 <!-- DALLAS -->
         <a href="classes.html" style="
-            color: white;
+            color: var(--crust-base);;
             text-decoration: none;
             font-family: 'OneDotCd-Bold';
             margin: 0 5px;
@@ -407,7 +435,7 @@
 
         <!-- DENVER -->
         <a href="denver_classes.html" style="
-            color: white;
+            color: var(--crust-base);;
             text-decoration: none;
             font-family: 'OneDotCd-Bold';
             margin: 0 5px;
@@ -500,7 +528,7 @@
                     </a>
                     </div>
                     <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
-                        <button onclick="showSITInfo(event)" style="background: var(--brand-blue); color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; width: 100%; font-family: 'OneDotCd-Bold'; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                        <button onclick="showSITInfo(event)" style="background: var(--brand-blue); color: var(--crust-base);; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; width: 100%; font-family: 'OneDotCd-Bold'; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">
                             👉 View Requirements & Apply
                         </button>
                     </div>
@@ -555,7 +583,7 @@
 
     <!-- Add this Modal HTML first (hidden by default) -->
     <div id="sit-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 500px; width: 90%; position: relative; font-family: 'OneDotCd', sans-serif;">
+        <div style="background: var(--crust-base);; padding: 2rem; border-radius: 12px; max-width: 500px; width: 90%; position: relative; font-family: 'OneDotCd', sans-serif;">
             
             <h2 style="color: var(--dark-blue); margin-bottom: 1rem;">DO-IT Program Requirements</h2>
             
@@ -603,9 +631,9 @@
     <div id="view-viewer" class="hidden" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; flex-direction: column; align-items: center; justify-content: center;">
         
         <!-- Header Bar -->
-        <div style="width: 90%; max-width: 800px; background: #333; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0;">
+        <div style="width: 90%; max-width: 800px; background: #333; color: var(--crust-base);; padding: 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0;">
             <span style="font-family: 'OneDotCd-Bold'; text-transform: uppercase;">Document Viewer</span>
-            <button onclick="closeViewer()" style="background: var(--brand-red); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">CLOSE X</button>
+            <button onclick="closeViewer()" style="background: var(--brand-red); color: var(--crust-base);; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">CLOSE X</button>
         </div>
 
         <!-- The Frame -->
