@@ -138,14 +138,10 @@
             height: 100%;
             background-color: rgba(0,0,0,0.5); 
             backdrop-filter: blur(2px);
-            /* NEW FLEXBOX CENTERING */
-            align-items: center; 
-            justify-content: center;
         }
         
         .modal-content {
             background-color: white;
-            /* REMOVED MARGIN: margin: 10% auto; */
             padding: 25px;
             border: 2px solid var(--brand-blue);
             border-radius: 8px;
@@ -153,8 +149,14 @@
             max-width: 500px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             font-family: 'OneDotCd', sans-serif;
-            position: relative;
-            /* UPDATED HEIGHT CALCULATION */
+            
+            /* NEW ABSOLUTE CENTERING */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            
+            /* HEIGHT LIMIT & SCROLL */
             max-height: 85vh; 
             overflow-y: auto; 
         }
