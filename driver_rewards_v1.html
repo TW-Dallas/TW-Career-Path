@@ -161,11 +161,38 @@
 </head>
 <body>
 
-    <!-- HEADER -->
+<!-- HEADER -->
     <header>
         <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo">
         <h1>Driver Rewards</h1>
+        <div style="text-align: center; margin-top: 5px;">
+            <span onclick="document.getElementById('rulesModal').style.display='flex'" style="color: white; font-size: 0.9em; text-decoration: underline; cursor: pointer; opacity: 0.9; font-family: 'OneDotCd', Arial, sans-serif;">How do I earn points?</span>
+        </div>
     </header>
+
+    <!-- ELIGIBILITY RULES MODAL -->
+    <div id="rulesModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="modal-content" style="background: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 500px; position: relative;">
+            <span onclick="document.getElementById('rulesModal').style.display='none'" style="position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--brand-red); font-weight: bold;">&times;</span>
+            <h2 style="font-family: 'PizzaPress'; color: var(--brand-blue); margin-top: 0;">Eligibility Rules</h2>
+            
+            <div style="font-family: Arial, sans-serif; font-size: 0.95em; color: #333; line-height: 1.5;">
+                <p><strong>To earn points, you must meet the following criteria during a single fiscal period:</strong></p>
+                <ol style="margin-bottom: 20px; padding-left: 20px;">
+                    <li>Complete a minimum of <strong>100 deliveries</strong>.</li>
+                    <li>Maintain an average Drivosity score of <strong>96 or above</strong>.</li>
+                </ol>
+                
+                <div style="background: #f4f4f4; padding: 15px; border-radius: 5px; border-left: 4px solid var(--brand-red);">
+                    <p style="margin: 0 0 10px 0;"><strong>When can I see my points?</strong></p>
+                    <p style="margin: 0; font-size: 0.9em;">
+                        <span id="currentPeriodDisplay" style="font-weight: bold; color: var(--brand-blue);">Loading period data...</span><br>
+                        Points earned in the current period will be available to view the first week of <span id="nextPeriodDisplay" style="font-weight: bold;">the next period</span>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- MAIN APP CONTAINER -->
     <div class="app-container" id="app-view">
@@ -336,6 +363,15 @@
                     // CACHE DATA FOR ADMIN USE LATER
                     ALL_DRIVERS = data.data; 
 
+                    // --- NEW: INJECT PERIOD DATA INTO MODAL ---
+                    if (data.periodData) {
+                        document.getElementById('currentPeriodDisplay').innerHTML = `We are currently in ${data.periodData.name} <br><span style="font-size: 0.85em; font-weight: normal; color: #666;">(${data.periodData.dateRange})</span>`;
+                        document.getElementById('nextPeriodDisplay').innerText = data.periodData.nextName;
+                    } else {
+                        document.getElementById('currentPeriodDisplay').innerText = "Current Period Active.";
+                    }
+                    // ------------------------------------------
+
                     /* NEW FUZZY SEARCH LOGIC */
                     const searchTerms = name.toLowerCase().split(' '); 
                     
@@ -356,7 +392,7 @@
                    } else {
                         // REFINED ERROR MESSAGE - SOFTER PHRASING
                         document.getElementById('errorMsg').innerHTML = `
-                            <strong>No points found for ${name} in the ${market} market.</strong><br>
+                            <strong>No points found for ${nameInput.value.trim()} in the ${market} market.</strong><br>
                             <span style="font-size: 0.85em; color: var(--crust-deep); margin-top: 5px; display: inline-block; line-height: 1.4;">
                             Please ensure your name matches the Pulse system exactly. If you believe this is an error and you meet all eligibility requirements, please submit a support ticket below.
                             </span>
