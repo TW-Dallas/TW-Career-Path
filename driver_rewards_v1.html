@@ -89,7 +89,7 @@
         .data-table th { background: var(--brand-blue); color: var(--crust-base); padding: 8px; text-align: left; }
         .data-table td { border-bottom: 1px solid #ccc; padding: 8px; }
         .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .link-btn { background: #eee; padding: 10px; text-align: center; border-radius: 4px; text-decoration: none; color: #333; font-weight: bold; font-size: 0.9rem; display:block; border: 1px solid #ccc; }
+        .link-btn { background: var(--crust-light); padding: 10px; text-align: center; border-radius: 4px; text-decoration: none; color: var(--crust-burnt); font-weight: bold; font-size: 0.9rem; display:block; border: 1px solid var(--crust-dark); }
 
         /* --- PDF VIEWER --- */
         #pdf-view {
@@ -506,7 +506,18 @@
             try {
                 const response = await fetch(`${API_URL}?action=getAdminLinks`);
                 const links = await response.json();
-                container.innerHTML = links.map(l => `<a href="${l.url}" target="_blank" class="link-btn">🛒 ${l.name}</a>`).join('');
+                
+                container.innerHTML = links.map(l => {
+                    // Check if a URL actually exists
+                    if (l.url && l.url.trim() !== "") {
+                        // It has a link, make it clickable
+                        return `<a href="${l.url}" target="_blank" class="link-btn">🛒 ${l.name}</a>`;
+                    } else {
+                        // No link, just display it as an inactive badge/item
+                        return `<div class="link-btn" style="opacity: 0.7; cursor: default;">🛒 ${l.name} (See Manager)</div>`;
+                    }
+                }).join('');
+                
             } catch (e) {
                 container.innerHTML = "Error loading links.";
             }
@@ -588,12 +599,26 @@
                 btn.disabled = false; btn.textContent = "Try Again";
             });
         }
+
+        // --- FETCH PERIOD DATA ON PAGE LOAD ---
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // We assume API_URL is already defined globally in your script
+                const response = await fetch(`${API_URL}?action=getPeriodOnly`);
+                const data = await response.json();
+
+                if (data.status === 'success' && data.periodData) {
+                    document.getElementById('currentPeriodDisplay').innerHTML = `We are currently in Period ${data.periodData.name} <br><span style="font-size: 0.85em; font-weight: normal; color: var(--crust-deep);">(${data.periodData.dateRange})</span>`;
+                    document.getElementById('nextPeriodDisplay').innerText = `Period ${data.periodData.nextName}`;
+                } else {
+                    document.getElementById('currentPeriodDisplay').innerText = "Current Period Active.";
+                }
+            } catch (e) {
+                console.error("Failed to load period data on startup:", e);
+                document.getElementById('currentPeriodDisplay').innerText = "Current Period Active.";
+            }
+        });
+
     </script>
 </body>
 </html>
-
-
-
-
-
-
