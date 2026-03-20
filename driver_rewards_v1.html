@@ -508,13 +508,21 @@
                 const links = await response.json();
                 
                 container.innerHTML = links.map(l => {
-                    // Check if a URL actually exists
-                    if (l.url && l.url.trim() !== "") {
-                        // It has a link, make it clickable
+                    // Check if the URL column actually contains a web link (starts with http or www)
+                    const isWebLink = l.url && (l.url.toLowerCase().startsWith('http') || l.url.toLowerCase().startsWith('www'));
+                    
+                    if (isWebLink) {
+                        // It's a real link, make it clickable
                         return `<a href="${l.url}" target="_blank" class="link-btn">🛒 ${l.name}</a>`;
                     } else {
-                        // No link, just display it as an inactive badge/item
-                        return `<div class="link-btn" style="opacity: 0.7; cursor: default;">🛒 ${l.name} (See Manager)</div>`;
+                        // It's just instructional text (e.g. "Purchase from local vendor")
+                        // Display it as a static div, and show the instruction underneath the name
+                        return `
+                            <div class="link-btn" style="opacity: 0.8; cursor: default; display: flex; flex-direction: column; align-items: center;">
+                                <span>🛒 ${l.name}</span>
+                                <span style="font-size: 0.75em; font-weight: normal; margin-top: 4px; color: var(--crust-deep);">${l.url}</span>
+                            </div>
+                        `;
                     }
                 }).join('');
                 
