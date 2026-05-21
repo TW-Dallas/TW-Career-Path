@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Wow LMS Dashboard</title>
+    <link rel="icon" type="image/png" href="image/tile_blue.png">
+    
+    <!-- Link to global styles -->
+    <link rel="stylesheet" href="LMS_Global_Styles.css">
+
+    <style>
+        /* --- Setup Container --- */
+        .setup-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+            border-top: 6px solid var(--brand-blue);
+        }
+
+        /* --- Carousel Styles --- */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            min-height: 350px;
+        }
+
+        .carousel-slide {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.4s ease-out;
+            padding: 1rem 0;
+        }
+
+        .carousel-slide.active {
+            display: block;
+        }
+
+        .carousel-image-placeholder {
+            width: 100%;
+            height: 180px;
+            background-color: var(--crust-med);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--crust-burnt);
+            border: 2px dashed var(--crust-dark);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dot.active {
+            background-color: var(--brand-blue);
+            transform: scale(1.2);
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--brand-blue);
+            border: 2px solid var(--brand-blue);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(0, 144, 226, 0.1);
+            color: var(--dark-blue);
+            transform: scale(1.02);
+        }
+
+        .setup-title {
+            font-family: 'OneDotCd-Bold';
+            font-size: 2.2rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .setup-text {
+            color: #555;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        /* --- Form Elements --- */
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            font-family: 'OneDotCd-Bold';
+            color: var(--crust-deep);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--crust-med);
+            border-radius: 8px;
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 3px rgba(0, 144, 226, 0.2);
+        }
+
+        /* --- Avatar Placeholder --- */
+        .avatar-preview {
+            width: 150px;
+            height: 150px;
+            background-color: var(--crust-med);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--crust-burnt);
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--brand-blue);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-family: 'OneDotCd-Bold';
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .btn:hover {
+            background: var(--dark-blue);
+            transform: scale(1.02);
+        }
+
+        /* --- Support Modal Styles --- */
+        .hidden { display: none !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body style="min-height: 100vh; display: flex; flex-direction: column;">
+
+    <header>
+        <div class="logo-container">
+            <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo-img">
+        </div>
+        <p class="tagline">Growing Leaders. Building Futures.</p>
+    </header>
+
+    <!-- Navigation -->
+    <div class="nav-strip" style="background-color: var(--dark-blue); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: left; display: flex; align-items: center; justify-content: space-between;">
+            <a href="index.html" class="back-link" style="color: white; text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 8px;">
+                &#8592; Back to Career Path
+            </a>
+        </div>
+    </div>
+
+    <main>
+        
+        <!-- STEP 1: INITIAL LOGIN (Mock) -->
+        <div id="step-login" class="setup-container">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🔒</div>
+            <h2 class="setup-title">Secure Login</h2>
+            <p class="setup-text">Enter the credentials provided in your welcome email.</p>
+            
+            <div class="form-group">
+                <label class="form-label">Employee ID</label>
+                <input type="text" class="form-input" placeholder="e.g., 123456">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" placeholder="••••••••">
+            </div>
+            
+            <button class="btn" onclick="nextStep('setup-profile')">Sign In</button>
+        </div>
+
+        <!-- STEP 2: PROFILE CONFIRMATION & AVATAR -->
+        <div id="step-setup-profile" class="setup-container hidden">
+            <h2 class="setup-title">Verify Your Profile</h2>
+            <p class="setup-text">Does this information look correct?</p>
+            
+            <!-- Data Confirmation Card -->
+            <div style="background: var(--crust-light); border: 2px solid var(--crust-med); border-radius: 12px; padding: 1.5rem; text-align: left; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; border-bottom: 1px solid #ddd; padding-bottom: 0.5rem;">
+                    <span style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue);">Name:</span>
+                    <span style="color: var(--crust-deep);" id="mock-name">John Doe</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; border-bottom: 1px solid #ddd; padding-bottom: 0.5rem;">
+                    <span style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue);">Role:</span>
+                    <span style="color: var(--crust-deep);" id="mock-role">Delivery Expert</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue);">Store:</span>
+                    <span style="color: var(--crust-deep);" id="mock-store">6789 - McKinney</span>
+                </div>
+            </div>
+
+            <!-- Avatar Section (Placeholder for now) -->
+            <h3 style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue); margin-bottom: 1rem;">Create Your Avatar</h3>
+            <div class="avatar-preview">
+                👤
+            </div>
+            <p style="margin-bottom: 2rem; color: var(--brand-blue); font-weight: bold; cursor: pointer;">Customize Avatar (Coming Soon)</p>
+
+            <button class="btn" onclick="nextStep('tutorial')">Yes, Let's Go!</button>
+            <p style="margin-top: 15px; font-size: 0.9rem; color: #888; cursor: pointer; text-decoration: underline;" onclick="toggleSupportModal()">Wait, something is wrong.</p>
+        </div>
+
+        <!-- STEP 3: ONBOARDING TUTORIAL -->
+        <div id="step-tutorial" class="setup-container hidden">
+            
+            <div class="carousel-container">
+                <!-- Slide 1 -->
+                <div class="carousel-slide active" id="slide-1">
+                    <h2 class="setup-title" style="font-size: 1.8rem;">Your Training Path</h2>
+                    <div class="carousel-image-placeholder">🗺️</div>
+                    <p class="setup-text">Welcome to the Map. You must complete your training modules in order. Future modules will unlock as you progress.</p>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-slide" id="slide-2">
+                    <h2 class="setup-title" style="font-size: 1.8rem;">Navigation & Progress</h2>
+                    <div class="carousel-image-placeholder">▶️</div>
+                    <p class="setup-text">Look for the <strong>Next</strong> button at the bottom of each module to advance. Your progress saves automatically.</p>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-slide" id="slide-3">
+                    <h2 class="setup-title" style="font-size: 1.8rem;">Knowledge Checks</h2>
+                    <div class="carousel-image-placeholder">📝</div>
+                    <p class="setup-text">Pay close attention! There are short quizzes at the end of every module to test what you've learned.</p>
+                </div>
+
+                 <!-- Slide 4 -->
+                 <div class="carousel-slide" id="slide-4">
+                    <h2 class="setup-title" style="font-size: 1.8rem;">Need Help?</h2>
+                    <div class="carousel-image-placeholder">🛟</div>
+                    <p class="setup-text">If you find a typo, something is broken, or you need help, click the <strong>Support</strong> button at the bottom of the screen.</p>
+                </div>
+            </div>
+
+            <div class="carousel-dots">
+                <div class="dot active" onclick="goToSlide(1)"></div>
+                <div class="dot" onclick="goToSlide(2)"></div>
+                <div class="dot" onclick="goToSlide(3)"></div>
+                <div class="dot" onclick="goToSlide(4)"></div>
+            </div>
+
+            <div class="carousel-nav">
+                <button class="btn btn-outline" id="btn-prev" onclick="changeSlide(-1)" style="visibility: hidden;">Back</button>
+                <button class="btn" id="btn-next" onclick="changeSlide(1)">Next</button>
+            </div>
+        </div>
+
+        <!-- STEP 4: MAP LOBBY (Placeholder) -->
+        <div id="step-map-lobby" class="setup-container hidden">
+            <h2 class="setup-title" style="font-size: 2.2rem; color: var(--brand-blue);">The Training Map</h2>
+            <div style="width: 100%; height: 350px; background-color: var(--crust-med); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 2rem; color: var(--crust-burnt); border: 4px dashed var(--crust-dark); margin-bottom: 2rem;">
+                <span style="font-size: 4rem; margin-bottom: 10px;">🗺️</span>
+                <span style="font-family: 'OneDotCd-Bold'; font-size: 1.5rem;">Interactive Map Coming Soon</span>
+            </div>
+            <p class="setup-text" id="map-welcome-msg" style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue);"></p>
+        </div>
+
+    </main>
+
+    <!-- SUPPORT MODAL -->
+    <div id="supportModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleSupportModal()">&times;</span>
+            <h2 style="font-family: 'PizzaPress'; color: var(--brand-blue); margin-bottom: 5px;">Report an Issue</h2>
+            <p style="font-family: 'OneDotCd'; color: #666; margin-bottom: 20px;">Found a problem with your profile data? Let us know.</p>
+            
+            <form id="supportForm" onsubmit="submitSupport(event)">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-input" name="name" id="supportName" required placeholder="Your Name">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Store Number</label>
+                    <input type="text" class="form-input" name="storeNumber" id="supportStore" required placeholder="e.g. 1234">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" name="email" id="supportEmail" required placeholder="your.email@example.com">
+                </div>
+    
+                <div class="form-group">
+                    <label class="form-label">Issue Type</label>
+                    <select class="form-input" name="issueType" id="supportType">
+                        <option value="Profile Data Incorrect">My Profile Data is Incorrect</option>
+                        <option value="Bug/Broken Link">Problem / Broken Link</option>
+                        <option value="Typo/Content Error">Typo / Content Error</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-input" name="message" id="supportMessage" rows="4" required placeholder="Describe what is wrong with your profile..."></textarea>
+                </div>
+    
+                <button type="submit" id="supportSubmitBtn">Send Report</button>
+                <div id="supportStatus" style="margin-top: 10px;"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function nextStep(stepId) {
+            // Hide all steps
+            document.getElementById('step-login').classList.add('hidden');
+            document.getElementById('step-setup-profile').classList.add('hidden');
+            document.getElementById('step-tutorial').classList.add('hidden');
+            document.getElementById('step-map-lobby').classList.add('hidden');
+            
+            // Show target
+            document.getElementById('step-' + stepId).classList.remove('hidden');
+        }
+
+        // --- CAROUSEL LOGIC ---
+        let currentSlide = 1;
+        const totalSlides = 4;
+
+        function updateCarousel() {
+            // Hide all slides
+            for (let i = 1; i <= totalSlides; i++) {
+                document.getElementById('slide-' + i).classList.remove('active');
+            }
+            // Show current slide
+            document.getElementById('slide-' + currentSlide).classList.add('active');
+
+            // Update dots
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                if (index + 1 === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+
+            // Update buttons
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+
+            if (currentSlide === 1) {
+                btnPrev.style.visibility = 'hidden';
+            } else {
+                btnPrev.style.visibility = 'visible';
+            }
+
+            if (currentSlide === totalSlides) {
+                btnNext.innerText = "Start Exploring";
+                btnNext.onclick = finishSetup; // Changes function on last slide
+            } else {
+                btnNext.innerText = "Next";
+                btnNext.onclick = () => changeSlide(1);
+            }
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 1) currentSlide = 1;
+            if (currentSlide > totalSlides) currentSlide = totalSlides;
+            updateCarousel();
+        }
+
+        function goToSlide(slideNum) {
+            currentSlide = slideNum;
+            updateCarousel();
+        }
+
+        function finishSetup() {
+            const name = document.getElementById('mock-name').innerText;
+            document.getElementById('map-welcome-msg').innerText = `Welcome to your path, ${name}.`;
+            nextStep('map-lobby');
+        }
+
+        // --- SUPPORT MODAL LOGIC ---
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyKhcd3c4j2SwJOTtG5c7yZxDEIC-Mw-d-zYE27CQuALwyd2rmU_6BQMYQwjqVwQ89N/exec'; 
+
+        function toggleSupportModal() {
+            const modal = document.getElementById('supportModal');
+            if (modal.style.display === "block") {
+                modal.style.display = "none";
+            } else {
+                modal.style.display = "block";
+            }
+        }
+        
+        // Close modal if user clicks outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('supportModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        function submitSupport(e) {
+            e.preventDefault();
+            const btn = document.getElementById('supportSubmitBtn');
+            const status = document.getElementById('supportStatus');
+            
+            btn.disabled = true;
+            btn.textContent = "Sending...";
+            
+            const formData = new FormData(document.getElementById('supportForm'));
+            const data = new URLSearchParams();
+            for (const pair of formData) {
+                data.append(pair[0], pair[1]);
+            }
+        
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: data
+            })
+            .then(response => {
+                btn.textContent = "Sent!";
+                btn.style.backgroundColor = "var(--brand-blue)";
+                status.innerHTML = "<p style='color: green; text-align: center; font-family: \"OneDotCd-Bold\";'>Thank you! We received your report.</p>";
+                
+                setTimeout(() => {
+                    toggleSupportModal(); 
+                    document.getElementById('supportForm').reset(); 
+                    btn.disabled = false;
+                    btn.textContent = "Send Report";
+                    btn.style.backgroundColor = "var(--brand-red)";
+                    status.innerHTML = "";
+                }, 2000);
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                status.innerHTML = "<p style='color: red; text-align: center;'>Error sending report. Please try again.</p>";
+                btn.disabled = false;
+                btn.textContent = "Try Again";
+            });
+        }
+    </script>
+
+</body>
+</html>
