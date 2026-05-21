@@ -757,7 +757,7 @@
 
             if (currentSlide === totalSlides) {
                 btnNext.innerText = "Start Exploring";
-                btnNext.onclick = finishSetup; // Changes function on last slide
+                btnNext.onclick = finishTutorial; // Changes function on last slide
             } else {
                 btnNext.innerText = "Next";
                 btnNext.onclick = () => changeSlide(1);
@@ -776,14 +776,7 @@
             updateCarousel();
         }
 
-        function finishSetup() {
-            const name = document.getElementById('mock-name').innerText;
-            const role = document.getElementById('mock-role').innerText;
-            
-            // Update Master Dashboard Header
-            document.getElementById('master-dash-name').innerText = name;
-            document.getElementById('master-dash-role').innerText = role;
-            
+        function finishTutorial() {
             nextStep('master-lobby');
         }
 
