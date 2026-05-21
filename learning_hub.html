@@ -339,14 +339,14 @@
         <div id="view-lobby" class="grid-view">
 
             <!-- Card 1: LMS -->
-            <div class="lobby-card" onclick="navigateTo('login')">
+            <div class="lobby-card">
                 <div class="card-image-area" style="background: var(--crust-med);">
                     <span>🎓</span>
                 </div>
                 <div class="card-content">
                     <div class="card-title">Team Wow Training Courses</div>
                     <div class="card-desc">Interactive courses, quizzes, and certification tracking.</div>
-                    <span class="btn">View Dashboard</span>
+                    <a href="lms_dashboard.html" class="btn">View Dashboard</a>
                 </div>
             </div>
 
@@ -444,58 +444,6 @@
 
         </div>
 
-        <!-- STEP 4.5: FAKE LOGIN -->
-        <div id="view-login" class="hidden" style="max-width: 400px; margin: 4rem auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center;">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
-            <h2 style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue); margin-bottom: 1.5rem;">Training Courses Secure Login</h2>
-            
-            <input type="text" placeholder="Employee ID" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px;">
-            <input type="password" placeholder="Password" style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px;">
-            
-            <button class="btn" style="width: 100%;" onclick="navigateTo('lms')">Sign In</button>
-            <p style="margin-top: 15px; font-size: 0.8rem; color: #888;">(Demo: Click Sign In to bypass)</p>
-        </div>
-
-        <!-- STEP 5: LMS MOCKUP (Vision) -->
-        <div id="view-lms" class="hidden" style="animation: fadeIn 0.5s ease-out;">
-            <div class="section-header">
-                <div class="section-title">My Learning Dashboard</div>
-                <p style="color: #666; font-size: 0.9rem; margin-top: 5px;">(Concept Preview)</p>
-            </div>
-
-            <!-- Fake Progress Section -->
-            <div style="background: white; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--brand-blue); margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                <h3 style="font-family: 'OneDotCd-Bold'; margin-bottom: 10px; color: var(--dark-blue);">Current Course: GMIT Level 1</h3>
-                <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px;">
-                    <span>Progress</span>
-                    <span>65%</span>
-                </div>
-                <div style="width: 100%; height: 10px; background: #eee; border-radius: 5px; overflow: hidden;">
-                    <div style="width: 65%; height: 100%; background: var(--brand-blue);"></div>
-                </div>
-                <button class="btn" style="margin-top: 15px; padding: 0.5rem 1.5rem; font-size: 0.9rem;">Resume Training ▶</button>
-            </div>
-
-            <!-- Fake Course Grid -->
-            <h3 style="font-family: 'OneDotCd-Bold'; margin-bottom: 1rem; color: var(--crust-deep);">Assigned Courses</h3>
-            <div class="resource-grid">
-                <!-- Mock Card 1 -->
-                <div class="resource-card" style="opacity: 0.7;">
-                    <span class="res-type">REQUIRED</span>
-                    <div class="res-title">Food Safety Certification</div>
-                    <div class="res-desc">Due: Feb 15, 2026</div>
-                    <span style="font-size: 0.8rem; color: var(--brand-red);">Not Started</span>
-                </div>
-                <!-- Mock Card 2 -->
-                <div class="resource-card" style="opacity: 0.7;">
-                    <span class="res-type">OPTIONAL</span>
-                    <div class="res-title">Advanced Dough Repair</div>
-                    <div class="res-desc">Master Class Series</div>
-                    <span style="font-size: 0.8rem; color: green;">Completed ✅</span>
-                </div>
-            </div>
-        </div>
-
     </main>
 
     <footer>
@@ -563,8 +511,6 @@
             document.getElementById('view-categories').classList.add('hidden');
             document.getElementById('view-resources-list').classList.add('hidden');
             document.getElementById('view-viewer').classList.add('hidden');
-            document.getElementById('view-login').classList.add('hidden');
-            document.getElementById('view-lms').classList.add('hidden');
 
             // Show Target & Update Button Text
             if (view === 'lobby') {
@@ -579,12 +525,6 @@
             } else if (view === 'viewer') {
                 document.getElementById('view-viewer').classList.remove('hidden');
                 updateNav('back', 'Back to Resources');
-            } else if (view === 'login') {
-                document.getElementById('view-login').classList.remove('hidden');
-                updateNav('back', 'Back to Lobby');
-            } else if (view === 'lms') {
-                document.getElementById('view-lms').classList.remove('hidden');
-                updateNav('back', 'Log Out');
             }
             
             // Update State
@@ -622,10 +562,6 @@
             } else if (currentView === 'viewer') {
                 document.getElementById('content-frame').src = ''; 
                 navigateTo('list');
-            } else if (currentView === 'login') {
-                navigateTo('lobby');
-            } else if (currentView === 'lms') {
-                navigateTo('login');
             }
         }
 
@@ -692,4 +628,3 @@
 
 </body>
 </html>
-
