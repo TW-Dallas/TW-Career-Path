@@ -25,14 +25,14 @@
         }
 
         /* --- Map Container --- */
-        #step-map-lobby {
+        #step-master-lobby, #step-day1-dashboard {
             max-width: 1200px;
             width: 100%;
             background: transparent;
             box-shadow: none;
             border-top: none;
             padding: 0;
-            text-align: left; /* Reset text align for the dashboard */
+            text-align: left;
         }
 
         /* --- Dashboard Layout --- */
@@ -425,7 +425,7 @@
                 <label class="form-label">Select Your Market</label>
                 <select class="form-input" id="login-market" style="border-color: var(--brand-blue); border-width: 2px;">
                     <option value="" disabled selected>-- Choose Market --</option>
-                    <option value="dallas">Dallas</option>
+                    <option value="dallas">Dallas / Fort Worth</option>
                     <option value="denver">Denver</option>
                     <option value="elpaso">El Paso</option>
                     <option value="la">Los Angeles</option>
@@ -523,18 +523,78 @@
             </div>
         </div>
 
-        <!-- STEP 4: MAP LOBBY (Dashboard) -->
-        <div id="step-map-lobby" class="setup-container hidden">
+        <!-- STEP 4: MASTER LOBBY (Days Overview) -->
+        <div id="step-master-lobby" class="setup-container hidden">
             
-            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <h2 class="dashboard-title">My Learning Path</h2>
+                <div class="dashboard-user-info">
+                    <div style="text-align: right;">
+                        <div style="font-family: 'OneDotCd-Bold'; color: var(--crust-deep);" id="master-dash-name">John Doe</div>
+                        <div style="font-size: 0.9rem; color: #666;" id="master-dash-role">Delivery Expert</div>
+                    </div>
+                    <div class="dashboard-avatar">👤</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-header">
+                    <h3>Overall Onboarding Progress</h3>
+                    <span style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue);">0%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <div class="course-grid">
+                
+                <!-- Day 1: Active -->
+                <div class="course-card">
+                    <div class="course-image" style="background-image: url('image/photo_training.webp');">
+                        <div class="course-badge">ONBOARDING</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-title">Day 1</div>
+                        <div class="course-meta">Phone Training & Customer Interaction</div>
+                        <button class="btn-small" onclick="nextStep('day1-dashboard')">View Modules</button>
+                    </div>
+                </div>
+
+                <!-- Day 2: Locked -->
+                <div class="course-card locked">
+                    <div class="course-image" style="background-image: url('image/photo_driver.jpg');">
+                        <div class="course-badge" style="color: #888;">ONBOARDING</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-title">Day 2</div>
+                        <div class="course-meta">Safety, Ops, & Hands-On Practice</div>
+                        <button class="btn-small">Locked 🔒</button>
+                    </div>
+                </div>
+
+                <!-- Day 3: Locked -->
+                <div class="course-card locked">
+                    <div class="course-image" style="background-image: url('image/photo_csr.jpg');">
+                        <div class="course-badge" style="color: #888;">ONBOARDING</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-title">Day 3</div>
+                        <div class="course-meta">Live Fire & Final Certification</div>
+                        <button class="btn-small">Locked 🔒</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- STEP 5: DAY 1 DASHBOARD (Modules) -->
+        <div id="step-day1-dashboard" class="setup-container hidden">
+            
             <div class="dashboard-header">
                 <h2 class="dashboard-title">Day 1: Phone Training & Customer Interaction</h2>
                 <div class="dashboard-user-info">
-                    <div style="text-align: right;">
-                        <div style="font-family: 'OneDotCd-Bold'; color: var(--crust-deep);" id="dash-name">John Doe</div>
-                        <div style="font-size: 0.9rem; color: #666;" id="dash-role">Delivery Expert</div>
-                    </div>
-                    <div class="dashboard-avatar">👤</div>
+                    <button class="btn-small" style="background: var(--crust-med); color: var(--crust-deep);" onclick="nextStep('master-lobby')">← Back to Days</button>
                 </div>
             </div>
 
@@ -566,7 +626,7 @@
 
                 <!-- Card 2: Locked -->
                 <div class="course-card locked">
-                    <div class="course-image" style="background-image: url('image/photo_csr.jpg');">
+                    <div class="course-image" style="background-image: url('image/csr-counter.jpg');">
                         <div class="course-badge" style="color: #888;">MODULE 2</div>
                     </div>
                     <div class="course-content">
@@ -578,7 +638,7 @@
 
                 <!-- Card 3: Locked -->
                 <div class="course-card locked">
-                    <div class="course-image" style="background-image: url('image/photo_driver.jpg');">
+                    <div class="course-image" style="background-image: url('image/photo_csr.jpg');">
                         <div class="course-badge" style="color: #888;">MODULE 3</div>
                     </div>
                     <div class="course-content">
@@ -656,7 +716,8 @@
             document.getElementById('step-login').classList.add('hidden');
             document.getElementById('step-setup-profile').classList.add('hidden');
             document.getElementById('step-tutorial').classList.add('hidden');
-            document.getElementById('step-map-lobby').classList.add('hidden');
+            document.getElementById('step-master-lobby').classList.add('hidden');
+            document.getElementById('step-day1-dashboard').classList.add('hidden');
             
             // Show target
             document.getElementById('step-' + stepId).classList.remove('hidden');
@@ -719,11 +780,11 @@
             const name = document.getElementById('mock-name').innerText;
             const role = document.getElementById('mock-role').innerText;
             
-            // Update Dashboard Header
-            document.getElementById('dash-name').innerText = name;
-            document.getElementById('dash-role').innerText = role;
+            // Update Master Dashboard Header
+            document.getElementById('master-dash-name').innerText = name;
+            document.getElementById('master-dash-role').innerText = role;
             
-            nextStep('map-lobby');
+            nextStep('master-lobby');
         }
 
         // --- SUPPORT MODAL LOGIC ---
