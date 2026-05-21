@@ -523,11 +523,60 @@
             </div>
         </div>
 
-        <!-- STEP 4: MASTER LOBBY (Days Overview) -->
+        <!-- STEP 4: TRACK GATEWAY (Who are you?) -->
+        <div id="step-gateway" class="setup-container hidden" style="max-width: 900px;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🧭</div>
+            <h2 class="setup-title">Select Your Path</h2>
+            <p class="setup-text">Welcome to the Learning Management System. Which track are you taking today?</p>
+            
+            <div class="course-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                
+                <!-- Track 1: New Hire -->
+                <div class="course-card" style="cursor: pointer; border-top: 6px solid var(--brand-blue);" onclick="nextStep('master-lobby')">
+                    <div class="course-image" style="background-color: var(--crust-light); height: 180px; font-size: 4rem;">
+                        🐣
+                        <div class="course-badge">TRACK 1</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-title">New Hire</div>
+                        <div class="course-meta">Complete your 3-Day foundational Onboarding.</div>
+                        <button class="btn-small">Start Onboarding</button>
+                    </div>
+                </div>
+
+                <!-- Track 2: Current Team Member -->
+                <div class="course-card" style="cursor: pointer; border-top: 6px solid var(--dark-blue);" onclick="nextStep('ceu-lobby')">
+                    <div class="course-image" style="background-color: var(--crust-light); height: 180px; font-size: 4rem;">
+                        🚀
+                        <div class="course-badge" style="color: var(--dark-blue);">TRACK 2</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-title">Current Team</div>
+                        <div class="course-meta">Access Continuing Education Units (CEUs).</div>
+                        <button class="btn-small" style="background: var(--dark-blue);">View CEUs</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- STEP 4.5: CEU LOBBY (Placeholder) -->
+        <div id="step-ceu-lobby" class="setup-container hidden">
+            <div class="dashboard-header">
+                <h2 class="dashboard-title">Continuing Education (CEUs)</h2>
+                <div class="dashboard-user-info">
+                    <button class="btn-small" style="background: var(--crust-med); color: var(--crust-deep);" onclick="nextStep('gateway')">← Back to Gateway</button>
+                </div>
+            </div>
+            <p style="text-align:center; padding: 3rem; font-size: 1.2rem; color: #666;">CEU Modules coming soon...</p>
+        </div>
+
+        <!-- STEP 5: ONBOARDING LOBBY (Days Overview) -->
         <div id="step-master-lobby" class="setup-container hidden">
             
             <div class="dashboard-header">
-                <h2 class="dashboard-title">My Learning Path</h2>
+                <button class="btn-small" style="background: var(--crust-med); color: var(--crust-deep); margin-right: 15px;" onclick="nextStep('gateway')">← Back</button>
+                <h2 class="dashboard-title" style="flex-grow: 1;">My Learning Path</h2>
                 <div class="dashboard-user-info">
                     <div style="text-align: right;">
                         <div style="font-family: 'OneDotCd-Bold'; color: var(--crust-deep);" id="master-dash-name">John Doe</div>
@@ -716,6 +765,8 @@
             document.getElementById('step-login').classList.add('hidden');
             document.getElementById('step-setup-profile').classList.add('hidden');
             document.getElementById('step-tutorial').classList.add('hidden');
+            if(document.getElementById('step-gateway')) document.getElementById('step-gateway').classList.add('hidden');
+            if(document.getElementById('step-ceu-lobby')) document.getElementById('step-ceu-lobby').classList.add('hidden');
             document.getElementById('step-master-lobby').classList.add('hidden');
             document.getElementById('step-day1-dashboard').classList.add('hidden');
             
@@ -777,7 +828,7 @@
         }
 
         function finishTutorial() {
-            nextStep('master-lobby');
+            nextStep('gateway');
         }
 
         // --- SUPPORT MODAL LOGIC ---
