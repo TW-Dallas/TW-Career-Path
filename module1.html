@@ -142,11 +142,44 @@
             align-items: center;
         }
 
+        .btn {
+            display: inline-block;
+            background: var(--brand-blue);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-family: 'OneDotCd-Bold';
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: auto;
+        }
+
+        .btn:hover {
+            background: var(--dark-blue);
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--brand-blue);
+            border: 2px solid var(--brand-blue);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(0, 144, 226, 0.1);
+            color: var(--dark-blue);
+            transform: scale(1.02);
+        }
+
         .btn-disabled {
             background: #ccc !important;
             cursor: not-allowed !important;
             transform: none !important;
             color: #888 !important;
+            border: none !important;
         }
 
         .hidden { display: none !important; }
