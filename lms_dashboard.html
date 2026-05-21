@@ -26,12 +26,209 @@
 
         /* --- Map Container --- */
         #step-map-lobby {
-            max-width: 1200px; /* Allow the map to be much wider */
+            max-width: 1200px;
             width: 100%;
-            background: transparent; /* Remove the white card background */
+            background: transparent;
             box-shadow: none;
             border-top: none;
             padding: 0;
+            text-align: left; /* Reset text align for the dashboard */
+        }
+
+        /* --- Dashboard Layout --- */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--brand-blue);
+        }
+
+        .dashboard-title {
+            font-family: 'OneDotCd-Bold';
+            font-size: 2rem;
+            color: var(--dark-blue);
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .dashboard-user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dashboard-avatar {
+            width: 50px;
+            height: 50px;
+            background-color: var(--crust-med);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid var(--brand-blue);
+        }
+
+        /* --- Progress Bar --- */
+        .progress-container {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-header h3 {
+            font-family: 'OneDotCd-Bold';
+            color: var(--crust-deep);
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 12px;
+            background: var(--crust-light);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--crust-med);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--brand-blue), #00b4ff);
+            width: 15%; /* Mock progress */
+            border-radius: 6px;
+            transition: width 1s ease-out;
+        }
+
+        /* --- Course Grid --- */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            border-top: 6px solid var(--acc-blue); /* Match Lobby Cards */
+            position: relative;
+            text-align: center; /* Center text like Lobby Cards */
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15); /* Stronger hover shadow */
+        }
+
+        .course-card.locked {
+            opacity: 0.6;
+            filter: grayscale(100%);
+            cursor: not-allowed;
+            border-top: 6px solid #888; /* Gray top border for locked */
+        }
+        
+        .course-card.locked:hover {
+            transform: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .course-image {
+            height: 240px; /* Match Lobby Card height */
+            background-color: var(--crust-med);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem; /* Big emoji placeholder */
+            color: var(--crust-burnt);
+            position: relative;
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--brand-blue);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-family: 'OneDotCd-Bold';
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .course-content {
+            padding: 2rem; /* Match Lobby Card padding */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-title {
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.8rem; /* Match Lobby Card title size */
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .course-meta {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-small {
+            display: inline-block;
+            background: var(--brand-blue);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-family: 'OneDotCd-Bold';
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: auto;
+            margin: 0 auto; /* Center button */
+        }
+
+        .btn-small:hover {
+            background: var(--dark-blue);
+            transform: scale(1.05);
+        }
+        
+        .course-card.locked .btn-small {
+            background: #ccc;
+            cursor: not-allowed;
+            color: #888;
+        }
+        .course-card.locked .btn-small:hover {
+            transform: none;
         }
 
         /* --- Carousel Styles --- */
@@ -315,14 +512,85 @@
             </div>
         </div>
 
-        <!-- STEP 4: MAP LOBBY (Placeholder) -->
+        <!-- STEP 4: MAP LOBBY (Dashboard) -->
         <div id="step-map-lobby" class="setup-container hidden">
-            <h2 class="setup-title" style="font-size: 2.2rem; color: var(--brand-blue);">The Training Map</h2>
-            <div style="width: 100%; height: 350px; background-color: var(--crust-med); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 2rem; color: var(--crust-burnt); border: 4px dashed var(--crust-dark); margin-bottom: 2rem;">
-                <span style="font-size: 4rem; margin-bottom: 10px;">🗺️</span>
-                <span style="font-family: 'OneDotCd-Bold'; font-size: 1.5rem;">Interactive Map Coming Soon</span>
+            
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <h2 class="dashboard-title">Day 1: Phone Training & Customer Interaction</h2>
+                <div class="dashboard-user-info">
+                    <div style="text-align: right;">
+                        <div style="font-family: 'OneDotCd-Bold'; color: var(--crust-deep);" id="dash-name">John Doe</div>
+                        <div style="font-size: 0.9rem; color: #666;" id="dash-role">Delivery Expert</div>
+                    </div>
+                    <div class="dashboard-avatar">👤</div>
+                </div>
             </div>
-            <p class="setup-text" id="map-welcome-msg" style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue);"></p>
+
+            <!-- Global Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-header">
+                    <h3>Day 1 Progress</h3>
+                    <span style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue);">0%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- Course Grid -->
+            <div class="course-grid">
+                
+                <!-- Card 1: Active -->
+                <div class="course-card">
+                    <div class="course-image" style="background-image: url('image/photo_training.webp');">
+                        <div class="course-badge">MODULE 1</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-title">Intro & System Setup</div>
+                        <div class="course-meta">Welcome Video & Culture</div>
+                        <button class="btn-small">Start Training</button>
+                    </div>
+                </div>
+
+                <!-- Card 2: Locked -->
+                <div class="course-card locked">
+                    <div class="course-image" style="background-image: url('image/photo_csr.jpg');">
+                        <div class="course-badge" style="color: #888;">MODULE 2</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-title">Customer Service Basics</div>
+                        <div class="course-meta">Service Expectations & Tone</div>
+                        <button class="btn-small">Locked 🔒</button>
+                    </div>
+                </div>
+
+                <!-- Card 3: Locked -->
+                <div class="course-card locked">
+                    <div class="course-image" style="background-image: url('image/photo_driver.jpg');">
+                        <div class="course-badge" style="color: #888;">MODULE 3</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-title">The POS Simulator</div>
+                        <div class="course-meta">Phone Basics & Order Entry</div>
+                        <button class="btn-small">Locked 🔒</button>
+                    </div>
+                </div>
+                
+                 <!-- Card 4: Locked -->
+                <div class="course-card locked">
+                    <div class="course-image" style="background-image: url('image/photo_gm.webp');">
+                        <div class="course-badge" style="color: #888;">MODULE 4</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-title">Recap & Authorization</div>
+                        <div class="course-meta">Trainer Sign-Off (Unlock Day 2)</div>
+                        <button class="btn-small">Locked 🔒</button>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
 
     </main>
@@ -438,7 +706,12 @@
 
         function finishSetup() {
             const name = document.getElementById('mock-name').innerText;
-            document.getElementById('map-welcome-msg').innerText = `Welcome to your path, ${name}.`;
+            const role = document.getElementById('mock-role').innerText;
+            
+            // Update Dashboard Header
+            document.getElementById('dash-name').innerText = name;
+            document.getElementById('dash-role').innerText = role;
+            
             nextStep('map-lobby');
         }
 
