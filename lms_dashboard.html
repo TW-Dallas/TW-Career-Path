@@ -854,11 +854,16 @@
         }
 
         // --- CHECK URL FOR REDIRECTS ON LOAD ---
-        window.onload = function() {
+        document.addEventListener("DOMContentLoaded", function() {
             if (window.location.hash === '#day1') {
-                nextStep('day1-dashboard');
+                // Short timeout to ensure all default hiding is done first
+                setTimeout(() => {
+                    nextStep('day1-dashboard');
+                    // Clean up URL so it doesn't get stuck if they refresh
+                    history.replaceState(null, null, ' ');
+                }, 100);
             }
-        };
+        });
     </script>
 </body>
 </html>
