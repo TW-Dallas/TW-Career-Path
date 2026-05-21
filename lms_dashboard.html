@@ -17,9 +17,21 @@
             border-radius: var(--border-radius);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             width: 100%;
+            max-width: 600px; /* Restrict width of the login/tutorial cards */
+            margin: 0 auto; /* Center the cards */
             text-align: center;
             animation: fadeIn 0.5s ease-out;
             border-top: 6px solid var(--brand-blue);
+        }
+
+        /* --- Map Container --- */
+        #step-map-lobby {
+            max-width: 1200px; /* Allow the map to be much wider */
+            width: 100%;
+            background: transparent; /* Remove the white card background */
+            box-shadow: none;
+            border-top: none;
+            padding: 0;
         }
 
         /* --- Carousel Styles --- */
@@ -197,14 +209,14 @@
 
     <!-- Navigation -->
     <div class="nav-strip" style="background-color: var(--dark-blue); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100;">
-        <div style="max-width: 800px; margin: 0 auto; text-align: left; display: flex; align-items: center; justify-content: space-between;">
+        <div style="max-width: 1200px; margin: 0 auto; text-align: left; display: flex; align-items: center; justify-content: space-between;">
             <a href="index.html" class="back-link" style="color: white; text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 8px;">
                 &#8592; Back to Career Path
             </a>
         </div>
     </div>
 
-    <main>
+    <main style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem; flex: 1; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
         
         <!-- STEP 1: INITIAL LOGIN (Mock) -->
         <div id="step-login" class="setup-container">
