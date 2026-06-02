@@ -128,6 +128,8 @@
   #hb-time-clock { top: 50%; left: 0%; width: 50%; height: 50%; }
   #hb-log-in { top: 60%; left: 0%; width: 30%; height: 30%; } /* Added Log In Hitbox */
   #hb-carryout { top: 60%; left: 60%; width: 40%; height: 40%; } /* New Hitbox for Carryout */
+  #hb-phone-field { top: 15%; left: 15%; width: 40%; height: 10%; } /* Phone Field */
+  #hb-greeting-tab { top: 30%; left: 80%; width: 20%; height: 15%; } /* Greeting Tab */
   
   /* Numpad Sequence Hitboxes */
   #hb-num-1 { top: 20%; left: 20%; width: 60%; height: 60%; }
@@ -194,6 +196,8 @@
           <div id="hb-time-clock" class="hitbox" onclick="advanceStep(2, event)"></div>
           <div id="hb-log-in" class="hitbox" onclick="advanceStep(6, event)"></div> <!-- Added Log In div -->
           <div id="hb-carryout" class="hitbox" onclick="advanceStep(8, event)"></div> <!-- Added Carryout div -->
+          <div id="hb-phone-field" class="hitbox" onclick="advanceStep(9, event)"></div> <!-- Phone Field -->
+          <div id="hb-greeting-tab" class="hitbox" onclick="advanceStep(10, event)"></div> <!-- Greeting Tab -->
           
           <!-- Numpad Hitboxes -->
           <div id="hb-num-1" class="hitbox" onclick="typeMockID('1', event)"></div>
@@ -269,9 +273,15 @@
       },
       {
           step: 8,
-          image: "resources/POS_assets/POS_8.png", // Placeholder for the actual order screen
-          activeHitbox: null, // End of Step 1 intro
-          instruction: "Welcome to the Order Entry screen.<br><br><strong>End of Step 1 Introduction.</strong>"
+          image: "resources/POS_assets/POS_8.png", // Customer Info Screen (Blank)
+          activeHitbox: "hb-phone-field", // Hitbox for typing the phone number
+          instruction: "Welcome to the Order Entry screen.<br><br>The first step is always Greeting and Information. You must start by asking for their phone number.<br><br><strong>Action:</strong> Click the 'Phone #' field to begin entering the customer's information."
+      },
+      {
+          step: 9,
+          image: "resources/POS_assets/POS_9.png", // Customer Info Screen (Filled with Training/Address Error)
+          activeHitbox: "hb-greeting-tab", // Hitbox to return to Greeting/Specials
+          instruction: "If the system populates their information from a past order, ask them to verify it. Do NOT read it to them. If there is an address error (like the one shown below in red), stop. They may be outside your delivery area.<br><br>For this practice, the information is verified.<br><br><strong>Action:</strong> Click the 'Greeting/Specials' tab on the right to select the Service Method."
       }
   ];
 
