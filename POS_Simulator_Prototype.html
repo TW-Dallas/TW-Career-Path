@@ -100,24 +100,27 @@
       border: none;
   }
   
-  /* The Bouncing Arrow */
+  /* The Bouncing Arrow (SVG) */
   .hitbox::before {
-      content: '↓';
+      content: '';
       position: absolute;
-      top: -60px; /* Adjusted for larger arrow */
+      top: -50px; /* Sits completely above the button */
       left: 50%;
       transform: translateX(-50%);
-      font-size: 80px; /* Doubled the size */
-      color: var(--brand-red); /* Changed to red for high visibility */
-      font-weight: bold;
-      text-shadow: 0 4px 6px rgba(0,0,0,0.6);
+      width: 40px; /* Fat width */
+      height: 40px; /* Short tail */
+      /* Base64 encoded SVG of a fat, short arrow */
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff0000"><path d="M12 21l-9-9h6V3h6v9h6z"/></svg>');
+      background-size: contain;
+      background-repeat: no-repeat;
+      filter: drop-shadow(0 4px 4px rgba(0,0,0,0.5));
       animation: bounce 1s infinite;
-      pointer-events: none; /* So the arrow itself doesn't block clicks */
+      pointer-events: none;
   }
 
   @keyframes bounce {
-      0%, 100% { top: -60px; }
-      50% { top: -40px; }
+      0%, 100% { top: -50px; }
+      50% { top: -35px; } /* Bounces closer to the top edge, not into the middle */
   }
 
   /* Specific Hitbox Estimates */
