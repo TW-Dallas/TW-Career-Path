@@ -104,20 +104,20 @@
   .hitbox::before {
       content: '↓';
       position: absolute;
-      top: -40px; /* Position above the hitbox */
+      top: -60px; /* Adjusted for larger arrow */
       left: 50%;
       transform: translateX(-50%);
-      font-size: 40px;
-      color: var(--brand-blue);
+      font-size: 80px; /* Doubled the size */
+      color: var(--brand-red); /* Changed to red for high visibility */
       font-weight: bold;
-      text-shadow: 0 4px 6px rgba(0,0,0,0.4);
+      text-shadow: 0 4px 6px rgba(0,0,0,0.6);
       animation: bounce 1s infinite;
       pointer-events: none; /* So the arrow itself doesn't block clicks */
   }
 
   @keyframes bounce {
-      0%, 100% { top: -40px; }
-      50% { top: -25px; }
+      0%, 100% { top: -60px; }
+      50% { top: -40px; }
   }
 
   /* Specific Hitbox Estimates */
