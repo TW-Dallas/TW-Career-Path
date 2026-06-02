@@ -89,16 +89,36 @@
       display: inline-block; /* Wraps tightly around the image */
   }
 
-  /* --- HITBOXES (Visible for testing) --- */
+  /* --- HITBOXES (Invisible with Arrows) --- */
   .hitbox {
       position: absolute;
-      border: 3px dashed red; /* VISIBLE FOR TESTING */
-      background: rgba(255,0,0,0.2);
       cursor: pointer;
       display: none; /* Hidden by default, activated per step */
       z-index: 10;
+      /* Remove visible borders */
+      background: transparent;
+      border: none;
   }
-  .hitbox:hover { background: rgba(255,255,0,0.4); border-color: yellow; }
+  
+  /* The Bouncing Arrow */
+  .hitbox::before {
+      content: '↓';
+      position: absolute;
+      top: -40px; /* Position above the hitbox */
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 40px;
+      color: var(--brand-blue);
+      font-weight: bold;
+      text-shadow: 0 4px 6px rgba(0,0,0,0.4);
+      animation: bounce 1s infinite;
+      pointer-events: none; /* So the arrow itself doesn't block clicks */
+  }
+
+  @keyframes bounce {
+      0%, 100% { top: -40px; }
+      50% { top: -25px; }
+  }
 
   /* Specific Hitbox Estimates */
   #hb-order-entry { top: 2%; left: 1%; width: 10%; height: 10%; }
