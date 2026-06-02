@@ -130,6 +130,7 @@
   #hb-carryout { top: 60%; left: 60%; width: 40%; height: 40%; } /* New Hitbox for Carryout */
   #hb-phone-field { top: 15%; left: 15%; width: 40%; height: 10%; } /* Phone Field */
   #hb-greeting-tab { top: 30%; left: 80%; width: 20%; height: 15%; } /* Greeting Tab */
+  #hb-carryout-service { top: 65%; left: 10%; width: 20%; height: 15%; } /* Carryout Service Method */
   
   /* Numpad Sequence Hitboxes */
   #hb-num-1 { top: 20%; left: 20%; width: 60%; height: 60%; }
@@ -198,6 +199,7 @@
           <div id="hb-carryout" class="hitbox" onclick="advanceStep(8, event)"></div> <!-- Added Carryout div -->
           <div id="hb-phone-field" class="hitbox" onclick="advanceStep(9, event)"></div> <!-- Phone Field -->
           <div id="hb-greeting-tab" class="hitbox" onclick="advanceStep(10, event)"></div> <!-- Greeting Tab -->
+          <div id="hb-carryout-service" class="hitbox" onclick="advanceStep(11, event)"></div> <!-- Carryout Service Method -->
           
           <!-- Numpad Hitboxes -->
           <div id="hb-num-1" class="hitbox" onclick="typeMockID('1', event)"></div>
@@ -282,6 +284,18 @@
           image: "resources/POS_assets/POS_9.png", // Customer Info Screen (Filled with Training/Address Error)
           activeHitbox: "hb-greeting-tab", // Hitbox to return to Greeting/Specials
           instruction: "If the system populates their information from a past order, ask them to verify it. Do NOT read it to them. If there is an address error (like the one shown below in red), stop. They may be outside your delivery area.<br><br>For this practice, the information is verified.<br><br><strong>Action:</strong> Click the 'Greeting/Specials' tab on the right to select the Service Method."
+      },
+      {
+          step: 10,
+          image: "resources/POS_assets/POS_10.png", // Greeting/Specials Screen
+          activeHitbox: "hb-carryout-service", // Hitbox for Carryout Service Method
+          instruction: "We are back on the Greeting page. Notice the green arrows on the right? That means the required information for those sections is complete.<br><br>Let's review a few buttons before selecting the service method:<br><ul><li><strong>Expedite:</strong> Pushes an order to the front. <em>Do not use unless explicitly instructed by a manager.</em></li><li><strong>Time Wanted:</strong> For future orders (we'll cover this later).</li><li><strong>School Lunch:</strong> <em>Do not use unless instructed.</em></li></ul><br><strong>Action:</strong> This is a walk-in. Click the 'Carry-Out' button under Service Method."
+      },
+      {
+          step: 11,
+          image: "resources/POS_assets/POS_11.png", // Placeholder for next screen
+          activeHitbox: null, // End of this block
+          instruction: "Service method selected. Next, we will review the menu tabs.<br><br><strong>End of Step 1.2.</strong>"
       }
   ];
 
