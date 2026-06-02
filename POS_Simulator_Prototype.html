@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POS Simulator - Module 3, Step 0</title>
+<style>
+  /* --- GLOBAL CRUST PALETTE --- */
+  :root {
+      --brand-red: #ff0000;
+      --brand-blue: #0090e2;
+      --dark-blue: #005c91;
+      --crust-base: #fefaf6;
+      --crust-light: #faf2e9;
+      --crust-med: #f0decc;
+      --crust-dark: #c0a588;
+      --crust-deep: #603913;
+  }
+
+  body {
+      font-family: 'Arial Narrow', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--crust-light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: var(--crust-deep);
+  }
+
+  /* --- MOBILE BLOCKER --- */
+  #mobile-blocker {
+      display: none;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--dark-blue); color: white;
+      text-align: center; padding: 40px; z-index: 9999;
+  }
+  @media (max-width: 768px) {
+      #mobile-blocker { display: flex; flex-direction: column; justify-content: center; }
+      #simulator-wrapper { display: none !important; }
+  }
+
+  /* --- SPLIT VIEW LAYOUT --- */
+  #simulator-wrapper {
+      display: flex;
+      width: 95%; max-width: 1400px;
+      height: 85vh;
+      background: var(--crust-base);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      overflow: hidden;
+      border: 2px solid var(--crust-med);
+  }
+
+  /* LEFT: Instructions Panel (30%) */
+  #instruction-panel {
+      width: 30%;
+      background: white;
+      padding: 30px;
+      border-right: 2px solid var(--crust-med);
+      display: flex;
+      flex-direction: column;
+  }
+  h2 { color: var(--dark-blue); margin-top: 0; text-transform: uppercase; border-bottom: 2px solid var(--brand-red); padding-bottom: 10px;}
+  #instruction-text { font-size: 1.2rem; line-height: 1.6; margin-top: 20px; flex-grow: 1; }
+  .error-msg { color: var(--brand-red); font-weight: bold; margin-top: 15px; display: none; }
+
+  /* RIGHT: POS Screen (70%) */
+  #pos-container {
+      width: 70%;
+      background: #000;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  /* The actual POS Image */
+  #pos-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain; /* Ensures it fits without distortion */
+  }
+
+  /* The wrapper that holds the image and hitboxes */
+  #hitbox-wrapper {
+      position: relative;
+      display: inline-block; /* Wraps tightly around the image */
+  }
+
+  /* --- HITBOXES (Visible for testing) --- */
+  .hitbox {
+      position: absolute;
+      border: 3px dashed red; /* VISIBLE FOR TESTING */
+      background: rgba(255,0,0,0.2);
+      cursor: pointer;
+      display: none; /* Hidden by default, activated per step */
+      z-index: 10;
+  }
+  .hitbox:hover { background: rgba(255,255,0,0.4); border-color: yellow; }
+
+  /* Specific Hitbox Estimates */
+  #hb-order-entry { top: 2%; left: 1%; width: 10%; height: 10%; }
+  #hb-time-clock { top: 78%; left: 22%; width: 10%; height: 8%; }
+  #hb-numpad-ok { top: 60%; left: 27%; width: 9%; height: 12%; }
+  #hb-pink-clock { top: 6%; left: 12%; width: 8%; height: 8%; }
+  #hb-qwerty-enter { top: 70%; left: 45%; width: 8%; height: 10%; }
+
+</style>
+</head>
+<body>
+
+<!-- Mobile Blocker -->
+<div id="mobile-blocker">
+  <h2>Screen Too Small</h2>
+  <p>This interactive module requires a larger screen. Please rotate your device to landscape mode, or log in using a store laptop to complete this training.</p>
+</div>
+
+<!-- Main Split View -->
+<div id="simulator-wrapper">
+  
+  <!-- Left: Instructions -->
+  <div id="instruction-panel">
+      <h2>Module 3: Order Entry</h2>
+      <h3 style="color: var(--crust-dark);">Step 0: Clocking In</h3>
+      
+      <div id="instruction-text">
+          Welcome to the POS Simulator. Before we can take an order, we need to access the system.<br><br>
+          <strong>Action:</strong> Click the "Order Entry" button on the top left of the screen.
+      </div>
+      
+      <div id="error-msg" class="error-msg">Incorrect click. Please follow the instructions.</div>
+  </div>
+
+  <!-- Right: Simulator -->
+  <div id="pos-container">
+      <div id="hitbox-wrapper">
+          <!-- The Background Image -->
+          <img id="pos-image" src="https://tw-dallas.github.io/resources/POS_assets/POS_1.png" alt="POS Screen" onclick="handleMiss()">
+          
+          <!-- The Hitboxes -->
+          <div id="hb-order-entry" class="hitbox" onclick="advanceStep(1, event)"></div>
+          <div id="hb-time-clock" class="hitbox" onclick="advanceStep(2, event)"></div>
+          <div id="hb-numpad-ok" class="hitbox" onclick="advanceStep(3, event)"></div>
+          <div id="hb-pink-clock" class="hitbox" onclick="advanceStep(4, event)"></div>
+          <div id="hb-qwerty-enter" class="hitbox" onclick="advanceStep(5, event)"></div>
+      </div>
+  </div>
+
+</div>
+
+<script>
+  // State Machine
+  let currentStep = 0;
+
+  // The base URL for GitHub. (Assuming tw-dallas.github.io is the root)
+  const baseUrl = "https://tw-dallas.github.io/";
+
+  // Sequence Data
+  const sequence = [
+      {
+          step: 0,
+          image: "resources/POS_assets/POS_1.png",
+          activeHitbox: "hb-order-entry",
+          instruction: "Welcome to the POS Simulator. Before we can take an order, we need to access the system.<br><br><strong>Action:</strong> Click the 'Order Entry' button on the top left."
+      },
+      {
+          step: 1,
+          image: "resources/POS_assets/POS_2.png",
+          activeHitbox: "hb-time-clock",
+          instruction: "This is the Caller ID screen. Before you can log in, you must clock in for your shift.<br><br><strong>Action:</strong> Click the blue 'Time Clock' button at the bottom."
+      },
+      {
+          step: 2,
+          image: "resources/POS_assets/POS_3.png",
+          activeHitbox: "hb-numpad-ok",
+          instruction: "Enter your employee ID.<br><br><strong>Action:</strong> (Simulation) Click the green 'OK' checkmark to submit your ID."
+      },
+      {
+          step: 3,
+          image: "resources/POS_assets/POS_4.png",
+          activeHitbox: "hb-pink-clock",
+          instruction: "Verify your shift details on the right.<br><br><strong>Action:</strong> Click the pink 'Clock In' icon at the top left to confirm."
+      },
+      {
+          step: 4,
+          image: "resources/POS_assets/POS_5.png",
+          activeHitbox: "hb-qwerty-enter",
+          instruction: "Enter your secure password.<br><br><strong>Action:</strong> (Simulation) Click the 'Enter' door icon to finalize clock-in."
+      },
+      {
+          step: 5,
+          image: "resources/POS_assets/POS_2.png", // Returns to Caller ID
+          activeHitbox: null, // End of Step 0
+          instruction: "Excellent. You are now clocked in.<br><br><strong>End of Step 0.</strong> You are ready to proceed to Step 1: Taking an Order."
+      }
+  ];
+
+  function loadStep(stepIndex) {
+      const data = sequence[stepIndex];
+      
+      // Update Image
+      document.getElementById('pos-image').src = baseUrl + data.image;
+      
+      // Update Instructions
+      document.getElementById('instruction-text').innerHTML = data.instruction;
+      document.getElementById('error-msg').style.display = 'none';
+
+      // Hide all hitboxes
+      document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+      
+      // Show active hitbox (if any)
+      if(data.activeHitbox) {
+          document.getElementById(data.activeHitbox).style.display = 'block';
+      }
+  }
+
+  function advanceStep(expectedStep, event) {
+      event.stopPropagation(); // Prevents the click from hitting the image underneath and triggering a miss
+      if (currentStep === expectedStep - 1) {
+          currentStep = expectedStep;
+          loadStep(currentStep);
+      }
+  }
+
+  function handleMiss() {
+      // Triggered if they click the image but miss the active hitbox
+      if(currentStep < 5) {
+          const errorMsg = document.getElementById('error-msg');
+          errorMsg.style.display = 'block';
+          // Small shake animation could go here
+          setTimeout(() => { errorMsg.style.display = 'none'; }, 2000);
+      }
+  }
+
+  // Initialize
+  loadStep(0);
+
+</script>
+
+</body>
+</html>
