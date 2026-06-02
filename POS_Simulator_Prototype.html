@@ -126,6 +126,8 @@
   /* Specific Hitbox Estimates (OVERSIZED FOR TESTING) */
   #hb-order-entry { top: 0%; left: 0%; width: 40%; height: 40%; }
   #hb-time-clock { top: 50%; left: 0%; width: 50%; height: 50%; }
+  #hb-log-in { top: 60%; left: 0%; width: 30%; height: 30%; } /* Added Log In Hitbox */
+  #hb-carryout { top: 60%; left: 60%; width: 40%; height: 40%; } /* New Hitbox for Carryout */
   
   /* Numpad Sequence Hitboxes */
   #hb-num-1 { top: 20%; left: 20%; width: 60%; height: 60%; }
@@ -190,6 +192,8 @@
           <!-- The Hitboxes -->
           <div id="hb-order-entry" class="hitbox" onclick="advanceStep(1, event)"></div>
           <div id="hb-time-clock" class="hitbox" onclick="advanceStep(2, event)"></div>
+          <div id="hb-log-in" class="hitbox" onclick="advanceStep(6, event)"></div> <!-- Added Log In div -->
+          <div id="hb-carryout" class="hitbox" onclick="advanceStep(8, event)"></div> <!-- Added Carryout div -->
           
           <!-- Numpad Hitboxes -->
           <div id="hb-num-1" class="hitbox" onclick="typeMockID('1', event)"></div>
@@ -248,8 +252,26 @@
       {
           step: 5,
           image: "resources/POS_assets/POS_2.png", // Returns to Caller ID
-          activeHitbox: null, // End of Step 0
-          instruction: "Excellent. You are now clocked in.<br><br><strong>End of Step 0.</strong> You are ready to proceed to Step 1: Taking an Order."
+          activeHitbox: "hb-log-in", // Modified to bridge to Step 0.5
+          instruction: "Excellent. You are now clocked in.<br><br>Now that you are clocked in, you will need to log in to access the order taking capabilities.<br><br><strong>Action:</strong> Click the green 'Log In' button in the bottom left-hand corner of the screen."
+      },
+      {
+          step: 6,
+          image: "resources/POS_assets/POS_6.png", // PLACEHOLDER FOR THE NEW SCREENSHOT
+          activeHitbox: "hb-num-1", // We will need to map a new numpad here
+          instruction: "Enter your employee ID.<br><br><strong>Action:</strong> Use the keypad to type '1234', then click the green 'OK' checkmark."
+      },
+      {
+          step: 7,
+          image: "resources/POS_assets/POS_7.png", // Active Caller ID screen
+          activeHitbox: "hb-carryout", // New hitbox for Carryout
+          instruction: "You are now fully logged in.<br><br>Let's review the main sections of this screen before taking an order.<br><br><ul><li><strong>Caller ID Lines (Orange):</strong> These display incoming phone calls.</li><li><strong>Training Mode (Top Right):</strong> Used to practice orders without sending them to the kitchen.</li><li><strong>Carryout (Bottom Right):</strong> Used for walk-in customers at the counter.</li></ul><br><strong>Action:</strong> For today's practice, we will assume a customer has walked in. Click the orange 'Carryout' button."
+      },
+      {
+          step: 8,
+          image: "resources/POS_assets/POS_8.png", // Placeholder for the actual order screen
+          activeHitbox: null, // End of Step 1 intro
+          instruction: "Welcome to the Order Entry screen.<br><br><strong>End of Step 1 Introduction.</strong>"
       }
   ];
 
@@ -272,7 +294,14 @@
       } else if (mockID === "123") {
           document.getElementById('hb-num-4').style.display = 'block';
       } else if (mockID === "1234") {
-          document.getElementById('hb-numpad-ok').style.display = 'block';
+          // Dynamic routing based on current step
+          if (currentStep === 2) {
+              document.getElementById('hb-numpad-ok').style.display = 'block';
+              document.getElementById('hb-numpad-ok').onclick = function(e) { advanceStep(3, e); };
+          } else if (currentStep === 6) {
+              document.getElementById('hb-numpad-ok').style.display = 'block';
+              document.getElementById('hb-numpad-ok').onclick = function(e) { advanceStep(7, e); };
+          }
       }
   }
 
