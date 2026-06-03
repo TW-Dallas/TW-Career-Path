@@ -131,6 +131,14 @@
   #hb-phone-field { top: 15%; left: 15%; width: 40%; height: 10%; } /* Phone Field */
   #hb-greeting-tab { top: 30%; left: 80%; width: 20%; height: 15%; } /* Greeting Tab */
   #hb-carryout-service { top: 65%; left: 10%; width: 20%; height: 15%; } /* Carryout Service Method */
+  #hb-pizzas-tab { top: 45%; left: 80%; width: 20%; height: 15%; } /* Pizzas Tab */
+  #hb-size-14 { top: 20%; left: 45%; width: 15%; height: 10%; } /* 14" Size Button */
+  #hb-crust-hand-tossed { top: 35%; left: 25%; width: 15%; height: 10%; } /* Hand Tossed Crust Button */
+  #hb-pepperoni { top: 55%; left: 45%; width: 10%; height: 10%; } /* Pepperoni Button */
+  #hb-everything-else-tab { top: 60%; left: 80%; width: 20%; height: 15%; } /* Everything Else Tab */
+  #hb-coupons-tab { top: 75%; left: 80%; width: 20%; height: 15%; } /* Coupons Tab */
+  #hb-payments-tab { top: 90%; left: 80%; width: 20%; height: 10%; } /* Payments Tab */
+  #hb-finish-tab { top: 90%; left: 80%; width: 20%; height: 10%; } /* Finish Tab */
   
   /* Numpad Sequence Hitboxes */
   #hb-num-1 { top: 20%; left: 20%; width: 60%; height: 60%; }
@@ -200,6 +208,14 @@
           <div id="hb-phone-field" class="hitbox" onclick="advanceStep(9, event)"></div> <!-- Phone Field -->
           <div id="hb-greeting-tab" class="hitbox" onclick="advanceStep(10, event)"></div> <!-- Greeting Tab -->
           <div id="hb-carryout-service" class="hitbox" onclick="advanceStep(11, event)"></div> <!-- Carryout Service Method -->
+          <div id="hb-pizzas-tab" class="hitbox" onclick="advanceStep(12, event)"></div> <!-- Pizzas Tab -->
+          <div id="hb-size-14" class="hitbox" onclick="advanceStep(13, event)"></div> <!-- 14" Size Button -->
+          <div id="hb-crust-hand-tossed" class="hitbox" onclick="advanceStep(14, event)"></div> <!-- Hand Tossed Button -->
+          <div id="hb-pepperoni" class="hitbox" onclick="advanceStep(15, event)"></div> <!-- Pepperoni Button -->
+          <div id="hb-everything-else-tab" class="hitbox" onclick="advanceStep(16, event)"></div> <!-- Everything Else Tab -->
+          <div id="hb-coupons-tab" class="hitbox" onclick="advanceStep(17, event)"></div> <!-- Coupons Tab -->
+          <div id="hb-payments-tab" class="hitbox" onclick="advanceStep(18, event)"></div> <!-- Payments Tab -->
+          <div id="hb-finish-tab" class="hitbox" onclick="advanceStep(19, event)"></div> <!-- Finish Tab -->
           
           <!-- Numpad Hitboxes -->
           <div id="hb-num-1" class="hitbox" onclick="typeMockID('1', event)"></div>
@@ -293,9 +309,57 @@
       },
       {
           step: 11,
-          image: "resources/POS_assets/POS_11.png", // Placeholder for next screen
-          activeHitbox: null, // End of this block
-          instruction: "Service method selected. Next, we will review the menu tabs.<br><br><strong>End of Step 1.2.</strong>"
+          image: "resources/POS_assets/POS_11.png", // Pizzas Tab Screen
+          activeHitbox: "hb-pizzas-tab", // Hitbox for Pizzas Tab
+          instruction: "Service method selected. Next, we will review the menu tabs on the right.<br><br><strong>Action:</strong> Click the blue 'Pizzas' tab to open the pizza builder."
+      },
+      {
+          step: 12,
+          image: "resources/POS_assets/POS_12.png", // Pizza Builder Screen
+          activeHitbox: "hb-size-14", // Hitbox for 14" Size
+          instruction: "This is the Pizza Builder.<br><br>Notice that 'Original Sauce' and 'Pizza Cheese' are already selected by default. You generally build a pizza from top to bottom: Size, Crust, then Toppings.<br><br><strong>Action:</strong> For our practice order, select the 14-inch size."
+      },
+      {
+          step: 13,
+          image: "resources/POS_assets/POS_13.png", // 14" Selected, Missing Crust Error
+          activeHitbox: "hb-crust-hand-tossed", // Hitbox for Hand Tossed Crust
+          instruction: "Great. Now look at the screen. Notice the red 'Missing Crust' banner on the left, and the red arrow pointing to the 'Pizzas' tab on the right? The system will always flag incomplete items.<br><br><strong>Action:</strong> Resolve the error by clicking the 'Hand Tossed' crust option."
+      },
+      {
+          step: 14,
+          image: "resources/POS_assets/POS_14.png", // Hand Tossed Selected, Error Cleared
+          activeHitbox: "hb-pepperoni", // Hitbox for Pepperoni
+          instruction: "Excellent. The crust error is resolved, and the item on the left now reads '1 14\" HandToss Pizza'. Since sauce and cheese are already selected, this is a complete cheese pizza.<br><br>Now, let's add a topping.<br><br><strong>Action:</strong> Click the 'Pepperoni' button."
+      },
+      {
+          step: 15,
+          image: "resources/POS_assets/POS_15.png", // Pepperoni Selected
+          activeHitbox: "hb-everything-else-tab", // Hitbox for Everything Else Tab
+          instruction: "The Pepperoni button turns orange, and the topping is added to the receipt on the left.<br><br>That concludes the basic pizza builder. Next, let's look at the other menu categories.<br><br><strong>Action:</strong> Click the 'Everything Else' tab on the right."
+      },
+      {
+          step: 16,
+          image: "resources/POS_assets/POS_17.png", // Corrected image for Everything Else
+          activeHitbox: "hb-coupons-tab", // Hitbox for Coupons Tab
+          instruction: "This is the 'Everything Else' tab. As you can see, this is where you will find Breads, Desserts, Wings, Drinks, and other non-pizza items.<br><br>We won't build one right now, but you will use this tab frequently.<br><br><strong>Action:</strong> Click the 'Coupons' tab on the right to continue the tour."
+      },
+      {
+          step: 17,
+          image: "resources/POS_assets/POS_20.png", // Coupons Screen
+          activeHitbox: "hb-payments-tab", // Hitbox for Payments Tab
+          instruction: "This is the Coupons tab. You can select coupons from the list or use the 'Find Coupon by Code' button at the top if the customer has a specific code.<br><br>We will apply a coupon later.<br><br><strong>Action:</strong> Click the 'Payments' tab on the right to proceed."
+      },
+      {
+          step: 18,
+          image: "resources/POS_assets/POS_23.png", // Payments Screen
+          activeHitbox: "hb-finish-tab", // Hitbox for Finish Tab
+          instruction: "This is the Payments screen. Here you will see the final total and select the payment method (Cash, Credit, etc.).<br><br>Since this is just a practice run, we will assume they are paying cash at the counter.<br><br><strong>Action:</strong> Click the 'Finish' tab on the bottom right."
+      },
+      {
+          step: 19,
+          image: "resources/POS_assets/POS_24.png", // Final Confirmation Screen
+          activeHitbox: null, // End of Module
+          instruction: "Order Complete.<br><br>This concludes the basic Order Entry tour. You are now ready to take live practice orders.<br><br><strong>End of Module 3: Step 1.</strong>"
       }
   ];
 
