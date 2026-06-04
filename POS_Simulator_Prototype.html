@@ -212,7 +212,6 @@
           <!-- The Background Image -->
           <img id="pos-image" src="resources/POS_assests/POS_1.png" alt="POS Screen" onclick="handleMiss()">
           
-          
           <!-- First 10 Steps -->
           <div id="hb-order-entry" class="hitbox" onclick="advanceStep(1, event)"></div>
           <div id="hb-time-clock" class="hitbox" onclick="advanceStep(2, event)"></div>
@@ -223,35 +222,35 @@
           <div id="hb-log-in-OK" class="hitbox" onclick="advanceStep(7, event)"></div> 
           <div id="hb-carryout" class="hitbox" onclick="advanceStep(8, event)"></div> 
           <div id="hb-cust-add" class="hitbox" onclick="advanceStep(9, event)"></div> 
-          <div id="hb-phone-field" class="hitbox" onclick="advanceStep(12, event)"></div> 
-          <div id="hb-address-section" class="hitbox" onclick="advanceStep(13, event)"></div> 
-          <div id="hb-rewards-checker" class="hitbox" onclick="advanceStep(14, event)"></div> 
-          <div id="hb-rewards-ok" class="hitbox" onclick="advanceStep(15, event)"></div> 
-          <div id="hb-greeting-tab" class="hitbox" onclick="advanceStep(16, event)"></div> 
-          <div id="hb-delivery-service" class="hitbox" onclick="advanceStep(17, event)"></div>
-          
-          <!-- Shifted Pizza Builder -->
-          <div id="hb-pizzas-tab" class="hitbox" onclick="advanceStep(18, event)"></div> 
-          <div id="hb-size-14" class="hitbox" onclick="advanceStep(19, event)"></div> 
-          <div id="hb-crust-hand-tossed" class="hitbox" onclick="advanceStep(20, event)"></div> 
-          <div id="hb-pepperoni" class="hitbox" onclick="advanceStep(21, event)"></div> 
-          
-          <!-- New Sub-Menu Tour -->
-          <div id="hb-half-and-half" class="hitbox" onclick="advanceStep(22, event)"></div>
-          <div id="hb-specialty" class="hitbox" onclick="advanceStep(23, event)"></div>
-          <div id="hb-cooking-instructions" class="hitbox" onclick="advanceStep(24, event)"></div>
-          <div id="hb-everything-else-tab" class="hitbox" onclick="advanceStep(25, event)"></div> 
-          
-          <!-- Shifted Checkout & Future Tabs -->
-          <div id="hb-coupons-tab" class="hitbox" onclick="advanceStep(26, event)"></div> 
-          <div id="hb-payments-tab" class="hitbox" onclick="advanceStep(27, event)"></div> 
-          <div id="hb-cash-later" class="hitbox" onclick="advanceStep(28, event)"></div> 
-          <div id="hb-finish-tab" class="hitbox" onclick="advanceStep(29, event)"></div> 
-          <div id="hb-finish-checkout" class="hitbox" onclick="advanceStep(30, event)"></div>
-          <div id="hb-todays-orders-tab" class="hitbox" onclick="advanceStep(31, event)"></div> 
-          <div id="hb-quick-payments-tab" class="hitbox" onclick="advanceStep(32, event)"></div> 
 
-
+          <!-- Verification / Rewards Flow -->
+          <div id="hb-phone-field" class="hitbox" onclick="advanceStep(10, event)"></div> 
+          <div id="hb-address-section" class="hitbox" onclick="advanceStep(11, event)"></div> 
+          <div id="hb-rewards-checker" class="hitbox" onclick="advanceStep(12, event)"></div> 
+          <div id="hb-rewards-ok" class="hitbox" onclick="advanceStep(13, event)"></div> 
+          <div id="hb-greeting-tab" class="hitbox" onclick="advanceStep(14, event)"></div> 
+          <div id="hb-delivery-service" class="hitbox" onclick="advanceStep(15, event)"></div>
+          
+          <!-- Pizza Builder -->
+          <div id="hb-pizzas-tab" class="hitbox" onclick="advanceStep(16, event)"></div> 
+          <div id="hb-size-14" class="hitbox" onclick="advanceStep(17, event)"></div> 
+          <div id="hb-crust-hand-tossed" class="hitbox" onclick="advanceStep(18, event)"></div> 
+          <div id="hb-pepperoni" class="hitbox" onclick="advanceStep(19, event)"></div> 
+          
+          <!-- Sub-Menu Tour -->
+          <div id="hb-half-and-half" class="hitbox" onclick="advanceStep(20, event)"></div>
+          <div id="hb-specialty" class="hitbox" onclick="advanceStep(21, event)"></div>
+          <div id="hb-cooking-instructions" class="hitbox" onclick="advanceStep(22, event)"></div>
+          <div id="hb-everything-else-tab" class="hitbox" onclick="advanceStep(23, event)"></div> 
+          
+          <!-- Checkout & Future Tabs -->
+          <div id="hb-coupons-tab" class="hitbox" onclick="advanceStep(24, event)"></div> 
+          <div id="hb-payments-tab" class="hitbox" onclick="advanceStep(25, event)"></div> 
+          <div id="hb-cash-later" class="hitbox" onclick="advanceStep(26, event)"></div> 
+          <div id="hb-finish-tab" class="hitbox" onclick="advanceStep(27, event)"></div> 
+          <div id="hb-finish-checkout" class="hitbox" onclick="advanceStep(28, event)"></div>
+          <div id="hb-todays-orders-tab" class="hitbox" onclick="advanceStep(29, event)"></div> 
+          <div id="hb-quick-payments-tab" class="hitbox" onclick="advanceStep(30, event)"></div> 
       </div>
   </div>
 
@@ -266,6 +265,7 @@
   const baseUrl = "https://tw-dallas.github.io/TW-Career-Path/";
 
   // Sequence Data
+  const sequence = [
   const sequence = [
       {
           step: 0,
@@ -299,23 +299,29 @@
       },
       {
           step: 5,
-          image: "resources/POS_assests/POS_2.png", // Returns to Caller ID
+          image: "resources/POS_assests/POS_2.png", 
           activeHitbox: "hb-log-in", 
           instruction: "Excellent. You are now clocked in.<br><br>Now you must log in to access the order taking capabilities.<br><br><strong>Action:</strong> Click the green 'Log In' button in the bottom left corner."
       },
       {
           step: 6,
-          image: "resources/POS_assests/POS_6.png", // Log In Numpad Screen
+          image: "resources/POS_assests/POS_6.png", 
           activeHitbox: "hb-log-in-OK", 
           instruction: "Enter your employee ID again to log in.<br><br><strong>Action:</strong> Assume your ID is entered. Click the green 'OK' checkmark."
       },
       {
           step: 7,
-          image: "resources/POS_assests/POS_7.png", // Active Caller ID screen
+          image: "resources/POS_assests/POS_7.png", 
           activeHitbox: "hb-carryout", 
-          instruction: "You are now fully logged in.<br><br>Let's review the main sections of this screen before taking an order.<br><br><ul><li><strong>Caller ID Lines (Orange):</strong> These display incoming phone calls.</li><li><strong>Training Mode (Top Right):</strong> Used to practice orders without sending them to the makeline.</li><li><strong>Carryout (Bottom Right):</strong> Used for walk-in customers at the counter.</li></ul><br><strong>Action:</strong> For today's practice, click the orange 'Carryout' button."
+          instruction: "You are now fully logged in.<br><br>Let's review the main sections of this screen before taking an order.<br><br><ul><li><strong>Caller ID Lines (Orange):</strong> These display incoming phone calls.</li><li><strong>Training Mode (Top Right):</strong> Used to practice orders without sending them to the kitchen.</li><li><strong>Carryout (Bottom Right):</strong> Used for walk-in customers at the counter.</li></ul><br><strong>Action:</strong> For today's practice, click the orange 'Carryout' button."
       },
-            {
+      {
+          step: 8,
+          image: "resources/POS_assests/POS_8.png", 
+          activeHitbox: "hb-cust-add", 
+          instruction: "You are now on the Greetings/Specials page.<br><br>Every order begins by verifying the customer's information.<br><br><strong>Action:</strong> Click the 'Customer Address' tab on the right."
+      },
+      {
           step: 9,
           image: "resources/POS_assests/POS_9.png",
           activeHitbox: "hb-phone-field", 
@@ -423,15 +429,15 @@
           activeHitbox: "hb-finish-tab", 
           instruction: "Payment method selected.<br><br><strong>Action:</strong> Click the 'Finish' tab on the bottom right."
       },
-            {
+      {
           step: 27,
-          image: "resources/POS_assests/POS_27.png", // Final Confirmation Screen
-          activeHitbox: "hb-finish-checkout", // Needs a unique ID for the final 'OK' or 'Finish' button
+          image: "resources/POS_assests/POS_27.png",
+          activeHitbox: "hb-finish-checkout", 
           instruction: "Order Complete.<br><br><strong>Action:</strong> Click 'Accept' to return to the main screen."
       },
       {
           step: 28,
-          image: "resources/POS_assests/POS_7.png", // Back to main Caller ID screen
+          image: "resources/POS_assests/POS_7.png", 
           activeHitbox: "hb-todays-orders-tab", 
           instruction: "You are back on the main screen, ready for the next customer.<br><br>Now let's look at a few administrative tabs.<br><br><strong>Action:</strong> Click the 'Today's Orders' tab."
       },
@@ -443,11 +449,10 @@
       },
       {
           step: 30,
-          image: "resources/POS_assests/POS_269.png", 
+          image: "resources/POS_assests/POS_29.png", 
           activeHitbox: null, 
           instruction: "This is the Quick Payments tab. [Future Instructions]<br><br><strong>End of Module 3: Step 0.</strong>"
       }
-
   ];
 
   function loadStep(stepIndex) {
