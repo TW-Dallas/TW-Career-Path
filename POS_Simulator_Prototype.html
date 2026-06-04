@@ -145,6 +145,10 @@
   #hb-coupons-tab { top: 64.0054%; left: 84.8435%; width: 13.1109%; height: 11.4301% }
   #hb-payments-tab { top: 75.6184%; left: 84.7748%; width: 13.2482%; height: 11.8873% }
   #hb-finish-tab { top: 87.6886%; left: 84.9808%; width: 14.9643%; height: 12.1617% }
+  #hb-finish-checkout { top: 72.4179%; left: 29.3795%; width: 9.06096%; height: 9.41843% }
+  #hb-todays-orders-tab { top: 89.7003%; left: 17.0236%; width: 16.749%; height: 10.0585% }
+  #hb-quick-payments-tab { top: 89.6089%; left: 34.1159%; width: 16.6118%; height: 10.2414% }
+
   
   /* Numpad Sequence Hitboxes */
   #hb-num-1 { top: 37.3411%; left: 38.4404%; width: 9.1296%; height: 9.14411% }
@@ -246,8 +250,9 @@
           <div id="hb-payments-tab" class="hitbox" onclick="advanceStep(27, event)"></div> 
           <div id="hb-cash-later" class="hitbox" onclick="advanceStep(28, event)"></div> 
           <div id="hb-finish-tab" class="hitbox" onclick="advanceStep(29, event)"></div> 
-          <div id="hb-todays-orders-tab" class="hitbox" onclick="advanceStep(30, event)"></div> 
-          <div id="hb-quick-payments-tab" class="hitbox" onclick="advanceStep(31, event)"></div> 
+          <div id="hb-finish-checkout" class="hitbox" onclick="advanceStep(30, event)"></div>
+          <div id="hb-todays-orders-tab" class="hitbox" onclick="advanceStep(31, event)"></div> 
+          <div id="hb-quick-payments-tab" class="hitbox" onclick="advanceStep(32, event)"></div> 
 
 
       </div>
@@ -425,7 +430,7 @@
           step: 27,
           image: "resources/POS_assets/POS_27.png", // Final Confirmation Screen
           activeHitbox: "hb-finish-checkout", // Needs a unique ID for the final 'OK' or 'Finish' button
-          instruction: "Order Complete.<br><br><strong>Action:</strong> Click 'Finish' to return to the main screen."
+          instruction: "Order Complete.<br><br><strong>Action:</strong> Click 'Accept' to return to the main screen."
       },
       {
           step: 28,
