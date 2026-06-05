@@ -511,10 +511,17 @@
   }
 
   function advanceStep(expectedStep, event) {
-      event.stopPropagation(); // Prevents the click from hitting the image underneath and triggering a miss
+      event.stopPropagation(); // Prevents the click from hitting the image underneath
+      
       if (currentStep === expectedStep - 1) {
           currentStep = expectedStep;
-          loadStep(currentStep);
+          
+          // Check if this was the final step of the stage
+          if (currentStep === 30) { // Change 22 to whatever your actual final step is
+              window.location.href = 'LMS_Files/POS_Simulator_Stage1.1.html'; // Update this to your actual next stage HTML file
+          } else {
+              loadStep(currentStep);
+          }
       }
   } 
 
