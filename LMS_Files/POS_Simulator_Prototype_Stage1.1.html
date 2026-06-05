@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POS Simulator - Module 3, Step 0</title>
+<style>
+  /* --- GLOBAL CRUST PALETTE --- */
+  :root {
+      --brand-red: #ff0000;
+      --brand-blue: #0090e2;
+      --dark-blue: #005c91;
+      --crust-base: #fefaf6;
+      --crust-light: #faf2e9;
+      --crust-med: #f0decc;
+      --crust-dark: #c0a588;
+      --crust-deep: #603913;
+  }
+
+  body {
+      font-family: 'Arial Narrow', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--crust-light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: var(--crust-deep);
+  }
+
+  /* --- MOBILE BLOCKER --- */
+  #mobile-blocker {
+      display: none;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--dark-blue); color: white;
+      text-align: center; padding: 40px; z-index: 9999;
+  }
+  @media (max-width: 768px) {
+      #mobile-blocker { display: flex; flex-direction: column; justify-content: center; }
+      #simulator-wrapper { display: none !important; }
+  }
+
+  /* --- SPLIT VIEW LAYOUT --- */
+  #simulator-wrapper {
+      display: flex;
+      width: 95%; max-width: 1400px;
+      height: 75vh; /* 1. Locks the app so it NEVER bleeds off the bottom of your laptop */
+      margin: 20px auto; 
+      background: var(--crust-base);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      overflow: hidden; /* Keeps your rounded corners */
+      border: 2px solid var(--crust-med);
+  }
+
+  /* LEFT: Instructions Panel */
+  #instruction-panel {
+      flex-grow: 1; /* 2. Instead of a fixed 30%, this just flexibly fills whatever space is left */
+      background: white;
+      padding: 30px;
+      border-right: 2px solid var(--crust-med);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto; /* Adds a scrollbar ONLY to the text if it gets too small */
+  }
+  
+  h2 { color: var(--dark-blue); margin-top: 0; text-transform: uppercase; border-bottom: 2px solid var(--brand-red); padding-bottom: 10px;}
+  #instruction-text { font-size: 1.2rem; line-height: 1.6; margin-top: 20px; flex-grow: 1; }
+  .error-msg { color: var(--brand-red); font-weight: bold; margin-top: 15px; display: none; }
+
+  /* RIGHT: POS Screen */
+  #pos-container {
+      height: 100%; /* 3. Locks exactly to the wrapper's 85vh height */
+      max-width: 75%; /* Prevents it from crushing the left panel on narrow screens */
+      aspect-ratio: 1600 / 1200; /* 4. Locks the shape to your image. Your hitboxes are 100% safe. */
+      background: #000;
+      position: relative;
+  }
+
+  /* The actual POS Image */
+  #pos-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; 
+  }
+
+  /* The wrapper that holds the image and hitboxes */
+  #hitbox-wrapper {
+      position: relative;
+      display: inline-block; /* Wraps tightly around the image */
+  }
+
+  /* --- HITBOXES (Invisible with Arrows) --- */
+  .hitbox {
+      position: absolute;
+      cursor: pointer;
+      display: none; /* Hidden by default, activated per step */
+      z-index: 10;
+      /* Remove visible borders */
+      background: transparent;
+      border: none;
+  }
+  
+  /* The Bouncing Arrow (SVG) */
+  .hitbox::before {
+      content: '';
+      position: absolute;
+      top: -50px; /* Sits completely above the button */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px; /* Fat width */
+      height: 40px; /* Short tail */
+      /* Base64 encoded SVG of a fat, short arrow */
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff0000"><path d="M12 21l-9-9h6V3h6v9h6z"/></svg>');
+      background-size: contain;
+      background-repeat: no-repeat;
+      filter: drop-shadow(0 4px 4px rgba(0,0,0,0.5));
+      animation: bounce 1s infinite;
+      animation-delay: 1s; /* DELAYS THE BOUNCE */
+      opacity: 0; /* STARTS INVISIBLE */
+      animation-fill-mode: forwards; /* STAYS VISIBLE ONCE IT APPEARS */
+      pointer-events: none;
+  }
+
+  @keyframes bounce {
+      0% { top: -50px; opacity: 1; }
+      50% { top: -35px; opacity: 1; }
+      100% { top: -50px; opacity: 1; }
+  }
+
+    /* The "Flip to Bottom" override */
+  .hitbox.arrow-bottom::before {
+      top: auto; /* Kills the top positioning */
+      bottom: -50px; /* Moves it below */
+      transform: translateX(-50%) rotate(180deg); /* Flips it up */
+      animation: bounceBottomUp 1s infinite;
+      animation-delay: 1s; /* DELAYS THE BOUNCE */
+      opacity: 0; /* STARTS INVISIBLE */
+      animation-fill-mode: forwards; /* STAYS VISIBLE ONCE IT APPEARS */
+  }
+  
+  @keyframes bounceBottomUp {
+      0% { bottom: -50px; opacity: 1; }
+      50% { bottom: -35px; opacity: 1; } 
+      100% { bottom: -50px; opacity: 1; }
+  }
+  
+/* Specific Hitbox Coordinates */
+#hb-carryout { top: 78.0888%; left: 66.9206%; width: 14.6899%; height: 8.87038%; }
+#hb-cust-add { top: 15.9073%; left: 84.8435%; width: 12.905%; height: 11.9788%; }
+#hb-phone-field { top: 18.0598%; left: 18.2263%; width: 25.2992%; height: 4.52571%; }
+#hb-phone-0 { top: 70.196%; left: 49.1023%; width: 8.5691%; height: 8.3273%; }
+#hb-phone-OK { top: 83.049%; left: 38.4929%; width: 8.97715%; height: 9.23244%; }
+#hb-cust-name { top: 23.4907%; left: 18.2263%; width: 43.1175%; height: 4.34468%; }
+#hb-add-number { top: 29.1026%; left: 18.3623%; width: 9.65724%; height: 3.62056%; }
+#hb-street-name { top: 29.2836%; left: 29.1077%; width: 51.8226%; height: 3.62056%; }
+#hb-street-select { top: 29.2836%; left: 28.4276%; width: 52.6387%; height: 12.4909%; }
+#hb-rewards-checker { top: 18.4219%; left: 62.568%; width: 8.70511%; height: 8.3273%; }
+#hb-rewards-ok { top: 83.0251%; left: 38.5777%; width: 8.99231%; height: 9.23555%; }
+#hb-greeting-tab { top: 28.1974%; left: 84.7388%; width: 12.3776%; height: 11.5858%; }
+#hb-delivery-service { top: 65.505%; left: 2.60846%; width: 7.96266%; height: 8.13826%; }
+#hb-pizzas-tab { top: 39.8649%; left: 84.9121%; width: 12.9736%; height: 11.8873%; }
+#hb-size-14 { top: 21.156%; left: 45.7166%; width: 8.09994%; height: 7.86394%; }
+#hb-crust-hand-tossed { top: 33.464%; left: 27.8693%; width: 7.89401%; height: 7.95538%; }
+#hb-pepperoni { top: 54.9527%; left: 45.5794%; width: 8.30588%; height: 7.95538%; }
+#hb-new-pizza { top: 5.20682%; left: 40.8052%; width: 9.52122%; height: 8.14627%; }
+#hb-size-12 { top: 21.6804%; left: 37.1328%; width: 7.07291%; height: 6.87907%; }
+#hb-crust-thin { top: 33.6283%; left: 36.9967%; width: 7.48096%; height: 7.60319%; }
+#hb-beef { top: 54.8086%; left: 72.6333%; width: 7.88901%; height: 8.14627%; }
+#hb-mushroom { top: 54.8086%; left: 72.6333%; width: 7.88901%; height: 8.14627%; }
+
+  /* Mock Input Display Overlay */
+  #mock-input-display {
+      position: absolute;
+      top: 25.5%; left: 41.5%; width: 14%; height: 3%;
+      background: white;
+      color: black;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 5px;
+      display: flex;
+      align-items: center;
+      padding-left: 5px;
+      z-index: 5;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Mobile Blocker -->
+<div id="mobile-blocker">
+  <h2>Screen Too Small</h2>
+  <p>This interactive module requires a larger screen. Please rotate your device to landscape mode, or log in using a store laptop to complete this training.</p>
+</div>
+
+<!-- Main Split View -->
+<div id="simulator-wrapper">
+  
+  <!-- Left: Instructions -->
+  <div id="instruction-panel">
+      <h2>Module 3: Order Entry</h2>
+      <h3 style="color: var(--crust-dark);">Stage 1.1: Order Taking Practice</h3>
+      
+      <div id="instruction-text">
+          Welcome to the POS Simulator. Before we can take an order, we need to access the system.<br><br>
+          <strong>Action:</strong> Click the "Order Entry" button on the top left of the screen.
+      </div>
+      
+      <div id="error-msg" class="error-msg">Incorrect click. Please follow the instructions.</div>
+  </div>
+
+  <!-- Right: Simulator -->
+  <div id="pos-container">
+      <div id="hitbox-wrapper">
+          <!-- Mock Input Overlay -->
+          <div id="mock-input-display" style="display: none;"></div>
+
+          <!-- The Background Image -->
+          <img id="pos-image" src="LMS_Files/resources/POS_assets/Stage_0/POS_1.png" alt="POS Screen" onclick="handleMiss()">
+
+          <div id="hb-carryout" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-cust-add" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-phone-field" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-phone-0" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-phone-OK" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-cust-name" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-add-number" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-street-name" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-street-select" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-rewards-checker" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-rewards-ok" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-greeting-tab" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-delivery-service" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-pizzas-tab" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-size-14" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-crust-hand-tossed" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-pepperoni" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-new-pizza" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-size-12" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-crust-thin" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-beef" class="hitbox" onclick="advanceStep('next', event)"></div>
+          <div id="hb-mushroom" class="hitbox" onclick="advanceStep('next', event)"></div>
+        </div>
+  </div>
+
+</div>
+
+<script>
+  // State Machine
+  let currentStep = 0;
+  let mockID = "";
+
+  // The base URL for GitHub. (Assuming tw-dallas.github.io is the root)
+  const baseUrl = "https://tw-dallas.github.io/TW-Career-Path/";
+
+  // Sequence Data
+const sequence = [
+    {
+        "step": 0,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_7.png",
+        "activeHitbox": "hb-carryout",
+        "instruction": "We are going to practice a few examples. For this first one, we'll give you the exact details. Enter them in the order you saw in the tutorial and see below. This will always be the order of operations you will follow.<br>For this example, we'll use the carry out tab to access the order taking screen again.<br><br>Click the <strong>Carry Out</strong> button to continue."
+    },
+    {
+        "step": 1,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_8.png",
+        "activeHitbox": "hb-cust-add",
+        "instruction": "<strong>Greeting:</strong> Use the example at the top of the order entry screen!<br><br>After the greeting, navigate to the Customer Information tab."
+    },
+    {
+        "step": 2,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_9.png",
+        "activeHitbox": "hb-phone-field",
+        "instruction": "The customer's details are listed below. Click the information fields in the correct order to fill out the fields. <br><br>Remember, outside of this simulator, you'll have to type in the information yourself!<br><br> Customer information:<br><br>Phone # - (000) 000-0000"
+    },
+    {
+        "step": 3,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.1.png",
+        "activeHitbox": "hb-phone-0",
+        "instruction": "The customer's details are listed below. Click the information fields in the correct order to fill out the fields. <br><br>Remember, outside of this simulator, you'll have to type in the information yourself!<br><br><strong>Customer information:</strong><br>Phone # - (000) 000-0000<br><br><strong>Click '0' 1 time for this example.</strong>"
+    },
+    {
+        "step": 4,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.2.png",
+        "activeHitbox": "hb-phone-OK",
+        "instruction": "The customer's details are listed below. Click the information fields in the correct order to fill out the fields. <br><br>Remember, outside of this simulator, you'll have to type in the information yourself!<br><br> Customer information:<br><br>Phone # - (000) 000-0000<br><br><strong>Click '0' 1 time for this example.</strong>\"<br><br>Click <strong>OK</strong> to move to close the phone field."
+    },
+    {
+        "step": 5,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.3.png",
+        "activeHitbox": "hb-cust-name",
+        "instruction": "The customer's details are listed below. Click the information fields in the correct order to fill out the fields. <br><br>Remember, outside of this simulator, you'll have to type in the information yourself!<br><br> Customer information:<br><br>Phone # - (000) 000-0000<br><br><strong>Click '0' 1 time for this example.</strong>\\\"<br><br>Click <strong>OK</strong> to move to close the phone field.<br><br>Name - Training<br><br>Click anywhere in the <strong>Name</strong> field to continue."
+    },
+    {
+        "step": 6,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.4.png",
+        "activeHitbox": "hb-add-number",
+        "instruction": "The customer's details are listed below. Click the information fields in the correct order to fill out the fields. <br><br>Remember, outside of this simulator, you'll have to type in the information yourself!<br><br> <strong>Customer information:<br><br>Phone # - (000) 000-0000</strong><br><br><strong>Click '0' 1 time for this example.</strong><br><br>Click <strong>OK</strong> to move to close the phone field.<br><br>Name - Training<br><br>Click anywhere in the <strong>Name</strong> field to continue.<br><br><strong>Address - 4550 Eldorado Pkwy, McKinney, TX 75070</strong><br><br>Click the first address field to enter the address number."
+    },
+    {
+        "step": 7,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.5.png",
+        "activeHitbox": "hb-street-name",
+        "instruction": "The customer's details are listed below. Click the information fields in the correct order to fill out the fields. <br><br>Remember, outside of this simulator, you'll have to type in the information yourself!<br><br> <strong>Customer information:<br><br>Phone # - (000) 000-0000</strong><br><br><strong>Click '0' 1 time for this example.</strong><br><br>Click <strong>OK</strong> to move to close the phone field.<br><br>Name - Training<br><br>Click anywhere in the <strong>Name</strong> field to continue.<br><br><strong>Address - 4550 Eldorado Pkwy, McKinney, TX 75070</strong><br><br>Click the first address field to enter the address number.<br><br>Click the next address field to enter the street name."
+    },
+    {
+        "step": 8,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.6.png",
+        "activeHitbox": "hb-street-select",
+        "instruction": "The customer's details are listed below. Click the information fields in the correct order to fill out the fields. <br><br>Remember, outside of this simulator, you'll have to type in the information yourself!<br><br> <strong>Customer information:<br><br>Phone # - (000) 000-0000</strong><br><br><strong>Click '0' 1 time for this example.</strong><br><br>Click <strong>OK</strong> to move to close the phone field.<br><br>Name - Training<br><br>Click anywhere in the <strong>Name</strong> field to continue.<br><br><strong>Address - 4550 Eldorado Pkwy, McKinney, TX 75070</strong><br><br>Click the first address field to enter the address number.<br><br>Click the next address field to enter the street name.<br><br>Select the corresponding street name.<br><br>"
+    },
+    {
+        "step": 9,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_11.png",
+        "activeHitbox": "hb-rewards-checker",
+        "instruction": "Confirm the Rewards Status."
+    },
+    {
+        "step": 10,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_12.png",
+        "activeHitbox": "hb-rewards-ok",
+        "instruction": "Check the Rewards Status"
+    },
+    {
+        "step": 11,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_13.png",
+        "activeHitbox": "hb-greeting-tab",
+        "instruction": "After verifying all information is correct, navigate back to the <strong>Greetings/Specials</strong> screen to continue."
+    },
+    {
+        "step": 12,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_14.png",
+        "activeHitbox": "hb-delivery-service",
+        "instruction": "<strong>Service Method<br></strong><br><br>Delivery"
+    },
+    {
+        "step": 13,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_15.png",
+        "activeHitbox": "hb-pizzas-tab",
+        "instruction": "Great! Time to get the order information."
+    },
+    {
+        "step": 14,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_16.png",
+        "activeHitbox": "hb-size-14",
+        "instruction": "<strong>Order</strong><br><br>1 Large Hand-Tossed Pepperoni"
+    },
+    {
+        "step": 15,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_17.png",
+        "activeHitbox": "hb-crust-hand-tossed",
+        "instruction": "<strong>Order</strong><br><br>1 Large Hand-Tossed Pepperoni"
+    },
+    {
+        "step": 16,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_18.png",
+        "activeHitbox": "hb-pepperoni",
+        "instruction": "<strong>Order</strong><br><br>1 Large Hand-Tossed Pepperoni"
+    },
+    {
+        "step": 17,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_19.png",
+        "activeHitbox": "hb-new-pizza",
+        "instruction": "That was easy! Now, we'll add a few more pizzas.<br><br>Click the green button that says <strong>New</strong> to begin a new item. This is crucial! If you do not do this, you will change the current item."
+    },
+    {
+        "step": 18,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.8.png",
+        "activeHitbox": "hb-size-12",
+        "instruction": "<strong>aOrder</strong><br><br>1 Medium Thin Crust with Beef and Mushrooms"
+    },
+    {
+        "step": 19,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.9.png",
+        "activeHitbox": "hb-crust-thin",
+        "instruction": "<strong>aOrder</strong><br><br>1 Medium Thin Crust with Beef and Mushrooms"
+    },
+    {
+        "step": 20,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.10.png",
+        "activeHitbox": "hb-beef",
+        "instruction": "<strong>Order</strong><br><br>1 Medium Thin Crust with Beef and Mushrooms"
+    },
+    {
+        "step": 21,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.11.png",
+        "activeHitbox": "hb-mushroom",
+        "instruction": "<strong>Order</strong><br><br>1 Medium Thin Crust with Beef and Mushrooms"
+    }
+];
+
+  function loadStep(stepIndex) {
+      const data = sequence[stepIndex];
+      
+      // Update Image
+      document.getElementById('pos-image').src = baseUrl + data.image;
+      
+      // Update Instructions
+      document.getElementById('instruction-text').innerHTML = data.instruction;
+      document.getElementById('error-msg').style.display = 'none';
+
+      // Hide all hitboxes and mock display
+      document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+      document.getElementById('mock-input-display').style.display = 'none';
+      
+      // Show active hitbox (if any)
+      if(data.activeHitbox) {
+          const activeBox = document.getElementById(data.activeHitbox);
+          activeBox.style.display = 'block';
+    
+          // If it's Step 0, flip the arrow to the bottom
+          if (stepIndex === 0) {
+              activeBox.classList.add('arrow-bottom');
+          } else {
+              // Ensure it's removed for all other steps just in case
+              activeBox.classList.remove('arrow-bottom'); 
+          }
+      }
+  }
+
+  function advanceStep(expectedStep, event) {
+      // If the HTML only passes the event, or passes the number and the event, 
+      // this ensures we catch the event to stop the click from going through.
+      const e = event || expectedStep; 
+      if (e && e.stopPropagation) {
+          e.stopPropagation();
+      }
+
+      // Just force it to advance by 1 and load it
+      currentStep++;
+      loadStep(currentStep);
+  }
+
+  function handleMiss() {
+      // Triggered if they click the image but miss the active hitbox
+      if(currentStep < 22) { // Updated to reflect new total steps
+          const errorMsg = document.getElementById('error-msg');
+          errorMsg.style.display = 'block';
+          // Small shake animation could go here
+          setTimeout(() => { errorMsg.style.display = 'none'; }, 2000);
+      }
+  }
+
+  // Initialize
+  loadStep(0);
+
+</script>
+
+</body>
+</html>
