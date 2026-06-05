@@ -521,7 +521,7 @@
       currentStep++;
       
       // Check if we hit the final step
-      if (currentStep >= 30) { 
+      if (currentStep >= 31) { 
           // Use a relative path to go UP one folder level to find LMS_Files
           window.location.href = '../LMS_Files/POS_Simulator_Stage1.1.html'; 
       } else {
@@ -530,7 +530,7 @@
   } 
 
   function handleMiss() {
-      if(currentStep < 30) { 
+      if(currentStep < 31) { 
           const errorMsg = document.getElementById('error-msg');
           errorMsg.style.display = 'block'; // It turns on, and stays on.
       }
