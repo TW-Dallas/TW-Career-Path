@@ -511,19 +511,24 @@
   }
 
   function advanceStep(expectedStep, event) {
-      event.stopPropagation(); // Prevents the click from hitting the image underneath
-      
-      if (currentStep === expectedStep - 1) {
-          currentStep = expectedStep;
-          
-          // Check if this was the final step of the stage
-          if (currentStep === 30) { // Change 22 to whatever your actual final step is
-              window.location.href = 'LMS_Files/POS_Simulator_Stage1.1.html'; // Update this to your actual next stage HTML file
-          } else {
-              loadStep(currentStep);
-          }
+      // Catch the event to stop the click from triggering a miss
+      const e = event || expectedStep; 
+      if (e && e.stopPropagation) {
+          e.stopPropagation();
       }
-  } 
+
+      // Just force it to advance by 1
+      currentStep++;
+      
+      // Check if we hit the final step
+      if (currentStep >= 30) { 
+          // Use a relative path to go UP one folder level to find LMS_Files
+          window.location.href = '../LMS_Files/POS_Simulator_Stage1.1.html'; 
+      } else {
+          loadStep(currentStep);
+      }
+  }
+} 
 
   function handleMiss() {
       // Triggered if they click the image but miss the active hitbox
