@@ -527,16 +527,12 @@
       } else {
           loadStep(currentStep);
       }
-  }
-} 
+  } 
 
   function handleMiss() {
-      // Triggered if they click the image but miss the active hitbox
-      if(currentStep < 30) { // Updated to reflect new total steps
+      if(currentStep < 30) { 
           const errorMsg = document.getElementById('error-msg');
-          errorMsg.style.display = 'block';
-          // Small shake animation could go here
-          setTimeout(() => { errorMsg.style.display = 'none'; }, 2000);
+          errorMsg.style.display = 'block'; // It turns on, and stays on.
       }
   }
 
