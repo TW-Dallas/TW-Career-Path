@@ -8,18 +8,18 @@
     <style>
         /* Override header to match the screenshot layout exactly */
         header {
-            background: var(--brand-blue); 
+            background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue));
             color: var(--crust-base);
-            padding: 1.5rem 1rem 0; 
+            padding: 2rem 1rem 1.5rem;
             text-align: center;
             border-bottom: 6px solid var(--brand-red);
-            box-shadow: none; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             position: relative;
         }
 
         .logo-container {
             max-width: 350px;
-            margin: 0 auto;
+            margin: 0 auto 0.2rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,8 +27,8 @@
 
         /* The actual logo image styling */
         .logo-img {
-            max-height: 80px;
-            width: auto;
+            width: 100%;
+            height: auto;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
             margin-bottom: 0.5rem;
         }
