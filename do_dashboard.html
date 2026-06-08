@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DO Tech Inventory Dashboard</title>
-    <!-- Assuming this HTML is in the same folder as the CSS -->
+    <title>Tech Inventory Status</title>
     <link rel="stylesheet" href="LMS_Global_Styles.css">
     <style>
-        /* Dashboard Specific Styles using Globals */
         .dashboard-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 2rem auto;
             padding: 2rem;
             background: var(--crust-base);
@@ -18,11 +16,25 @@
             border-top: 6px solid var(--brand-blue);
         }
 
-        .controls {
-            display: flex;
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
             gap: 1rem;
             margin-bottom: 2rem;
             align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            color: var(--brand-blue);
+            font-size: 0.9rem;
+            text-transform: uppercase;
         }
 
         select {
@@ -33,7 +45,7 @@
             border-radius: 8px;
             background: var(--crust-light);
             color: var(--crust-deep);
-            flex-grow: 1;
+            width: 100%;
             cursor: pointer;
         }
 
@@ -52,6 +64,8 @@
             font-size: 1.1rem;
             cursor: pointer;
             transition: var(--transition);
+            height: 48px;
+            align-self: flex-end;
         }
 
         .refresh-btn:hover {
@@ -87,12 +101,12 @@
         .store-list {
             list-style: none;
             padding: 0;
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
         }
 
         .store-item {
-            padding: 0.5rem;
+            padding: 0.8rem;
             margin-bottom: 0.5rem;
             background: var(--crust-base);
             border-radius: 4px;
@@ -100,10 +114,19 @@
             font-family: 'OneDotCd', sans-serif;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
 
         .store-item.missing { border-left-color: var(--brand-red); }
         .store-item.completed { border-left-color: var(--brand-blue); }
+
+        .store-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .store-number { font-weight: bold; font-size: 1.1rem; }
+        .store-meta { font-size: 0.9rem; color: var(--crust-dark); }
 
         .loading {
             text-align: center;
@@ -116,15 +139,15 @@
         .count-badge {
             background: var(--crust-med);
             color: var(--crust-deep);
-            padding: 2px 8px;
+            padding: 2px 10px;
             border-radius: 12px;
             font-size: 0.9rem;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .results-grid { grid-template-columns: 1fr; }
-            .controls { flex-direction: column; }
-            .refresh-btn { width: 100%; }
+            .controls-grid { grid-template-columns: 1fr; }
+            .refresh-btn { width: 100%; align-self: stretch; }
         }
     </style>
 </head>
@@ -139,10 +162,19 @@
 
     <main>
         <div class="dashboard-container">
-            <div class="controls">
-                <select id="doSelect">
-                    <option value="">Loading DOs...</option>
-                </select>
+            <div class="controls-grid">
+                <div class="filter-group">
+                    <label for="marketSelect">Filter by Market</label>
+                    <select id="marketSelect">
+                        <option value="All">All Markets</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="doSelect">Filter by DO</label>
+                    <select id="doSelect">
+                        <option value="All">All DOs</option>
+                    </select>
+                </div>
                 <button class="refresh-btn" onclick="fetchData()">Refresh Data</button>
             </div>
 
@@ -180,39 +212,49 @@
 
         async function fetchData() {
             const loading = document.getElementById('loadingIndicator');
-            const doSelect = document.getElementById('doSelect');
-            
             loading.style.display = 'block';
             
             try {
                 const response = await fetch(API_URL);
                 globalData = await response.json();
-                
-                // Extract unique DOs and populate dropdown if it's empty
-                if(doSelect.options.length <= 1) {
-                    const uniqueDOs = [...new Set(globalData.map(item => item.doName))].filter(name => name);
-                    uniqueDOs.sort();
-                    
-                    doSelect.innerHTML = '<option value="All">View All Stores</option>';
-                    uniqueDOs.forEach(doName => {
-                        const option = document.createElement('option');
-                        option.value = doName;
-                        option.textContent = doName;
-                        doSelect.appendChild(option);
-                    });
-                }
-                
-                filterResults(); // Initial render
-                
+                populateDropdowns();
+                filterResults(); 
             } catch (error) {
                 console.error("Error fetching data:", error);
-                document.getElementById('missingList').innerHTML = `<li class="store-item missing">Error loading data. Try again.</li>`;
+                document.getElementById('missingList').innerHTML = `<li class="store-item missing">Error loading data.</li>`;
             } finally {
                 loading.style.display = 'none';
             }
         }
 
+        function populateDropdowns() {
+            const marketSelect = document.getElementById('marketSelect');
+            const doSelect = document.getElementById('doSelect');
+
+            // Only populate if they are empty
+            if (marketSelect.options.length <= 1) {
+                const uniqueMarkets = [...new Set(globalData.map(item => item.market))].filter(Boolean).sort();
+                uniqueMarkets.forEach(market => {
+                    const option = document.createElement('option');
+                    option.value = market;
+                    option.textContent = market;
+                    marketSelect.appendChild(option);
+                });
+            }
+
+            if (doSelect.options.length <= 1) {
+                const uniqueDOs = [...new Set(globalData.map(item => item.doName))].filter(Boolean).sort();
+                uniqueDOs.forEach(doName => {
+                    const option = document.createElement('option');
+                    option.value = doName;
+                    option.textContent = doName;
+                    doSelect.appendChild(option);
+                });
+            }
+        }
+
         function filterResults() {
+            const selectedMarket = document.getElementById('marketSelect').value;
             const selectedDO = document.getElementById('doSelect').value;
             const missingList = document.getElementById('missingList');
             const completedList = document.getElementById('completedList');
@@ -224,11 +266,17 @@
             let completedCount = 0;
 
             globalData.forEach(item => {
-                // If a specific DO is selected, skip stores that don't belong to them
+                // Apply Filters
+                if (selectedMarket !== "All" && item.market !== selectedMarket) return;
                 if (selectedDO !== "All" && item.doName !== selectedDO) return;
                 
                 const li = document.createElement('li');
-                li.innerHTML = `<strong>Store ${item.store}</strong> <span>${item.market}</span>`;
+                li.innerHTML = `
+                    <div class="store-info">
+                        <span class="store-number">Store ${item.store}</span>
+                        <span class="store-meta">${item.market} | ${item.doName}</span>
+                    </div>
+                `;
                 
                 if (item.status === "Yes") {
                     li.className = 'store-item completed';
@@ -248,7 +296,8 @@
             if(completedCount === 0) completedList.innerHTML = '<li class="store-item" style="border-left-color: var(--crust-dark)">No responses yet.</li>';
         }
 
-        // Add event listener to dropdown
+        // Add event listeners
+        document.getElementById('marketSelect').addEventListener('change', filterResults);
         document.getElementById('doSelect').addEventListener('change', filterResults);
 
         // Fetch data on load
