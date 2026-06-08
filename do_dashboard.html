@@ -6,6 +6,44 @@
     <title>Tech Inventory Status</title>
     <link rel="stylesheet" href="LMS_Global_Styles.css">
     <style>
+        /* Override header to match the screenshot layout exactly */
+        header {
+            background: var(--brand-blue); 
+            color: var(--crust-base);
+            padding: 1.5rem 1rem 0; 
+            text-align: center;
+            border-bottom: 6px solid var(--brand-red);
+            box-shadow: none; 
+            position: relative;
+        }
+
+        .logo-container {
+            max-width: 350px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* The actual logo image styling */
+        .logo-img {
+            max-height: 80px;
+            width: auto;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-family: 'PizzaPress', serif;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            opacity: 1;
+            text-shadow: none;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem; 
+        }
+
+        /* Dashboard specific styles */
         .dashboard-container {
             max-width: 900px;
             margin: 2rem auto;
@@ -155,9 +193,10 @@
 
     <header>
         <div class="logo-container">
-            <h1 style="color: white; font-family: 'PizzaPress', sans-serif;">TEAM WOW</h1>
+            <!-- Updated Logo Path -->
+            <img src="../TW-Career-Path/New_Logo_v2.png" alt="Team Wow Logo" class="logo-img">
         </div>
-        <p class="tagline">Technology Inventory Status</p>
+        <p class="tagline">GROWING LEADERS. BUILDING FUTURES.</p>
     </header>
 
     <main>
@@ -231,7 +270,6 @@
             const marketSelect = document.getElementById('marketSelect');
             const doSelect = document.getElementById('doSelect');
 
-            // Only populate if they are empty
             if (marketSelect.options.length <= 1) {
                 const uniqueMarkets = [...new Set(globalData.map(item => item.market))].filter(Boolean).sort();
                 uniqueMarkets.forEach(market => {
@@ -266,7 +304,6 @@
             let completedCount = 0;
 
             globalData.forEach(item => {
-                // Apply Filters
                 if (selectedMarket !== "All" && item.market !== selectedMarket) return;
                 if (selectedDO !== "All" && item.doName !== selectedDO) return;
                 
@@ -296,11 +333,9 @@
             if(completedCount === 0) completedList.innerHTML = '<li class="store-item" style="border-left-color: var(--crust-dark)">No responses yet.</li>';
         }
 
-        // Add event listeners
         document.getElementById('marketSelect').addEventListener('change', filterResults);
         document.getElementById('doSelect').addEventListener('change', filterResults);
 
-        // Fetch data on load
         window.onload = fetchData;
     </script>
 </body>
