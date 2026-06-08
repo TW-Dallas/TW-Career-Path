@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DO Tech Inventory Dashboard</title>
+    <!-- Assuming this HTML is in the same folder as the CSS -->
+    <link rel="stylesheet" href="LMS_Global_Styles.css">
+    <style>
+        /* Dashboard Specific Styles using Globals */
+        .dashboard-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--crust-base);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid var(--brand-blue);
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        select {
+            padding: 0.8rem;
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 1.1rem;
+            border: 2px solid var(--crust-dark);
+            border-radius: 8px;
+            background: var(--crust-light);
+            color: var(--crust-deep);
+            flex-grow: 1;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--brand-blue);
+        }
+
+        .refresh-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--brand-red);
+            color: var(--crust-base);
+            border: none;
+            border-radius: 8px;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .refresh-btn:hover {
+            background: var(--acc-red);
+            transform: translateY(-2px);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .status-card {
+            background: var(--crust-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--crust-med);
+        }
+
+        .status-card h3 {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--crust-med);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .missing-header { color: var(--brand-red); }
+        .completed-header { color: var(--brand-blue); }
+
+        .store-list {
+            list-style: none;
+            padding: 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .store-item {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: var(--crust-base);
+            border-radius: 4px;
+            border-left: 4px solid var(--crust-dark);
+            font-family: 'OneDotCd', sans-serif;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .store-item.missing { border-left-color: var(--brand-red); }
+        .store-item.completed { border-left-color: var(--brand-blue); }
+
+        .loading {
+            text-align: center;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            color: var(--brand-blue);
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .count-badge {
+            background: var(--crust-med);
+            color: var(--crust-deep);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .results-grid { grid-template-columns: 1fr; }
+            .controls { flex-direction: column; }
+            .refresh-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <h1 style="color: white; font-family: 'PizzaPress', sans-serif;">TEAM WOW</h1>
+        </div>
+        <p class="tagline">Technology Inventory Status</p>
+    </header>
+
+    <main>
+        <div class="dashboard-container">
+            <div class="controls">
+                <select id="doSelect">
+                    <option value="">Loading DOs...</option>
+                </select>
+                <button class="refresh-btn" onclick="fetchData()">Refresh Data</button>
+            </div>
+
+            <div id="loadingIndicator" class="loading">Fetching live data from Google Sheets...</div>
+
+            <div class="results-grid">
+                <div class="status-card">
+                    <h3 class="missing-header">
+                        Action Required
+                        <span id="missingCount" class="count-badge">0</span>
+                    </h3>
+                    <ul id="missingList" class="store-list">
+                        <!-- Missing stores populated here -->
+                    </ul>
+                </div>
+
+                <div class="status-card">
+                    <h3 class="completed-header">
+                        Completed
+                        <span id="completedCount" class="count-badge">0</span>
+                    </h3>
+                    <ul id="completedList" class="store-list">
+                        <!-- Completed stores populated here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // --- REPLACE THIS WITH YOUR DEPLOYMENT URL ---
+        const API_URL = "https://script.google.com/macros/s/AKfycbzkQfpIhSeM9hDK5V7NNLGGa8WXD9roZek45wuvnxljq_JTRCvDILpZjahM8TJPRb_Y/exec";
+        
+        let globalData = [];
+
+        async function fetchData() {
+            const loading = document.getElementById('loadingIndicator');
+            const doSelect = document.getElementById('doSelect');
+            
+            loading.style.display = 'block';
+            
+            try {
+                const response = await fetch(API_URL);
+                globalData = await response.json();
+                
+                // Extract unique DOs and populate dropdown if it's empty
+                if(doSelect.options.length <= 1) {
+                    const uniqueDOs = [...new Set(globalData.map(item => item.doName))].filter(name => name);
+                    uniqueDOs.sort();
+                    
+                    doSelect.innerHTML = '<option value="All">View All Stores</option>';
+                    uniqueDOs.forEach(doName => {
+                        const option = document.createElement('option');
+                        option.value = doName;
+                        option.textContent = doName;
+                        doSelect.appendChild(option);
+                    });
+                }
+                
+                filterResults(); // Initial render
+                
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                document.getElementById('missingList').innerHTML = `<li class="store-item missing">Error loading data. Try again.</li>`;
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function filterResults() {
+            const selectedDO = document.getElementById('doSelect').value;
+            const missingList = document.getElementById('missingList');
+            const completedList = document.getElementById('completedList');
+            
+            missingList.innerHTML = '';
+            completedList.innerHTML = '';
+            
+            let missingCount = 0;
+            let completedCount = 0;
+
+            globalData.forEach(item => {
+                // If a specific DO is selected, skip stores that don't belong to them
+                if (selectedDO !== "All" && item.doName !== selectedDO) return;
+                
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>Store ${item.store}</strong> <span>${item.market}</span>`;
+                
+                if (item.status === "Yes") {
+                    li.className = 'store-item completed';
+                    completedList.appendChild(li);
+                    completedCount++;
+                } else {
+                    li.className = 'store-item missing';
+                    missingList.appendChild(li);
+                    missingCount++;
+                }
+            });
+
+            document.getElementById('missingCount').textContent = missingCount;
+            document.getElementById('completedCount').textContent = completedCount;
+            
+            if(missingCount === 0) missingList.innerHTML = '<li class="store-item" style="border-left-color: var(--crust-dark)">All clear!</li>';
+            if(completedCount === 0) completedList.innerHTML = '<li class="store-item" style="border-left-color: var(--crust-dark)">No responses yet.</li>';
+        }
+
+        // Add event listener to dropdown
+        document.getElementById('doSelect').addEventListener('change', filterResults);
+
+        // Fetch data on load
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
