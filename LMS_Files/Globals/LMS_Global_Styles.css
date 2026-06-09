@@ -395,3 +395,119 @@ footer {
     height: 100%;
     border: none;
 }
+
+  /* --- MOBILE BLOCKER --- */
+  #mobile-blocker {
+      display: none;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--dark-blue); color: white;
+      text-align: center; padding: 40px; z-index: 9999;
+  }
+  @media (max-width: 768px) {
+      #mobile-blocker { display: flex; flex-direction: column; justify-content: center; }
+      #simulator-wrapper { display: none !important; }
+  }
+
+  /* --- SPLIT VIEW LAYOUT --- */
+  #simulator-wrapper {
+      display: flex;
+      width: 95%; max-width: 1400px;
+      height: 75vh; /* 1. Locks the app so it NEVER bleeds off the bottom of your laptop */
+      margin: 20px auto; 
+      background: var(--crust-base);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      overflow: hidden; /* Keeps your rounded corners */
+      border: 2px solid var(--crust-med);
+  }
+
+  /* LEFT: Instructions Panel */
+  #instruction-panel {
+      flex-grow: 1; /* 2. Instead of a fixed 30%, this just flexibly fills whatever space is left */
+      background: white;
+      padding: 30px;
+      border-right: 2px solid var(--crust-med);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto; /* Adds a scrollbar ONLY to the text if it gets too small */
+  }
+  
+  h2 { color: var(--dark-blue); margin-top: 0; text-transform: uppercase; border-bottom: 2px solid var(--brand-red); padding-bottom: 10px;}
+  #instruction-text { font-size: 1.2rem; line-height: 1.6; margin-top: 20px; flex-grow: 1; }
+  .error-msg { color: var(--brand-red); font-weight: bold; margin-top: 15px; display: none; }
+
+  /* RIGHT: POS Screen */
+  #pos-container {
+      height: 100%; /* 3. Locks exactly to the wrapper's 85vh height */
+      max-width: 75%; /* Prevents it from crushing the left panel on narrow screens */
+      aspect-ratio: 1600 / 1200; /* 4. Locks the shape to your image. Your hitboxes are 100% safe. */
+      background: #000;
+      position: relative;
+  }
+
+  /* The actual POS Image */
+  #pos-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; 
+  }
+
+  /* The wrapper that holds the image and hitboxes */
+  #hitbox-wrapper {
+      position: relative;
+      display: inline-block; /* Wraps tightly around the image */
+  }
+
+  /* --- HITBOXES (Invisible with Arrows) --- */
+  .hitbox {
+      position: absolute;
+      cursor: pointer;
+      display: none; /* Hidden by default, activated per step */
+      z-index: 10;
+      /* Remove visible borders */
+      background: transparent;
+      border: none;
+  }
+  
+  /* The Bouncing Arrow (SVG) */
+  .hitbox::before {
+      content: '';
+      position: absolute;
+      top: -50px; /* Sits completely above the button */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px; /* Fat width */
+      height: 40px; /* Short tail */
+      /* Base64 encoded SVG of a fat, short arrow */
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff0000"><path d="M12 21l-9-9h6V3h6v9h6z"/></svg>');
+      background-size: contain;
+      background-repeat: no-repeat;
+      filter: drop-shadow(0 4px 4px rgba(0,0,0,0.5));
+      animation: bounce 1s infinite;
+      animation-delay: 1s; /* DELAYS THE BOUNCE */
+      opacity: 0; /* STARTS INVISIBLE */
+      animation-fill-mode: forwards; /* STAYS VISIBLE ONCE IT APPEARS */
+      pointer-events: none;
+  }
+
+  @keyframes bounce {
+      0% { top: -50px; opacity: 1; }
+      50% { top: -35px; opacity: 1; }
+      100% { top: -50px; opacity: 1; }
+  }
+
+    /* The "Flip to Bottom" override */
+  .hitbox.arrow-bottom::before {
+      top: auto; /* Kills the top positioning */
+      bottom: -50px; /* Moves it below */
+      transform: translateX(-50%) rotate(180deg); /* Flips it up */
+      animation: bounceBottomUp 1s infinite;
+      animation-delay: 1s; /* DELAYS THE BOUNCE */
+      opacity: 0; /* STARTS INVISIBLE */
+      animation-fill-mode: forwards; /* STAYS VISIBLE ONCE IT APPEARS */
+  }
+  
+  @keyframes bounceBottomUp {
+      0% { bottom: -50px; opacity: 1; }
+      50% { bottom: -35px; opacity: 1; } 
+      100% { bottom: -50px; opacity: 1; }
