@@ -1,0 +1,362 @@
+  /* LMS Master Hitbox List */
+  
+  
+  
+  /* Main Screen */
+  #hb-order-entry { top: 3.32503%; left: 2.60846%; width: 10.5025%; height: 12.6189% }
+  #hb-log-in { top: 77.9958%; left: 2.12795%; width: 9.1296%; height: 9.69276% }
+  #hb-log-in-OK { top: 82.9702%; left: 38.5777%; width: 8.99231%; height: 9.32699% }
+  #hb-carryout { top: 77.9958%; left: 66.9962%; width: 14.827%; height: 9.32699% }
+  #hb-todays-orders-tab { top: 89.7003%; left: 17.0236%; width: 16.749%; height: 10.0585% }
+  #hb-quick-payments-tab { top: 89.6089%; left: 34.1159%; width: 16.6118%; height: 10.2414% }
+  #hb-caller-ID { top: 89.928%; left: 50.9249%; width: 16.7301%; height: 9.95655%; }
+  
+  /* Time Clock */
+  #hb-time-clock { top: 77.7215%; left: 21.8287%; width: 8.99231%; height: 9.60132% }
+  #hb-numpad-ok { top: 64.6454%; left: 26.4964%; width: 8.37452%; height: 9.32699% }
+  #hb-pink-clock { top: 9.08582%; left: 11.3948%; width: 8.44316%; height: 9.32699% }
+  #hb-qwerty-input { top: 23.625%; left: 1.92202%; width: 78.3223%; height: 8.41258% }
+  #hb-qwerty-enter { top: 74.1553%; left: 37.2735%; width: 8.30588%; height: 9.50988% }
+
+  /* Numpad Sequence Hitboxes */
+  #hb-num-1 { top: 37.3411%; left: 38.4404%; width: 9.1296%; height: 9.14411% }
+  #hb-num-2 { top: 37.4874%; left: 48.9429%; width: 9.1296%; height: 8.86979% }
+  #hb-num-3 { top: 37.4874%; left: 59.4454%; width: 8.92367%; height: 8.77835% }
+  #hb-num-4 { top: 48.2775%; left: 38.4404%; width: 8.99231%; height: 9.05267% }
+
+  /* Customer Information */
+  #hb-cust-add { top: 15.9073%; left: 84.8435%; width: 12.905%; height: 11.9788% }
+  #hb-phone-field { top: 18.0598%; left: 18.2263%; width: 25.2992%; height: 4.52571%; }
+  #hb-phone-0 { top: 70.196%; left: 49.1023%; width: 8.5691%; height: 8.3273%; }
+  #hb-phone-OK { top: 83.049%; left: 38.4929%; width: 8.97715%; height: 9.23244%; }
+  #hb-cust-name { top: 23.4907%; left: 18.2263%; width: 43.1175%; height: 4.34468%; }
+  #hb-address-section { top: 28.6542%; left: 18.0533%; width: 63.2208%; height: 25.7864% }
+  #hb-add-number { top: 29.1026%; left: 18.3623%; width: 9.65724%; height: 3.62056%; }
+  #hb-street-name { top: 29.2836%; left: 29.1077%; width: 51.8226%; height: 3.62056%; }
+  #hb-street-select { top: 29.2836%; left: 28.4276%; width: 52.6387%; height: 12.4909%; }
+  #hb-rewards-checker { top: 18.047%; left: 62.397%; width: 9.40417%; height: 8.96123% }
+  #hb-rewards-ok { top: 83.0251%; left: 38.5777%; width: 8.99231%; height: 9.23555% }
+
+  /* Greetings / Specials */
+  #hb-greeting-tab { top: 27.7947%; left: 84.7062%; width: 13.3855%; height: 11.7959% }
+  #hb-delivery-service { top: 65.505%; left: 2.60846%; width: 7.96266%; height: 8.13826% }
+  #hb-carryout-service { top: 65.7789%; left: 11.5615%; width: 7.61697%; height: 7.42216%; }
+  #hb-time-wanted { top: 78.2336%; left: 11.6975%; width: 7.75299%; height: 7.96524%; }
+
+  /* Pizza Tab */
+  #hb-pizzas-tab { top: 39.8649%; left: 84.9121%; width: 12.9736%; height: 11.8873% }
+  #hb-new-pizza { top: 5.20682%; left: 40.8052%; width: 9.52122%; height: 8.14627%; }
+  #hb-delete-item { top: 4.48271%; left: 73.2318%; width: 9.24918%; height: 8.87038%; }
+  #hb-quantity-down { top: 5.20682%; left: 51.197%; width: 6.52884%; height: 8.3273%; }
+  #hb-quantity-up { top: 5.38785%; left: 65.6148%; width: 6.80087%; height: 8.3273%; }
+  #hb-half-and-half { top: 89.9746%; left: 35.4887%; width: 11.7381%; height: 9.14411% }
+  #hb-specialty { top: 89.8832%; left: 48.0505%; width: 11.5321%; height: 8.96123% }
+  #hb-cooking-instructions { top: 89.8832%; left: 60.2004%; width: 11.6694%; height: 8.96123% }
+  #hb-everything-else-tab { top: 51.8437%; left: 84.7062%; width: 13.2482%; height: 11.8873% }
+  #hb-everything-else-bottom { top: 89.566%; left: 23.395%; width: 11.4255%; height: 9.05141%; }
+
+  /* Pizza Sizes */
+  #hb-size-10 { top: 21.3183%; left: 27.7476%; width: 7.88901%; height: 7.24113%; }
+  #hb-size-12 { top: 21.6804%; left: 37.1328%; width: 7.07291%; height: 6.87907%; }
+  #hb-size-14 { top: 21.156%; left: 45.7166%; width: 8.09994%; height: 7.86394% }
+  #hb-size-16 { top: 21.3183%; left: 54.679%; width: 8.16104%; height: 7.42216%; }
+
+  /* Pizza Crust Types */
+  #hb-crust-hand-tossed { top: 33.464%; left: 27.8693%; width: 7.89401%; height: 7.95538%; }
+  #hb-crust-thin { top: 33.6283%; left: 36.9967%; width: 7.48096%; height: 7.60319%; }
+  #hb-crust-pan { top: 33.9903%; left: 45.8379%; width: 7.75299%; height: 7.24113%; }
+  #hb-crust-new-york { top: 33.8093%; left: 54.815%; width: 7.75299%; height: 7.24113%; }
+  #hb-crust-gluten-free { top: 33.6283%; left: 63.6561%; width: 8.16104%; height: 7.60319%; }
+  #hb-crust-PSC { top: 33.8093%; left: 72.9053%; width: 7.75299%; height: 7.42216%; }
+
+  /* Pizza Toppings*/
+  #hb-extra { top: 46.3002%; left: 37.1328%; width: 7.20892%; height: 7.78421%; }
+  #hb-light { top: 46.1192%; left: 28.0196%; width: 7.48096%; height: 7.78421%; }
+  #hb-next-toppings-screen { top: 46.4813%; left: 45.8379%; width: 7.75299%; height: 7.78421%; }
+  #hb-pepperoni { top: 54.9527%; left: 45.5794%; width: 8.30588%; height: 7.95538% }
+  #hb-beef { top: 54.8086%; left: 72.6333%; width: 7.88901%; height: 8.14627%; }
+  #hb-mushroom { top: 54.8086%; left: 72.6333%; width: 7.88901%; height: 8.14627%; }
+  #hb-baon { top: 63.86%; left: 27.8836%; width: 7.75299%; height: 7.42216%; }
+  #hb-jalapeno { top: 65.8513%; left: 72.7693%; width: 8.16104%; height: 7.24113%; }
+  #hb-ham { top: 54.8086%; left: 54.951%; width: 7.61697%; height: 7.96524%; }
+  #hb-sausage { top: 54.6275%; left: 64.0642%; width: 7.61697%; height: 7.96524%; }
+  #hb-onions { top: 63.6789%; left: 37.1328%; width: 7.48096%; height: 7.60319%; }
+  #hb-green-peppers { top: 63.4979%; left: 46.1099%; width: 7.34494%; height: 7.60319%; }
+  #hb-black-olives { top: 63.3169%; left: 54.951%; width: 7.61697%; height: 7.96524%; }
+  #hb-pineapple { top: 72.1873%; left: 27.8836%; width: 7.61697%; height: 7.78421%; }
+  #hb-premium-chicken { top: 72.1873%; left: 36.8607%; width: 7.88901%; height: 7.78421%; }
+  #hb-philly-steak { top: 72.3683%; left: 55.2231%; width: 7.34494%; height: 7.60319%; }
+  #hb-diced-tomatoes { top: 72.3683%; left: 63.9282%; width: 7.75299%; height: 7.60319%; }
+  #hb-fresh-spinach { top: 72.3683%; left: 72.6333%; width: 8.16104%; height: 7.78421%; }
+  #hb-banana-pepper { top: 54.9896%; left: 27.8836%; width: 7.75299%; height: 7.96524%; }
+  #hb-feta-cheese { top: 54.9896%; left: 36.7247%; width: 8.16104%; height: 8.14627%; }
+  
+  /* Pizza Sauce */
+  #hb-original-sauce { top: 55.1706%; left: 28.0196%; width: 7.75299%; height: 7.42216%; }
+  #hb-alfredo-sauce { top: 63.6789%; left: 27.7476%; width: 8.02503%; height: 8.14627%; }
+  #hb-garlic-parm-sauce { top: 63.6789%; left: 36.9967%; width: 7.61697%; height: 7.78421%; }
+  #hb-BBQ-sauce { top: 64.041%; left: 45.8379%; width: 7.75299%; height: 7.42216%; }
+  #hb-buffalo-sauce { top: 63.86%; left: 54.679%; width: 7.88901%; height: 7.78421%; }
+  #hb-ranch-sauce { top: 63.6789%; left: 63.7922%; width: 7.88901%; height: 7.96524%; }
+  #hb-mango-sauce { top: 63.6789%; left: 72.3613%; width: 8.29706%; height: 7.78421%; }
+  
+  /* Pizza Cheese */
+  #hb-pizza-cheese { top: 55.3516%; left: 36.8607%; width: 7.75299%; height: 7.24113%; }
+  #hb-cheddar-blend { top: 72.3683%; left: 46.2459%; width: 7.48096%; height: 7.96524%; }
+  #hb-shredded-prov { top: 54.9896%; left: 45.5658%; width: 8.29706%; height: 7.96524%; }
+  #hb-amer-cheese { top: 54.9896%; left: 54.951%; width: 7.61697%; height: 7.78421%; }
+  #hb-shredded-parm { top: 55.1706%; left: 63.9282%; width: 7.75299%; height: 7.96524%; }
+
+  /* Specialty Pizzas */
+  #hb-specialty-extrav { top: 48.6536%; left: 44.9402%; width: 15.2339%; height: 7.78421%; }
+  #hb-specialty-veggie { top: 48.2915%; left: 61.3983%; width: 16.0501%; height: 8.68936%; }
+  #hb-specialty-meatzza { top: 58.2481%; left: 28.21%; width: 15.2339%; height: 8.14627%; }
+  #hb-specialty-hawaiian { top: 57.886%; left: 44.6681%; width: 15.642%; height: 9.05141%; }
+  #hb-specialty-philly { top: 57.886%; left: 61.5343%; width: 15.778%; height: 9.05141%; }
+  #hb-specialty-ultimate { top: 67.2995%; left: 28.074%; width: 15.506%; height: 8.87038%; }
+  #hb-specialty-6-cheese { top: 67.2995%; left: 44.6681%; width: 15.914%; height: 8.68936%; }
+  #hb-specialty-BBQ { top: 67.2995%; left: 60.9902%; width: 16.4581%; height: 8.87038%; }
+  #hb-specialty-CBR { top: 76.894%; left: 27.938%; width: 15.642%; height: 8.87038%; }
+  #hb-specialty-spinach { top: 76.713%; left: 44.3961%; width: 16.1861%; height: 8.68936%; }
+  #hb-specialty-deluxe { top: 76.713%; left: 61.5343%; width: 15.778%; height: 9.05141%; }
+  #hb-pizza-toppings-bottom { top: 89.747%; left: 23.1774%; width: 11.4255%; height: 8.87038%; }
+
+  /* Half and Half */
+  #hb-right-side { top: 17.8788%; left: 64.2002%; width: 18.2263%; height: 26.4301%; }
+  #hb-left-side { top: 18.0598%; left: 26.7954%; width: 17.8183%; height: 25.706%; }
+  #hb-whole { top: 17.9512%; left: 45.4298%; width: 18.2263%; height: 25.525%; }
+
+  /* Cooking Instructions */
+  #hb-well-done { top: 21.3183%; left: 61.6159%; width: 15.506%; height: 8.68936%; }
+  #hb-lightly-done { top: 20.9563%; left: 44.8857%; width: 15.37%; height: 8.3273%; }
+  #hb-cut-in-6 { top: 21.3183%; left: 28.1556%; width: 15.0979%; height: 8.3273%; }
+  #hb-cut-in-8 { top: 30.7318%; left: 28.0196%; width: 15.37%; height: 8.3273%; }
+  #hb-cut-in-10 { top: 40.1453%; left: 28.0196%; width: 15.642%; height: 8.68936%; }
+  #hb-cut-in-12 { top: 49.5587%; left: 28.0196%; width: 15.506%; height: 8.3273%; }
+  #hb-do-not-cut { top: 30.3697%; left: 44.8857%; width: 15.37%; height: 8.68936%; }
+  #hb-clean-cutter { top: 30.3697%; left: 61.4799%; width: 15.778%; height: 8.68936%; }
+  #hb-pie-cut { top: 39.7832%; left: 44.4777%; width: 15.778%; height: 9.23244%; }
+  #hb-square-cut { top: 40.1453%; left: 61.7519%; width: 15.506%; height: 8.68936%; }
+  #hb-double-cut { top: 49.9208%; left: 44.6137%; width: 15.778%; height: 8.3273%; }
+  #hb-add-oregano { top: 21.1373%; left: 28.0196%; width: 15.506%; height: 8.87038%; }
+  #hb-no-oregano { top: 21.3183%; left: 44.6137%; width: 15.914%; height: 8.3273%; }
+  #hb-CI-next-screen { top: 49.3777%; left: 61.4799%; width: 8.97715%; height: 8.87038%; }
+  #hb-CI-written-instructions { top: 59.3343%; left: 27.8836%; width: 39.8531%; height: 8.14627%; }
+
+  /* Bread / Desserts Size*/
+  #hb-bread-size-3 { top: 21.3183%; left: 28.0196%; width: 7.48096%; height: 7.96524%; }
+  #hb-bread-size-8 { top: 21.3183%; left: 36.7247%; width: 7.88901%; height: 7.24113%; }
+  #hb-bread-size-9 { top: 21.3183%; left: 45.5658%; width: 8.16104%; height: 7.42216%; }
+  #hb-bread-size-16 { top: 21.3183%; left: 54.815%; width: 7.75299%; height: 7.60319%; }
+  #hb-bread-size-32 { top: 21.3183%; left: 63.6561%; width: 7.88901%; height: 7.60319%; }
+  
+  /* Bread / Desserts Flacors */
+  #hb-bread-stuffed-cheesy { top: 33.6283%; left: 28.1556%; width: 7.61697%; height: 7.60319%; }
+  #hb-bread-stuffed-pepperoni { top: 33.6283%; left: 36.8607%; width: 7.75299%; height: 7.78421%; }
+  #hb-bread-stuffed-spinach { top: 33.8093%; left: 46.2459%; width: 7.34494%; height: 7.42216%; }
+  #hb-bread-stuffed-bacon { top: 33.9903%; left: 54.679%; width: 7.61697%; height: 7.60319%; }
+  #hb-bread-parm-bites { top: 33.9903%; left: 63.5201%; width: 8.16104%; height: 7.24113%; }
+  #hb-bread-garlic-bites { top: 33.8093%; left: 72.7693%; width: 8.02503%; height: 7.96524%; }
+  #hb-bread-cinnamon-bites { top: 42.4986%; left: 27.7476%; width: 7.75299%; height: 7.42216%; }
+  #hb-bread-MCB { top: 42.4986%; left: 36.9967%; width: 7.75299%; height: 7.96524%; }
+  #hb-bread-choc-lava { top: 42.6797%; left: 45.9739%; width: 7.75299%; height: 7.60319%; }
+
+  /* Bread Toppings */
+  #hb-bread-toppings-light { top: 21.4994%; left: 27.7476%; width: 7.88901%; height: 7.78421%; }
+  #hb-bread-toppings-extra { top: 21.1373%; left: 36.8607%; width: 7.75299%; height: 8.14627%; }
+  #hb-bread-toppings-double { top: 21.1373%; left: 45.8379%; width: 7.75299%; height: 8.3273%; }
+  #hb-bread-bacon { top: 30.5508%; left: 27.8836%; width: 7.88901%; height: 7.60319%; }
+  #hb-bread-jalapeno { top: 30.3697%; left: 36.8607%; width: 7.75299%; height: 7.60319%; }
+  #hb-bread-spinach { top: 30.0077%; left: 45.5658%; width: 8.16104%; height: 7.78421%; }
+  #hb-bread-feta { top: 30.0077%; left: 54.679%; width: 7.88901%; height: 7.78421%; }
+  #hb-bread-pepperoni { top: 30.0077%; left: 63.5201%; width: 8.29706%; height: 7.96524%; }
+
+  /* Bread Cooking Instructions */
+  #hb-bread-extra-cinnamon { top: 21.3183%; left: 27.8836%; width: 15.642%; height: 8.3273%; }
+  #hb-bread-light-cinnamon { top: 30.5508%; left: 27.7476%; width: 15.778%; height: 8.68936%; }
+  #hb-bread-extra-shake { top: 21.1373%; left: 44.8857%; width: 15.642%; height: 8.68936%; }
+  #hb-bread-light-shake { top: 21.3183%; left: 61.2078%; width: 16.1861%; height: 8.50833%; }  
+
+  /* Wings Size */
+  #hb-wings-size-8 { top: 21.3183%; left: 27.6115%; width: 8.16104%; height: 7.42216%; }
+  #hb-wings-size-16 { top: 21.3183%; left: 37.1328%; width: 7.61697%; height: 7.24113%; }
+  #hb-wings-size-32 { top: 21.4994%; left: 45.5658%; width: 8.02503%; height: 7.0601%; }
+  #hb-wings-size-loaded { top: 20.9563%; left: 54.407%; width: 8.29706%; height: 7.78421%; }
+
+  /* Wings Flavors */
+  #hb-wings-hot-buffalo { top: 33.8093%; left: 28.0196%; width: 7.61697%; height: 7.78421%; }
+  #hb-wings-BBQ { top: 33.4472%; left: 36.4527%; width: 8.16104%; height: 8.14627%; }
+  #hb-wings-mango { top: 33.8093%; left: 45.9739%; width: 7.88901%; height: 7.60319%; }
+  #hb-wings-garlic-parm { top: 33.8093%; left: 54.679%; width: 7.88901%; height: 7.60319%; }
+  #hb-wings-plain { top: 33.4472%; left: 63.7922%; width: 7.88901%; height: 8.14627%; }
+  #hb-wings-boneless { top: 33.6283%; left: 72.3613%; width: 8.16104%; height: 7.96524%; }
+  #hb-wings-BBQ-loaded { top: 42.4986%; left: 28.0196%; width: 7.61697%; height: 7.42216%; }
+  #hb-wings-buffalo-loaded { top: 42.1366%; left: 36.9967%; width: 7.48096%; height: 7.78421%; }
+  #hb-wings-jalapeno-loaded { top: 42.3176%; left: 45.8379%; width: 7.88901%; height: 7.96524%; }
+  #hb-wings-bacon-loaded { top: 41.9556%; left: 54.407%; width: 8.16104%; height: 8.3273%; }
+
+  /* Wings Cooking Instructions */
+  #hb-wings-well-done { top: 20.9563%; left: 27.7476%; width: 15.778%; height: 9.05141%; }
+  #hb-wings-only-wings { top: 20.9563%; left: 44.4777%; width: 15.914%; height: 9.05141%; }
+  #hb-wings-only-drums { top: 20.9563%; left: 61.0718%; width: 16.1861%; height: 8.68936%; }
+
+  /* Wings Toppings */
+  #hb-wings-light { top: 21.3183%; left: 27.7476%; width: 7.88901%; height: 8.14627%; }
+  #hb-wings-extra { top: 21.4994%; left: 36.7247%; width: 7.88901%; height: 7.78421%; }
+  #hb-wings-double { top: 21.4994%; left: 45.9739%; width: 7.75299%; height: 7.60319%; }
+  #hb-wings-bacon { top: 30.3697%; left: 27.7476%; width: 8.02503%; height: 7.60319%; }
+  #hb-wings-diced-tomatoes { top: 30.3697%; left: 36.4527%; width: 8.02503%; height: 7.42216%; }
+  #hb-wings-feta-cheese { top: 30.3697%; left: 45.5658%; width: 8.16104%; height: 7.24113%; }
+  #hb-wings-jalapenos { top: 29.8267%; left: 54.543%; width: 8.02503%; height: 8.3273%; }
+  #hb-wings-pineapple { top: 29.6456%; left: 63.6561%; width: 7.88901%; height: 7.96524%; }
+  
+  /* Wings Dips */
+  #hb-wings-dip-1 { top: 54.8086%; left: 27.8836%; width: 7.75299%; height: 7.78421%; }
+  #hb-wings-dip-2 { top: 54.6275%; left: 36.8607%; width: 7.61697%; height: 7.78421%; }
+  #hb-wings-dip-3 { top: 54.9896%; left: 45.7018%; width: 7.88901%; height: 7.42216%; }
+  #hb-wings-dip-4 { top: 54.8086%; left: 54.815%; width: 7.75299%; height: 7.78421%; }
+  #hb-wings-dip-5 { top: 54.8086%; left: 63.5201%; width: 8.16104%; height: 7.78421%; }
+  #hb-wings-dip-slice-sauce { top: 63.6789%; left: 28.0196%; width: 7.61697%; height: 7.42216%; }
+  #hb-wings-dip-ranch { top: 63.4979%; left: 36.9967%; width: 7.48096%; height: 7.78421%; }
+  #hb-wings-dip-blue-cheese { top: 63.3169%; left: 45.9739%; width: 7.48096%; height: 7.96524%; }
+  #hb-wings-dip-BBQ { top: 63.3169%; left: 55.0871%; width: 7.48096%; height: 7.60319%; }
+  #hb-wings-dip-buffalo { top: 63.3169%; left: 63.7922%; width: 7.88901%; height: 7.60319%; }
+  #hb-wings-dip-mango { top: 63.3169%; left: 72.6333%; width: 8.02503%; height: 8.14627%; }
+  
+  /* Pasta Size and Type*/
+  #hb-pasta-size-individual { top: 21.4994%; left: 27.7476%; width: 8.02503%; height: 7.42216%; }
+  #hb-pasta-flavor-dish { top: 33.8093%; left: 27.8836%; width: 7.75299%; height: 7.42216%; }
+  
+  /* Pasta Flavor */
+  #hb-pasta-type-alfredo { top: 46.3002%; left: 28.0196%; width: 15.37%; height: 8.14627%; }
+  #hb-pasta-5-cheese-mac { top: 46.4813%; left: 44.7497%; width: 15.642%; height: 8.14627%; }
+  #hb-pasta-buffalo-mac { top: 46.3002%; left: 61.6159%; width: 15.642%; height: 8.50833%; }
+
+  /* Pasta Toppings */
+  #hb-pasta-premium-chicken { top: 21.6804%; left: 28.0196%; width: 7.75299%; height: 7.42216%; }
+  #hb-pasta-cheddar { top: 21.3183%; left: 36.9967%; width: 7.48096%; height: 7.60319%; }
+  #hb-pasta-buffalo { top: 21.6804%; left: 45.9739%; width: 7.61697%; height: 7.60319%; }
+  #hb-pasta-shredded-parm { top: 21.6804%; left: 54.951%; width: 7.75299%; height: 7.78421%; }
+  #hb-pasta-amer-cheese { top: 21.6804%; left: 63.9282%; width: 7.61697%; height: 7.42216%; }
+  #hb-pasta-alfredo-sauce { top: 21.4994%; left: 72.6333%; width: 7.88901%; height: 7.78421%; }
+  
+  /* Sandwich Size and Type */
+  #hb-size-sandwich { top: 21.1373%; left: 27.8836%; width: 7.61697%; height: 7.78421%; }
+  #hb-flavor-sandwich { top: 33.6283%; left: 27.8836%; width: 7.88901%; height: 7.96524%; }
+  
+  /* Sandwich Type */
+  #hb-sandwich-CBR { top: 46.3002%; left: 28.1556%; width: 15.37%; height: 8.68936%; }
+  #hb-sandwich-philly { top: 46.1192%; left: 44.7497%; width: 15.506%; height: 8.68936%; }
+  #hb-sandwich-italian { top: 45.9382%; left: 61.2078%; width: 16.0501%; height: 9.05141%; }
+  #hb-sandwich-chicken-parm { top: 55.7137%; left: 27.8836%; width: 15.778%; height: 8.68936%; }
+  #hb-sandwich-spicy-hab { top: 55.3516%; left: 44.8857%; width: 15.506%; height: 8.68936%; }
+  #hb-sandwich-buffalo { top: 55.7137%; left: 61.3439%; width: 16.0501%; height: 8.68936%; }
+
+  /* Sandwich Toppings */
+  #hb-sandwich-top-light { top: 21.3183%; left: 28.0196%; width: 7.88901%; height: 8.14627%; }
+  #hb-sandwich-top-pizza-cheese { top: 30.3697%; left: 27.7476%; width: 7.75299%; height: 7.60319%; }
+  #hb-sandwich-top-pepperoni { top: 29.6456%; left: 36.7247%; width: 8.16104%; height: 8.3273%; }
+  #hb-sandwich-top-ham { top: 30.1887%; left: 45.7018%; width: 8.16104%; height: 7.78421%; }
+  #hb-sandwich-top-sausage { top: 30.3697%; left: 54.679%; width: 8.16104%; height: 7.78421%; }
+  #hb-sandwich-top-beef { top: 29.8267%; left: 63.7922%; width: 7.88901%; height: 8.3273%; }
+  #hb-sandwich-top-bacon { top: 30.0077%; left: 72.7693%; width: 8.02503%; height: 8.14627%; }
+  #hb-sandwich-top-onion { top: 38.8781%; left: 27.7476%; width: 7.75299%; height: 7.60319%; }
+  #hb-sandwich-top-green-pepper { top: 38.697%; left: 36.8607%; width: 7.75299%; height: 7.96524%; }
+  #hb-sandwich-top-olives { top: 38.697%; left: 45.7018%; width: 7.88901%; height: 7.78421%; }
+  #hb-sandwich-top-mushroom { top: 38.516%; left: 54.543%; width: 8.16104%; height: 8.14627%; }
+  #hb-sandwich-top-jalapeno { top: 39.0591%; left: 63.7922%; width: 7.88901%; height: 7.42216%; }
+  #hb-sandwich-top-pineapple { top: 38.516%; left: 72.6333%; width: 8.16104%; height: 8.14627%; }
+  #hb-sandwich-top-chicken { top: 47.7485%; left: 27.8836%; width: 7.88901%; height: 7.60319%; }
+  #hb-sandwich-top-cheddar { top: 47.2054%; left: 36.8607%; width: 7.88901%; height: 7.78421%; }
+  #hb-sandwich-top-philly { top: 47.3864%; left: 45.8379%; width: 7.61697%; height: 7.60319%; }
+  #hb-sandwich-top-BBQ { top: 47.3864%; left: 54.951%; width: 7.61697%; height: 7.96524%; }
+  #hb-sandwich-top-garlic-parm { top: 47.5674%; left: 63.7922%; width: 7.88901%; height: 7.60319%; }
+  #hb-sandwich-top-buffalo { top: 47.2054%; left: 72.9053%; width: 7.75299%; height: 8.3273%; }
+  #hb-sandwich-top-tomatoes { top: 56.0758%; left: 27.8836%; width: 7.88901%; height: 7.78421%; }#hb-sandwich-top-spinach { top: 55.8947%; left: 36.9967%; width: 7.48096%; height: 8.14627%; }
+  #hb-sandwich-top-spinach { top: 56.3654%; left: 36.8607%; width: 7.75299%; height: 7.24113%; }
+  #hb-sandwich-top-feta { top: 56.0758%; left: 45.7018%; width: 7.75299%; height: 7.78421%; }
+  #hb-sandwich-top-shredded-parm { top: 56.2568%; left: 54.951%; width: 7.61697%; height: 7.60319%; }
+  #hb-sandwich-top-amer-cheese { top: 56.0758%; left: 63.6561%; width: 8.02503%; height: 7.96524%; }
+  #hb-sandwich-top-shredded-prov { top: 56.0758%; left: 72.6333%; width: 7.88901%; height: 7.96524%; }
+  #hb-sandwich-top-banana-pep { top: 64.5841%; left: 27.8836%; width: 7.88901%; height: 8.14627%; }
+  #hb-sandwich-top-ranch { top: 64.4031%; left: 45.9739%; width: 7.61697%; height: 8.3273%; }
+  #hb-sandwich-top-alfredo { top: 64.7651%; left: 54.815%; width: 7.75299%; height: 7.96524%; }
+  #hb-sandwich-top-mango { top: 64.5841%; left: 63.6561%; width: 7.88901%; height: 8.14627%; }
+  #hb-sandwich-top-blue-cheese { top: 64.5841%; left: 72.6333%; width: 8.16104%; height: 8.14627%; }
+
+  /* Salad Type */
+  #hb-salad-garden { top: 33.8093%; left: 27.8836%; width: 7.75299%; height: 8.14627%; }
+  #hb-salad-caesar { top: 33.6283%; left: 36.8607%; width: 7.75299%; height: 7.78421%; }
+
+  /* Salad Dressing */
+  #hb-salad-dressing-1 { top: 46.4813%; left: 27.8836%; width: 7.88901%; height: 7.42216%; }
+  #hb-salad-dressing-2 { top: 46.3002%; left: 36.8607%; width: 7.75299%; height: 7.78421%; }
+  #hb-salad-dressing-3 { top: 46.1192%; left: 45.8379%; width: 8.02503%; height: 7.78421%; }
+  #hb-salad-dressing-4 { top: 46.3002%; left: 54.679%; width: 8.02503%; height: 7.78421%; }
+  #hb-salad-dressing-5 { top: 45.9382%; left: 63.6561%; width: 8.02503%; height: 8.14627%; }
+  #hb-salad-dressing-caesar { top: 55.1706%; left: 28.0196%; width: 7.61697%; height: 7.42216%; }
+  #hb-salad-dressing-ranch { top: 54.8086%; left: 36.5887%; width: 8.02503%; height: 7.78421%; }
+  #hb-salad-dressing-balsamic { top: 54.9896%; left: 45.8379%; width: 8.02503%; height: 7.60319%; }
+  
+  /* Drinks Size*/
+  #hb-drink-20-oz { top: 20.9563%; left: 27.8836%; width: 7.88901%; height: 8.3273%; }
+  #hb-drink-2-liter { top: 21.3183%; left: 36.7247%; width: 8.16104%; height: 7.42216%; }
+  
+  /* Drinks Flavor */
+  #hb-drink-coke { top: 33.8093%; left: 27.8836%; width: 7.75299%; height: 7.78421%; }
+  #hb-drink-diet-coke { top: 33.2662%; left: 36.7247%; width: 7.88901%; height: 8.14627%; }
+  #hb-drink-orange { top: 33.8093%; left: 45.9739%; width: 7.75299%; height: 7.78421%; }
+  #hb-drink-sprite { top: 33.6283%; left: 54.679%; width: 8.02503%; height: 7.60319%; }
+  #hb-drink-pibb { top: 33.6283%; left: 63.6561%; width: 8.02503%; height: 7.60319%; }
+  #hb-drink-water { top: 33.6283%; left: 72.3613%; width: 8.16104%; height: 7.78421%; }
+
+  /* Extras */
+  #hb-extras-dip-slice-sauce { top: 33.4472%; left: 28.0196%; width: 7.61697%; height: 8.14627%; }
+  #hb-extras-dip-ranch { top: 33.2662%; left: 36.7247%; width: 8.02503%; height: 7.78421%; }
+  #hb-extras-dip-marinara { top: 33.9903%; left: 45.8379%; width: 7.75299%; height: 7.42216%; }
+  #hb-extras-dip-icing { top: 33.6283%; left: 54.679%; width: 8.02503%; height: 7.42216%; }
+  #hb-extras-dip-garlic { top: 33.8093%; left: 63.6561%; width: 8.16104%; height: 7.42216%; }
+  #hb-extras-dip-buffalo { top: 33.9903%; left: 72.9053%; width: 7.75299%; height: 7.42216%; }
+  #hb-extras-dip-mango { top: 42.4986%; left: 28.0196%; width: 7.75299%; height: 7.96524%; }
+  #hb-extras-dip-BBQ { top: 42.1366%; left: 36.7247%; width: 7.88901%; height: 7.78421%; }
+  #hb-extras-dip-blue-cheese { top: 41.9556%; left: 45.5658%; width: 8.02503%; height: 7.96524%; }
+  #hb-extras-dressing-ranch { top: 42.3176%; left: 54.679%; width: 8.02503%; height: 7.96524%; }
+  #hb-extras-dressing-caesar { top: 42.6797%; left: 63.9282%; width: 7.61697%; height: 7.24113%; }
+  #hb-extras-next-screen { top: 42.4986%; left: 72.7693%; width: 7.75299%; height: 7.60319%; }
+
+  /* Coupns */
+  #hb-coupons-tab { top: 64.0054%; left: 84.8435%; width: 13.1109%; height: 11.4301% }
+  #hb-find-coupon-code { top: 4.84477%; left: 54.2709%; width: 15.506%; height: 8.68936%; }
+  #hb-filter-coupons { top: 89.566%; left: 35.5005%; width: 11.2894%; height: 8.87038%; }
+  #hb-service-method-coupons { top: 89.747%; left: 48.4222%; width: 10.6094%; height: 9.05141%; }
+  #hb-product-cat-coupons { top: 89.747%; left: 60.2557%; width: 11.2894%; height: 8.50833%; }
+  #hb-coupon-groups { top: 89.566%; left: 72.7693%; width: 11.0174%; height: 8.87038%; }
+
+  /* Payments */
+  #hb-payments-tab { top: 75.6184%; left: 84.7748%; width: 13.2482%; height: 11.8873% }
+  #hb-cash-later { top: 16.4011%; left: 26.7024%; width: 8.30588%; height: 8.41258% }
+  #hb-cash { top: 16.7926%; left: 26.9314%; width: 7.75299%; height: 7.42216%; }
+  #hb-pay-now { top: 36.5247%; left: 26.7954%; width: 8.02503%; height: 7.96524%; }
+  #hb-pay-later { top: 36.5247%; left: 35.9086%; width: 7.75299%; height: 7.78421%; }
+  #hb-credit-card { top: 16.4306%; left: 53.5909%; width: 8.16104%; height: 8.14627%; }
+  #hb-credit-card-manual { top: 25.844%; left: 53.7269%; width: 8.02503%; height: 7.60319%; }
+  #hb-gift-card { top: 16.6116%; left: 71.6812%; width: 8.02503%; height: 7.96524%; }
+  #hb-gift-card-manual { top: 25.482%; left: 62.704%; width: 7.75299%; height: 7.78421%; }
+  #hb-tax-and-total { top: 90.1091%; left: 15.37%; width: 6.66485%; height: 9.05141%; }
+  #hb-payment-tax-exempt { top: 57.705%; left: 30.5223%; width: 8.70511%; height: 9.41347%; }
+  #hb-payment-tax-total-finish { top: 70.196%; left: 47.3885%; width: 8.84113%; height: 9.23244%; }
+  
+  /* Finish */
+  #hb-finish-tab { top: 87.6886%; left: 84.9808%; width: 14.9643%; height: 12.1617%; }
+  #hb-finish-checkout { top: 72.4179%; left: 29.3795%; width: 9.06096%; height: 9.41843%; }
+  #hb-send-order { top: 58.8962%; left: 39.7784%; width: 9.44109%; height: 9.88937%; }
+
+  /* Exit Options */
+  #hb-exit-order { top: 4.4103%; left: 84.6572%; width: 14.5539%; height: 11.0427%; }
+  #hb-exit-specials { top: 46.5537%; left: 28.21%; width: 24.7552%; height: 8.87038%; }
+  #hb-exit-delivery-time { top: 46.9157%; left: 54.5974%; width: 24.6192%; height: 8.14627%; }
+  #hb-exit-area { top: 57.2343%; left: 28.074%; width: 25.0272%; height: 9.05141%; }
+  #hb-exit-payment { top: 57.5964%; left: 54.8694%; width: 24.0751%; height: 9.05141%; }
+  #hb-exit-idk { top: 68.096%; left: 28.6181%; width: 24.2111%; height: 9.41347%; }
+  #hb-exit-custom { top: 80.768%; left: 28.482%; width: 40.2612%; height: 9.41347%; }
+  #hb-exit-other { top: 80.768%; left: 70.1034%; width: 9.65724%; height: 9.41347%; }
