@@ -184,6 +184,27 @@ footer {
     font-family: 'OneDotCd', sans-serif;
 }
 
+/* Ticket Format */
+.pos-ticket {
+    background-color: var(--crust-light);
+    border-left: 5px solid var(--brand-blue);
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 4px;
+    font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
+    color: var(--crust-burnt);
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.pos-ticket-header {
+    font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif;
+    color: var(--dark-blue);
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
 /* --- Desktop --- */
 @media (min-width: 600px) {
     .timeline::before { left: 50%; margin-left: -2px; }
