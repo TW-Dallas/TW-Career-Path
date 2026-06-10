@@ -36,7 +36,7 @@
   }
   
   body {
-      font-family: 'Arial Narrow', sans-serif;
+      font-family: 'OneDotCd', 'Arial Narrow', sans-serif; /* Default body font */
       margin: 0;
       padding: 0;
       background-color: var(--crust-light);
@@ -84,8 +84,22 @@
       overflow-y: auto; 
   }
   
-  h2 { color: var(--dark-blue); margin-top: 0; text-transform: uppercase; border-bottom: 2px solid var(--brand-red); padding-bottom: 10px;}
-  #instruction-text { font-size: 1.2rem; line-height: 1.6; margin-top: 20px; flex-grow: 1; }
+  h2 { 
+      font-family: 'PizzaPress', 'Arial Narrow', sans-serif; /* Big headers */
+      color: var(--dark-blue); 
+      margin-top: 0; 
+      text-transform: uppercase; 
+      border-bottom: 2px solid var(--brand-red); 
+      padding-bottom: 10px;
+  }
+
+  #instruction-text { 
+      font-family: 'OneDotCd', 'Arial Narrow', sans-serif; /* Main instruction text */
+      font-size: 1.2rem; 
+      line-height: 1.6; 
+      margin-top: 20px; 
+      flex-grow: 1; 
+  }
   .error-msg { color: var(--brand-red); font-weight: bold; margin-top: 15px; display: none; }
 
   /* RIGHT: POS Screen */
