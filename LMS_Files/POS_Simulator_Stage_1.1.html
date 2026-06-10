@@ -174,7 +174,11 @@
 
 </head>
 <body>
-
+    <!-- Add the buttons right here: -->
+    <div class="nav-strip" style="margin-top: 20px; text-align: center;">
+        <button onclick="goBack()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">&#8592; Back</button>
+        <button onclick="goNext()" style="padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 20px;">Next &#8594;</button>
+    </div>
     <!-- Mobile Blocker (From your global CSS) -->
     <div id="mobile-blocker">
         <h2>Desktop Required</h2>
@@ -206,7 +210,7 @@
         </div>
 
     </div>
-
+  
     <!-- JAVASCRIPT FOR STAGE 1.1 -->
     <script>
         // Sequence Data
@@ -789,6 +793,19 @@
                 activeHb.style.display = 'block';
             } else {
                 console.warn("Hitbox not found: " + stepData.activeHitbox);
+            }
+        }
+              function goBack() {
+            if (currentStep > 0) {
+                currentStep--;
+                loadStep(currentStep);
+            }        
+        }
+
+        function goNext() {
+            if (currentStep < sequence.length - 1) {
+                currentStep++;
+                loadStep(currentStep);
             }
         }
     </script>
