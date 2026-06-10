@@ -92,8 +92,16 @@
       margin-top: 20px; 
       flex-grow: 1; 
   }
-  .error-msg { color: var(--brand-red); font-weight: bold; margin-top: 15px; display: none; }
-
+  .error-msg { 
+      color: var(--brand-red); 
+      font-weight: bold; 
+      display: none; 
+      
+      /* Pin it to the bottom right */
+      position: absolute;
+      bottom: 30px; /* Aligns vertically with the buttons */
+      right: 30px;  /* Pushes it against the right wall */
+  }
   /* RIGHT: POS Screen */
   #pos-container {
       height: 100%; 
