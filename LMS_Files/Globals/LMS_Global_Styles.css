@@ -87,21 +87,18 @@
 
   #instruction-text { 
       font-family: 'OneDotCd', 'Arial Narrow', sans-serif; 
-      font-size: 1.1rem; /* Dropped from 1.2rem */
+      font-size: 1.1rem; 
       line-height: 1.5; 
       margin-top: 20px; 
       flex-grow: 1; 
+  } /* <-- THE MISSING BRACKET */
  
-  #error-message { 
+  .error-msg { 
       color: var(--brand-red); 
       font-weight: bold; 
+      margin-top: 15px; 
       display: none; 
-      
-      /* Force it to the right */
-      position: absolute !important;
-      bottom: 30px !important; 
-      right: 30px !important;  
-      text-align: right;
+      text-align: right; 
   }
   /* RIGHT: POS Screen */
   #pos-container {
