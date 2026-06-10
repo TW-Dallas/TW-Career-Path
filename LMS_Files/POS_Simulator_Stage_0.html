@@ -11,12 +11,29 @@
 
 </head>
 <body>
+    <!-- Mobile Blocker -->
     <div id="mobile-blocker">
         <h2>Desktop Required</h2>
-        <p>This POS simulator requires a larger screen. Please rotate your device or use a computer.</p>
+        <p>This POS simulator requires a larger screen.</p>
     </div>
 
+    <!-- GLOBAL LMS HEADER (Must be OUTSIDE the simulator-wrapper) -->
+    <div class="lms-header" style="background-color: var(--dark-blue); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem; text-align: center; display: flex; align-items: center; justify-content: center; position: relative; width: 100%; box-sizing: border-box;">
+        
+        <div style="position: absolute; left: 20px;">
+            <a href="lms_dashboard.html" class="back-link" style="color: white; text-decoration: none; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.1rem;">
+                &#8592; Exit to Dashboard
+            </a>
+        </div>
+
+        <img src="../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto;">
+        
+    </div>
+
+    <!-- Main Wrapper (This starts AFTER the header closes) -->
     <div id="simulator-wrapper">
+        <!-- LEFT: Instructions Panel -->
+        <div id="instruction-panel">
         
         <!-- LEFT: Instructions Panel -->
         <div id="instruction-panel">
