@@ -4,241 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>POS Simulator - Module 3, Step 0</title>
-<style>
   
-  /* --- FONT LOADING --- */
-  @font-face {
-      font-family: 'PizzaPress';
-      src: url('../fonts/Dominos Sans Header 1.ttf') format('truetype');
-      font-weight: normal;
-  }
-  @font-face {
-      font-family: 'OneDotCd-Bold';
-      src: url('../fonts/Dominos Sans Bold.ttf') format('truetype');
-      font-weight: bold;
-  }
-  @font-face {
-      font-family: 'OneDotCd';
-      src: url('../fonts/Dominos Sans Body.ttf') format('truetype');
-      font-weight: normal;
-  }
-  
-  /* --- GLOBAL CRUST PALETTE --- */
-  :root {
-      --brand-red: #ff0000;
-      --brand-blue: #0090e2;
-      --dark-blue: #005c91;
-      --crust-base: #fefaf6;
-      --crust-light: #faf2e9;
-      --crust-med: #f0decc;
-      --crust-dark: #c0a588;
-      --crust-deep: #603913;
-  }
-  
-  body {
-      font-family: 'OneDotCd', 'Arial Narrow', sans-serif; /* Default body font */
-      margin: 0;
-      padding: 0;
-      background-color: var(--crust-light);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: var(--crust-deep);
-  }
-
-  /* --- MOBILE BLOCKER --- */
-  #mobile-blocker {
-      display: none;
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: var(--dark-blue); color: white;
-      text-align: center; padding: 40px; z-index: 9999;
-  }
-  @media (max-width: 768px) {
-      #mobile-blocker { display: flex; flex-direction: column; justify-content: center; }
-      #simulator-wrapper { display: none !important; }
-  }
-
-  /* --- SPLIT VIEW LAYOUT --- */
-  #simulator-wrapper {
-      display: flex;
-      width: 95%; max-width: 1400px;
-      height: 75vh; 
-      margin: 20px auto; 
-      background: var(--crust-base);
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      overflow: hidden; 
-      border: 2px solid var(--crust-med);
-  }
-
-  /* LEFT: Instructions Panel */
-  #instruction-panel {
-      position: relative; /* REQUIRED FOR BUTTON POSITIONING */
-      flex-grow: 1; 
-      background: white;
-      padding: 30px;
-      border-right: 2px solid var(--crust-med);
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto; 
-  }
-  
-  h2 { 
-      font-family: 'PizzaPress', 'Arial Narrow', sans-serif; /* Big headers */
-      color: var(--dark-blue); 
-      margin-top: 0; 
-      text-transform: uppercase; 
-      border-bottom: 2px solid var(--brand-red); 
-      padding-bottom: 10px;
-  }
-
-  #instruction-text { 
-      font-family: 'OneDotCd', 'Arial Narrow', sans-serif; /* Main instruction text */
-      font-size: 1.2rem; 
-      line-height: 1.6; 
-      margin-top: 20px; 
-      flex-grow: 1; 
-  }
-  .error-msg { color: var(--brand-red); font-weight: bold; margin-top: 15px; display: none; }
-
-  /* RIGHT: POS Screen */
-  #pos-container {
-      height: 100%; 
-      max-width: 75%; 
-      aspect-ratio: 1600 / 1200; 
-      background: #000;
-      position: relative;
-  }
-
-  /* The actual POS Image */
-  #pos-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover; 
-  }
-
-  /* The wrapper that holds the image and hitboxes */
-  #hitbox-wrapper {
-      position: relative;
-      display: inline-block; 
-  }
-
-  /* --- HITBOXES (Invisible with Arrows) --- */
-  .hitbox {
-      position: absolute;
-      cursor: pointer;
-      display: none; 
-      z-index: 10;
-      background: transparent;
-      border: none;
-  }
-  
-  .hitbox::before {
-      content: '';
-      position: absolute;
-      top: -50px; 
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40px; 
-      height: 40px; 
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff0000"><path d="M12 21l-9-9h6V3h6v9h6z"/></svg>');
-      background-size: contain;
-      background-repeat: no-repeat;
-      filter: drop-shadow(0 4px 4px rgba(0,0,0,0.5));
-      animation: bounce 1s infinite;
-      animation-delay: 1s; 
-      opacity: 0; 
-      animation-fill-mode: forwards; 
-      pointer-events: none;
-  }
-
-  @keyframes bounce {
-      0% { top: -50px; opacity: 1; }
-      50% { top: -35px; opacity: 1; }
-      100% { top: -50px; opacity: 1; }
-  }
-
-  .hitbox.arrow-bottom::before {
-      top: auto; 
-      bottom: -50px; 
-      transform: translateX(-50%) rotate(180deg); 
-      animation: bounceBottomUp 1s infinite;
-      animation-delay: 1s; 
-      opacity: 0; 
-      animation-fill-mode: forwards; 
-  }
-  
-  @keyframes bounceBottomUp {
-      0% { bottom: -50px; opacity: 1; }
-      50% { bottom: -35px; opacity: 1; } 
-      100% { bottom: -50px; opacity: 1; }
-  }
-
-  /* --- POS TICKET STYLING --- */
-  .pos-ticket {
-      background-color: var(--crust-light);
-      border-left: 5px solid var(--brand-blue);
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 4px;
-      font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
-      color: var(--crust-burnt);
-      font-size: 1.25rem; 
-      line-height: 1.4;
-  }
-
-  .pos-ticket-header {
-      font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif;
-      color: var(--dark-blue);
-      font-size: 1.4rem; 
-      margin-bottom: 8px;
-      font-weight: bold;
-  }
-
-  /* --- BUTTON STYLING --- */
-  .nav-strip {
-      position: absolute;
-      bottom: 20px;
-      left: 30px;
-      display: flex;
-      gap: 15px;
-      z-index: 100;
-  }
-
-  .btn {
-      display: inline-block;
-      background: var(--brand-blue);
-      color: white;
-      padding: 0.8rem 2rem;
-      border-radius: 50px;
-      font-family: 'OneDotCd-Bold';
-      text-decoration: none;
-      transition: 0.3s ease;
-      border: none;
-      font-size: 1.1rem;
-      cursor: pointer;
-  }
-  
-  .btn:hover {
-      opacity: 0.8;
-  }
-  
-</style>
-  
-    <!-- 2. LINK TO YOUR GLOBAL HITBOXES CSS -->
-    <link rel="stylesheet" href="Globals/LMS_Master_hitboxes.css">
+<!-- LINK TO YOUR GLOBALS -->
+<link rel="stylesheet" href="Globals/LMS_Global_Styles.css">  
+<link rel="stylesheet" href="Globals/LMS_Master_hitboxes.css">
 
 </head>
 <body>
-
-    <!-- Mobile Blocker (From your global CSS) -->
     <div id="mobile-blocker">
         <h2>Desktop Required</h2>
         <p>This POS simulator requires a larger screen. Please rotate your device or use a computer.</p>
     </div>
 
-    <!-- Main Wrapper -->
     <div id="simulator-wrapper">
         
         <!-- LEFT: Instructions Panel -->
@@ -249,16 +26,18 @@
                 <!-- JavaScript will inject the text/tickets here -->
             </div>
             <div id="error-message" class="error-msg">❌ Incorrect Click. Try again.</div>
-        </div>
 
+            <!-- THE TEST BUTTONS -->
+            <div class="nav-strip">
+                <button class="btn" onclick="goBack()">&#8592; Back</button>
+            </div>
+        </div>
+      
         <!-- RIGHT: POS Screen & Hitboxes -->
         <div id="pos-container">
             <div id="hitbox-wrapper">
-                <!-- The dynamically changing background image -->
                 <img id="pos-image" src="" alt="POS Screen">
-
                 <!-- 3. HITBOXES WILL BE INJECTED HERE BY JAVASCRIPT -->
-                
             </div>
         </div>
 
@@ -522,23 +301,30 @@
                 hb.style.display = 'none';
             });
             
-            // 4. Show the active hitbox for this step
+            // 4. Show the active hitbox and handle the arrow
             const activeHb = document.getElementById(stepData.activeHitbox);
-
             if (activeHb) {
                 activeHb.style.display = 'block';
 
-                // If it's Step 0, flip the arrow to the bottom
+                // ONLY IN STAGE 0: Flip the arrow to the bottom for the very first step
                 if (stepIndex === 0) {
                     activeHb.classList.add('arrow-bottom');
                 } else {
-                    // Ensure it's removed for all other steps just in case
                     activeHb.classList.remove('arrow-bottom'); 
                 }
+
+                // Stage 0 doesn't hide arrows, so ensure they are always visible
+                activeHb.classList.remove('hide-arrow'); 
+                
             } else {
                 console.warn("Hitbox not found: " + stepData.activeHitbox);
             }
-
+        }
+              function goBack() {
+            if (currentStep > 0) {
+                currentStep--;
+                loadStep(currentStep);
+            }        
         }
     </script>
 </body>
