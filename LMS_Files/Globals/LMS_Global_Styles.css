@@ -54,7 +54,7 @@
       display: flex;
       width: 95%; max-width: 1400px;
       height: 75vh; 
-      margin: 20px auto; 
+      margin: 6vh auto; /* CHANGED: Pushes it down 6% of the screen */
       background: var(--crust-base);
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
