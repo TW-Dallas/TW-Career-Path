@@ -166,7 +166,24 @@
     margin-bottom: 8px;
     font-weight: bold;
 }
-  
+
+  .btn {
+    display: inline-block;
+    background: var(--brand-blue);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-family: 'OneDotCd-Bold';
+    text-decoration: none;
+    transition: 0.3s ease;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+.btn:hover {
+    opacity: 0.8;
+}
+
 </style>
   
     <!-- 2. LINK TO YOUR GLOBAL HITBOXES CSS -->
@@ -174,11 +191,6 @@
 
 </head>
 <body>
-    <!-- Add the buttons right here: -->
-    <div class="nav-strip" style="margin-top: 20px; text-align: center;">
-        <button onclick="goBack()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">&#8592; Back</button>
-        <button onclick="goNext()" style="padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 20px;">Next &#8594;</button>
-    </div>
     <!-- Mobile Blocker (From your global CSS) -->
     <div id="mobile-blocker">
         <h2>Desktop Required</h2>
@@ -198,6 +210,12 @@
             <div id="error-message" class="error-msg">❌ Incorrect Click. Try again.</div>
         </div>
 
+          <!-- Add the buttons right here: -->
+        <div class="nav-strip" style="margin-top: 20px; text-align: center;">
+            <button onclick="goBack()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">&#8592; Back</button>
+            <button onclick="goNext()" style="padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 20px;">Next &#8594;</button>
+        </div>
+      
         <!-- RIGHT: POS Screen & Hitboxes -->
         <div id="pos-container">
             <div id="hitbox-wrapper">
