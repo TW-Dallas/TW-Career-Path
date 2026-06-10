@@ -91,16 +91,17 @@
       line-height: 1.5; 
       margin-top: 20px; 
       flex-grow: 1; 
-  }
-  .error-msg { 
+ 
+  #error-message { 
       color: var(--brand-red); 
       font-weight: bold; 
       display: none; 
       
-      /* Pin it to the bottom right */
-      position: absolute;
-      bottom: 30px; /* Aligns vertically with the buttons */
-      right: 30px;  /* Pushes it against the right wall */
+      /* Force it to the right */
+      position: absolute !important;
+      bottom: 30px !important; 
+      right: 30px !important;  
+      text-align: right;
   }
   /* RIGHT: POS Screen */
   #pos-container {
