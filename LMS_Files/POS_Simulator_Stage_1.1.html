@@ -591,8 +591,6 @@
             // Add a click listener to the image itself to catch WRONG clicks
             posImage.addEventListener('click', function() {
                 errorMsg.style.display = 'block';
-                // Optional: Shake the screen or play a sound
-                setTimeout(() => { errorMsg.style.display = 'none'; }, 2000);
             });
 
             // Start the first step
@@ -638,14 +636,14 @@
                 console.warn("Hitbox not found: " + stepData.activeHitbox);
             }
         }
-              function goBack() {
+            function goBack() {
             if (currentStep > 0) {
                 currentStep--;
                 loadStep(currentStep);
             }        
         }
 
-        function goNext() {
+            function goNext() {
             if (currentStep < sequence.length - 1) {
                 currentStep++;
                 loadStep(currentStep);
