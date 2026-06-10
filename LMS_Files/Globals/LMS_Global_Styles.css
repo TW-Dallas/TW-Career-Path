@@ -28,13 +28,11 @@
   }
   
   body {
-      font-family: 'OneDotCd', 'Arial Narrow', sans-serif; /* Default body font */
+      font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
       margin: 0;
       padding: 0;
       background-color: var(--crust-light);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      display: block; /* CHANGED FROM FLEX */
       height: 100vh;
       color: var(--crust-deep);
   }
