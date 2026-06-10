@@ -89,7 +89,9 @@
       line-height: 1.5; 
       margin-top: 20px; 
       flex-grow: 1; 
-  } /* <-- THE MISSING BRACKET */
+      padding-bottom: 60px; /* ADD THIS LINE: Creates a safe zone for the buttons */
+  } 
+
  
   .error-msg { 
       color: var(--brand-red); 
