@@ -9,17 +9,17 @@
   /* --- FONT LOADING --- */
   @font-face {
       font-family: 'PizzaPress';
-      src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
+      src: url('../fonts/Dominos Sans Header 1.ttf') format('truetype');
       font-weight: normal;
   }
   @font-face {
       font-family: 'OneDotCd-Bold';
-      src: url('fonts/Dominos Sans Bold.ttf') format('truetype');
+      src: url('../fonts/Dominos Sans Bold.ttf') format('truetype');
       font-weight: bold;
   }
   @font-face {
       font-family: 'OneDotCd';
-      src: url('fonts/Dominos Sans Body.ttf') format('truetype');
+      src: url('../fonts/Dominos Sans Body.ttf') format('truetype');
       font-weight: normal;
   }
   
@@ -209,6 +209,9 @@
   .btn:hover {
       opacity: 0.8;
   }
+
+  .hitbox.hide-arrow::before { display: none !important; }
+
 </style>
   
 <link rel="stylesheet" href="Globals/LMS_Master_hitboxes.css">
@@ -471,7 +474,7 @@
             {
                 "step": 36,
                 "image": "resources/POS_assets/Stage_1.1/POS_1.26.png",
-                "activeHitbox": "hb-cash-later",
+                "activeHitbox": "hb-pay-later",
                 "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>💳 PAYMENT</div><strong>Type:</strong> Cash</div>💡 <strong>Hint:</strong> If the customer is not in the store, payment time for cash orders will always be <strong>Later</strong>.<br><br>👉 <strong>Action:</strong> Select 'Later'."
             },
             {
@@ -824,10 +827,20 @@
                 hb.style.display = 'none';
             });
             
-            // 4. Show the active hitbox for this step
+            // 4. Show the active hitbox and handle the arrow
             const activeHb = document.getElementById(stepData.activeHitbox);
             if (activeHb) {
                 activeHb.style.display = 'block';
+
+                // Ensure it's NEVER flipped in Stage 1.1
+                activeHb.classList.remove('arrow-bottom'); 
+
+                // Hide arrows starting at Step 39
+                if (stepIndex >= 39) { 
+                    activeHb.classList.add('hide-arrow'); 
+                } else {
+                    activeHb.classList.remove('hide-arrow'); // Keep visible before 39
+                }
             } else {
                 console.warn("Hitbox not found: " + stepData.activeHitbox);
             }
