@@ -445,11 +445,21 @@
             
             // 4. Show the active hitbox for this step
             const activeHb = document.getElementById(stepData.activeHitbox);
+
             if (activeHb) {
                 activeHb.style.display = 'block';
+
+                // If it's Step 0, flip the arrow to the bottom
+                if (stepIndex === 0) {
+                    activeHb.classList.add('arrow-bottom');
+                } else {
+                    // Ensure it's removed for all other steps just in case
+                    activeHb.classList.remove('arrow-bottom'); 
+                }
             } else {
                 console.warn("Hitbox not found: " + stepData.activeHitbox);
             }
+
         }
     </script>
 </body>
