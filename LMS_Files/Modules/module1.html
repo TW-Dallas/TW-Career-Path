@@ -273,8 +273,9 @@
     </div>
 
     <script>
-                let currentQuizStep = 1;
+        let currentStep = 1;
         let videoWatched = false;
+        let currentQuizStep = 1;
         let quizPassed = false;
         let player;
 
@@ -289,11 +290,13 @@
             player = new YT.Player('youtube-player', {
                 height: '100%',
                 width: '100%',
-                videoId: 'nlWZSqsErrw', // This is a placeholder YouTube ID. Swap it tomorrow.
+                    videoId: 'nlWZSqsErrw', // This is a placeholder YouTube ID. Swap it tomorrow.
                 playerVars: {
                     'playsinline': 1,
                     'rel': 0, // Don't show related videos at the end
-                    'modestbranding': 1
+                    'modestbranding': 1,
+                    'controls': 0, // Hides the scrub bar
+                    'disablekb': 1 // Disables keyboard skipping
                 },
                 events: {
                     'onStateChange': onPlayerStateChange
