@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1 - Module 1</title>
+    <link rel="icon" type="image/png" href="image/tile_blue.png">
+    <link rel="stylesheet" href="LMS_Global_Styles.css">
+    <style>
+        .classroom-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-top: 6px solid var(--brand-blue);
+        }
+
+        .classroom-header {
+            background: var(--crust-light);
+            padding: 1.5rem 2rem;
+            border-bottom: 2px solid var(--crust-med);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .module-title {
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.8rem;
+            color: var(--dark-blue);
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .step-indicator {
+            font-family: 'OneDotCd-Bold';
+            color: var(--brand-blue);
+            background: rgba(0, 144, 226, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .classroom-content {
+            padding: 2rem;
+            min-height: 400px; /* Keep height stable during transitions */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- Step 1: Video --- */
+        .video-wrapper {
+            width: 100%;
+            background: #000;
+            aspect-ratio: 16/9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .mock-play-btn {
+            font-size: 4rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .mock-play-btn:hover { transform: scale(1.1); }
+
+        /* --- Step 2: Knowledge Check --- */
+        .quiz-container {
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .quiz-question {
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.4rem;
+            color: var(--crust-deep);
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--crust-base);
+            border: 2px solid var(--crust-med);
+            border-radius: 8px;
+            font-family: 'OneDotCd';
+            font-size: 1.1rem;
+            color: var(--crust-deep);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--brand-blue);
+            background: rgba(0, 144, 226, 0.05);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--brand-blue);
+            background: var(--brand-blue);
+            color: white;
+        }
+
+        /* --- Step 3: Prompt --- */
+        .prompt-container {
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .prompt-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .prompt-text {
+            font-size: 1.5rem;
+            color: var(--crust-deep);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        /* --- Footer Controls --- */
+        .classroom-footer {
+            padding: 1.5rem 2rem;
+            background: var(--crust-light);
+            border-top: 2px solid var(--crust-med);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--brand-blue);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-family: 'OneDotCd-Bold';
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: auto;
+        }
+
+        .btn:hover {
+            background: var(--dark-blue);
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--brand-blue);
+            border: 2px solid var(--brand-blue);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(0, 144, 226, 0.1);
+            color: var(--dark-blue);
+            transform: scale(1.02);
+        }
+
+        .btn-disabled {
+            background: #ccc !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            color: #888 !important;
+            border: none !important;
+        }
+
+        .hidden { display: none !important; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body style="background-color: var(--crust-light);">
+
+    <div class="nav-strip" style="background-color: var(--dark-blue); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem; text-align: center;">
+        <div style="max-width: 900px; margin: 0 auto; text-align: left;">
+            <a href="lms_dashboard.html" class="back-link" style="color: white; text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.1rem;">
+                &#8592; Exit to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div class="classroom-container">
+        
+        <div class="classroom-header">
+            <h2 class="module-title">Module 2: Customer Service Basics</h2>
+            <div class="step-indicator" id="step-counter">Step 1 of 3</div>
+        </div>
+
+        <div class="classroom-content">
+            
+            <!-- STEP 1: VIDEO -->
+            <div id="content-video" style="width: 100%; text-align: center;">
+                <h3 style="font-family: 'OneDotCd-Bold'; color: var(--crust-deep); margin-bottom: 1rem;">Welcome to Team Wow</h3>
+                <div class="video-wrapper" style="background: transparent;">
+                    <!-- The YouTube Player will be injected here -->
+                    <div id="youtube-player"></div>
+                </div>
+                <p style="color: #666; font-size: 0.9rem;">You must watch the entire video to proceed.</p>
+            </div>
+
+            <!-- STEP 2: KNOWLEDGE CHECK -->
+                        <!-- STEP 2: KNOWLEDGE CHECK -->
+            <div id="content-quiz" class="quiz-container hidden">
+                
+                <!-- Question 1 -->
+                <div class="question-block" id="q1-block">
+                    <p style="color: var(--brand-blue); font-family: 'OneDotCd-Bold'; margin-bottom: 0.5rem;">Question 1 of 3</p>
+                    <div class="quiz-question">What is the Team Wow Mission?</div>
+                    <button class="quiz-option" onclick="selectOption(this, 1, false)">A. Making pizzas as fast as possible</button>
+                    <button class="quiz-option" onclick="selectOption(this, 1, true)">B. Dedicated to delivering the best customer experience possible</button>
+                    <button class="quiz-option" onclick="selectOption(this, 1, false)">C. Memorizing the entire menu on Day 1</button>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-block hidden" id="q2-block">
+                    <p style="color: var(--brand-blue); font-family: 'OneDotCd-Bold'; margin-bottom: 0.5rem;">Question 2 of 3</p>
+                    <div class="quiz-question">Which of the following is our #1 priority?</div>
+                    <button class="quiz-option" onclick="selectOption(this, 2, true)">A. Safety</button>
+                    <button class="quiz-option" onclick="selectOption(this, 2, false)">B. Speed</button>
+                    <button class="quiz-option" onclick="selectOption(this, 2, false)">C. Perfect Uniforms</button>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-block hidden" id="q3-block">
+                    <p style="color: var(--brand-blue); font-family: 'OneDotCd-Bold'; margin-bottom: 0.5rem;">Question 3 of 3</p>
+                    <div class="quiz-question">What is the focus of the 3-day training program?</div>
+                    <button class="quiz-option" onclick="selectOption(this, 3, false)">A. Making dough from scratch</button>
+                    <button class="quiz-option" onclick="selectOption(this, 3, false)">B. Delivering orders in your car</button>
+                    <button class="quiz-option" onclick="selectOption(this, 3, true)">C. Service, Uniform, Safety, and Harassment</button>
+                </div>
+                
+                <p id="quiz-feedback" style="color: var(--brand-red); font-family: 'OneDotCd-Bold'; margin-top: 1rem; display: none;">Please select the correct answer to continue.</p>
+            </div>
+
+            <!-- STEP 3: PROMPT (Grab Trainer) -->
+            <div id="content-prompt" class="prompt-container hidden">
+                <div class="prompt-icon">🤝</div>
+                <h2 style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 2rem; margin-bottom: 1rem;">Online Training Complete!</h2>
+                <p class="prompt-text">Next step is with your trainer for a store tour.</p>
+                <p style="color: #666; font-size: 1rem;">When you are finished with your tour, your trainer will unlock Module 2 for you.</p>
+            </div>
+
+        </div>
+
+        <div class="classroom-footer">
+            <button class="btn btn-outline hidden" id="btn-back" onclick="changeStep(-1)" style="padding: 0.8rem 2rem; width: auto;">Back</button>
+            <div style="flex-grow: 1;"></div> <!-- Spacer -->
+            <button class="btn btn-disabled" id="btn-next" onclick="changeStep(1)" style="padding: 0.8rem 2rem; width: auto; margin-top: 0;">Next Step</button>
+            <a href="lms_dashboard.html#day1" class="btn hidden" id="btn-finish" style="padding: 0.8rem 2rem; width: auto; margin-top: 0; background: var(--brand-red);">Return to Dashboard</a>
+        </div>
+
+    </div>
+
+    <script>
+                let currentQuizStep = 1;
+        let videoWatched = false;
+        let quizPassed = false;
+        let player;
+
+        // Load the YouTube IFrame Player API code asynchronously.
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // This function creates an <iframe> (and YouTube player) after the API code downloads.
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '100%',
+                width: '100%',
+                videoId: 't42Cj7v7MGg', // This is a placeholder YouTube ID. Swap it tomorrow.
+                playerVars: {
+                    'playsinline': 1,
+                    'rel': 0, // Don't show related videos at the end
+                    'modestbranding': 1
+                },
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // The API calls this function when the player's state changes.
+        function onPlayerStateChange(event) {
+            // event.data === 0 means the video has ended
+            if (event.data === 0) {
+                videoWatched = true;
+                const nextBtn = document.getElementById('btn-next');
+                nextBtn.classList.remove('btn-disabled');
+                
+                // Optional: Change the subtext to green to show it's done
+                document.querySelector('#content-video p').innerText = "Video Complete!";
+                document.querySelector('#content-video p').style.color = "#4CAF50";
+            }
+        }
+
+        function selectOption(element, questionNumber, isCorrect) {
+            const block = document.getElementById('q' + questionNumber + '-block');
+            block.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            const nextBtn = document.getElementById('btn-next');
+            const feedback = document.getElementById('quiz-feedback');
+
+            if (isCorrect) {
+                feedback.style.display = 'none';
+                if (questionNumber === 3) {
+                    quizPassed = true;
+                    nextBtn.classList.remove('btn-disabled');
+                } else {
+                    setTimeout(() => {
+                        document.getElementById('q' + questionNumber + '-block').classList.add('hidden');
+                        document.getElementById('q' + (questionNumber + 1) + '-block').classList.remove('hidden');
+                    }, 800);
+                }
+            } else {
+                feedback.style.display = 'block';
+            }
+        }
+
+        function changeStep(direction) {
+            if (direction === 1) {
+                if (currentStep === 1 && !videoWatched) return;
+                if (currentStep === 2 && !quizPassed) {
+                    document.getElementById('quiz-feedback').style.display = 'block';
+                    return;
+                }
+            }
+            currentStep += direction;
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('content-video').classList.add('hidden');
+            document.getElementById('content-quiz').classList.add('hidden');
+            document.getElementById('content-prompt').classList.add('hidden');
+
+            const btnBack = document.getElementById('btn-back');
+            const btnNext = document.getElementById('btn-next');
+            const btnFinish = document.getElementById('btn-finish');
+            
+            btnBack.classList.remove('hidden');
+            btnNext.classList.remove('hidden');
+            btnFinish.classList.add('hidden');
+
+            document.getElementById('step-counter').innerText = `Step ${currentStep} of 3`;
+
+            if (currentStep === 1) {
+                document.getElementById('content-video').classList.remove('hidden');
+                btnBack.classList.add('hidden');
+                if (!videoWatched) btnNext.classList.add('btn-disabled');
+            } 
+            else if (currentStep === 2) {
+                document.getElementById('content-quiz').classList.remove('hidden');
+                if (!quizPassed) btnNext.classList.add('btn-disabled');
+            } 
+            else if (currentStep === 3) {
+                document.getElementById('content-prompt').classList.remove('hidden');
+                btnNext.classList.add('hidden');
+                btnFinish.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
