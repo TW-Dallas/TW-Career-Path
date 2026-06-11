@@ -188,13 +188,13 @@
   .pos-ticket {
       background-color: var(--crust-light);
       border-left: 5px solid var(--brand-blue);
-      padding: 10px; /* Reduced from 15px */
-      margin: 10px 0; /* Reduced from 15px */
+      padding: 10px 10px 2px 10px; /* Shaved 8px off the bottom padding */
+      margin: 10px 0 5px 0; /* Shaved 5px off the bottom margin */
       border-radius: 4px;
       font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
       color: var(--crust-burnt);
-      font-size: 1.0rem; /* Dropped from 1.25rem */
-      line-height: 1.3;
+      font-size: 1.0rem;
+      line-height: 1.4; /* Slightly un-smashed */
   }
 
   .pos-ticket-header {
