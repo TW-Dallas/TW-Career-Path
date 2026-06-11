@@ -710,7 +710,7 @@
             </div>
 
         </div>
-
+        
     </main>
 
     <!-- SUPPORT MODAL -->
@@ -757,6 +757,25 @@
         </div>
     </div>
 
+    <script>
+        // 1. When the page loads, check if we already logged in
+        document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem("lms_logged_in") === "true") {
+                // Hide the login screen
+                document.getElementById("step-login").classList.add("hidden");
+                // Go straight to the Day 1 Modules dashboard
+                document.getElementById("step-day1-dashboard").classList.remove("hidden");
+            }
+        });
+
+        // 2. When they click 'Sign In' for the first time, save that memory
+        document.addEventListener("click", function(e) {
+            if (e.target && e.target.innerText === "Sign In") {
+                localStorage.setItem("lms_logged_in", "true");
+            }
+        });
+    </script>
+    
     <script>
         function nextStep(stepId) {
             // Hide all steps
