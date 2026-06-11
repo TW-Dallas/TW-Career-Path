@@ -80,7 +80,7 @@
       margin-top: 0; 
       text-transform: uppercase; 
       border-bottom: 2px solid var(--brand-red); 
-      padding-bottom: 10px;
+      padding-bottom: 5px;
   }
 
   #instruction-text { 
