@@ -230,29 +230,32 @@
                 <!-- Question 1 -->
                 <div class="question-block" id="q1-block">
                     <p style="color: var(--brand-blue); font-family: 'OneDotCd-Bold'; margin-bottom: 0.5rem;">Question 1 of 3</p>
-                    <div class="quiz-question">What is the Team Wow Mission?</div>
-                    <button class="quiz-option" onclick="selectOption(this, 1, false)">A. Making pizzas as fast as possible</button>
-                    <button class="quiz-option" onclick="selectOption(this, 1, true)">B. Dedicated to delivering the best customer experience possible</button>
-                    <button class="quiz-option" onclick="selectOption(this, 1, false)">C. Memorizing the entire menu on Day 1</button>
+                    <div class="quiz-question">According to the training, customer service is more than just doing what?</div>
+                    <button class="quiz-option" onclick="selectOption(this, 1, true)">A. Taking orders</button>
+                    <button class="quiz-option" onclick="selectOption(this, 1, false)">B. Making pizzas quickly</button>
+                    <button class="quiz-option" onclick="selectOption(this, 1, false)">C. Wearing the correct uniform</button>
                 </div>
 
                 <!-- Question 2 -->
                 <div class="question-block hidden" id="q2-block">
                     <p style="color: var(--brand-blue); font-family: 'OneDotCd-Bold'; margin-bottom: 0.5rem;">Question 2 of 3</p>
-                    <div class="quiz-question">Which of the following is our #1 priority?</div>
-                    <button class="quiz-option" onclick="selectOption(this, 2, true)">A. Safety</button>
-                    <button class="quiz-option" onclick="selectOption(this, 2, false)">B. Speed</button>
-                    <button class="quiz-option" onclick="selectOption(this, 2, false)">C. Perfect Uniforms</button>
+                    <div class="quiz-question">When handling customer concerns, we follow LEADS. What does LEADS stand for?</div>
+                    <button class="quiz-option" onclick="selectOption(this, 2, false)">A. Look, Evaluate, Assess, Deliver, Smile</button>
+                    <button class="quiz-option" onclick="selectOption(this, 2, false)">B. Listen, Engage, Answer, Direct, Serve</button>
+                    <button class="quiz-option" onclick="selectOption(this, 2, true)">C. Listen, Empathize, Apologize, Do, and Stand</button>
                 </div>
 
                 <!-- Question 3 -->
                 <div class="question-block hidden" id="q3-block">
                     <p style="color: var(--brand-blue); font-family: 'OneDotCd-Bold'; margin-bottom: 0.5rem;">Question 3 of 3</p>
-                    <div class="quiz-question">What is the focus of the 3-day training program?</div>
-                    <button class="quiz-option" onclick="selectOption(this, 3, false)">A. Making dough from scratch</button>
-                    <button class="quiz-option" onclick="selectOption(this, 3, false)">B. Delivering orders in your car</button>
-                    <button class="quiz-option" onclick="selectOption(this, 3, true)">C. Service, Uniform, Safety, and Harassment</button>
+                    <div class="quiz-question">What is the final step to officially unlock Day 2 of your training?</div>
+                    <button class="quiz-option" onclick="selectOption(this, 3, false)">A. Clock out and go home</button>
+                    <button class="quiz-option" onclick="selectOption(this, 3, true)">B. Get with your trainer so they can sign off</button>
+                    <button class="quiz-option" onclick="selectOption(this, 3, false)">C. Complete 10 perfect pizzas on the make line</button>
                 </div>
+                
+                <p id="quiz-feedback" style="color: var(--brand-red); font-family: 'OneDotCd-Bold'; margin-top: 1rem; display: none;">Please select the correct answer to continue.</p>
+            </div>
                 
                 <p id="quiz-feedback" style="color: var(--brand-red); font-family: 'OneDotCd-Bold'; margin-top: 1rem; display: none;">Please select the correct answer to continue.</p>
             </div>
