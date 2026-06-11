@@ -15,7 +15,7 @@
             flex-direction: column;
             gap: 20px; 
             width: 100%;
-            max-width: 1400px; /* Widened to use more real estate */
+            max-width: 1400px; 
             margin: 0 auto; 
         }
         .drop-zones {
@@ -28,8 +28,8 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            flex: 1 1 0; /* Forces all 4 columns to be exactly equal width */
-            min-width: 0; /* Prevents long text from blowing out the column width */
+            flex: 1 1 0; 
+            min-width: 0; 
         }
         .drop-zone {
             width: 100%;
@@ -42,13 +42,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-sizing: border-box; /* Keeps padding inside the width */
+            box-sizing: border-box; 
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
         }
         .drop-zone.drag-over {
-            border-color: #006491;
-            background-color: #e6f0f5;
+            border-color: var(--brand-blue);
+            background-color: var(--crust-light);
             transform: scale(1.02);
         }
         .drop-zone.correct {
@@ -67,7 +67,7 @@
             min-height: 80px;
         }
         .draggable-pill {
-            background: #006491; 
+            background: var(--dark-blue); 
             color: white;
             padding: 10px 20px; 
             border-radius: 20px; 
@@ -77,7 +77,7 @@
             font-size: 0.9rem; 
             text-align: center;
             max-width: 350px; 
-            box-sizing: border-box; /* Keeps padding inside the width */
+            box-sizing: border-box; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: transform 0.1s;
         }
@@ -99,7 +99,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .game-btn {
-            background: #E31837; 
+            background: var(--brand-red); 
             color: white;
             border: none;
             padding: 15px 30px;
@@ -111,14 +111,14 @@
             transition: background 0.2s;
         }
         .game-btn:hover {
-            background: #c1122b;
+            background: var(--dark-red);
         }
     </style>
 </head>
 <body>
 
     <div style="text-align: center; margin-bottom: 40px; margin-top: 40px;">
-        <h1 style="color: #006491; font-size: 2.5rem; margin-bottom: 10px;">Module 3: Menu Matching</h1>
+        <h1 style="color: var(--dark-blue); font-size: 2.5rem; margin-bottom: 10px;">Module 3: Menu Matching</h1>
         <p style="font-size: 1.2rem; color: #666;">Drag the correct ingredients to their matching Specialty Pizza.</p>
     </div>
 
@@ -128,25 +128,25 @@
         <div class="drop-zones">
             <div class="column-wrapper">
                 <img src="../../image/Extrav.png" alt="ExtravaganZZa" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
-                <h3 style="color: #006491; margin: 0 0 10px 0; font-size: 1.1rem;">ExtravaganZZa</h3>
+                <h3 style="color: var(--dark-blue); margin: 0 0 10px 0; font-size: 1.1rem;">ExtravaganZZa</h3>
                 <div class="drop-zone" data-pizza="extravaganzza"></div>
             </div>
 
             <div class="column-wrapper">
                 <img src="../../image/Meatzza.png" alt="MeatZZa" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
-                <h3 style="color: #006491; margin: 0 0 10px 0; font-size: 1.1rem;">MeatZZa</h3>
+                <h3 style="color: var(--dark-blue); margin: 0 0 10px 0; font-size: 1.1rem;">MeatZZa</h3>
                 <div class="drop-zone" data-pizza="meatzza"></div>
             </div>
 
             <div class="column-wrapper">
                 <img src="../../image/Veggie.png" alt="Pacific Veggie" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
-                <h3 style="color: #006491; margin: 0 0 10px 0; font-size: 1.1rem;">Pacific Veggie</h3>
+                <h3 style="color: var(--dark-blue); margin: 0 0 10px 0; font-size: 1.1rem;">Pacific Veggie</h3>
                 <div class="drop-zone" data-pizza="veggie"></div>
             </div>
 
             <div class="column-wrapper">
                 <img src="../../image/Hawaiian.png" alt="Honolulu Hawaiian" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
-                <h3 style="color: #006491; margin: 0 0 10px 0; font-size: 1.1rem;">Honolulu Hawaiian</h3>
+                <h3 style="color: var(--dark-blue); margin: 0 0 10px 0; font-size: 1.1rem;">Honolulu Hawaiian</h3>
                 <div class="drop-zone" data-pizza="hawaiian"></div>
             </div>
         </div>
@@ -219,12 +219,12 @@
                     draggingElement.setAttribute('draggable', 'false'); 
                     draggingElement.style.cursor = 'default';
                     draggingElement.style.boxShadow = 'none';
-                    draggingElement.style.width = '100%'; // Fits perfectly inside the box now
+                    draggingElement.style.width = '100%'; 
                     
                     matchedCount++;
                     checkWinCondition();
                 } else {
-                    zone.style.borderColor = '#E31837'; 
+                    zone.style.borderColor = 'var(--brand-red)'; 
                     setTimeout(() => {
                         if (!zone.classList.contains('correct')) {
                             zone.style.borderColor = ''; 
