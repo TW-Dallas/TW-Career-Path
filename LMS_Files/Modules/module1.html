@@ -396,8 +396,33 @@
                 document.getElementById('content-prompt').classList.remove('hidden');
                 btnNext.classList.add('hidden');
                 btnFinish.classList.remove('hidden');
+                localStorage.setItem('mod1_complete', 'true');
             }
         }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Check if Module 1 is complete
+            if (localStorage.getItem('mod1_complete') === 'true') {
+                
+                // Find the Module 2 card using the ID we just added
+                const mod2Card = document.getElementById('card-mod2');
+                
+                if (mod2Card) {
+                    // Remove the 'locked' grey styling from the card
+                    mod2Card.classList.remove('locked');
+                    
+                    // Turn the grey badge back to blue
+                    mod2Card.querySelector('.course-badge').style.color = "var(--dark-blue)";
+                    
+                    // Find the grey locked button
+                    const lockBtn = mod2Card.querySelector('.btn-small');
+                    
+                    // Replace it with the active blue button that asks for the PIN
+                    lockBtn.outerHTML = '<button class="btn-small" onclick="requireTrainerPin()" style="background: var(--brand-blue); color: white; border: none;">Start Module 2</button>';
+                }
+            }
+        });
     </script>
 </body>
 </html>
