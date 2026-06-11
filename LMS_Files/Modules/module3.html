@@ -9,39 +9,33 @@
     <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
 
     <style>
-        /* Game-specific layout only */
+        /* Game-specific styles only */
         .game-container {
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 20px; 
             width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
+            max-width: 1100px; 
+            margin: 0 auto; 
         }
         .drop-zones {
             display: flex;
             justify-content: space-between;
-            gap: 20px;
+            gap: 15px; 
         }
         .drop-zone {
             flex: 1;
             background: white;
             border: 3px dashed #ccc;
             border-radius: 12px;
-            padding: 20px;
+            padding: 15px; 
             text-align: center;
-            min-height: 150px;
+            min-height: 100px; 
             display: flex;
             flex-direction: column;
             align-items: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
-        }
-        .drop-zone h3 {
-            margin: 0 0 15px 0;
-            color: #006491;
-            font-size: 1.2rem;
-            pointer-events: none; 
         }
         .drop-zone.drag-over {
             border-color: #006491;
@@ -56,24 +50,24 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 20px;
-            padding: 30px;
+            gap: 15px; 
+            padding: 20px; 
             background: white;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            min-height: 100px;
+            min-height: 80px;
         }
         .draggable-pill {
-            background: #006491;
+            background: #006491; 
             color: white;
-            padding: 15px 25px;
-            border-radius: 30px;
+            padding: 10px 20px; 
+            border-radius: 20px; 
             cursor: grab;
             user-select: none;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.9rem; 
             text-align: center;
-            max-width: 250px;
+            max-width: 350px; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: transform 0.1s;
         }
@@ -87,7 +81,7 @@
         #success-message {
             display: none;
             text-align: center;
-            margin-top: 40px;
+            margin-top: 20px;
             animation: fadeIn 0.5s ease;
         }
         @keyframes fadeIn {
@@ -95,7 +89,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .game-btn {
-            background: #E31837;
+            background: #E31837; 
             color: white;
             border: none;
             padding: 15px 30px;
@@ -119,37 +113,32 @@
     </div>
 
     <div class="game-container">
-        <!-- DROP ZONES WITH IMAGES -->
+        
+        <!-- DROP ZONES WITH IMAGES & LABELS -->
         <div class="drop-zones">
-            
-            <!-- ExtravaganZZa Column -->
             <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
-                <img src="../../image/Extrav.png" alt="ExtravaganZZa" style="width: 150px; height: 150px; margin-bottom: 15px; border-radius: 50%; object-fit: cover;">
-                <div class="drop-zone" data-pizza="extravaganzza" style="width: 100%; min-height: 120px;">
-                </div>
+                <img src="../../image/Extrav.png" alt="ExtravaganZZa" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
+                <h3 style="color: #006491; margin: 0 0 10px 0; font-size: 1.1rem;">ExtravaganZZa</h3>
+                <div class="drop-zone" data-pizza="extravaganzza" style="width: 100%; min-height: 100px;"></div>
             </div>
 
-            <!-- MeatZZa Column -->
             <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
-                <img src="../../image/Meatzza.png" alt="MeatZZa" style="width: 150px; height: 150px; margin-bottom: 15px; border-radius: 50%; object-fit: cover;">
-                <div class="drop-zone" data-pizza="meatzza" style="width: 100%; min-height: 120px;">
-                </div>
+                <img src="../../image/Meatzza.png" alt="MeatZZa" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
+                <h3 style="color: #006491; margin: 0 0 10px 0; font-size: 1.1rem;">MeatZZa</h3>
+                <div class="drop-zone" data-pizza="meatzza" style="width: 100%; min-height: 100px;"></div>
             </div>
 
-            <!-- Pacific Veggie Column -->
             <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
-                <img src="../../image/Veggie.png" alt="Pacific Veggie" style="width: 150px; height: 150px; margin-bottom: 15px; border-radius: 50%; object-fit: cover;">
-                <div class="drop-zone" data-pizza="veggie" style="width: 100%; min-height: 120px;">
-                </div>
+                <img src="../../image/Veggie.png" alt="Pacific Veggie" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
+                <h3 style="color: #006491; margin: 0 0 10px 0; font-size: 1.1rem;">Pacific Veggie</h3>
+                <div class="drop-zone" data-pizza="veggie" style="width: 100%; min-height: 100px;"></div>
             </div>
 
-            <!-- Honolulu Hawaiian Column -->
             <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
-                <img src="../../image/Hawaiian.png" alt="Honolulu Hawaiian" style="width: 150px; height: 150px; margin-bottom: 15px; border-radius: 50%; object-fit: cover;">
-                <div class="drop-zone" data-pizza="hawaiian" style="width: 100%; min-height: 120px;">
-                </div>
+                <img src="../../image/Hawaiian.png" alt="Honolulu Hawaiian" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
+                <h3 style="color: #006491; margin: 0 0 10px 0; font-size: 1.1rem;">Honolulu Hawaiian</h3>
+                <div class="drop-zone" data-pizza="hawaiian" style="width: 100%; min-height: 100px;"></div>
             </div>
-
         </div>
 
         <!-- DRAGGABLES -->
@@ -167,7 +156,8 @@
                 Pepperoni, ham, Italian sausage, beef, fresh onions, fresh green peppers, fresh mushrooms and black olives, all sandwiched between two layers of provolone and cheese made with 100% real mozzarella.
             </div>
         </div>
-        
+    </div>
+
     <div id="success-message">
         <h2 style="color: #28a745; font-size: 2rem; margin-bottom: 10px;">Perfect Match!</h2>
         <p style="font-size: 1.1rem; color: #555;">You've mastered the Specialty Pizzas.</p>
@@ -179,7 +169,6 @@
         const dropZones = document.querySelectorAll('.drop-zone');
         let matchedCount = 0;
 
-        // --- DRAG EVENTS ---
         draggables.forEach(draggable => {
             draggable.addEventListener('dragstart', (e) => {
                 draggable.classList.add('dragging');
@@ -191,7 +180,6 @@
             });
         });
 
-        // --- DROP ZONE EVENTS ---
         dropZones.forEach(zone => {
             zone.addEventListener('dragover', e => {
                 e.preventDefault(); 
@@ -215,7 +203,6 @@
                 const actualMatch = draggingElement.getAttribute('data-match');
 
                 if (expectedMatch === actualMatch) {
-                    // It's a match!
                     zone.appendChild(draggingElement);
                     zone.classList.add('correct');
                     
@@ -227,8 +214,7 @@
                     matchedCount++;
                     checkWinCondition();
                 } else {
-                    // Wrong match - flash red
-                    zone.style.borderColor = '#E31837';
+                    zone.style.borderColor = '#E31837'; 
                     setTimeout(() => {
                         if (!zone.classList.contains('correct')) {
                             zone.style.borderColor = ''; 
@@ -238,7 +224,6 @@
             });
         });
 
-        // --- WIN CONDITION & RETURN ---
         function checkWinCondition() {
             if (matchedCount === 4) {
                 document.getElementById('success-message').style.display = 'block';
