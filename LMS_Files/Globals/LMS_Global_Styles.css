@@ -172,29 +172,17 @@
       100% { bottom: -50px; opacity: 1; }
   }
 
-  /* --- POS TICKET STYLING --- */
+  /* --- POS TICKET STYLING --- */  
   .pos-ticket {
       background-color: var(--crust-light);
       border-left: 5px solid var(--brand-blue);
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 4px;
-      font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
-      color: var(--crust-burnt);
-      font-size: 1.25rem; 
-      line-height: 1.4;
-  }
-
-  .pos-ticket {
-      background-color: var(--crust-light);
-      border-left: 5px solid var(--brand-blue);
-      padding: 10px 10px 2px 10px; /* Shaved 8px off the bottom padding */
-      margin: 10px 0 5px 0; /* Shaved 5px off the bottom margin */
+      padding: 12px 10px 8px 10px; /* +2px top, +6px bottom for breathing room */
+      margin: 10px 0 2px 0; /* Shaved margin to compensate for padding */
       border-radius: 4px;
       font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
       color: var(--crust-burnt);
       font-size: 1.0rem;
-      line-height: 1.4; /* Slightly un-smashed */
+      line-height: 1.5; /* Increased for clear line separation */
   }
 
   .pos-ticket-header {
