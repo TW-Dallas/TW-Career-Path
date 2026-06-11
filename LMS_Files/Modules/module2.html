@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day 1 - Module 1</title>
+    <title>Day 1 - Module 2</title>
     <link rel="icon" type="image/png" href="image/tile_blue.png">
     <link rel="stylesheet" href="LMS_Global_Styles.css">
     <style>
@@ -381,6 +381,20 @@
                 btnFinish.classList.remove('hidden');
             }
         }
+    </script>
+    <script>
+    function requireTrainerPin() {
+        // This pops up a browser alert asking for the password
+        let pin = prompt("TRAINER AUTHORIZATION REQUIRED\n\nPlease have your trainer enter their 4-digit PIN to unlock Module 2:");
+        
+        // For the presentation tomorrow, the mock PIN is 1234
+        if (pin === "1234") {
+            alert("Authorization Successful! Unlocking Module 2.");
+            window.location.href = "module2.html"; // Send them to the file
+        } else if (pin !== null) { // If they typed wrong (and didn't hit cancel)
+            alert("Incorrect PIN. Access Denied.");
+        }
+    }
     </script>
 </body>
 </html>
