@@ -305,6 +305,10 @@
                     'disablekb': 1 // Disables keyboard skipping
                 },
                 events: {
+                    'onReady': function(event) {
+                        event.target.unMute();
+                        event.target.setVolume(100);
+                    },
                     'onStateChange': onPlayerStateChange
                 }
             });
