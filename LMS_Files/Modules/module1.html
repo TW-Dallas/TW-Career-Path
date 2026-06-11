@@ -294,7 +294,7 @@
             player = new YT.Player('youtube-player', {
                 height: '100%',
                 width: '100%',
-                    videoId: 'dQw4w9WgXcQ', // This is a placeholder YouTube ID. Swap it tomorrow.
+                    videoId: 'nlWZSqsErrw', // This is a placeholder YouTube ID. Swap it tomorrow.
                 playerVars: {
                     'playsinline': 1,
                     'rel': 0, // Don't show related videos at the end
@@ -314,6 +314,12 @@
 
         // The API calls this function when the player's state changes.
         function onPlayerStateChange(event) {
+            // event.data === 1 means the video has started playing (User clicked it!)
+            if (event.data === 1) {
+                event.target.unMute();
+                event.target.setVolume(100);
+            }
+
             // event.data === 0 means the video has ended
             if (event.data === 0) {
                 videoWatched = true;
