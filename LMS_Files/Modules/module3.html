@@ -270,7 +270,7 @@
                 // Render the 3-column grid layout (NO BOX-CEPTION)
                 let gridHTML = `
                     <div style="padding: 1.5rem 2rem 0.5rem 2rem; text-align: center;">
-                        <h2 style="font-family: 'PizzaPress'; color: var(--crust-dark); font-size: 2.2rem; margin: 0 0 1rem 0; text-transform: uppercase;">${slide.title}</h2>
+                        <h2 style="font-family: 'PizzaPress'; color: var(--crust-burnt); font-size: 2.2rem; margin: 0 0 1rem 0; text-transform: uppercase;">${slide.title}</h2>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 0 2rem 2rem 2rem;">`;
                 
@@ -279,13 +279,13 @@
                         <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
                             
                             <!-- Injected Title (Native Text) -->
-                            <h3 style="font-family: 'Subhead2', sans-serif; color: var(--crust-dark); font-size: 1.3rem; margin: 0 0 8px 0;">${item.name}</h3>
+                            <h3 style="font-family: 'Subhead2', sans-serif; color: var(--crust-burnt); font-size: 1.3rem; margin: 0 0 8px 0;">${item.name}</h3>
 
                             <!-- The Canva image (cropped without text) -->
                             <img src="${item.image}" alt="${item.name}" style="width: 100%; max-width: 220px; object-fit: contain; margin-bottom: 10px;">
                             
                             <!-- Description text -->
-                            <p style="font-family: 'OneDotCd'; color: #333; font-size: 1.05rem; margin: 0; line-height: 1.4;">${item.desc}</p>
+                            <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0; line-height: 1.4;">${item.desc}</p>
                         </div>
                     `;
                 });
