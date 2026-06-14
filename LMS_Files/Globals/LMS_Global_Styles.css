@@ -14,7 +14,11 @@
       src: url('../../fonts/Dominos Sans Body.ttf') format('truetype');
       font-weight: normal;
   }
-  
+  @font-face {
+      font-family: 'Subhead2';
+      src: url('../../fonts/Dominos Sans Subhead 2.ttf') format('truetype');
+      font-weight: normal;
+  }
   /* --- GLOBAL CRUST PALETTE --- */
   :root {
       --brand-red: #ff0000;
