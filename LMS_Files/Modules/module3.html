@@ -212,21 +212,8 @@
         <!-- MENU DECONSTRUCTED SLIDESHOW -->
         <div id="menu-slideshow" style="background: var(--crust-base); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 900px; margin: 2rem auto; overflow: hidden; border: 2px solid var(--crust-med);">
             
-            <!-- Slide Content Area (Flexbox for Side-by-Side) -->
-            <div style="display: flex; flex-wrap: wrap;">
-                <!-- Left: Image -->
-                <div style="flex: 1 1 350px; background: var(--crust-light); display: flex; align-items: center; justify-content: center; padding: 2rem;">
-                    <img id="slide-img" src="../image/placeholder.jpg" alt="Menu Item" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                </div>
-                
-                <!-- Right: Text & Details -->
-                <div style="flex: 1 1 350px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: center;">
-                    <h2 id="slide-title" style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 1rem;">Loading...</h2>
-                    <div id="slide-desc" style="font-family: 'OneDotCd'; color: #333; font-size: 1.15rem; line-height: 1.6;">
-                        <!-- JavaScript will inject bullet points here -->
-                    </div>
-                </div>
-            </div>
+            <!-- THIS IS THE MAGIC CONTAINER THE JS IS LOOKING FOR -->
+            <div id="slide-content-container"></div>
 
             <!-- Controls Footer -->
             <div style="background: var(--crust-light); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--crust-med);">
