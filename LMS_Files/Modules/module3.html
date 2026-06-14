@@ -3,247 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module 3: Menu Matching</title>
-    
-    <!-- LINK TO YOUR GLOBAL CSS -->
+    <title>Day 1 - Module 1</title>
+    <link rel="icon" type="image/png" href="../../image/tile_blue.png">
     <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
-
     <style>
-        /* Game-specific styles only */
-        .game-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px; 
-            width: 100%;
-            max-width: 1400px; 
-            margin: 0 auto; 
+        .classroom-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-top: 6px solid var(--brand-blue);
         }
-        .drop-zones {
+
+        .classroom-header {
+            background: var(--crust-light);
+            padding: 1.5rem 2rem;
+            border-bottom: 2px solid var(--crust-med);
             display: flex;
             justify-content: space-between;
-            gap: 15px; 
-            width: 100%;
+            align-items: center;
         }
-        .column-wrapper {
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            flex: 1 1 0; 
-            min-width: 0; 
+
+        .module-title {
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.8rem;
+            color: var(--dark-blue);
+            margin: 0;
+            text-transform: uppercase;
         }
-        .drop-zone {
-            width: 100%;
-            background: white;
-            border: 3px dashed #ccc;
-            border-radius: 12px;
-            padding: 15px; 
-            text-align: center;
-            min-height: 100px; 
+
+        .step-indicator {
+            font-family: 'OneDotCd-Bold';
+            color: var(--brand-blue);
+            background: rgba(0, 144, 226, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .classroom-content {
+            padding: 2rem;
+            min-height: 400px; /* Keep height stable during transitions */
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-sizing: border-box; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+            justify-content: center;
         }
-        .drop-zone.drag-over {
+
+        /* --- Step 1: Video --- */
+        .video-wrapper {
+            width: 100%;
+            background: #000;
+            aspect-ratio: 16/9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .mock-play-btn {
+            font-size: 4rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .mock-play-btn:hover { transform: scale(1.1); }
+
+        /* --- Step 2: Knowledge Check --- */
+        .quiz-container {
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .quiz-question {
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.4rem;
+            color: var(--crust-deep);
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--crust-base);
+            border: 2px solid var(--crust-med);
+            border-radius: 8px;
+            font-family: 'OneDotCd';
+            font-size: 1.1rem;
+            color: var(--crust-deep);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .quiz-option:hover {
             border-color: var(--brand-blue);
-            background-color: var(--crust-light);
+            background: rgba(0, 144, 226, 0.05);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--brand-blue);
+            background: var(--brand-blue);
+            color: white;
+        }
+
+        /* --- Step 3: Prompt --- */
+        .prompt-container {
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .prompt-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .prompt-text {
+            font-size: 1.5rem;
+            color: var(--crust-deep);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        /* --- Footer Controls --- */
+        .classroom-footer {
+            padding: 1.5rem 2rem;
+            background: var(--crust-light);
+            border-top: 2px solid var(--crust-med);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--brand-blue);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-family: 'OneDotCd-Bold';
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: auto;
+        }
+
+        .btn:hover {
+            background: var(--dark-blue);
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--brand-blue);
+            border: 2px solid var(--brand-blue);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(0, 144, 226, 0.1);
+            color: var(--dark-blue);
             transform: scale(1.02);
         }
-        .drop-zone.correct {
-            border: 3px solid var(--brand-blue);
-            background-color: var(--crust-light);
+
+        .btn-disabled {
+            background: #ccc !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            color: #888 !important;
+            border: none !important;
         }
-        .draggables {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px; 
-            padding: 20px; 
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            min-height: 80px;
-        }
-        .draggable-pill {
-            background: var(--dark-blue); 
-            color: white;
-            padding: 10px 20px; 
-            border-radius: 20px; 
-            cursor: grab;
-            user-select: none;
-            font-weight: bold;
-            font-size: 0.9rem; 
-            text-align: center;
-            max-width: 350px; 
-            box-sizing: border-box; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: transform 0.1s;
-        }
-        .draggable-pill:active {
-            cursor: grabbing;
-            transform: scale(0.95);
-        }
-        .draggable-pill.dragging {
-            opacity: 0.5;
-        }
-        #success-message {
-            display: none;
-            text-align: center;
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease;
-        }
+
+        .hidden { display: none !important; }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .game-btn {
-            background: var(--brand-red); 
-            color: var(--crust-base);
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.2s;
-        }
-        .game-btn:hover {
-            background: var(--dark-red);
-        }
     </style>
 </head>
-<body>
+<body style="background-color: var(--crust-light);">
 
-    <div style="text-align: center; margin-bottom: 40px; margin-top: 40px;">
-        <h1 style="color: var(--dark-blue); font-size: 2.5rem; margin-bottom: 10px;">Module 3: Menu Matching</h1>
-        <p style="font-size: 1.2rem; color: var(--crust-deep);">Drag the correct ingredients to their matching Specialty Pizza.</p>
+    <div class="nav-strip" style="background-color: var(--dark-blue); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem; text-align: center;">
+        <div style="max-width: 900px; margin: 0 auto; text-align: left;">
+            <a href="../lms_dashboard.html#day1" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.1rem;">
+                &#8592; Back to Day 1
+            </a>
+        </div>
     </div>
 
-    <div class="game-container">
+    <div class="classroom-container">
         
-        <!-- DROP ZONES WITH IMAGES & LABELS -->
-        <div class="drop-zones">
-            <div class="column-wrapper">
-                <img src="../../image/Extrav.png" alt="ExtravaganZZa" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
-                <h3 style="color: var(--dark-blue); margin: 0 0 10px 0; font-size: 1.1rem;">ExtravaganZZa</h3>
-                <div class="drop-zone" data-pizza="extravaganzza"></div>
-            </div>
-
-            <div class="column-wrapper">
-                <img src="../../image/Meatzza.png" alt="MeatZZa" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
-                <h3 style="color: var(--dark-blue); margin: 0 0 10px 0; font-size: 1.1rem;">MeatZZa</h3>
-                <div class="drop-zone" data-pizza="meatzza"></div>
-            </div>
-
-            <div class="column-wrapper">
-                <img src="../../image/Veggie.png" alt="Pacific Veggie" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
-                <h3 style="color: var(--dark-blue); margin: 0 0 10px 0; font-size: 1.1rem;">Pacific Veggie</h3>
-                <div class="drop-zone" data-pizza="veggie"></div>
-            </div>
-
-            <div class="column-wrapper">
-                <img src="../../image/Hawaiian.png" alt="Honolulu Hawaiian" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
-                <h3 style="color: var(--dark-blue); margin: 0 0 10px 0; font-size: 1.1rem;">Honolulu Hawaiian</h3>
-                <div class="drop-zone" data-pizza="hawaiian"></div>
-            </div>
+        <div class="classroom-header">
+            <h2 class="module-title">Module 1: Intro & System Setup</h2>
+            <div class="step-indicator" id="step-counter">Step 1 of 3</div>
         </div>
 
-        <!-- DRAGGABLES -->
-        <div class="draggables" id="draggable-container">
-            <div class="draggable-pill" draggable="true" id="ing-veggie" data-match="veggie">
-                Fresh baby spinach, fresh onions, fresh mushrooms, tomatoes, black olives, feta, provolone, cheese made with 100% real mozzarella and sprinkled with a garlic herb seasoning.
+        <div class="classroom-content">
+            
+        <!-- MENU DECONSTRUCTED SLIDESHOW -->
+        <div id="menu-slideshow" style="background: var(--crust-base); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 900px; margin: 2rem auto; overflow: hidden; border: 2px solid var(--crust-med);">
+            
+            <!-- Slide Content Area (Flexbox for Side-by-Side) -->
+            <div style="display: flex; flex-wrap: wrap;">
+                <!-- Left: Image -->
+                <div style="flex: 1 1 350px; background: var(--crust-light); display: flex; align-items: center; justify-content: center; padding: 2rem;">
+                    <img id="slide-img" src="../image/placeholder.jpg" alt="Menu Item" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                </div>
+                
+                <!-- Right: Text & Details -->
+                <div style="flex: 1 1 350px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: center;">
+                    <h2 id="slide-title" style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 1rem;">Loading...</h2>
+                    <div id="slide-desc" style="font-family: 'OneDotCd'; color: #333; font-size: 1.15rem; line-height: 1.6;">
+                        <!-- JavaScript will inject bullet points here -->
+                    </div>
+                </div>
             </div>
-            <div class="draggable-pill" draggable="true" id="ing-meatzza" data-match="meatzza">
-                Pepperoni, ham, Italian sausage and beef, all sandwiched between two layers of provolone and cheese made with 100% real mozzarella.
-            </div>
-            <div class="draggable-pill" draggable="true" id="ing-hawaiian" data-match="hawaiian">
-                Sliced ham, smoked bacon, pineapple, fresh green peppers, provolone and cheese made with 100% real mozzarella.
-            </div>
-            <div class="draggable-pill" draggable="true" id="ing-extravaganzza" data-match="extravaganzza">
-                Pepperoni, ham, Italian sausage, beef, fresh onions, fresh green peppers, fresh mushrooms and black olives, all sandwiched between two layers of provolone and cheese made with 100% real mozzarella.
+
+            <!-- Controls Footer -->
+            <div style="background: var(--crust-light); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--crust-med);">
+                <span id="slide-counter" style="font-family: 'OneDotCd-Bold'; color: var(--crust-dark); font-size: 1.1rem;">Slide 1 of 4</span>
+                <div>
+                    <button id="btn-slide-prev" onclick="changeSlide(-1)" class="btn-small" style="background: var(--crust-base); color: #333; border: none; margin-right: 10px; display: none; font-family: 'OneDotCd-Bold'; padding: 0.5rem 1rem;">&#8592; Previous</button>
+                    
+                    <button id="btn-slide-next" onclick="changeSlide(1)" class="btn-small" style="background: var(--brand-blue); color: var(--crust-base); border: none; font-family: 'OneDotCd-Bold'; padding: 0.5rem 1.5rem;">Next &#8594;</button>
+                    
+                    <button id="btn-start-game" onclick="startMatchingGame()" class="btn-small" style="background: var(--brand-red); color: var(--crust-base); border: none; display: none; font-family: 'OneDotCd-Bold'; padding: 0.5rem 1.5rem;">Test Your Knowledge</button>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div id="success-message">
-        <h2 style="color: var(--brand-blue); font-size: 2rem; margin-bottom: 10px;">Perfect Match!</h2>
-        <p style="font-size: 1.1rem; color: var(--crust-deep);">You've mastered the Specialty Pizzas.</p>
-        <button class="game-btn" onclick="completeModule()">Return to Day 1</button>
-    </div>
 
     <script>
-        const draggables = document.querySelectorAll('.draggable-pill');
-        const dropZones = document.querySelectorAll('.drop-zone');
-        let matchedCount = 0;
+        // --- SLIDESHOW DATA ---
+        const menuSlides = [
+    {
+        title: "The Foundations: Crusts",
+        type: "grid", // Tells the script to use the side-by-side layout
+        items: [
+            { name: "Hand Tossed", image: "../image/hand_tossed.png", desc: "Garlic-oil seasoned rim. Our standard." },
+            { name: "Parmesan Stuffed", image: "../image/stuffed_crust.png", desc: "Cheese stuffed rim." },
+            { name: "Handmade Pan", image: "../image/pan.png", desc: "Thick, buttery, baked in a pan." },
+            { name: "Thin & NY Style", image: "../image/thin_ny.png", desc: "Crunchy thin or big foldable slices." }
+        ]
+    },
+    {
+        title: "The Sauces",
+        type: "standard", // Tells the script to use the original layout
+        image: "../image/sauces.jpg", 
+        desc: "<ul style='padding-left: 20px; margin:0;'><li><b>Robust Inspired Tomato:</b> Default pizza sauce.</li><li><b>Hearty Marinara:</b> Sweeter, used on pan pizzas.</li></ul>"
+    }
+    // ... ECT
+];
 
-        draggables.forEach(draggable => {
-            draggable.addEventListener('dragstart', (e) => {
-                draggable.classList.add('dragging');
-                e.dataTransfer.setData('text/plain', draggable.id); 
-            });
+        let currentSlide = 0;
 
-            draggable.addEventListener('dragend', () => {
-                draggable.classList.remove('dragging');
-            });
-        });
-
-        dropZones.forEach(zone => {
-            zone.addEventListener('dragover', e => {
-                e.preventDefault(); 
-                if (!zone.classList.contains('correct')) {
-                    zone.classList.add('drag-over');
-                }
-            });
-
-            zone.addEventListener('dragleave', () => {
-                zone.classList.remove('drag-over');
-            });
-
-            zone.addEventListener('drop', e => {
-                e.preventDefault();
-                zone.classList.remove('drag-over');
+        // --- SLIDESHOW LOGIC ---
+        function renderSlide(index) {
+            const slide = menuSlides[index];
+            const contentContainer = document.getElementById('slide-content-container');
+            
+            if (slide.type === 'grid') {
+                // Render the 3-column grid layout
+                let gridHTML = `
+                    <div style="padding: 1.5rem 2rem 0.5rem 2rem;">
+                        <h2 style="font-family: 'PizzaPress'; color: var(--crust-dark); font-size: 2.2rem; margin: 0 0 1rem 0; text-transform: uppercase;">${slide.title}</h2>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 0 2rem 2rem 2rem;">`;
                 
-                const draggingElement = document.querySelector('.dragging');
-                if (!draggingElement) return;
+                slide.items.forEach(item => {
+                    gridHTML += `
+                        <div style="border: 1px solid var(--crust-med); border-radius: 8px; padding: 15px; background: white; display: flex; flex-direction: column;">
+                            <h4 style="margin: 0 0 10px 0; color: var(--crust-dark); font-family: 'OneDotCd-Bold'; font-size: 1.2rem; text-align: left;">${item.name}</h4>
+                            
+                            <img src="${item.image}" alt="${item.name}" style="width: 100%; height: 120px; object-fit: contain; margin-bottom: 10px;">
+                            
+                            <p style="font-family: 'OneDotCd'; color: #333; font-size: 1rem; margin: 0; flex-grow: 1; border-top: 1px solid #eee; padding-top: 10px; text-align: left;">${item.desc}</p>
+                        </div>
+                    `;
+                });
+                
+                gridHTML += `</div>`;
+                contentContainer.innerHTML = gridHTML;
 
-                const expectedMatch = zone.getAttribute('data-pizza');
-                const actualMatch = draggingElement.getAttribute('data-match');
+            } else {
+                // Render your ORIGINAL left/right layout
+                contentContainer.innerHTML = `
+                    <div style="display: flex; flex-wrap: wrap;">
+                        <div style="flex: 1 1 350px; background: var(--crust-light); display: flex; align-items: center; justify-content: center; padding: 2rem;">
+                            <img src="${slide.image}" alt="${slide.title}" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        </div>
+                        <div style="flex: 1 1 350px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: center;">
+                            <h2 style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 1rem;">${slide.title}</h2>
+                            <div style="font-family: 'OneDotCd'; color: #333; font-size: 1.15rem; line-height: 1.6;">${slide.desc}</div>
+                        </div>
+                    </div>
+                `;
+            }
 
-                if (expectedMatch === actualMatch) {
-                    zone.appendChild(draggingElement);
-                    zone.classList.add('correct');
-                    
-                    draggingElement.setAttribute('draggable', 'false'); 
-                    draggingElement.style.cursor = 'default';
-                    draggingElement.style.boxShadow = 'none';
-                    draggingElement.style.width = '100%'; 
-                    
-                    matchedCount++;
-                    checkWinCondition();
-                } else {
-                    zone.style.borderColor = 'var(--brand-red)'; 
-                    setTimeout(() => {
-                        if (!zone.classList.contains('correct')) {
-                            zone.style.borderColor = ''; 
-                        }
-                    }, 400);
-                }
-            });
-        });
+            document.getElementById('slide-counter').innerText = `Slide ${index + 1} of ${menuSlides.length}`;
 
-        function checkWinCondition() {
-            if (matchedCount === 4) {
-                document.getElementById('success-message').style.display = 'block';
-                localStorage.setItem('mod3_complete', 'true');
+            // Toggle Buttons
+            document.getElementById('btn-slide-prev').style.display = index === 0 ? 'none' : 'inline-block';
+            
+            if (index === menuSlides.length - 1) {
+                document.getElementById('btn-slide-next').style.display = 'none';
+                document.getElementById('btn-start-game').style.display = 'inline-block';
+            } else {
+                document.getElementById('btn-slide-next').style.display = 'inline-block';
+                document.getElementById('btn-start-game').style.display = 'none';
             }
         }
 
-        function completeModule() {
-            window.location.href = '../lms_dashboard.html#day1'; 
+        function changeSlide(direction) {
+            currentSlide += direction;
+            renderSlide(currentSlide);
         }
+
+        function startMatchingGame() {
+            // This will hide the slideshow and show the game board. 
+            // We will wire this up next!
+            document.getElementById('menu-slideshow').style.display = 'none';
+            window.location.href = "module3_game.html";
+        }
+
+        // Initialize the first slide
+        document.addEventListener("DOMContentLoaded", function() {
+            renderSlide(0);
+        });
     </script>
 </body>
 </html>
