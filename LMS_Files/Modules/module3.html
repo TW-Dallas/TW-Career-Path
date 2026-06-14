@@ -257,12 +257,12 @@
         image: "../resources/Menu/Toppings-Meats.png"
     },
     {
-        title: "Veggies",
+        title: "Veggies & More (Part 1)",
         type: "full-image",
         image: "../resources/Menu/Toppings-Veggies1.png"
     },
     {
-        title: "Veggies & Add-On Cheeses",
+        title: "Veggies & More (Part 2)",
         type: "full-image",
         image: "../resources/Menu/Toppings-Veggies2.png"
     }
@@ -278,7 +278,7 @@
             if (slide.type === 'grid') {
                 // Render the 3-column grid layout (NO BOX-CEPTION)
                 let gridHTML = `
-                    <div style="padding: 1.5rem 2rem 0.5rem 2rem; text-align: center;">
+                    <div style="padding: 1.5rem 2rem 0.5rem 2rem; text-align: left;">
                         <h2 style="font-family: 'PizzaPress'; color: var(--med-blue); font-size: 2rem; margin: 0 0 1rem 0; text-transform: uppercase;">${slide.title}</h2>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 0 2rem 2rem 2rem;">`;
@@ -321,7 +321,7 @@
                             
                             <!-- Text on the right -->
                             <div style="padding: 0 20px; flex-grow: 1;">
-                                <h4 style="margin: 0; color: var(--crust-deep); font-family: 'Subhead2'; font-size: 1.2rem;">${item.name}</h4>
+                                <h4 style="margin: 0; color: var(--crust-deep); font-family: 'Subhead2'; font-size: 1.3rem;">${item.name}</h4>
                             </div>
                         </div>
                     `;
@@ -333,7 +333,7 @@
             } else if (slide.type === 'full-image') {
                 // Render a single large graphic centered
                 contentContainer.innerHTML = `
-                    <div style="padding: 1.5rem 2rem 0.5rem 2rem; text-align: center;">
+                    <div style="padding: 1.5rem 2rem 0.5rem 2rem; text-align: left;">
                         <h2 style="font-family: 'PizzaPress'; color: var(--med-blue); font-size: 2rem; margin: 0 0 1rem 0; text-transform: uppercase;">${slide.title}</h2>
                     </div>
                     <div style="padding: 0 2rem 2rem 2rem; display: flex; justify-content: center;">
