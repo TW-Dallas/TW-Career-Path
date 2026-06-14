@@ -10,7 +10,7 @@
         .classroom-container {
             max-width: 900px;
             margin: 2rem auto;
-            background: white;
+            background: var(--crust-base);
             border-radius: var(--border-radius);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             overflow: hidden;
@@ -60,7 +60,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: var(--crust-base);
             font-size: 1.2rem;
             margin-bottom: 1.5rem;
             position: relative;
@@ -111,7 +111,7 @@
         .quiz-option.selected {
             border-color: var(--brand-blue);
             background: var(--brand-blue);
-            color: white;
+            color: var(--crust-base);
         }
 
         /* --- Step 3: Prompt --- */
@@ -145,7 +145,7 @@
         .btn {
             display: inline-block;
             background: var(--brand-blue);
-            color: white;
+            color: var(--crust-base);
             padding: 0.8rem 2rem;
             border-radius: 50px;
             font-family: 'OneDotCd-Bold';
@@ -199,15 +199,13 @@
             </a>
             <div style="display: flex; align-items: center; gap: 15px;">
                 <span style="font-family: 'OneDotCd-Bold'; font-size: 1.2rem; color: var(--crust-base); text-transform: uppercase;">Module 1: Intro & System Setup</span>
-                <span id="step-counter" style="background: rgba(255,255,255,0.2); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem;">Step 1 of 3</span>
+                <span id="step-counter" style="background: rgba(255,255,255,0.2); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem;">Step 1 of 3</span>
             </div>
         </div>
     </div>
 
     <div class="classroom-container">
         
-
-
         <div class="classroom-content">
             
             <!-- STEP 1: VIDEO -->
