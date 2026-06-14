@@ -145,7 +145,7 @@
         .btn {
             display: inline-block;
             background: var(--brand-blue);
-            color: var(--crust-base);
+            color: white;
             padding: 0.8rem 2rem;
             border-radius: 50px;
             font-family: 'OneDotCd-Bold';
@@ -250,9 +250,22 @@
             { name: "Ranch", image: "../resources/Sauces/Ranch.png" },   
             // ...
         ]
+    },
+    {
+        title: "Meats",
+        type: "full-image",
+        image: "../resources/Menu/Toppings-Meats.png"
+    },
+    {
+        title: "Veggies & More (Part 1)",
+        type: "full-image",
+        image: "../resources/Menu/Toppings-Veggies1.png"
+    },
+    {
+        title: "Veggies & More (Part 2)",
+        type: "full-image",
+        image: "../resources/Menu/Toppings-Veggies2.png"
     }
-
-    // ... ECT
 ];
 
         let currentSlide = 0;
@@ -317,6 +330,16 @@
                 listHTML += `</div>`;
                 contentContainer.innerHTML = listHTML;
 
+            } else if (slide.type === 'full-image') {
+                // Render a single large graphic centered
+                contentContainer.innerHTML = `
+                    <div style="padding: 1.5rem 2rem 0.5rem 2rem; text-align: center;">
+                        <h2 style="font-family: 'PizzaPress'; color: var(--med-blue); font-size: 2rem; margin: 0 0 1rem 0; text-transform: uppercase;">${slide.title}</h2>
+                    </div>
+                    <div style="padding: 0 2rem 2rem 2rem; display: flex; justify-content: center;">
+                        <img src="${slide.image}" alt="${slide.title}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    </div>
+                `;
             } else {
                 // Render your ORIGINAL left/right layout
                 contentContainer.innerHTML = `
