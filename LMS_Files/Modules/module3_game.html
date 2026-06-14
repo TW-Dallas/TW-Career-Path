@@ -3,366 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day 1 - Module 3</title>
-    <link rel="icon" type="image/png" href="../../image/tile_blue.png">
+    <title>Module 3: Menu Matching</title>
+    
+    <!-- LINK TO YOUR GLOBAL CSS -->
     <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
-    <style>
-        .classroom-container {
-            max-width: 900px;
-            margin: 2rem auto;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            overflow: hidden;
-            border-top: 6px solid var(--brand-blue);
-        }
 
-        .classroom-header {
-            background: var(--crust-light);
-            padding: 1.5rem 2rem;
-            border-bottom: 2px solid var(--crust-med);
+    <style>
+        /* Game-specific styles only */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; 
+            width: 100%;
+            max-width: 1400px; 
+            margin: 0 auto; 
+        }
+        .drop-zones {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            gap: 15px; 
+            width: 100%;
         }
-
-        .module-title {
-            font-family: 'OneDotCd-Bold';
-            font-size: 1.8rem;
-            color: var(--dark-blue);
-            margin: 0;
-            text-transform: uppercase;
+        .column-wrapper {
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            flex: 1 1 0; 
+            min-width: 0; 
         }
-
-        .step-indicator {
-            font-family: 'OneDotCd-Bold';
-            color: var(--brand-blue);
-            background: rgba(0, 144, 226, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-        }
-
-        .classroom-content {
-            padding: 2rem;
-            min-height: 400px; /* Keep height stable during transitions */
+        .drop-zone {
+            width: 100%;
+            background: white;
+            border: 3px dashed #ccc;
+            border-radius: 12px;
+            padding: 15px; 
+            text-align: center;
+            min-height: 100px; 
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            box-sizing: border-box; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }
-
-        /* --- Step 1: Video --- */
-        .video-wrapper {
-            width: 100%;
-            background: #000;
-            aspect-ratio: 16/9;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-        
-        .mock-play-btn {
-            font-size: 4rem;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .mock-play-btn:hover { transform: scale(1.1); }
-
-        /* --- Step 2: Knowledge Check --- */
-        .quiz-container {
-            width: 100%;
-            max-width: 600px;
-            text-align: left;
-        }
-
-        .quiz-question {
-            font-family: 'OneDotCd-Bold';
-            font-size: 1.4rem;
-            color: var(--crust-deep);
-            margin-bottom: 1.5rem;
-        }
-
-        .quiz-option {
-            display: block;
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: var(--crust-base);
-            border: 2px solid var(--crust-med);
-            border-radius: 8px;
-            font-family: 'OneDotCd';
-            font-size: 1.1rem;
-            color: var(--crust-deep);
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: left;
-        }
-
-        .quiz-option:hover {
+        .drop-zone.drag-over {
             border-color: var(--brand-blue);
-            background: rgba(0, 144, 226, 0.05);
-        }
-
-        .quiz-option.selected {
-            border-color: var(--brand-blue);
-            background: var(--brand-blue);
-            color: white;
-        }
-
-        /* --- Step 3: Prompt --- */
-        .prompt-container {
-            text-align: center;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .prompt-icon {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-        }
-
-        .prompt-text {
-            font-size: 1.5rem;
-            color: var(--crust-deep);
-            margin-bottom: 2rem;
-            max-width: 600px;
-        }
-
-        /* --- Footer Controls --- */
-        .classroom-footer {
-            padding: 1.5rem 2rem;
-            background: var(--crust-light);
-            border-top: 2px solid var(--crust-med);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .btn {
-            display: inline-block;
-            background: var(--brand-blue);
-            color: var(--crust-base);
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-family: 'OneDotCd-Bold';
-            text-decoration: none;
-            transition: var(--transition);
-            border: none;
-            font-size: 1.1rem;
-            cursor: pointer;
-            width: auto;
-        }
-
-        .btn:hover {
-            background: var(--dark-blue);
-            transform: scale(1.05);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--brand-blue);
-            border: 2px solid var(--brand-blue);
-        }
-        
-        .btn-outline:hover {
-            background: rgba(0, 144, 226, 0.1);
-            color: var(--dark-blue);
+            background-color: var(--crust-light);
             transform: scale(1.02);
         }
-
-        .btn-disabled {
-            background: #ccc !important;
-            cursor: not-allowed !important;
-            transform: none !important;
-            color: #888 !important;
-            border: none !important;
+        .drop-zone.correct {
+            border: 3px solid var(--brand-blue);
+            background-color: var(--crust-light);
         }
-
-        .hidden { display: none !important; }
-        
+        .draggables {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px; 
+            padding: 20px; 
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            min-height: 80px;
+        }
+        .draggable-pill {
+            background: var(--dark-blue); 
+            color: white;
+            padding: 10px 20px; 
+            border-radius: 20px; 
+            cursor: grab;
+            user-select: none;
+            font-weight: bold;
+            font-size: 0.9rem; 
+            text-align: center;
+            max-width: 350px; 
+            box-sizing: border-box; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.1s;
+        }
+        .draggable-pill:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+        .draggable-pill.dragging {
+            opacity: 0.5;
+        }
+        #success-message {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease;
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .game-btn {
+            background: var(--brand-red); 
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+        .game-btn:hover {
+            background: var(--dark-red);
+        }
     </style>
 </head>
-<body style="background-color: var(--crust-light);">
+<body>
 
-    <div class="nav-strip" style="background-color: var(--dark-blue); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem;">
-        <div style="max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-            <a href="../lms_dashboard.html#day1" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.1rem;">
-                &#8592; Back to Day 1
-            </a>
-            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.2rem; color: var(--crust-base); text-transform: uppercase;">Module 3: Menu Overview</span>
+    <div style="text-align: center; margin-bottom: 40px; margin-top: 40px;">
+        <h1 id="round-title" style="color: var(--dark-blue); font-size: 2.5rem; margin-bottom: 10px;">Module 3: Menu Matching</h1>
+        <p style="font-size: 1.2rem; color: #666;">Drag the correct ingredients to their matching item.</p>
+    </div>
+
+    <div class="game-container">
+        
+        <!-- DYNAMIC DROP ZONES -->
+        <div class="drop-zones" id="drop-zones-container">
+            <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- DYNAMIC DRAGGABLES -->
+        <div class="draggables" id="draggable-container">
+            <!-- Injected via JavaScript -->
         </div>
     </div>
 
-    <div class="classroom-container">
-        
+    <!-- ROUND TRANSITION MESSAGE -->
+    <div id="round-transition" style="display: none; text-align: center; margin-top: 30px;">
+        <h2 style="color: var(--dark-blue); font-size: 1.8rem; margin-bottom: 10px;">Round Complete!</h2>
+        <button class="game-btn" onclick="nextRound()" style="padding: 10px 20px; font-size: 1.1rem; cursor: pointer; background-color: var(--dark-blue); color: white; border: none; border-radius: 5px;">Start Next Round</button>
+    </div>
 
-
-        <div class="classroom-content">
-            
-        <!-- MENU DECONSTRUCTED SLIDESHOW -->
-        <div id="menu-slideshow" style="background: var(--crust-base); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 900px; margin: 0.5rem auto 2rem auto; overflow: hidden; border: 2px solid var(--crust-med);">
-            
-            <!-- THIS IS THE MAGIC CONTAINER THE JS IS LOOKING FOR -->
-            <div id="slide-content-container"></div>
-
-            <!-- Controls Footer -->
-            <div style="background: var(--crust-light); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--crust-med);">
-                <span id="slide-counter" style="font-family: 'OneDotCd-Bold'; color: var(--crust-dark); font-size: 1.1rem;">Slide 1 of 4</span>
-                <div>
-                    <button id="btn-slide-prev" onclick="changeSlide(-1)" class="btn-small" style="background: var(--crust-base); color: #333; border: none; margin-right: 10px; display: none; font-family: 'OneDotCd-Bold'; padding: 0.5rem 1rem;">&#8592; Previous</button>
-                    
-                    <button id="btn-slide-next" onclick="changeSlide(1)" class="btn-small" style="background: var(--brand-blue); color: var(--crust-base); border: none; font-family: 'OneDotCd-Bold' !important; padding: 0.5rem 1.5rem;">Next &#8594;</button>
-                    
-                    <button id="btn-start-game" onclick="startMatchingGame()" class="btn-small" style="background: var(--brand-red); color: var(--crust-base); border: none; display: none; font-family: 'OneDotCd-Bold'; padding: 0.5rem 1.5rem;">Test Your Knowledge</button>
-                </div>
-            </div>
-        </div>
+    <!-- FINAL SUCCESS MESSAGE -->
+    <div id="success-message" style="display: none; text-align: center; margin-top: 30px;">
+        <h2 style="color: #28a745; font-size: 2rem; margin-bottom: 10px;">Perfect Match!</h2>
+        <p style="font-size: 1.1rem; color: #555;">You've mastered the menu items.</p>
+        <button class="game-btn" onclick="completeModule()" style="padding: 10px 20px; font-size: 1.1rem; cursor: pointer; background-color: #28a745; color: white; border: none; border-radius: 5px;">Back to Day 1</button>
+    </div>
 
     <script>
-        // --- SLIDESHOW DATA ---
-        const menuSlides = [
-    {
-        title: "The Foundations: Crusts",
-        type: "grid", // Tells the script to use the side-by-side layout
-        items: [
-            { name: "Hand Tossed", image: "../resources/Menu/Menu-HT.png", desc: "Garlic-oil seasoned rim. Our standard." },
-            { name: "Parmesan Stuffed Crust", image: "../resources/Menu/Menu-PSC.png", desc: "Mozzarella cheese-stuffed rim." },
-            { name: "Handmade Pan", image: "../resources/Menu/Menu-Pan.png", desc: "Thick, buttery, baked in a pan." },
-            { name: "Crunchy Thin Crust", image: "../resources/Menu/Menu-TC.png", desc: "Thin and crispy." },
-            { name: "New York Style", image: "../resources/Menu/Menu-NY.png", desc: "Thin and perfect for folding." },
-            { name: "Gluten Free Crust", image: "../resources/Menu/Menu-GF.png", desc: "Certified free of gluten." }
-        ]
-    },
-    {
-        title: "The Sauces",
-        type: "list", // <-- Use this instead of 'grid'
-        items: [
-            { name: "Robust Inspired Tomato Sauce", image: "../resources/Sauces/Tomato.png" },
-            { name: "Honey BBQ Sauce", image: "../resources/Sauces/BBQ.png" },
-            { name: "Garlic Parmesan Sauce", image: "../resources/Sauces/GP.png" },
-            { name: "Alfredo Sauce", image: "../resources/Sauces/Alfredo.png" },
-            { name: "Ranch", image: "../resources/Sauces/Ranch.png" },   
-            // ...
-        ]
-    }
+        // --- GAME DATA ---
+        const gameData = [
+            {
+                title: "Round 1: Specialty Pizzas",
+                items: [
+                    { id: "extravaganzza", name: "ExtravaganZZa", img: "../../image/Extrav.png", desc: "Pepperoni, ham, Italian sausage, beef, fresh onions, fresh green peppers, fresh mushrooms and black olives, all sandwiched between two layers of provolone and cheese made with 100% real mozzarella." },
+                    { id: "meatzza", name: "MeatZZa", img: "../../image/Meatzza.png", desc: "Pepperoni, ham, Italian sausage and beef, all sandwiched between two layers of provolone and cheese made with 100% real mozzarella." },
+                    { id: "veggie", name: "Pacific Veggie", img: "../../image/Veggie.png", desc: "Fresh baby spinach, fresh onions, fresh mushrooms, tomatoes, black olives, feta, provolone, cheese made with 100% real mozzarella and sprinkled with a garlic herb seasoning." },
+                    { id: "hawaiian", name: "Honolulu Hawaiian", img: "../../image/Hawaiian.png", desc: "Sliced ham, smoked bacon, pineapple, fresh green peppers, provolone and cheese made with 100% real mozzarella." }
+                ]
+            },
+            {
+                title: "Round 2: Breads & Sides",
+                items: [
+                    { id: "item1", name: "Placeholder Item 1", img: "../../image/Placeholder.png", desc: "Placeholder description for item 1." },
+                    { id: "item2", name: "Placeholder Item 2", img: "../../image/Placeholder.png", desc: "Placeholder description for item 2." },
+                    { id: "item3", name: "Placeholder Item 3", img: "../../image/Placeholder.png", desc: "Placeholder description for item 3." },
+                    { id: "item4", name: "Placeholder Item 4", img: "../../image/Placeholder.png", desc: "Placeholder description for item 4." }
+                ]
+            },
+            {
+                title: "Round 3: Chicken & Desserts",
+                items: [
+                    { id: "item5", name: "Placeholder Item 5", img: "../../image/Placeholder.png", desc: "Placeholder description for item 5." },
+                    { id: "item6", name: "Placeholder Item 6", img: "../../image/Placeholder.png", desc: "Placeholder description for item 6." },
+                    { id: "item7", name: "Placeholder Item 7", img: "../../image/Placeholder.png", desc: "Placeholder description for item 7." },
+                    { id: "item8", name: "Placeholder Item 8", img: "../../image/Placeholder.png", desc: "Placeholder description for item 8." }
+                ]
+            }
+        ];
 
-    // ... ECT
-];
+        let currentRound = 0;
+        let matchedCount = 0;
 
-        let currentSlide = 0;
+        // Shuffle function to randomize draggables
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
 
-        // --- SLIDESHOW LOGIC ---
-        function renderSlide(index) {
-            const slide = menuSlides[index];
-            const contentContainer = document.getElementById('slide-content-container');
+        function loadRound(roundIndex) {
+            matchedCount = 0;
+            const roundData = gameData[roundIndex];
             
-            if (slide.type === 'grid') {
-                // Render the 3-column grid layout (NO BOX-CEPTION)
-                let gridHTML = `
-                    <div style="padding: 1.5rem 2rem 0.5rem 2rem; text-align: center;">
-                        <h2 style="font-family: 'PizzaPress'; color: var(--med-blue); font-size: 2rem; margin: 0 0 1rem 0; text-transform: uppercase;">${slide.title}</h2>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 0 2rem 2rem 2rem;">`;
-                
-                slide.items.forEach(item => {
-                    gridHTML += `
-                        <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                            
-                            <!-- Injected Title (Native Text) -->
-                            <h3 style="font-family: 'Subhead2', sans-serif; color: var(--crust-burnt); font-size: 1.3rem; margin: 0 0 8px 0;">${item.name}</h3>
+            document.getElementById('round-title').innerText = roundData.title;
+            
+            const dropZonesContainer = document.getElementById('drop-zones-container');
+            const draggablesContainer = document.getElementById('draggable-container');
+            
+            dropZonesContainer.innerHTML = '';
+            draggablesContainer.innerHTML = '';
 
-                            <!-- The Canva image (cropped without text) -->
-                            <img src="${item.image}" alt="${item.name}" style="width: 100%; max-width: 220px; object-fit: contain; margin-bottom: 10px;">
-                            
-                            <!-- Description text -->
-                            <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0; line-height: 1.4;">${item.desc}</p>
-                        </div>
-                    `;
-                });
-                
-                gridHTML += `</div>`;
-                contentContainer.innerHTML = gridHTML;
-
-            } else if (slide.type === 'list') {
-                // Render the horizontal, 2-column list layout (for sauces/smaller items)
-                let listHTML = `
-                    <div style="padding: 1.5rem 2rem 0.5rem 2rem;">
-                        <h2 style="font-family: 'PizzaPress'; color: var(--med-blue); font-size: 2rem; margin: 0 0 1rem 0; text-transform: uppercase;">${slide.title}</h2>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 2rem 2rem 2rem;">`;
-                
-                slide.items.forEach(item => {
-                    listHTML += `
-                        <div style="border: 1px solid var(--crust-med); border-radius: 8px; background: var(--crust-base); display: flex; align-items: center; overflow: hidden; height: 100px;">
-                            
-                            <!-- Image on the left -->
-                            <div style="width: 100px; height: 100%; flex-shrink: 0; background: white; display: flex; align-items: center; justify-content: center;">
-                                <img src="${item.image}" alt="${item.name}" style="max-width: 100%; max-height: 100%; object-fit: cover;">
-                            </div>
-                            
-                            <!-- Text on the right -->
-                            <div style="padding: 0 20px; flex-grow: 1;">
-                                <h4 style="margin: 0; color: var(--crust-deep); font-family: 'Subhead2'; font-size: 1.2rem;">${item.name}</h4>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                listHTML += `</div>`;
-                contentContainer.innerHTML = listHTML;
-
-            } else {
-                // Render your ORIGINAL left/right layout
-                contentContainer.innerHTML = `
-                    <div style="display: flex; flex-wrap: wrap;">
-                        <div style="flex: 1 1 350px; background: var(--crust-light); display: flex; align-items: center; justify-content: center; padding: 2rem;">
-                            <img src="${slide.image}" alt="${slide.title}" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                        </div>
-                        <div style="flex: 1 1 350px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: center;">
-                            <h2 style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 1rem;">${slide.title}</h2>
-                            <div style="font-family: 'OneDotCd'; color: #333; font-size: 1.15rem; line-height: 1.6;">${slide.desc}</div>
-                        </div>
-                    </div>
+            // Generate Drop Zones
+            roundData.items.forEach(item => {
+                const col = document.createElement('div');
+                col.className = 'column-wrapper';
+                col.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
+                    <h3 style="color: var(--dark-blue); margin: 0 0 10px 0; font-size: 1.1rem;">${item.name}</h3>
+                    <div class="drop-zone" data-pizza="${item.id}"></div>
                 `;
+                dropZonesContainer.appendChild(col);
+            });
+
+            // Generate Draggables (Shuffled)
+            const shuffledItems = shuffle([...roundData.items]);
+            shuffledItems.forEach(item => {
+                const pill = document.createElement('div');
+                pill.className = 'draggable-pill';
+                pill.setAttribute('draggable', 'true');
+                pill.id = `ing-${item.id}`;
+                pill.setAttribute('data-match', item.id);
+                pill.innerText = item.desc;
+                draggablesContainer.appendChild(pill);
+            });
+
+            attachEventListeners();
+        }
+
+        function attachEventListeners() {
+            const draggables = document.querySelectorAll('.draggable-pill');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', (e) => {
+                    draggable.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', draggable.id); 
+                });
+
+                draggable.addEventListener('dragend', () => {
+                    draggable.classList.remove('dragging');
+                });
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', e => {
+                    e.preventDefault(); 
+                    if (!zone.classList.contains('correct')) {
+                        zone.classList.add('drag-over');
+                    }
+                });
+
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', e => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    
+                    const draggingElement = document.querySelector('.dragging');
+                    if (!draggingElement) return;
+
+                    const expectedMatch = zone.getAttribute('data-pizza');
+                    const actualMatch = draggingElement.getAttribute('data-match');
+
+                    if (expectedMatch === actualMatch) {
+                        zone.appendChild(draggingElement);
+                        zone.classList.add('correct');
+                        
+                        draggingElement.setAttribute('draggable', 'false'); 
+                        draggingElement.style.cursor = 'default';
+                        draggingElement.style.boxShadow = 'none';
+                        draggingElement.style.width = '100%'; 
+                        
+                        matchedCount++;
+                        checkWinCondition();
+                    } else {
+                        zone.style.borderColor = 'var(--brand-red)'; 
+                        setTimeout(() => {
+                            if (!zone.classList.contains('correct')) {
+                                zone.style.borderColor = ''; 
+                            }
+                        }, 400);
+                    }
+                });
+            });
+        }
+
+        function checkWinCondition() {
+            if (matchedCount === gameData[currentRound].items.length) {
+                if (currentRound < gameData.length - 1) {
+                    document.getElementById('round-transition').style.display = 'block';
+                } else {
+                    document.getElementById('success-message').style.display = 'block';
+                    localStorage.setItem('mod3_complete', 'true');
+                }
             }
-
-            document.getElementById('slide-counter').innerText = `Slide ${index + 1} of ${menuSlides.length}`;
-
-            // Toggle Buttons
-            document.getElementById('btn-slide-prev').style.display = index === 0 ? 'none' : 'inline-block';
-            
-            if (index === menuSlides.length - 1) {
-                document.getElementById('btn-slide-next').style.display = 'none';
-                document.getElementById('btn-start-game').style.display = 'inline-block';
-            } else {
-                document.getElementById('btn-slide-next').style.display = 'inline-block';
-                document.getElementById('btn-start-game').style.display = 'none';
-            }
         }
 
-        function changeSlide(direction) {
-            currentSlide += direction;
-            renderSlide(currentSlide);
+        function nextRound() {
+            document.getElementById('round-transition').style.display = 'none';
+            currentRound++;
+            loadRound(currentRound);
         }
 
-        function startMatchingGame() {
-            // This will hide the slideshow and show the game board. 
-            document.getElementById('menu-slideshow').style.display = 'none';
-            window.location.href = "module3_game.html";
+        function completeModule() {
+            window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1'; 
         }
 
-        // Initialize the first slide
-        document.addEventListener("DOMContentLoaded", function() {
-            renderSlide(0);
-        });
+        // Initialize the first round on page load
+        window.onload = () => {
+            loadRound(currentRound);
+        };
     </script>
 </body>
-</html> 
+</html>
