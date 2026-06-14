@@ -99,27 +99,38 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .game-btn {
-            background: var(--brand-red); 
+            display: inline-block;
+            background: var(--brand-blue);
             color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-family: 'OneDotCd-Bold';
+            text-decoration: none;
+            transition: transform 0.2s;
             border: none;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 6px;
+            font-size: 1.1rem;
             cursor: pointer;
             margin-top: 20px;
-            transition: background 0.2s;
         }
         .game-btn:hover {
-            background: var(--dark-red);
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
 
+    <div class="nav-strip" style="background-color: var(--dark-blue); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem;">
+        <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            <a href="module3.html" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.1rem;">
+                &#8592; Back to Module 3
+            </a>
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.2rem; color: var(--crust-base); text-transform: uppercase;">Module 3: Knowledge Check</span>
+        </div>
+    </div>
+
     <div style="text-align: center; margin-bottom: 40px; margin-top: 40px;">
-        <h1 id="round-title" style="color: var(--dark-blue); font-size: 2.5rem; margin-bottom: 10px;">Module 3: Menu Matching</h1>
-        <p style="font-size: 1.2rem; color: #666;">Drag the correct ingredients to their matching item.</p>
+        <h1 id="round-title" style="color: var(--dark-blue); font-size: 2.5rem; margin-bottom: 10px; font-family: 'PizzaPress'; text-transform: uppercase;">Module 3: Menu Matching</h1>
+        <p style="font-size: 1.2rem; color: var(--crust-deep); font-family: 'OneDotCd-Bold';">Drag the correct ingredients to their matching item.</p>
     </div>
 
     <div class="game-container">
@@ -137,19 +148,20 @@
 
     <!-- ROUND TRANSITION MESSAGE -->
     <div id="round-transition" style="display: none; text-align: center; margin-top: 30px;">
-        <h2 style="color: var(--dark-blue); font-size: 1.8rem; margin-bottom: 10px;">Round Complete!</h2>
-        <button class="game-btn" onclick="nextRound()" style="padding: 10px 20px; font-size: 1.1rem; cursor: pointer; background-color: var(--dark-blue); color: white; border: none; border-radius: 5px;">Start Next Round</button>
+        <h2 style="color: var(--brand-blue); font-size: 2.5rem; margin-bottom: 10px; font-family: 'PizzaPress';">Round Complete!</h2>
+        <button class="game-btn" onclick="nextRound()" style="background: var(--dark-blue);">Start Next Round</button>
     </div>
 
     <!-- FINAL SUCCESS MESSAGE -->
     <div id="success-message" style="display: none; text-align: center; margin-top: 30px;">
-        <h2 style="color: #28a745; font-size: 2rem; margin-bottom: 10px;">Perfect Match!</h2>
-        <p style="font-size: 1.1rem; color: #555;">You've mastered the menu items.</p>
-        <button class="game-btn" onclick="completeModule()" style="padding: 10px 20px; font-size: 1.1rem; cursor: pointer; background-color: #28a745; color: white; border: none; border-radius: 5px;">Back to Day 1</button>
+        <h2 style="color: var(--brand-blue); font-size: 2.5rem; margin-bottom: 10px; font-family: 'PizzaPress';">Perfect Match!</h2>
+        <p style="font-size: 1.2rem; color: var(--crust-deep); font-family: 'OneDotCd-Bold';">You've mastered the menu items.</p>
+        <button class="game-btn" onclick="completeModule()" style="background: var(--brand-red);">Back to Day 1</button>
     </div>
 
     <script>
         // --- GAME DATA ---
+        // Edit this array to add your Canva images and ingredient descriptions for Rounds 2 & 3.
         const gameData = [
             {
                 title: "Round 1: Specialty Pizzas",
