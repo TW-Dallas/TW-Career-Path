@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: Menu Matching</title>
+    
+    <!-- LINK TO YOUR GLOBAL CSS -->
+    <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
+
+    <style>
+        /* Game-specific styles only */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; 
+            width: 100%;
+            max-width: 1400px; 
+            margin: 0 auto; 
+        }
+        .drop-zones {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px; 
+            width: 100%;
+        }
+        .column-wrapper {
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            flex: 1 1 0; 
+            min-width: 0; 
+        }
+        .drop-zone {
+            width: 100%;
+            background: white;
+            border: 3px dashed #ccc;
+            border-radius: 12px;
+            padding: 15px; 
+            text-align: center;
+            min-height: 100px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .drop-zone.drag-over {
+            border-color: var(--brand-blue);
+            background-color: var(--crust-light);
+            transform: scale(1.02);
+        }
+        .drop-zone.correct {
+            border: 3px solid var(--brand-blue);
+            background-color: var(--crust-light);
+        }
+        .draggables {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px; 
+            padding: 20px; 
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            min-height: 80px;
+        }
+        .draggable-pill {
+            background: var(--dark-blue); 
+            color: white;
+            padding: 10px 20px; 
+            border-radius: 20px; 
+            cursor: grab;
+            user-select: none;
+            font-weight: bold;
+            font-size: 0.9rem; 
+            text-align: center;
+            max-width: 350px; 
+            box-sizing: border-box; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.1s;
+        }
+        .draggable-pill:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+        .draggable-pill.dragging {
+            opacity: 0.5;
+        }
+        #success-message {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .game-btn {
+            background: var(--brand-red); 
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+        .game-btn:hover {
+            background: var(--dark-red);
+        }
+    </style>
+</head>
+<body>
+
+    <div style="text-align: center; margin-bottom: 40px; margin-top: 40px;">
+        <h1 id="round-title" style="color: var(--dark-blue); font-size: 2.5rem; margin-bottom: 10px;">Module 3: Menu Matching</h1>
+        <p style="font-size: 1.2rem; color: #666;">Drag the correct ingredients to their matching item.</p>
+    </div>
+
+    <div class="game-container">
+        
+        <!-- DYNAMIC DROP ZONES -->
+        <div class="drop-zones" id="drop-zones-container">
+            <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- DYNAMIC DRAGGABLES -->
+        <div class="draggables" id="draggable-container">
+            <!-- Injected via JavaScript -->
+        </div>
+    </div>
+
+    <!-- ROUND TRANSITION MESSAGE -->
+    <div id="round-transition" style="display: none; text-align: center; margin-top: 30px;">
+        <h2 style="color: var(--dark-blue); font-size: 1.8rem; margin-bottom: 10px;">Round Complete!</h2>
+        <button class="game-btn" onclick="nextRound()" style="padding: 10px 20px; font-size: 1.1rem; cursor: pointer; background-color: var(--dark-blue); color: white; border: none; border-radius: 5px;">Start Next Round</button>
+    </div>
+
+    <!-- FINAL SUCCESS MESSAGE -->
+    <div id="success-message" style="display: none; text-align: center; margin-top: 30px;">
+        <h2 style="color: #28a745; font-size: 2rem; margin-bottom: 10px;">Perfect Match!</h2>
+        <p style="font-size: 1.1rem; color: #555;">You've mastered the menu items.</p>
+        <button class="game-btn" onclick="completeModule()" style="padding: 10px 20px; font-size: 1.1rem; cursor: pointer; background-color: #28a745; color: white; border: none; border-radius: 5px;">Back to Day 1</button>
+    </div>
+
+    <script>
+        // --- GAME DATA ---
+        // Edit this array to add your Canva images and ingredient descriptions for Rounds 2 & 3.
+        const gameData = [
+            {
+                title: "Round 1: Specialty Pizzas",
+                items: [
+                    { id: "extravaganzza", name: "ExtravaganZZa", img: "../../image/Extrav.png", desc: "Pepperoni, ham, Italian sausage, beef, fresh onions, fresh green peppers, fresh mushrooms and black olives, all sandwiched between two layers of provolone and cheese made with 100% real mozzarella." },
+                    { id: "meatzza", name: "MeatZZa", img: "../../image/Meatzza.png", desc: "Pepperoni, ham, Italian sausage and beef, all sandwiched between two layers of provolone and cheese made with 100% real mozzarella." },
+                    { id: "veggie", name: "Pacific Veggie", img: "../../image/Veggie.png", desc: "Fresh baby spinach, fresh onions, fresh mushrooms, tomatoes, black olives, feta, provolone, cheese made with 100% real mozzarella and sprinkled with a garlic herb seasoning." },
+                    { id: "hawaiian", name: "Honolulu Hawaiian", img: "../../image/Hawaiian.png", desc: "Sliced ham, smoked bacon, pineapple, fresh green peppers, provolone and cheese made with 100% real mozzarella." }
+                ]
+            },
+            {
+                title: "Round 2: Breads & Sides",
+                items: [
+                    { id: "item1", name: "Placeholder Item 1", img: "../../image/Placeholder.png", desc: "Placeholder description for item 1." },
+                    { id: "item2", name: "Placeholder Item 2", img: "../../image/Placeholder.png", desc: "Placeholder description for item 2." },
+                    { id: "item3", name: "Placeholder Item 3", img: "../../image/Placeholder.png", desc: "Placeholder description for item 3." },
+                    { id: "item4", name: "Placeholder Item 4", img: "../../image/Placeholder.png", desc: "Placeholder description for item 4." }
+                ]
+            },
+            {
+                title: "Round 3: Chicken & Desserts",
+                items: [
+                    { id: "item5", name: "Placeholder Item 5", img: "../../image/Placeholder.png", desc: "Placeholder description for item 5." },
+                    { id: "item6", name: "Placeholder Item 6", img: "../../image/Placeholder.png", desc: "Placeholder description for item 6." },
+                    { id: "item7", name: "Placeholder Item 7", img: "../../image/Placeholder.png", desc: "Placeholder description for item 7." },
+                    { id: "item8", name: "Placeholder Item 8", img: "../../image/Placeholder.png", desc: "Placeholder description for item 8." }
+                ]
+            }
+        ];
+
+        let currentRound = 0;
+        let matchedCount = 0;
+
+        // Shuffle function to randomize draggables
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function loadRound(roundIndex) {
+            matchedCount = 0;
+            const roundData = gameData[roundIndex];
+            
+            document.getElementById('round-title').innerText = roundData.title;
+            
+            const dropZonesContainer = document.getElementById('drop-zones-container');
+            const draggablesContainer = document.getElementById('draggable-container');
+            
+            dropZonesContainer.innerHTML = '';
+            draggablesContainer.innerHTML = '';
+
+            // Generate Drop Zones
+            roundData.items.forEach(item => {
+                const col = document.createElement('div');
+                col.className = 'column-wrapper';
+                col.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
+                    <h3 style="color: var(--dark-blue); margin: 0 0 10px 0; font-size: 1.1rem;">${item.name}</h3>
+                    <div class="drop-zone" data-pizza="${item.id}"></div>
+                `;
+                dropZonesContainer.appendChild(col);
+            });
+
+            // Generate Draggables (Shuffled)
+            const shuffledItems = shuffle([...roundData.items]);
+            shuffledItems.forEach(item => {
+                const pill = document.createElement('div');
+                pill.className = 'draggable-pill';
+                pill.setAttribute('draggable', 'true');
+                pill.id = `ing-${item.id}`;
+                pill.setAttribute('data-match', item.id);
+                pill.innerText = item.desc;
+                draggablesContainer.appendChild(pill);
+            });
+
+            attachEventListeners();
+        }
+
+        function attachEventListeners() {
+            const draggables = document.querySelectorAll('.draggable-pill');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', (e) => {
+                    draggable.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', draggable.id); 
+                });
+
+                draggable.addEventListener('dragend', () => {
+                    draggable.classList.remove('dragging');
+                });
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', e => {
+                    e.preventDefault(); 
+                    if (!zone.classList.contains('correct')) {
+                        zone.classList.add('drag-over');
+                    }
+                });
+
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', e => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    
+                    const draggingElement = document.querySelector('.dragging');
+                    if (!draggingElement) return;
+
+                    const expectedMatch = zone.getAttribute('data-pizza');
+                    const actualMatch = draggingElement.getAttribute('data-match');
+
+                    if (expectedMatch === actualMatch) {
+                        zone.appendChild(draggingElement);
+                        zone.classList.add('correct');
+                        
+                        draggingElement.setAttribute('draggable', 'false'); 
+                        draggingElement.style.cursor = 'default';
+                        draggingElement.style.boxShadow = 'none';
+                        draggingElement.style.width = '100%'; 
+                        
+                        matchedCount++;
+                        checkWinCondition();
+                    } else {
+                        zone.style.borderColor = 'var(--brand-red)'; 
+                        setTimeout(() => {
+                            if (!zone.classList.contains('correct')) {
+                                zone.style.borderColor = ''; 
+                            }
+                        }, 400);
+                    }
+                });
+            });
+        }
+
+        function checkWinCondition() {
+            if (matchedCount === gameData[currentRound].items.length) {
+                if (currentRound < gameData.length - 1) {
+                    document.getElementById('round-transition').style.display = 'block';
+                } else {
+                    document.getElementById('success-message').style.display = 'block';
+                    localStorage.setItem('mod3_complete', 'true');
+                }
+            }
+        }
+
+        function nextRound() {
+            document.getElementById('round-transition').style.display = 'none';
+            currentRound++;
+            loadRound(currentRound);
+        }
+
+        function completeModule() {
+            window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1'; 
+        }
+
+        // Initialize the first round on page load
+        window.onload = () => {
+            loadRound(currentRound);
+        };
+    </script>
+</body>
+</html>
