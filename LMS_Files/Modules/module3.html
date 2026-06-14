@@ -202,8 +202,6 @@
     </div>
 
     <div class="classroom-container">
-        
-
 
         <div class="classroom-content">
             
@@ -217,11 +215,11 @@
             <div style="background: var(--crust-light); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--crust-med);">
                 <span id="slide-counter" style="font-family: 'OneDotCd-Bold'; color: var(--crust-dark); font-size: 1.1rem;">Slide 1 of 4</span>
                 <div>
-                    <button id="btn-slide-prev" onclick="changeSlide(-1)" class="btn-small" style="background: var(--crust-base); color: #333; border: none; margin-right: 10px; display: none; font-family: 'OneDotCd-Bold'; padding: 0.5rem 1rem;">&#8592; Previous</button>
+                    <button id="btn-slide-prev" onclick="changeSlide(-1)" class="btn" style="background: var(--crust-base); color: var(--dark-blue); border: 2px solid var(--dark-blue); margin-right: 10px; display: none;">&#8592; Previous</button>
                     
-                    <button id="btn-slide-next" onclick="changeSlide(1)" class="btn-small" style="background: var(--brand-blue); color: var(--crust-base); border: none; font-family: 'OneDotCd-Bold' !important; padding: 0.5rem 1.5rem;">Next &#8594;</button>
+                    <button id="btn-slide-next" onclick="changeSlide(1)" class="btn" style="background: var(--brand-blue); color: white; border: none;">Next &#8594;</button>
                     
-                    <button id="btn-start-game" onclick="startMatchingGame()" class="btn-small" style="background: var(--brand-red); color: var(--crust-base); border: none; display: none; font-family: 'OneDotCd-Bold'; padding: 0.5rem 1.5rem;">Test Your Knowledge</button>
+                    <button id="btn-start-game" onclick="startMatchingGame()" class="btn" style="background: var(--brand-red); color: white; border: none; display: none;">Test Your Knowledge</button>
                 </div>
             </div>
         </div>
@@ -355,6 +353,7 @@
 
         function startMatchingGame() {
             // This will hide the slideshow and show the game board. 
+            // We will wire this up next!
             document.getElementById('menu-slideshow').style.display = 'none';
             window.location.href = "module3_game.html";
         }
