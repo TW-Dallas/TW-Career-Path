@@ -22,13 +22,16 @@
   /* --- GLOBAL CRUST PALETTE --- */
   :root {
       --brand-red: #ff0000;
+      --dark-red: #910000;
       --brand-blue: #0090e2;
+      --med-blue: #0077bd;
       --dark-blue: #005c91;
       --crust-base: #fefaf6;
       --crust-light: #faf2e9;
       --crust-med: #f0decc;
       --crust-dark: #c0a588;
       --crust-deep: #603913;
+      --crust-burnt: #472b10;
   }
   
   body {
