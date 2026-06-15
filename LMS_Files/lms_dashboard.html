@@ -960,7 +960,7 @@
     
     // Replace this string with the URL Google gives you after deploying the Web App
     const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx39IcC3lHtDIfX7WrgAN66rda4Vm1xSctFRhO35FS_JEnCCiOfJ3l72F2BEVOVJmuxXA/exec';
-    async function authenticateUser() {
+    function authenticateUser() {
         const marketInput = document.getElementById('login-market').value; 
         const idInput = document.getElementById('login-id').value;
         const passInput = document.getElementById('login-password').value;
@@ -979,14 +979,14 @@
         loginBtn.style.opacity = "0.7";
         loginBtn.disabled = true;
 
-        // Build the query string
-        const queryParams = `?market=${encodeURIComponent(marketInput)}&id=${encodeURIComponent(idInput)}&password=${encodeURIComponent(passInput)}`;
-        const finalUrl = AUTH_SCRIPT_URL + queryParams;
+        // 1. Create a unique, randomized callback function name for this specific login attempt
+        const callbackName = 'jsonpCallback_' + Math.round(100000 * Math.random());
 
-        try {
-            // A simple GET request bypasses the CORS preflight
-            const response = await fetch(finalUrl);
-            const result = await response.json();
+        // 2. Define what happens when Google returns the data
+        window[callbackName] = function(result) {
+            // Clean up the DOM by removing the script tag and this function
+            document.getElementById(callbackName).remove();
+            delete window[callbackName];
 
             if (result.success) {
                 document.getElementById('mock-name').innerText = `${result.firstName} ${result.lastName}`;
@@ -995,18 +995,32 @@
 
                 document.getElementById('step-login').classList.add('hidden');
                 document.getElementById('step-setup-profile').classList.remove('hidden');
-
             } else {
                 alert("Login failed: " + result.error);
             }
-        } catch (error) {
-            console.error("Fetch error:", error);
-            alert("Unable to connect to the database. Please try again.");
-        } finally {
+
+            // Reset the button
             loginBtn.innerText = "Sign In";
             loginBtn.style.opacity = "1";
             loginBtn.disabled = false;
-        }
+        };
+
+        // 3. Create the script element and append it to the body to trigger the request
+        const script = document.createElement('script');
+        script.id = callbackName;
+        script.src = `${AUTH_SCRIPT_URL}?market=${encodeURIComponent(marketInput)}&id=${encodeURIComponent(idInput)}&password=${encodeURIComponent(passInput)}&callback=${callbackName}`;
+        
+        // 4. Failsafe just in case the connection drops
+        script.onerror = function() {
+            document.getElementById(callbackName).remove();
+            delete window[callbackName];
+            alert("Unable to connect to the database. Please check your connection.");
+            loginBtn.innerText = "Sign In";
+            loginBtn.style.opacity = "1";
+            loginBtn.disabled = false;
+        };
+
+        document.body.appendChild(script);
     }
 
     // --- TRAINER PIN LOGIC ---
