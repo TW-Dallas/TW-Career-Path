@@ -340,6 +340,12 @@
                 loadStep(currentStep);
             }        
         }
+              function goNext() {
+        if (currentStep < sequence.length - 1) {
+                currentStep++;
+                loadStep(currentStep);
+            }
+        }
     </script>
 </body>
 </html>
