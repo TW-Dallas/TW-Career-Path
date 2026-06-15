@@ -467,7 +467,7 @@
                 <label class="form-label">Select Your Market</label>
                 <select class="form-input" id="login-market" style="border-color: var(--brand-blue); border-width: 2px;">
                     <option value="" disabled selected>-- Choose Market --</option>
-                    <option value="dallas">Dallas / Fort Worth</option>
+                    <option value="dallas">Dallas</option>
                     <option value="denver">Denver</option>
                     <option value="elpaso">El Paso</option>
                     <option value="la">Los Angeles</option>
@@ -476,15 +476,15 @@
 
             <div class="form-group">
                 <label class="form-label">Employee ID</label>
-                <input type="text" class="form-input" placeholder="e.g., 123456">
+                <input type="text" class="form-input" id="login-id">
             </div>
             
             <div class="form-group">
                 <label class="form-label">Password</label>
-                <input type="password" class="form-input" placeholder="••••••••">
+                <input type="password" class="form-input" id="login-password">
             </div>
             
-            <button class="btn" onclick="nextStep('setup-profile')">Sign In</button>
+            <button class="btn" id="login-btn" onclick="authenticateUser()">Sign In</button>
         </div>
 
         <!-- STEP 2: PROFILE CONFIRMATION & AVATAR -->
@@ -957,44 +957,104 @@
                 }, 100);
             }
         });
-
-// --- TRAINER PIN LOGIC ---
-function requireTrainerPin(targetModuleUrl) {
-    let pin = prompt("TRAINER AUTHORIZATION REQUIRED\n\nPlease have your trainer enter their 4-digit PIN to unlock the next module:");
-    if (pin === "1234") {
-        alert("Authorization Successful! Unlocking Module.");
-        window.location.href = targetModuleUrl; 
-    } else if (pin !== null) { 
-        alert("Incorrect PIN. Access Denied.");
-    }
-}
-
-// --- DYNAMIC UNLOCK LOGIC ---
-document.addEventListener("DOMContentLoaded", function() {
     
-    // Define the rules: Which module unlocks which card?
-    const unlockRules = [
-        { requiredKey: 'mod1_complete', targetCardId: 'card-mod2', targetUrl: 'Modules/module2.html', buttonText: 'Start Module 2' },
-        { requiredKey: 'mod2_complete', targetCardId: 'card-mod3', targetUrl: 'Modules/module3.html', buttonText: 'Start Module 3' },
-        { requiredKey: 'mod3_complete', targetCardId: 'card-mod4', targetUrl: 'POS_Simulator_Stage_0.html', buttonText: 'Start Module 4' },
-        { requiredKey: 'mod4_complete', targetCardId: 'card-mod5', targetUrl: 'Modules/module5.html', buttonText: 'Start Module 5' }
-    ];
+    // Replace this string with the URL Google gives you after deploying the Web App
+    const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx39IcC3lHtDIfX7WrgAN66rda4Vm1xSctFRhO35FS_JEnCCiOfJ3l72F2BEVOVJmuxXA/exec';
 
-    // Loop through the rules and apply the unlock logic if the condition is met
-    unlockRules.forEach(rule => {
-        if (localStorage.getItem(rule.requiredKey) === 'true') {
-            const card = document.getElementById(rule.targetCardId);
-            if (card) {
-                card.classList.remove('locked');
-                card.querySelector('.course-badge').style.color = "var(--dark-blue)";
-                const lockBtn = card.querySelector('.btn-small');
-                
-                // Swap the locked button for the active button, passing the correct URL to the PIN function
-                lockBtn.outerHTML = `<button class="btn-small" onclick="requireTrainerPin('${rule.targetUrl}')" style="background: var(--brand-blue); color: white; border: none;">${rule.buttonText}</button>`;
-            }
+    async function authenticateUser() {
+        const marketInput = document.getElementById('login-market').value; // Grab the market
+        const idInput = document.getElementById('login-id').value;
+        const passInput = document.getElementById('login-password').value;
+        const loginBtn = document.getElementById('login-btn');
+
+        // Prevent empty submissions
+        if (!marketInput) {
+            alert("Please select your market.");
+            return;
         }
+        if (!idInput || !passInput) {
+            alert("Please enter both your Employee ID and Password.");
+            return;
+        }
+
+        loginBtn.innerText = "Authenticating...";
+        loginBtn.style.opacity = "0.7";
+        loginBtn.disabled = true;
+
+        // Add the market to the payload sent to Google
+        const payload = {
+            market: marketInput,
+            id: idInput,
+            password: passInput
+        };
+
+        try {
+            const response = await fetch(AUTH_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                document.getElementById('mock-name').innerText = `${result.firstName} ${result.lastName}`;
+                document.getElementById('mock-role').innerText = result.role;
+                document.getElementById('mock-store').innerText = result.store;
+
+                document.getElementById('step-login').classList.add('hidden');
+                document.getElementById('step-setup-profile').classList.remove('hidden');
+
+            } else {
+                alert("Login failed: " + result.error);
+            }
+        } catch (error) {
+            console.error("Fetch error:", error);
+            alert("Unable to connect to the database. Please try again.");
+        } finally {
+            loginBtn.innerText = "Sign In";
+            loginBtn.style.opacity = "1";
+            loginBtn.disabled = false;
+        }
+    }
+
+    // --- TRAINER PIN LOGIC ---
+    function requireTrainerPin(targetModuleUrl) {
+        let pin = prompt("TRAINER AUTHORIZATION REQUIRED\n\nPlease have your trainer enter their 4-digit PIN to unlock the next module:");
+        if (pin === "1234") {
+            alert("Authorization Successful! Unlocking Module.");
+            window.location.href = targetModuleUrl; 
+        } else if (pin !== null) { 
+            alert("Incorrect PIN. Access Denied.");
+        }
+    }
+
+    // --- DYNAMIC UNLOCK LOGIC ---
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        // Define the rules: Which module unlocks which card?
+        const unlockRules = [
+            { requiredKey: 'mod1_complete', targetCardId: 'card-mod2', targetUrl: 'Modules/module2.html', buttonText: 'Start Module 2' },
+            { requiredKey: 'mod2_complete', targetCardId: 'card-mod3', targetUrl: 'Modules/module3.html', buttonText: 'Start Module 3' },
+            { requiredKey: 'mod3_complete', targetCardId: 'card-mod4', targetUrl: 'POS_Simulator_Stage_0.html', buttonText: 'Start Module 4' },
+            { requiredKey: 'mod4_complete', targetCardId: 'card-mod5', targetUrl: 'Modules/module5.html', buttonText: 'Start Module 5' }
+        ];
+
+        // Loop through the rules and apply the unlock logic if the condition is met
+        unlockRules.forEach(rule => {
+            if (localStorage.getItem(rule.requiredKey) === 'true') {
+                const card = document.getElementById(rule.targetCardId);
+                if (card) {
+                    card.classList.remove('locked');
+                    card.querySelector('.course-badge').style.color = "var(--dark-blue)";
+                    const lockBtn = card.querySelector('.btn-small');
+                    
+                    // Swap the locked button for the active button, passing the correct URL to the PIN function
+                    lockBtn.outerHTML = `<button class="btn-small" onclick="requireTrainerPin('${rule.targetUrl}')" style="background: var(--brand-blue); color: white; border: none;">${rule.buttonText}</button>`;
+                }
+            }
+        });
     });
-});
     </script>
 </body>
 </html>
