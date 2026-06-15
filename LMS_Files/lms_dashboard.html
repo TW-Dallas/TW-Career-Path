@@ -1071,6 +1071,21 @@
             }
         });
     });
+
+    window.togglePasswordVisibility = function() {
+        const passInput = document.getElementById('login-password');
+        const toggleBtn = document.getElementById('toggle-password');
+
+        if (passInput.type === 'password') {
+            passInput.type = 'text';
+            toggleBtn.innerText = 'HIDE';
+            toggleBtn.style.color = 'var(--crust-dark)'; 
+        } else {
+            passInput.type = 'password';
+            toggleBtn.innerText = 'SHOW';
+            toggleBtn.style.color = 'var(--brand-blue)'; 
+        }
+    };
     </script>
 </body>
 </html>
