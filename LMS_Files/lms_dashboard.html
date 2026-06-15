@@ -496,7 +496,7 @@
             <div style="background: var(--crust-light); border: 2px solid var(--crust-med); border-radius: 12px; padding: 1.5rem; text-align: left; margin-bottom: 2rem;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; border-bottom: 1px solid #ddd; padding-bottom: 0.5rem;">
                     <span style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue);">Name:</span>
-                    <span style="color: var(--crust-deep);" id="mock-name">John Doe</span>
+                    <span style="color: var(--crust-deep);" id="mock-name">Pete Zah</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; border-bottom: 1px solid #ddd; padding-bottom: 0.5rem;">
                     <span style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue);">Role:</span>
@@ -989,10 +989,16 @@
             delete window[callbackName];
 
             if (result.success) {
+            // 1. Update the 'Verify Your Profile' screen
                 document.getElementById('mock-name').innerText = `${result.firstName} ${result.lastName}`;
                 document.getElementById('mock-role').innerText = result.role;
                 document.getElementById('mock-store').innerText = result.store;
 
+                // 2. Update the 'My Learning Path' Dashboard Header
+                document.getElementById('master-dash-name').innerText = `${result.firstName} ${result.lastName}`;
+                document.getElementById('master-dash-role').innerText = result.role;
+
+                // 3. Transition the screens
                 document.getElementById('step-login').classList.add('hidden');
                 document.getElementById('step-setup-profile').classList.remove('hidden');
             } else {
