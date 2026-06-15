@@ -960,14 +960,12 @@
     
     // Replace this string with the URL Google gives you after deploying the Web App
     const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx39IcC3lHtDIfX7WrgAN66rda4Vm1xSctFRhO35FS_JEnCCiOfJ3l72F2BEVOVJmuxXA/exec';
-
     async function authenticateUser() {
-        const marketInput = document.getElementById('login-market').value; // Grab the market
+        const marketInput = document.getElementById('login-market').value; 
         const idInput = document.getElementById('login-id').value;
         const passInput = document.getElementById('login-password').value;
         const loginBtn = document.getElementById('login-btn');
 
-        // Prevent empty submissions
         if (!marketInput) {
             alert("Please select your market.");
             return;
@@ -981,20 +979,13 @@
         loginBtn.style.opacity = "0.7";
         loginBtn.disabled = true;
 
-        // Add the market to the payload sent to Google
-        const payload = {
-            market: marketInput,
-            id: idInput,
-            password: passInput
-        };
+        // Build the query string
+        const queryParams = `?market=${encodeURIComponent(marketInput)}&id=${encodeURIComponent(idInput)}&password=${encodeURIComponent(passInput)}`;
+        const finalUrl = AUTH_SCRIPT_URL + queryParams;
 
         try {
-            const response = await fetch(AUTH_SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify(payload)
-            });
-
+            // A simple GET request bypasses the CORS preflight
+            const response = await fetch(finalUrl);
             const result = await response.json();
 
             if (result.success) {
