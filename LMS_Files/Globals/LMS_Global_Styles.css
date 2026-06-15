@@ -92,7 +92,7 @@
 
   #instruction-text { 
       font-family: 'OneDotCd', 'Arial Narrow', sans-serif; 
-      font-size: 1.0rem; /* Dropped from 1.1rem */
+      font-size: 1.2rem; /* Dropped from 1.1rem */
       line-height: 1.4; 
       margin-top: 15px; 
       flex-grow: 1; 
