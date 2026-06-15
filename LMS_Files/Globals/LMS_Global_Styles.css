@@ -129,14 +129,16 @@
   }
 
   /* --- HITBOXES (Invisible with Arrows) --- */
-  .hitbox {
-      position: absolute;
-      cursor: pointer;
-      display: none; 
-      z-index: 10;
-      background: transparent;
-      border: none;
-  }
+    .hitbox {
+        position: absolute;
+        cursor: default; /* Stops the mouse from turning into a hand */
+        display: none;
+        z-index: 10;
+        background: transparent;
+        border: none;
+        user-select: none; /* Stops text selection */
+        caret-color: transparent; /* Makes the blinking typing cursor invisible */
+    }
   
   .hitbox::before {
       content: '';
@@ -386,3 +388,4 @@
         color: var(--dark-blue);
         transform: scale(1.02);
     }
+    
