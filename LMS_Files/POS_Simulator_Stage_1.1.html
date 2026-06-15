@@ -47,7 +47,7 @@
             <div class="nav-strip">
                 <button class="btn" onclick="goBack()">&#8592; Back</button>
                 <!-- Next button removed for rollout -->
-                <button class="btn" style="background-color: var(--brand-red);" onclick="goNext()">Next &#8594;</button>
+                <!-- <button class="btn" style="background-color: var(--brand-red);" onclick="goNext()">Next &#8594;</button> -->
                 <button id="finish-sim-btn" class="btn" style="background-color: var(--brand-red); display: none;" onclick="endSimulation()">Finish Simulation</button>
             </div>
         </div>
@@ -670,7 +670,7 @@
             posImage.src = "resources/POS_assets/Stage_1.1/under_construction.png"; 
             
             // Update the text panel
-            instructionText.innerHTML = "<strong>Stage 1.1 Complete</strong><br><br>The next phase of the simulator is currently in development. Please return to the LMS Dashboard.";
+            instructionText.innerHTML = "<strong>Stage 1.1 Complete</strong><br><br>The next phase of the simulator is currently in development. Please use the 'Return to Day 1' button on the top lefthand side of the screen to return to the Day 1 Dashboard.<br><br> Find your trainer to begin the next training stage.";
             
             // Hide all hitboxes and the finish button itself
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
