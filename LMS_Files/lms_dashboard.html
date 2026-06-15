@@ -633,10 +633,10 @@
             <div class="progress-container">
                 <div class="progress-header">
                     <h3>Overall Onboarding Progress</h3>
-                    <span style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue);">0%</span>
+                    <span id="master-dash-progress-text" style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue);">0%</span>
                 </div>
                 <div class="progress-track">
-                    <div class="progress-fill" style="width: 0%;"></div>
+                    <div id="master-dash-progress-fill" class="progress-fill" style="width: 0%;"></div>
                 </div>
             </div>
 
@@ -1005,6 +1005,10 @@
                 // 3. Transition the screens
                 document.getElementById('step-login').classList.add('hidden');
                 document.getElementById('step-setup-profile').classList.remove('hidden');
+                
+                // 4. Update the Progress Bar
+                document.getElementById('master-dash-progress-text').innerText = `${result.progress}%`;
+                document.getElementById('master-dash-progress-fill').style.width = `${result.progress}%`;
             } else {
                 alert("Login failed: " + result.error);
             }
