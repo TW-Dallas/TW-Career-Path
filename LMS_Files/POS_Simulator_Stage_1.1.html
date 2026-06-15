@@ -46,10 +46,12 @@
             <!-- THE TEST BUTTONS -->
             <div class="nav-strip">
                 <button class="btn" onclick="goBack()">&#8592; Back</button>
-                <button class="btn" style="background-color: var(--brand-red);" onclick="goNext()">Next &#8594;</button>
+                <!-- Next button removed for rollout -->
+                <!-- <button class="btn" style="background-color: var(--brand-red);" onclick="goNext()">Next &#8594;</button> -->
+                <button id="finish-sim-btn" class="btn" style="background-color: var(--brand-red); display: none;" onclick="endSimulation()">Finish Simulation</button>
             </div>
         </div>
-      
+
         <!-- RIGHT: POS Screen & Hitboxes -->
         <div id="pos-container">
             <div id="hitbox-wrapper">
@@ -651,8 +653,18 @@
             } else {
                 console.warn("Hitbox not found: " + stepData.activeHitbox);
             }
+            
+            // 5. Toggle Finish Button Visibility
+            const finishBtn = document.getElementById('finish-sim-btn');
+            if (finishBtn) {
+                if (stepIndex === sequence.length - 1) {
+                    finishBtn.style.display = 'inline-block'; // Show on the very last step
+                } else {
+                    finishBtn.style.display = 'none'; // Hide everywhere else
+                }
+            }
         }
-
+        
         function endSimulation() {
             // Swap to the construction image
             posImage.src = "resources/POS_assets/Stage_1.1/under_construction.png"; 
@@ -660,8 +672,9 @@
             // Update the text panel
             instructionText.innerHTML = "<strong>Stage 1.1 Complete</strong><br><br>The next phase of the simulator is currently in development. Please return to the LMS Dashboard.";
             
-            // Hide hitboxes just to be safe
+            // Hide all hitboxes and the finish button itself
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+            document.getElementById('finish-sim-btn').style.display = 'none';
         }
 
             function goBack() {
