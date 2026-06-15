@@ -481,8 +481,13 @@
             
             <div class="form-group">
                 <label class="form-label">Password</label>
-                <input type="password" class="form-input" id="login-password">
-            </div>
+                <div style="position: relative; width: 100%;">
+                    <input type="password" id="login-password" class="form-input" placeholder="Password" style="width: 100%; padding-right: 40px; box-sizing: border-box;">
+                    
+                    <span id="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--brand-blue); font-size: 14px; font-weight: bold; user-select: none;">
+                        SHOW
+                    </span>
+                </div>
             
             <button class="btn" id="login-btn" onclick="authenticateUser()">Sign In</button>
         </div>
