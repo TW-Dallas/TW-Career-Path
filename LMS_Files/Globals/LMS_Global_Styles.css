@@ -202,10 +202,11 @@
       font-weight: bold;
   }
 
+  /* The Master Button Template */
   .btn {
       display: inline-block;
       background: var(--brand-blue);
-      color: white;
+      color: var(--crust-base);
       padding: 0.8rem 2rem;
       border-radius: 50px;
       font-family: 'OneDotCd-Bold';
@@ -218,6 +219,11 @@
   
   .btn:hover {
       opacity: 0.8;
+  }
+
+  /* The Red Override */
+  .btn-finish {
+      background: var(--brand-red);
   }
 
   .hitbox.hide-arrow::before { display: none !important; }
@@ -388,4 +394,3 @@
         color: var(--dark-blue);
         transform: scale(1.02);
     }
-    

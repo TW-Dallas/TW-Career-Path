@@ -993,7 +993,11 @@
             delete window[callbackName];
 
             if (result.success) {
-            // 1. Update the 'Verify Your Profile' screen
+                // -- ADD THESE TWO LINES TO SAVE THE SESSION --
+                localStorage.setItem('tw_market', document.getElementById('login-market').value);
+                localStorage.setItem('tw_id', document.getElementById('login-id').value.trim().toLowerCase());
+            
+                // 1. Update the 'Verify Your Profile' screen
                 document.getElementById('mock-name').innerText = `${result.firstName} ${result.lastName}`;
                 document.getElementById('mock-role').innerText = result.role;
                 document.getElementById('mock-store').innerText = result.store;
@@ -1089,6 +1093,38 @@
             toggleBtn.style.color = 'var(--brand-blue)'; 
         }
     };
+
+    function sendProgressUpdate(moduleName) {
+        // Grab the ID and Market from the browser's memory
+        const market = localStorage.getItem('tw_market');
+        const id = localStorage.getItem('tw_id');
+        
+        if (!market || !id) {
+            console.error("Session missing. Please log in from the dashboard.");
+            return;
+        }
+        
+        const callbackName = 'jsonpCallbackUpdate_' + Math.round(100000 * Math.random());
+        
+        // IMPORTANT: Swap out this URL for your actual deployed Apps Script URL
+        const scriptUrl = "YOUR_APPS_SCRIPT_URL_HERE"; 
+        
+        const url = `${scriptUrl}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&callback=${callbackName}`;
+
+        window[callbackName] = function(result) {
+            if (result.success) {
+                console.log(`${moduleName} securely logged to database!`);
+                // (Since the progress bar is on the dashboard, we just let this run silently in the background)
+            }
+            delete window[callbackName];
+        };
+
+        const script = document.createElement('script');
+        script.src = url;
+        script.onload = () => script.remove();
+        document.body.appendChild(script);
+    }
+
     </script>
 </body>
 </html>
