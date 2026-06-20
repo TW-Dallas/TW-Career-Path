@@ -1107,7 +1107,7 @@
         const callbackName = 'jsonpCallbackUpdate_' + Math.round(100000 * Math.random());
         
         // IMPORTANT: Swap out this URL for your actual deployed Apps Script URL
-        const scriptUrl = "YOUR_APPS_SCRIPT_URL_HERE"; 
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec"; 
         
         const url = `${scriptUrl}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&callback=${callbackName}`;
 
