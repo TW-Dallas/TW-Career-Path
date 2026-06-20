@@ -1018,22 +1018,24 @@
                     });
                 }
 
-                // 3. Update the 'Verify Your Profile' screen
+                // 3. Update the UI Text
                 document.getElementById('mock-name').innerText = `${result.firstName} ${result.lastName}`;
                 document.getElementById('mock-role').innerText = result.role;
                 document.getElementById('mock-store').innerText = result.store;
-
-                // 4. Update the 'My Learning Path' Dashboard Header
                 document.getElementById('master-dash-name').innerText = `${result.firstName} ${result.lastName}`;
                 document.getElementById('master-dash-role').innerText = result.role;
 
-                // 5. Transition the screens
+                // 4. FIRE THE PROGRESS ENGINE (This fixes the mismatched bars!)
+                syncProgressBars();
+
+                // 5. Smart Routing for Veterans
                 document.getElementById('step-login').classList.add('hidden');
-                document.getElementById('step-setup-profile').classList.remove('hidden');
+                if (localStorage.getItem('tw_tutorial_complete') === 'true') {
+                    nextStep('gateway'); // Or whatever your main map is called
+                } else {
+                    document.getElementById('step-setup-profile').classList.remove('hidden');
+                }
                 
-                // 6. Update the Progress Bar
-                document.getElementById('master-dash-progress-text').innerText = `${result.progress}%`;
-                document.getElementById('master-dash-progress-fill').style.width = `${result.progress}%`;
             } else {
                 alert("Login failed: " + result.error);
             }
