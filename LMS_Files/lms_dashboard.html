@@ -691,14 +691,14 @@
                 </div>
             </div>
 
-            <!-- Global Progress Bar -->
+            <!-- Day 1 Progress Bar -->
             <div class="progress-container">
                 <div class="progress-header">
                     <h3>Day 1 Progress</h3>
-                    <span style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue);">0%</span>
+                    <span id="day1-progress-text" style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue);">0%</span>
                 </div>
                 <div class="progress-track">
-                    <div class="progress-fill" style="width: 0%;"></div>
+                    <div id="day1-progress-fill" class="progress-fill" style="width: 0%;"></div>
                 </div>
             </div>
 
@@ -1157,6 +1157,46 @@
             nextStep('tutorial');
         }
     }
+
+    function syncProgressBars() {
+        // 1. Tally up Day 1 from the Backpack
+        const day1Keys = ['mod1_complete', 'mod2_complete', 'mod3_complete', 'mod4_complete', 'mod5_complete'];
+        let day1Count = 0;
+        
+        day1Keys.forEach(key => {
+            if (localStorage.getItem(key) === 'true') day1Count++;
+        });
+
+        // (When you build Day 2 and 3, you just add their counts to this total)
+        let totalCompleted = day1Count; 
+
+        // 2. Calculate the Percentages
+        const TOTAL_DAY1_MODULES = 5;
+        const TOTAL_COURSE_MODULES = 15; // Update this if your final course size changes!
+
+        let day1Percent = Math.round((day1Count / TOTAL_DAY1_MODULES) * 100);
+        let masterPercent = Math.round((totalCompleted / TOTAL_COURSE_MODULES) * 100);
+
+        // 3. Paint the Master Bar
+        const masterText = document.getElementById('master-dash-progress-text');
+        const masterFill = document.getElementById('master-dash-progress-fill');
+        if (masterText && masterFill) {
+            masterText.innerText = `${masterPercent}%`;
+            masterFill.style.width = `${masterPercent}%`;
+        }
+
+        // 4. Paint the Day 1 Bar
+        const day1Text = document.getElementById('day1-progress-text');
+        const day1Fill = document.getElementById('day1-progress-fill');
+        if (day1Text && day1Fill) {
+            day1Text.innerText = `${day1Percent}%`;
+            day1Fill.style.width = `${day1Percent}%`;
+        }
+    }
+
+    // Fire the engine the second the dashboard loads, OR when returning from a module via #day1
+    window.addEventListener('DOMContentLoaded', syncProgressBars);
+    window.addEventListener('hashchange', syncProgressBars);
     </script>
 </body>
 </html>
