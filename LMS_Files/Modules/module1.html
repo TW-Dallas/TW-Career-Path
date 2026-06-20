@@ -436,7 +436,7 @@
             console.error("Error logging progress:", error);
         });
     }
-    
+
     function finishAndReturn() {
         // 1. Change the button so they know it's working
         const btn = document.getElementById('btn-finish');
@@ -448,7 +448,7 @@
 
         // 3. Wait 1.5 seconds for Google to catch it, then return to the dashboard
         setTimeout(() => {
-            window.location.href = '../lms_dashboard.html';
+            window.location.href = '../lms_dashboard.html#day1';
         }, 1500);
     }
     </script>
