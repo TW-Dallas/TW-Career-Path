@@ -418,7 +418,9 @@
         
         // 3. Build the secure URL
         const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}`;
-
+        
+        console.log("SENDING DATA TO VAULT: ", url);
+        
         // 4. Fire the secure fetch request
         fetch(url, {
             method: 'GET',
