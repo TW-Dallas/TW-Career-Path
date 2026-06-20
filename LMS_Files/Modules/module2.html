@@ -131,9 +131,15 @@
                 playerVars: {
                     'playsinline': 1,
                     'rel': 0, // Don't show related videos at the end
-                    'modestbranding': 1
+                    'modestbranding': 1,
+                    'controls': 0, // Hides the scrub bar
+                    'disablekb': 1 // Disables keyboard skipping
                 },
                 events: {
+                    'onReady': function(event) {
+                        event.target.unMute();
+                        event.target.setVolume(100);
+                    },
                     'onStateChange': onPlayerStateChange
                 }
             });
