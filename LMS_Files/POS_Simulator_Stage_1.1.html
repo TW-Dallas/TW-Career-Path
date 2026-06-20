@@ -568,7 +568,7 @@
                 "step": 83,
                 "image": "resources/POS_assets/Stage_0/POS_7.png",
                 "activeHitbox": null,
-                "instruction": "<strong>Excellent Job!</strong><br>It looks like you're starting to get the hang of this!</br> Return to the dashboard and meet up with your trainer for the next experience!<br><br><button onclick='endSimulation()' style='padding: 10px 20px; background-color: #006491; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;'>Finish Simulation</button>"
+                "instruction": "<strong>Excellent Job!</strong><br>It looks like you're starting to get the hang of this!</br> Return to the dashboard and meet up with your trainer for the next experience!"
             }
         ];
         
@@ -677,22 +677,36 @@
         }
         
         function endSimulation() {
-            // Swap to the construction image
+            // 1. Swap to the construction image
             posImage.src = "resources/POS_assets/Stage_1.1/under_construction.png"; 
             
-            // Update the text panel
-            instructionText.innerHTML = "<strong>Stage 1.1 Complete</strong><br><br>The next phase of the simulator is currently in development. Please use the 'Return to Day 1' button on the top lefthand side of the screen to return to the Day 1 Dashboard.<br><br> Find your trainer to begin the next training stage.";
+            // 2. Update the text panel to instruct them to click the new button
+            instructionText.innerHTML = "<strong>Stage 1.1 Complete</strong><br><br>The next phase of the simulator is currently in development.<br><br>Click the red button below to save your progress and return to the Day 1 Dashboard.";
             
-            // Hide all hitboxes and the finish button itself
+            // 3. Hide all hitboxes
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
-            document.getElementById('finish-sim-btn').style.display = 'none';
-
-            // 🔥 THE PIPELINE 🔥
-            // 1. Send data to Vault
-            sendProgressUpdate('Day 1 Mod 4');
             
-            // 2. Backpack drop for Dashboard
-            localStorage.setItem('mod4_complete', 'true');
+            // 4. SHAPESHIFT THE BUTTON: Keep it visible, but change the text
+            const finishBtn = document.getElementById('finish-sim-btn');
+            finishBtn.style.display = 'inline-block'; 
+            finishBtn.innerText = "Save & Return to Day 1"; 
+
+            // 5. REWIRE THE CLICK: Change what the button does when clicked again
+            finishBtn.onclick = function() {
+                // Visual feedback
+                finishBtn.innerText = "Saving...";
+                finishBtn.style.pointerEvents = "none";
+                finishBtn.style.opacity = "0.5";
+
+                // THE PIPELINE
+                sendProgressUpdate('Day 1 Mod 4');
+                localStorage.setItem('mod4_complete', 'true');
+
+                // TELEPORT (This replaces the need for them to use the top-left navigation)
+                setTimeout(() => {
+                    window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
+                }, 1000);
+            };
         }
 
             function goBack() {
