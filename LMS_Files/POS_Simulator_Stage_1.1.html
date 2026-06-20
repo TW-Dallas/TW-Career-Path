@@ -571,6 +571,17 @@
                 "instruction": "<strong>Excellent Job!</strong><br>It looks like you're starting to get the hang of this!</br> Return to the dashboard and meet up with your trainer for the next experience!<br><br><button onclick='endSimulation()' style='padding: 10px 20px; background-color: #006491; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;'>Finish Simulation</button>"
             }
         ];
+        
+        // Add these to the top of your script
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+
+        function sendProgressUpdate(moduleName) {
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            if (!market || !id) return;
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}`;
+            fetch(url, { method: 'GET', credentials: 'omit' });
+        }
 
         let currentStep = 0;
         const posImage = document.getElementById('pos-image');
@@ -675,6 +686,13 @@
             // Hide all hitboxes and the finish button itself
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
             document.getElementById('finish-sim-btn').style.display = 'none';
+
+            // 🔥 THE PIPELINE 🔥
+            // 1. Send data to Vault
+            sendProgressUpdate('Day 1 Mod 4');
+            
+            // 2. Backpack drop for Dashboard
+            localStorage.setItem('mod4_complete', 'true');
         }
 
             function goBack() {
