@@ -161,9 +161,13 @@
     <div id="success-message" style="display: none; text-align: center; margin-top: 30px;">
         <h2 style="color: var(--brand-blue); font-size: 2.5rem; margin-bottom: 10px; font-family: 'PizzaPress';">Perfect Match!</h2>
         <p style="font-size: 1.2rem; color: var(--crust-deep); font-family: 'OneDotCd-Bold';">You've mastered the menu items.</p>
-        <button class="game-btn" onclick="completeModule()" style="background: var(--brand-red);">Back to Day 1</button>
+        <button class="game-btn" 
+                id="btn-finish" 
+                onclick="completeModule()" 
+                style="background: var(--brand-red); cursor: pointer;">
+            Back to Day 1
+        </button>    
     </div>
-
     <script>
         // --- GAME DATA ---
         // Edit this array to add your Canva images and ingredient descriptions for Rounds 2 & 3.
@@ -196,7 +200,8 @@
             //     ]
             // }
         ];
-
+        
+        let currentStep = 1;
         let currentRound = 0;
         let matchedCount = 0;
 
@@ -328,13 +333,73 @@
         }
 
         function completeModule() {
+            alert("Button is working!"); 
+            console.log("Button clicked!");
+            
+            // 1. Send data to Vault
+            sendProgressUpdate('Day 1 Mod 3');
+            
+            // 2. Backpack drop
+            localStorage.setItem('mod3_complete', 'true');
+
+            // 3. Teleport Home
             window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1'; 
+        } // This one closing brace closes the function for everyone!
+
+    // The Web App URL so Module 1 can find the Vault
+    const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+
+    function sendProgressUpdate(moduleName) {
+        // 1. Grab the ID and Market from the browser's memory
+        const market = localStorage.getItem('tw_market');
+        const id = localStorage.getItem('tw_id');
+        
+        // 2. Failsafe if they somehow aren't logged in
+        if (!market || !id) {
+            console.error("Session missing. Please log in from the dashboard.");
+            return;
+        }
+        
+        // 3. Build the secure URL
+        const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}`;
+
+        // 4. Fire the secure fetch request
+        fetch(url, {
+            method: 'GET',
+            credentials: 'omit'
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                console.log(`${moduleName} securely logged to database!`);
+            } else {
+                console.error("Failed to update progress: ", result.error);
+            }
+        })
+        .catch(error => {
+            console.error("Error logging progress:", error);
+        });
+    }
+
+    function finishAndReturn() {
+        // 1. Change the button so they know it's working
+        const btn = document.getElementById('btn-finish');
+        if (btn) {
+            btn.innerText = "Saving Progress...";
+            btn.style.pointerEvents = "none"; // Prevents them from clicking twice
         }
 
-        // Initialize the first round on page load
-        window.onload = () => {
-            loadRound(currentRound);
-        };
+        // 2. Fire the checkmark to Google
+        sendProgressUpdate('Day 1 Mod 3');
+
+        // 3. THE BACKPACK DROP: Tell the browser they finished so the Dashboard unlocks Mod 2
+        localStorage.setItem('mod3_complete', 'true');
+
+        // 4. Wait 1.5 seconds for Google to catch it, then return directly to the Day 1 map
+        setTimeout(() => {
+            window.location.href = '../lms_dashboard.html#day1';
+        }, 1500);
+    }
     </script>
 </body>
 </html>
