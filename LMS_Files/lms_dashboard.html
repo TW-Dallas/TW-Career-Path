@@ -1195,10 +1195,42 @@
             day1Fill.style.width = `${day1Percent}%`;
         }
     }
+    
+    // Fire both engines the second the dashboard loads, OR when returning from a module via #day1
+    window.addEventListener('DOMContentLoaded', () => {
+        syncProgressBars();
+        syncProfileText();
+    });
 
-    // Fire the engine the second the dashboard loads, OR when returning from a module via #day1
-    window.addEventListener('DOMContentLoaded', syncProgressBars);
-    window.addEventListener('hashchange', syncProgressBars);
+    window.addEventListener('hashchange', () => {
+        syncProgressBars();
+        syncProfileText();
+    });
+
+    function syncProfileText() {
+        // 1. Pull the data from the Backpack
+        const firstName = localStorage.getItem('tw_firstName') || "Team";
+        const lastName = localStorage.getItem('tw_lastName') || "Member";
+        const role = localStorage.getItem('tw_role') || "Trainee";
+        const store = localStorage.getItem('tw_store') || "";
+
+        // 2. Paint the Profile Verification Screen
+        const mockName = document.getElementById('mock-name');
+        if (mockName) mockName.innerText = `${firstName} ${lastName}`;
+        
+        const mockRole = document.getElementById('mock-role');
+        if (mockRole) mockRole.innerText = role;
+
+        const mockStore = document.getElementById('mock-store');
+        if (mockStore) mockStore.innerText = store;
+
+        // 3. Paint the Main Dashboard Header
+        const dashName = document.getElementById('master-dash-name');
+        if (dashName) dashName.innerText = `${firstName} ${lastName}`;
+
+        const dashRole = document.getElementById('master-dash-role');
+        if (dashRole) dashRole.innerText = role;
+    }
     </script>
 </body>
 </html>
