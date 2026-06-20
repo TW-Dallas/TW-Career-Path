@@ -488,7 +488,7 @@
                         SHOW
                     </span>
                 </div>
-            </div> <button class="btn" id="login-btn" onclick="authenticateUser()">Sign In</button>
+            </div> <button id="login-btn" class="btn" onclick="authenticateUser()">Sign In</button>
         </div>
 
         <!-- STEP 2: PROFILE CONFIRMATION & AVATAR -->
@@ -884,8 +884,12 @@
         }
 
         function finishTutorial() {
-            nextStep('gateway');
-        }
+        // Plant the flag so the browser remembers them forever
+        localStorage.setItem('tw_tutorial_complete', 'true');
+        
+        // Send them to the gateway
+        nextStep('gateway');
+        }   
 
         // --- SUPPORT MODAL LOGIC ---
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyKhcd3c4j2SwJOTtG5c7yZxDEIC-Mw-d-zYE27CQuALwyd2rmU_6BQMYQwjqVwQ89N/exec'; 
@@ -964,7 +968,10 @@
     
     // Replace this string with the URL Google gives you after deploying the Web App
     const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
-    function authenticateUser() {
+    
+    function authenticateUser(event) {
+        if (event) event.preventDefault();
+        
         const marketInput = document.getElementById('login-market').value; 
         const idInput = document.getElementById('login-id').value;
         const passInput = document.getElementById('login-password').value;
@@ -983,62 +990,65 @@
         loginBtn.style.opacity = "0.7";
         loginBtn.disabled = true;
 
-        // 1. Create a unique, randomized callback function name for this specific login attempt
-        const callbackName = 'jsonpCallback_' + Math.round(100000 * Math.random());
+        const url = `${AUTH_SCRIPT_URL}?action=login&market=${encodeURIComponent(marketInput)}&id=${encodeURIComponent(idInput.trim().toLowerCase())}&password=${encodeURIComponent(passInput)}`;
 
-        // 2. Define what happens when Google returns the data
-        window[callbackName] = function(result) {
-            // Clean up the DOM by removing the script tag and this function
-            document.getElementById(callbackName).remove();
-            delete window[callbackName];
-
+        fetch(url, {
+            method: 'GET',
+            credentials: 'omit' 
+        })
+        .then(response => response.json()) 
+        .then(result => {
             if (result.success) {
-                // -- ADD THESE TWO LINES TO SAVE THE SESSION --
-                localStorage.setItem('tw_market', document.getElementById('login-market').value);
-                localStorage.setItem('tw_id', document.getElementById('login-id').value.trim().toLowerCase());
+                // 1. Save standard session data
+                localStorage.setItem('tw_market', marketInput);
+                localStorage.setItem('tw_id', idInput.trim().toLowerCase());
+                localStorage.setItem('tw_firstName', result.firstName);
+                localStorage.setItem('tw_lastName', result.lastName);
+                localStorage.setItem('tw_role', result.role);
+                localStorage.setItem('tw_store', result.store);
             
-                // 1. Update the 'Verify Your Profile' screen
+                // 2. THE VAULT SYNC RECEIVER: Translate database history to UI unlocks
+                if (result.completed && result.completed.length > 0) {
+                    result.completed.forEach(modName => {
+                        if (modName === "day 1 mod 1") localStorage.setItem('mod1_complete', 'true');
+                        if (modName === "day 1 mod 2") localStorage.setItem('mod2_complete', 'true');
+                        if (modName === "day 1 mod 3") localStorage.setItem('mod3_complete', 'true');
+                        if (modName === "day 1 mod 4") localStorage.setItem('mod4_complete', 'true');
+                        if (modName === "day 1 mod 5") localStorage.setItem('mod5_complete', 'true');
+                    });
+                }
+
+                // 3. Update the 'Verify Your Profile' screen
                 document.getElementById('mock-name').innerText = `${result.firstName} ${result.lastName}`;
                 document.getElementById('mock-role').innerText = result.role;
                 document.getElementById('mock-store').innerText = result.store;
 
-                // 2. Update the 'My Learning Path' Dashboard Header
+                // 4. Update the 'My Learning Path' Dashboard Header
                 document.getElementById('master-dash-name').innerText = `${result.firstName} ${result.lastName}`;
                 document.getElementById('master-dash-role').innerText = result.role;
 
-                // 3. Transition the screens
+                // 5. Transition the screens
                 document.getElementById('step-login').classList.add('hidden');
                 document.getElementById('step-setup-profile').classList.remove('hidden');
                 
-                // 4. Update the Progress Bar
+                // 6. Update the Progress Bar
                 document.getElementById('master-dash-progress-text').innerText = `${result.progress}%`;
                 document.getElementById('master-dash-progress-fill').style.width = `${result.progress}%`;
             } else {
                 alert("Login failed: " + result.error);
             }
 
-            // Reset the button
             loginBtn.innerText = "Sign In";
             loginBtn.style.opacity = "1";
             loginBtn.disabled = false;
-        };
-
-        // 3. Create the script element and append it to the body to trigger the request
-        const script = document.createElement('script');
-        script.id = callbackName;
-        script.src = `${AUTH_SCRIPT_URL}?market=${encodeURIComponent(marketInput)}&id=${encodeURIComponent(idInput)}&password=${encodeURIComponent(passInput)}&callback=${callbackName}`;
-        
-        // 4. Failsafe just in case the connection drops
-        script.onerror = function() {
-            document.getElementById(callbackName).remove();
-            delete window[callbackName];
+        })
+        .catch(error => {
+            console.error("Database connection failed:", error);
             alert("Unable to connect to the database. Please check your connection.");
             loginBtn.innerText = "Sign In";
             loginBtn.style.opacity = "1";
             loginBtn.disabled = false;
-        };
-        console.log("Generated URL: ", script.src);
-        document.body.appendChild(script);
+        });
     }
 
     // --- TRAINER PIN LOGIC ---
@@ -1095,36 +1105,58 @@
     };
 
     function sendProgressUpdate(moduleName) {
-        // Grab the ID and Market from the browser's memory
+        // 1. Grab the ID and Market from the browser's memory
         const market = localStorage.getItem('tw_market');
         const id = localStorage.getItem('tw_id');
         
+        // 2. Failsafe if they somehow aren't logged in
         if (!market || !id) {
             console.error("Session missing. Please log in from the dashboard.");
             return;
         }
         
-        const callbackName = 'jsonpCallbackUpdate_' + Math.round(100000 * Math.random());
-        
-        // IMPORTANT: Swap out this URL for your actual deployed Apps Script URL
-        const scriptUrl = "https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec"; 
-        
-        const url = `${scriptUrl}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&callback=${callbackName}`;
+        // 3. Build the URL (Notice there is no callback= part anymore)
+        const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}`;
 
-        window[callbackName] = function(result) {
+        // 4. Fire the secure fetch request that ignores Google accounts
+        fetch(url, {
+            method: 'GET',
+            credentials: 'omit'
+        })
+        .then(response => response.json()) // Tell the browser to expect JSON back
+        .then(result => {
             if (result.success) {
-                console.log(`${moduleName} securely logged to database!`);
-                // (Since the progress bar is on the dashboard, we just let this run silently in the background)
+                console.log(`${moduleName} securely logged to database! Overall: ${result.overallProgress}%, Day: ${result.dayProgress}%`);
+                
+                // Try to update the master dashboard progress bar if it exists on the current page
+                const progressText = document.getElementById('master-dash-progress-text');
+                const progressFill = document.getElementById('master-dash-progress-fill');
+                
+                if (progressText && progressFill) {
+                    progressText.innerText = `${result.overallProgress}%`;
+                    progressFill.style.width = `${result.overallProgress}%`;
+                }
+            } else {
+                console.error("Failed to update progress: ", result.error);
             }
-            delete window[callbackName];
-        };
-
-        const script = document.createElement('script');
-        script.src = url;
-        script.onload = () => script.remove();
-        document.body.appendChild(script);
+        })
+        .catch(error => {
+            console.error("Error logging progress:", error);
+        });
     }
 
+    function routeFromProfile() {
+    // Check the backpack for the flag we planted in Step 1
+    const tutorialDone = localStorage.getItem('tw_tutorial_complete');
+
+        if (tutorialDone === 'true') {
+            // They are a returning user. Skip the carousel entirely.
+            nextStep('gateway'); // (Change this if they should go to 'day1-dashboard' instead!)
+        } else {
+            // First time logging in. Send them to slide 1.
+            nextStep('tutorial');
+        }
+    }
     </script>
 </body>
 </html>
