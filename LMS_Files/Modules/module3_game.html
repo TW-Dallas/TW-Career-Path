@@ -201,205 +201,108 @@
             // }
         ];
         
-        let currentStep = 1;
-        let currentRound = 0;
-        let matchedCount = 0;
+const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+    let currentRound = 0;
+    let matchedCount = 0;
 
-        // Shuffle function to randomize draggables
-        function shuffle(array) {
-            let currentIndex = array.length, randomIndex;
-            while (currentIndex !== 0) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex--;
-                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-            }
-            return array;
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
         }
+        return array;
+    }
 
-        function loadRound(roundIndex) {
-            matchedCount = 0;
-            const roundData = gameData[roundIndex];
-            
-            document.getElementById('round-title').innerText = roundData.title;
-            
-            const dropZonesContainer = document.getElementById('drop-zones-container');
-            const draggablesContainer = document.getElementById('draggable-container');
-            
-            dropZonesContainer.innerHTML = '';
-            draggablesContainer.innerHTML = '';
+    function loadRound(roundIndex) {
+        matchedCount = 0;
+        const roundData = gameData[roundIndex];
+        document.getElementById('round-title').innerText = roundData.title;
+        const dropZonesContainer = document.getElementById('drop-zones-container');
+        const draggablesContainer = document.getElementById('draggable-container');
+        dropZonesContainer.innerHTML = '';
+        draggablesContainer.innerHTML = '';
 
-            // Generate Drop Zones
-            roundData.items.forEach(item => {
-                const col = document.createElement('div');
-                col.className = 'column-wrapper';
-                col.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}" style="width: 120px; height: 120px; margin-bottom: 5px; border-radius: 50%; object-fit: cover;">
-                    <h3 style="color: var(--dark-blue); margin: 0 0 10px 0; font-size: 1.1rem;">${item.name}</h3>
-                    <div class="drop-zone" data-pizza="${item.id}"></div>
-                `;
-                dropZonesContainer.appendChild(col);
+        roundData.items.forEach(item => {
+            const col = document.createElement('div');
+            col.className = 'column-wrapper';
+            col.innerHTML = `<img src="${item.img}" style="width: 120px; height: 120px; border-radius: 50%;"><h3 style="color: var(--dark-blue);">${item.name}</h3><div class="drop-zone" data-pizza="${item.id}"></div>`;
+            dropZonesContainer.appendChild(col);
+        });
+
+        const shuffledItems = shuffle([...roundData.items]);
+        shuffledItems.forEach(item => {
+            const pill = document.createElement('div');
+            pill.className = 'draggable-pill';
+            pill.setAttribute('draggable', 'true');
+            pill.id = `ing-${item.id}`;
+            pill.setAttribute('data-match', item.id);
+            pill.innerText = item.desc;
+            draggablesContainer.appendChild(pill);
+        });
+        attachEventListeners();
+    }
+    function attachEventListeners() {
+        const draggables = document.querySelectorAll('.draggable-pill');
+        const dropZones = document.querySelectorAll('.drop-zone');
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', (e) => {
+                draggable.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', draggable.id);
             });
-
-            // Generate Draggables (Shuffled)
-            const shuffledItems = shuffle([...roundData.items]);
-            shuffledItems.forEach(item => {
-                const pill = document.createElement('div');
-                pill.className = 'draggable-pill';
-                pill.setAttribute('draggable', 'true');
-                pill.id = `ing-${item.id}`;
-                pill.setAttribute('data-match', item.id);
-                pill.innerText = item.desc;
-                draggablesContainer.appendChild(pill);
-            });
-
-            attachEventListeners();
-        }
-
-        function attachEventListeners() {
-            const draggables = document.querySelectorAll('.draggable-pill');
-            const dropZones = document.querySelectorAll('.drop-zone');
-
-            draggables.forEach(draggable => {
-                draggable.addEventListener('dragstart', (e) => {
-                    draggable.classList.add('dragging');
-                    e.dataTransfer.setData('text/plain', draggable.id); 
-                });
-
-                draggable.addEventListener('dragend', () => {
-                    draggable.classList.remove('dragging');
-                });
-            });
-
-            dropZones.forEach(zone => {
-                zone.addEventListener('dragover', e => {
-                    e.preventDefault(); 
-                    if (!zone.classList.contains('correct')) {
-                        zone.classList.add('drag-over');
-                    }
-                });
-
-                zone.addEventListener('dragleave', () => {
-                    zone.classList.remove('drag-over');
-                });
-
-                zone.addEventListener('drop', e => {
-                    e.preventDefault();
-                    zone.classList.remove('drag-over');
-                    
-                    const draggingElement = document.querySelector('.dragging');
-                    if (!draggingElement) return;
-
-                    const expectedMatch = zone.getAttribute('data-pizza');
-                    const actualMatch = draggingElement.getAttribute('data-match');
-
-                    if (expectedMatch === actualMatch) {
-                        zone.appendChild(draggingElement);
-                        zone.classList.add('correct');
-                        
-                        draggingElement.setAttribute('draggable', 'false'); 
-                        draggingElement.style.cursor = 'default';
-                        draggingElement.style.boxShadow = 'none';
-                        draggingElement.style.width = '100%'; 
-                        
-                        matchedCount++;
-                        checkWinCondition();
-                    } else {
-                        zone.style.borderColor = 'var(--brand-red)'; 
-                        setTimeout(() => {
-                            if (!zone.classList.contains('correct')) {
-                                zone.style.borderColor = ''; 
-                            }
-                        }, 400);
-                    }
-                });
-            });
-        }
-
-        function checkWinCondition() {
-            if (matchedCount === gameData[currentRound].items.length) {
-                if (currentRound < gameData.length - 1) {
-                    document.getElementById('round-transition').style.display = 'block';
-                } else {
-                    document.getElementById('success-message').style.display = 'block';
-                    localStorage.setItem('mod3_complete', 'true');
+            draggable.addEventListener('dragend', () => draggable.classList.remove('dragging'));
+        });
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+            zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+            zone.addEventListener('drop', e => {
+                e.preventDefault();
+                zone.classList.remove('drag-over');
+                const draggingElement = document.querySelector('.dragging');
+                if (!draggingElement) return;
+                if (zone.getAttribute('data-pizza') === draggingElement.getAttribute('data-match')) {
+                    zone.appendChild(draggingElement);
+                    zone.classList.add('correct');
+                    draggingElement.setAttribute('draggable', 'false');
+                    matchedCount++;
+                    checkWinCondition();
                 }
-            }
-        }
-
-        function nextRound() {
-            document.getElementById('round-transition').style.display = 'none';
-            currentRound++;
-            loadRound(currentRound);
-        }
-
-        function completeModule() {
-            alert("Button is working!"); 
-            console.log("Button clicked!");
-            
-            // 1. Send data to Vault
-            sendProgressUpdate('Day 1 Mod 3');
-            
-            // 2. Backpack drop
-            localStorage.setItem('mod3_complete', 'true');
-
-            // 3. Teleport Home
-            window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1'; 
-        } // This one closing brace closes the function for everyone!
-
-    // The Web App URL so Module 1 can find the Vault
-    const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
-
-    function sendProgressUpdate(moduleName) {
-        // 1. Grab the ID and Market from the browser's memory
-        const market = localStorage.getItem('tw_market');
-        const id = localStorage.getItem('tw_id');
-        
-        // 2. Failsafe if they somehow aren't logged in
-        if (!market || !id) {
-            console.error("Session missing. Please log in from the dashboard.");
-            return;
-        }
-        
-        // 3. Build the secure URL
-        const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}`;
-
-        // 4. Fire the secure fetch request
-        fetch(url, {
-            method: 'GET',
-            credentials: 'omit'
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                console.log(`${moduleName} securely logged to database!`);
-            } else {
-                console.error("Failed to update progress: ", result.error);
-            }
-        })
-        .catch(error => {
-            console.error("Error logging progress:", error);
+            });
         });
     }
 
-    function finishAndReturn() {
-        // 1. Change the button so they know it's working
-        const btn = document.getElementById('btn-finish');
-        if (btn) {
-            btn.innerText = "Saving Progress...";
-            btn.style.pointerEvents = "none"; // Prevents them from clicking twice
+    function checkWinCondition() {
+        if (matchedCount === gameData[currentRound].items.length) {
+            if (currentRound < gameData.length - 1) {
+                document.getElementById('round-transition').style.display = 'block';
+            } else {
+                document.getElementById('success-message').style.display = 'block';
+            }
         }
-
-        // 2. Fire the checkmark to Google
-        sendProgressUpdate('Day 1 Mod 3');
-
-        // 3. THE BACKPACK DROP: Tell the browser they finished so the Dashboard unlocks Mod 2
-        localStorage.setItem('mod3_complete', 'true');
-
-        // 4. Wait 1.5 seconds for Google to catch it, then return directly to the Day 1 map
-        setTimeout(() => {
-            window.location.href = '../lms_dashboard.html#day1';
-        }, 1500);
     }
+
+    function nextRound() {
+        document.getElementById('round-transition').style.display = 'none';
+        currentRound++;
+        loadRound(currentRound);
+    }
+
+    function sendProgressUpdate(moduleName) {
+        const market = localStorage.getItem('tw_market');
+        const id = localStorage.getItem('tw_id');
+        if (!market || !id) return;
+        const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}`;
+        fetch(url, { method: 'GET', credentials: 'omit' });
+    }
+
+    function completeModule() {
+        sendProgressUpdate('Day 1 Mod 3');
+        localStorage.setItem('mod3_complete', 'true');
+        window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
+    }
+
+    window.onload = () => loadRound(currentRound);
     </script>
 </body>
 </html>
