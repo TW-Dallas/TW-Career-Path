@@ -572,16 +572,10 @@
             }
         ];
         
-        // Add these to the top of your script
+        // --- RELATIONAL TRACKING STATE ---
+        const moduleStartTime = Date.now(); // Start timer as soon as practice loads
+        let wrongClicks = 0;               // Tracks practice mistakes
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
-
-        function sendProgressUpdate(moduleName) {
-            const market = localStorage.getItem('tw_market');
-            const id = localStorage.getItem('tw_id');
-            if (!market || !id) return;
-            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}`;
-            fetch(url, { method: 'GET', credentials: 'omit' });
-        }
 
         let currentStep = 0;
         const posImage = document.getElementById('pos-image');
@@ -589,14 +583,11 @@
         const errorMsg = document.getElementById('error-message');
         const hitboxWrapper = document.getElementById('hitbox-wrapper');
 
-        // 🔥 FETCH THE GLOBAL HITBOXES AUTOMATICALLY 🔥
+        // Fetch the global hitboxes automatically
         fetch('Globals/LMS_Master_html.html')
             .then(response => response.text())
             .then(html => {
-                // Append the fetched buttons to the wrapper
                 hitboxWrapper.insertAdjacentHTML('beforeend', html);
-                
-                // Now that the hitboxes exist, start the simulator!
                 initializeSimulator();
             })
             .catch(error => {
@@ -605,25 +596,43 @@
             });
 
         function initializeSimulator() {
-            // Add event listeners to ALL hitboxes
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.addEventListener('click', function(e) {
-                    // If they clicked the correct one...
                     if (this.id === sequence[currentStep].activeHitbox) {
-                        errorMsg.style.display = 'none'; // Hide any previous error
-                        currentStep++; // Move to next step
-                        loadStep(currentStep); // Load it
+                        errorMsg.style.display = 'none'; 
+                        currentStep++; 
+                        loadStep(currentStep); 
                     } 
                 });
             });
 
-            // Add a click listener to the image itself to catch WRONG clicks
+            // Catch incorrect clicks
             posImage.addEventListener('click', function() {
                 errorMsg.style.display = 'block';
+                wrongClicks++; // Increment wrong clicks for Stage 1.1
             });
 
-            // Start the first step
             loadStep(0);
+        }
+
+        function sendProgressUpdate(moduleName, status = "Completed") {
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            if (!market || !id) return;
+
+            const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            
+            // Capture Practice mistakes to merge with Tutorial mistakes
+            const answers = {
+                "Stage 1.1 Wrong Clicks": wrongClicks,
+                "Stage 1.1 Status": "Finished Practice"
+            };
+            const answersStr = encodeURIComponent(JSON.stringify(answers));
+
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${status}`;
+            
+            console.log("SENDING STAGE 1.1 DATA: ", url);
+            fetch(url, { method: 'GET', credentials: 'omit' });
         }
 
         function loadStep(stepIndex) {
@@ -635,88 +644,67 @@
             }
 
             const stepData = sequence[stepIndex];
-            
-            // 1. Update Image
             posImage.src = stepData.image;
-            
-            // 2. Update Instructions
             instructionText.innerHTML = stepData.instruction;
             
-            // 3. Hide all hitboxes
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.style.display = 'none';
             });
             
-            // 4. Show the active hitbox and handle the arrow
             const activeHb = document.getElementById(stepData.activeHitbox);
             if (activeHb) {
                 activeHb.style.display = 'block';
-
-                // Ensure it's NEVER flipped in Stage 1.1
                 activeHb.classList.remove('arrow-bottom'); 
 
-                // Hide arrows starting at Step 39
                 if (stepIndex >= 39) { 
                     activeHb.classList.add('hide-arrow'); 
                 } else {
-                    activeHb.classList.remove('hide-arrow'); // Keep visible before 39
-                }
-            } else {
-                console.warn("Hitbox not found: " + stepData.activeHitbox);
+                    activeHb.classList.remove('hide-arrow'); 
+not                }
             }
             
-            // 5. Toggle Finish Button Visibility
             const finishBtn = document.getElementById('finish-sim-btn');
             if (finishBtn) {
                 if (stepIndex === sequence.length - 1) {
-                    finishBtn.style.display = 'inline-block'; // Show on the very last step
+                    finishBtn.style.display = 'inline-block'; 
                 } else {
-                    finishBtn.style.display = 'none'; // Hide everywhere else
+                    finishBtn.style.display = 'none'; 
                 }
             }
         }
         
         function endSimulation() {
-            // 1. Swap to the construction image
             posImage.src = "resources/POS_assets/Stage_1.1/under_construction.png"; 
-            
-            // 2. Update the text panel to instruct them to click the new button
             instructionText.innerHTML = "<strong>Stage 1.1 Complete</strong><br><br>The next phase of the simulator is currently in development.<br><br>Click the red button below to save your progress and return to the Day 1 Dashboard.";
-            
-            // 3. Hide all hitboxes
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
             
-            // 4. SHAPESHIFT THE BUTTON: Keep it visible, but change the text
             const finishBtn = document.getElementById('finish-sim-btn');
             finishBtn.style.display = 'inline-block'; 
             finishBtn.innerText = "Save & Return to Day 1"; 
 
-            // 5. REWIRE THE CLICK: Change what the button does when clicked again
             finishBtn.onclick = function() {
-                // Visual feedback
                 finishBtn.innerText = "Saving...";
                 finishBtn.style.pointerEvents = "none";
                 finishBtn.style.opacity = "0.5";
 
-                // THE PIPELINE
-                sendProgressUpdate('Day 1 Mod 4');
+                // Save time and answers, then mark module as Complete
+                sendProgressUpdate('Day 1 Mod 4', 'Completed');
                 localStorage.setItem('mod4_complete', 'true');
 
-                // TELEPORT (This replaces the need for them to use the top-left navigation)
                 setTimeout(() => {
                     window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
-                }, 1000);
+                }, 1500);
             };
         }
 
-            function goBack() {
+        function goBack() {
             if (currentStep > 0) {
                 currentStep--;
                 loadStep(currentStep);
             }        
         }
 
-            function goNext() {
+        function goNext() {
             if (currentStep < sequence.length - 1) {
                 currentStep++;
                 loadStep(currentStep);

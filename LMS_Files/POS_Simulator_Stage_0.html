@@ -61,7 +61,7 @@
     </div>
 
     <!-- JAVASCRIPT FOR STAGE 0 -->
-    <script>
+<script>
         // Sequence Data
         const sequence = [
             {
@@ -252,20 +252,21 @@
             }
         ];
 
-        let currentStep = 0;
+        // --- RELATIONAL TRACKING STATE ---
+        const moduleStartTime = Date.now();
+        let wrongClicks = 0;
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+
         const posImage = document.getElementById('pos-image');
         const instructionText = document.getElementById('instruction-text');
         const errorMsg = document.getElementById('error-message');
         const hitboxWrapper = document.getElementById('hitbox-wrapper');
 
-        // 🔥 FETCH THE GLOBAL HITBOXES AUTOMATICALLY 🔥
+        // Fetch the global hitboxes automatically
         fetch('Globals/LMS_Master_html.html')
             .then(response => response.text())
             .then(html => {
-                // Append the fetched buttons to the wrapper
                 hitboxWrapper.insertAdjacentHTML('beforeend', html);
-                
-                // Now that the hitboxes exist, start the simulator!
                 initializeSimulator();
             })
             .catch(error => {
@@ -274,74 +275,86 @@
             });
 
         function initializeSimulator() {
-            // Add event listeners to ALL hitboxes
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.addEventListener('click', function(e) {
-                    // If they clicked the correct one...
                     if (this.id === sequence[currentStep].activeHitbox) {
-                        errorMsg.style.display = 'none'; // Hide any previous error
-                        currentStep++; // Move to next step
-                        loadStep(currentStep); // Load it
+                        errorMsg.style.display = 'none'; 
+                        currentStep++; 
+                        loadStep(currentStep); 
                     } 
                 });
             });
 
-            // Add a click listener to the image itself to catch WRONG clicks
+            // Tracks incorrect clicks
             posImage.addEventListener('click', function() {
                 errorMsg.style.display = 'block';
+                wrongClicks++; // Increments the error counter
             });
 
-            // Start the first step
             loadStep(0);
+        }
+
+        function sendProgressUpdate(moduleName, status = "In Progress") {
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            if (!market || !id) return;
+
+            const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            
+            // Build the starting object for Module 4 Answers
+            const answers = {
+                "Stage 0 Wrong Clicks": wrongClicks,
+                "Stage 0 Status": "Completed Tutorial"
+            };
+            const answersStr = encodeURIComponent(JSON.stringify(answers));
+
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${status}`;
+            
+            console.log("SENDING STAGE 0 TIME: ", url);
+            fetch(url, { method: 'GET', credentials: 'omit' });
         }
 
         function loadStep(stepIndex) {
             if (stepIndex >= sequence.length) {
-                // Seamlessly redirect to Stage 1.1 the moment the final hitbox is clicked
-                window.location.href = "POS_Simulator_Stage_1.1.html";
+                // Write progress before redirecting
+                sendProgressUpdate('Day 1 Mod 4', 'In Progress');
+
+                // Redirect to Stage 1.1 after 1 second buffer
+                setTimeout(() => {
+                    window.location.href = "POS_Simulator_Stage_1.1.html";
+                }, 1000);
                 return;
             }
 
             const stepData = sequence[stepIndex];
-            
-            // 1. Update Image
             posImage.src = stepData.image;
-            
-            // 2. Update Instructions
             instructionText.innerHTML = stepData.instruction;
             
-            // 3. Hide all hitboxes
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.style.display = 'none';
             });
             
-            // 4. Show the active hitbox and handle the arrow
             const activeHb = document.getElementById(stepData.activeHitbox);
             if (activeHb) {
                 activeHb.style.display = 'block';
-
-                // ONLY IN STAGE 0: Flip the arrow to the bottom for the very first step
                 if (stepIndex === 0) {
                     activeHb.classList.add('arrow-bottom');
                 } else {
                     activeHb.classList.remove('arrow-bottom'); 
                 }
-
-                // Stage 0 doesn't hide arrows, so ensure they are always visible
                 activeHb.classList.remove('hide-arrow'); 
-                
-            } else {
-                console.warn("Hitbox not found: " + stepData.activeHitbox);
             }
         }
-              function goBack() {
+
+        function goBack() {
             if (currentStep > 0) {
                 currentStep--;
                 loadStep(currentStep);
             }        
         }
-              function goNext() {
-        if (currentStep < sequence.length - 1) {
+
+        function goNext() {
+            if (currentStep < sequence.length - 1) {
                 currentStep++;
                 loadStep(currentStep);
             }

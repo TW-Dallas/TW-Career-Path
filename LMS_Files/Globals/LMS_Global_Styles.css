@@ -99,13 +99,23 @@
       padding-bottom: 60px; /* Keep this so buttons don't overlap */
   } 
 
-  .error-msg { 
-      color: var(--brand-red); 
-      font-weight: bold; 
-      margin-top: 15px; 
-      display: none; 
-      text-align: right; 
+.error-msg { 
+      display: none; /* Controlled dynamically by JavaScript */
+      background-color: rgba(255, 0, 0, 0.06); /* Soft opacity of var(--brand-red) */
+      border: 1px solid rgba(255, 0, 0, 0.15); /* Soft border using var(--brand-red) */
+      border-left: 5px solid var(--brand-red);  /* Solid established brand red accent */
+      color: var(--dark-red);                  /* Established dark red font */
+      padding: 12px 16px; 
+      border-radius: 8px; 
+      font-family: 'OneDotCd-Bold', sans-serif;
+      font-size: 1.05rem;
+      margin: 15px 0; 
+      box-sizing: border-box; 
+      text-align: center;
+      width: 100%;
+      animation: fadeIn 0.2s ease-out;
   }
+  
   /* RIGHT: POS Screen */
   #pos-container {
       height: 100%; 
