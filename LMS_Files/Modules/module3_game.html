@@ -168,7 +168,7 @@
             Back to Day 1
         </button>    
     </div>
-    <script>
+<script>
         // --- GAME DATA ---
         // Edit this array to add your Canva images and ingredient descriptions for Rounds 2 & 3.
         const gameData = [
@@ -180,129 +180,146 @@
                     { id: "veggie", name: "Pacific Veggie", img: "../../image/Veggie.png", desc: "Fresh baby spinach, fresh onions, fresh mushrooms, tomatoes, black olives, feta, provolone, cheese made with 100% real mozzarella and sprinkled with a garlic herb seasoning." },
                     { id: "hawaiian", name: "Honolulu Hawaiian", img: "../../image/Hawaiian.png", desc: "Sliced ham, smoked bacon, pineapple, fresh green peppers, provolone and cheese made with 100% real mozzarella." }
                 ]
-            },
-            // {
-            //     title: "Round 2: Breads & Sides",
-            //     items: [
-            //         { id: "item1", name: "Placeholder Item 1", img: "../../image/Placeholder.png", desc: "Placeholder description for item 1." },
-            //         { id: "item2", name: "Placeholder Item 2", img: "../../image/Placeholder.png", desc: "Placeholder description for item 2." },
-            //         { id: "item3", name: "Placeholder Item 3", img: "../../image/Placeholder.png", desc: "Placeholder description for item 3." },
-            //         { id: "item4", name: "Placeholder Item 4", img: "../../image/Placeholder.png", desc: "Placeholder description for item 4." }
-            //     ]
-            // },
-            // {
-            //     title: "Round 3: Chicken & Desserts",
-            //     items: [
-            //         { id: "item5", name: "Placeholder Item 5", img: "../../image/Placeholder.png", desc: "Placeholder description for item 5." },
-            //         { id: "item6", name: "Placeholder Item 6", img: "../../image/Placeholder.png", desc: "Placeholder description for item 6." },
-            //         { id: "item7", name: "Placeholder Item 7", img: "../../image/Placeholder.png", desc: "Placeholder description for item 7." },
-            //         { id: "item8", name: "Placeholder Item 8", img: "../../image/Placeholder.png", desc: "Placeholder description for item 8." }
-            //     ]
-            // }
+            }
         ];
         
-const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
-    let currentRound = 0;
-    let matchedCount = 0;
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+        let currentRound = 0;
+        let matchedCount = 0;
 
-    function shuffle(array) {
-        let currentIndex = array.length, randomIndex;
-        while (currentIndex !== 0) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex--;
-            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        // --- RELATIONAL TRACKING STATE ---
+        const moduleStartTime = Date.now(); // Start tracking game duration immediately
+        let userAnswers = {};               // Collects matching pairs as they are correctly dragged
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
         }
-        return array;
-    }
 
-    function loadRound(roundIndex) {
-        matchedCount = 0;
-        const roundData = gameData[roundIndex];
-        document.getElementById('round-title').innerText = roundData.title;
-        const dropZonesContainer = document.getElementById('drop-zones-container');
-        const draggablesContainer = document.getElementById('draggable-container');
-        dropZonesContainer.innerHTML = '';
-        draggablesContainer.innerHTML = '';
+        function loadRound(roundIndex) {
+            matchedCount = 0;
+            const roundData = gameData[roundIndex];
+            document.getElementById('round-title').innerText = roundData.title;
+            const dropZonesContainer = document.getElementById('drop-zones-container');
+            const draggablesContainer = document.getElementById('draggable-container');
+            dropZonesContainer.innerHTML = '';
+            draggablesContainer.innerHTML = '';
 
-        roundData.items.forEach(item => {
-            const col = document.createElement('div');
-            col.className = 'column-wrapper';
-            col.innerHTML = `<img src="${item.img}" style="width: 120px; height: 120px; border-radius: 50%;"><h3 style="color: var(--dark-blue);">${item.name}</h3><div class="drop-zone" data-pizza="${item.id}"></div>`;
-            dropZonesContainer.appendChild(col);
-        });
-
-        const shuffledItems = shuffle([...roundData.items]);
-        shuffledItems.forEach(item => {
-            const pill = document.createElement('div');
-            pill.className = 'draggable-pill';
-            pill.setAttribute('draggable', 'true');
-            pill.id = `ing-${item.id}`;
-            pill.setAttribute('data-match', item.id);
-            pill.innerText = item.desc;
-            draggablesContainer.appendChild(pill);
-        });
-        attachEventListeners();
-    }
-    function attachEventListeners() {
-        const draggables = document.querySelectorAll('.draggable-pill');
-        const dropZones = document.querySelectorAll('.drop-zone');
-        draggables.forEach(draggable => {
-            draggable.addEventListener('dragstart', (e) => {
-                draggable.classList.add('dragging');
-                e.dataTransfer.setData('text/plain', draggable.id);
+            roundData.items.forEach(item => {
+                const col = document.createElement('div');
+                col.className = 'column-wrapper';
+                col.innerHTML = `<img src="${item.img}" style="width: 120px; height: 120px; border-radius: 50%;"><h3 style="color: var(--dark-blue);">${item.name}</h3><div class="drop-zone" data-pizza="${item.id}"></div>`;
+                dropZonesContainer.appendChild(col);
             });
-            draggable.addEventListener('dragend', () => draggable.classList.remove('dragging'));
-        });
-        dropZones.forEach(zone => {
-            zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
-            zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-            zone.addEventListener('drop', e => {
-                e.preventDefault();
-                zone.classList.remove('drag-over');
-                const draggingElement = document.querySelector('.dragging');
-                if (!draggingElement) return;
-                if (zone.getAttribute('data-pizza') === draggingElement.getAttribute('data-match')) {
-                    zone.appendChild(draggingElement);
-                    zone.classList.add('correct');
-                    draggingElement.setAttribute('draggable', 'false');
-                    matchedCount++;
-                    checkWinCondition();
+
+            const shuffledItems = shuffle([...roundData.items]);
+            shuffledItems.forEach(item => {
+                const pill = document.createElement('div');
+                pill.className = 'draggable-pill';
+                pill.setAttribute('draggable', 'true');
+                pill.id = `ing-${item.id}`;
+                pill.setAttribute('data-match', item.id);
+                pill.innerText = item.desc;
+                draggablesContainer.appendChild(pill);
+            });
+            attachEventListeners();
+        }
+
+        function attachEventListeners() {
+            const draggables = document.querySelectorAll('.draggable-pill');
+            const dropZones = document.querySelectorAll('.drop-zone');
+            
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', (e) => {
+                    draggable.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', draggable.id);
+                });
+                draggable.addEventListener('dragend', () => draggable.classList.remove('dragging'));
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+                zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+                zone.addEventListener('drop', e => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    const draggingElement = document.querySelector('.dragging');
+                    if (!draggingElement) return;
+                    
+                    if (zone.getAttribute('data-pizza') === draggingElement.getAttribute('data-match')) {
+                        zone.appendChild(draggingElement);
+                        zone.classList.add('correct');
+                        draggingElement.setAttribute('draggable', 'false');
+                        matchedCount++;
+                        
+                        // --- ANSWER CAPTURING LOGIC ---
+                        // Find the pizza name (h3 element) above the drop zone, and match it with the text description
+                        const itemName = zone.previousElementSibling ? zone.previousElementSibling.innerText : "Unknown Item";
+                        const itemDesc = draggingElement.innerText;
+                        userAnswers[itemName] = itemDesc; // Logs match to userAnswers
+                        
+                        checkWinCondition();
+                    }
+                });
+            });
+        }
+
+        function checkWinCondition() {
+            if (matchedCount === gameData[currentRound].items.length) {
+                if (currentRound < gameData.length - 1) {
+                    document.getElementById('round-transition').style.display = 'block';
+                } else {
+                    document.getElementById('success-message').style.display = 'block';
                 }
-            });
-        });
-    }
-
-    function checkWinCondition() {
-        if (matchedCount === gameData[currentRound].items.length) {
-            if (currentRound < gameData.length - 1) {
-                document.getElementById('round-transition').style.display = 'block';
-            } else {
-                document.getElementById('success-message').style.display = 'block';
             }
         }
-    }
 
-    function nextRound() {
-        document.getElementById('round-transition').style.display = 'none';
-        currentRound++;
-        loadRound(currentRound);
-    }
+        function nextRound() {
+            document.getElementById('round-transition').style.display = 'none';
+            currentRound++;
+            loadRound(currentRound);
+        }
 
-    function sendProgressUpdate(moduleName) {
-        const market = localStorage.getItem('tw_market');
-        const id = localStorage.getItem('tw_id');
-        if (!market || !id) return;
-        const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}`;
-        fetch(url, { method: 'GET', credentials: 'omit' });
-    }
+        function sendProgressUpdate(moduleName) {
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            if (!market || !id) return;
+            
+            // Calculate active seconds spent playing
+            const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            
+            // Format and stringify matching pairs
+            const answersStr = encodeURIComponent(JSON.stringify(userAnswers));
+            
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=Completed`;
+            
+            console.log("SENDING DATA TO VAULT: ", url);
+            fetch(url, { method: 'GET', credentials: 'omit' });
+        }
 
-    function completeModule() {
-        sendProgressUpdate('Day 1 Mod 3');
-        localStorage.setItem('mod3_complete', 'true');
-        window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
-    }
+        function completeModule() {
+            // Change button text to give user visual feedback of saving state
+            const btn = document.getElementById('btn-finish');
+            if (btn) {
+                btn.innerText = "Saving Progress...";
+                btn.style.pointerEvents = "none"; // Prevents multiple rapid clicks
+            }
 
-    window.onload = () => loadRound(currentRound);
+            sendProgressUpdate('Day 1 Mod 3');
+            localStorage.setItem('mod3_complete', 'true');
+            
+            // Give 1.5 seconds for the Google Sheet request to complete before redirecting
+            setTimeout(() => {
+                window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
+            }, 1500);
+        }
+
+        window.onload = () => loadRound(currentRound);
     </script>
 </body>
 </html>

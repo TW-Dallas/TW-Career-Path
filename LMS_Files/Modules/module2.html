@@ -117,6 +117,10 @@
         let quizPassed = false;
         let player;
 
+        // --- RELATIONAL TRACKING STATE ---
+        const moduleStartTime = Date.now(); // Starts the timer immediately on load
+        let userAnswers = {};               // Collects options as they answer the quiz
+
         // Load the YouTube IFrame Player API code asynchronously.
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -167,7 +171,9 @@
             
             const nextBtn = document.getElementById('btn-next');
             const feedback = document.getElementById('quiz-feedback');
-
+            
+            userAnswers['q' + questionNumber] = element.innerText.trim();
+            
             if (isCorrect) {
                 feedback.style.display = 'none';
                 if (questionNumber === 3) {
@@ -240,40 +246,45 @@
         }
     }
 
-    // The Web App URL so Module 1 can find the Vault
-    const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+    // The Web App URL so Module 2 can find the Vault
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
 
-    function sendProgressUpdate(moduleName) {
-        // 1. Grab the ID and Market from the browser's memory
-        const market = localStorage.getItem('tw_market');
-        const id = localStorage.getItem('tw_id');
-        
-        // 2. Failsafe if they somehow aren't logged in
-        if (!market || !id) {
-            console.error("Session missing. Please log in from the dashboard.");
-            return;
-        }
-        
-        // 3. Build the secure URL
-        const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}`;
-
-        // 4. Fire the secure fetch request
-        fetch(url, {
-            method: 'GET',
-            credentials: 'omit'
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                console.log(`${moduleName} securely logged to database!`);
-            } else {
-                console.error("Failed to update progress: ", result.error);
+        function sendProgressUpdate(moduleName) {
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            
+            if (!market || !id) {
+                console.error("Session missing. Please log in from the dashboard.");
+                return;
             }
-        })
-        .catch(error => {
-            console.error("Error logging progress:", error);
-        });
-    }
+            
+            // Calculate active seconds spent since loading
+            const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            
+            // Stringify and safely encode JSON responses
+            const answersStr = encodeURIComponent(JSON.stringify(userAnswers));
+            
+            // Package all information safely to update tracking
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=Completed`;
+            
+            console.log("SENDING DATA TO VAULT: ", url);
+            
+            fetch(url, {
+                method: 'GET',
+                credentials: 'omit'
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    console.log(`${moduleName} securely logged to database!`);
+                } else {
+                    console.error("Failed to update progress: ", result.error);
+                }
+            })
+            .catch(error => {
+                console.error("Error logging progress:", error);
+            });
+        }
 
     function finishAndReturn() {
         // 1. Change the button so they know it's working
