@@ -278,12 +278,16 @@
 
     </div>
 
-    <script>
+<script>
         let currentStep = 1;
         let videoWatched = false;
         let currentQuizStep = 1;
         let quizPassed = false;
         let player;
+
+        // --- RELATIONAL TRACKING STATE ---
+        const moduleStartTime = Date.now(); // Starts the timer immediately on load
+        let userAnswers = {};               // Collects options as they answer the quiz
 
         // Load the YouTube IFrame Player API code asynchronously.
         var tag = document.createElement('script');
@@ -296,7 +300,7 @@
             player = new YT.Player('youtube-player', {
                 height: '100%',
                 width: '100%',
-                    videoId: 'Ihgs-E77W3M', // This is a placeholder YouTube ID. Swap it tomorrow.
+                videoId: 'Ihgs-E77W3M', // Placeholder YouTube ID. Swap it tomorrow.
                 playerVars: {
                     'playsinline': 1,
                     'rel': 0, // Don't show related videos at the end
@@ -316,7 +320,7 @@
 
         // The API calls this function when the player's state changes.
         function onPlayerStateChange(event) {
-            // event.data === 1 means the video has started playing (User clicked it!)
+            // event.data === 1 means the video has started playing
             if (event.data === 1) {
                 event.target.unMute();
                 event.target.setVolume(100);
@@ -328,7 +332,6 @@
                 const nextBtn = document.getElementById('btn-next');
                 nextBtn.classList.remove('btn-disabled');
                 
-                // Optional: Change the subtext to green to show it's done
                 document.querySelector('#content-video p').innerText = "Video Complete!";
                 document.querySelector('#content-video p').style.color = "#4CAF50";
             }
@@ -341,6 +344,9 @@
             
             const nextBtn = document.getElementById('btn-next');
             const feedback = document.getElementById('quiz-feedback');
+
+            // Save user response text in userAnswers object
+            userAnswers['q' + questionNumber] = element.innerText.trim();
 
             if (isCorrect) {
                 feedback.style.display = 'none';
@@ -402,62 +408,61 @@
             }
         }
 
-    // The Web App URL so Module 1 can find the Vault
-    const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
 
-    function sendProgressUpdate(moduleName) {
-        // 1. Grab the ID and Market from the browser's memory
-        const market = localStorage.getItem('tw_market');
-        const id = localStorage.getItem('tw_id');
-        
-        // 2. Failsafe if they somehow aren't logged in
-        if (!market || !id) {
-            console.error("Session missing. Please log in from the dashboard.");
-            return;
-        }
-        
-        // 3. Build the secure URL
-        const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}`;
-        
-        console.log("SENDING DATA TO VAULT: ", url);
-        
-        // 4. Fire the secure fetch request
-        fetch(url, {
-            method: 'GET',
-            credentials: 'omit'
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                console.log(`${moduleName} securely logged to database!`);
-            } else {
-                console.error("Failed to update progress: ", result.error);
+        function sendProgressUpdate(moduleName) {
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            
+            if (!market || !id) {
+                console.error("Session missing. Please log in from the dashboard.");
+                return;
             }
-        })
-        .catch(error => {
-            console.error("Error logging progress:", error);
-        });
-    }
-
-    function finishAndReturn() {
-        // 1. Change the button so they know it's working
-        const btn = document.getElementById('btn-finish');
-        if (btn) {
-            btn.innerText = "Saving Progress...";
-            btn.style.pointerEvents = "none"; // Prevents them from clicking twice
+            
+            // Calculate active seconds spent since loading
+            const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            
+            // Stringify and safely encode JSON responses
+            const answersStr = encodeURIComponent(JSON.stringify(userAnswers));
+            
+            // Package all information safely to update tracking
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=Completed`;
+            
+            console.log("SENDING DATA TO VAULT: ", url);
+            
+            fetch(url, {
+                method: 'GET',
+                credentials: 'omit'
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    console.log(`${moduleName} securely logged to database!`);
+                } else {
+                    console.error("Failed to update progress: ", result.error);
+                }
+            })
+            .catch(error => {
+                console.error("Error logging progress:", error);
+            });
         }
 
-        // 2. Fire the checkmark to Google
-        sendProgressUpdate('Day 1 Mod 1');
+        function finishAndReturn() {
+            const btn = document.getElementById('btn-finish');
+            if (btn) {
+                btn.innerText = "Saving Progress...";
+                btn.style.pointerEvents = "none"; 
+            }
 
-        // 3. THE BACKPACK DROP: Tell the browser they finished so the Dashboard unlocks Mod 2
-        localStorage.setItem('mod1_complete', 'true');
+            // Save status, time, and answers
+            sendProgressUpdate('Day 1 Mod 1');
 
-        // 4. Wait 1.5 seconds for Google to catch it, then return directly to the Day 1 map
-        setTimeout(() => {
-            window.location.href = '../lms_dashboard.html#day1';
-        }, 1500);
-    }
+            localStorage.setItem('mod1_complete', 'true');
+
+            setTimeout(() => {
+                window.location.href = '../lms_dashboard.html#day1';
+            }, 1500);
+        }
     </script>
 </body>
 </html>
