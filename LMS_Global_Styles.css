@@ -33,7 +33,38 @@
       --crust-deep: #603913;
       --crust-burnt: #472b10;
   }
-  
+  /* --- HEADER & LOGO LAYOUT (MATCHING INITIAL DESIGN) --- */
+    :root {
+        --border-radius: 12px;
+        --transition: all 0.3s ease;
+    }
+
+    header {
+        background-color: white; /* Keeps the top header background white */
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .logo-img {
+        max-height: 80px; /* Restricts your logo from becoming giant */
+        width: auto;
+    }
+
+    .tagline {
+        font-family: 'OneDotCd', sans-serif;
+        font-size: 1rem;
+        color: var(--crust-deep);
+        margin: 0 auto;
+        text-align: center; /* Centers "Growing Leaders. Building Futures." */
+    }
+
   body {
       font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
       margin: 0;
