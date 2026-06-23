@@ -1,3 +1,410 @@
+  /* --- FONT LOADING --- */
+  @font-face {
+      font-family: 'PizzaPress';
+      src: url('../../fonts/Dominos Sans Header 1.ttf') format('truetype');
+      font-weight: normal;
+  }
+  @font-face {
+      font-family: 'OneDotCd-Bold';
+      src: url('../../fonts/Dominos Sans Bold.ttf') format('truetype');
+      font-weight: bold;
+  }
+  @font-face {
+      font-family: 'OneDotCd';
+      src: url('../../fonts/Dominos Sans Body.ttf') format('truetype');
+      font-weight: normal;
+  }
+  @font-face {
+      font-family: 'Subhead2';
+      src: url('../../fonts/Dominos Sans Subhead 2.ttf') format('truetype');
+      font-weight: normal;
+  }
+  /* --- GLOBAL CRUST PALETTE --- */
+  :root {
+      --brand-red: #ff0000;
+      --dark-red: #910000;
+      --brand-blue: #0090e2;
+      --med-blue: #0077bd;
+      --dark-blue: #005c91;
+      --crust-base: #fefaf6;
+      --crust-light: #faf2e9;
+      --crust-med: #f0decc;
+      --crust-dark: #c0a588;
+      --crust-deep: #603913;
+      --crust-burnt: #472b10;
+  }
+  
+  body {
+      font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--crust-light);
+      display: block; /* CHANGED FROM FLEX */
+      height: 100vh;
+      color: var(--crust-deep);
+  }
+
+  /* --- MOBILE BLOCKER --- */
+  #mobile-blocker {
+      display: none;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--dark-blue); color: white;
+      text-align: center; padding: 40px; z-index: 9999;
+  }
+  @media (max-width: 768px) {
+      #mobile-blocker { display: flex; flex-direction: column; justify-content: center; }
+      #simulator-wrapper { display: none !important; }
+  }
+
+  /* --- SPLIT VIEW LAYOUT --- */
+  #simulator-wrapper {
+      display: flex;
+      width: 95%; max-width: 1400px;
+      height: 75vh; 
+      margin: 6vh auto; /* CHANGED: Pushes it down 6% of the screen */
+      background: var(--crust-base);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      overflow: hidden; 
+      border: 2px solid var(--crust-med);
+  }
+
+  /* LEFT: Instructions Panel */
+  #instruction-panel {
+      position: relative; /* REQUIRED FOR BUTTON POSITIONING */
+      flex-grow: 1; 
+      background: white;
+      padding: 30px;
+      border-right: 2px solid var(--crust-med);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto; 
+  }
+  
+  h2 { 
+      font-family: 'PizzaPress', 'Arial Narrow', sans-serif; /* Big headers */
+      color: var(--dark-blue); 
+      margin-top: 0; 
+      text-transform: uppercase; 
+      border-bottom: 2px solid var(--brand-red); 
+      padding-bottom: 5px;
+  }
+
+  #instruction-text { 
+      font-family: 'OneDotCd', 'Arial Narrow', sans-serif; 
+      font-size: 1.1rem; /* Dropped from 1.1rem */
+      line-height: 1.4; 
+      margin-top: 15px; 
+      flex-grow: 1; 
+      padding-bottom: 60px; /* Keep this so buttons don't overlap */
+  } 
+
+.error-msg { 
+      display: none; /* Controlled dynamically by JavaScript */
+      background-color: rgba(255, 0, 0, 0.06); /* Soft opacity of var(--brand-red) */
+      border: 1px solid rgba(255, 0, 0, 0.15); /* Soft border using var(--brand-red) */
+      border-left: 5px solid var(--brand-red);  /* Solid established brand red accent */
+      color: var(--dark-red);                  /* Established dark red font */
+      padding: 12px 16px; 
+      border-radius: 8px; 
+      font-family: 'OneDotCd-Bold', sans-serif;
+      font-size: 1.05rem;
+      margin: 15px 0; 
+      box-sizing: border-box; 
+      text-align: center;
+      width: 100%;
+      animation: fadeIn 0.2s ease-out;
+  }
+  
+  /* RIGHT: POS Screen */
+  #pos-container {
+      height: 100%; 
+      max-width: 75%; 
+      aspect-ratio: 1600 / 1200; 
+      background: #000;
+      position: relative;
+  }
+
+  /* The actual POS Image */
+  #pos-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; 
+  }
+
+  /* The wrapper that holds the image and hitboxes */
+  #hitbox-wrapper {
+      position: relative;
+      display: inline-block; 
+  }
+
+  /* --- HITBOXES (Invisible with Arrows) --- */
+    .hitbox {
+        position: absolute;
+        cursor: default; /* Stops the mouse from turning into a hand */
+        display: none;
+        z-index: 10;
+        background: transparent;
+        border: none;
+        user-select: none; /* Stops text selection */
+        caret-color: transparent; /* Makes the blinking typing cursor invisible */
+    }
+  
+  .hitbox::before {
+      content: '';
+      position: absolute;
+      top: -50px; 
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px; 
+      height: 40px; 
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff0000"><path d="M12 21l-9-9h6V3h6v9h6z"/></svg>');
+      background-size: contain;
+      background-repeat: no-repeat;
+      filter: drop-shadow(0 4px 4px rgba(0,0,0,0.5));
+      animation: bounce 1s infinite;
+      animation-delay: 1s; 
+      opacity: 0; 
+      animation-fill-mode: forwards; 
+      pointer-events: none;
+  }
+
+  @keyframes bounce {
+      0% { top: -50px; opacity: 1; }
+      50% { top: -35px; opacity: 1; }
+      100% { top: -50px; opacity: 1; }
+  }
+
+  .hitbox.arrow-bottom::before {
+      top: auto; 
+      bottom: -50px; 
+      transform: translateX(-50%) rotate(180deg); 
+      animation: bounceBottomUp 1s infinite;
+      animation-delay: 1s; 
+      opacity: 0; 
+      animation-fill-mode: forwards; 
+  }
+  
+  @keyframes bounceBottomUp {
+      0% { bottom: -50px; opacity: 1; }
+      50% { bottom: -35px; opacity: 1; } 
+      100% { bottom: -50px; opacity: 1; }
+  }
+
+  /* --- POS TICKET STYLING --- */  
+  .pos-ticket {
+      background-color: var(--crust-light);
+      border-left: 5px solid var(--brand-blue);
+      padding: 12px 10px 8px 10px; /* +2px top, +6px bottom for breathing room */
+      margin: 10px 0 2px 0; /* Shaved margin to compensate for padding */
+      border-radius: 4px;
+      font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
+      color: var(--crust-burnt);
+      font-size: 1.0rem;
+      line-height: 1.5; /* Increased for clear line separation */
+  }
+
+  .pos-ticket-header {
+      font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif;
+      color: var(--dark-blue);
+      font-size: 1.15rem; /* Dropped from 1.4rem */
+      margin-bottom: 6px;
+      font-weight: bold;
+  }
+
+  /* The Master Button Template */
+  .btn {
+      display: inline-block;
+      background: var(--brand-blue);
+      color: var(--crust-base);
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-family: 'OneDotCd-Bold';
+      text-decoration: none;
+      transition: 0.3s ease;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+  }
+  
+  .btn:hover {
+      opacity: 0.8;
+  }
+
+  /* The Red Override */
+  .btn-finish {
+      background: var(--brand-red);
+  }
+
+  .hitbox.hide-arrow::before { display: none !important; }
+
+    .classroom-container {
+        max-width: 900px;
+        margin: 2rem auto;
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        overflow: hidden;
+        border-top: 6px solid var(--brand-blue);
+    }
+    
+    .classroom-header {
+        background: var(--crust-light);
+        padding: 1.5rem 2rem;
+        border-bottom: 2px solid var(--crust-med);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .module-title {
+        font-family: 'OneDotCd-Bold';
+        font-size: 1.8rem;
+        color: var(--dark-blue);
+        margin: 0;
+        text-transform: uppercase;
+    }
+
+    .step-indicator {
+        font-family: 'OneDotCd-Bold';
+        color: var(--brand-blue);
+        background: rgba(0, 144, 226, 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+    }
+
+    .classroom-content {
+        padding: 2rem;
+        min-height: 400px; /* Keep height stable during transitions */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* --- Step 1: Video --- */
+    .video-wrapper {
+        width: 100%;
+        background: #000;
+        aspect-ratio: 16/9;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+    
+    .mock-play-btn {
+        font-size: 4rem;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    .mock-play-btn:hover { transform: scale(1.1); }
+
+    /* --- Step 2: Knowledge Check --- */
+    .quiz-container {
+        width: 100%;
+        max-width: 600px;
+        text-align: left;
+    }
+
+    .quiz-question {
+        font-family: 'OneDotCd-Bold';
+        font-size: 1.4rem;
+        color: var(--crust-deep);
+        margin-bottom: 1.5rem;
+    }
+
+    .quiz-option {
+        display: block;
+        width: 100%;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background: var(--crust-base);
+        border: 2px solid var(--crust-med);
+        border-radius: 8px;
+        font-family: 'OneDotCd';
+        font-size: 1.1rem;
+        color: var(--crust-deep);
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: left;
+    }
+
+    .quiz-option:hover {
+        border-color: var(--brand-blue);
+        background: rgba(0, 144, 226, 0.05);
+    }
+
+    .quiz-option.selected {
+        border-color: var(--brand-blue);
+        background: var(--brand-blue);
+        color: var(--crust-base);
+    }
+
+    /* --- Step 3: Prompt --- */
+    .prompt-container {
+        text-align: center;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .prompt-icon {
+        font-size: 5rem;
+        margin-bottom: 1rem;
+    }
+
+    .prompt-text {
+        font-size: 1.5rem;
+        color: var(--crust-deep);
+        margin-bottom: 2rem;
+        max-width: 600px;
+    }
+
+    /* --- Footer Controls --- */
+    .classroom-footer {
+        padding: 1.5rem 2rem;
+        background: var(--crust-light);
+        border-top: 2px solid var(--crust-med);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn {
+        display: inline-block;
+        background: var(--brand-blue);
+        color: var(--crust-base);
+        padding: 0.8rem 2rem;
+        border-radius: 50px;
+        font-family: 'OneDotCd-Bold';
+        text-decoration: none;
+        transition: var(--transition);
+        border: none;
+        font-size: 1.1rem;
+        cursor: pointer;
+        width: auto;
+    }
+
+    .btn:hover {
+        background: var(--dark-blue);
+        transform: scale(1.05);
+    }
+
+    .btn-outline {
+        background: transparent;
+        color: var(--brand-blue);
+        border: 2px solid var(--brand-blue);
+    }
+    
+    .btn-outline:hover {
+        background: rgba(0, 144, 226, 0.1);
+        color: var(--dark-blue);
+        transform: scale(1.02);
+    }
+
 /* --- Setup Container --- */
 .setup-container {
     background: white;
