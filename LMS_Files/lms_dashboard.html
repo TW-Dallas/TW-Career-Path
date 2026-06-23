@@ -10,431 +10,426 @@
     <script src="Globals/lms_feedback.js"></script>
 
     <style>
-        /* --- Setup Container --- */
-        .setup-container {
-            background: white;
-            padding: 2.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 600px; /* Restrict width of the login/tutorial cards */
-            margin: 0 auto; /* Center the cards */
-            text-align: center;
-            animation: fadeIn 0.5s ease-out;
-            border-top: 6px solid var(--brand-blue);
-        }
+/* --- Setup Container --- */
+.setup-container {
+    background: white;
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px; /* Restrict width of the login/tutorial cards */
+    margin: 0 auto; /* Center the cards */
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+    border-top: 6px solid var(--brand-blue);
+}
 
-        /* --- Map Container --- */
-        #step-master-lobby, #step-day1-dashboard {
-            max-width: 1200px;
-            width: 100%;
-            background: transparent;
-            box-shadow: none;
-            border-top: none;
-            padding: 0;
-            text-align: left;
-        }
+/* --- Map Container --- */
+#step-master-lobby, #step-day1-dashboard {
+    max-width: 1200px;
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    border-top: none;
+    padding: 0;
+    text-align: left;
+}
 
-        /* --- Dashboard Layout --- */
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            background: white;
-            padding: 1.5rem 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border-left: 6px solid var(--brand-blue);
-        }
+/* --- Dashboard Layout --- */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    background: white;
+    padding: 1.5rem 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border-left: 6px solid var(--brand-blue);
+}
 
-        .dashboard-title {
-            font-family: 'OneDotCd-Bold';
-            font-size: 2rem;
-            color: var(--dark-blue);
-            margin: 0;
-            text-transform: uppercase;
-        }
+.dashboard-title {
+    font-family: 'OneDotCd-Bold';
+    font-size: 2rem;
+    color: var(--dark-blue);
+    margin: 0;
+    text-transform: uppercase;
+}
 
-        .dashboard-user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+.dashboard-user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
-        .dashboard-avatar {
-            width: 50px;
-            height: 50px;
-            background-color: var(--crust-med);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            border: 2px solid var(--brand-blue);
-        }
+.dashboard-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: var(--crust-med);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border: 2px solid var(--brand-blue);
+}
 
-        /* --- Progress Bar --- */
-        .progress-container {
-            background: white;
-            padding: 1.5rem 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            margin-bottom: 2rem;
-        }
+/* --- Progress Bar --- */
+.progress-container {
+    background: white;
+    padding: 1.5rem 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+}
 
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
 
-        .progress-header h3 {
-            font-family: 'OneDotCd-Bold';
-            color: var(--crust-deep);
-            margin: 0;
-            font-size: 1.2rem;
-        }
+.progress-header h3 {
+    font-family: 'OneDotCd-Bold';
+    color: var(--crust-deep);
+    margin: 0;
+    font-size: 1.2rem;
+}
 
-        .progress-track {
-            width: 100%;
-            height: 12px;
-            background: var(--crust-light);
-            border-radius: 6px;
-            overflow: hidden;
-            border: 1px solid var(--crust-med);
-        }
+.progress-track {
+    width: 100%;
+    height: 12px;
+    background: var(--crust-light);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--crust-med);
+}
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--brand-blue), #00b4ff);
-            width: 15%; /* Mock progress */
-            border-radius: 6px;
-            transition: width 1s ease-out;
-        }
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--brand-blue), #00b4ff);
+    width: 15%; /* Mock progress */
+    border-radius: 6px;
+    transition: width 1s ease-out;
+}
 
-        /* --- Course Grid --- */
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+/* --- Course Grid --- */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
 
-        .course-card {
-            background: white;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            border-top: 6px solid var(--acc-blue); /* Match Lobby Cards */
-            position: relative;
-            text-align: center; /* Center text like Lobby Cards */
-        }
+.course-card {
+    background: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    border-top: 6px solid var(--acc-blue); /* Match Lobby Cards */
+    position: relative;
+    text-align: center; /* Center text like Lobby Cards */
+}
 
-        .course-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.15); /* Stronger hover shadow */
-        }
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.15); /* Stronger hover shadow */
+}
 
-        .course-card.locked {
-            opacity: 0.6;
-            filter: grayscale(100%);
-            cursor: not-allowed;
-            border-top: 6px solid #888; /* Gray top border for locked */
-        }
-        
-        .course-card.locked:hover {
-            transform: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
+.course-card.locked {
+    opacity: 0.6;
+    filter: grayscale(100%);
+    cursor: not-allowed;
+    border-top: 6px solid #888; /* Gray top border for locked */
+}
 
-        .course-image {
-            height: 240px; /* Match Lobby Card height */
-            background-color: var(--crust-med);
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem; /* Big emoji placeholder */
-            color: var(--crust-burnt);
-            position: relative;
-        }
+.course-card.locked:hover {
+    transform: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
 
-        .course-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--brand-blue);
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            font-family: 'OneDotCd-Bold';
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+.course-image {
+    height: 240px; /* Match Lobby Card height */
+    background-color: var(--crust-med);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem; /* Big emoji placeholder */
+    color: var(--crust-burnt);
+    position: relative;
+}
 
-        .course-content {
-            padding: 2rem; /* Match Lobby Card padding */
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
+.course-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--brand-blue);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-family: 'OneDotCd-Bold';
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
-        .course-title {
-            font-family: 'OneDotCd-Bold';
-            font-size: 1.8rem; /* Match Lobby Card title size */
-            color: var(--dark-blue);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
+.course-content {
+    padding: 2rem; /* Match Lobby Card padding */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
 
-        .course-meta {
-            font-size: 1rem;
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
+.course-title {
+    font-family: 'OneDotCd-Bold';
+    font-size: 1.8rem; /* Match Lobby Card title size */
+    color: var(--dark-blue);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
 
-        .btn-small {
-            display: inline-block;
-            background: var(--brand-blue);
-            color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-family: 'OneDotCd-Bold';
-            text-decoration: none;
-            transition: var(--transition);
-            border: none;
-            font-size: 1.1rem;
-            cursor: pointer;
-            width: auto;
-            margin: 0 auto; /* Center button */
-        }
+.course-meta {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
 
-        .btn-small:hover {
-            background: var(--dark-blue);
-            transform: scale(1.05);
-        }
-        
-        .course-card.locked .btn-small {
-            background: #ccc;
-            cursor: not-allowed;
-            color: #888;
-        }
-        .course-card.locked .btn-small:hover {
-            transform: none;
-        }
+.btn-small {
+    display: inline-block;
+    background: var(--brand-blue);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-family: 'OneDotCd-Bold';
+    text-decoration: none;
+    transition: var(--transition);
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: auto;
+    margin: 0 auto; /* Center button */
+}
 
-        /* --- Carousel Styles --- */
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            min-height: 350px;
-        }
+.btn-small:hover {
+    background: var(--dark-blue);
+    transform: scale(1.05);
+}
 
-        .carousel-slide {
-            display: none;
-            width: 100%;
-            animation: fadeIn 0.4s ease-out;
-            padding: 1rem 0;
-        }
+.course-card.locked .btn-small {
+    background: #ccc;
+    cursor: not-allowed;
+    color: #888;
+}
+.course-card.locked .btn-small:hover {
+    transform: none;
+}
 
-        .carousel-slide.active {
-            display: block;
-        }
+/* --- Carousel Styles --- */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    min-height: 350px;
+}
 
-        .carousel-image-placeholder {
-            width: 100%;
-            height: 180px;
-            background-color: var(--crust-med);
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: var(--crust-burnt);
-            border: 2px dashed var(--crust-dark);
-        }
+.carousel-slide {
+    display: none;
+    width: 100%;
+    animation: fadeIn 0.4s ease-out;
+    padding: 1rem 0;
+}
 
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 1rem;
-            margin-bottom: 1.5rem;
-        }
+.carousel-slide.active {
+    display: block;
+}
 
-        .dot {
-            width: 12px;
-            height: 12px;
-            background-color: #ccc;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+.carousel-image-placeholder {
+    width: 100%;
+    height: 180px;
+    background-color: var(--crust-med);
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--crust-burnt);
+    border: 2px dashed var(--crust-dark);
+}
 
-        .dot.active {
-            background-color: var(--brand-blue);
-            transform: scale(1.2);
-        }
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
 
-        .carousel-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-        }
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+}
 
-        .btn-outline {
-            background: transparent;
-            color: var(--brand-blue);
-            border: 2px solid var(--brand-blue);
-        }
-        
-        .btn-outline:hover {
-            background: rgba(0, 144, 226, 0.1);
-            color: var(--dark-blue);
-            transform: scale(1.02);
-        }
+.dot.active {
+    background-color: var(--brand-blue);
+    transform: scale(1.2);
+}
 
-        .setup-title {
-            font-family: 'OneDotCd-Bold';
-            font-size: 2.2rem;
-            color: var(--dark-blue);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-        }
+.carousel-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
 
-        .setup-text {
-            color: #555;
-            margin-bottom: 2rem;
-            font-size: 1.2rem;
-        }
+.btn-outline {
+    background: transparent;
+    color: var(--brand-blue);
+    border: 2px solid var(--brand-blue);
+}
 
-        /* --- Form Elements --- */
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
+.btn-outline:hover {
+    background: rgba(0, 144, 226, 0.1);
+    color: var(--dark-blue);
+    transform: scale(1.02);
+}
 
-        .form-label {
-            display: block;
-            font-family: 'OneDotCd-Bold';
-            color: var(--crust-deep);
-            margin-bottom: 0.5rem;
-        }
+.setup-title {
+    font-family: 'OneDotCd-Bold';
+    font-size: 2.2rem;
+    color: var(--dark-blue);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
 
-        .form-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--crust-med);
-            border-radius: 8px;
-            font-family: 'OneDotCd', sans-serif;
-            font-size: 1.1rem;
-            transition: var(--transition);
-        }
+.setup-text {
+    color: #555;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+}
 
-        .form-input:focus {
-            outline: none;
-            border-color: var(--brand-blue);
-            box-shadow: 0 0 0 3px rgba(0, 144, 226, 0.2);
-        }
+/* --- Form Elements --- */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
 
-        /* --- Avatar Placeholder --- */
-        .avatar-preview {
-            width: 150px;
-            height: 150px;
-            background-color: var(--crust-med);
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: var(--crust-burnt);
-            border: 4px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+.form-label {
+    display: block;
+    font-family: 'OneDotCd-Bold';
+    color: var(--crust-deep);
+    margin-bottom: 0.5rem;
+}
 
-        .btn {
-            display: inline-block;
-            background: var(--brand-blue);
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-family: 'OneDotCd-Bold';
-            text-decoration: none;
-            transition: var(--transition);
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 1rem;
-            user-select: none;
-            -webkit-user-select: none;
-        }
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--crust-med);
+    border-radius: 8px;
+    font-family: 'OneDotCd', sans-serif;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
 
-        .btn:hover {
-            background: var(--dark-blue);
-            transform: scale(1.02);
-        }
+.form-input:focus {
+    outline: none;
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 3px rgba(0, 144, 226, 0.2);
+}
 
-        /* --- Support Modal Styles --- */
+/* --- Avatar Placeholder --- */
+.avatar-preview {
+    width: 150px;
+    height: 150px;
+    background-color: var(--crust-med);
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: var(--crust-burnt);
+    border: 4px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
 
-        #supportSubmitBtn {
-            background-color: var(--brand-red);
-            color:  var(--crust-base);
-            border: none;
-            padding: 12px 20px;
-            font-family: 'OneDotCd-Bold';
-            font-size: 18px;
-            cursor: pointer;
-            width: 100%;
-            border-radius: 4px;
-            transition: background 0.2s;
-        }
-        
-        #supportSubmitBtn:hover {
-            background-color: var(--acc-red);
-        }
-        
-        /* Footer Button Wrapper */
-        .footer-support-wrapper {
-            text-align: center;
-            padding: 20px;
-            /* Removed background-color: var(--crust-light); */
-            background: transparent; 
-        }
-        
-       /* Footer Button Style */
-        .footer-support-btn {
-            background: rgba(254, 250, 246, 0.15); /* Updated to Crust Base RGB */
-            border: 1px solid var(--crust-base);
-            color: var(--crust-base);
-            padding: 8px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'OneDotCd-Bold';
-            transition: all 0.2s ease;
-        }
-        
-        .footer-support-btn:hover {
-            background-color: var(--crust-base);
-            color: var(--brand-blue);
-        }
-        .hidden { display: none !important; }
+.btn {
+    display: inline-block;
+    background: var(--brand-blue);
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-family: 'OneDotCd-Bold';
+    text-decoration: none;
+    transition: var(--transition);
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+    user-select: none;
+    -webkit-user-select: none;
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+.btn:hover {
+    background: var(--dark-blue);
+    transform: scale(1.02);
+}
+
+/* --- Support Modal Styles --- */
+
+#supportSubmitBtn {
+    background-color: var(--brand-red);
+    color:  var(--crust-base);
+    border: none;
+    padding: 12px 20px;
+    font-family: 'OneDotCd-Bold';
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+#supportSubmitBtn:hover {
+    background-color: var(--acc-red);
+}
+
+/* Footer Button Wrapper */
+.footer-support-wrapper {
+    text-align: center;
+    padding: 20px;
+    /* Removed background-color: var(--crust-light); */
+    background: transparent; 
+}
+
+/* Footer Button Style */
+.footer-support-btn {
+    background: rgba(254, 250, 246, 0.15); /* Updated to Crust Base RGB */
+    border: 1px solid var(--crust-base);
+    color: var(--crust-base);
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'OneDotCd-Bold';
+    transition: all 0.2s ease;
+}
+
+.footer-support-btn:hover {
+    background-color: var(--crust-base);
+    color: var(--brand-blue);
+}
+.hidden { display: none !important; }
     </style>
 </head>
 <body style="min-height: 100vh; display: flex; flex-direction: column;">
@@ -455,9 +450,9 @@
         </div>
     </div>
 
-    <main style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem; flex: 1; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <main style="max-width: 1200px; margin: 0 auto; padding: 20px; flex-grow: 1;">
         
-        <!-- STEP 1: INITIAL LOGIN (Mock) -->
+        <!-- STEP 1: LOGIN -->
         <div id="step-login" class="setup-container">
             <div style="font-size: 4rem; margin-bottom: 1rem;">🔒</div>
             <h2 class="setup-title">Secure Login</h2>
@@ -512,7 +507,7 @@
                 </div>
             </div>
 
-            <!-- Avatar Section (Placeholder for now) -->
+            <!-- Avatar Section -->
             <h3 style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue); margin-bottom: 1rem;">Create Your Avatar</h3>
             <div class="avatar-preview">
                 👤
@@ -569,7 +564,7 @@
             </div>
         </div>
 
-        <!-- STEP 4: TRACK GATEWAY (Who are you?) -->
+        <!-- STEP 4: TRACK GATEWAY -->
         <div id="step-gateway" class="setup-container hidden" style="max-width: 900px;">
             <div style="font-size: 4rem; margin-bottom: 1rem;">🧭</div>
             <h2 class="setup-title">Select Your Path</h2>
@@ -604,7 +599,7 @@
             </div>
         </div>
 
-        <!-- STEP 4.5: CEU LOBBY (Placeholder) -->
+        <!-- STEP 4.5: CEU LOBBY -->
         <div id="step-ceu-lobby" class="setup-container hidden">
             <div class="dashboard-header">
                 <h2 class="dashboard-title">Continuing Education (CEUs)</h2>
@@ -654,7 +649,7 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Locked (Until Mod 1 is done) -->
+                <!-- Day 2: Locked -->
                 <div class="course-card locked" id="card-day2">
                     <div class="course-image" style="background-image: url('../image/csr-counter.jpg');">
                         <div class="course-badge" style="color: #888;">ONBOARDING</div>
@@ -681,7 +676,7 @@
             </div>
         </div>
 
-        <!-- STEP 5: DAY 1 DASHBOARD (Modules) -->
+        <!-- STEP 5: DAY 1 DASHBOARD -->
         <div id="step-day1-dashboard" class="setup-container hidden">
             
             <div class="dashboard-header">
@@ -705,7 +700,7 @@
             <!-- Course Grid -->
             <div class="course-grid">
                 
-                <!-- Card 1: Active -->
+                <!-- Card 1 -->
                 <div class="course-card">
                     <div class="course-image" style="background-image: url('../image/photo_training.webp');">
                         <div class="course-badge">MODULE 1</div>
@@ -717,7 +712,7 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Locked -->
+                <!-- Card 2 -->
                 <div class="course-card locked" id="card-mod2">
                     <div class="course-image" style="background-image: url('../image/csr-counter.jpg');">
                         <div class="course-badge" style="color: #888;">MODULE 2</div>
@@ -729,7 +724,7 @@
                     </div>
                 </div>
 
-                <!-- Card 3: Locked -->
+                <!-- Card 3 -->
                 <div class="course-card locked" id="card-mod3">
                     <div class="course-image" style="background-image: url('../image/specialty-pizzas.jpg');">
                         <div class="course-badge" style="color: #888;">MODULE 3</div>
@@ -741,7 +736,7 @@
                     </div>
                 </div>
                 
-                 <!-- Card 4: Locked -->
+                 <!-- Card 4 -->
                 <div class="course-card locked" id="card-mod4">
                     <div class="course-image" style="background-image: url('resources/POS_assets/Stage_1.1/POS_1.8.png');">
                         <div class="course-badge" style="color: #888;">MODULE 4</div>
@@ -753,7 +748,7 @@
                     </div>
                 </div>
 
-                <!-- Card 5: Locked -->
+                <!-- Card 5 -->
                 <div class="course-card locked" id="card-mod5">
                     <div class="course-image" style="background-image: url('../image/photo_gm.webp');">
                         <div class="course-badge" style="color: #888;">MODULE 5</div>
@@ -772,10 +767,10 @@
     </main>
 
     <!-- SUPPORT MODAL -->
-    <div id="supportModal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-modal" onclick="toggleSupportModal()">&times;</span>
-            <h2 style="font-family: 'PizzaPress'; color: var(--brand-blue); margin-bottom: 5px;">Report an Issue</h2>
+    <div id="supportModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 92, 145, 0.5); z-index: 10001; align-items: center; justify-content: center;">
+        <div class="modal-content" style="background-color: var(--crust-base); border: 3px solid var(--crust-med); border-radius: 12px; width: 90%; max-width: 450px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); position: relative; font-family: 'OneDotCd', sans-serif;">
+            <span class="close-modal" onclick="toggleSupportModal()" style="position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; color: var(--crust-dark);">&times;</span>
+            <h2 style="font-family: 'PizzaPress'; color: var(--brand-blue); margin-bottom: 5px; text-transform: uppercase;">Report an Issue</h2>
             <p style="font-family: 'OneDotCd'; color: #666; margin-bottom: 20px;">Found a problem with your profile data? Let us know.</p>
             
             <form id="supportForm" onsubmit="submitSupport(event)">
@@ -815,7 +810,52 @@
         </div>
     </div>
 
+    <!-- ONE-TIME BETA WELCOME INSTRUCTION MODAL -->
+    <div id="betaWelcomeModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 92, 145, 0.55); z-index: 10002; align-items: center; justify-content: center; font-family: 'OneDotCd', sans-serif;">
+        <div class="modal-content" style="background-color: var(--crust-base); border: 3px solid var(--crust-med); border-radius: 12px; width: 90%; max-width: 500px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); text-align: center; position: relative;">
+            <h2 style="font-family: 'PizzaPress'; color: var(--dark-blue); margin-top: 0; margin-bottom: 10px; border-bottom: 2px solid var(--brand-red); padding-bottom: 5px; text-transform: uppercase;">Beta Tester Guide</h2>
+            <p style="font-size: 1.15rem; color: var(--crust-deep); margin-bottom: 20px; line-height: 1.4;">Welcome to the new LMS platform! As a beta tester, your feedback is critical to evaluating stability, layout, and content quality.</p>
+            
+            <!-- Instruction 1 -->
+            <div style="display: flex; align-items: center; gap: 15px; text-align: left; margin-bottom: 15px; background: rgba(0, 144, 226, 0.05); border-left: 4px solid var(--brand-blue); padding: 12px; border-radius: 4px;">
+                <div style="font-size: 2rem; user-select: none;">🛠️</div>
+                <div>
+                    <strong style="color: var(--dark-blue); font-family: 'OneDotCd-Bold';">1. Floating Report Button</strong>
+                    <p style="margin: 3px 0 0 0; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.3;">Click the <strong>Report Issue</strong> button in the bottom-right corner of any slide or simulator to log bugs, typos, or suggestions instantly.</p>
+                </div>
+            </div>
+
+            <!-- Instruction 2 -->
+            <div style="display: flex; align-items: center; gap: 15px; text-align: left; margin-bottom: 25px; background: rgba(255, 0, 0, 0.05); border-left: 4px solid var(--brand-red); padding: 12px; border-radius: 4px;">
+                <div style="font-size: 2rem; user-select: none;">📝</div>
+                <div>
+                    <strong style="color: var(--dark-red, var(--brand-red)); font-family: 'OneDotCd-Bold';">2. Post-Module Survey</strong>
+                    <p style="margin: 3px 0 0 0; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.3;">When you complete a module, a brief check-in will appear. Rate your experience and leave stability notes before returning here.</p>
+                </div>
+            </div>
+
+            <button class="btn" onclick="dismissBetaWelcome()" style="width: 100%; margin-top: 0;">Got It, Let's Go!</button>
+        </div>
+    </div>
+
     <script>
+        function checkBetaWelcome() {
+            const id = localStorage.getItem('tw_id');
+            const welcomeSeen = localStorage.getItem('tw_beta_welcome_seen');
+            const modal = document.getElementById('betaWelcomeModal');
+            if (modal && id && welcomeSeen !== 'true') {
+                modal.style.display = 'flex';
+            }
+        }
+
+        function dismissBetaWelcome() {
+            localStorage.setItem('tw_beta_welcome_seen', 'true');
+            const modal = document.getElementById('betaWelcomeModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
         function nextStep(stepId) {
             // Hide all steps
             document.getElementById('step-login').classList.add('hidden');
@@ -828,6 +868,11 @@
             
             // Show target
             document.getElementById('step-' + stepId).classList.remove('hidden');
+
+            // Trigger welcome modal check if they land on gateway or dashboard
+            if (stepId === 'gateway' || stepId === 'master-lobby' || stepId === 'day1-dashboard') {
+                checkBetaWelcome();
+            }
         }
 
         // --- CAROUSEL LOGIC ---
@@ -884,11 +929,8 @@
         }
 
         function finishTutorial() {
-        // Plant the flag so the browser remembers them forever
-        localStorage.setItem('tw_tutorial_complete', 'true');
-        
-        // Send them to the gateway
-        nextStep('gateway');
+            localStorage.setItem('tw_tutorial_complete', 'true');
+            nextStep('gateway');
         }   
 
         // --- SUPPORT MODAL LOGIC ---
@@ -896,10 +938,10 @@
 
         function toggleSupportModal() {
             const modal = document.getElementById('supportModal');
-            if (modal.style.display === "block") {
+            if (modal.style.display === "block" || modal.style.display === "flex") {
                 modal.style.display = "none";
             } else {
-                modal.style.display = "block";
+                modal.style.display = "flex";
             }
         }
         
@@ -920,9 +962,6 @@
             btn.textContent = "Sending...";
             
             const formData = new FormData(document.getElementById('supportForm'));
-            
-            // Add parameters manually to URL for GET/POST fetch
-            // Note: We use 'no-cors' mode for GAS, but it's cleaner to just build the URL params
             const data = new URLSearchParams();
             for (const pair of formData) {
                 data.append(pair[0], pair[1]);
@@ -938,8 +977,8 @@
                 status.innerHTML = "<p style='color: green; text-align: center;'>Thank you! We received your report.</p>";
                 
                 setTimeout(() => {
-                    toggleSupportModal(); // Close modal after 2s
-                    document.getElementById('supportForm').reset(); // Reset form
+                    toggleSupportModal(); 
+                    document.getElementById('supportForm').reset(); 
                     btn.disabled = false;
                     btn.textContent = "Send Report";
                     btn.style.backgroundColor = "var(--brand-red)";
@@ -957,16 +996,13 @@
         // --- CHECK URL FOR REDIRECTS ON LOAD ---
         document.addEventListener("DOMContentLoaded", function() {
             if (window.location.hash === '#day1') {
-                // Short timeout to ensure all default hiding is done first
                 setTimeout(() => {
                     nextStep('day1-dashboard');
-                    // Clean up URL so it doesn't get stuck if they refresh
                     history.replaceState(null, null, ' ');
                 }, 100);
             }
         });
     
-    // Replace this string with the URL Google gives you after deploying the Web App
     const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
     
     function authenticateUser(event) {
@@ -999,7 +1035,6 @@
         .then(response => response.json()) 
         .then(result => {
             if (result.success) {
-                // 1. Save standard session data
                 localStorage.setItem('tw_market', marketInput);
                 localStorage.setItem('tw_id', idInput.trim().toLowerCase());
                 localStorage.setItem('tw_firstName', result.firstName);
@@ -1007,7 +1042,6 @@
                 localStorage.setItem('tw_role', result.role);
                 localStorage.setItem('tw_store', result.store);
             
-                // 2. THE VAULT SYNC RECEIVER: Translate database history to UI unlocks
                 if (result.completed && result.completed.length > 0) {
                     result.completed.forEach(modName => {
                         if (modName === "day 1 mod 1") localStorage.setItem('mod1_complete', 'true');
@@ -1018,20 +1052,17 @@
                     });
                 }
 
-                // 3. Update the UI Text
                 document.getElementById('mock-name').innerText = `${result.firstName} ${result.lastName}`;
                 document.getElementById('mock-role').innerText = result.role;
                 document.getElementById('mock-store').innerText = result.store;
                 document.getElementById('master-dash-name').innerText = `${result.firstName} ${result.lastName}`;
                 document.getElementById('master-dash-role').innerText = result.role;
 
-                // 4. FIRE THE PROGRESS ENGINE (This fixes the mismatched bars!)
                 syncProgressBars();
 
-                // 5. Smart Routing for Veterans
                 document.getElementById('step-login').classList.add('hidden');
                 if (localStorage.getItem('tw_tutorial_complete') === 'true') {
-                    nextStep('gateway'); // Or whatever your main map is called
+                    nextStep('gateway'); 
                 } else {
                     document.getElementById('step-setup-profile').classList.remove('hidden');
                 }
@@ -1053,7 +1084,6 @@
         });
     }
 
-    // --- TRAINER PIN LOGIC ---
     function requireTrainerPin(targetModuleUrl) {
         let pin = prompt("TRAINER AUTHORIZATION REQUIRED\n\nPlease have your trainer enter their 4-digit PIN to unlock the next module:");
         if (pin === "1234") {
@@ -1064,10 +1094,7 @@
         }
     }
 
-    // --- DYNAMIC UNLOCK LOGIC ---
     document.addEventListener("DOMContentLoaded", function() {
-        
-        // Define the rules: Which module unlocks which card?
         const unlockRules = [
             { requiredKey: 'mod1_complete', targetCardId: 'card-mod2', targetUrl: 'Modules/module2.html', buttonText: 'Start Module 2' },
             { requiredKey: 'mod2_complete', targetCardId: 'card-mod3', targetUrl: 'Modules/module3.html', buttonText: 'Start Module 3' },
@@ -1075,7 +1102,6 @@
             { requiredKey: 'mod4_complete', targetCardId: 'card-mod5', targetUrl: 'Modules/module5.html', buttonText: 'Start Module 5' }
         ];
 
-        // Loop through the rules and apply the unlock logic if the condition is met
         unlockRules.forEach(rule => {
             if (localStorage.getItem(rule.requiredKey) === 'true') {
                 const card = document.getElementById(rule.targetCardId);
@@ -1083,8 +1109,6 @@
                     card.classList.remove('locked');
                     card.querySelector('.course-badge').style.color = "var(--dark-blue)";
                     const lockBtn = card.querySelector('.btn-small');
-                    
-                    // Swap the locked button for the active button, passing the correct URL to the PIN function
                     lockBtn.outerHTML = `<button class="btn-small" onclick="requireTrainerPin('${rule.targetUrl}')" style="background: var(--brand-blue); color: white; border: none;">${rule.buttonText}</button>`;
                 }
             }
@@ -1107,30 +1131,25 @@
     };
 
     function sendProgressUpdate(moduleName) {
-        // 1. Grab the ID and Market from the browser's memory
         const market = localStorage.getItem('tw_market');
         const id = localStorage.getItem('tw_id');
         
-        // 2. Failsafe if they somehow aren't logged in
         if (!market || !id) {
             console.error("Session missing. Please log in from the dashboard.");
             return;
         }
         
-        // 3. Build the URL (Notice there is no callback= part anymore)
         const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}`;
 
-        // 4. Fire the secure fetch request that ignores Google accounts
         fetch(url, {
             method: 'GET',
             credentials: 'omit'
         })
-        .then(response => response.json()) // Tell the browser to expect JSON back
+        .then(response => response.json()) 
         .then(result => {
             if (result.success) {
                 console.log(`${moduleName} securely logged to database! Overall: ${result.overallProgress}%, Day: ${result.dayProgress}%`);
                 
-                // Try to update the master dashboard progress bar if it exists on the current page
                 const progressText = document.getElementById('master-dash-progress-text');
                 const progressFill = document.getElementById('master-dash-progress-fill');
                 
@@ -1148,20 +1167,16 @@
     }
 
     function routeFromProfile() {
-    // Check the backpack for the flag we planted in Step 1
-    const tutorialDone = localStorage.getItem('tw_tutorial_complete');
+        const tutorialDone = localStorage.getItem('tw_tutorial_complete');
 
         if (tutorialDone === 'true') {
-            // They are a returning user. Skip the carousel entirely.
-            nextStep('gateway'); // (Change this if they should go to 'day1-dashboard' instead!)
+            nextStep('gateway'); 
         } else {
-            // First time logging in. Send them to slide 1.
             nextStep('tutorial');
         }
     }
 
     function syncProgressBars() {
-        // 1. Tally up Day 1 from the Backpack
         const day1Keys = ['mod1_complete', 'mod2_complete', 'mod3_complete', 'mod4_complete', 'mod5_complete'];
         let day1Count = 0;
         
@@ -1169,68 +1184,137 @@
             if (localStorage.getItem(key) === 'true') day1Count++;
         });
 
-        // (When you build Day 2 and 3, you just add their counts to this total)
         let totalCompleted = day1Count; 
 
-        // 2. Calculate the Percentages
         const TOTAL_DAY1_MODULES = 5;
-        const TOTAL_COURSE_MODULES = 15; // Update this if your final course size changes!
+        const TOTAL_COURSE_MODULES = 15; 
 
         let day1Percent = Math.round((day1Count / TOTAL_DAY1_MODULES) * 100);
         let masterPercent = Math.round((totalCompleted / TOTAL_COURSE_MODULES) * 100);
 
-        // 3. Paint the Master Bar
-        const masterText = document.getElementById('master-dash-progress-text');
-        const masterFill = document.getElementById('master-dash-progress-fill');
-        if (masterText && masterFill) {
-            masterText.innerText = `${masterPercent}%`;
-            masterFill.style.width = `${masterPercent}%`;
-        }
+        const masterText = document.getElementById('master-lobby-progress-val') || document.getElementById('master-lobby-progress-value'); // Fallbacks
+        const masterFill = document.querySelector('.progress-fill');
+        
+        // Dynamic matching of your progress IDs
+        const masterTextEl = document.getElementById('master-lobby-progress') || document.getElementById('slide-counter'); 
 
-        // 4. Paint the Day 1 Bar
-        const day1Text = document.getElementById('day1-progress-text');
-        const day1Fill = document.getElementById('day1-progress-fill');
-        if (day1Text && day1Fill) {
-            day1Text.innerText = `${day1Percent}%`;
-            day1Fill.style.width = `${day1Percent}%`;
+        // Apply percentages dynamically
+        if (masterFill) {
+            masterFill.style.width = `${masterDayProgress || overallProgress || 15}%`;
+        }
+        
+        // Refresh with actual database states
+        const savedProgress = localStorage.getItem('tw_progress') || 0;
+        if (masterFill) {
+            masterFill.style.width = `${savedProgress}%`;
+        }
+        const textVal = document.getElementById('progress-percentage');
+        if (textVal) {
+            textVal.innerText = `${savedProgress}%`;
         }
     }
-    
-    // Fire both engines the second the dashboard loads, OR when returning from a module via #day1
+
+    function syncUserUI(firstName, lastName, role, progress) {
+        localStorage.setItem('tw_progress', progress);
+        
+        // Update user header details
+        const headerName = document.getElementById('mock-name');
+        const headerRole = document.getElementById('mock-role');
+        const avatar = document.querySelector('.dashboard-avatar');
+
+        if (headerName) headerName.innerText = `${firstName} ${lastName}`;
+        if (headerRole) headerRole.innerText = role;
+        if (avatar && firstName) {
+            avatar.innerText = firstName.charAt(0).toUpperCase();
+        }
+
+        // Apply database state to local progress bar
+        const fill = document.querySelector('.progress-fill');
+        if (fill) fill.style.width = `${progress}%`;
+        const textVal = document.getElementById('progress-percentage');
+        if (textVal) textVal.innerText = `${progress}%`;
+    }
+
+    function authenticateUser() {
+        const market = document.getElementById('login-market').value;
+        const id = document.getElementById('login-id').value.trim();
+        const pass = document.getElementById('login-password').value.trim();
+
+        if (!market || !id || !pass) {
+            alert("Please fill in all login fields.");
+            return;
+        }
+
+        const loginBtn = document.getElementById('login-btn');
+        loginBtn.innerText = "Connecting...";
+        loginBtn.disabled = true;
+
+        const url = `${AUTH_SCRIPT_URL}?action=login&market=${market}&id=${id}&password=${pass}`;
+
+        fetch(url, { method: 'GET', credentials: 'omit' })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                // Save session states
+                localStorage.setItem('tw_market', market);
+                localStorage.setItem('tw_id', id);
+                localStorage.setItem('tw_firstName', result.firstName);
+                localStorage.setItem('tw_lastName', result.lastName);
+                localStorage.setItem('tw_role', result.role);
+                localStorage.setItem('tw_store', result.store);
+
+                // Load completions
+                if (result.completed && result.completed.length > 0) {
+                    result.completed.forEach(modName => {
+                        if (modName === "day 1 mod 1") localStorage.setItem('mod1_complete', 'true');
+                        if (modName === "day 1 mod 2") localStorage.setItem('mod2_complete', 'true');
+                        if (modName === "day 1 mod 3") localStorage.setItem('mod3_complete', 'true');
+                        if (modName === "day 1 mod 4") localStorage.setItem('mod4_complete', 'true');
+                        if (modName === "day 1 mod 5") localStorage.setItem('mod5_complete', 'true');
+                    });
+                }
+
+                syncUserUI(result.firstName, result.lastName, result.role, result.progress);
+
+                // Direct to Profile screen first
+                nextStep('setup-profile');
+            } else {
+                alert("Authentication Failed: " + result.error);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Failed to reach server.");
+        })
+        .finally(() => {
+            loginBtn.innerText = "Sign In";
+            loginBtn.disabled = false;
+        });
+    }
+
+    // Fire UI updates on load
     window.addEventListener('DOMContentLoaded', () => {
-        syncProgressBars();
-        syncProfileText();
+        const savedId = localStorage.getItem('tw_id');
+        if (savedId) {
+            const fName = localStorage.getItem('tw_firstName');
+            const lName = localStorage.getItem('tw_lastName');
+            const role = localStorage.getItem('tw_role');
+            const progress = localStorage.getItem('tw_progress') || 0;
+            syncUserUI(fName, lName, role, progress);
+            
+            // Skip login if session active
+            nextStep('gateway');
+        } else {
+            nextStep('login');
+        }
     });
 
     window.addEventListener('hashchange', () => {
-        syncProgressBars();
-        syncProfileText();
+        if (window.location.hash === '#day1') {
+            nextStep('day1-dashboard');
+            history.replaceState(null, null, ' ');
+        }
     });
-
-    function syncProfileText() {
-        // 1. Pull the data from the Backpack
-        const firstName = localStorage.getItem('tw_firstName') || "Team";
-        const lastName = localStorage.getItem('tw_lastName') || "Member";
-        const role = localStorage.getItem('tw_role') || "Trainee";
-        const store = localStorage.getItem('tw_store') || "";
-
-        // 2. Paint the Profile Verification Screen
-        const mockName = document.getElementById('mock-name');
-        if (mockName) mockName.innerText = `${firstName} ${lastName}`;
-        
-        const mockRole = document.getElementById('mock-role');
-        if (mockRole) mockRole.innerText = role;
-
-        const mockStore = document.getElementById('mock-store');
-        if (mockStore) mockStore.innerText = store;
-
-        // 3. Paint the Main Dashboard Header
-        const dashName = document.getElementById('master-dash-name');
-        if (dashName) dashName.innerText = `${firstName} ${lastName}`;
-
-        const dashRole = document.getElementById('master-dash-role');
-        if (dashRole) dashRole.innerText = role;
-    }
     </script>
 </body>
 </html>
