@@ -503,15 +503,26 @@
 </head>
 <body style="min-height: 100vh; display: flex; flex-direction: column;">
 
-    <!-- UNIFIED BRAND NAVBAR (WITH SMART BACK ROUTING) -->
-    <header style="background-color: var(--dark-blue); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <!-- UNIFIED BRAND NAVBAR (WITH INTEGRATED USER PROFILE) -->
+    <header style="background-color: var(--dark-blue); border-bottom: 4px solid var(--brand-red); padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         <div style="display: flex; align-items: center; gap: 20px;">
             <img src="../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
-            <a href="javascript:void(0)" onclick="goBackLobby()" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+            <a id="nav-back-link" href="javascript:void(0)" onclick="goBackLobby()" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: none; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
                 &#8592; Back
             </a>
         </div>
-        <p style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); margin: 0; text-transform: uppercase; letter-spacing: 1px;">Growing Leaders. Building Futures.</p>
+        
+        <!-- Global Profile Widget (Visible only when logged in) -->
+        <div id="nav-user-widget" style="display: none; align-items: center; gap: 12px;">
+            <div style="text-align: right;">
+                <div style="font-family: 'OneDotCd-Bold'; color: var(--crust-base); font-size: 1.05rem; line-height: 1.2;" id="nav-user-name">John Doe</div>
+                <div style="font-size: 0.85rem; color: rgba(254, 250, 246, 0.75); margin-top: 1px;" id="nav-user-role">Trainee</div>
+            </div>
+            <div id="nav-user-avatar" style="width: 38px; height: 38px; font-size: 1.1rem; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; background-color: rgba(254, 250, 246, 0.15); color: white; font-family: 'OneDotCd-Bold';">👤</div>
+        </div>
+        
+        <!-- Standard tagline (Visible only when logged out) -->
+        <p id="nav-tagline" style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); margin: 0; text-transform: uppercase; letter-spacing: 1px; display: block;">Growing Leaders. Building Futures.</p>
     </header>
 
     <main style="max-width: 1200px; margin: 0 auto; padding: 20px; flex-grow: 1;">
@@ -678,25 +689,7 @@
         <div id="step-master-lobby" class="setup-container hidden">
             
             <div class="dashboard-header">
-                <button class="btn-small" style="background: var(--crust-med); color: var(--crust-deep); margin-right: 15px;" onclick="nextStep('gateway')">← Back</button>
-                <h2 class="dashboard-title" style="flex-grow: 1;">My Learning Path</h2>
-                <div class="dashboard-user-info">
-                    <div style="text-align: right;">
-                        <div style="font-family: 'OneDotCd-Bold'; color: var(--crust-deep);" id="master-dash-name">John Doe</div>
-                        <div style="font-size: 0.9rem; color: #666;" id="master-dash-role">Delivery Expert</div>
-                    </div>
-                    <div class="dashboard-avatar">👤</div>
-                </div>
-            </div>
-
-            <div class="progress-container">
-                <div class="progress-header">
-                    <h3>Overall Onboarding Progress</h3>
-                    <span id="master-dash-progress-text" style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue);">0%</span>
-                </div>
-                <div class="progress-track">
-                    <div id="master-dash-progress-fill" class="progress-fill" style="width: 0%;"></div>
-                </div>
+                <h2 class="dashboard-title">My Learning Path</h2>
             </div>
 
             <div class="course-grid">
@@ -745,7 +738,7 @@
             
             <div class="dashboard-header">
                 <h2 class="dashboard-title">Day 1: Phone Training & Customer Interaction</h2>
-            </div> <!-- Closes .dashboard-header -->
+            </div>
 
             <!-- Day 1 Progress Bar -->
             <div class="progress-container">
@@ -914,25 +907,6 @@
             const modal = document.getElementById('betaWelcomeModal');
             if (modal) {
                 modal.style.display = 'none';
-            }
-        }
-
-        function nextStep(stepId) {
-            // Hide all steps
-            document.getElementById('step-login').classList.add('hidden');
-            document.getElementById('step-setup-profile').classList.add('hidden');
-            document.getElementById('step-tutorial').classList.add('hidden');
-            if(document.getElementById('step-gateway')) document.getElementById('step-gateway').classList.add('hidden');
-            if(document.getElementById('step-ceu-lobby')) document.getElementById('step-ceu-lobby').classList.add('hidden');
-            document.getElementById('step-master-lobby').classList.add('hidden');
-            document.getElementById('step-day1-dashboard').classList.add('hidden');
-            
-            // Show target
-            document.getElementById('step-' + stepId).classList.remove('hidden');
-
-            // Trigger welcome modal check if they land on gateway or dashboard
-            if (stepId === 'gateway' || stepId === 'master-lobby' || stepId === 'day1-dashboard') {
-                checkBetaWelcome();
             }
         }
 
@@ -1275,6 +1249,50 @@
         }
     }
 
+    function nextStep(stepId) {
+        // Hide all steps
+        document.getElementById('step-login').classList.add('hidden');
+        document.getElementById('step-setup-profile').classList.add('hidden');
+        document.getElementById('step-tutorial').classList.add('hidden');
+        if(document.getElementById('step-gateway')) document.getElementById('step-gateway').classList.add('hidden');
+        if(document.getElementById('step-ceu-lobby')) document.getElementById('step-ceu-lobby').classList.add('hidden');
+        document.getElementById('step-master-lobby').classList.add('hidden');
+        document.getElementById('step-day1-dashboard').classList.add('hidden');
+        
+        // Show target
+        document.getElementById('step-' + stepId).classList.remove('hidden');
+
+        // --- DYNAMIC NAVBAR DISPLAY LOGIC ---
+        const navBack = document.getElementById('nav-back-link');
+        const navWidget = document.getElementById('nav-user-widget');
+        const navTagline = document.getElementById('nav-tagline');
+        const sessionActive = localStorage.getItem('tw_id');
+
+        if (sessionActive) {
+            // Show profile details, hide default tagline
+            if (navWidget) navWidget.style.display = 'flex';
+            if (navTagline) navTagline.style.display = 'none';
+
+            // Display back link on content dashboards, keep hidden on setup screens
+            if (navBack) {
+                if (stepId === 'login' || stepId === 'setup-profile' || stepId === 'tutorial') {
+                    navBack.style.display = 'none';
+                } else {
+                    navBack.style.display = 'inline-flex';
+                }
+            }
+        } else {
+            // Default logged-out view
+            if (navBack) navBack.style.display = 'none';
+            if (navWidget) navWidget.style.display = 'none';
+            if (navTagline) navTagline.style.display = 'block';
+        }
+
+        if (stepId === 'gateway' || stepId === 'master-lobby' || stepId === 'day1-dashboard') {
+            checkBetaWelcome();
+        } 
+    }
+
     function syncUserUI(firstName, lastName, role, progress) {
         localStorage.setItem('tw_progress', progress);
         
@@ -1284,19 +1302,24 @@
         if (headerName) headerName.innerText = `${firstName} ${lastName}`;
         if (headerRole) headerRole.innerText = role;
 
-        // 2. Update Master Lobby Header details (Fixes the "John Doe" bug)
-        const masterName = document.getElementById('master-dash-name');
-        const masterRole = document.getElementById('master-dash-role');
-        if (masterName) masterName.innerText = `${firstName} ${lastName}`;
-        if (masterRole) masterRole.innerText = role;
+        // 2. Update Global Navbar Profile details
+        const navName = document.getElementById('nav-user-name');
+        const navRole = document.getElementById('nav-user-role');
+        const navAvatar = document.getElementById('nav-user-avatar');
+        const navWidget = document.getElementById('nav-user-widget');
+        const navTagline = document.getElementById('nav-tagline');
 
-        // 3. Update Avatar letter (e.g. "M" for Michael)
-        const avatar = document.querySelector('.dashboard-avatar');
-        if (avatar && firstName) {
-            avatar.innerText = firstName.charAt(0).toUpperCase();
+        if (navName) navName.innerText = `${firstName} ${lastName}`;
+        if (navRole) navRole.innerText = role;
+        if (navAvatar && firstName) {
+            navAvatar.innerText = firstName.charAt(0).toUpperCase();
         }
 
-        // 4. Apply database progress to the visual progress bar
+        // Instantly trigger profile display on refresh if session logged
+        if (navWidget) navWidget.style.display = 'flex';
+        if (navTagline) navTagline.style.display = 'none';
+
+        // 3. Apply database progress to visual progress bar
         const fill = document.querySelector('.progress-fill');
         if (fill) fill.style.width = `${progress}%`;
         const textVal = document.getElementById('progress-percentage');
