@@ -503,21 +503,16 @@
 </head>
 <body style="min-height: 100vh; display: flex; flex-direction: column;">
 
-    <header>
-        <div class="logo-container">
-            <img src="../New_Logo_v2.png" alt="Team Wow Logo" class="logo-img">
-        </div>
-        <p class="tagline">Growing Leaders. Building Futures.</p>
-    </header>
-
-    <!-- Navigation -->
-    <div class="nav-strip" style="background-color: var(--dark-blue); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100;">
-        <div style="max-width: 1200px; margin: 0 auto; text-align: left; display: flex; align-items: center; justify-content: space-between;">
-            <a href="../learning_hub.html" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 8px;">
-                &#8592; Back to Training Dashboard
+    <!-- UNIFIED BRAND NAVBAR (WITH SMART BACK ROUTING) -->
+    <header style="background-color: var(--dark-blue); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="javascript:void(0)" onclick="goBackLobby()" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Back
             </a>
         </div>
-    </div>
+        <p style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); margin: 0; text-transform: uppercase; letter-spacing: 1px;">Growing Leaders. Building Futures.</p>
+    </header>
 
     <main style="max-width: 1200px; margin: 0 auto; padding: 20px; flex-grow: 1;">
         
@@ -750,10 +745,7 @@
             
             <div class="dashboard-header">
                 <h2 class="dashboard-title">Day 1: Phone Training & Customer Interaction</h2>
-                <div class="dashboard-user-info">
-                    <button class="btn-small" style="background: var(--crust-med); color: var(--crust-deep);" onclick="nextStep('master-lobby')">← Back to Days</button>
-                </div>
-            </div>
+            </div> <!-- Closes .dashboard-header -->
 
             <!-- Day 1 Progress Bar -->
             <div class="progress-container">
@@ -1286,18 +1278,25 @@
     function syncUserUI(firstName, lastName, role, progress) {
         localStorage.setItem('tw_progress', progress);
         
-        // Update user header details
+        // 1. Update Profile Verification screen details
         const headerName = document.getElementById('mock-name');
         const headerRole = document.getElementById('mock-role');
-        const avatar = document.querySelector('.dashboard-avatar');
-
         if (headerName) headerName.innerText = `${firstName} ${lastName}`;
         if (headerRole) headerRole.innerText = role;
+
+        // 2. Update Master Lobby Header details (Fixes the "John Doe" bug)
+        const masterName = document.getElementById('master-dash-name');
+        const masterRole = document.getElementById('master-dash-role');
+        if (masterName) masterName.innerText = `${firstName} ${lastName}`;
+        if (masterRole) masterRole.innerText = role;
+
+        // 3. Update Avatar letter (e.g. "M" for Michael)
+        const avatar = document.querySelector('.dashboard-avatar');
         if (avatar && firstName) {
             avatar.innerText = firstName.charAt(0).toUpperCase();
         }
 
-        // Apply database state to local progress bar
+        // 4. Apply database progress to the visual progress bar
         const fill = document.querySelector('.progress-fill');
         if (fill) fill.style.width = `${progress}%`;
         const textVal = document.getElementById('progress-percentage');
@@ -1384,6 +1383,37 @@
             history.replaceState(null, null, ' ');
         }
     });
+
+    // --- SMART BACK-BUTTON ROUTING ENGINE ---
+    function goBackLobby() {
+        let activeStep = "";
+        const steps = ['login', 'setup-profile', 'tutorial', 'gateway', 'ceu-lobby', 'master-lobby', 'day1-dashboard'];
+        
+        // Identify which section card is currently active (not hidden)
+        for (let s of steps) {
+            const el = document.getElementById('step-' + s);
+            if (el && !el.classList.contains('hidden')) {
+                activeStep = s;
+                break;
+            }
+        }
+
+        // Step-by-step logical backtrack hierarchy
+        if (activeStep === 'day1-dashboard') {
+            nextStep('master-lobby'); // From Day Modules, go to Days Selection map
+        } else if (activeStep === 'master-lobby' || activeStep === 'ceu-lobby') {
+            nextStep('gateway');      // From Days Selection map, go to Path Selection (Tracks)
+        } else if (activeStep === 'gateway') {
+            window.location.href = "../learning_hub.html"; // From Path Selection, exit to main Resource hub
+        } else if (activeStep === 'tutorial') {
+            nextStep('setup-profile');
+        } else if (activeStep === 'setup-profile') {
+            nextStep('login');
+        } else {
+            // Failsafe fallback
+            window.location.href = "../learning_hub.html";
+        }
+    }
     </script>
 </body>
 </html>
