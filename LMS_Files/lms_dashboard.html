@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../LMS_Global_Styles.css"> 
 
 <style>
-    /* --- FONT LOADING --- */
+/* --- FONT LOADING (FIXED PATHS) --- */
   @font-face {
       font-family: 'PizzaPress';
       src: url('../fonts/Dominos Sans Header 1.ttf') format('truetype');
@@ -32,6 +32,7 @@
       src: url('../fonts/Dominos Sans Subhead 2.ttf') format('truetype');
       font-weight: normal;
   }
+  
   /* --- GLOBAL CRUST PALETTE --- */
   :root {
       --brand-red: #ff0000;
@@ -1226,6 +1227,7 @@
     }
 
     function syncProgressBars() {
+        // 1. Tally up Day 1 from the Backpack
         const day1Keys = ['mod1_complete', 'mod2_complete', 'mod3_complete', 'mod4_complete', 'mod5_complete'];
         let day1Count = 0;
         
@@ -1235,31 +1237,27 @@
 
         let totalCompleted = day1Count; 
 
+        // 2. Calculate the Percentages
         const TOTAL_DAY1_MODULES = 5;
         const TOTAL_COURSE_MODULES = 15; 
 
         let day1Percent = Math.round((day1Count / TOTAL_DAY1_MODULES) * 100);
         let masterPercent = Math.round((totalCompleted / TOTAL_COURSE_MODULES) * 100);
 
-        const masterText = document.getElementById('master-lobby-progress-val') || document.getElementById('master-lobby-progress-value'); // Fallbacks
-        const masterFill = document.querySelector('.progress-fill');
-        
-        // Dynamic matching of your progress IDs
-        const masterTextEl = document.getElementById('master-lobby-progress') || document.getElementById('slide-counter'); 
+        // 3. Paint the Master Bar
+        const masterText = document.getElementById('master-dash-progress-text');
+        const masterFill = document.getElementById('master-dash-progress-fill');
+        if (masterText && masterFill) {
+            masterText.innerText = `${masterPercent}%`;
+            masterFill.style.width = `${masterPercent}%`;
+        }
 
-        // Apply percentages dynamically
-        if (masterFill) {
-            masterFill.style.width = `${masterDayProgress || overallProgress || 15}%`;
-        }
-        
-        // Refresh with actual database states
-        const savedProgress = localStorage.getItem('tw_progress') || 0;
-        if (masterFill) {
-            masterFill.style.width = `${savedProgress}%`;
-        }
-        const textVal = document.getElementById('progress-percentage');
-        if (textVal) {
-            textVal.innerText = `${savedProgress}%`;
+        // 4. Paint the Day 1 Bar
+        const day1Text = document.getElementById('day1-progress-text');
+        const day1Fill = document.getElementById('day1-progress-fill');
+        if (day1Text && day1Fill) {
+            day1Text.innerText = `${day1Percent}%`;
+            day1Fill.style.width = `${day1Percent}%`;
         }
     }
 
