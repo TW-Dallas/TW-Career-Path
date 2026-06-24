@@ -1,6 +1,3 @@
-// ==============================================================================
-// LMS GLOBAL BETA FEEDBACK WIDGET
-// ==============================================================================
 (function() {
     // Only run if we are in a browser environment
     if (typeof document === 'undefined') return;
