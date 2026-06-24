@@ -26,20 +26,20 @@
 </head>
 <body style="background-color: var(--crust-light);">
 
-    <div class="nav-strip" style="background-color: var(--dark-blue); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem; position: relative;">
-        <div style="max-width: 900px; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
-            <div style="position: absolute; left: 20px;">
-                <a href="../lms_dashboard.html#day1" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.1rem; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
-                    &#8592; Back to Day 1
-                </a>
-            </div>
-            <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto;">
-            <div style="position: absolute; right: 20px; display: flex; align-items: center; gap: 15px;">
-                <span style="font-family: 'OneDotCd-Bold'; font-size: 1.2rem; color: var(--crust-base); text-transform: uppercase;">Module 2: Customer Service Basics</span>
-                <span id="step-counter" style="background: rgba(255,255,255,0.2); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem;">Step 1 of 3</span>
-            </div>
+    <!-- UNIFIED MODULE BRAND NAVBAR -->
+    <header style="background-color: var(--dark-blue); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="../lms_dashboard.html#day1" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Back to Day 1
+            </a>
         </div>
-    </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 2: Customer Service Basics</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Step 1 of 3</span>
+        </div>
+    </header>
 
     <div class="classroom-container">
         <div class="classroom-content">

@@ -120,19 +120,20 @@
 </head>
 <body>
 
-    <div class="nav-strip" style="background-color: var(--dark-blue); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem; position: relative;">
-        <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
-            <div style="position: absolute; left: 20px;">
-                <a href="module3.html" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.1rem; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
-                    &#8592; Back to Module 3
-                </a>
-            </div>
-            <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto;">
-            <div style="position: absolute; right: 20px;">
-                <span style="font-family: 'OneDotCd-Bold'; font-size: 1.2rem; color: var(--crust-base); text-transform: uppercase;">Module 3: Knowledge Check</span>
-            </div>
+<!-- UNIFIED MODULE BRAND NAVBAR -->
+    <header style="background-color: var(--dark-blue); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="module3.html" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Back to Slides
+            </a>
         </div>
-    </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 3: Knowledge Check</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Game</span>
+        </div>
+    </header>
 
     <div style="text-align: center; margin-bottom: 40px; margin-top: 40px;">
         <h1 id="round-title" style="color: var(--dark-blue); font-size: 2.5rem; margin-bottom: 10px; font-family: 'PizzaPress'; text-transform: uppercase;">Module 3: Menu Matching</h1>
