@@ -748,26 +748,29 @@
             </div>
         </div>
 
-        <!-- STEP 5: DAY 1 DASHBOARD -->
+<!-- STEP 5: DAY 1 DASHBOARD -->
         <div id="step-day1-dashboard" class="setup-container hidden">
             
-            <div class="dashboard-header">
-                <h2 class="dashboard-title">Day 1: Phone Training & Customer Interaction</h2>
-            </div>
-
-            <!-- Day 1 Progress Bar -->
-            <div class="progress-container">
-                <div class="progress-header">
-                    <h3>Day 1 Progress</h3>
-                    <span id="day1-progress-text" style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue);">0%</span>
+            <!-- COMBINED DAY 1 TITLE & PROGRESS CARD -->
+            <div class="dashboard-header" style="display: flex; flex-direction: column; gap: 15px; border-left: 6px solid var(--brand-blue); padding: 1.2rem 1.8rem; margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <h2 class="dashboard-title" style="margin: 0; font-size: 1.1rem;">Day 1: Phone Training & Customer Interaction</h2>
+                    <span id="day1-progress-text" style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.1rem; font-weight: bold;">0%</span>
                 </div>
-                <div class="progress-track">
-                    <div id="day1-progress-fill" class="progress-fill" style="width: 0%;"></div>
+                
+                <div style="width: 100%;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-family: 'OneDotCd-Bold'; color: var(--crust-deep); font-size: 1.0rem;">Day 1 Progress</span>
+                    </div>
+                    <div class="progress-track" style="width: 100%; height: 12px; background: var(--crust-light); border-radius: 6px; overflow: hidden; border: 1px solid var(--crust-med);">
+                        <div id="day1-progress-fill" class="progress-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--brand-blue), #00b4ff); border-radius: 6px; transition: width 1s ease-out;"></div>
+                    </div>
                 </div>
             </div>
 
             <!-- Course Grid -->
             <div class="course-grid">
+                <!-- Keep your standard Module 1, Module 2, Module 3, Module 4, Module 5 cards here -->
                 
                 <!-- Card 1 -->
                 <div class="course-card">
