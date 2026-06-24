@@ -347,8 +347,14 @@
             const feedback = document.getElementById('quiz-feedback');
 
             // Save user response text in userAnswers object
-            userAnswers['q' + questionNumber] = element.innerText.trim();
-
+            if (!userAnswers['q' + questionNumber]) {
+                userAnswers['q' + questionNumber] = [];
+            }
+            // Add the selected answer to the list if they haven't clicked it already
+            const selectedText = element.innerText.trim();
+            if (!userAnswers['q' + questionNumber].includes(selectedText)) {
+                userAnswers['q' + questionNumber].push(selectedText);
+            }
             if (isCorrect) {
                 feedback.style.display = 'none';
                 if (questionNumber === 3) {
