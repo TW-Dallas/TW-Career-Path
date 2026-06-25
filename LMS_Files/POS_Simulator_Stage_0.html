@@ -61,7 +61,7 @@
     </div>
 
     <!-- JAVASCRIPT FOR STAGE 0 -->
-<script>
+    <script>
         // Sequence Data
         const sequence = [
             {
@@ -254,6 +254,7 @@
 
         // --- RELATIONAL TRACKING STATE ---
         const moduleStartTime = Date.now();
+        let currentStep = 0; // FIXED: Added missing global step tracking variable
         let wrongClicks = 0;
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
 
@@ -274,15 +275,24 @@
                 instructionText.innerHTML = "<strong>Error:</strong> Could not load hitboxes. Check console.";
             });
 
+        // FIXED: Added global advanceStep function to process click events from elements using inline onclick attributes
+        window.advanceStep = function(element) {
+            if (element && element.id === sequence[currentStep].activeHitbox) {
+                errorMsg.style.display = 'none'; 
+                currentStep++; 
+                loadStep(currentStep); 
+            }
+        };
+
         function initializeSimulator() {
+            // FIXED: Safely configure hitboxes to avoid double-triggering events
             document.querySelectorAll('.hitbox').forEach(hb => {
-                hb.addEventListener('click', function(e) {
-                    if (this.id === sequence[currentStep].activeHitbox) {
-                        errorMsg.style.display = 'none'; 
-                        currentStep++; 
-                        loadStep(currentStep); 
-                    } 
-                });
+                // If a hitbox does not have an inline onclick attribute, attach a fallback listener
+                if (!hb.hasAttribute('onclick')) {
+                    hb.addEventListener('click', function(e) {
+                        advanceStep(this);
+                    });
+                }
             });
 
             // Tracks incorrect clicks
@@ -327,7 +337,11 @@
             }
 
             const stepData = sequence[stepIndex];
-            posImage.src = stepData.image;
+            
+            // NOTE: If you experience 404 errors resolving images, prepend "../" to stepData.image 
+            // depending on where your resources folder is located relative to this file.
+            posImage.src = stepData.image; 
+            
             instructionText.innerHTML = stepData.instruction;
             
             document.querySelectorAll('.hitbox').forEach(hb => {
