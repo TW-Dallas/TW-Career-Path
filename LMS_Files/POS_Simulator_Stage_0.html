@@ -252,9 +252,9 @@
             }
         ];
 
-        // --- RELATIONAL TRACKING STATE ---
+// --- RELATIONAL TRACKING STATE ---
         const moduleStartTime = Date.now();
-        let currentStep = 0; // FIXED: Added missing global step tracking variable
+        let currentStep = 0;
         let wrongClicks = 0;
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
 
@@ -275,9 +275,31 @@
                 instructionText.innerHTML = "<strong>Error:</strong> Could not load hitboxes. Check console.";
             });
 
-        // FIXED: Added global advanceStep function to process click events from elements using inline onclick attributes
-        window.advanceStep = function(element) {
-            if (element && element.id === sequence[currentStep].activeHitbox) {
+        // Global advanceStep function capable of parsing any argument structure
+        window.advanceStep = function(target) {
+            let clickedId = "";
+
+            if (typeof target === 'string') {
+                // Case 1: ID string passed (e.g., onclick="advanceStep('hb-id')")
+                clickedId = target;
+            } else if (target && target.id) {
+                // Case 2: Full DOM element passed (e.g., onclick="advanceStep(this)")
+                clickedId = target.id;
+            } else if (target && target.target) {
+                // Case 3: Event object passed (e.g., onclick="advanceStep(event)")
+                clickedId = target.target.id;
+            } else if (window.event) {
+                // Case 4: No arguments passed (e.g., onclick="advanceStep()"), fall back to browser event
+                const eventTarget = window.event.currentTarget || window.event.target;
+                if (eventTarget) {
+                    clickedId = eventTarget.id;
+                }
+            }
+
+            const activeHitboxId = sequence[currentStep].activeHitbox;
+
+            // If the clicked ID matches the active hitbox for the current step
+            if (clickedId === activeHitboxId) {
                 errorMsg.style.display = 'none'; 
                 currentStep++; 
                 loadStep(currentStep); 
@@ -285,17 +307,14 @@
         };
 
         function initializeSimulator() {
-            // FIXED: Safely configure hitboxes to avoid double-triggering events
+            // Bind listeners to all hitboxes to guarantee execution if inline onclick is missing
             document.querySelectorAll('.hitbox').forEach(hb => {
-                // If a hitbox does not have an inline onclick attribute, attach a fallback listener
-                if (!hb.hasAttribute('onclick')) {
-                    hb.addEventListener('click', function(e) {
-                        advanceStep(this);
-                    });
-                }
+                hb.addEventListener('click', function(e) {
+                    advanceStep(this);
+                });
             });
 
-            // Tracks incorrect clicks
+            // Tracks incorrect clicks on the background image
             posImage.addEventListener('click', function() {
                 errorMsg.style.display = 'block';
                 wrongClicks++; // Increments the error counter
@@ -337,11 +356,7 @@
             }
 
             const stepData = sequence[stepIndex];
-            
-            // NOTE: If you experience 404 errors resolving images, prepend "../" to stepData.image 
-            // depending on where your resources folder is located relative to this file.
-            posImage.src = stepData.image;
-            
+            posImage.src = stepData.image; 
             instructionText.innerHTML = stepData.instruction;
             
             document.querySelectorAll('.hitbox').forEach(hb => {
@@ -365,13 +380,6 @@
                 currentStep--;
                 loadStep(currentStep);
             }        
-        }
-
-        function goNext() {
-            if (currentStep < sequence.length - 1) {
-                currentStep++;
-                loadStep(currentStep);
-            }
         }
     </script>
 </body>
