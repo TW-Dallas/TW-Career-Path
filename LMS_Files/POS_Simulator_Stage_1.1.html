@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 4: Order Entry Practice</title>
+<title>Module 4: Order Entry Practice (Stage 1.1)</title>
   
 <!-- LINK TO YOUR GLOBALS -->
+<link rel="icon" type="image/png" href="../image/tile_blue.png">
 <link rel="stylesheet" href="Globals/LMS_Global_Styles.css">  
 <link rel="stylesheet" href="Globals/LMS_Master_hitboxes.css">
 <script src="Globals/lms_feedback.js"></script>
@@ -29,7 +30,7 @@
         
         <div style="display: flex; align-items: center; gap: 15px;">
             <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 4: Order Entry Practice</span>
-            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Simulator</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Practice Simulator</span>
         </div>
     </header>
 
@@ -46,12 +47,10 @@
             <!-- THE TEST BUTTONS -->
             <div class="nav-strip">
                 <button class="btn" onclick="goBack()">&#8592; Back</button>
-                <!-- Next button removed for rollout -->
-                <!-- <button class="btn" style="background-color: var(--brand-red);" onclick="goNext()">Next &#8594;</button> -->
-                <button id="finish-sim-btn" class="btn" style="background-color: var(--brand-red); display: none;" onclick="endSimulation()">Finish Simulation</button>
+                <button class="btn" id="finish-sim-btn" style="display: none; background-color: var(--brand-red);" onclick="endSimulation()">Finish</button>
             </div>
         </div>
-
+      
         <!-- RIGHT: POS Screen & Hitboxes -->
         <div id="pos-container">
             <div id="hitbox-wrapper">
@@ -61,7 +60,7 @@
         </div>
 
     </div>
-  
+
     <!-- JAVASCRIPT FOR STAGE 1.1 -->
     <script>
         // Sequence Data
@@ -572,7 +571,7 @@
             }
         ];
         
-        // --- RELATIONAL TRACKING STATE ---
+// --- RELATIONAL TRACKING STATE ---
         const moduleStartTime = Date.now(); // Start timer as soon as practice loads
         let wrongClicks = 0;               // Tracks practice mistakes
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
@@ -595,18 +594,46 @@
                 instructionText.innerHTML = "<strong>Error:</strong> Could not load hitboxes. Check console.";
             });
 
+        // Global advanceStep function capable of parsing any argument structure
+        window.advanceStep = function(target) {
+            let clickedId = "";
+
+            if (typeof target === 'string') {
+                // Case 1: ID string passed (e.g., onclick="advanceStep('hb-id')")
+                clickedId = target;
+            } else if (target && target.id) {
+                // Case 2: Full DOM element passed (e.g., onclick="advanceStep(this)")
+                clickedId = target.id;
+            } else if (target && target.target) {
+                // Case 3: Event object passed (e.g., onclick="advanceStep(event)")
+                clickedId = target.target.id;
+            } else if (window.event) {
+                // Case 4: No arguments passed (e.g., onclick="advanceStep()"), fall back to browser event
+                const eventTarget = window.event.currentTarget || window.event.target;
+                if (eventTarget) {
+                    clickedId = eventTarget.id;
+                }
+            }
+
+            const activeHitboxId = sequence[currentStep].activeHitbox;
+
+            // If the clicked ID matches the active hitbox for the current step
+            if (clickedId === activeHitboxId) {
+                errorMsg.style.display = 'none'; 
+                currentStep++; 
+                loadStep(currentStep); 
+            }
+        };
+
         function initializeSimulator() {
+            // Bind listeners to all hitboxes to guarantee execution if inline onclick is missing
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.addEventListener('click', function(e) {
-                    if (this.id === sequence[currentStep].activeHitbox) {
-                        errorMsg.style.display = 'none'; 
-                        currentStep++; 
-                        loadStep(currentStep); 
-                    } 
+                    advanceStep(this);
                 });
             });
 
-            // Catch incorrect clicks
+            // Tracks incorrect clicks on the background image
             posImage.addEventListener('click', function() {
                 errorMsg.style.display = 'block';
                 wrongClicks++; // Increment wrong clicks for Stage 1.1
@@ -660,7 +687,7 @@
                     activeHb.classList.add('hide-arrow'); 
                 } else {
                     activeHb.classList.remove('hide-arrow'); 
-not                }
+                } // FIXED: Removed the rogue "not" typo here
             }
             
             const finishBtn = document.getElementById('finish-sim-btn');
