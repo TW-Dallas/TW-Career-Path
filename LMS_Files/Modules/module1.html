@@ -50,12 +50,14 @@
             <div id="content-video" style="width: 100%; text-align: center;">
                 <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 1.5rem;">Welcome!</h3>
                 <div class="video-wrapper" style="position: relative; background: #000; overflow: hidden; border-radius: 8px;">
-                    <!-- Invisible shield over the top to block the Vimeo title, avatar, and share links -->
-                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 70px; z-index: 10; cursor: default;"></div>
+                    <!-- 1. TOP-LEFT SHIELD: Blocks the video title and uploader profile links -->
+                    <div style="position: absolute; top: 0; left: 0; width: calc(100% - 80px); height: 70px; z-index: 10; cursor: default;"></div>
                     
-                    <!-- Invisible shield over the bottom right to block the clickable Vimeo logo link -->
-                    <!-- Note: This is sized to block the logo in the corner, keeping the volume/play buttons on the left interactive -->
-                    <div style="position: absolute; bottom: 0; right: 0; width: 100px; height: 45px; z-index: 10; cursor: default;"></div>
+                    <!-- 2. RESPONSIVE RIGHT SHIELD: Blocks stacked buttons (Heart, Watch Later, Share) from the top down to the control bar -->
+                    <div style="position: absolute; top: 0; right: 0; width: 80px; height: calc(100% - 50px); z-index: 10; cursor: default;"></div>
+                    
+                    <!-- 3. BOTTOM-RIGHT SHIELD: Blocks only the "vimeo" logo link in the bottom control pill -->
+                    <div style="position: absolute; bottom: 0; right: 0; width: 85px; height: 50px; z-index: 10; cursor: default;"></div>
                     
                     <!-- The Vimeo Player will be loaded here -->
                     <div id="vimeo-player" style="width: 100%; height: 100%;"></div>
