@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="../../image/tile_blue.png">
     <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
     <script src="../Globals/lms_feedback.js"></script>
+    <script src="https://player.vimeo.com/api/player.js"></script>
     <style>
         .btn-disabled {
             background: #ccc !important;
@@ -47,14 +48,9 @@
             <!-- STEP 1: VIDEO -->
             <div id="content-video" style="width: 100%; text-align: center;">
                 <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 1.5rem;">Welcome!</h3>
-                <div class="video-wrapper" style="position: relative; background: transparent;">
-                    <!-- Invisible shield over the top to block the title link -->
-                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 80px; z-index: 10; cursor: default;"></div>
-                    
-                    <!-- Invisible shield over the bottom right to block the YouTube logo -->
-                    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 70px; z-index: 10; cursor: default;"></div>
-                    <!-- The YouTube Player will be injected here -->
-                    <div id="youtube-player"></div>
+                <div class="video-wrapper" style="position: relative; background: #000; overflow: hidden; border-radius: 8px;">
+                    <!-- The Vimeo Player will be loaded here -->
+                    <div id="vimeo-player" style="width: 100%; height: 100%;"></div>
                 </div>
                 <p style="color: var(--crust-burnt); font-size: 0.9rem;">You must watch the entire video to proceed.</p>
             </div>
@@ -118,52 +114,65 @@
         let quizPassed = false;
         let player;
 
-        // --- RELATIONAL TRACKING STATE ---
-        const moduleStartTime = Date.now(); // Starts the timer immediately on load
-        let userAnswers = {};               // Collects options as they answer the quiz
+        // --- VIMEO PLAYER INITIALIZATION ---
+        const vimeoVideoId = '1205007275'; 
 
-        // Load the YouTube IFrame Player API code asynchronously.
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        const options = {
+            id: vimeoVideoId,
+            loop: false,
+            responsive: true,
+            autoplay: false
+        };
 
-        // This function creates an <iframe> (and YouTube player) after the API code downloads.
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player', {
-                height: '100%',
-                width: '100%',
-                videoId: 'ImAjRhog6ME',
-                playerVars: {
-                    'playsinline': 1,
-                    'rel': 0, // Don't show related videos at the end
-                    'modestbranding': 1,
-                    'controls': 0, // Hides the scrub bar
-                    'disablekb': 1 // Disables keyboard skipping
-                },
-                events: {
-                    'onReady': function(event) {
-                        event.target.unMute();
-                        event.target.setVolume(100);
-                    },
-                    'onStateChange': onPlayerStateChange
+        player = new Vimeo.Player('vimeo-player', options);
+
+        let maxTimeWatched = 0;
+        let isEnforcingHold = false;
+
+        player.ready().then(() => {
+            player.setVolume(1);
+        });
+
+        // Monitor playing position continuously to keep track of farthest progress
+        player.on('timeupdate', function(data) {
+            if (isEnforcingHold) return;
+            
+            // Increment maximum allowed time if playing forward naturally
+            if (data.seconds > maxTimeWatched) {
+                if (data.seconds - maxTimeWatched < 2.5) { 
+                    maxTimeWatched = data.seconds;
                 }
-            });
-        }
-
-        // The API calls this function when the player's state changes.
-        function onPlayerStateChange(event) {
-            // event.data === 0 means the video has ended
-            if (event.data === 0) {
-                videoWatched = true;
-                const nextBtn = document.getElementById('btn-next');
-                nextBtn.classList.remove('btn-disabled');
-                
-                // Optional: Change the subtext to green to show it's done
-                document.querySelector('#content-video p').innerText = "Video Complete!";
-                document.querySelector('#content-video p').style.color = "#4CAF50";
             }
-        }
+        });
+
+        // Catch forward seeking attempts and snap back to furthest watched progress
+        player.on('seeked', function(data) {
+            if (isEnforcingHold) return;
+            
+            if (data.seconds > maxTimeWatched + 1.5) {
+                isEnforcingHold = true;
+                player.setCurrentTime(maxTimeWatched).then(() => {
+                    isEnforcingHold = false;
+                }).catch(() => {
+                    isEnforcingHold = false;
+                });
+            }
+        });
+
+        // Set completed state on finish
+        player.on('ended', function() {
+            videoWatched = true;
+            const nextBtn = document.getElementById('btn-next');
+            if (nextBtn) {
+                nextBtn.classList.remove('btn-disabled');
+            }
+            
+            const statusText = document.querySelector('#content-video p');
+            if (statusText) {
+                statusText.innerText = "Video Complete!";
+                statusText.style.color = "#4CAF50";
+            }
+        });
 
         function selectOption(element, questionNumber, isCorrect) {
             const block = document.getElementById('q' + questionNumber + '-block');
