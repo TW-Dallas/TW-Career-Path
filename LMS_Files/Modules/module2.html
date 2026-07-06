@@ -123,6 +123,10 @@
         let quizPassed = false;
         let player;
 
+        // --- RELATIONAL TRACKING STATE ---
+        const moduleStartTime = Date.now(); // Starts the timer immediately on load
+        let userAnswers = {};               // Collects options as they answer the quiz
+
         // --- VIMEO PLAYER INITIALIZATION ---
         const vimeoVideoId = '1205007275'; 
 
@@ -191,8 +195,15 @@
             const nextBtn = document.getElementById('btn-next');
             const feedback = document.getElementById('quiz-feedback');
             
-            userAnswers['q' + questionNumber] = element.innerText.trim();
-            
+            // Save user response text in userAnswers object
+            if (!userAnswers['q' + questionNumber]) {
+                userAnswers['q' + questionNumber] = [];
+            }
+            // Add the selected answer to the list if they haven't clicked it already
+            const selectedText = element.innerText.trim();
+            if (!userAnswers['q' + questionNumber].includes(selectedText)) {
+                userAnswers['q' + questionNumber].push(selectedText);
+            }
             if (isCorrect) {
                 feedback.style.display = 'none';
                 if (questionNumber === 3) {
@@ -305,25 +316,25 @@
             });
         }
 
-    function finishAndReturn() {
-        // 1. Change the button so they know it's working
-        const btn = document.getElementById('btn-finish');
-        if (btn) {
-            btn.innerText = "Saving Progress...";
-            btn.style.pointerEvents = "none"; // Prevents them from clicking twice
+        function finishAndReturn() {
+            // 1. Change the button so they know it's working
+            const btn = document.getElementById('btn-finish');
+            if (btn) {
+                btn.innerText = "Saving Progress...";
+                btn.style.pointerEvents = "none"; // Prevents them from clicking twice
+            }
+
+            // 2. Fire the checkmark to Google
+            sendProgressUpdate('Day 1 Mod 2');
+
+            // 3. THE BACKPACK DROP: Tell the browser they finished so the Dashboard unlocks Mod 2
+            localStorage.setItem('mod2_complete', 'true');
+
+            // 4. Wait 1.5 seconds for Google to catch it, then return directly to the Day 1 map
+            setTimeout(() => {
+                window.location.href = '../lms_dashboard.html#day1';
+            }, 1500);
         }
-
-        // 2. Fire the checkmark to Google
-        sendProgressUpdate('Day 1 Mod 2');
-
-        // 3. THE BACKPACK DROP: Tell the browser they finished so the Dashboard unlocks Mod 2
-        localStorage.setItem('mod2_complete', 'true');
-
-        // 4. Wait 1.5 seconds for Google to catch it, then return directly to the Day 1 map
-        setTimeout(() => {
-            window.location.href = '../lms_dashboard.html#day1';
-        }, 1500);
-    }
     </script>
 </body>
 </html>
