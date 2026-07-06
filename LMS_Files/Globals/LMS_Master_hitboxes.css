@@ -43,6 +43,15 @@
   #hb-carryout-service { top: 65.7789%; left: 11.5615%; width: 7.61697%; height: 7.42216%; }
   #hb-time-wanted { top: 78.2336%; left: 11.6975%; width: 7.75299%; height: 7.96524%; }
 
+  /* Everything Else */
+  #hb-wings-tab { top: 21.2712%; left: 27.7911%; width: 16.001%; height: 8.81128%; }
+  #hb-bread-tab { top: 21.111%; left: 44.514%; width: 16.1213%; height: 8.81128%; }
+  #hb-pasta-tab { top: 21.111%; left: 61.4774%; width: 15.8807%; height: 8.97148%; }
+  #hb-sandwich-tab { top: 30.5631%; left: 27.9115%; width: 15.8807%; height: 8.97148%; }
+  #hb-salad-tab { top: 30.5631%; left: 44.514%; width: 16.001%; height: 8.97148%; }
+  #hb-drinks-tab { top: 30.5631%; left: 61.2368%; width: 16.1213%; height: 8.97148%; }
+  #hb-extras-tab { top: 40.0152%; left: 27.9115%; width: 15.7603%; height: 9.13169%; }
+
   /* Pizza Tab */
   #hb-pizzas-tab { top: 39.8649%; left: 84.9121%; width: 12.9736%; height: 11.8873% }
   #hb-new-pizza { top: 5.20682%; left: 40.8052%; width: 9.52122%; height: 8.14627%; }
