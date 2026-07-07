@@ -517,7 +517,10 @@
         <div id="nav-user-widget" style="display: none; align-items: center; gap: 12px;">
             <div style="text-align: right;">
                 <div style="font-family: 'OneDotCd-Bold'; color: var(--crust-base); font-size: 1.05rem; line-height: 1.2;" id="nav-user-name">John Doe</div>
-                <div style="font-size: 0.85rem; color: rgba(254, 250, 246, 0.75); margin-top: 1px;" id="nav-user-role">Trainee</div>
+                <div style="font-size: 0.85rem; color: rgba(254, 250, 246, 0.75); margin-top: 1px;">
+                    <span id="nav-user-role">Trainee</span><span id="nav-user-store-divider"></span><span id="nav-user-store"></span> | 
+                    <a href="javascript:void(0)" onclick="logoutUser()" style="color: #ff9b9b; text-decoration: underline; font-family: 'OneDotCd-Bold'; margin-left: 4px;">Sign Out</a>
+                </div>
             </div>
             <div id="nav-user-avatar" style="width: 38px; height: 38px; font-size: 1.1rem; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; background-color: rgba(254, 250, 246, 0.15); color: white; font-family: 'OneDotCd-Bold';">👤</div>
         </div>
@@ -1059,85 +1062,6 @@
     
     const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
     
-    function authenticateUser(event) {
-        if (event) event.preventDefault();
-        
-        const marketInput = document.getElementById('login-market').value; 
-        const idInput = document.getElementById('login-id').value;
-        const passInput = document.getElementById('login-password').value;
-        const loginBtn = document.getElementById('login-btn');
-
-        if (!marketInput) {
-            alert("Please select your market.");
-            return;
-        }
-        if (!idInput || !passInput) {
-            alert("Please enter both your Employee ID and Password.");
-            return;
-        }
-
-        loginBtn.innerText = "Authenticating...";
-        loginBtn.style.opacity = "0.7";
-        loginBtn.disabled = true;
-
-        const url = `${AUTH_SCRIPT_URL}?action=login&market=${encodeURIComponent(marketInput)}&id=${encodeURIComponent(idInput.trim().toLowerCase())}&password=${encodeURIComponent(passInput)}`;
-
-        fetch(url, {
-            method: 'GET',
-            credentials: 'omit' 
-        })
-        .then(response => response.json()) 
-        .then(result => {
-            if (result.success) {
-                localStorage.setItem('tw_market', marketInput);
-                localStorage.setItem('tw_id', idInput.trim().toLowerCase());
-                localStorage.setItem('tw_firstName', result.firstName);
-                localStorage.setItem('tw_lastName', result.lastName);
-                localStorage.setItem('tw_role', result.role);
-                localStorage.setItem('tw_store', result.store);
-            
-                if (result.completed && result.completed.length > 0) {
-                    result.completed.forEach(modName => {
-                        if (modName === "day 1 mod 1") localStorage.setItem('mod1_complete', 'true');
-                        if (modName === "day 1 mod 2") localStorage.setItem('mod2_complete', 'true');
-                        if (modName === "day 1 mod 3") localStorage.setItem('mod3_complete', 'true');
-                        if (modName === "day 1 mod 4") localStorage.setItem('mod4_complete', 'true');
-                        if (modName === "day 1 mod 5") localStorage.setItem('mod5_complete', 'true');
-                    });
-                }
-
-                document.getElementById('mock-name').innerText = `${result.firstName} ${result.lastName}`;
-                document.getElementById('mock-role').innerText = result.role;
-                document.getElementById('mock-store').innerText = result.store;
-                document.getElementById('master-dash-name').innerText = `${result.firstName} ${result.lastName}`;
-                document.getElementById('master-dash-role').innerText = result.role;
-
-                syncProgressBars();
-
-                document.getElementById('step-login').classList.add('hidden');
-                if (localStorage.getItem('tw_tutorial_complete') === 'true') {
-                    nextStep('gateway'); 
-                } else {
-                    document.getElementById('step-setup-profile').classList.remove('hidden');
-                }
-                
-            } else {
-                alert("Login failed: " + result.error);
-            }
-
-            loginBtn.innerText = "Sign In";
-            loginBtn.style.opacity = "1";
-            loginBtn.disabled = false;
-        })
-        .catch(error => {
-            console.error("Database connection failed:", error);
-            alert("Unable to connect to the database. Please check your connection.");
-            loginBtn.innerText = "Sign In";
-            loginBtn.style.opacity = "1";
-            loginBtn.disabled = false;
-        });
-    }
-
     function requireTrainerPin(targetModuleUrl) {
         let pin = prompt("TRAINER AUTHORIZATION REQUIRED\n\nPlease have your trainer enter their 4-digit PIN to unlock the next module:");
         if (pin === "1234") {
@@ -1309,24 +1233,40 @@
         } 
     } 
 
-    function syncUserUI(firstName, lastName, role, progress) {
+    function syncUserUI(firstName, lastName, role, progress, store) {
         localStorage.setItem('tw_progress', progress);
         
         // 1. Update Profile Verification screen details
         const headerName = document.getElementById('mock-name');
         const headerRole = document.getElementById('mock-role');
+        const headerStore = document.getElementById('mock-store');
         if (headerName) headerName.innerText = `${firstName} ${lastName}`;
         if (headerRole) headerRole.innerText = role;
+        if (headerStore && store) headerStore.innerText = store;
 
         // 2. Update Global Navbar Profile details
         const navName = document.getElementById('nav-user-name');
         const navRole = document.getElementById('nav-user-role');
+        const navStore = document.getElementById('nav-user-store');
+        const navStoreDivider = document.getElementById('nav-user-store-divider');
         const navAvatar = document.getElementById('nav-user-avatar');
         const navWidget = document.getElementById('nav-user-widget');
         const navTagline = document.getElementById('nav-tagline');
 
         if (navName) navName.innerText = `${firstName} ${lastName}`;
         if (navRole) navRole.innerText = role;
+        
+        // Dynamically display the store with a soft bullet separator next to the role
+        if (navStore && store) {
+            // Prepend "Store " if the string doesn't already contain it
+            let formattedStore = store.toLowerCase().includes('store') ? store : "Store " + store;
+            navStore.innerText = formattedStore;
+            if (navStoreDivider) navStoreDivider.innerText = " • ";
+        } else {
+            if (navStore) navStore.innerText = "";
+            if (navStoreDivider) navStoreDivider.innerText = "";
+        }
+
         if (navAvatar && firstName) {
             navAvatar.innerText = firstName.charAt(0).toUpperCase();
         }
@@ -1335,8 +1275,15 @@
         if (navWidget) navWidget.style.display = 'flex';
         if (navTagline) navTagline.style.display = 'none';
 
-        // 3. TRIGGER YOUR PROGRESS ENGINE (Safely updates both of your progress bars)
+        // 3. Trigger progress engine
         syncProgressBars();
+    }
+    
+    function logoutUser() {
+        if (confirm("Are you sure you want to sign out? This will clear your current session so another candidate can log in.")) {
+            localStorage.clear();
+            window.location.reload();
+        }
     }
     
     function authenticateUser() {
@@ -1353,7 +1300,10 @@
         loginBtn.innerText = "Connecting...";
         loginBtn.disabled = true;
 
-        const url = `${AUTH_SCRIPT_URL}?action=login&market=${market}&id=${id}&password=${pass}`;
+        // Normalize inputs to avoid database lookup failures caused by trailing spaces or case mismatches
+        const normalizedId = id.trim().toLowerCase();
+
+        const url = `${AUTH_SCRIPT_URL}?action=login&market=${market}&id=${normalizedId}&password=${pass}`;
 
         fetch(url, { method: 'GET', credentials: 'omit' })
         .then(response => response.json())
@@ -1361,7 +1311,7 @@
             if (result.success) {
                 // Save session states
                 localStorage.setItem('tw_market', market);
-                localStorage.setItem('tw_id', id);
+                localStorage.setItem('tw_id', normalizedId);
                 localStorage.setItem('tw_firstName', result.firstName);
                 localStorage.setItem('tw_lastName', result.lastName);
                 localStorage.setItem('tw_role', result.role);
@@ -1378,7 +1328,8 @@
                     });
                 }
 
-                syncUserUI(result.firstName, result.lastName, result.role, result.progress);
+                // Pass the store value to dynamically render on the confirmation page and navbar
+                syncUserUI(result.firstName, result.lastName, result.role, result.progress, result.store);
 
                 // Direct to Profile screen first
                 nextStep('setup-profile');
@@ -1396,7 +1347,7 @@
         });
     }
 
-    // Fire UI updates on load
+    // Fire UI updates and restore active sessions on load
     window.addEventListener('DOMContentLoaded', () => {
         const savedId = localStorage.getItem('tw_id');
         if (savedId) {
@@ -1404,19 +1355,13 @@
             const lName = localStorage.getItem('tw_lastName');
             const role = localStorage.getItem('tw_role');
             const progress = localStorage.getItem('tw_progress') || 0;
-            syncUserUI(fName, lName, role, progress);
+            const store = localStorage.getItem('tw_store');
             
-            // Skip login if session active
+            // Re-sync UI with the stored variables
+            syncUserUI(fName, lName, role, progress, store);
             nextStep('gateway');
         } else {
             nextStep('login');
-        }
-    });
-
-    window.addEventListener('hashchange', () => {
-        if (window.location.hash === '#day1') {
-            nextStep('day1-dashboard');
-            history.replaceState(null, null, ' ');
         }
     });
 
