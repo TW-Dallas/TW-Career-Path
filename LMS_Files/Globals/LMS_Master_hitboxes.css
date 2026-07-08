@@ -52,6 +52,11 @@
   #hb-drinks-tab { top: 30.5631%; left: 61.2368%; width: 16.1213%; height: 8.97148%; }
   #hb-extras-tab { top: 40.0152%; left: 27.9115%; width: 15.7603%; height: 9.13169%; }
 
+  /* Cooking Instructions */
+  #hb-wings-cooking-instructions { top: 89.3965%; left: 47.6902%; width: 11.8207%; height: 9.22242%; }
+  #hb-bread-cooking-instructions { top: 89.5773%; left: 47.962%; width: 11.413%; height: 9.04159%; }
+  #hb-sandwich-cooking-instructions { top: 89.3965%; left: 60.0543%; width: 11.8207%; height: 8.86076%; }
+
   /* Pizza Tab */
   #hb-pizzas-tab { top: 39.8649%; left: 84.9121%; width: 12.9736%; height: 11.8873% }
   #hb-new-pizza { top: 5.20682%; left: 40.8052%; width: 9.52122%; height: 8.14627%; }
@@ -135,7 +140,7 @@
   #hb-left-side { top: 18.0598%; left: 26.7954%; width: 17.8183%; height: 25.706%; }
   #hb-whole { top: 17.9512%; left: 45.4298%; width: 18.2263%; height: 25.525%; }
 
-  /* Cooking Instructions */
+  /* Pizza Cooking Instructions */
   #hb-well-done { top: 21.3183%; left: 61.6159%; width: 15.506%; height: 8.68936%; }
   #hb-lightly-done { top: 20.9563%; left: 44.8857%; width: 15.37%; height: 8.3273%; }
   #hb-cut-in-6 { top: 21.3183%; left: 28.1556%; width: 15.0979%; height: 8.3273%; }
@@ -296,7 +301,8 @@
   #hb-sandwich-top-BBQ { top: 47.3864%; left: 54.951%; width: 7.61697%; height: 7.96524%; }
   #hb-sandwich-top-garlic-parm { top: 47.5674%; left: 63.7922%; width: 7.88901%; height: 7.60319%; }
   #hb-sandwich-top-buffalo { top: 47.2054%; left: 72.9053%; width: 7.75299%; height: 8.3273%; }
-  #hb-sandwich-top-tomatoes { top: 56.0758%; left: 27.8836%; width: 7.88901%; height: 7.78421%; }#hb-sandwich-top-spinach { top: 55.8947%; left: 36.9967%; width: 7.48096%; height: 8.14627%; }
+  #hb-sandwich-top-tomatoes { top: 56.0758%; left: 27.8836%; width: 7.88901%; height: 7.78421%; }
+  #hb-sandwich-top-spinach { top: 55.8947%; left: 36.9967%; width: 7.48096%; height: 8.14627%; }
   #hb-sandwich-top-spinach { top: 56.3654%; left: 36.8607%; width: 7.75299%; height: 7.24113%; }
   #hb-sandwich-top-feta { top: 56.0758%; left: 45.7018%; width: 7.75299%; height: 7.78421%; }
   #hb-sandwich-top-shredded-parm { top: 56.2568%; left: 54.951%; width: 7.61697%; height: 7.60319%; }
@@ -307,6 +313,10 @@
   #hb-sandwich-top-alfredo { top: 64.7651%; left: 54.815%; width: 7.75299%; height: 7.96524%; }
   #hb-sandwich-top-mango { top: 64.5841%; left: 63.6561%; width: 7.88901%; height: 8.14627%; }
   #hb-sandwich-top-blue-cheese { top: 64.5841%; left: 72.6333%; width: 8.16104%; height: 8.14627%; }
+
+  /* Sandwich Cooking Instructions */
+  #hb-sandwich-lightly-done { top: 21.2229%; left: 27.9891%; width: 15.8967%; height: 8.67993%; }
+  #hb-sandwich-well-done { top: 21.2229%; left: 44.837%; width: 15.7609%; height: 9.04159%; }
 
   /* Salad Type */
   #hb-salad-garden { top: 33.8093%; left: 27.8836%; width: 7.75299%; height: 8.14627%; }
