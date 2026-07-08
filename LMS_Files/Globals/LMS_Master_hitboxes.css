@@ -159,7 +159,7 @@
   #hb-bread-size-16 { top: 21.3183%; left: 54.815%; width: 7.75299%; height: 7.60319%; }
   #hb-bread-size-32 { top: 21.3183%; left: 63.6561%; width: 7.88901%; height: 7.60319%; }
   
-  /* Bread / Desserts Flacors */
+  /* Bread / Desserts Flavors */
   #hb-bread-stuffed-cheesy { top: 33.6283%; left: 28.1556%; width: 7.61697%; height: 7.60319%; }
   #hb-bread-stuffed-pepperoni { top: 33.6283%; left: 36.8607%; width: 7.75299%; height: 7.78421%; }
   #hb-bread-stuffed-spinach { top: 33.8093%; left: 46.2459%; width: 7.34494%; height: 7.42216%; }
@@ -169,6 +169,19 @@
   #hb-bread-cinnamon-bites { top: 42.4986%; left: 27.7476%; width: 7.75299%; height: 7.42216%; }
   #hb-bread-MCB { top: 42.4986%; left: 36.9967%; width: 7.75299%; height: 7.96524%; }
   #hb-bread-choc-lava { top: 42.6797%; left: 45.9739%; width: 7.75299%; height: 7.60319%; }
+
+  /* Bread Dips */
+  #hb-bread-dip-1 { top: 54.6768%; left: 28.125%; width: 7.47283%; height: 7.9566%; }
+  #hb-bread-dip-2 { top: 54.8576%; left: 36.6848%; width: 8.15217%; height: 7.59494%; }
+  #hb-bread-dip-3 { top: 54.4959%; left: 45.788%; width: 8.0163%; height: 7.9566%; }
+  #hb-bread-dip-4 { top: 54.8576%; left: 54.4837%; width: 8.28804%; height: 7.77577%; }
+  #hb-bread-dip-5 { top: 54.4959%; left: 63.8587%; width: 7.74457%; height: 7.9566%; }
+  #hb-bread-dip-slice-sauce { top: 63.5375%; left: 27.7174%; width: 8.15217%; height: 7.59494%; }
+  #hb-bread-dip-marinara { top: 63.1759%; left: 36.8207%; width: 7.74457%; height: 7.9566%; }
+  #hb-bread-dip-garlic { top: 63.1759%; left: 45.5163%; width: 8.15217%; height: 8.13743%; }
+  #hb-bread-dip-ranch { top: 63.1759%; left: 54.6196%; width: 8.0163%; height: 7.9566%; }
+  #hb-bread-dip-icing { top: 63.1759%; left: 63.587%; width: 7.88043%; height: 7.77577%; }
+  #hb-bread-dip-buffalo { top: 62.8142%; left: 72.5543%; width: 7.88043%; height: 8.13743%; }
 
   /* Bread Toppings */
   #hb-bread-toppings-light { top: 21.4994%; left: 27.7476%; width: 7.88901%; height: 7.78421%; }
