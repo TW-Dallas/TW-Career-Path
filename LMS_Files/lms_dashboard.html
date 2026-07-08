@@ -1272,15 +1272,15 @@
         
         // Dynamically display the store with a soft bullet separator next to the role
         if (navStore && store) {
+            // Safely coerce to a string in case the server returned a numeric value
+            const storeStr = String(store);
+            
             // Prepend "Store " if the string doesn't already contain it
-            let formattedStore = store.toLowerCase().includes('store') ? store : "Store " + store;
+            let formattedStore = storeStr.toLowerCase().includes('store') ? storeStr : "Store " + storeStr;
             navStore.innerText = formattedStore;
             if (navStoreDivider) navStoreDivider.innerText = " • ";
-        } else {
-            if (navStore) navStore.innerText = "";
-            if (navStoreDivider) navStoreDivider.innerText = "";
         }
-
+        
         if (navAvatar && firstName) {
             navAvatar.innerText = firstName.charAt(0).toUpperCase();
         }
