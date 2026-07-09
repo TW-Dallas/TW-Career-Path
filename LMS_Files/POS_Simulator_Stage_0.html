@@ -339,7 +339,7 @@
 
             const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${status}`;
             
-            console.log("SENDING STAGE 0 TIME: ", url);
+            console.log("SENDING STAGE 0 DATA: ", url);
             fetch(url, { method: 'GET', credentials: 'omit' });
         }
 
