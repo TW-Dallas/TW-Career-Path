@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Order Entry Practice (Stage 1.1)</title>
+  
+<!-- LINK TO YOUR GLOBALS -->
+<link rel="icon" type="image/png" href="../image/tile_blue.png">
+<link rel="stylesheet" href="Globals/LMS_Global_Styles.css">  
+<link rel="stylesheet" href="Globals/LMS_Master_hitboxes.css">
+<script src="Globals/lms_feedback.js"></script>
+
+</head>
+<body>
+    <!-- Mobile Blocker -->
+    <div id="mobile-blocker">
+        <h2>Desktop Required</h2>
+        <p>This POS simulator requires a larger screen. Please rotate your device or use a computer.</p>
+    </div>
+
+    <!-- UNIFIED MODULE BRAND NAVBAR (POS SIMULATOR) -->
+    <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="lms_dashboard.html#day1" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Back to Day 1
+            </a>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 4: Order Entry Practice</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Practice Simulator</span>
+        </div>
+    </header>
+
+    <!-- Main Wrapper -->
+    <div id="simulator-wrapper">
+        
+        <!-- LEFT: Instructions Panel -->
+        <div id="instruction-panel">
+            <div id="instruction-text">
+                <!-- JavaScript will inject the text/tickets here -->
+            </div>
+            <div id="error-message" class="error-msg">❌ Incorrect Click. Try again.</div>
+
+            <!-- THE TEST BUTTONS -->
+            <div class="nav-strip">
+                <button class="btn" onclick="goBack()">&#8592; Back</button>
+                <button class="btn" id="finish-sim-btn" style="display: none; background-color: var(--brand-red);" onclick="endSimulation()">Finish</button>
+            </div>
+        </div>
+      
+        <!-- RIGHT: POS Screen & Hitboxes -->
+        <div id="pos-container">
+            <div id="hitbox-wrapper">
+                <img id="pos-image" src="" alt="POS Screen">
+                <!-- 3. HITBOXES WILL BE INJECTED HERE BY JAVASCRIPT -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT FOR STAGE 2.0 -->
+    <script>
+        // Sequence Data
+        const sequence = [
+            {
+        "step": 0,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_7.png",
+        "activeHitbox": "hb-carryout",
+        "instruction": "<p style='margin-bottom: 8px;'><br><strong>Placing Side Orders</strong><br><br>Now, we are going to review the non-pizza items. Similar to the pizza section, we'll give you the exact details. Enter them in the order you saw in the tutorial and see below. This will always be the order of operations you will follow.</p><p style='margin-bottom: 32px;'>Go back to the carry out tab to access the order taking screen.</p><p style='font-size: 1rem;'>👉 <strong>Action:</strong> Click the <strong>Carry Out</strong> button to continue.</p>"
+    },
+    {
+        "step": 1,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_8.png",
+        "activeHitbox": "hb-cust-add",
+        "instruction": "📋 <strong>Greeting:</strong>Remember to use the proper greeting for all customers!<br><br><p style='font-size: 1rem;'>👉 <strong>Action:</strong> Click the <strong>Carry Out</strong> button to continue.</p>"
+    },
+    {
+        "step": 2,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_9.png",
+        "activeHitbox": "hb-phone-field",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000</div>👉 <strong>Action:</strong> Click the <strong>Phone #</strong> field to begin."
+    },
+    {
+        "step": 3,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.1.png",
+        "activeHitbox": "hb-phone-0",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000</div>👉 <strong>Action:</strong> Click '0'."
+    },
+    {
+        "step": 4,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.2.png",
+        "activeHitbox": "hb-phone-OK",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000</div>👉 <strong>Action:</strong> Click <strong>OK</strong> to close the phone field."
+    },
+    {
+        "step": 5,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.3.png",
+        "activeHitbox": "hb-cust-name",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training</div>👉 <strong>Action:</strong> Click anywhere in the <strong>Name</strong> field to continue."
+    },
+    {
+        "step": 6,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.4.png",
+        "activeHitbox": "hb-add-number",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div>👉 <strong>Action:</strong> Click the first address field to enter the address number."
+    },
+    {
+        "step": 7,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.5.png",
+        "activeHitbox": "hb-street-name",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div>👉 <strong>Action:</strong> Click the next address field to enter the street name."
+    },
+    {
+        "step": 8,
+        "image": "LMS_Files/resources/POS_assets/Stage_1.1/POS_1.6.png",
+        "activeHitbox": "hb-street-select",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div>👉 <strong>Action:</strong> Select the corresponding street name."
+    },
+    {
+        "step": 9,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_11.png",
+        "activeHitbox": "hb-rewards-checker",
+        "instruction": "👉 <strong>Action:</strong> Confirm the Rewards Status."
+    },
+    {
+        "step": 10,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_12.png",
+        "activeHitbox": "hb-rewards-ok",
+        "instruction": "👉 <strong>Action:</strong> Check the Rewards Status"
+    },
+    {
+        "step": 11,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_13.png",
+        "activeHitbox": "hb-greeting-tab",
+        "instruction": "👉 <strong>Action:</strong> After verifying all information is correct, navigate back to the <strong>Greetings/Specials</strong> screen to continue."
+    },
+    {
+        "step": 12,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_14.png",
+        "activeHitbox": "hb-delivery-service",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Type:</strong> Delivery</div>👉 <strong>Action:</strong> Click <strong>Delivery</strong>."
+    },
+    {
+        "step": 13,
+        "image": "LMS_Files/resources/POS_assets/Stage_0/POS_15.png",
+        "activeHitbox": "hb-everything-else-tab",
+        "instruction": "👉 <strong>Action:</strong> Click the <strong>Everything Else</strong> tab."
+    },
+    {
+        "step": 14,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.1.png",
+        "activeHitbox": "hb-wings-tab",
+        "instruction": "From this section, you can access the menu for all non-pizza items.<br><br>👉 <strong>Action:</strong> Click the <strong>Wings</strong> tab."
+    },
+    {
+        "step": 15,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.2.png",
+        "activeHitbox": "hb-wings-size-8",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• 8-Piece Honey BBQ Wings with 2 Ranch Dip Cups</div>👉 <strong>Action:</strong> Select the 8-Piece size."
+    },
+    {
+        "step": 16,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.3.png",
+        "activeHitbox": "hb-wings-BBQ-loaded",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• 8-Piece Honey BBQ Wings with 2 Ranch Dip Cups</div><br><br> Good job! Notice that just like pizzas, the screen gives multiple indicators that the item is incomplete.<br><br>You may also have noticed that there are two different BBQ flavors.<br>Let's see what the incorrect pairing looks like first.<br><br>👉 <strong>Action:</strong> Select the Sweet BBQ Bacon flavor."
+    },
+    {
+        "step": 17,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.4.png",
+        "activeHitbox": "hb-wings-BBQ",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• 8-Piece Honey BBQ Wings with 2 Ranch Dip Cups</div><br><br> With the incorrect option selected, you receive a red 'Invalid Product' warning. This helps prevent the wrong parings. <br><br>👉 <strong>Action:</strong> Select the Honey BBQ Wings flavor."
+    },
+        {
+        "step": 18,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.5.png",
+        "activeHitbox": "hb-wings-dip-2",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• 8-Piece Honey BBQ Wings with 2 Ranch Dip Cups</div><br><br> Now that the correct option is selected, you are ready to add the dip cups.<br>Hint: All light blue buttons function the same way: Click the button and tell it what to adjust.<br>👉 <strong>Action:</strong> Select '2'."
+    },
+    {
+        "step": 19,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.6.png",
+        "activeHitbox": "hb-wings-dip-ranch",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• 8-Piece Honey BBQ Wings with 2 Ranch Dip Cups</div><br><br>Hint: All light blue buttons function the same way: Click the button and tell it what to adjust.<br>👉 <strong>Action:</strong> Select 'Ranch Dip Cup'."
+    },
+    {
+        "step": 20,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.7.png",
+        "activeHitbox": "hb-new-wings",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• 8-Piece Honey BBQ Wings with 2 Ranch Dip Cups</div><br><br>Notice that the quantity '2x' appears on the Ranch Dip Cup button.<br><br> Review the order and ensure it is correct. After, you are ready to move to the next item.👉 <strong>Action:</strong> Select 'New Wings'."
+    },
+    {
+        "step": 21,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.8.png",
+        "activeHitbox": "hb-wings-size-loaded",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• Loaded Chicken - Spicy Jalapeno Pineapple (Well Done, Light Jalapenos)</div><br><br>👉 <strong>Action:</strong> Select 'Loaded Chicken' under 'size'."
+    },
+    {
+        "step": 22,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.9.png",
+        "activeHitbox": "hb-wings-jalapeno-loaded",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• Loaded Chicken - Spicy Jalapeno Pineapple (Well Done, Light Jalapenos)</div><br><br>👉 <strong>Action:</strong> Select 'Spicy Jalapeno Pineapple' under 'Flavor'."
+    },
+    {
+        "step": 23,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.10.png",
+        "activeHitbox": "hb-wings-cooking-instructions",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• Loaded Chicken - Spicy Jalapeno Pineapple (Well Done, Light Jalapenos)</div><br><br>👉 <strong>Action:</strong> Navigate to 'Cooking Instructions'."
+    },
+    {
+        "step": 24,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.79png",
+        "activeHitbox": "hb-wings-well-done",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• Loaded Chicken - Spicy Jalapeno Pineapple (Well Done, Light Jalapenos)</div><br><br>👉 <strong>Action:</strong> Select 'Well Done'."
+    },
+    {
+        "step": 25,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.11.png",
+        "activeHitbox": "hb-wings-toppings",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• Loaded Chicken - Spicy Jalapeno Pineapple (Well Done, Light Jalapenos)</div><br><br>👉 <strong>Action:</strong> Select 'Chicken Toppings'."
+    },
+    {
+        "step": 26,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.80.png",
+        "activeHitbox": "hb-wings-light",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• Loaded Chicken - Spicy Jalapeno Pineapple (Well Done, Light Jalapenos)</div><br><br>👉 <strong>Action:</strong> Select 'Light'."
+    },
+    {
+        "step": 27,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.12.png",
+        "activeHitbox": "hb-wings-jalapenos",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• Loaded Chicken - Spicy Jalapeno Pineapple (Well Done, Light Jalapenos)</div><br><br>👉 <strong>Action:</strong> Select 'Jalapenos'."
+    },
+    {
+        "step": 28,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.13.png",
+        "activeHitbox": "hb-everything-else-bottom",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🍗 ORDER ITEMS</div>• Loaded Chicken - Spicy Jalapeno Pineapple (Well Done, Light Jalapenos)</div><br><br>Ensure everything is correct, and then return to the 'Everything Else' menu. This time, use the bottom tab to return.👉 <strong>Action:</strong> Select 'Everything Else' at the bottom of the POS screen."
+    },
+    {
+        "step": 29,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.14.png",
+        "activeHitbox": "hb-bread-tab",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥖 ORDER ITEMS</div>• 8-Piece Stuffed Cheesy Bread with 1 Marinara Dip Cup</div><br><br>👉 <strong>Action:</strong> Select 'Breads/Desserts'."
+    },
+    {
+        "step": 30,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.15.png",
+        "activeHitbox": "hb-bread-stuffed-cheesy",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥖 ORDER ITEMS</div>• 8-Piece Stuffed Cheesy Bread with 1 Marinara Dip Cup</div><br><br>Hint: Cheesy Bread only comes in 8-Piece. Choosing the size is not necessary.<br><br>👉 <strong>Action:</strong> Select 'Stuffed Cheesy Bread'."
+    },
+    {
+        "step": 31,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.16.png",
+        "activeHitbox": "hb-bread-dip-marinara",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥖 ORDER ITEMS</div>• 8-Piece Stuffed Cheesy Bread with 1 Marinara Dip Cup</div><br><br>Hint: If you do not choose a quantity, the default amount is 1.<br><br>👉 <strong>Action:</strong> Select 'Marinara'."
+    },
+    {
+        "step": 32,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.17.png",
+        "activeHitbox": "hb-new-bread",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥖 ORDER ITEMS</div>• 16-Piece Cinnamon Bread Bites with 3 Icing Dip Cups</div><br><br>After reviewing the item, move to the next item.<br><br>👉 <strong>Action:</strong> Select 'New Bread'."
+    },
+    {
+        "step": 33,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.18.png",
+        "activeHitbox": "hb-bread-16-piece",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥖 ORDER ITEMS</div>• 16-Piece Cinnamon Bread Bites with 3 Icing Dip Cups</div><br><br>👉 <strong>Action:</strong> Select '16-Piece'."
+    },
+    {
+        "step": 34,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.19.png",
+        "activeHitbox": "hb-bread-cinnamon-bites",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥖 ORDER ITEMS</div>• 16-Piece Cinnamon Bread Bites with 3 Icing Dip Cups</div><br><br>👉 <strong>Action:</strong> Select 'Cinnamon Bread Bites'."
+    },
+    {
+        "step": 35,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.20.png",
+        "activeHitbox": "hb-bread-dip-3",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥖 ORDER ITEMS</div>• 16-Piece Cinnamon Bread Bites with 3 Icing Dip Cups</div><br><br>👉 <strong>Action:</strong> Select '3' in the lower 'Sauce' portion of the screen."
+    },
+    {
+        "step": 36,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.21.png",
+        "activeHitbox": "hb-bread-dip-icing",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥖 ORDER ITEMS</div>• 16-Piece Cinnamon Bread Bites with 3 Icing Dip Cups</div><br><br>👉 <strong>Action:</strong> Select 'Icing'."
+    },
+    {
+        "step": 37,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.22.png",
+        "activeHitbox": "hb-everything-else-bottom",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥖 ORDER ITEMS</div>• 16-Piece Cinnamon Bread Bites with 3 Icing Dip Cups</div><br><br>Review the order for accuracy, then return to the 'Everything Else' tab.<br><br>👉 <strong>Action:</strong> Select 'Everything Else' at the bottom of your screen."
+    },
+    {
+        "step": 38,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.81.png",
+        "activeHitbox": "hb-sandwich-tab",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥪 ORDER ITEMS</div>• Italian Sandwich (No Ham, Light Banana Peppers, Lightly Done)</div><br><br> 👉 <strong>Action:</strong> Select 'Sandwich'."
+    },
+    {
+        "step": 39,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.23.png",
+        "activeHitbox": "hb-flavor-sandwich",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥪 ORDER ITEMS</div>• Italian Sandwich (No Ham, Light Banana Peppers, Lightly Done)</div><br><br>Hint: Selecting either option under 'Size' or 'Flavor' will automatically select the other.<br>For this example, use the 'Flavor' section.<br><br>👉 <strong>Action:</strong> Select 'Sandwich Bread'."
+    },
+    {
+        "step": 40,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.24.png",
+        "activeHitbox": "hb-sandwich-italian",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥪 ORDER ITEMS</div>• Italian Sandwich (No Ham, Light Banana Peppers, Lightly Done)</div><br><br> 👉 <strong>Action:</strong> Under the 'Specialty' section, select 'Italian'."
+    },
+    {
+        "step": 41,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.25.png",
+        "activeHitbox": "hb-sandwich-toppings",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥪 ORDER ITEMS</div>• Italian Sandwich (No Ham, Light Banana Peppers, Lightly Done)</div><br><br>Hint: If a customer asks about what toppings are included, you can view and modify the recipe in the 'Sandwich Toppings' section.<br><br>👉 <strong>Action:</strong> Select 'Sandwich Toppings' at the bottom of the screen."
+    },
+    {
+        "step": 42,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.26.png",
+        "activeHitbox": "hb-sandwich-top-ham",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥪 ORDER ITEMS</div>• Italian Sandwich (No Ham, Light Banana Peppers, Lightly Done)</div><br><br>Hint: Remove a topping the same way one is added.<br><br>👉 <strong>Action:</strong> Click 'Ham'."
+    },
+    {
+        "step": 43,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.27.png",
+        "activeHitbox": "hb-sandwich-top-light",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥪 ORDER ITEMS</div>• Italian Sandwich (No Ham, Light Banana Peppers, Lightly Done)</div><br><br>👉 <strong>Action:</strong> Click 'Light'."
+    },
+    {
+        "step": 44,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.28.png",
+        "activeHitbox": "hb-sandwich-top-banana-pep",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥪 ORDER ITEMS</div>• Italian Sandwich (No Ham, Light Banana Peppers, Lightly Done)</div><br><br>Hint: Choose where to apply 'Light'.<br><br>👉 <strong>Action:</strong> Click 'Banana Peppers'."
+    },
+    {
+        "step": 45,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.29.png",
+        "activeHitbox": "hb-sandwich-cooking-instructions",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥪 ORDER ITEMS</div>• Italian Sandwich (No Ham, Light Banana Peppers, Lightly Done)</div><br><br>👉 <strong>Action:</strong> Click 'Cooking Instructions'."
+    },
+    {
+        "step": 46,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.30.png",
+        "activeHitbox": "hb-sandwich-lightly-done",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥪 ORDER ITEMS</div>• Italian Sandwich (No Ham, Light Banana Peppers, Lightly Done)</div><br><br>👉 <strong>Action:</strong> Click 'Lightly Done'."
+    },
+    {
+        "step": 47,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.31.png",
+        "activeHitbox": "hb-everything-else-tab",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥪 ORDER ITEMS</div>• Italian Sandwich (No Ham, Light Banana Peppers, Lightly Done)</div><br><br>Review the order for accuracy and then return to the 'Everything Else' menu.👉 <strong>Action:</strong> This time, use the 'Everything Else' button on the right side of the screen."
+    },
+    {
+        "step": 48,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.32.png",
+        "activeHitbox": "hb-extras-tab",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥭 ORDER ITEMS</div>• 2 Mango Habanero Dip Cups</div><br><br>All non-oven items can be found within the 'Extras' section of the menu.<br><br>👉 <strong>Action:</strong> Select 'Extras'."
+    },
+    {
+        "step": 49,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.33.png",
+        "activeHitbox": "hb-extras-dip-mango",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥭 ORDER ITEMS</div>• 2 Mango Habanero Dip Cups</div><br><br>👉 <strong>Action:</strong> Select 'Mango Habanero Dip Cup'."
+    },
+    {
+        "step": 50,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.34.png",
+        "activeHitbox": "hb-quantity-box",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥭 ORDER ITEMS</div>• 2 Mango Habanero Dip Cups</div><br><br>Notice that this section does not have the light-blue buttons to change the quantity.<br>Instead, you will use the quantity arrows at the top of the screen.<br><br>👉 <strong>Action:</strong> Click the Quantity (Qty) box with '1' at the top between the two black arrows."
+    },
+    {
+        "step": 51,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.35.png",
+        "activeHitbox": "hb-qty-2",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥭 ORDER ITEMS</div>• 2 Mango Habanero Dip Cups</div><br><br>Notice that this section does not have the light-blue buttons to change the quantity.<br>The black arrows can be used to increase or decrease the selected item by a value of 1. The numpad is used to type the exact quantity.<br>For this practice scenario, use the numpad to type the exact quantity requested.<br><br>👉 <strong>Action:</strong> Press '2'."
+    },
+    {
+        "step": 52,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.36.png",
+        "activeHitbox": "hb-qty-OK",
+        "instruction": "<div class='pos-ticket'><div class='pos-ticket-header'>🥭 ORDER ITEMS</div>• 2 Mango Habanero Dip Cups</div><br><br>Notice that this section does not have the light-blue buttons to change the quantity.<br>Like any other pop-up, the green 'OK' button saves the information and closes the box.<br><br>👉 <strong>Action:</strong> Click 'OK'."
+    },
+    {
+        "step": 53,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.37.png",
+        "activeHitbox": "hb-payments-tab",
+        "instruction": "<strong>Great job!</strong><br><br>Next, you will practice the skill you just learned without guidance.<br><br>👉 <strong>Action:</strong>Wrap up this order by navigating through the 'Cash - Later' steps."
+    },
+    {
+        "step": 54,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.37.png",
+        "activeHitbox": "hb-cash",
+        "instruction": "👉 <strong>Action:</strong>Wrap up this order by navigating through the 'Cash - Later' steps."
+    },
+    {
+        "step": 55,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.39.png",
+        "activeHitbox": "hb-pay-later",
+        "instruction": "👉 <strong>Action:</strong>Wrap up this order by navigating through the 'Cash - Later' steps."
+    },
+    {
+        "step": 56,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.40.png",
+        "activeHitbox": "hb-finish-tab",
+        "instruction": "👉 <strong>Action:</strong>Wrap up this order by navigating through the 'Cash - Later' steps."
+    },
+    {
+        "step": 57,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.41.png",
+        "activeHitbox": "hb-finish-checkout",
+        "instruction": "👉 <strong>Action:</strong>Wrap up this order by navigating through the 'Cash - Later' steps."
+    },
+    {
+        "step": 58,
+        "image": "LMS_Files/resources/POS_assets/Stage_2/POS_2.42.png",
+        "activeHitbox": "hb-send-order",
+        "instruction": "👉 <strong>Action:</strong>Wrap up this order by navigating through the 'Cash - Later' steps."
+    },
+    {
+        "step": 59,
+        "image": "LMS_Files/resources/POS_assets/Stage_0./POS_7.png",
+        "activeHitbox": null,
+        "instruction": "🥳"
+    },
+        ];
+        
+// --- RELATIONAL TRACKING STATE ---
+        const moduleStartTime = Date.now(); // Start timer as soon as practice loads
+        let wrongClicks = 0;               // Tracks practice mistakes
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+
+        let currentStep = 0;
+        const posImage = document.getElementById('pos-image');
+        const instructionText = document.getElementById('instruction-text');
+        const errorMsg = document.getElementById('error-message');
+        const hitboxWrapper = document.getElementById('hitbox-wrapper');
+
+        // Fetch the global hitboxes automatically
+        fetch('Globals/LMS_Master_html.html')
+            .then(response => response.text())
+            .then(html => {
+                hitboxWrapper.insertAdjacentHTML('beforeend', html);
+                initializeSimulator();
+            })
+            .catch(error => {
+                console.error("Error loading hitboxes:", error);
+                instructionText.innerHTML = "<strong>Error:</strong> Could not load hitboxes. Check console.";
+            });
+
+        // Global advanceStep function capable of parsing any argument structure
+        window.advanceStep = function(target) {
+            let clickedId = "";
+
+            if (typeof target === 'string') {
+                // Case 1: ID string passed (e.g., onclick="advanceStep('hb-id')")
+                clickedId = target;
+            } else if (target && target.id) {
+                // Case 2: Full DOM element passed (e.g., onclick="advanceStep(this)")
+                clickedId = target.id;
+            } else if (target && target.target) {
+                // Case 3: Event object passed (e.g., onclick="advanceStep(event)")
+                clickedId = target.target.id;
+            } else if (window.event) {
+                // Case 4: No arguments passed (e.g., onclick="advanceStep()"), fall back to browser event
+                const eventTarget = window.event.currentTarget || window.event.target;
+                if (eventTarget) {
+                    clickedId = eventTarget.id;
+                }
+            } 
+
+            const activeHitboxId = sequence[currentStep].activeHitbox;
+
+            // If the clicked ID matches the active hitbox for the current step
+            if (clickedId === activeHitboxId) {
+                errorMsg.style.display = 'none'; 
+                currentStep++; 
+                loadStep(currentStep); 
+            }
+        };
+
+        function initializeSimulator() {
+            // Bind listeners to all hitboxes to guarantee execution if inline onclick is missing
+            document.querySelectorAll('.hitbox').forEach(hb => {
+                hb.addEventListener('click', function(e) {
+                    advanceStep(this);
+                });
+            });
+
+            // Tracks incorrect clicks on the background image
+            posImage.addEventListener('click', function() {
+                errorMsg.style.display = 'block';
+                wrongClicks++; // Increment wrong clicks for Stage 2
+            });
+
+            loadStep(0);
+        }
+
+        function sendProgressUpdate(moduleName, status = "Completed") {
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            if (!market || !id) return;
+
+            const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            
+            // Capture Practice mistakes to merge with Tutorial mistakes
+            const answers = {
+                "Stage 2 Wrong Clicks": wrongClicks,
+                "Stage 2 Status": "Finished Practice"
+            };
+            const answersStr = encodeURIComponent(JSON.stringify(answers));
+
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${status}`;
+            
+            console.log("SENDING STAGE 2 DATA: ", url);
+            fetch(url, { method: 'GET', credentials: 'omit' });
+        }
+
+        function loadStep(stepIndex) {
+            if (stepIndex >= sequence.length) {
+                instructionText.innerHTML = "<strong>🎉 Simulation Complete!</strong><br><br>You've successfully completed this module.";
+                posImage.src = "resources/POS_assets/under_construction.png";
+                document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+                return;
+            }
+
+            const stepData = sequence[stepIndex];
+            posImage.src = stepData.image;
+            instructionText.innerHTML = stepData.instruction;
+            
+            document.querySelectorAll('.hitbox').forEach(hb => {
+                hb.style.display = 'none';
+            });
+            
+            const activeHb = document.getElementById(stepData.activeHitbox);
+            if (activeHb) {
+                activeHb.style.display = 'block';
+                activeHb.classList.remove('arrow-bottom'); 
+
+                if (stepIndex >= 39) { 
+                    activeHb.classList.add('hide-arrow'); 
+                } else {
+                    activeHb.classList.remove('hide-arrow'); 
+                } // FIXED: Removed the rogue "not" typo here
+            }
+            
+            const finishBtn = document.getElementById('finish-sim-btn');
+            if (finishBtn) {
+                if (stepIndex === sequence.length - 1) {
+                    finishBtn.style.display = 'inline-block'; 
+                } else {
+                    finishBtn.style.display = 'none'; 
+                }
+            }
+        }
+        
+        function endSimulation() {
+            posImage.src = "resources/POS_assets/Stage_1.1/under_construction.png"; 
+            instructionText.innerHTML = "<strong>Stage 2 Complete</strong><br><br>The next phase of the simulator is currently in development.<br><br>Click the red button below to save your progress and return to the Day 1 Dashboard.";
+            document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+            
+            const finishBtn = document.getElementById('finish-sim-btn');
+            finishBtn.style.display = 'inline-block'; 
+            finishBtn.innerText = "Save & Return to Day 1"; 
+
+            finishBtn.onclick = function() {
+                finishBtn.innerText = "Saving...";
+                finishBtn.style.pointerEvents = "none";
+                finishBtn.style.opacity = "0.5";
+
+                // Save time and answers, then mark module as Complete
+                sendProgressUpdate('Day 1 Mod 4', 'Completed');
+                localStorage.setItem('mod4_complete', 'true');
+
+                setTimeout(() => {
+                    window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
+                }, 1500);
+            };
+        }
+
+        function goBack() {
+            if (currentStep > 0) {
+                currentStep--;
+                loadStep(currentStep);
+            }        
+        }
+
+        function goNext() {
+            if (currentStep < sequence.length - 1) {
+                currentStep++;
+                loadStep(currentStep);
+            }
+        }
+    </script>
+</body>
+</html>
