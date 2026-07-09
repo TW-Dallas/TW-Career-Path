@@ -508,7 +508,7 @@
             // Capture Practice mistakes to merge with Tutorial mistakes
             const answers = {
                 "Stage 2 Wrong Clicks": wrongClicks,
-                "Stage 2 Status": "Finished Practice"
+                "Stage 2 Status": "Finished Tutorial"
             };
             const answersStr = encodeURIComponent(JSON.stringify(answers));
 
@@ -520,7 +520,7 @@
 
         function loadStep(stepIndex) {
             if (stepIndex >= sequence.length) {
-                instructionText.innerHTML = "<strong>🎉 Simulation Complete!</strong><br><br>You've successfully completed this module.";
+                instructionText.innerHTML = "<strong>🎉 Simulation Complete!</strong><br><br>You've successfully completed the completed stages of this module.";
                 posImage.src = "resources/POS_assets/under_construction.png";
                 document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
                 return;
