@@ -63,6 +63,45 @@
 
     <!-- JAVASCRIPT FOR STAGE 2.0 -->
     <script>
+
+        // --- AUTO ERROR REPORTING ---
+        function reportErrorToDeveloper(errorType, details) {
+            const market = localStorage.getItem('tw_market') || 'Unknown Market';
+            const id = localStorage.getItem('tw_id') || 'Unknown ID';
+            const currentStepNum = typeof currentStep !== 'undefined' ? currentStep : 'N/A';
+            
+            // Create an informative payload
+            const payload = {
+                market: market,
+                userId: id,
+                module: 'Day 1 Mod 4 Practice',
+                step: currentStepNum,
+                errorType: errorType,
+                details: details,
+                userAgent: navigator.userAgent
+            };
+
+            const url = `${AUTH_SCRIPT_URL}?action=error&data=${encodeURIComponent(JSON.stringify(payload))}`;
+            
+            // Send it in the background
+            fetch(url, { method: 'GET', credentials: 'omit' })
+                .then(() => console.log("Error report sent successfully."))
+                .catch(err => console.error("Could not send error report:", err));
+        }
+
+        // 1. Capture general JavaScript exceptions (e.g., code crashes)
+        window.onerror = function (message, source, lineno, colno, error) {
+            const details = `${message} at ${source}:${lineno}:${colno}`;
+            reportErrorToDeveloper('JavaScript Exception', details);
+            return false; // let browser handle it normally too
+        };
+
+        // 2. Capture asset-loading failures (e.g., the POS_2.79png typo)
+        window.addEventListener('error', function (event) {
+            if (event.target && event.target.tagName === 'IMG') {
+                reportErrorToDeveloper('Broken Image Asset', event.target.src);
+            }
+        }, true); // True is required to capture resource-loading issues
         // Sequence Data
         const sequence = [
            {
@@ -514,7 +553,7 @@
 
         function loadStep(stepIndex) {
             if (stepIndex >= sequence.length) {
-                instructionText.innerHTML = "<strong>🎉 Simulation Complete!</strong><br><br>You've successfully completed the completed stages of this module.";
+                instructionText.innerHTML = "<strong>🎉 Simulation Complete!</strong><br><br>You've successfully completed this module.";
                 posImage.src = "resources/POS_assets/under_construction.png";
                 document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
                 return;
@@ -537,9 +576,13 @@
                     activeHb.classList.add('hide-arrow'); 
                 } else {
                     activeHb.classList.remove('hide-arrow'); 
-                } // FIXED: Removed the rogue "not" typo here
-            }
-            
+                }
+            } else {
+                // ---- NEW VALIDATION CHECK ----
+                // If the sequence expects a hitbox but it isn't in your HTML file:
+                reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${stepData.activeHitbox}" but it was not found in the DOM.`);
+            }            
+
             const finishBtn = document.getElementById('finish-sim-btn');
             if (finishBtn) {
                 if (stepIndex === sequence.length - 1) {

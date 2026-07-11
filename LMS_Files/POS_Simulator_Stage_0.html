@@ -62,9 +62,45 @@
 
     <!-- JAVASCRIPT FOR STAGE 0 -->
     <script>
+        function doGet(e) {
+            var action = e.parameter.action;
+            
+            if (action === "update") {
+                // ... your existing code to save user progress ...
+                return ContentService.createTextOutput("Progress updated");
+            } 
+            
+            // ADD THIS BLOCK FOR HANDLING ERRORS:
+            else if (action === "error") {
+                try {
+                var rawData = e.parameter.data;
+                var errorObj = JSON.parse(rawData);
+                
+                var recipient = "your_email@example.com"; // <-- PUT YOUR EMAIL HERE
+                var subject = "⚠️ POS Simulator Error: " + errorObj.errorType;
+                
+                var body = "An error was reported by a user in the POS simulator.\n\n" +
+                            "User ID: " + errorObj.userId + "\n" +
+                            "Market: " + errorObj.market + "\n" +
+                            "Module: " + errorObj.module + "\n" +
+                            "Step: " + errorObj.step + "\n\n" +
+                            "Error Type: " + errorObj.errorType + "\n" +
+                            "Details: " + errorObj.details + "\n\n" +
+                            "User Agent: " + errorObj.userAgent + "\n\n" +
+                            "This is an automated notification.";
+                            
+                // Use Google's built-in mail service
+                MailApp.sendEmail(recipient, subject, body);
+                
+                return ContentService.createTextOutput("Error email sent successfully.");
+                } catch(err) {
+                return ContentService.createTextOutput("Failed to process error message: " + err.toString());
+                }
+            }
+            }
         // Sequence Data
         const sequence = [
-{
+            {
                 "step": 0,
                 "image": "resources/POS_assets/Stage_0/POS_1.png",
                 "activeHitbox": "hb-order-entry",
@@ -348,9 +384,9 @@
                 // Write progress before redirecting
                 sendProgressUpdate('Day 1 Mod 4', 'In Progress');
 
-                // Redirect to Stage 1 after 1 second buffer
+                // Redirect to Stage 2 after 1 second buffer
                 setTimeout(() => {
-                    window.location.href = "POS_Simulator_Stage_1.html";
+                    window.location.href = "POS_Simulator_Stage_2.html";
                 }, 1000);
                 return;
             }
@@ -372,6 +408,10 @@
                     activeHb.classList.remove('arrow-bottom'); 
                 }
                 activeHb.classList.remove('hide-arrow'); 
+            } else {
+                // ---- NEW VALIDATION CHECK ----
+                // If the sequence expects a hitbox but it isn't in your HTML file:
+                reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${stepData.activeHitbox}" but it was not found in the DOM.`);
             }
         }
 
