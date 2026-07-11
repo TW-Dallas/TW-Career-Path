@@ -395,7 +395,7 @@
             {
                 "step": 48,
                 "image": "resources/POS_assets/Stage_2/POS_2.32.png",
-                "activeHitbox": "hb-extras",
+                "activeHitbox": "hb-extras-tab",
                 "instruction": "<div class='pos-ticket' style='margin-bottom: 24px;'><div class='pos-ticket-header'>🥪 ORDER ITEMS</div><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span>Italian Sandwich (No Ham, Light Banana Peppers, Lightly Done)</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Select 'Extras'.</p>"
             },
             {
@@ -528,7 +528,19 @@
                 wrongClicks++; // Increment wrong clicks for Stage 2
             });
 
-            loadStep(0);
+            // ---- NEW: JUMP TO STEP VIA URL QUERY PARAMETER ----
+            const urlParams = new URLSearchParams(window.location.search);
+            const stepParam = urlParams.get('step');
+            
+            if (stepParam !== null) {
+                const targetStep = parseInt(stepParam, 10);
+                // Ensure the step is a valid number within your sequence array limits
+                if (!isNaN(targetStep) && targetStep >= 0 && targetStep < sequence.length) {
+                    currentStep = targetStep;
+                }
+            }
+
+            loadStep(currentStep);
         }
 
         function sendProgressUpdate(moduleName, status = "Completed") {
