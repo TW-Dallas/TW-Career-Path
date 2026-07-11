@@ -189,6 +189,121 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* ========================================================
+           SIDES & EXTRAS: CATEGORIES & FLIP CARDS CSS
+           ======================================================== */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            width: 100%;
+            padding: 0 2rem 2rem 2rem;
+            box-sizing: border-box;
+        }
+
+        .category-card {
+            background: var(--crust-base);
+            border: 2px solid var(--crust-med);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 120px;
+            box-sizing: border-box;
+        }
+
+        .category-card:hover {
+            border-color: var(--brand-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .category-card.completed {
+            border-color: #2e7d32;
+            background: rgba(46, 125, 50, 0.05);
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            color: #2e7d32;
+        }
+
+        .flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+            padding: 0 2rem 2rem 2rem;
+            box-sizing: border-box;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 250px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .flip-card-front {
+            background-color: var(--crust-base);
+            border: 2px solid var(--crust-med);
+            color: var(--crust-deep);
+        }
+
+        .flip-card-back {
+            background-color: var(--brand-blue);
+            color: white;
+            transform: rotateY(180deg);
+            justify-content: center;
+            text-align: center;
+        }
+
+        .flip-card-back p {
+            font-family: 'OneDotCd';
+            font-size: 1.1rem;
+            line-height: 1.4;
+            margin: 0;
+        }
     </style>
 </head>
 <body style="background-color: var(--crust-light);">
@@ -212,7 +327,7 @@
         <div class="classroom-content">
             
         <!-- MENU DECONSTRUCTED SLIDESHOW -->
-        <div id="menu-slideshow" style="background: var(--crust-base); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 900px; margin: 0.5rem auto 2rem auto; overflow: hidden; border: 2px solid var(--crust-med);">
+        <div id="menu-slideshow" style="background: var(--crust-base); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 900px; margin: 0.5rem auto 2rem auto; overflow: hidden; border: 2px solid var(--crust-med); width: 100%;">
             
             <!-- THIS IS THE MAGIC CONTAINER THE JS IS LOOKING FOR -->
             <div id="slide-content-container"></div>
@@ -275,10 +390,123 @@
                 title: "Veggies & More (Part 2)",
                 type: "full-image",
                 image: "../resources/Menu/Toppings-Veggies2.png"
+            },
+            {
+                title: "The Specialties",
+                type: "grid", 
+                items: [
+                    { name: "Spicy Chicken Bacon Ranch", image: "../resources/Specialty/SCBR.png", desc: "Grilled chicken breast, creamy ranch, smoked bacon, jalapeños, provolone, and cheese made with 100% real mozzarella and finished off with a drizzle of buffalo sauce." },
+                    { name: "The People's Pizza - Deluxe", image: "../resources/Specialty/Deluxe.png", desc: "Savory pepperoni and Italian sausage, fresh green peppers, fresh mushrooms, fresh onions, provolone and cheese made with 100% real mozzarella." },
+                    { name: "ExtravaganZZa", image: "../resources/Specialty/Extrav.png", desc: "Pepperoni, ham, Italian sausage, beef, fresh onions, fresh green peppers, fresh mushrooms and black olives, all sandwiched between two layers of provolone and cheese made with 100% real mozzarella." },
+                    { name: "MeatZZa", image: "../resources/Specialty/Meatzza.png", desc: "Pepperoni, ham, Italian sausage and beef, all sandwiched between two layers of provolone and cheese made with 100% real mozzarella." },
+                    { name: "Honolulu Hawaiian", image: "../resources/Specialty/Hawaiian.png", desc: "Sliced ham, smoked bacon, pineapple, fresh green peppers, provolone and cheese made with 100% real mozzarella." },
+                    { name: "Philly Cheese Steak", image: "../resources/Specialty/Philly.png", desc: "Tender slices of steak, fresh onions, fresh green peppers, fresh mushrooms, provolone and American cheese." },
+                    { name: "Pacific Veggie", image: "../resources/Specialty/Veggie.png", desc: "Fresh baby spinach, fresh onions, fresh mushrooms, tomatoes, black olives, feta, provolone, cheese made with 100% real mozzarella and sprinkled with a garlic herb seasoning." },
+                    { name: "Ultimate Pepperoni", image: "../resources/Specialty/Ultimate.png", desc: "Two layers of pepperoni sandwiched between provolone, Parmesan-Asiago and cheese made with 100% real mozzarella then sprinkled with oregano." },
+                    { name: "Memphis BBQ Chicken", image: "../resources/Specialty/BBQ.png", desc: "Grilled chicken breast, honey BBQ sauce, fresh onions, cheddar, provolone and cheese made with 100% real mozzarella." },
+                    { name: "Wisconsin 6-Cheese", image: "../resources/Specialty/6Cheese.png", desc: "Feta, provolone, cheddar, Parmesan-Asiago, cheese made with 100% real mozzarella and sprinkled with oregano." },
+                    { name: "Spinach & Feta", image: "../resources/Specialty/SpinFeta.png", desc: "Creamy Alfredo sauce, fresh spinach, fresh onions, feta, Parmesan-Asiago, provolone and cheese made with 100% real mozzarella." }
+                ]
+            },
+            {
+                title: "Sides & Extras",
+                type: "interactive-categories"
             }
         ];
 
+        // --- SIDES & EXTRAS DATA FOR THE INTERACTIVE STEP ---
+        const sidesData = {
+            breads: {
+                title: "Breads",
+                items: [
+                    { name: "Parmesan Bread Bites", image: "../resources/Sides/ParmBites.png", desc: "Handmade from fresh buttery tasting pan dough, drizzled with garlic seasoning and sprinkled with Parmesan." },
+                    { name: "Garlic Bread Bites", image: "../resources/Sides/GarlicBites.png", desc: "Handmade from fresh buttery tasting pan dough, drizzled with garlic seasoning." },
+                    { name: "Stuffed Cheesy Bread", image: "../resources/Sides/StuffedCheesy.png", desc: "Oven-baked breadsticks, stuffed and covered in a blend of cheese made with 100% real mozzarella and cheddar. Seasoned with a touch of garlic and Parmesan." },
+                    { name: "Pepperoni Stuffed Cheesy Bread", image: "../resources/Sides/StuffedPep.png", desc: "Oven-baked breadsticks, stuffed with cheese and pepperoni - covered in a blend of cheese made with 100% real mozzarella and cheddar. Seasoned with a touch of garlic and Parmesan." },
+                    { name: "Spinach & Feta Stuffed Cheesy Bread", image: "../resources/Sides/StuffedSpin.png", desc: "Oven-baked breadsticks, stuffed with cheese, fresh spinach, and Feta cheese - covered in a blend of cheese made with 100% real mozzarella and cheddar. Seasoned with a touch of garlic and Parmesan." },
+                    { name: "Bacon & Jalapeno Stuffed Cheesy Bread", image: "../resources/Sides/StuffedBacon.png", desc: "Oven-baked breadsticks, stuffed with cheese, smoked bacon and jalapeno peppers - covered in a blend of cheese made with 100% real mozzarella and cheddar. Seasoned with a touch of garlic and Parmesan." }
+                ]
+            },
+            desserts: {
+                title: "Desserts",
+                items: [
+                    { name: "Cinnamon Bread Bites", image: "../resources/Sides/CinnaBites.png", desc: "Handmade from fresh buttery tasting pan dough, drizzled with cinnamon and sugar." },
+                    { name: "Chocolate Lava Cakes", image: "../resources/Sides/ChocLava.png", desc: "Oven-baked chocolate cakes with molten chocolate fudge on the inside." },
+                    { name: "Marbled Cookie Brownie", image: "../resources/Sides/MCB.png", desc: "Gooey, oven-baked cookie with chocolatey chunks and delicious fudge brownie." }
+                ]
+            },
+            wings: {
+                title: "Wings",
+                items: [
+                    { name: "Hot Buffalo Wings", image: "../resources/Sides/WingsBuff.png", desc: "Marinated and oven-baked, then smothered in hot buffalo sauce." },
+                    { name: "Honey BBQ Wings", image: "../resources/Sides/WingsBBQ.png", desc: "Marinated and oven-baked, then smothered in honey BBQ sauce." },
+                    { name: "Sweet Mango Habanero Wings", image: "../resources/Sides/WingsHab.png", desc: "Marinated and oven-baked, then smothered in sweet mango habanero sauce." },
+                    { name: "Garlic Parmesan Wings", image: "../resources/Sides/WingsGarParm.png", desc: "Marinated and oven-baked, then smothered in garlic Parmesan sauce. " },
+                    { name: "Plain Wings", image: "../resources/Sides/WingsPlain.png", desc: "Marinated and oven-baked." },
+                    { name: "Loaded Chicken – Crispy Bacon & Tomato", image: "../resources/Sides/LoadedCBT.png", desc: "Tender bites of breaded chicken made with 100% whole breast white meat topped with garlic Parmesan sauce, a blend of cheese made with mozzarella and cheddar, crispy bacon and tomato." },
+                    { name: "Loaded Chicken – Classic Hot Buffalo", image: "../resources/Sides/LoadedBuff.png", desc: "Tender bites of breaded chicken made with 100% whole breast white meat topped with hot buffalo sauce, ranch, a blend of cheese made with mozzarella and cheddar, and feta." },
+                    { name: "Loaded Chicken – Classic Hot Buffalo", image: "../resources/Sides/LoadedPJ.png", desc: "Tender bites of lightly breaded, 100% whole breast white meat chicken, topped with sweet and spicy mango-habanero sauce, a blend of cheese made with mozzarella and cheddar, jalapeno and pineapple." },
+                    { name: "Loaded Chicken – Sweet BBQ Bacon", image: "../resources/Sides/LoadedBBQ.png", desc: "Tender bites of lightly breaded, 100% whole breast white meat chicken, topped with sweet and spicy mango-habanero sauce, a blend of cheese made with mozzarella and cheddar, jalapeno and pineapple." },
+                    { name: "Boneless Chicken", image: "../resources/Sides/Boneless.png", desc: "Breaded chicken made with 100% whole white breast meat." }
+                ]
+            },
+            pasta: {
+                title: "Pasta",
+                items: [
+                    { name: "5-Cheese Mac & Cheese", image: "../resources/Sides/Pasta5Cheese.png", desc: "Penne pasta and a blend of cheese made with 100% real mozzarella, cheddar, American, Parmesan, Asiago and Alfredo sauce, oven baked to creamy, bubbly perfection." },
+                    { name: "Spicy Buffalo 5-Cheese Mac & Cheese", image: "../resources/Sides/PastaSpicy.png", desc: "Our creamy, oven-baked 5 Cheese Mac & Cheese drizzled with buffalo sauce for a spicy kick." },
+                    { name: "Chicken Alfredo", image: "../resources/Sides/PastaChicken.png", desc: "Grilled chicken breast and creamy Alfredo sauce is mixed with penne pasta and baked to creamy perfection." }
+                ]
+            },
+            sandwiches: {
+                title: "Oven Baked Sandwiches",
+                items: [
+                    { name: "Philly Cheese Steak", image: "../resources/Sides/SandwichPhilly.png", desc: "Tender slices of steak, American and provolone cheeses, fresh onions, fresh green peppers and fresh mushrooms." },
+                    { name: "Chicken Bacon Ranch", image: "../resources/Sides/SandwichCBR.png", desc: "Grilled chicken breast topped with smoked bacon, creamy ranch and provolone cheese." },
+                    { name: "Italian", image: "../resources/Sides/SandwichItalian.png", desc: "Pepperoni and ham topped with banana peppers, fresh green peppers, fresh onions, and provolone cheese." },
+                    { name: "Chicken Parm", image: "../resources/Sides/SandwichParm.png", desc: "Grilled chicken breast, robust-inspired tomato sauce, Parmesan-Asiago and provolone cheese, finished with melted cheese made with 100% mozzarella.​" },
+                    { name: "Buffalo Chicken", image: "../resources/Sides/SandwichBuffalo.png", desc: "Grilled chicken breast, ranch, fresh onions, hot buffalo sauce, cheddar, and cheese made with 100% real mozzarella." }
+                ]
+            },
+            salads: {
+                title: "Salads",
+                items: [
+                    { name: "Classic Garden", image: "../resources/Sides/SaladGarden.png", desc: "A crisp and colorful combination of grape tomatoes, red onion, carrots, red cabbage, cheddar cheese and seasoned croutons, all atop a blend of romaine and iceberg lettuce." },
+                    { name: "Chicken Caesar", image: "../resources/Sides/SaladCaesar.png", desc: "Grilled white meat chicken, Parmesan cheese and seasoned croutons, all atop a blend of romaine and iceberg lettuce." }
+                ]
+            },
+            drinks: {
+                title: "Drinks",
+                items: [
+                    { name: "Coca-Cola®", image: "../resources/Sides/DrinkCoke.png", desc: "The authentic cola sensation that is a refreshing part of sharing life's enjoyable moments." },
+                    { name: "Diet Coke®", image: "../resources/Sides/DrinkDiet.png", desc: "Beautifully balanced adult cola taste in a no calorie beverage." },
+                    { name: "Sprite®", image: "../resources/Sides/DrinkSprite.png", desc: "Unique Lymon (lemon-lime) flavor, clear, clean and crisp with no caffeine." },
+                    { name: "Dasani® Bottle Water", image: "../resources/Sides/DrinkDasani.png", desc: "Unique Lymon (lemon-lime) flavor, clear, clean and crisp with no caffeine." },
+                    { name: "Fanta® Orange", image: "../resources/Sides/DrinkFanta.png", desc: "Exuberant tropical fun to release you from the everyday mundane." }
+                    
+                ]
+            },
+            extras: {
+                title: "Extras (Dipping Cups)",
+                items: [
+                    { name: "Slice Sauce Dipping Cup", image: "../resources/Sides/DipSliceSauce.png", desc: "Creamy and zesty with a hint of Parmesan." },
+                    { name: "Hot Buffalo Dipping Cup", image: "../resources/Sides/DipBuffalo.png", desc: "Domino's own spicy buffalo sauce." },
+                    { name: "Sweet Mango Habanero Dipping Cup", image: "../resources/Sides/DipHab.png", desc: "A perfect blend of sweet and spicy in one sauce." },
+                    { name: "Honey BBQ Dipping Cup", image: "../resources/Sides/DipBBQ.png", desc: "A sweet and smoky BBQ sauce with bold flavor." },
+                    { name: "Ranch Dipping Cup", image: "../resources/Sides/DipRanch.png", desc: "A creamy buttermilk ranch dressing with hints of garlic and onion." },
+                    { name: "Garlic Dipping Cup", image: "../resources/Sides/DipGarlic.png", desc: "A buttery garlic sauce." },
+                    { name: "Icing Dipping Cup", image: "../resources/Sides/DipIcing.png", desc: "A thick sweet icing with a hint of vanilla." },
+                    { name: "Marinara Dipping Cup", image: "../resources/Sides/DipMarinara.png", desc: "A sweet tomato sauce blended with garlic, basil and oregano." },
+                    { name: "Salad Dressings", image: "../resources/Sides/Dressings.png", desc: "Caesar Dressing, Ranch Dressing, and Balsamic." },
+                ]
+            }
+        };
+
         let currentSlide = 0;
+        let currentSubView = 'list'; // 'list' or 'detail'
+        let activeCategory = null;
+        const visitedCategories = new Set();
+        const totalCategories = Object.keys(sidesData).length;
 
         // --- RELATIONAL TRACKING STATE ---
         const overviewStartTime = Date.now(); // Start timer immediately on slide load
@@ -341,6 +569,8 @@
                         <img src="${slide.image}" alt="${slide.title}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                     </div>
                 `;
+            } else if (slide.type === 'interactive-categories') {
+                renderInteractiveCategories();
             } else {
                 contentContainer.innerHTML = `
                     <div style="display: flex; flex-wrap: wrap;">
@@ -356,20 +586,140 @@
             }
 
             document.getElementById('slide-counter').innerText = `Slide ${index + 1} of ${menuSlides.length}`;
-            document.getElementById('btn-slide-prev').style.display = index === 0 ? 'none' : 'inline-block';
             
-            if (index === menuSlides.length - 1) {
+            // Manage standard footer navigation visibility rules
+            if (slide.type === 'interactive-categories') {
+                document.getElementById('btn-slide-prev').style.display = 'inline-block';
                 document.getElementById('btn-slide-next').style.display = 'none';
-                document.getElementById('btn-start-game').style.display = 'inline-block';
-            } else {
-                document.getElementById('btn-slide-next').style.display = 'inline-block';
-                document.getElementById('btn-start-game').style.display = 'none';
+                
+                const gameBtn = document.getElementById('btn-start-game');
+                gameBtn.style.display = 'inline-block';
+                
+                // Keep the game button locked until they explore all categories
+                if (visitedCategories.size === totalCategories) { // <-- Changed from 7 to totalCategories
+                    gameBtn.classList.remove('btn-disabled');
+                    gameBtn.style.pointerEvents = 'auto';
+                    gameBtn.removeAttribute('disabled');
+                } else {
+                    gameBtn.classList.add('btn-disabled');
+                    gameBtn.style.pointerEvents = 'none';
+                    gameBtn.setAttribute('disabled', 'disabled');
+                }
             }
         }
 
         function changeSlide(direction) {
+            // Special handling: if we are inside a category's detail view, the footer "Previous" button brings us back to the categories selector
+            if (currentSlide === menuSlides.length - 1 && currentSubView === 'detail' && direction === -1) {
+                backToCategories();
+                return;
+            }
+            
             currentSlide += direction;
+            currentSubView = 'list'; // Reset selection state when navigating away
             renderSlide(currentSlide);
+        }
+
+        // --- SIDES INTERACTIVE RENDERING ---
+        function renderInteractiveCategories() {
+            const contentContainer = document.getElementById('slide-content-container');
+            
+            if (currentSubView === 'list') {
+                let catHTML = `
+                    <div style="padding: 1.5rem 2rem 0.5rem 2rem; text-align: left; width: 100%; box-sizing: border-box;">
+                        <h2 style="font-family: 'PizzaPress'; color: var(--med-blue); font-size: 2rem; margin: 0 0 0.5rem 0; text-transform: uppercase;">Sides & Extras</h2>
+                        <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.1rem; margin: 0 0 1rem 0;">Select each category to review our side items, desserts, drinks, and dipping cups. You must view all categories to unlock the knowledge challenge.</p>
+                    </div>
+                    <div class="category-grid">
+                `;
+                
+                Object.keys(sidesData).forEach(key => {
+                    const isCompleted = visitedCategories.has(key);
+                    const completedClass = isCompleted ? 'completed' : '';
+                    const badge = isCompleted ? `<span class="category-badge">&#10003;</span>` : '';
+                    
+                    catHTML += `
+                        <div class="category-card ${completedClass}" onclick="selectCategory('${key}')">
+                            ${badge}
+                            <h3 style="font-family: 'Subhead2'; color: var(--crust-burnt); font-size: 1.25rem; margin: 0;">${sidesData[key].title}</h3>
+                        </div>
+                    `;
+                });
+                
+                catHTML += `</div>`;
+                contentContainer.innerHTML = catHTML;
+                
+            } else if (currentSubView === 'detail' && activeCategory) {
+                const category = sidesData[activeCategory];
+                
+                let detailHTML = `
+                    <div style="padding: 1.5rem 2rem 0.5rem 2rem; text-align: left; width: 100%; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <button onclick="backToCategories()" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.95rem; margin-bottom: 0.5rem; border-radius: 4px;">&larr; Back to Categories</button>
+                            <h2 style="font-family: 'PizzaPress'; color: var(--med-blue); font-size: 2rem; margin: 0; text-transform: uppercase;">${category.title}</h2>
+                        </div>
+                        <div style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1rem; border: 2px dashed var(--brand-blue); padding: 5px 12px; border-radius: 5px;">
+                            Click any card to reveal details!
+                        </div>
+                    </div>
+                    <div class="flip-grid">
+                `;
+                
+                category.items.forEach(item => {
+                    detailHTML += `
+                        <div class="flip-card" onclick="toggleCardFlip(this)">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <h4 style="margin: 0 0 10px 0; color: var(--crust-burnt); font-family: 'Subhead2'; font-size: 1.25rem;">${item.name}</h4>
+                                    <img src="${item.image}" alt="${item.name}" style="max-height: 120px; max-width: 100%; object-fit: contain; margin-bottom: 10px;">
+                                    <span style="font-size: 0.85rem; color: #888; font-family: 'OneDotCd';">Tap to Flip</span>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h4 style="margin: 0 0 10px 0; font-family: 'Subhead2'; font-size: 1.25rem;">${item.name}</h4>
+                                    <p>${item.desc}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                detailHTML += `</div>`;
+                contentContainer.innerHTML = detailHTML;
+            }
+        }
+
+        function selectCategory(key) {
+            visitedCategories.add(key);
+            activeCategory = key;
+            currentSubView = 'detail';
+            renderInteractiveCategories();
+            updateGameButtonState();
+        }
+
+        function backToCategories() {
+            currentSubView = 'list';
+            activeCategory = null;
+            renderInteractiveCategories();
+            updateGameButtonState();
+        }
+
+        function toggleCardFlip(cardElement) {
+            cardElement.classList.toggle('flipped');
+        }
+
+        function updateGameButtonState() {
+            const gameBtn = document.getElementById('btn-start-game');
+            if (!gameBtn) return;
+            
+            if (visitedCategories.size === totalCategories) {
+                gameBtn.classList.remove('btn-disabled');
+                gameBtn.style.pointerEvents = 'auto';
+                gameBtn.removeAttribute('disabled');
+            } else {
+                gameBtn.classList.add('btn-disabled');
+                gameBtn.style.pointerEvents = 'none';
+                gameBtn.setAttribute('disabled', 'disabled');
+            }
         }
 
         // --- RELATIONAL OVERVIEW LOGGING ---
