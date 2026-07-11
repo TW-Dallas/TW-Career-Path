@@ -572,7 +572,7 @@
                         <h2 style="font-family: 'PizzaPress'; color: var(--med-blue); font-size: 2rem; margin: 0 0 0.5rem 0; text-transform: uppercase;">${slide.title}</h2>
                     </div>
                     <div style="padding: 0 2rem 1.5rem 2rem; display: flex; justify-content: center;">
-                        <img src="${slide.image}" alt="${slide.title}" style="max-width: 100%; max-height: 480px; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <img src="${slide.image}" alt="${slide.title}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                     </div>
                 `;
             } else if (slide.type === 'interactive-categories') {
@@ -602,15 +602,7 @@
                 gameBtn.style.display = 'inline-block';
                 
                 // Keep the game button locked until they explore all categories
-                if (visitedCategories.size === totalCategories) {
-                    gameBtn.classList.remove('btn-disabled');
-                    gameBtn.style.pointerEvents = 'auto';
-                    gameBtn.removeAttribute('disabled');
-                } else {
-                    gameBtn.classList.add('btn-disabled');
-                    gameBtn.style.pointerEvents = 'none';
-                    gameBtn.setAttribute('disabled', 'disabled');
-                }
+                updateGameButtonState();
             } else {
                 document.getElementById('btn-slide-prev').style.display = index === 0 ? 'none' : 'inline-block';
                 document.getElementById('btn-slide-next').style.display = 'inline-block';
@@ -716,6 +708,35 @@
             activeCategory = null;
             renderInteractiveCategories();
             updateGameButtonState();
+        }
+
+        function toggleCardFlip(cardElement) {
+            cardElement.classList.toggle('flipped');
+        }
+
+        function updateInteractiveInstructionText() {
+            const instr = document.getElementById('sides-instructions');
+            if (!instr) return;
+            if (visitedCategories.size === totalCategories) {
+                instr.innerHTML = '<strong style="color: #2e7d32;">&#10003; Complete!</strong> You have reviewed all categories. Click <strong>"Test Your Knowledge"</strong> below to begin the challenge.';
+            } else {
+                instr.innerHTML = `Select each category to review our side items, desserts, drinks, and dipping cups. You must view all categories to unlock the knowledge challenge. <strong style="color: var(--brand-blue);">(Completed: ${visitedCategories.size} of ${totalCategories})</strong>`;
+            }
+        }
+
+        function updateGameButtonState() {
+            const gameBtn = document.getElementById('btn-start-game');
+            if (!gameBtn) return;
+            
+            if (visitedCategories.size === totalCategories) {
+                gameBtn.classList.remove('btn-disabled');
+                gameBtn.style.pointerEvents = 'auto';
+                gameBtn.removeAttribute('disabled');
+            } else {
+                gameBtn.classList.add('btn-disabled');
+                gameBtn.style.pointerEvents = 'none';
+                gameBtn.setAttribute('disabled', 'disabled');
+            }
         }
 
         // --- RELATIONAL OVERVIEW LOGGING ---
