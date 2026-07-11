@@ -838,7 +838,7 @@
                     </div>
                 </div>
 
-                <!-- Card 5 -->
+                <!-- Card 5 (Coming Soon) -->
                 <div class="course-card locked" id="card-mod5">
                     <div class="course-image" style="background-image: url('../image/photo_gm.webp');">
                         <div class="course-badge" style="color: #888;">MODULE 5</div>
@@ -846,7 +846,7 @@
                     <div class="course-content">
                         <div class="course-title">Recap</div>
                         <div class="course-meta">Trainer Sign-Off (Unlock Day 2)</div>
-                        <button class="btn-small" onclick="requireTrainerPin()" style="background: var(--brand-blue); color: white; border: none;">Start Module 5</button>
+                        <button class="btn-small" style="background: #ccc; color: #888; cursor: not-allowed;" disabled>Coming Soon</button>
                     </div>
                 </div>
 
@@ -1090,8 +1090,8 @@
         const unlockRules = [
             { requiredKey: 'mod1_complete', targetCardId: 'card-mod2', targetUrl: 'Modules/module2.html', buttonText: 'Start Module 2' },
             { requiredKey: 'mod2_complete', targetCardId: 'card-mod3', targetUrl: 'Modules/module3.html', buttonText: 'Start Module 3' },
-            { requiredKey: 'mod3_complete', targetCardId: 'card-mod4', targetUrl: 'POS_Simulator_Stage_0.html', buttonText: 'Start Module 4' },
-            { requiredKey: 'mod4_complete', targetCardId: 'card-mod5', targetUrl: 'Modules/module5.html', buttonText: 'Start Module 5' }
+            { requiredKey: 'mod3_complete', targetCardId: 'card-mod4', targetUrl: 'POS_Simulator_Stage_0.html', buttonText: 'Start Module 4' }
+            // Removed Module 5 rule to keep it locked and marked as "Coming Soon"
         ];
 
         unlockRules.forEach(rule => {
