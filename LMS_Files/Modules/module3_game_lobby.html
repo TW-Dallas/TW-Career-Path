@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: Menu Arcade Lobby</title>
+    <link rel="icon" type="image/png" href="../../image/tile_blue.png">
+    <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
+    <script src="../Globals/lms_feedback.js"></script>
+    <style>
+        /* Reusing your global variables & custom fonts */
+        .lobby-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+            margin: 1.5rem 0;
+            box-sizing: border-box;
+        }
+
+        .game-card {
+            background: var(--crust-base);
+            border: 2px solid var(--crust-med);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            min-height: 180px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .game-card:hover {
+            border-color: var(--brand-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.06);
+        }
+
+        .game-card.completed {
+            border-color: #2e7d32;
+            background: rgba(46, 125, 50, 0.03);
+        }
+
+        .game-title {
+            font-family: 'Subhead2', sans-serif;
+            font-size: 1.3rem;
+            color: var(--crust-burnt);
+            margin: 0 0 8px 0;
+        }
+
+        .game-desc {
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 0.95rem;
+            color: var(--crust-deep);
+            line-height: 1.35;
+            margin: 0 0 15px 0;
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .status-badge {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 0.85rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .status-badge.pending {
+            background: var(--crust-med);
+            color: var(--crust-deep);
+        }
+
+        .status-badge.complete {
+            background: rgba(46, 125, 50, 0.15);
+            color: #2e7d32;
+        }
+
+        .score-display {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 1rem;
+            color: var(--brand-blue);
+        }
+
+        /* Progress Bar Styles */
+        .progress-wrapper {
+            width: 100%;
+            max-width: 900px;
+            background: var(--crust-light);
+            border: 2px solid var(--crust-med);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            box-sizing: border-box;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .progress-bar-container {
+            flex-grow: 1;
+            background: var(--crust-med);
+            height: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            background: var(--brand-blue);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease-out;
+        }
+
+        .progress-text {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 1.1rem;
+            color: var(--crust-burnt);
+            white-space: nowrap;
+        }
+
+        /* Overlay/Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-card {
+            background: white;
+            border-radius: 12px;
+            border-top: 6px solid var(--brand-blue);
+            max-width: 550px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: fadeIn 0.25s ease-out;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: var(--crust-light);
+            padding: 1.25rem 1.5rem;
+            border-bottom: 2px solid var(--crust-med);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.45;
+            color: var(--crust-deep);
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            background: var(--crust-light);
+            border-top: 2px solid var(--crust-med);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn-disabled {
+            background: #ccc !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            color: #888 !important;
+            border: none !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body style="background-color: var(--crust-light);">
+
+    <!-- UNIFIED MODULE BRAND NAVBAR -->
+    <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="module3.html" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Back to Slides
+            </a>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 3: Menu Arcade</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Lobby</span>
+        </div>
+    </header>
+
+    <div class="classroom-container">
+        <div class="classroom-header">
+            <h1 class="module-title" style="font-family: 'PizzaPress';">Menu Arcade</h1>
+            <span class="step-indicator" id="required-alert">Complete 3 of 4 to Unlock Mod 4</span>
+        </div>
+
+        <div class="classroom-content">
+            <!-- Progress Bar -->
+            <div class="progress-wrapper">
+                <div class="progress-bar-container">
+                    <div id="progress-bar-fill" class="progress-fill"></div>
+                </div>
+                <div id="progress-label" class="progress-text">0 / 4 Games Complete</div>
+            </div>
+
+            <!-- Arcade Grid -->
+            <div class="lobby-grid">
+                <!-- Game 1 Card -->
+                <div class="game-card" id="card-game1" onclick="openInstructions('game1')">
+                    <div>
+                        <h3 class="game-title">Game 1: Pizza Matcher</h3>
+                        <p class="game-desc">Drag ingredients to their corresponding boxes to match recipes in three fast-paced rounds.</p>
+                    </div>
+                    <div class="badge-container">
+                        <span class="status-badge pending" id="badge-game1">Play</span>
+                        <span class="score-display" id="score-game1"></span>
+                    </div>
+                </div>
+
+                <!-- Game 2 Card -->
+                <div class="game-card" id="card-game2" onclick="openInstructions('game2')">
+                    <div>
+                        <h3 class="game-title">Game 2: POS Tab Finder</h3>
+                        <p class="game-desc">Test your menu category speed! Rapidly sort items into their correct POS terminal tabs.</p>
+                    </div>
+                    <div class="badge-container">
+                        <span class="status-badge pending" id="badge-game2">Play</span>
+                        <span class="score-display" id="score-game2"></span>
+                    </div>
+                </div>
+
+                <!-- Game 3 Card -->
+                <div class="game-card" id="card-game3" onclick="openInstructions('game3')">
+                    <div>
+                        <h3 class="game-title">Game 3: Menu Jeopardy</h3>
+                        <p class="game-desc">Challenge yourself across core categories in a dynamic trivia board covering items and recipes.</p>
+                    </div>
+                    <div class="badge-container">
+                        <span class="status-badge pending" id="badge-game3">Play</span>
+                        <span class="score-display" id="score-game3"></span>
+                    </div>
+                </div>
+
+                <!-- Game 4 Card -->
+                <div class="game-card" id="card-game4" onclick="openInstructions('game4')">
+                    <div>
+                        <h3 class="game-title">Game 4: Perfect Pairs</h3>
+                        <p class="game-desc">Review mock order receipts and supply correct standard dipping cups or default sides instantly.</p>
+                    </div>
+                    <div class="badge-container">
+                        <span class="status-badge pending" id="badge-game4">Play</span>
+                        <span class="score-display" id="score-game4"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="clearMyData()" style="background: transparent; border: none; color: var(--crust-dark); font-family: 'OneDotCd', sans-serif; cursor: pointer; text-decoration: underline; font-size: 0.85rem; margin-top: 10px;">
+                Reset My Local Progress (For Testing)
+            </button>
+        </div>
+
+        <!-- Footer Controls -->
+        <div class="classroom-footer">
+            <a href="module3.html" class="btn btn-outline" style="line-height: normal; display: inline-flex; align-items: center; justify-content: center;">&larr; Back to Slides</a>
+            <button id="btn-finish-module" onclick="finishModuleProgress()" class="btn btn-finish btn-disabled" disabled>Complete Module</button>
+        </div>
+    </div>
+
+    <!-- INSTRUCTIONS MODAL OVERLAY -->
+    <div id="instructions-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="modal-game-title" style="margin: 0; font-family: 'PizzaPress'; border: none; padding: 0;">Game Instructions</h2>
+            </div>
+            <div class="modal-body" id="modal-game-desc">
+                Instructions text here...
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeInstructions()" style="padding: 0.5rem 1.5rem; font-size: 1rem;">Cancel</button>
+                <button id="modal-launch-btn" class="btn" style="padding: 0.5rem 1.5rem; font-size: 1rem;">Start Game &rarr;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE BLOCKER (Identical to your stylesheet configuration) -->
+    <div id="mobile-blocker">
+        <h2 style="color: white; border-bottom: 2px solid white;">Desktop Required</h2>
+        <p style="font-family: 'OneDotCd'; font-size: 1.2rem;">This training module is designed specifically for desktop displays. Please open this course on a PC or tablet terminal to proceed.</p>
+    </div>
+
+    <script>
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+        
+        // Resolve user identity to apply strict local-storage namespacing (Prevents cross-user overwriting on shared laptops)
+        const userId = localStorage.getItem('tw_id') || 'guest';
+        
+        // Define clean game profiles & mapping names
+        const gamesList = {
+            game1: {
+                title: "Game 1: Pizza Matcher",
+                desc: "<strong>Objective:</strong> Drag the correct raw ingredients to their matching specialty pizzas.<br><br><strong>Controls:</strong> Drag standard recipe pills from the tray at the bottom, then drop them into the appropriate pizza boxes. Finish all three rounds successfully to complete the card.",
+                url: "module3_game.html", // Reuses your existing drag & drop script
+                completeKey: `tw_${userId}_game1_complete`,
+                scoreKey: `tw_${userId}_game1_score`
+            },
+            game2: {
+                title: "Game 2: POS Tab Finder",
+                desc: "<strong>Objective:</strong> Build visual reflexes for your register by matching menu items with their designated category tabs.<br><br><strong>Controls:</strong> An item will show at the top of the screen. Rapidly click the matching POS category button (e.g. Breads, Pasta, Desserts) at the bottom. Faster streaks generate higher overall scores!",
+                url: "game2_tab_finder.html",
+                completeKey: `tw_${userId}_game2_complete`,
+                scoreKey: `tw_${userId}_game2_score`
+            },
+            game3: {
+                title: "Game 3: Menu Jeopardy",
+                desc: "<strong>Objective:</strong> Test recipe memory and structural knowledge across key menu categories.<br><br><strong>Controls:</strong> Click category tiles off the main Jeopardy board to open point-value questions. Answer the multiple-choice scenario correctly to clean the tile and gain those register credentials.",
+                url: "game3_jeopardy.html",
+                completeKey: `tw_${userId}_game3_complete`,
+                scoreKey: `tw_${userId}_game3_score`
+            },
+            game4: {
+                title: "Game 4: Perfect Pairs",
+                desc: "<strong>Objective:</strong> Recall default packing rules for sauces and upsell requests under simulation ticket constraints.<br><br><strong>Controls:</strong> Review incoming orders. Click the correct corresponding dipping cup (e.g., Garlic Cup, Icing) or side combination to satisfy the receipt profile accurately.",
+                url: "game4_perfect_pairs.html",
+                completeKey: `tw_${userId}_game4_complete`,
+                scoreKey: `tw_${userId}_game4_score`
+            }
+        };
+
+        let selectedGameKey = null;
+
+        function loadLobbyState() {
+            let completedCount = 0;
+
+            Object.keys(gamesList).forEach(key => {
+                const game = gamesList[key];
+                const isComplete = localStorage.getItem(game.completeKey) === 'true';
+                const score = localStorage.getItem(game.scoreKey) || null;
+
+                const cardEl = document.getElementById(`card-${key}`);
+                const badgeEl = document.getElementById(`badge-${key}`);
+                const scoreEl = document.getElementById(`score-${key}`);
+
+                if (isComplete) {
+                    completedCount++;
+                    cardEl.classList.add('completed');
+                    badgeEl.innerText = "Completed (✔)";
+                    badgeEl.className = "status-badge complete";
+                    if (score !== null) {
+                        scoreEl.innerText = `High Score: ${score}`;
+                    }
+                } else {
+                    cardEl.classList.remove('completed');
+                    badgeEl.innerText = "Play Now";
+                    badgeEl.className = "status-badge pending";
+                    scoreEl.innerText = "";
+                }
+            });
+
+            // Update Progress UI Elements
+            const progressFill = document.getElementById('progress-bar-fill');
+            const progressLabel = document.getElementById('progress-label');
+            const finishBtn = document.getElementById('btn-finish-module');
+            const requiredAlert = document.getElementById('required-alert');
+
+            const percent = (completedCount / 4) * 100;
+            progressFill.style.width = `${percent}%`;
+            progressLabel.innerText = `${completedCount} / 4 Games Completed`;
+
+            // Active boundary: requires at least 3 completed games to continue
+            if (completedCount >= 3) {
+                finishBtn.classList.remove('btn-disabled');
+                finishBtn.removeAttribute('disabled');
+                requiredAlert.innerText = "Mod 4 Unlocked!";
+                requiredAlert.style.background = "rgba(46,125,50,0.1)";
+                requiredAlert.style.color = "#2e7d32";
+            } else {
+                finishBtn.classList.add('btn-disabled');
+                finishBtn.setAttribute('disabled', 'disabled');
+                requiredAlert.innerText = "Complete 3 of 4 to Unlock Mod 4";
+                requiredAlert.style.background = "rgba(0, 144, 226, 0.1)";
+                requiredAlert.style.color = "var(--brand-blue)";
+            }
+        }
+
+        // Modal triggers
+        function openInstructions(gameKey) {
+            selectedGameKey = gameKey;
+            const game = gamesList[gameKey];
+            
+            document.getElementById('modal-game-title').innerText = game.title;
+            document.getElementById('modal-game-desc').innerHTML = game.desc;
+            
+            const launchBtn = document.getElementById('modal-launch-btn');
+            launchBtn.onclick = () => {
+                window.location.href = game.url;
+            };
+
+            document.getElementById('instructions-modal').style.display = 'flex';
+        }
+
+        function closeInstructions() {
+            document.getElementById('instructions-modal').style.display = 'none';
+            selectedGameKey = null;
+        }
+
+        // Close modal when hitting backdrop
+        window.onclick = function(event) {
+            const modal = document.getElementById('instructions-modal');
+            if (event.target === modal) {
+                closeInstructions();
+            }
+        }
+
+        // Clear local progress for testing
+        function clearMyData() {
+            if (confirm("Are you sure you want to reset your local scores and achievements for this module?")) {
+                Object.keys(gamesList).forEach(key => {
+                    const game = gamesList[key];
+                    localStorage.removeItem(game.completeKey);
+                    localStorage.removeItem(game.scoreKey);
+                });
+                loadLobbyState();
+            }
+        }
+
+        // Write Module Completion to existing Sheet via existing AUTH_SCRIPT_URL
+        function finishModuleProgress() {
+            const btn = document.getElementById('btn-finish-module');
+            if (btn) {
+                btn.innerText = "Saving Progress...";
+                btn.style.pointerEvents = "none";
+            }
+
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            
+            if (!market || !id) {
+                // Fail-safe redirect if credentials missing in testing environment
+                window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
+                return;
+            }
+
+            // Consolidate games output scores to submit alongside normal progress payload
+            const runScores = {
+                game1: localStorage.getItem(`tw_${id}_game1_score`) || '0',
+                game2: localStorage.getItem(`tw_${id}_game2_score`) || '0',
+                game3: localStorage.getItem(`tw_${id}_game3_score`) || '0',
+                game4: localStorage.getItem(`tw_${id}_game4_score`) || '0'
+            };
+
+            const answersStr = encodeURIComponent(JSON.stringify({ scores: runScores }));
+            
+            // Default arbitrary dummy time variable matching expected sheet parameter
+            const timeSpent = 420; 
+
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=Day%201%20Mod%203&timeSpent=${timeSpent}&answers=${answersStr}&status=Completed`;
+            
+            console.log("SUBMITTING FINISHED SHEET DATA: ", url);
+            fetch(url, { method: 'GET', credentials: 'omit' });
+
+            localStorage.setItem('mod3_complete', 'true');
+
+            // Delay redirect slightly to ensure database payload delivery succeeds
+            setTimeout(() => {
+                window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
+            }, 1500);
+        }
+
+        // Run on load
+        window.onload = () => {
+            loadLobbyState();
+        };
+    </script>
+</body>
+</html>
