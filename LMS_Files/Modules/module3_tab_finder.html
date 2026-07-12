@@ -50,12 +50,12 @@
             background: var(--crust-base);
             border: 2px solid var(--crust-med);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 1.5rem;
             width: 100%;
             max-width: 450px;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.5rem;
             box-sizing: border-box;
             transition: transform 0.15s ease;
         }
@@ -73,10 +73,10 @@
         }
 
         .item-image {
-            max-height: 140px;
+            max-height: 120px;
             max-width: 100%;
             object-fit: contain;
-            margin-bottom: 1.25rem;
+            margin-bottom: 0.75rem;
             display: block;
             margin-left: auto;
             margin-right: auto;
@@ -84,15 +84,15 @@
 
         .item-name {
             font-family: 'Subhead2', sans-serif;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             color: var(--crust-burnt);
             margin: 0;
         }
 
         /* Fallback placeholder style if image files are missing */
         .image-placeholder {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             background: var(--crust-med);
             border-radius: 50%;
             display: flex;
@@ -100,51 +100,86 @@
             justify-content: center;
             font-family: 'OneDotCd-Bold', sans-serif;
             color: var(--crust-deep);
-            font-size: 2rem;
-            margin: 0 auto 1.25rem auto;
+            font-size: 1.8rem;
+            margin: 0 auto 0.75rem auto;
         }
 
-        /* --- POS Grid Buttons --- */
+        /* --- POS Grid Screen Frame --- */
+        .pos-terminal-frame {
+            background-color: #d6cca3; /* Recreates the exact beige-yellow background of the actual POS terminal screen */
+            padding: 20px;
+            border-radius: 12px;
+            border: 3px solid #bdae84;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 750px;
+            box-sizing: border-box;
+        }
+
         .pos-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             width: 100%;
-            max-width: 700px;
             box-sizing: border-box;
         }
 
+        /* --- Glossy 3D Blue Buttons --- */
         .pos-btn {
-            background: var(--dark-blue);
+            background: linear-gradient(180deg, #008be3 0%, #00569c 100%);
+            border: 2px solid #00457d;
+            border-bottom: 6px solid #002d52;
+            border-radius: 14px;
             color: white;
-            border: none;
-            border-bottom: 4px solid var(--med-blue);
-            border-radius: 8px;
-            padding: 1.25rem 1rem;
+            padding: 1.25rem 0.5rem;
             font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             cursor: pointer;
             transition: all 0.1s;
-            text-transform: uppercase;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 6px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            box-sizing: border-box;
+            line-height: 1.2;
         }
 
         .pos-btn:hover {
-            background: var(--med-blue);
+            background: linear-gradient(180deg, #0ba0fc 0%, #006bbd 100%);
             transform: translateY(-2px);
         }
 
         .pos-btn:active {
-            transform: translateY(1px);
-            border-bottom-width: 1px;
-            box-shadow: none;
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
         }
 
+        /* Screen flash indicators on buttons */
+        .pos-btn.btn-correct {
+            background: linear-gradient(180deg, #4caf50 0%, #2e7d32 100%) !important;
+            border-color: #1b5e20 !important;
+            border-bottom-color: #0d3c11 !important;
+        }
+
+        .pos-btn.btn-incorrect {
+            background: linear-gradient(180deg, #f44336 0%, #c62828 100%) !important;
+            border-color: #8e0000 !important;
+            border-bottom-color: #5d0000 !important;
+        }
+
+        /* Disabled / Grayed out style for Donations and Charges */
         .pos-btn.disabled {
-            background: #aaa !important;
-            border-bottom-color: #888 !important;
+            background: linear-gradient(180deg, #5b7a91 0%, #3e5668 100%) !important;
+            border-color: #2b3d4a !important;
+            border-bottom-color: #1a262e !important;
             cursor: not-allowed !important;
             transform: none !important;
+            box-shadow: none !important;
+            opacity: 0.6;
         }
 
         /* --- Screens --- */
@@ -195,7 +230,7 @@
     <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         <div style="display: flex; align-items: center; gap: 20px;">
             <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
-            <a href="module3_lobby.html" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+            <a href="module3_game_lobby.html" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
                 &#8592; Exit to Lobby
             </a>
         </div>
@@ -220,7 +255,7 @@
             <div id="start-panel" class="start-overlay">
                 <h1 style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2.2rem; margin-top: 0; text-transform: uppercase;">POS Tab Finder</h1>
                 <p style="font-family: 'OneDotCd', sans-serif; font-size: 1.2rem; max-width: 500px; color: var(--crust-deep); margin-bottom: 20px;">
-                    Sort the 15 randomly assigned items into their correct POS Category Tabs as fast as you can. Keep a streak going for bonus points!
+                    Sort the 15 randomly assigned items into their correct POS category tabs as fast as you can. Keep a streak going for bonus points!
                 </p>
                 <button class="btn" onclick="startCountdown()" style="font-size: 1.2rem; padding: 1rem 3rem;">Start Challenge</button>
             </div>
@@ -239,13 +274,21 @@
                     <h2 class="item-name" id="item-target-name">Item Name</h2>
                 </div>
 
-                <div class="pos-grid">
-                    <button class="pos-btn" onclick="submitSort('breads')">Breads</button>
-                    <button class="pos-btn" onclick="submitSort('wings')">Wings & Chicken</button>
-                    <button class="pos-btn" onclick="submitSort('sandwiches_pasta')">Sandwiches & Pasta</button>
-                    <button class="pos-btn" onclick="submitSort('desserts')">Desserts</button>
-                    <button class="pos-btn" onclick="submitSort('salads_drinks')">Salads & Drinks</button>
-                    <button class="pos-btn" onclick="submitSort('extras')">Dipping Cups</button>
+                <!-- Exact reproduction of the 3x3 POS grid screen from the visual reference -->
+                <div class="pos-terminal-frame">
+                    <div class="pos-grid">
+                        <button class="pos-btn" id="btn-wings" onclick="submitSort('wings')">Wings</button>
+                        <button class="pos-btn" id="btn-breads_desserts" onclick="submitSort('breads_desserts')">Breads/<br>Desserts</button>
+                        <button class="pos-btn" id="btn-pasta" onclick="submitSort('pasta')">Pasta</button>
+                        
+                        <button class="pos-btn" id="btn-sandwich" onclick="submitSort('sandwich')">Sandwich</button>
+                        <button class="pos-btn" id="btn-salad" onclick="submitSort('salad')">Salad</button>
+                        <button class="pos-btn" id="btn-drinks" onclick="submitSort('drinks')">Drinks</button>
+                        
+                        <button class="pos-btn" id="btn-extras" onclick="submitSort('extras')">Extras</button>
+                        <button class="pos-btn disabled" disabled>Donations</button>
+                        <button class="pos-btn disabled" disabled>Charges</button>
+                    </div>
                 </div>
             </div>
 
@@ -284,26 +327,24 @@
         <p style="font-family: 'OneDotCd'; font-size: 1.2rem; max-width: 500px;">This simulation game is designed specifically for desktop displays. Please play on a PC terminal to proceed.</p>
     </div>
 
-    <script>
+    <script {nonce}>
         // Resolve user identifier
         const userId = localStorage.getItem('tw_id') || 'guest';
 
-        // Full items repository matching Slide 8 specifications
+        // Full items repository matching Slide 8 specifications, correctly mapped to POS Groups
         const itemsDatabase = [
-            // Breads category
-            { name: "Parmesan Bread Bites", group: "breads", img: "../resources/Sides/ParmBites.png" },
-            { name: "Garlic Bread Bites", group: "breads", img: "../resources/Sides/GarlicBites.png" },
-            { name: "Stuffed Cheesy Bread", group: "breads", img: "../resources/Sides/StuffedCheesy.png" },
-            { name: "Pepperoni Stuffed Cheesy Bread", group: "breads", img: "../resources/Sides/StuffedPep.png" },
-            { name: "Spinach & Feta Stuffed Cheesy Bread", group: "breads", img: "../resources/Sides/StuffedSpin.png" },
-            { name: "Bacon & Jalapeno Stuffed Cheesy Bread", group: "breads", img: "../resources/Sides/StuffedBacon.png" },
-            
-            // Desserts category
-            { name: "Cinnamon Bread Bites", group: "desserts", img: "../resources/Sides/CinnaBites.png" },
-            { name: "Chocolate Lava Cakes", group: "desserts", img: "../resources/Sides/ChocLava.png" },
-            { name: "Marbled Cookie Brownie", group: "desserts", img: "../resources/Sides/MCB.png" },
+            // Breads & Desserts (Breads/Desserts POS Category)
+            { name: "Parmesan Bread Bites", group: "breads_desserts", img: "../resources/Sides/ParmBites.png" },
+            { name: "Garlic Bread Bites", group: "breads_desserts", img: "../resources/Sides/GarlicBites.png" },
+            { name: "Stuffed Cheesy Bread", group: "breads_desserts", img: "../resources/Sides/StuffedCheesy.png" },
+            { name: "Pepperoni Stuffed Cheesy Bread", group: "breads_desserts", img: "../resources/Sides/StuffedPep.png" },
+            { name: "Spinach & Feta Stuffed Cheesy Bread", group: "breads_desserts", img: "../resources/Sides/StuffedSpin.png" },
+            { name: "Bacon & Jalapeno Stuffed Cheesy Bread", group: "breads_desserts", img: "../resources/Sides/StuffedBacon.png" },
+            { name: "Cinnamon Bread Bites", group: "breads_desserts", img: "../resources/Sides/CinnaBites.png" },
+            { name: "Chocolate Lava Cakes", group: "breads_desserts", img: "../resources/Sides/ChocLava.png" },
+            { name: "Marbled Cookie Brownie", group: "breads_desserts", img: "../resources/Sides/MCB.png" },
 
-            // Wings & Chicken category
+            // Wings & Chicken (Wings POS Category)
             { name: "Hot Buffalo Wings", group: "wings", img: "../resources/Sides/WingsBuff.png" },
             { name: "Honey BBQ Wings", group: "wings", img: "../resources/Sides/WingsBBQ.png" },
             { name: "Sweet Mango Habanero Wings", group: "wings", img: "../resources/Sides/WingsHab.png" },
@@ -315,26 +356,30 @@
             { name: "Loaded Chicken – Sweet BBQ Bacon", group: "wings", img: "../resources/Sides/LoadedBBQ.png" },
             { name: "Boneless Chicken", group: "wings", img: "../resources/Sides/WingsBoneless.png" },
 
-            // Sandwiches & Pasta category
-            { name: "5-Cheese Mac & Cheese", group: "sandwiches_pasta", img: "../resources/Sides/Pasta5Cheese.png" },
-            { name: "Spicy Buffalo 5-Cheese Mac & Cheese", group: "sandwiches_pasta", img: "../resources/Sides/PastaSpicy.png" },
-            { name: "Chicken Alfredo", group: "sandwiches_pasta", img: "../resources/Sides/PastaChicken.png" },
-            { name: "Philly Cheese Steak Sandwich", group: "sandwiches_pasta", img: "../resources/Sides/SandwichPhilly.png" },
-            { name: "Chicken Bacon Ranch Sandwich", group: "sandwiches_pasta", img: "../resources/Sides/SandwichCBR.png" },
-            { name: "Italian Sandwich", group: "sandwiches_pasta", img: "../resources/Sides/SandwichItalian.png" },
-            { name: "Chicken Parm Sandwich", group: "sandwiches_pasta", img: "../resources/Sides/SandwichParm.png" },
-            { name: "Buffalo Chicken Sandwich", group: "sandwiches_pasta", img: "../resources/Sides/SandwichBuffalo.png" },
+            // Pastas (Pasta POS Category)
+            { name: "5-Cheese Mac & Cheese", group: "pasta", img: "../resources/Sides/Pasta5Cheese.png" },
+            { name: "Spicy Buffalo 5-Cheese Mac & Cheese", group: "pasta", img: "../resources/Sides/PastaSpicy.png" },
+            { name: "Chicken Alfredo", group: "pasta", img: "../resources/Sides/PastaChicken.png" },
 
-            // Salads & Drinks category
-            { name: "Classic Garden Salad", group: "salads_drinks", img: "../resources/Sides/SaladGarden.png" },
-            { name: "Chicken Caesar Salad", group: "salads_drinks", img: "../resources/Sides/SaladCaesar.png" },
-            { name: "Coca-Cola®", group: "salads_drinks", img: "../resources/Sides/DrinkCoke.png" },
-            { name: "Diet Coke®", group: "salads_drinks", img: "../resources/Sides/DrinkDiet.png" },
-            { name: "Sprite®", group: "salads_drinks", img: "../resources/Sides/DrinkSprite.png" },
-            { name: "Dasani® Water", group: "salads_drinks", img: "../resources/Sides/DrinkDasani.png" },
-            { name: "Fanta® Orange", group: "salads_drinks", img: "../resources/Sides/DrinkFanta.png" },
+            // Sandwiches (Sandwich POS Category)
+            { name: "Philly Cheese Steak Sandwich", group: "sandwich", img: "../resources/Sides/SandwichPhilly.png" },
+            { name: "Chicken Bacon Ranch Sandwich", group: "sandwich", img: "../resources/Sides/SandwichCBR.png" },
+            { name: "Italian Sandwich", group: "sandwich", img: "../resources/Sides/SandwichItalian.png" },
+            { name: "Chicken Parm Sandwich", group: "sandwich", img: "../resources/Sides/SandwichParm.png" },
+            { name: "Buffalo Chicken Sandwich", group: "sandwich", img: "../resources/Sides/SandwichBuffalo.png" },
 
-            // Dipping Cups category
+            // Salads (Salad POS Category)
+            { name: "Classic Garden Salad", group: "salad", img: "../resources/Sides/SaladGarden.png" },
+            { name: "Chicken Caesar Salad", group: "salad", img: "../resources/Sides/SaladCaesar.png" },
+            
+            // Drinks (Drinks POS Category)
+            { name: "Coca-Cola®", group: "drinks", img: "../resources/Sides/DrinkCoke.png" },
+            { name: "Diet Coke®", group: "drinks", img: "../resources/Sides/DrinkDiet.png" },
+            { name: "Sprite®", group: "drinks", img: "../resources/Sides/DrinkSprite.png" },
+            { name: "Dasani® Water", group: "drinks", img: "../resources/Sides/DrinkDasani.png" },
+            { name: "Fanta® Orange", group: "drinks", img: "../resources/Sides/DrinkFanta.png" },
+
+            // Extras (Extras POS Category)
             { name: "Slice Sauce Dipping Cup", group: "extras", img: "../resources/Sides/DipSliceSauce.png" },
             { name: "Hot Buffalo Dipping Cup", group: "extras", img: "../resources/Sides/DipBuffalo.png" },
             { name: "Sweet Mango Habanero Dipping Cup", group: "extras", img: "../resources/Sides/DipHab.png" },
@@ -437,6 +482,7 @@
 
             const item = deck[currentIndex];
             const targetCard = document.getElementById('item-target-card');
+            const clickedBtn = document.getElementById(`btn-${selectedGroup}`);
             const buttons = document.querySelectorAll('.pos-btn');
 
             if (item.group === selectedGroup) {
@@ -446,10 +492,12 @@
                 document.getElementById('hud-streak').innerText = streak;
 
                 targetCard.classList.add('correct-flash');
+                if (clickedBtn) clickedBtn.classList.add('btn-correct');
                 canInteract = false;
 
                 setTimeout(() => {
                     targetCard.classList.remove('correct-flash');
+                    if (clickedBtn) clickedBtn.classList.remove('btn-correct');
                     currentIndex++;
                     if (currentIndex < deck.length) {
                         showCurrentItem();
@@ -466,6 +514,7 @@
                 document.getElementById('hud-streak').innerText = streak;
 
                 targetCard.classList.add('incorrect-flash');
+                if (clickedBtn) clickedBtn.classList.add('btn-incorrect');
                 canInteract = false;
 
                 // Disable category buttons temporarily to enforce sorting discipline
@@ -473,8 +522,14 @@
 
                 setTimeout(() => {
                     targetCard.classList.remove('incorrect-flash');
+                    if (clickedBtn) clickedBtn.classList.remove('btn-incorrect');
                     canInteract = true;
-                    buttons.forEach(btn => btn.classList.remove('disabled'));
+                    // Retain disabled classes only on permanent utility buttons (Donations / Charges)
+                    buttons.forEach(btn => {
+                        if (!btn.hasAttribute('disabled')) {
+                            btn.classList.remove('disabled');
+                        }
+                    });
                 }, 1000); // 1-second sorting delay penalty
             }
         }
