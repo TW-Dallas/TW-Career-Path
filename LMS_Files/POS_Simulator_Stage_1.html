@@ -669,7 +669,19 @@
                 wrongClicks++; // Increment wrong clicks for Stage 1.1
             });
 
-            loadStep(0);
+            // ---- NEW: JUMP TO STEP VIA URL QUERY PARAMETER ----
+            const urlParams = new URLSearchParams(window.location.search);
+            const stepParam = urlParams.get('step');
+            
+            if (stepParam !== null) {
+                const targetStep = parseInt(stepParam, 10);
+                // Ensure the step is a valid number within your sequence array limits
+                if (!isNaN(targetStep) && targetStep >= 0 && targetStep < sequence.length) {
+                    currentStep = targetStep;
+                }
+            }
+
+            loadStep(currentStep);
         }
 
         function sendProgressUpdate(moduleName, status = "In Progress") {
@@ -720,7 +732,15 @@
                 } else {
                     activeHb.classList.remove('arrow-bottom'); 
                 }
-                activeHb.classList.remove('hide-arrow'); 
+
+                // Detect if the subtitle contains "Order 2" (case-insensitive)
+                const isOrderTwo = stepData.instruction.toUpperCase().includes('ORDER 2');
+                
+                if (isOrderTwo) {
+                    activeHb.classList.add('hide-arrow');    // Hide arrow on Order 2
+                } else {
+                    activeHb.classList.remove('hide-arrow'); // Show arrow on Practice / Order 1
+                }
             } else {
                 // ---- NEW VALIDATION CHECK ----
                 // If the sequence expects a hitbox but it isn't in your HTML file:
