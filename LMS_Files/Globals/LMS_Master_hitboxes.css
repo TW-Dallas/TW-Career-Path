@@ -288,6 +288,11 @@
   #hb-pasta-shredded-parm { top: 21.6804%; left: 54.951%; width: 7.75299%; height: 7.78421%; }
   #hb-pasta-amer-cheese { top: 21.6804%; left: 63.9282%; width: 7.61697%; height: 7.42216%; }
   #hb-pasta-alfredo-sauce { top: 21.4994%; left: 72.6333%; width: 7.88901%; height: 7.78421%; }
+
+  /* Pasta Cooking Instructions */
+  #hb-pasta-cooking-instructions { top: 89.2294%; left: 59.9363%; width: 12.4161%; height: 9.8811%; }
+  #hb-pasta-lightly-done { top: 21.8183%; left: 28.0862%; width: 15.3852%; height: 7.90488%; }
+  #hb-pasta-well-done { top: 21.2793%; left: 44.686%; width: 15.7901%; height: 8.62351%; }
   
   /* Sandwich Size and Type */
   #hb-new-sandwich { top: 5.11023%; left: 41.3121%; width: 9.04217%; height: 8.44385%; }
