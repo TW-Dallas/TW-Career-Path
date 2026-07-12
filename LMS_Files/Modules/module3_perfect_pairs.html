@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: Perfect Pairs</title>
+    <link rel="icon" type="image/png" href="../../image/tile_blue.png">
+    <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
+    <script src="../Globals/lms_feedback.js"></script>
+    <style>
+        .game-wrapper {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-top: 6px solid var(--brand-blue);
+        }
+
+        .hud-bar {
+            background: var(--crust-light);
+            padding: 1rem 2rem;
+            border-bottom: 2px solid var(--crust-med);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 1.1rem;
+            color: var(--crust-burnt);
+        }
+
+        .hud-stat span {
+            color: var(--brand-blue);
+        }
+
+        .play-area {
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 480px;
+            box-sizing: border-box;
+        }
+
+        /* --- Question Card Style --- */
+        .scenario-card {
+            background: var(--crust-base);
+            border: 2px solid var(--crust-med);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 650px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            margin-bottom: 2rem;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .scenario-tag {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--brand-blue);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .scenario-question {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 1.35rem;
+            color: var(--crust-burnt);
+            line-height: 1.4;
+            margin: 10px 0 0 0;
+        }
+
+        /* --- Option Buttons Grid --- */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 650px;
+            box-sizing: border-box;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid var(--crust-med);
+            border-radius: 8px;
+            padding: 1.25rem 1rem;
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 1.1rem;
+            color: var(--crust-deep);
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: left;
+            line-height: 1.35;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .option-btn:hover {
+            border-color: var(--brand-blue);
+            background: rgba(0, 144, 226, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .option-btn.selected-correct {
+            background: #e8f5e9 !important;
+            border-color: #2e7d32 !important;
+            color: #1b5e20 !important;
+            font-family: 'OneDotCd-Bold', sans-serif;
+        }
+
+        .option-btn.selected-incorrect {
+            background: #ffebee !important;
+            border-color: #c62828 !important;
+            color: #b71c1c !important;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            animation: shake 0.3s ease-out;
+        }
+
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* --- Screens --- */
+        .start-overlay, .end-overlay {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2.5rem;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .hidden { display: none !important; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+    </style>
+</head>
+<body style="background-color: var(--crust-light);">
+
+    <!-- BRAND NAVBAR -->
+    <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="module3_game_lobby.html" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Back to Game Lobby
+            </a>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 3: Perfect Pairs</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Game 4</span>
+        </div>
+    </header>
+
+    <div class="game-wrapper">
+        <!-- HUD State bar -->
+        <div id="game-hud" class="hud-bar hidden">
+            <div class="hud-stat">Scenario: <span id="hud-index">1 / 10</span></div>
+            <div class="hud-stat">Score: <span id="hud-score">0</span></div>
+        </div>
+
+        <div class="play-area">
+
+            <!-- START / INTRO PANEL -->
+            <div id="start-panel" class="start-overlay">
+                <h1 style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2.2rem; margin-top: 0; text-transform: uppercase;">Perfect Pairs</h1>
+                <p style="font-family: 'OneDotCd', sans-serif; font-size: 1.2rem; max-width: 500px; color: var(--crust-deep); margin-bottom: 25px;">
+                    Test your knowledge of menu defaults, crust constraints, and register rules. Resolve 10 customer scenarios to finish the challenge.
+                </p>
+                <button class="btn" onclick="startGamePlay()" style="font-size: 1.2rem; padding: 1rem 3rem;">Start Challenge</button>
+            </div>
+
+            <!-- ACTIVE SCENARIO PLAY AREA -->
+            <div id="action-panel" class="hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <div class="scenario-card">
+                    <span class="scenario-tag" id="scenario-category">Register Query</span>
+                    <p class="scenario-question" id="scenario-text">Scenario description here...</p>
+                </div>
+
+                <div class="options-grid" id="options-box">
+                    <!-- Option buttons will be injected dynamically -->
+                </div>
+            </div>
+
+            <!-- COMPLETED PANEL -->
+            <div id="end-panel" class="end-overlay hidden">
+                <h1 style="font-family: 'PizzaPress'; color: #2e7d32; font-size: 2.5rem; margin-top: 0; text-transform: uppercase;">Challenge Complete!</h1>
+                <p style="font-family: 'OneDotCd', sans-serif; font-size: 1.25rem; color: var(--crust-deep); max-width: 500px; margin: 0 auto 20px auto;">
+                    You have verified your menu default knowledge. Your score is saved to your profile.
+                </p>
+                <div style="background: var(--crust-light); border: 2px solid var(--crust-med); border-radius: 12px; padding: 1.5rem 3rem; margin: 15px auto 30px auto; max-width: 320px;">
+                    <div style="display: flex; justify-content: space-between; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.5rem; color: var(--brand-blue);">
+                        <span>Final Score:</span>
+                        <strong id="final-score">0</strong>
+                    </div>
+                </div>
+                <button class="btn" onclick="returnToLobby()" style="background: var(--brand-red); font-size: 1.2rem; padding: 1rem 3rem;">Return to Lobby</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MOBILE BLOCKER -->
+    <div id="mobile-blocker" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark-blue); color: white; text-align: center; padding: 40px; z-index: 9999; flex-direction: column; justify-content: center; align-items: center;">
+        <h2 style="color: white; border-bottom: 2px solid white; font-family: 'PizzaPress';">Desktop Required</h2>
+        <p style="font-family: 'OneDotCd'; font-size: 1.2rem; max-width: 500px;">This simulation is designed specifically for desktop displays. Please play on a PC terminal to proceed.</p>
+    </div>
+
+    <script {nonce}>
+        // Resolve user identifier
+        const userId = localStorage.getItem('tw_id') || 'guest';
+
+        // 10 Scenarios covering the complete defaults landscape
+        const scenariosDatabase = [
+            {
+                category: "Crust Constraints",
+                question: "A customer wants to order a Large (14\") Handmade Pan Pizza. How should you handle this on the register?",
+                options: [
+                    "Pan Pizzas only come in 12\" Medium by default, so suggest the Medium size.",
+                    "Ring up a Large Hand Tossed and write 'Pan' in the instructions.",
+                    "Go ahead and ring it up as a Large; Pan is available in all sizes.",
+                    "Pan pizzas only come in 10\" Small."
+                ],
+                answer: "Pan Pizzas only come in 12\" Medium by default, so suggest the Medium size."
+            },
+            {
+                category: "Register Defaults",
+                question: "An order of Cinnamon Bread Bites is being assembled. Which default item must be packaged with it?",
+                options: [
+                    "Marinara Dipping Cup",
+                    "Icing Dipping Cup (Included automatically)",
+                    "No default sauce comes with Cinnamon Bites",
+                    "Garlic Dipping Cup"
+                ],
+                answer: "Icing Dipping Cup (Included automatically)"
+            },
+            {
+                category: "Register Defaults",
+                question: "A customer orders a Classic Garden Salad. What is the standard dressing policy?",
+                options: [
+                    "Dressings are an extra paid charge.",
+                    "Salads include 1 dressing of choice by default.",
+                    "Dressings are only provided with chicken orders.",
+                    "Salads do not come with dressing packets."
+                ],
+                answer: "Salads include 1 dressing of choice by default."
+            },
+            {
+                category: "Specialty Sauces",
+                question: "What default sauce base comes on the Memphis BBQ Chicken Pizza?",
+                options: [
+                    "Robust Inspired Tomato Sauce",
+                    "Garlic Parmesan Sauce",
+                    "Honey BBQ Sauce",
+                    "Creamy Alfredo Sauce"
+                ],
+                answer: "Honey BBQ Sauce"
+            },
+            {
+                category: "Food Cost Rules",
+                question: "A customer orders Parmesan Bread Bites and asks if they come with a free Marinara dipping cup.",
+                options: [
+                    "Yes, all bread sides automatically get a free Marinara.",
+                    "No, dipping cups are paid add-ons for bread bites.",
+                    "Yes, but only if they order a large size.",
+                    "Marinara is only included with Gluten Free crust."
+                ],
+                answer: "No, dipping cups are paid add-ons for bread bites."
+            },
+            {
+                category: "Crust Constraints",
+                question: "What is the only size option available for the Gluten Free Crust?",
+                options: [
+                    "10\" Small only",
+                    "12\" Medium only",
+                    "14\" Large only",
+                    "Gluten Free is available in all sizes"
+                ],
+                answer: "10\" Small only"
+            },
+            {
+                category: "Cut Styles",
+                question: "What is the standard cut style for a Crunchy Thin Crust Pizza on the cut table?",
+                options: [
+                    "Pie Cut (8 slices)",
+                    "Square Cut (Party Cut)",
+                    "Uncut / Clean Cut",
+                    "Double Pie Cut (16 slices)"
+                ],
+                answer: "Square Cut (Party Cut)"
+            },
+            {
+                category: "Specialty Sauces",
+                question: "A customer orders a Spinach & Feta Pizza and asks what sauce base is used.",
+                options: [
+                    "Robust Inspired Tomato Sauce",
+                    "Honey BBQ Sauce",
+                    "Creamy Alfredo Sauce",
+                    "No sauce base, just cheese"
+                ],
+                answer: "Creamy Alfredo Sauce"
+            },
+            {
+                category: "Specialty Sauces",
+                question: "What base is used on the Philly Cheese Steak Pizza instead of robust tomato sauce?",
+                options: [
+                    "Creamy Alfredo Sauce",
+                    "Garlic Parmesan Sauce",
+                    "American & Provolone Cheese base",
+                    "Ranch dressing base"
+                ],
+                answer: "American & Provolone Cheese base"
+            },
+            {
+                category: "Food Cost Rules",
+                question: "A customer orders an 8-piece Boneless Chicken. Does the register automatically include a free dipping cup with chicken orders?",
+                options: [
+                    "Yes, 1 dipping cup is included free with all chicken orders.",
+                    "No, all dipping cups with chicken sides are paid add-ons.",
+                    "Yes, but only if they order a 16-piece or larger.",
+                    "Only Ranch is free with chicken sides."
+                ],
+                answer: "No, all dipping cups with chicken sides are paid add-ons."
+            }
+        ];
+
+        // Mobile blocker detection
+        if (window.innerWidth <= 768) {
+            document.getElementById('mobile-blocker').style.display = 'flex';
+        }
+
+        let currentScenarioIndex = 0;
+        let score = 0;
+        let canInteract = true;
+        let deck = [];
+
+        function startGamePlay() {
+            document.getElementById('start-panel').classList.add('hidden');
+            document.getElementById('game-hud').classList.remove('hidden');
+            document.getElementById('action-panel').classList.remove('hidden');
+
+            // Randomize order of the 10 scenarios
+            deck = [...scenariosDatabase].sort(() => Math.random() - 0.5);
+            currentScenarioIndex = 0;
+            score = 0;
+            canInteract = true;
+
+            showScenario();
+        }
+
+        function showScenario() {
+            const scenario = deck[currentScenarioIndex];
+            
+            document.getElementById('hud-index').innerText = `${currentScenarioIndex + 1} / 10`;
+            document.getElementById('hud-score').innerText = score;
+            
+            document.getElementById('scenario-category').innerText = scenario.category;
+            document.getElementById('scenario-text').innerText = scenario.question;
+
+            const optionsBox = document.getElementById('options-box');
+            optionsBox.innerHTML = '';
+
+            // Shuffle choice options
+            const shuffledOptions = [...scenario.options].sort(() => Math.random() - 0.5);
+
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(opt, btn);
+                optionsBox.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedOpt, clickedBtn) {
+            if (!canInteract) return;
+
+            const scenario = deck[currentScenarioIndex];
+            const optionButtons = document.querySelectorAll('.option-btn');
+            canInteract = false;
+
+            // Freeze choices during answer reveal sequence
+            optionButtons.forEach(btn => btn.classList.add('disabled'));
+
+            if (selectedOpt === scenario.answer) {
+                // Correct choice
+                clickedBtn.classList.add('selected-correct');
+                score += 150; // 150 points for correct
+            } else {
+                // Incorrect choice
+                clickedBtn.classList.add('selected-incorrect');
+                score = Math.max(0, score - 50); // 50-point penalty
+
+                // Highlight correct answer in green outline
+                optionButtons.forEach(btn => {
+                    if (btn.innerText === scenario.answer) {
+                        btn.classList.add('selected-correct');
+                    }
+                });
+            }
+
+            document.getElementById('hud-score').innerText = score;
+
+            // Short transition delay
+            setTimeout(() => {
+                currentScenarioIndex++;
+                if (currentScenarioIndex < deck.length) {
+                    showScenario();
+                    canInteract = true;
+                } else {
+                    endGamePlay();
+                }
+            }, 1800);
+        }
+
+        function endGamePlay() {
+            document.getElementById('game-hud').classList.add('hidden');
+            document.getElementById('action-panel').classList.add('hidden');
+            document.getElementById('end-panel').classList.remove('hidden');
+
+            document.getElementById('final-score').innerText = score;
+
+            // Save completeness flag to scoped user storage key
+            localStorage.setItem(`tw_${userId}_game4_complete`, 'true');
+
+            // Save score to local storage
+            const previousHighScore = parseInt(localStorage.getItem(`tw_${userId}_game4_score`) || '0', 10);
+            if (score > previousHighScore) {
+                localStorage.setItem(`tw_${userId}_game4_score`, score);
+            }
+        }
+
+        function returnToLobby() {
+            window.location.href = "module3_game_lobby.html";
+        }
+    </script>
+</body>
+</html>
