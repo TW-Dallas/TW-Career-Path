@@ -171,9 +171,9 @@
         <button class="game-btn" onclick="nextRound()" style="background: var(--dark-blue);">Start Next Round</button>
     </div>
 
-    <!-- FINAL SUCCESS MESSAGE -->
+<!-- FINAL SUCCESS MESSAGE -->
     <div id="success-message" style="display: none; text-align: center; margin-top: 30px; animation: fadeIn 0.5s ease;">
-        <h2 style="color: #2e7d32; font-size: 2.5rem; margin-bottom: 10px; font-family: 'PizzaPress'; text-transform: uppercase;">Perfect Match!</h2>
+        <h2 style="color: var(--med-blue); font-size: 2.5rem; margin-bottom: 10px; font-family: 'PizzaPress'; text-transform: uppercase;">Perfect Match!</h2>
         <p style="font-size: 1.2rem; color: var(--crust-deep); font-family: 'OneDotCd-Bold'; margin-bottom: 20px;">You've mastered the specialty pizzas.</p>
         
         <div style="background: var(--crust-light); border: 2px solid var(--crust-med); border-radius: 12px; padding: 1.5rem 2.5rem; margin: 15px auto 30px auto; max-width: 320px; text-align: left; box-sizing: border-box;">
@@ -195,7 +195,7 @@
                 id="btn-finish" 
                 onclick="returnToLobby()" 
                 style="background: var(--brand-red); cursor: pointer; padding: 1rem 3rem;">
-            Return to Lobby
+            Return to Game Lobby
         </button>    
     </div>
 
@@ -354,6 +354,17 @@
         }
 
         function endGamePlay() {
+            // HIDE the gameplay containers to clean up screen space
+            const gameContainer = document.querySelector('.game-container');
+            if (gameContainer) gameContainer.style.display = 'none';
+            
+            // HIDE the top header/instructions wrapper to prevent vertical pushing
+            const roundTitle = document.getElementById('round-title');
+            if (roundTitle && roundTitle.parentElement) {
+                roundTitle.parentElement.style.display = 'none';
+            }
+
+            // SHOW the success card
             document.getElementById('success-message').style.display = 'block';
             
             const elapsedSeconds = ((Date.now() - moduleStartTime) / 1000);
