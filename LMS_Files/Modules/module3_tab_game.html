@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: POS Tab Finder</title>
+    <link rel="icon" type="image/png" href="../../image/tile_blue.png">
+    <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
+    <script src="../Globals/lms_feedback.js"></script>
+    <style>
+        .game-wrapper {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-top: 6px solid var(--brand-blue);
+            position: relative;
+        }
+
+        .hud-bar {
+            background: var(--crust-light);
+            padding: 1rem 2rem;
+            border-bottom: 2px solid var(--crust-med);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 1.1rem;
+            color: var(--crust-burnt);
+        }
+
+        .hud-stat span {
+            color: var(--brand-blue);
+        }
+
+        .play-area {
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 450px;
+            box-sizing: border-box;
+        }
+
+        /* --- Active Item Card --- */
+        .item-card {
+            background: var(--crust-base);
+            border: 2px solid var(--crust-med);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            margin-bottom: 2.5rem;
+            box-sizing: border-box;
+            transition: transform 0.15s ease;
+        }
+
+        .item-card.correct-flash {
+            border-color: #2e7d32;
+            background: rgba(46, 125, 50, 0.05);
+            animation: pulseGreen 0.2s ease-out;
+        }
+
+        .item-card.incorrect-flash {
+            border-color: var(--brand-red);
+            background: rgba(255, 0, 0, 0.05);
+            animation: shakeRed 0.3s ease-out;
+        }
+
+        .item-image {
+            max-height: 140px;
+            max-width: 100%;
+            object-fit: contain;
+            margin-bottom: 1.25rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .item-name {
+            font-family: 'Subhead2', sans-serif;
+            font-size: 1.6rem;
+            color: var(--crust-burnt);
+            margin: 0;
+        }
+
+        /* Fallback placeholder style if image files are missing */
+        .image-placeholder {
+            width: 120px;
+            height: 120px;
+            background: var(--crust-med);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            color: var(--crust-deep);
+            font-size: 2rem;
+            margin: 0 auto 1.25rem auto;
+        }
+
+        /* --- POS Grid Buttons --- */
+        .pos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 700px;
+            box-sizing: border-box;
+        }
+
+        .pos-btn {
+            background: var(--dark-blue);
+            color: white;
+            border: none;
+            border-bottom: 4px solid var(--med-blue);
+            border-radius: 8px;
+            padding: 1.25rem 1rem;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.1s;
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .pos-btn:hover {
+            background: var(--med-blue);
+            transform: translateY(-2px);
+        }
+
+        .pos-btn:active {
+            transform: translateY(1px);
+            border-bottom-width: 1px;
+            box-shadow: none;
+        }
+
+        .pos-btn.disabled {
+            background: #aaa !important;
+            border-bottom-color: #888 !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+        }
+
+        /* --- Screens --- */
+        .start-overlay, .end-overlay {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2.5rem;
+            box-sizing: border-box;
+        }
+
+        .big-countdown {
+            font-family: 'PizzaPress', sans-serif;
+            font-size: 6rem;
+            color: var(--brand-blue);
+            margin: 20px 0;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- Animations --- */
+        @keyframes pulseGreen {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shakeRed {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body style="background-color: var(--crust-light);">
+
+    <!-- BRAND NAVBAR -->
+    <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="module3_lobby.html" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Exit to Lobby
+            </a>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 3: POS Tab Finder</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Game 2</span>
+        </div>
+    </header>
+
+    <div class="game-wrapper">
+        <!-- HUD State bar -->
+        <div id="game-hud" class="hud-bar hidden">
+            <div class="hud-stat">Item: <span id="hud-index">1 / 15</span></div>
+            <div class="hud-stat">Streak: <span id="hud-streak">0</span></div>
+            <div class="hud-stat">Elapsed Time: <span id="hud-timer">0.0s</span></div>
+        </div>
+
+        <div class="play-area">
+            
+            <!-- START / COUNTDOWN PANEL -->
+            <div id="start-panel" class="start-overlay">
+                <h1 style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2.2rem; margin-top: 0; text-transform: uppercase;">POS Tab Finder</h1>
+                <p style="font-family: 'OneDotCd', sans-serif; font-size: 1.2rem; max-width: 500px; color: var(--crust-deep); margin-bottom: 20px;">
+                    Sort the 15 randomly assigned items into their correct POS Category Tabs as fast as you can. Keep a streak going for bonus points!
+                </p>
+                <button class="btn" onclick="startCountdown()" style="font-size: 1.2rem; padding: 1rem 3rem;">Start Challenge</button>
+            </div>
+
+            <!-- ACTIVE BLITZ PLAY AREA -->
+            <div id="countdown-panel" class="start-overlay hidden">
+                <h2 style="font-family: 'OneDotCd-Bold'; color: var(--crust-burnt); margin: 0; font-size: 1.5rem;">Get Ready!</h2>
+                <div id="countdown-number" class="big-countdown">3</div>
+            </div>
+
+            <div id="action-panel" class="hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <div class="item-card" id="item-target-card">
+                    <div id="item-visual-container">
+                        <!-- Image or placeholder fallback will be injected here -->
+                    </div>
+                    <h2 class="item-name" id="item-target-name">Item Name</h2>
+                </div>
+
+                <div class="pos-grid">
+                    <button class="pos-btn" onclick="submitSort('breads')">Breads</button>
+                    <button class="pos-btn" onclick="submitSort('wings')">Wings & Chicken</button>
+                    <button class="pos-btn" onclick="submitSort('sandwiches_pasta')">Sandwiches & Pasta</button>
+                    <button class="pos-btn" onclick="submitSort('desserts')">Desserts</button>
+                    <button class="pos-btn" onclick="submitSort('salads_drinks')">Salads & Drinks</button>
+                    <button class="pos-btn" onclick="submitSort('extras')">Dipping Cups</button>
+                </div>
+            </div>
+
+            <!-- COMPLETED PANEL -->
+            <div id="end-panel" class="end-overlay hidden">
+                <h1 style="font-family: 'PizzaPress'; color: #2e7d32; font-size: 2.5rem; margin-top: 0; text-transform: uppercase;">Challenge Complete!</h1>
+                
+                <div style="background: var(--crust-light); border: 2px solid var(--crust-med); border-radius: 12px; padding: 1.5rem 2.5rem; margin: 15px 0 30px 0; min-width: 300px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-family: 'OneDotCd', sans-serif; font-size: 1.1rem;">
+                        <span>Accuracy Score:</span>
+                        <strong id="final-accuracy">15 / 15</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-family: 'OneDotCd', sans-serif; font-size: 1.1rem;">
+                        <span>Best Streak:</span>
+                        <strong id="final-streak">0</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-family: 'OneDotCd', sans-serif; font-size: 1.1rem;">
+                        <span>Total Time:</span>
+                        <strong id="final-time">0.0s</strong>
+                    </div>
+                    <div style="border-top: 2px solid var(--crust-med); padding-top: 10px; display: flex; justify-content: space-between; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.3rem; color: var(--brand-blue);">
+                        <span>Calculated Score:</span>
+                        <strong id="final-score">0</strong>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="returnToLobby()" style="background: var(--brand-red); font-size: 1.2rem; padding: 1rem 3rem;">Return to Lobby</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MOBILE BLOCKER -->
+    <div id="mobile-blocker" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark-blue); color: white; text-align: center; padding: 40px; z-index: 9999; flex-direction: column; justify-content: center; align-items: center;">
+        <h2 style="color: white; border-bottom: 2px solid white; font-family: 'PizzaPress';">Desktop Required</h2>
+        <p style="font-family: 'OneDotCd'; font-size: 1.2rem; max-width: 500px;">This simulation game is designed specifically for desktop displays. Please play on a PC terminal to proceed.</p>
+    </div>
+
+    <script>
+        // Resolve user identifier
+        const userId = localStorage.getItem('tw_id') || 'guest';
+
+        // Full items repository matching Slide 8 specifications
+        const itemsDatabase = [
+            // Breads category
+            { name: "Parmesan Bread Bites", group: "breads", img: "../resources/Sides/ParmBites.png" },
+            { name: "Garlic Bread Bites", group: "breads", img: "../resources/Sides/GarlicBites.png" },
+            { name: "Stuffed Cheesy Bread", group: "breads", img: "../resources/Sides/StuffedCheesy.png" },
+            { name: "Pepperoni Stuffed Cheesy Bread", group: "breads", img: "../resources/Sides/StuffedPep.png" },
+            { name: "Spinach & Feta Stuffed Cheesy Bread", group: "breads", img: "../resources/Sides/StuffedSpin.png" },
+            { name: "Bacon & Jalapeno Stuffed Cheesy Bread", group: "breads", img: "../resources/Sides/StuffedBacon.png" },
+            
+            // Desserts category
+            { name: "Cinnamon Bread Bites", group: "desserts", img: "../resources/Sides/CinnaBites.png" },
+            { name: "Chocolate Lava Cakes", group: "desserts", img: "../resources/Sides/ChocLava.png" },
+            { name: "Marbled Cookie Brownie", group: "desserts", img: "../resources/Sides/MCB.png" },
+
+            // Wings & Chicken category
+            { name: "Hot Buffalo Wings", group: "wings", img: "../resources/Sides/WingsBuff.png" },
+            { name: "Honey BBQ Wings", group: "wings", img: "../resources/Sides/WingsBBQ.png" },
+            { name: "Sweet Mango Habanero Wings", group: "wings", img: "../resources/Sides/WingsHab.png" },
+            { name: "Garlic Parmesan Wings", group: "wings", img: "../resources/Sides/WingsGarParm.png" },
+            { name: "Plain Wings", group: "wings", img: "../resources/Sides/WingsPlain.png" },
+            { name: "Loaded Chicken – Crispy Bacon & Tomato", group: "wings", img: "../resources/Sides/LoadedCBT.png" },
+            { name: "Loaded Chicken – Classic Hot Buffalo", group: "wings", img: "../resources/Sides/LoadedBuff.png" },
+            { name: "Loaded Chicken – Spicy Jalapeno Pineapple", group: "wings", img: "../resources/Sides/LoadedPJ.png" },
+            { name: "Loaded Chicken – Sweet BBQ Bacon", group: "wings", img: "../resources/Sides/LoadedBBQ.png" },
+            { name: "Boneless Chicken", group: "wings", img: "../resources/Sides/WingsBoneless.png" },
+
+            // Sandwiches & Pasta category
+            { name: "5-Cheese Mac & Cheese", group: "sandwiches_pasta", img: "../resources/Sides/Pasta5Cheese.png" },
+            { name: "Spicy Buffalo 5-Cheese Mac & Cheese", group: "sandwiches_pasta", img: "../resources/Sides/PastaSpicy.png" },
+            { name: "Chicken Alfredo", group: "sandwiches_pasta", img: "../resources/Sides/PastaChicken.png" },
+            { name: "Philly Cheese Steak Sandwich", group: "sandwiches_pasta", img: "../resources/Sides/SandwichPhilly.png" },
+            { name: "Chicken Bacon Ranch Sandwich", group: "sandwiches_pasta", img: "../resources/Sides/SandwichCBR.png" },
+            { name: "Italian Sandwich", group: "sandwiches_pasta", img: "../resources/Sides/SandwichItalian.png" },
+            { name: "Chicken Parm Sandwich", group: "sandwiches_pasta", img: "../resources/Sides/SandwichParm.png" },
+            { name: "Buffalo Chicken Sandwich", group: "sandwiches_pasta", img: "../resources/Sides/SandwichBuffalo.png" },
+
+            // Salads & Drinks category
+            { name: "Classic Garden Salad", group: "salads_drinks", img: "../resources/Sides/SaladGarden.png" },
+            { name: "Chicken Caesar Salad", group: "salads_drinks", img: "../resources/Sides/SaladCaesar.png" },
+            { name: "Coca-Cola®", group: "salads_drinks", img: "../resources/Sides/DrinkCoke.png" },
+            { name: "Diet Coke®", group: "salads_drinks", img: "../resources/Sides/DrinkDiet.png" },
+            { name: "Sprite®", group: "salads_drinks", img: "../resources/Sides/DrinkSprite.png" },
+            { name: "Dasani® Water", group: "salads_drinks", img: "../resources/Sides/DrinkDasani.png" },
+            { name: "Fanta® Orange", group: "salads_drinks", img: "../resources/Sides/DrinkFanta.png" },
+
+            // Dipping Cups category
+            { name: "Slice Sauce Dipping Cup", group: "extras", img: "../resources/Sides/DipSliceSauce.png" },
+            { name: "Hot Buffalo Dipping Cup", group: "extras", img: "../resources/Sides/DipBuffalo.png" },
+            { name: "Sweet Mango Habanero Dipping Cup", group: "extras", img: "../resources/Sides/DipHab.png" },
+            { name: "Honey BBQ Dipping Cup", group: "extras", img: "../resources/Sides/DipBBQ.png" },
+            { name: "Ranch Dipping Cup", group: "extras", img: "../resources/Sides/DipRanch.png" },
+            { name: "Garlic Dipping Cup", group: "extras", img: "../resources/Sides/DipGarlic.png" },
+            { name: "Icing Dipping Cup", group: "extras", img: "../resources/Sides/DipIcing.png" },
+            { name: "Marinara Dipping Cup", group: "extras", img: "../resources/Sides/DipMarinara.png" },
+            { name: "Salad Dressing Packet", group: "extras", img: "../resources/Sides/Dressings.png" }
+        ];
+
+        // Mobile blocker logic matching your design constraints
+        if (window.innerWidth <= 768) {
+            document.getElementById('mobile-blocker').style.display = 'flex';
+        }
+
+        let deck = [];
+        let currentIndex = 0;
+        let score = 0;
+        let streak = 0;
+        let maxStreak = 0;
+        let totalIncorrect = 0;
+        
+        let startTime = 0;
+        let timerInterval = null;
+        let canInteract = true;
+
+        // Shuffle deck helper
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        function startCountdown() {
+            document.getElementById('start-panel').classList.add('hidden');
+            document.getElementById('countdown-panel').classList.remove('hidden');
+
+            let count = 3;
+            const countEl = document.getElementById('countdown-number');
+            countEl.innerText = count;
+
+            const interval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countEl.innerText = count;
+                } else if (count === 0) {
+                    countEl.innerText = "GO!";
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('countdown-panel').classList.add('hidden');
+                    initializeGamePlay();
+                }
+            }, 1000);
+        }
+
+        function initializeGamePlay() {
+            // Build a randomized active deck of 15 items
+            deck = shuffle([...itemsDatabase]).slice(0, 15);
+            currentIndex = 0;
+            score = 0;
+            streak = 0;
+            maxStreak = 0;
+            totalIncorrect = 0;
+            canInteract = true;
+
+            document.getElementById('game-hud').classList.remove('hidden');
+            document.getElementById('action-panel').classList.remove('hidden');
+
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimerHUD, 100);
+            
+            showCurrentItem();
+        }
+
+        function updateTimerHUD() {
+            const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+            document.getElementById('hud-timer').innerText = `${elapsed}s`;
+        }
+
+        function showCurrentItem() {
+            const item = deck[currentIndex];
+            document.getElementById('hud-index').innerText = `${currentIndex + 1} / 15`;
+            document.getElementById('item-target-name').innerText = item.name;
+
+            const visualContainer = document.getElementById('item-visual-container');
+            visualContainer.innerHTML = '';
+
+            // Handle fallback style elegantly if source image is absent
+            const imgEl = document.createElement('img');
+            imgEl.src = item.img;
+            imgEl.className = 'item-image';
+            imgEl.alt = item.name;
+            imgEl.onerror = function() {
+                visualContainer.innerHTML = `<div class="image-placeholder">📦</div>`;
+            };
+            visualContainer.appendChild(imgEl);
+        }
+
+        function submitSort(selectedGroup) {
+            if (!canInteract) return;
+
+            const item = deck[currentIndex];
+            const targetCard = document.getElementById('item-target-card');
+            const buttons = document.querySelectorAll('.pos-btn');
+
+            if (item.group === selectedGroup) {
+                // Correct match sequence
+                streak++;
+                if (streak > maxStreak) maxStreak = streak;
+                document.getElementById('hud-streak').innerText = streak;
+
+                targetCard.classList.add('correct-flash');
+                canInteract = false;
+
+                setTimeout(() => {
+                    targetCard.classList.remove('correct-flash');
+                    currentIndex++;
+                    if (currentIndex < deck.length) {
+                        showCurrentItem();
+                        canInteract = true;
+                    } else {
+                        endGamePlay();
+                    }
+                }, 200);
+
+            } else {
+                // Incorrect match sequence
+                streak = 0;
+                totalIncorrect++;
+                document.getElementById('hud-streak').innerText = streak;
+
+                targetCard.classList.add('incorrect-flash');
+                canInteract = false;
+
+                // Disable category buttons temporarily to enforce sorting discipline
+                buttons.forEach(btn => btn.classList.add('disabled'));
+
+                setTimeout(() => {
+                    targetCard.classList.remove('incorrect-flash');
+                    canInteract = true;
+                    buttons.forEach(btn => btn.classList.remove('disabled'));
+                }, 1000); // 1-second sorting delay penalty
+            }
+        }
+
+        function endGamePlay() {
+            clearInterval(timerInterval);
+            
+            document.getElementById('game-hud').classList.add('hidden');
+            document.getElementById('action-panel').classList.add('hidden');
+            document.getElementById('end-panel').classList.remove('hidden');
+
+            const elapsedSeconds = ((Date.now() - startTime) / 1000);
+            
+            // Score Formula: Base (Correct sorted * 100) + Streak bonus + Speed factor
+            // Incorrect match attempts subtract a 25-point penalty
+            const totalCorrect = deck.length; // Always 15 to finish
+            const baseScore = totalCorrect * 100; // 1500
+            const streakBonus = maxStreak * 50; 
+            
+            // Fast bonus: Gives points for finishing faster than 60 seconds
+            let speedBonus = 0;
+            if (elapsedSeconds < 60) {
+                speedBonus = Math.floor((60 - elapsedSeconds) * 20);
+            }
+
+            const errorPenalty = totalIncorrect * 25;
+            
+            const finalScore = Math.max(0, baseScore + streakBonus + speedBonus - errorPenalty);
+
+            // Print summary
+            document.getElementById('final-accuracy').innerText = `${totalCorrect} items`;
+            document.getElementById('final-streak').innerText = `${maxStreak}`;
+            document.getElementById('final-time').innerText = `${elapsedSeconds.toFixed(1)}s`;
+            document.getElementById('final-score').innerText = finalScore;
+
+            // Save state to User-ID scoped keys
+            localStorage.setItem(`tw_${userId}_game2_complete`, 'true');
+            
+            // Set highest score tracking
+            const previousHighScore = parseInt(localStorage.getItem(`tw_${userId}_game2_score`) || '0', 10);
+            if (finalScore > previousHighScore) {
+                localStorage.setItem(`tw_${userId}_game2_score`, finalScore);
+            }
+        }
+
+        function returnToLobby() {
+            window.location.href = "module3_game_lobby.html";
+        }
+    </script>
+</body>
+</html>
