@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: Menu Jeopardy</title>
+    <link rel="icon" type="image/png" href="../../image/tile_blue.png">
+    <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
+    <script src="../Globals/lms_feedback.js"></script>
+    <style>
+        .game-wrapper {
+            max-width: 1040px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-top: 6px solid var(--brand-blue);
+        }
+
+        .hud-bar {
+            background: var(--crust-light);
+            padding: 1rem 2rem;
+            border-bottom: 2px solid var(--crust-med);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 1.1rem;
+            color: var(--crust-burnt);
+        }
+
+        .score-box {
+            font-size: 1.3rem;
+            color: var(--brand-blue);
+        }
+
+        .play-area {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 480px;
+            box-sizing: border-box;
+        }
+
+        /* --- Jeopardy Board Grid --- */
+        .jeopardy-board {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .board-header {
+            background: var(--dark-blue);
+            color: white;
+            padding: 1rem 0.5rem;
+            text-align: center;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 1.05rem;
+            border-radius: 6px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+            line-height: 1.2;
+        }
+
+        .tile-btn {
+            background: linear-gradient(180deg, #008be3 0%, #00569c 100%);
+            border: 2px solid #00457d;
+            border-bottom: 4px solid #002d52;
+            border-radius: 6px;
+            color: #ffeb3b; /* Traditional yellow text style */
+            padding: 1.5rem 0;
+            font-family: 'PizzaPress', sans-serif;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.1s;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 75px;
+        }
+
+        .tile-btn:hover {
+            background: linear-gradient(180deg, #0ba0fc 0%, #006bbd 100%);
+            transform: scale(1.02);
+        }
+
+        .tile-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* State management styles for answered tiles */
+        .tile-btn.correct {
+            background: #2e7d32 !important;
+            border-color: #1b5e20 !important;
+            color: rgba(255,255,255,0.6) !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
+        .tile-btn.incorrect {
+            background: #c62828 !important;
+            border-color: #8e0000 !important;
+            color: rgba(255,255,255,0.4) !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
+        /* --- Question Modal Styles --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-card {
+            background: white;
+            border-radius: 12px;
+            border-top: 6px solid var(--brand-blue);
+            max-width: 650px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            animation: scaleIn 0.2s ease-out;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: var(--crust-light);
+            padding: 1rem 1.5rem;
+            border-bottom: 2px solid var(--crust-med);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clue-text {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 1.3rem;
+            line-height: 1.45;
+            color: var(--crust-burnt);
+            text-align: center;
+            margin: 1.5rem;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        .option-btn {
+            background: var(--crust-base);
+            border: 2px solid var(--crust-med);
+            border-radius: 8px;
+            padding: 1.25rem 1rem;
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 1.1rem;
+            color: var(--crust-deep);
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            border-color: var(--brand-blue);
+            background: rgba(0, 144, 226, 0.05);
+        }
+
+        .option-btn.selected-correct {
+            background: #e8f5e9 !important;
+            border-color: #2e7d32 !important;
+            color: #1b5e20 !important;
+            font-family: 'OneDotCd-Bold', sans-serif;
+        }
+
+        .option-btn.selected-incorrect {
+            background: #ffebee !important;
+            border-color: #c62828 !important;
+            color: #b71c1c !important;
+            font-family: 'OneDotCd-Bold', sans-serif;
+        }
+
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* --- Screens --- */
+        .end-panel {
+            text-align: center;
+            padding: 2.5rem;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .hidden { display: none !important; }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body style="background-color: var(--crust-light);">
+
+    <!-- BRAND NAVBAR -->
+    <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="module3_game_lobby.html" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Back to Game Lobby
+            </a>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 3: Menu Jeopardy</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Game 3</span>
+        </div>
+    </header>
+
+    <div class="game-wrapper">
+        <!-- HUD State bar -->
+        <div class="hud-bar" id="game-hud">
+            <div>Completed: <span id="hud-progress" style="color: var(--brand-blue);">0 / 15 Tiles</span></div>
+            <div class="score-box">Round Score: <strong id="hud-score">$0</strong></div>
+        </div>
+
+        <div class="play-area">
+
+            <!-- MAIN TRIVIA BOARD -->
+            <div id="board-container" style="width: 100%;">
+                <div class="jeopardy-board">
+                    <!-- Column headers -->
+                    <div class="board-header">Specialty<br>Pizzas</div>
+                    <div class="board-header">Breads &<br>Desserts</div>
+                    <div class="board-header">Wings &<br>Chicken</div>
+                    <div class="board-header">Pasta &<br>Sandwiches</div>
+                    <div class="board-header">Dipping Cups<br>& Extras</div>
+
+                    <!-- Row 1 (100) -->
+                    <button class="tile-btn" id="tile-pizza-100" onclick="selectTile('pizza', 100)">100</button>
+                    <button class="tile-btn" id="tile-breads-100" onclick="selectTile('breads', 100)">100</button>
+                    <button class="tile-btn" id="tile-wings-100" onclick="selectTile('wings', 100)">100</button>
+                    <button class="tile-btn" id="tile-pasta-100" onclick="selectTile('pasta', 100)">100</button>
+                    <button class="tile-btn" id="tile-extras-100" onclick="selectTile('extras', 100)">100</button>
+
+                    <!-- Row 2 (200) -->
+                    <button class="tile-btn" id="tile-pizza-200" onclick="selectTile('pizza', 200)">200</button>
+                    <button class="tile-btn" id="tile-breads-200" onclick="selectTile('breads', 200)">200</button>
+                    <button class="tile-btn" id="tile-wings-200" onclick="selectTile('wings', 200)">200</button>
+                    <button class="tile-btn" id="tile-pasta-200" onclick="selectTile('pasta', 200)">200</button>
+                    <button class="tile-btn" id="tile-extras-200" onclick="selectTile('extras', 200)">200</button>
+
+                    <!-- Row 3 (300) -->
+                    <button class="tile-btn" id="tile-pizza-300" onclick="selectTile('pizza', 300)">300</button>
+                    <button class="tile-btn" id="tile-breads-300" onclick="selectTile('breads', 300)">300</button>
+                    <button class="tile-btn" id="tile-wings-300" onclick="selectTile('wings', 300)">300</button>
+                    <button class="tile-btn" id="tile-pasta-300" onclick="selectTile('pasta', 300)">300</button>
+                    <button class="tile-btn" id="tile-extras-300" onclick="selectTile('extras', 300)">300</button>
+                </div>
+            </div>
+
+            <!-- END OF BOARD COMPLETED SCREEN -->
+            <div id="completed-container" class="end-panel hidden">
+                <h1 style="font-family: 'PizzaPress'; color: #2e7d32; font-size: 2.5rem; margin-top: 0; text-transform: uppercase;">Board Cleared!</h1>
+                <p style="font-family: 'OneDotCd', sans-serif; font-size: 1.25rem; color: var(--crust-deep); max-width: 500px; margin: 0 auto 20px auto;">
+                    Great job completing all fifteen tiles. Your score has been calculated and saved. Return to the game lobby to check your progress.
+                </p>
+                <div style="background: var(--crust-light); border: 2px solid var(--crust-med); border-radius: 12px; padding: 1.5rem 3rem; margin: 15px auto 30px auto; max-width: 320px;">
+                    <div style="display: flex; justify-content: space-between; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.5rem; color: var(--brand-blue);">
+                        <span>Final Score:</span>
+                        <strong id="final-score-val">$0</strong>
+                    </div>
+                </div>
+                <button class="btn" onclick="returnToLobby()" style="background: var(--brand-red); font-size: 1.2rem; padding: 1rem 3rem;">Return to Lobby</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- QUESTIONS POPUP MODAL OVERLAY -->
+    <div id="trivia-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span id="clue-category" style="font-family: 'OneDotCd-Bold'; text-transform: uppercase; color: var(--brand-blue); font-size: 1.1rem;">Category</span>
+                <span id="clue-points" style="font-family: 'PizzaPress'; color: var(--brand-red); font-size: 1.5rem;">$100</span>
+            </div>
+            
+            <div class="clue-text" id="clue-body">
+                Clue description text...
+            </div>
+
+            <div class="options-grid" id="options-box">
+                <!-- Buttons injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE BLOCKER -->
+    <div id="mobile-blocker" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark-blue); color: white; text-align: center; padding: 40px; z-index: 9999; flex-direction: column; justify-content: center; align-items: center;">
+        <h2 style="color: white; border-bottom: 2px solid white; font-family: 'PizzaPress';">Desktop Required</h2>
+        <p style="font-family: 'OneDotCd'; font-size: 1.2rem; max-width: 500px;">This trivia board is designed specifically for desktop displays. Please play on a PC terminal to proceed.</p>
+    </div>
+
+    <script {nonce}>
+        // Resolve user identifier
+        const userId = localStorage.getItem('tw_id') || 'guest';
+
+        // Full 15 clues mapping database off official slide assets
+        const jeopardyData = {
+            pizza: {
+                title: "Specialty Pizzas",
+                100: {
+                    clue: "Pepperoni, ham, Italian sausage, beef, onions, green peppers, mushrooms and black olives, all sandwiched between two layers of provolone and mozzarella.",
+                    options: ["MeatZZa", "The People's Pizza - Deluxe", "ExtravaganZZa", "Pacific Veggie"],
+                    answer: "ExtravaganZZa"
+                },
+                200: {
+                    clue: "Tender slices of steak, fresh onions, fresh green peppers, fresh mushrooms, provolone and American cheese.",
+                    options: ["Philly Cheese Steak", "Spicy Chicken Bacon Ranch", "Honolulu Hawaiian", "MeatZZa"],
+                    answer: "Philly Cheese Steak"
+                },
+                300: {
+                    clue: "Sliced ham, smoked bacon, pineapple, fresh green peppers, provolone and cheese made with 100% real mozzarella.",
+                    options: ["Pacific Veggie", "Honolulu Hawaiian", "Ultimate Pepperoni", "Memphis BBQ Chicken"],
+                    answer: "Honolulu Hawaiian"
+                }
+            },
+            breads: {
+                title: "Breads & Desserts",
+                100: {
+                    clue: "Oven-baked chocolate cakes with molten chocolate fudge on the inside.",
+                    options: ["Cinnamon Bread Bites", "Marbled Cookie Brownie", "Chocolate Lava Cakes", "Parmesan Bread Bites"],
+                    answer: "Chocolate Lava Cakes"
+                },
+                200: {
+                    clue: "Oven-baked breadsticks, stuffed with cheese, fresh spinach, and Feta cheese - covered in a blend of mozzarella and cheddar, finished with garlic and Parmesan.",
+                    options: ["Spinach & Feta Stuffed Cheesy Bread", "Bacon & Jalapeno Stuffed Cheesy Bread", "Pepperoni Stuffed Cheesy Bread", "Stuffed Cheesy Bread"],
+                    answer: "Spinach & Feta Stuffed Cheesy Bread"
+                },
+                300: {
+                    clue: "Gooey, oven-baked cookie with chocolatey chunks and delicious fudge brownie.",
+                    options: ["Cinnamon Bread Bites", "Chocolate Lava Cakes", "Marbled Cookie Brownie", "Parmesan Bread Bites"],
+                    answer: "Marbled Cookie Brownie"
+                }
+            },
+            wings: {
+                title: "Wings & Chicken",
+                100: {
+                    clue: "Tender bites of breaded chicken white meat topped with garlic Parmesan sauce, mozzarella & cheddar blend, crispy bacon, and tomato.",
+                    options: ["Loaded Chicken – Classic Hot Buffalo", "Loaded Chicken – Crispy Bacon & Tomato", "Loaded Chicken – Spicy Jalapeno Pineapple", "Loaded Chicken – Sweet BBQ Bacon"],
+                    answer: "Loaded Chicken – Crispy Bacon & Tomato"
+                },
+                200: {
+                    clue: "Tender bites of white meat chicken topped with sweet and spicy mango-habanero sauce, mozzarella & cheddar blend, jalapeno and pineapple.",
+                    options: ["Loaded Chicken – Spicy Jalapeno Pineapple", "Loaded Chicken – Sweet BBQ Bacon", "Loaded Chicken – Classic Hot Buffalo", "Boneless Chicken"],
+                    answer: "Loaded Chicken – Spicy Jalapeno Pineapple"
+                },
+                300: {
+                    clue: "Chicken wings marinated and oven-baked, then smothered in sweet mango habanero sauce.",
+                    options: ["Plain Wings", "Hot Buffalo Wings", "Honey BBQ Wings", "Sweet Mango Habanero Wings"],
+                    answer: "Sweet Mango Habanero Wings"
+                }
+            },
+            pasta: {
+                title: "Pasta & Sandwiches",
+                100: {
+                    clue: "Grilled chicken breast and creamy Alfredo sauce mixed with penne pasta and oven-baked to perfection.",
+                    options: ["5-Cheese Mac & Cheese", "Chicken Alfredo Pasta", "Spicy Buffalo 5-Cheese Mac & Cheese", "Chicken Parm Sandwich"],
+                    answer: "Chicken Alfredo Pasta"
+                },
+                200: {
+                    clue: "Tender slices of steak, American and provolone cheeses, fresh onions, fresh green peppers and fresh mushrooms on baked bread.",
+                    options: ["Italian Sandwich", "Philly Cheese Steak Sandwich", "Chicken Bacon Ranch Sandwich", "Buffalo Chicken Sandwich"],
+                    answer: "Philly Cheese Steak Sandwich"
+                },
+                300: {
+                    clue: "Pepperoni and ham topped with banana peppers, fresh green peppers, fresh onions, and provolone cheese on baked bread.",
+                    options: ["Chicken Parm Sandwich", "Italian Sandwich", "Chicken Bacon Ranch Sandwich", "Buffalo Chicken Sandwich"],
+                    answer: "Italian Sandwich"
+                }
+            },
+            extras: {
+                title: "Dipping Cups & Extras",
+                100: {
+                    clue: "A sweet tomato dipping sauce blended with garlic, basil and oregano.",
+                    options: ["Garlic Dipping Cup", "Marinara Dipping Cup", "Slice Sauce Dipping Cup", "Hot Buffalo Dipping Cup"],
+                    answer: "Marinara Dipping Cup"
+                },
+                200: {
+                    clue: "A thick sweet dipping cup with a hint of vanilla, standard with Cinnamon Bread Bites.",
+                    options: ["Honey BBQ Dipping Cup", "Sweet Mango Habanero Dipping Cup", "Ranch Dipping Cup", "Icing Dipping Cup"],
+                    answer: "Icing Dipping Cup"
+                },
+                300: {
+                    clue: "Dipping cup described as: 'Creamy and zesty with a hint of Parmesan.'",
+                    options: ["Ranch Dipping Cup", "Slice Sauce Dipping Cup", "Garlic Dipping Cup", "Marinara Dipping Cup"],
+                    answer: "Slice Sauce Dipping Cup"
+                }
+            }
+        };
+
+        // Mobile blocker detection
+        if (window.innerWidth <= 768) {
+            document.getElementById('mobile-blocker').style.display = 'flex';
+        }
+
+        let roundScore = 0;
+        let answeredCount = 0;
+        let activeCategory = null;
+        let activePoints = null;
+
+        function selectTile(categoryKey, points) {
+            const tileId = `tile-${categoryKey}-${points}`;
+            const tileBtn = document.getElementById(tileId);
+
+            // Prevent clicking already attempted tiles
+            if (tileBtn.classList.contains('correct') || tileBtn.classList.contains('incorrect')) return;
+
+            activeCategory = categoryKey;
+            activePoints = points;
+
+            const clue = jeopardyData[categoryKey][points];
+
+            document.getElementById('clue-category').innerText = jeopardyData[categoryKey].title;
+            document.getElementById('clue-points').innerText = `$${points}`;
+            document.getElementById('clue-body').innerText = clue.clue;
+
+            const optionsBox = document.getElementById('options-box');
+            optionsBox.innerHTML = '';
+
+            // Shuffle option buttons slightly for variety
+            const shuffledOptions = [...clue.options].sort(() => Math.random() - 0.5);
+
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => submitAnswer(opt, btn);
+                optionsBox.appendChild(btn);
+            });
+
+            document.getElementById('trivia-modal').style.display = 'flex';
+        }
+
+        function submitAnswer(selectedOption, clickedBtn) {
+            const clue = jeopardyData[activeCategory][activePoints];
+            const optionButtons = document.querySelectorAll('.option-btn');
+            const tileId = `tile-${activeCategory}-${activePoints}`;
+            const tileBtn = document.getElementById(tileId);
+
+            // Freeze choices during answer reveal sequence
+            optionButtons.forEach(btn => btn.classList.add('disabled'));
+
+            if (selectedOption === clue.answer) {
+                // Correct match
+                clickedBtn.classList.add('selected-correct');
+                roundScore += activePoints;
+                tileBtn.classList.add('correct');
+            } else {
+                // Incorrect match: subtract points from total score
+                clickedBtn.classList.add('selected-incorrect');
+                roundScore -= activePoints;
+                tileBtn.classList.add('incorrect');
+
+                // Visually reveal correct answer in green outline
+                optionButtons.forEach(btn => {
+                    if (btn.innerText === clue.answer) {
+                        btn.classList.add('selected-correct');
+                    }
+                });
+            }
+
+            // Update HUD
+            answeredCount++;
+            document.getElementById('hud-progress').innerText = `${answeredCount} / 15 Tiles`;
+            document.getElementById('hud-score').innerText = (roundScore >= 0 ? `$${roundScore}` : `-$${Math.abs(roundScore)}`);
+
+            // Short reveal delay before returning to board
+            setTimeout(() => {
+                document.getElementById('trivia-modal').style.display = 'none';
+                checkBoardCompletion();
+            }, 1800);
+        }
+
+        function checkBoardCompletion() {
+            if (answeredCount >= 15) {
+                document.getElementById('board-container').classList.add('hidden');
+                document.getElementById('completed-container').classList.remove('hidden');
+                document.getElementById('final-score-val').innerText = (roundScore >= 0 ? `$${roundScore}` : `-$${Math.abs(roundScore)}`);
+
+                // Save completeness flag to scoped user storage key
+                localStorage.setItem(`tw_${userId}_game3_complete`, 'true');
+
+                // Update High Score database if they did better than previous attempts
+                const previousHighScore = parseInt(localStorage.getItem(`tw_${userId}_game3_score`) || '0', 10);
+                if (roundScore > previousHighScore) {
+                    localStorage.setItem(`tw_${userId}_game3_score`, roundScore);
+                }
+            }
+        }
+
+        function returnToLobby() {
+            window.location.href = "module3_game_lobby.html";
+        }
+    </script>
+</body>
+</html>
