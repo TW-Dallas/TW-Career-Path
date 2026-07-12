@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Module 3: Menu Matching</title>
     
-    <!-- LINK TO YOUR GLOBAL CSS -->
+    <!-- LINK TO GLOBAL CSS -->
     <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
     <script src="../Globals/lms_feedback.js"></script>
 
@@ -118,20 +118,20 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: var(--crust-light);">
 
-<!-- UNIFIED MODULE BRAND NAVBAR -->
+    <!-- UNIFIED MODULE BRAND NAVBAR -->
     <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         <div style="display: flex; align-items: center; gap: 20px;">
             <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
             <a href="module3_game_lobby.html" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-                &#8592; Back to Game Lobby
+                &#8592; Exit to Lobby
             </a>
         </div>
         
         <div style="display: flex; align-items: center; gap: 15px;">
-            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 3: Knowledge Check</span>
-            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Game</span>
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 3: Pizza Matcher</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Game 1</span>
         </div>
     </header>
 
@@ -160,19 +160,38 @@
     </div>
 
     <!-- FINAL SUCCESS MESSAGE -->
-    <div id="success-message" style="display: none; text-align: center; margin-top: 30px;">
-        <h2 style="color: var(--brand-blue); font-size: 2.5rem; margin-bottom: 10px; font-family: 'PizzaPress';">Perfect Match!</h2>
-        <p style="font-size: 1.2rem; color: var(--crust-deep); font-family: 'OneDotCd-Bold';">You've mastered the menu items.</p>
+    <div id="success-message" style="display: none; text-align: center; margin-top: 30px; animation: fadeIn 0.5s ease;">
+        <h2 style="color: #2e7d32; font-size: 2.5rem; margin-bottom: 10px; font-family: 'PizzaPress'; text-transform: uppercase;">Perfect Match!</h2>
+        <p style="font-size: 1.2rem; color: var(--crust-deep); font-family: 'OneDotCd-Bold'; margin-bottom: 20px;">You've mastered the specialty pizzas.</p>
+        
+        <div style="background: var(--crust-light); border: 2px solid var(--crust-med); border-radius: 12px; padding: 1.5rem 2.5rem; margin: 15px auto 30px auto; max-width: 320px; text-align: left; box-sizing: border-box;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-family: 'OneDotCd', sans-serif; font-size: 1.1rem;">
+                <span>Accuracy:</span>
+                <strong>11 / 11 Pizza Recipes</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-family: 'OneDotCd', sans-serif; font-size: 1.1rem;">
+                <span>Total Time:</span>
+                <strong id="final-time">0.0s</strong>
+            </div>
+            <div style="border-top: 2px solid var(--crust-med); padding-top: 10px; display: flex; justify-content: space-between; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.3rem; color: var(--brand-blue);">
+                <span>Calculated Score:</span>
+                <strong id="final-score">0</strong>
+            </div>
+        </div>
+
         <button class="game-btn" 
                 id="btn-finish" 
-                onclick="completeModule()" 
-                style="background: var(--brand-red); cursor: pointer;">
-            Back to Day 1
+                onclick="returnToLobby()" 
+                style="background: var(--brand-red); cursor: pointer; padding: 1rem 3rem;">
+            Return to Lobby
         </button>    
     </div>
-<script>
+
+    <script>
+        // Resolve user identifier
+        const userId = localStorage.getItem('tw_id') || 'guest';
+
         // --- GAME DATA ---
-        // Edit this array to add your Canva images and ingredient descriptions for Rounds 2 & 3.
         const gameData = [
             {
                 title: "Round 1: Specialty Pizzas (Part 1)",
@@ -188,7 +207,7 @@
                 items: [
                     { id: "ultimate", name: "Ultimate Pepperoni", img: "../resources/Specialty/Ultimate.png", desc: "Two layers of pepperoni sandwiched between provolone, Parmesan-Asiago and cheese, sprinkled with oregano." },
                     { id: "deluxe", name: "The People's Pizza - Deluxe", img: "../resources/Specialty/Deluxe.png", desc: "Pepperoni, Italian sausage, green peppers, mushrooms, onions, provolone and cheese." },
-                    { id: "6cheese", name: "Wisconsin Six Cheese", img: "../resources/Specialty/6Cheese.png", desc: "Feta, provolone, cheddar, Parmesan-Asiago, and cheese, sprinkled with oregano." },
+                    { id: "6cheese", name: "Wisconsin 6-Cheese", img: "../resources/Specialty/6Cheese.png", desc: "Feta, provolone, cheddar, Parmesan-Asiago, and cheese, sprinkled with oregano." },
                     { id: "bbq", name: "Memphis BBQ Chicken", img: "../resources/Specialty/BBQ.png", desc: "Grilled chicken breast, honey BBQ sauce, onions, cheddar, provolone and cheese." }
                 ]
             },
@@ -197,12 +216,11 @@
                 items: [
                     { id: "philly", name: "Philly Cheese Steak", img: "../resources/Specialty/Philly.png", desc: "Steak, onions, green peppers, mushrooms, provolone and American cheese." },
                     { id: "scbr", name: "Spicy Chicken Bacon Ranch", img: "../resources/Specialty/SCBR.png", desc: "Grilled chicken breast, ranch, bacon, jalapeños, provolone, and cheese, finished off with a drizzle of buffalo sauce." },
-                    { id: "spinfeta", name: "Pacific Veggie", img: "../resources/Specialty/SpinFeta.png", desc: "Alfredo sauce, spinach, onions, feta, Parmesan-Asiago, provolone and cheese." },
+                    { id: "spinfeta", name: "Spinach & Feta", img: "../resources/Specialty/SpinFeta.png", desc: "Alfredo sauce, spinach, onions, feta, Parmesan-Asiago, provolone and cheese." },
                 ]
             },
         ];
         
-        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
         let currentRound = 0;
         let matchedCount = 0;
 
@@ -277,10 +295,9 @@
                         matchedCount++;
                         
                         // --- ANSWER CAPTURING LOGIC ---
-                        // Find the pizza name (h3 element) above the drop zone, and match it with the text description
                         const itemName = zone.previousElementSibling ? zone.previousElementSibling.innerText : "Unknown Item";
                         const itemDesc = draggingElement.innerText;
-                        userAnswers[itemName] = itemDesc; // Logs match to userAnswers
+                        userAnswers[itemName] = itemDesc;
                         
                         checkWinCondition();
                     }
@@ -293,7 +310,7 @@
                 if (currentRound < gameData.length - 1) {
                     document.getElementById('round-transition').style.display = 'block';
                 } else {
-                    document.getElementById('success-message').style.display = 'block';
+                    endGamePlay();
                 }
             }
         }
@@ -304,38 +321,39 @@
             loadRound(currentRound);
         }
 
-        function sendProgressUpdate(moduleName) {
-            const market = localStorage.getItem('tw_market');
-            const id = localStorage.getItem('tw_id');
-            if (!market || !id) return;
+        function endGamePlay() {
+            document.getElementById('success-message').style.display = 'block';
             
-            // Calculate active seconds spent playing
-            const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            const elapsedSeconds = ((Date.now() - moduleStartTime) / 1000);
             
-            // Format and stringify matching pairs
-            const answersStr = encodeURIComponent(JSON.stringify(userAnswers));
+            // Score Formula: 11 matched items * 100 = 1100 base score
+            const totalCorrect = 11;
+            const baseScore = totalCorrect * 100;
             
-            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=Completed`;
+            // Fast bonus: Gives points for finishing faster than 90 seconds
+            let speedBonus = 0;
+            if (elapsedSeconds < 90) {
+                speedBonus = Math.floor((90 - elapsedSeconds) * 20);
+            }
             
-            console.log("SENDING DATA TO VAULT: ", url);
-            fetch(url, { method: 'GET', credentials: 'omit' });
+            const finalScore = baseScore + speedBonus;
+            
+            // Print statistics to DOM
+            document.getElementById('final-time').innerText = `${elapsedSeconds.toFixed(1)}s`;
+            document.getElementById('final-score').innerText = finalScore;
+            
+            // Save state to User-ID scoped keys
+            localStorage.setItem(`tw_${userId}_game1_complete`, 'true');
+            
+            // Set highest score tracking
+            const previousHighScore = parseInt(localStorage.getItem(`tw_${userId}_game1_score`) || '0', 10);
+            if (finalScore > previousHighScore) {
+                localStorage.setItem(`tw_${userId}_game1_score`, finalScore);
+            }
         }
 
-        function completeModule() {
-            // Change button text to give user visual feedback of saving state
-            const btn = document.getElementById('btn-finish');
-            if (btn) {
-                btn.innerText = "Saving Progress...";
-                btn.style.pointerEvents = "none"; // Prevents multiple rapid clicks
-            }
-
-            sendProgressUpdate('Day 1 Mod 3');
-            localStorage.setItem('mod3_complete', 'true');
-            
-            // Give 1.5 seconds for the Google Sheet request to complete before redirecting
-            setTimeout(() => {
-                window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
-            }, 1500);
+        function returnToLobby() {
+            window.location.href = "module3_game_lobby.html";
         }
 
         window.onload = () => loadRound(currentRound);
