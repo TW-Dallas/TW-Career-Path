@@ -832,7 +832,7 @@
             }
         };
 
-        function initializeSimulator() {
+function initializeSimulator() {
             // Bind listeners to all hitboxes to guarantee execution if inline onclick is missing
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.addEventListener('click', function(e) {
@@ -882,15 +882,14 @@
         }
 
         function loadStep(stepIndex) {
+            // If the user reaches the end of Stage 2 steps, transition to End Screen
             if (stepIndex >= sequence.length) {
-                instructionText.innerHTML = "<strong>🎉 Simulation Complete!</strong><br><br>You've successfully completed the currently completed stages.";
-                posImage.src = "resources/POS_assets/under_construction.png";
-                document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+                endSimulation();
                 return;
             }
-
+        
             const stepData = sequence[stepIndex];
-            posImage.src = stepData.image;
+            posImage.src = stepData.image; 
             instructionText.innerHTML = stepData.instruction;
             
             document.querySelectorAll('.hitbox').forEach(hb => {
@@ -900,19 +899,19 @@
             const activeHb = document.getElementById(stepData.activeHitbox);
             if (activeHb) {
                 activeHb.style.display = 'block';
-                activeHb.classList.remove('arrow-bottom'); 
-
-                if (stepIndex >= 58) { 
-                    activeHb.classList.add('hide-arrow'); 
+                if (stepIndex === 0) {
+                    activeHb.classList.add('arrow-bottom');
                 } else {
-                    activeHb.classList.remove('hide-arrow'); 
+                    activeHb.classList.remove('arrow-bottom'); 
                 }
+                activeHb.classList.remove('hide-arrow'); 
             } else {
                 // ---- NEW VALIDATION CHECK ----
                 // If the sequence expects a hitbox but it isn't in your HTML file:
                 reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${stepData.activeHitbox}" but it was not found in the DOM.`);
-            }            
+            }
 
+            // Put the finish button visibility check back inside loadStep
             const finishBtn = document.getElementById('finish-sim-btn');
             if (finishBtn) {
                 if (stepIndex === sequence.length - 1) {
@@ -921,7 +920,7 @@
                     finishBtn.style.display = 'none'; 
                 }
             }
-        }
+        } // <--- loadStep correctly closes here now
         
         function endSimulation() {
             posImage.src = "resources/POS_assets/Stage_1.1/under_construction.png"; 
