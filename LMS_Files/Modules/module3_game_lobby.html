@@ -326,7 +326,11 @@
             },
             game2: {
                 title: "Game 2: POS Tab Finder",
-                desc: "<strong>Objective:</strong> Build visual reflexes for your register by matching menu items with their designated category tabs.<br><br><strong>Controls:</strong> An item will show at the top of the screen. Rapidly click the matching POS category button (e.g. Breads, Pasta, Desserts) at the bottom. Faster streaks generate higher overall scores!",
+                desc: "<strong>Objective:</strong> Match menu items with their designated register tabs to build muscle memory before using the simulator.<br><br>" +
+                      "<div style='background: #faf2e9; border: 1.5px dashed var(--brand-blue); padding: 10px 15px; border-radius: 8px; font-family: \"OneDotCd-Bold\"; margin-bottom: 15px; color: var(--dark-blue);'>" +
+                      "  💡 REGISTER TIP: While we studied Breads and Desserts separately in our slides, they share a single button on the register screen: <strong style='color: var(--brand-red);'>Breads/Desserts</strong>." +
+                      "</div>" +
+                      "<strong>Controls:</strong> An item will appear in the box. Click the exact corresponding category button on the 3x3 register grid as fast as you can.",
                 url: "game2_tab_finder.html",
                 completeKey: `tw_${userId}_game2_complete`,
                 scoreKey: `tw_${userId}_game2_score`
