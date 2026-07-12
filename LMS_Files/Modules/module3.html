@@ -765,13 +765,13 @@
             
             const btn = document.getElementById('btn-start-game');
             if (btn) {
-                btn.innerText = "Loading Challenge...";
+                btn.innerText = "Loading Game Lobby...";
                 btn.style.pointerEvents = "none";
             }
 
             // Short buffer to guarantee delivery before redirecting to the game board
             setTimeout(() => {
-                window.location.href = "module3_game.html";
+                window.location.href = "module3_game_lobby.html";
             }, 1000);
         }
 

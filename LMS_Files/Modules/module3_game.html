@@ -116,6 +116,18 @@
         .game-btn:hover {
             transform: scale(1.05);
         }
+
+        .drop-zone.incorrect-flash {
+            border: 3px solid var(--brand-red) !important;
+            background-color: rgba(255, 0, 0, 0.08) !important;
+            animation: shakeRed 0.3s ease-out;
+        }
+
+        @keyframes shakeRed {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
     </style>
 </head>
 <body style="background-color: var(--crust-light);">
@@ -125,7 +137,7 @@
         <div style="display: flex; align-items: center; gap: 20px;">
             <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
             <a href="module3_game_lobby.html" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-                &#8592; Exit to Lobby
+                &#8592; Back to Game Lobby
             </a>
         </div>
         
@@ -267,6 +279,11 @@
             attachEventListeners();
         }
 
+        // Prevents the forbidden cursor from appearing while dragging over the background gaps
+        document.addEventListener("dragover", (e) => {
+            e.preventDefault();
+        });
+
         function attachEventListeners() {
             const draggables = document.querySelectorAll('.draggable-pill');
             const dropZones = document.querySelectorAll('.drop-zone');
@@ -275,12 +292,21 @@
                 draggable.addEventListener('dragstart', (e) => {
                     draggable.classList.add('dragging');
                     e.dataTransfer.setData('text/plain', draggable.id);
+                    
+                    // ADD THIS LINE: Tells the browser this is a move operation
+                    e.dataTransfer.effectAllowed = "move";
                 });
                 draggable.addEventListener('dragend', () => draggable.classList.remove('dragging'));
             });
 
             dropZones.forEach(zone => {
-                zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+                zone.addEventListener('dragover', e => { 
+                    e.preventDefault(); 
+                    zone.classList.add('drag-over'); 
+                    
+                    // ADD THIS LINE: Tells the cursor to stay as a grab/move pointer
+                    e.dataTransfer.dropEffect = "move";
+                });
                 zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
                 zone.addEventListener('drop', e => {
                     e.preventDefault();
@@ -300,6 +326,12 @@
                         userAnswers[itemName] = itemDesc;
                         
                         checkWinCondition();
+                    } else {
+                        // FLASH RED SEQUENCE: Triggers on incorrect drops
+                        zone.classList.add('incorrect-flash');
+                        setTimeout(() => {
+                            zone.classList.remove('incorrect-flash');
+                        }, 500); // Removes the flash state after 0.5 seconds
                     }
                 });
             });
