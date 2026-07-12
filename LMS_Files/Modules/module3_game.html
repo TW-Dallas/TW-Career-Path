@@ -353,18 +353,18 @@
             loadRound(currentRound);
         }
 
-        function endGamePlay() {
-            // HIDE the gameplay containers to clean up screen space
-            const gameContainer = document.querySelector('.game-container');
-            if (gameContainer) gameContainer.style.display = 'none';
+function endGamePlay() {
+            // 1. Keep the completed pizza columns, but HIDE only the empty draggable tray
+            const draggableContainer = document.getElementById('draggable-container');
+            if (draggableContainer) draggableContainer.style.display = 'none';
             
-            // HIDE the top header/instructions wrapper to prevent vertical pushing
+            // 2. Hide the top header/instructions wrapper to gain vertical screen space
             const roundTitle = document.getElementById('round-title');
             if (roundTitle && roundTitle.parentElement) {
                 roundTitle.parentElement.style.display = 'none';
             }
 
-            // SHOW the success card
+            // 3. SHOW the success card (which now sits beautifully below the completed pizza columns)
             document.getElementById('success-message').style.display = 'block';
             
             const elapsedSeconds = ((Date.now() - moduleStartTime) / 1000);
