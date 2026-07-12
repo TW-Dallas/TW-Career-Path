@@ -904,12 +904,20 @@
                 } else {
                     activeHb.classList.remove('arrow-bottom'); 
                 }
-                activeHb.classList.remove('hide-arrow'); 
+        
+                // Detect if the subtitle contains "Order 2" (case-insensitive)
+                const isOrderTwo = stepData.instruction.toUpperCase().includes('ORDER 2');
+                
+                if (isOrderTwo) {
+                    activeHb.classList.add('hide-arrow');    // Hide arrow on Order 2
+                } else {
+                    activeHb.classList.remove('hide-arrow'); // Show arrow on Practice / Order 1
+                }
             } else {
                 // ---- NEW VALIDATION CHECK ----
                 // If the sequence expects a hitbox but it isn't in your HTML file:
                 reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${stepData.activeHitbox}" but it was not found in the DOM.`);
-            }
+            } // <--- This now safely closes the else block
 
             // Put the finish button visibility check back inside loadStep
             const finishBtn = document.getElementById('finish-sim-btn');
