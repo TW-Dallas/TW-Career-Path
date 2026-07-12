@@ -806,11 +806,15 @@
             }
         }
 
-        // --- SIDES INTERACTIVE RENDERING ---
+// --- SIDES INTERACTIVE RENDERING ---
         function renderInteractiveCategories() {
             const contentContainer = document.getElementById('slide-content-container');
+            const prevBtn = document.getElementById('btn-slide-prev'); // Get the global footer button
             
             if (currentSubView === 'list') {
+                // RE-ENABLE standard slide prev button when viewing the grid
+                if (prevBtn) prevBtn.style.display = 'inline-block'; 
+
                 let catHTML = `
                     <div style="padding: 1rem 2rem 0.5rem 2rem; text-align: left; width: 100%; box-sizing: border-box;">
                         <h2 style="font-family: 'PizzaPress'; color: var(--med-blue); font-size: 2rem; margin: 0 0 0.5rem 0; text-transform: uppercase;">Sides & Extras</h2>
@@ -837,6 +841,9 @@
                 updateInteractiveInstructionText();
                 
             } else if (currentSubView === 'detail' && activeCategory) {
+                // HIDE the global slide prev button when inside the card details
+                if (prevBtn) prevBtn.style.display = 'none'; 
+
                 const category = sidesData[activeCategory];
                 
                 let detailHTML = `
