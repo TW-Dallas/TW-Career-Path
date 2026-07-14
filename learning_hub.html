@@ -464,51 +464,55 @@
         // --- DATA ---
         const resources = [
             // MANAGERS
-            { id: 1, category: 'managers', type: 'PDF', title: 'Product Consistency Changes', desc: 'Information about new product consistency changes.', 
-                 link: 'resources/gm/Changes_Product%20Consistency.pdf' },
-            { id: 2, category: 'managers', type: 'PDF', title: 'Dough Management Tool', desc: 'Tool to assist in dough proofing and management.', 
+            { id: 1, category: 'managers', type: 'PDF', title: 'Walk-In Hiring Guide - Dallas', desc: 'Dallas Walk-in Hiring Guide', 
+                 link: 'resources/gm/Walkin_Hiring.pdf' },
+            { id: 2, category: 'managers', type: 'PDF', title: 'I-9 Document List', desc: 'Visual list of acceptable I-9 documents.', 
+                 link: 'resources/gm/I-9.pdf' },
+            { id: 3, category: 'managers', type: 'PDF', title: 'Dough Management Tool', desc: 'Tool to assist in dough proofing and management.', 
                  link: 'resources/gm/Dough_Management_Tool.pdf' },
+            { id: 4, category: 'managers', type: 'PDF', title: 'Product Consistency Changes', desc: 'Information about new product consistency changes.', 
+                 link: 'resources/gm/Changes_Product%20Consistency.pdf' },
             
             // DRIVERS
-            { id: 3, category: 'drivers', type: 'PDF', title: 'Delivey Expert App FAQ', desc: 'Job Aid for the Delivery Expert App.', 
+            { id: 5, category: 'drivers', type: 'PDF', title: 'Delivey Expert App FAQ', desc: 'Job Aid for the Delivery Expert App.', 
                  link: 'resources/driver/delivery_exp_jobaid.pdf' },
-            { id: 4, category: 'drivers', type: 'Link', title: 'Drivosity Points', desc: 'See how many points you have. Speak with a manager to redeem points for prizes!', 
+            { id: 6, category: 'drivers', type: 'Link', title: 'Drivosity Points', desc: 'See how many points you have. Speak with a manager to redeem points for prizes!', 
                  link: 'https://team-wow-hr.com/drivosity-rewards.html' },
             
             // INSIDERS
-            { id: 5, category: 'insiders', type: 'PDF', title: 'Influencer Pizza Build Job Aid', desc: 'Build information for the influencer pizzas being promoted during the Best Deal Ever 4.0 campaign.', 
+            { id: 7, category: 'insiders', type: 'PDF', title: 'Influencer Pizza Build Job Aid', desc: 'Build information for the influencer pizzas being promoted during the Best Deal Ever 4.0 campaign.', 
                  link: 'resources/csr/BDE_Builds.pdf' },
-            { id: 6, category: 'insiders', type: 'PDF', title: 'Comprehensive Product Build Guide', desc: 'Job aids for makeline products.', 
+            { id: 8, category: 'insiders', type: 'PDF', title: 'Comprehensive Product Build Guide', desc: 'Job aids for makeline products.', 
                  link: 'resources/csr/product_job_aid.pdf' },
-            { id: 7, category: 'insiders', type: 'Image', title: 'Toppings Codes', desc: 'English and Spanish Toppings Codes.', 
+            { id: 9, category: 'insiders', type: 'Image', title: 'Toppings Codes', desc: 'English and Spanish Toppings Codes.', 
                  link: 'resources/csr/toppings.jpg' },
-            { id: 8, category: 'insiders', type: 'Video', title: 'Parmesan Stuff Crust Tutorial', desc: 'Step-by-step guide covering how to make the new Parmesan Stuffed Crust pizza.', 
+            { id: 10, category: 'insiders', type: 'Video', title: 'Parmesan Stuff Crust Tutorial', desc: 'Step-by-step guide covering how to make the new Parmesan Stuffed Crust pizza.', 
                 link: 'https://www.youtube.com/embed/QNENO4eDkKo?si=bS5XbuTSgf5f0id7' },
-            { id: 9, category: 'insiders', type: 'PDF', title: 'Pizza Procedures', desc: 'Job aids for pizza making.', 
+            { id: 11, category: 'insiders', type: 'PDF', title: 'Pizza Procedures', desc: 'Job aids for pizza making.', 
                  link: 'resources/csr/Pizza_Procedures.pdf' },
-            { id: 10, category: 'insiders', type: 'PDF', title: 'RTU Sauce Procedures', desc: 'Job aids for RTU sauce prep & use.', 
+            { id: 12, category: 'insiders', type: 'PDF', title: 'RTU Sauce Procedures', desc: 'Job aids for RTU sauce prep & use.', 
                  link: 'resources/csr/RTU_Sauce_Procedures.pdf' },
 
             // TRAINING
-            { id: 11, category: 'training', type: 'Video', title: 'Sanwich and Lava Cakes Update', desc: 'This video contains information on the updates to sandwiches and Lava Cakes, as well as the elimination of Loaded Tots.', 
+            { id: 13, category: 'training', type: 'Video', title: 'Sanwich and Lava Cakes Update', desc: 'This video contains information on the updates to sandwiches and Lava Cakes, as well as the elimination of Loaded Tots.', 
                  link: 'https://www.youtube.com/embed/t42Cj7v7MGg' },
-            { id: 12, category: 'training', type: 'PDF', title: 'Influencer Pizza Build Job Aid', desc: 'Build information for the influencer pizzas being promoted during the Best Deal Ever 4.0 campaign.', 
+            { id: 14, category: 'training', type: 'PDF', title: 'Influencer Pizza Build Job Aid', desc: 'Build information for the influencer pizzas being promoted during the Best Deal Ever 4.0 campaign.', 
                  link: 'resources/csr/BDE_Builds.pdf' },
-            { id: 13, category: 'training', type: 'PDF', title: 'New Hire Training Packet', desc: 'Comprehensive checklist to aid in new hire training.', 
+            { id: 15, category: 'training', type: 'PDF', title: 'New Hire Training Packet', desc: 'Comprehensive checklist to aid in new hire training.', 
                  link: 'resources/training/New%20Hire%20In-Store%20Training%20Packet%202025.pdf' },
-            { id: 14, category: 'training', type: 'PDF', title: 'OA Standards 2026', desc: '2026 Updated Operations Assessment Guidelines', 
+            { id: 16, category: 'training', type: 'PDF', title: 'OA Standards 2026', desc: '2026 Updated Operations Assessment Guidelines', 
                  link: 'resources/training/2026_OA_Guide.pdf' },
-            { id: 15, category: 'training', type: 'Video', title: 'Pizza Grading Tool Tutorial', desc: 'Information regarding use of the new Pizza Grading tool.', 
+            { id: 17, category: 'training', type: 'Video', title: 'Pizza Grading Tool Tutorial', desc: 'Information regarding use of the new Pizza Grading tool.', 
                  link: 'https://www.youtube.com/embed/yeveh8NcXNw?si=z7fHrTjd6pKJ27If' },
 
              // NEW HIRE
-            { id: 16, category: 'newhire', type: 'PDF', title: 'New Hire Training Packet', desc: 'Information packet for all new hires.', 
+            { id: 18, category: 'newhire', type: 'PDF', title: 'New Hire Training Packet', desc: 'Information packet for all new hires.', 
                  link: 'resources/new%20hire/New%20Hire%20Packet%202025.pdf' },
 
              // HR
-            { id: 17, category: 'hr', type: 'Link', title: 'MyPay FAQ', desc: 'MyPay Support and FAQ', 
+            { id: 19, category: 'hr', type: 'Link', title: 'MyPay FAQ', desc: 'MyPay Support and FAQ', 
                  link: 'https://alliancehcm.com/employee-support' },
-            { id: 18, category: 'hr', type: 'PDF', title: 'Netspend FAQ', desc: 'Netspend Skylight ONE Support and FAQ', 
+            { id: 20, category: 'hr', type: 'PDF', title: 'Netspend FAQ', desc: 'Netspend Skylight ONE Support and FAQ', 
                  link: 'resources/HR/Netspend%20FAQ.pdf' },
         ];
 
