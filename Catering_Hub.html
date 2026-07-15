@@ -1130,7 +1130,7 @@
         handleCoordinatorChange();
 
         if (fieldCarryout) fieldCarryout.value = item.serviceMethod || '';
-        if (fieldDate) fieldDate.value = item.date ? item.date.split('T')[0] : '';
+        if (fieldDate) fieldDate.value = formatStringToInputDate(item.date);
         if (fieldTime) fieldTime.value = item.time || '';
         if (fieldStore) fieldStore.value = item.storeNum || '';
         if (fieldPoNum) fieldPoNum.value = item.poNum || '';
@@ -1577,6 +1577,29 @@
             alert("Success! Quote has been emailed to the school coordinator.");
         });
     }
+
+    function formatStringToInputDate(dateStr) {
+        if (!dateStr) return '';
+        
+        // If it's already in ISO format, just take the date part
+        if (dateStr.includes('T')) {
+            return dateStr.split('T')[0];
+        }
+        
+        // Parse M/D/YY or MM/DD/YYYY formats
+        const parts = dateStr.split('/');
+        if (parts.length === 3) {
+            let month = parts[0].padStart(2, '0');
+            let day = parts[1].padStart(2, '0');
+            let year = parts[2];
+            if (year.length === 2) {
+            year = '20' + year; // Convert "26" to "2026"
+            }
+            return `${year}-${month}-${day}`;
+        }
+        
+        return dateStr;
+        }
 </script>
 </body>
 </html>
