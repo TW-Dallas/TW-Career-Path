@@ -81,27 +81,26 @@
             box-shadow: 0 4px 12px rgba(71, 43, 16, 0.15); 
             flex: 0 0 auto; 
         }
-        h1 { margin: 0; font-family: 'ExtraBlack', sans-serif; font-size: 24px; text-transform: uppercase; }
-        .subtitle { font-family: 'Compact', sans-serif; font-size: 14px; opacity: 0.9; }
+        h1 { margin: 0; font-family: 'ExtraBlack', sans-serif; font-size: 26px; text-transform: uppercase; }
+        .subtitle { font-family: 'Compact', sans-serif; font-size: 15px; opacity: 0.9; }
         .logo { height: 32px; width: auto; margin-right: 12px; }
         
         /* --- DASHBOARD VIEWPORT LOCK LAYOUT --- */
         .dashboard { 
             display: flex; 
-            max-width: 1400px; 
+            max-width: 1600px; /* Expanded from 1400px to sit beautifully on large monitors */
             width: 100%;
-            margin: 12px auto; 
-            padding: 0 16px; 
+            margin: 0 auto; /* Replaced vertical margin with safe interior padding to prevent vertical taskbar overflow */
+            padding: 12px 16px 16px 16px; 
             gap: 16px; 
-            flex: 1; /* Fills remaining height below the header */
-            height: calc(100vh - 75px); /* Forces fit inside viewport */
+            flex: 1; /* Locks container height perfectly to fill remaining browser screen */
             box-sizing: border-box;
             overflow: hidden;
         }
 
         /* Left Panel: Fixed Narrow Width, Scrollable inside */
         .list-panel { 
-            flex: 0 0 350px; 
+            flex: 0 0 380px; /* Slightly wider sidebar to accommodate larger fonts */
             display: flex; 
             flex-direction: column; 
             height: 100%; 
@@ -131,14 +130,14 @@
             overflow: hidden;
         }
         
-        /* NEW: Right Panel for Audit & Notepad */
+        /* Right Panel for Audit & Notepad */
         .notes-panel {
-            flex: 0 0 320px; /* Clean, compact width for notes and metrics */
+            flex: 0 0 340px; /* Slightly wider panel for Quick Scratchpad comfort */
             display: flex;
             flex-direction: column;
             height: 100%;
             overflow: hidden;
-            gap: 16px; /* Clean spacing between audit box and notepad */
+            gap: 16px; 
         }
 
         #orderForm {
@@ -168,7 +167,7 @@
         
         /* --- SORT CONTROLS --- */
         .control-row { display: flex; gap: 10px; margin-bottom: 8px; }
-        .control-row select { padding: 8px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'Subhead2', sans-serif; font-size: 15px; background: var(--card-bg); flex: 1; }
+        .control-row select { padding: 8px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'Subhead2', sans-serif; font-size: 16px; background: var(--card-bg); flex: 1; }
         
         /* --- CARDS WITH COLORS --- */
         .order-card { 
@@ -193,10 +192,10 @@
         .order-card.status-reviewing { border-left-color: var(--brand-blue); }
         .order-card.status-gray { border-left-color: var(--brand-grey); opacity: 0.6; background-color: #fbfbfb; }
 
-        .card-name { font-family: 'Subhead1', sans-serif; font-size: 18px; }
+        .card-name { font-family: 'Subhead1', sans-serif; font-size: 20px; }
         .card-sub { 
             font-family: 'Compact', sans-serif; 
-            font-size: 15px; 
+            font-size: 16px; 
             color: var(--crust-deep); 
             margin-top: 4px; 
             display: flex; 
@@ -206,7 +205,7 @@
         
         /* --- FORMS & INPUTS --- */
         .form-group { margin-bottom: 8px; }
-        .form-group label { display: block; font-family: 'Subhead1', sans-serif; font-size: 16px; margin-bottom: 4px; color: var(--crust-burnt); }
+        .form-group label { display: block; font-family: 'Subhead1', sans-serif; font-size: 17px; margin-bottom: 4px; color: var(--crust-burnt); }
         .form-row { display: flex; gap: 10px; }
         .form-row .form-group { flex: 1; }
         
@@ -222,7 +221,7 @@
             border: 1px solid var(--crust-dark); 
             font-family: 'Condensed', sans-serif; 
             box-sizing: border-box; 
-            font-size: 16px; 
+            font-size: 17px; 
             background-color: var(--card-bg);
             color: var(--crust-burnt);
         }
@@ -230,14 +229,14 @@
         
         /* --- COMPACT 3-COLUMN CHECKBOX GRID --- */
         .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; background: var(--crust-light); padding: 12px; border-radius: 8px; }
-        .checkbox-item { display: flex; align-items: center; gap: 6px; font-family: 'Compact', sans-serif; font-size: 15px; cursor: pointer; color: var(--crust-burnt); }
+        .checkbox-item { display: flex; align-items: center; gap: 6px; font-family: 'Compact', sans-serif; font-size: 16px; cursor: pointer; color: var(--crust-burnt); }
         .checkbox-item input { width: 18px; height: 18px; cursor: pointer; }
         
         /* Section Headers spanning 3 columns */
         .section-header {
             grid-column: span 3;
             font-family: 'Subhead1', sans-serif;
-            font-size: 14px;
+            font-size: 15px;
             color: var(--dark-blue);
             border-bottom: 2px solid var(--crust-dark);
             padding-bottom: 4px;
@@ -260,7 +259,7 @@
             padding: 10px 18px; 
             border-radius: 6px; 
             font-family: 'Subhead2', sans-serif; 
-            font-size: 16px; 
+            font-size: 17px; 
             cursor: pointer; 
             display: inline-flex; 
             align-items: center; 
@@ -269,13 +268,13 @@
         }
         button:hover { opacity: 0.9; }
         button.secondary { background: var(--brand-grey); }
-        button.btn-add { margin-bottom: 8px; background: var(--brand-blue); width: 100%; flex: 0 0 auto; padding: 12px; font-size: 16px; }
+        button.btn-add { margin-bottom: 8px; background: var(--brand-blue); width: 100%; flex: 0 0 auto; padding: 12px; font-size: 17px; }
         
         /* --- BADGES --- */
         .badge-drafted { background: #e3f2fd; color: #0d47a1; font-family: 'Compact', sans-serif; font-size: 12px; padding: 3px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #bbdefb; }
 
         /* --- LOADING OVERLAY --- */
-        .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 24px; z-index: 1000; color: var(--crust-burnt); }
+        .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 26px; z-index: 1000; color: var(--crust-burnt); }
         
         /* --- AUTH SCREEN --- */
         .auth-container { 
@@ -304,9 +303,9 @@
         }
 
         /* --- DESKTOP SCALE CONFIGURATION --- */
-        h1 { font-size: 24px; } 
-        .subtitle { font-size: 14px; } 
-        #formTitle { font-size: 21px !important; } 
+        h1 { font-size: 26px; } 
+        .subtitle { font-size: 15px; } 
+        #formTitle { font-size: 23px !important; } 
     </style>
 </head>
 <body>
@@ -325,11 +324,11 @@
     <div class="form-group" style="position: relative;">
         <label>Password</label>
         <input type="password" id="loginPass" style="padding-right: 60px;">
-        <span id="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; right: 10px; bottom: 8px; cursor: pointer; color: var(--brand-blue); font-family: 'Subhead2', sans-serif; font-size: 15px; font-weight: bold; user-select: none;">
+        <span id="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; right: 10px; bottom: 8px; cursor: pointer; color: var(--brand-blue); font-family: 'Subhead2', sans-serif; font-size: 16px; font-weight: bold; user-select: none;">
             SHOW
         </span>
     </div>
-    <div id="loginError" style="color: var(--brand-red); font-family: 'Condensed', sans-serif; font-size: 15px; margin-bottom: 12px;" class="hidden"></div>
+    <div id="loginError" style="color: var(--brand-red); font-family: 'Condensed', sans-serif; font-size: 16px; margin-bottom: 12px;" class="hidden"></div>
     <button onclick="handleLogin()">Login</button>
 </div>
 
@@ -365,7 +364,7 @@
 
         <!-- COLUMN 2: Order Details Form Panel (Center) -->
         <div class="form-panel" id="formPanel">
-            <h2 id="formTitle" style="margin-top: 0; font-family: 'ExtraBold', sans-serif; font-size: 21px; margin-bottom: 8px;">Order Details</h2>
+            <h2 id="formTitle" style="margin-top: 0; font-family: 'ExtraBold', sans-serif; font-size: 23px; margin-bottom: 8px;">Order Details</h2>
             <form id="orderForm" onsubmit="saveOrder(event)">
                 <input type="hidden" id="fieldId">
                 <input type="hidden" id="fieldQuoteUrl"> <!-- Hidden input to hold quote sheet link -->
@@ -400,7 +399,7 @@
 
                     <!-- Mini Form: Quick Add Coordinator -->
                     <div id="quickAddCoordArea" class="hidden" style="background: var(--crust-light); border: 2.5px solid var(--crust-dark); padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 6px solid var(--dark-red);">
-                        <h4 style="margin: 0 0 8px 0; font-family: 'Subhead1', sans-serif; font-size: 15px; color: var(--dark-red);">Quick Add Coordinator</h4>
+                        <h4 style="margin: 0 0 8px 0; font-family: 'Subhead1', sans-serif; font-size: 16px; color: var(--dark-red);">Quick Add Coordinator</h4>
                         <div class="form-group">
                             <label>Coordinator Name</label>
                             <input type="text" id="newCoordName" placeholder="e.g., Jane Doe">
@@ -498,21 +497,21 @@
             <!-- Dynamic Weekly Activity Audit Box (Monday to Sunday) -->
             <div id="metricsBox" style="background: var(--crust-light); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); color: var(--crust-burnt);">
                 <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--crust-med); padding-bottom: 8px; align-items: center;">
-                    <span style="font-family: 'ExtraBold', sans-serif; font-size: 15px; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">Weekly Activity Audit</span>
+                    <span style="font-family: 'ExtraBold', sans-serif; font-size: 16px; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">Weekly Activity Audit</span>
                     <span id="metricsWeekRange" style="font-size: 13px; font-family: 'Compact'; color: var(--crust-deep); font-weight: bold;"></span>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px;">
                     <span>Quotes Written:</span>
-                    <span style="font-family: 'Compact'; font-size: 14px;">
-                        This Week: <strong id="metricsQuotesThisWeek" style="color: var(--med-blue); font-family: 'Subhead2'; font-size: 15px;">0</strong> | 
-                        Last Week: <strong id="metricsQuotesLastWeek" style="font-family: 'Subhead2'; font-size: 15px;">0</strong>
+                    <span style="font-family: 'Compact'; font-size: 15px;">
+                        This Week: <strong id="metricsQuotesThisWeek" style="color: var(--med-blue); font-family: 'Subhead2'; font-size: 16px;">0</strong> | 
+                        Last Week: <strong id="metricsQuotesLastWeek" style="font-family: 'Subhead2'; font-size: 16px;">0</strong>
                     </span>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px;">
                     <span>Orders Placed:</span>
-                    <span style="font-family: 'Compact'; font-size: 14px;">
-                        This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Subhead2'; font-size: 15px;">0</strong> | 
-                        Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Subhead2'; font-size: 15px;">0</strong>
+                    <span style="font-family: 'Compact'; font-size: 15px;">
+                        This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Subhead2'; font-size: 16px;">0</strong> | 
+                        Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Subhead2'; font-size: 16px;">0</strong>
                     </span>
                 </div>
             </div>
@@ -520,12 +519,12 @@
             <!-- Notepad / Scratchpad Container -->
             <div style="flex: 1; background: var(--crust-base); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 16px; display: flex; flex-direction: column; box-shadow: 0 2px 6px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
                 <!-- Lined Paper Header Accent -->
-                <div style="font-family: 'ExtraBold', sans-serif; font-size: 14px; color: var(--dark-blue); border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px;">
+                <div style="font-family: 'ExtraBold', sans-serif; font-size: 15px; color: var(--dark-blue); border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px;">
                     <span>📋 Quick Scratchpad</span>
                     <span style="font-size: 13px; font-family: 'Compact'; color: var(--brand-grey);">Auto-Saves</span>
                 </div>
                 <!-- Premium Lined Textarea -->
-                <textarea id="scratchpad" placeholder="• Type any temporary notes here...&#10;• Perfect for last-minute coordinator requests...&#10;• Or driver routing details..." style="flex: 1; width: 100%; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 16px; line-height: 1.5; outline: none; padding: 0; color: var(--crust-burnt); resize: none;"></textarea>
+                <textarea id="scratchpad" placeholder="• Type any temporary notes here...&#10;• Perfect for last-minute coordinator requests...&#10;• Or driver routing details..." style="flex: 1; width: 100%; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 17px; line-height: 1.5; outline: none; padding: 0; color: var(--crust-burnt); resize: none;"></textarea>
             </div>
         </div>
     </div>
