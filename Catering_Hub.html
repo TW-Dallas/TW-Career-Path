@@ -66,6 +66,12 @@
         body { 
             font-family: 'Condensed', sans-serif; 
             background-color: var(--crust-light); 
+            /* Added your custom SVG repeating watermark */
+            background-image: 
+                linear-gradient(rgba(250, 242, 233, 0.94), rgba(250, 242, 233, 0.94)),
+                url('image/Pizza_800.svg');
+            background-repeat: repeat;
+            background-size: 320px; 
             color: var(--crust-burnt); 
             display: flex; 
             flex-direction: column; 
@@ -278,7 +284,7 @@
         /* --- LOADING OVERLAY --- */
         .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 26px; z-index: 1000; color: var(--crust-burnt); text-transform: uppercase; }
         
-/* --- PREMIUM AUTH SCREEN (SCALED UP) --- */
+        /* --- PREMIUM AUTH SCREEN (SCALED UP) --- */
         
         /* Default page background containing the subtle pizza pattern watermark */
         body { 
