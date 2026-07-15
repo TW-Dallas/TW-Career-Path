@@ -92,7 +92,6 @@
             max-width: 1600px; 
             width: 100%;
             margin: 0 auto; 
-            /* Set height explicitly so all columns stretch beautifully and never dip below OS taskbar */
             height: calc(100vh - 75px); 
             padding: 12px 16px 16px 16px; 
             gap: 16px; 
@@ -216,7 +215,7 @@
         .form-row.flex-three .form-group { flex: 1; }
         .form-row.flex-three .flex-two-weight { flex: 1.5; } 
 
-        /* FIXED: Added input[type="date"] directly to this selector so it formats properly! */
+        /* Fixed: Added input[type="date"] directly to this selector so it formats properly! */
         input[type="text"], input[type="password"], input[type="date"], textarea, select { 
             width: 100%; 
             padding: 8px 10px; 
@@ -277,7 +276,7 @@
         .badge-drafted { background: #e3f2fd; color: #0d47a1; font-family: 'Compact', sans-serif; font-size: 12px; padding: 3px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #bbdefb; }
 
         /* --- LOADING OVERLAY --- */
-        .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 26px; z-index: 1000; color: var(--crust-burnt); }
+        .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 26px; z-index: 1000; color: var(--crust-burnt); text-transform: uppercase; }
         
         /* --- PREMIUM AUTH SCREEN --- */
         .auth-container { 
@@ -362,6 +361,8 @@
             transform: translateY(1px);
         }
 
+        .hidden { display: none !important; }
+
         /* --- MOBILE STYLES --- */
         @media (max-width: 768px) {
             html, body { overflow: auto; height: auto; }
@@ -431,7 +432,7 @@
 <body>
 
 <!-- Loader Overlay -->
-<div id="loadingOverlay" class="overlay hidden">Saving Database...</div>
+<div id="loadingOverlay" class="overlay hidden">Loading Workspace...</div>
 
 <!-- Login Container -->
 <div id="authContainer" class="auth-container">
@@ -649,8 +650,8 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 17px;">
                     <span>Orders Placed:</span>
                     <span style="font-family: 'Compact'; font-size: 17px;">
-                        This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Subhead2'; font-size: 17px;">0</strong> | 
-                        Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Subhead2'; font-size: 17px;">0</strong>
+                        This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Subhead2'; font-size: 16px;">0</strong> | 
+                        Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Subhead2'; font-size: 16px;">0</strong>
                     </span>
                 </div>
             </div>
@@ -693,47 +694,54 @@
     let orders = [];
     let schoolsList = [];
     let coordinatorsMap = {};
-    let storeLookup = {}; // Map of Store Details
+    let storeLookup = {}; 
     let currentSelectedId = null;
 
     // Checklist state variables
-    let scratchpadMode = 'text'; // 'text' or 'list'
+    let scratchpadMode = 'text'; 
     let checklistItems = [];
 
     window.addEventListener('DOMContentLoaded', () => {
-        const savedUser = localStorage.getItem('cat_user');
-        const savedPass = localStorage.getItem('cat_pass');
-        
-        if (savedUser && savedPass) {
-            handleLogin(savedUser, savedPass);
-        }
-
-        // Auto-Load Scratchpad mode on startup
-        const savedMode = localStorage.getItem('cat_scratchpad_mode') || 'text';
-        setScratchpadMode(savedMode);
-
-        // Auto-Load Text Scratchpad content on startup
-        const scratchpad = document.getElementById('scratchpad');
-        const savedNotes = localStorage.getItem('cat_scratchpad');
-        if (savedNotes) {
-            scratchpad.value = savedNotes;
-        }
-
-        // Auto-Save Text Scratchpad content to LocalStorage on every keystroke
-        scratchpad.addEventListener('input', () => {
-            localStorage.setItem('cat_scratchpad', scratchpad.value);
-        });
-
-        // Load Checklist items
-        const savedList = localStorage.getItem('cat_checklist');
-        if (savedList) {
-            try {
-                checklistItems = JSON.parse(savedList);
-            } catch(e) {
-                checklistItems = [];
+        try {
+            const savedUser = localStorage.getItem('cat_user');
+            const savedPass = localStorage.getItem('cat_pass');
+            
+            if (savedUser && savedPass) {
+                handleLogin(savedUser, savedPass);
             }
+
+            // Auto-Load Scratchpad mode on startup
+            const savedMode = localStorage.getItem('cat_scratchpad_mode') || 'text';
+            setScratchpadMode(savedMode);
+
+            // Auto-Load Text Scratchpad content on startup
+            const scratchpad = document.getElementById('scratchpad');
+            const savedNotes = localStorage.getItem('cat_scratchpad');
+            if (scratchpad && savedNotes) {
+                scratchpad.value = savedNotes;
+            }
+
+            // Auto-Save Text Scratchpad content to LocalStorage on every keystroke
+            if (scratchpad) {
+                scratchpad.addEventListener('input', () => {
+                    localStorage.setItem('cat_scratchpad', scratchpad.value);
+                });
+            }
+
+            // Load Checklist items
+            const savedList = localStorage.getItem('cat_checklist');
+            if (savedList) {
+                try {
+                    checklistItems = JSON.parse(savedList);
+                } catch(e) {
+                    checklistItems = [];
+                }
+            }
+            renderChecklist();
+        } catch (e) {
+            console.error("Initialization error:", e);
+            showLoader(false); // Safeguard overlay from freezing if init throws
         }
-        renderChecklist();
     });
 
     function handleLogin(savedUser, savedPass) {
@@ -744,9 +752,8 @@
         if (!u || !p) return;
     
         showLoader(true, "Logging in and fetching directory...");
-        errorEl.classList.add('hidden');
+        if (errorEl) errorEl.classList.add('hidden');
     
-        // Simple GET fetch without needing separate city paths
         fetch(`${API_URL}?action=getInitialData`)
             .then(res => res.json())
             .then(data => {
@@ -757,8 +764,10 @@
                 localStorage.setItem('cat_user', u);
                 localStorage.setItem('cat_pass', p);
                 
-                document.getElementById('authContainer').classList.add('hidden');
-                document.getElementById('appContainer').classList.remove('hidden');
+                const authC = document.getElementById('authContainer');
+                const appC = document.getElementById('appContainer');
+                if (authC) authC.classList.add('hidden');
+                if (appC) appC.classList.remove('hidden');
                 
                 schoolsList = data.schools || [];
                 coordinatorsMap = data.coordinators || {};
@@ -771,8 +780,10 @@
             })
             .catch(err => {
                 showLoader(false);
-                errorEl.innerText = "Error verifying login or connecting to Google Sheets.";
-                errorEl.classList.remove('hidden');
+                if (errorEl) {
+                    errorEl.innerText = "Error verifying login or connecting to Google Sheets.";
+                    errorEl.classList.remove('hidden');
+                }
                 localStorage.clear();
             });
     }
@@ -784,6 +795,7 @@
 
     function showLoader(show, text = "Loading...") {
         const loader = document.getElementById('loadingOverlay');
+        if (!loader) return;
         loader.innerText = text;
         if (show) loader.classList.remove('hidden');
         else loader.classList.add('hidden');
@@ -792,18 +804,25 @@
     // Toggle Quick Add Area
     function toggleQuickAddCoord() {
         const area = document.getElementById('quickAddCoordArea');
+        if (!area) return;
         area.classList.toggle('hidden');
         if (!area.classList.contains('hidden')) {
-            document.getElementById('newCoordName').focus();
+            const nameInput = document.getElementById('newCoordName');
+            if (nameInput) nameInput.focus();
         }
     }
 
     // Submit Coordinator to Google Sheets via API
     async function submitQuickAddCoordinator() {
-        const school = document.getElementById('fieldSchool').value;
-        const name = document.getElementById('newCoordName').value.trim();
-        const phone = document.getElementById('newCoordPhone').value.trim();
-        const email = document.getElementById('newCoordEmail').value.trim();
+        const schoolDropdown = document.getElementById('fieldSchool');
+        const school = schoolDropdown ? schoolDropdown.value : '';
+        const nameInput = document.getElementById('newCoordName');
+        const phoneInput = document.getElementById('newCoordPhone');
+        const emailInput = document.getElementById('newCoordEmail');
+        
+        const name = nameInput ? nameInput.value.trim() : '';
+        const phone = phoneInput ? phoneInput.value.trim() : '';
+        const email = emailInput ? emailInput.value.trim() : '';
 
         if (!school || !name || !email) {
             alert("School, Coordinator Name, and Email are required to save.");
@@ -831,23 +850,22 @@
 
             if (!result.success) throw new Error(result.error);
 
-            // 1. Locally update your coordinators dropdown dataset
             if (!coordinatorsMap[school]) {
                 coordinatorsMap[school] = [];
             }
             coordinatorsMap[school].push({ name: name, phone: phone, email: email });
 
-            // 2. Re-trigger school dropdown refresh to rebuild selections
             handleSchoolChange();
 
-            // 3. Select the newly added coordinator
-            document.getElementById('fieldCoordinator').value = name;
+            const coordDropdown = document.getElementById('fieldCoordinator');
+            if (coordDropdown) {
+                coordDropdown.value = name;
+            }
             handleCoordinatorChange();
 
-            // 4. Reset & Hide Quick Add Form
-            document.getElementById('newCoordName').value = "";
-            document.getElementById('newCoordPhone').value = "";
-            document.getElementById('newCoordEmail').value = "";
+            if (nameInput) nameInput.value = "";
+            if (phoneInput) phoneInput.value = "";
+            if (emailInput) emailInput.value = "";
             toggleQuickAddCoord();
 
             showLoader(false);
@@ -859,7 +877,7 @@
     
     function populateSchoolsDropdown() {
         const schoolDropdown = document.getElementById('fieldSchool');
-        // Clear except first index option
+        if (!schoolDropdown) return;
         schoolDropdown.innerHTML = '<option value="">-- Select School --</option>';
         
         schoolsList.forEach(school => {
@@ -870,33 +888,36 @@
         });
     }
 
-    // UNIFIED SCHOOL CHANGE HANDLER: Auto-populates Store # and handles the "+" button
+    // UNIFIED SCHOOL CHANGE HANDLER
     function handleSchoolChange() {
-        const selectedSchool = document.getElementById('fieldSchool').value;
+        const schoolDropdown = document.getElementById('fieldSchool');
         const coordDropdown = document.getElementById('fieldCoordinator');
         const storeInput = document.getElementById('fieldStore');
-        const btnAdd = document.getElementById('btnQuickAddCoord'); // Target the "+" button
+        const btnAdd = document.getElementById('btnQuickAddCoord');
+        
+        if (!schoolDropdown || !coordDropdown) return;
+        const selectedSchool = schoolDropdown.value;
         
         coordDropdown.innerHTML = '<option value="">-- Select Coordinator --</option>';
-        document.getElementById('fieldPhone').value = "";
-        document.getElementById('fieldEmail').value = "";
-        storeInput.value = "";
+        const phoneInput = document.getElementById('fieldPhone');
+        const emailInput = document.getElementById('fieldEmail');
+        if (phoneInput) phoneInput.value = "";
+        if (emailInput) emailInput.value = "";
+        if (storeInput) storeInput.value = "";
 
         if (!selectedSchool) {
             coordDropdown.disabled = true;
-            btnAdd.disabled = true; // Disable "+" button if no school selected
+            if (btnAdd) btnAdd.disabled = true;
             return;
         }
 
-        btnAdd.disabled = false; // Enable "+" button
+        if (btnAdd) btnAdd.disabled = false;
 
-        // Auto-populate Store number for School
         const schoolObj = schoolsList.find(s => s.name === selectedSchool);
-        if (schoolObj) {
+        if (schoolObj && storeInput) {
             storeInput.value = schoolObj.storeNum || '';
         }
 
-        // Enable and build coordinator dropdown options
         const coords = coordinatorsMap[selectedSchool] || [];
         if (coords.length > 0) {
             coordDropdown.disabled = false;
@@ -907,22 +928,28 @@
                 coordDropdown.appendChild(opt);
             });
         } else {
-            coordDropdown.disabled = false; // Keep active so they can select a newly quick-added coord
+            coordDropdown.disabled = false;
             coordDropdown.innerHTML = '<option value="">-- Select Quick Add (+) to add --</option>';
         }
     }
 
     // Dynamic Coordinator Dropdown trigger
     function handleCoordinatorChange() {
-        const selectedSchool = document.getElementById('fieldSchool').value;
-        const selectedCoord = document.getElementById('fieldCoordinator').value;
+        const schoolDropdown = document.getElementById('fieldSchool');
+        const coordDropdown = document.getElementById('fieldCoordinator');
+        if (!schoolDropdown || !coordDropdown) return;
+        
+        const selectedSchool = schoolDropdown.value;
+        const selectedCoord = coordDropdown.value;
         
         if (selectedSchool && selectedCoord) {
             const coordsList = coordinatorsMap[selectedSchool] || [];
             const match = coordsList.find(c => c.name === selectedCoord);
             if (match) {
-                document.getElementById('fieldPhone').value = match.phone || '';
-                document.getElementById('fieldEmail').value = match.email || '';
+                const phoneInput = document.getElementById('fieldPhone');
+                const emailInput = document.getElementById('fieldEmail');
+                if (phoneInput) phoneInput.value = match.phone || '';
+                if (emailInput) emailInput.value = match.email || '';
             }
         }
     }
@@ -931,6 +958,7 @@
     window.togglePasswordVisibility = function() {
         const passInput = document.getElementById('loginPass');
         const toggleBtn = document.getElementById('toggle-password');
+        if (!passInput || !toggleBtn) return;
 
         if (passInput.type === 'password') {
             passInput.type = 'text';
@@ -962,9 +990,11 @@
 
     function renderList() {
         const listContainer = document.getElementById('orderList');
+        if (!listContainer) return;
         listContainer.innerHTML = '';
 
-        const sortBy = document.getElementById('sortControl').value;
+        const sortControl = document.getElementById('sortControl');
+        const sortBy = sortControl ? sortControl.value : 'date';
 
         // Clone so we don't mutate master list
         let sortedOrders = [...orders];
@@ -1053,55 +1083,90 @@
         currentSelectedId = item.id;
         renderList();
 
-        document.getElementById('formTitle').innerText = `Edit Order: ${item.schoolName}`;
+        const formTitle = document.getElementById('formTitle');
+        if (formTitle) formTitle.innerText = `Edit Order: ${item.schoolName}`;
         
-        document.getElementById('fieldId').value = item.id;
-        document.getElementById('fieldSchool').value = item.schoolName;
+        const fieldId = document.getElementById('fieldId');
+        const fieldSchool = document.getElementById('fieldSchool');
+        const fieldCoordinator = document.getElementById('fieldCoordinator');
+        const fieldCarryout = document.getElementById('fieldCarryout');
+        const fieldDate = document.getElementById('fieldDate');
+        const fieldTime = document.getElementById('fieldTime');
+        const fieldStore = document.getElementById('fieldStore');
+        const fieldPoNum = document.getElementById('fieldPoNum');
+        const fieldTotal = document.getElementById('fieldTotal');
+        const fieldTip = document.getElementById('fieldTip');
+        const fieldPoPdf = document.getElementById('fieldPoPdf');
+        const fieldQuoteUrl = document.getElementById('fieldQuoteUrl');
+
+        if (fieldId) fieldId.value = item.id;
+        if (fieldSchool) fieldSchool.value = item.schoolName;
         handleSchoolChange(); // Re-trigger mapping
         
-        document.getElementById('fieldCoordinator').value = item.coordinatorName;
+        if (fieldCoordinator) fieldCoordinator.value = item.coordinatorName;
         handleCoordinatorChange(); // Re-populate contact values
         
-        document.getElementById('fieldCarryout').value = item.serviceMethod || '';
-        document.getElementById('fieldDate').value = item.date ? item.date.split('T')[0] : '';
-        document.getElementById('fieldTime').value = item.time || '';
-        document.getElementById('fieldStore').value = item.storeNum || '';
-        document.getElementById('fieldPoNum').value = item.poNum || '';
-        document.getElementById('fieldTotal').value = item.totalCost || '';
-        document.getElementById('fieldTip').value = item.tipAmount || '';
-        document.getElementById('fieldPoPdf').value = item.poPdfLink || '';
-        document.getElementById('fieldQuoteUrl').value = item.quoteUrl || '';
+        if (fieldCarryout) fieldCarryout.value = item.serviceMethod || '';
+        if (fieldDate) fieldDate.value = item.date ? item.date.split('T')[0] : '';
+        if (fieldTime) fieldTime.value = item.time || '';
+        if (fieldStore) fieldStore.value = item.storeNum || '';
+        if (fieldPoNum) fieldPoNum.value = item.poNum || '';
+        if (fieldTotal) fieldTotal.value = item.totalCost || '';
+        if (fieldTip) fieldTip.value = item.tipAmount || '';
+        if (fieldPoPdf) fieldPoPdf.value = item.poPdfLink || '';
+        if (fieldQuoteUrl) fieldQuoteUrl.value = item.quoteUrl || '';
 
         // Checkboxes
-        document.getElementById('checkQuoteDrafted').checked = item.quoteUrl ? true : false;
-        document.getElementById('checkPulse').checked = item.enteredInPulse || false;
-        document.getElementById('checkCe').checked = item.ceSent || false;
-        document.getElementById('checkPoProcessed').checked = item.poProcessed || false;
-        document.getElementById('checkAccountingSent').checked = item.accountingSent || false;
-        document.getElementById('checkChaserSent').checked = item.chaserSent || false;
+        const checkQuoteDrafted = document.getElementById('checkQuoteDrafted');
+        const checkPulse = document.getElementById('checkPulse');
+        const checkCe = document.getElementById('checkCe');
+        const checkPoProcessed = document.getElementById('checkPoProcessed');
+        const checkAccountingSent = document.getElementById('checkAccountingSent');
+        const checkChaserSent = document.getElementById('checkChaserSent');
 
-        document.getElementById('btnCancel').innerText = "Cancel Edit";
+        if (checkQuoteDrafted) checkQuoteDrafted.checked = item.quoteUrl ? true : false;
+        if (checkPulse) checkPulse.checked = item.enteredInPulse || false;
+        if (checkCe) checkCe.checked = item.ceSent || false;
+        if (checkPoProcessed) checkPoProcessed.checked = item.poProcessed || false;
+        if (checkAccountingSent) checkAccountingSent.checked = item.accountingSent || false;
+        if (checkChaserSent) checkChaserSent.checked = item.chaserSent || false;
+
+        const btnCancel = document.getElementById('btnCancel');
+        if (btnCancel) btnCancel.innerText = "Cancel Edit";
         
         // Enable "Draft Quote Sheet" button because an saved order exists
-        document.getElementById('btnDraftQuote').disabled = false;
+        const btnDraftQuote = document.getElementById('btnDraftQuote');
+        if (btnDraftQuote) btnDraftQuote.disabled = false;
     }
 
     function prepareAddNew() {
         clearForm();
         currentSelectedId = null;
         renderList();
-        document.getElementById('formTitle').innerText = "Create New Order";
-        document.getElementById('fieldSchool').focus();
+        const formTitle = document.getElementById('formTitle');
+        if (formTitle) formTitle.innerText = "Create New Order";
+        const fieldSchool = document.getElementById('fieldSchool');
+        if (fieldSchool) fieldSchool.focus();
     }
 
     function clearForm() {
-        document.getElementById('orderForm').reset();
-        document.getElementById('fieldId').value = '';
-        document.getElementById('fieldQuoteUrl').value = '';
-        document.getElementById('formTitle').innerText = "Order Details";
-        document.getElementById('btnCancel').innerText = "Cancel";
-        document.getElementById('fieldCoordinator').disabled = true;
-        document.getElementById('btnDraftQuote').disabled = true;
+        const orderForm = document.getElementById('orderForm');
+        if (orderForm) orderForm.reset();
+        const fieldId = document.getElementById('fieldId');
+        const fieldQuoteUrl = document.getElementById('fieldQuoteUrl');
+        if (fieldId) fieldId.value = '';
+        if (fieldQuoteUrl) fieldQuoteUrl.value = '';
+        
+        const formTitle = document.getElementById('formTitle');
+        if (formTitle) formTitle.innerText = "Order Details";
+        const btnCancel = document.getElementById('btnCancel');
+        if (btnCancel) btnCancel.innerText = "Cancel";
+        
+        const fieldCoordinator = document.getElementById('fieldCoordinator');
+        if (fieldCoordinator) fieldCoordinator.disabled = true;
+        const btnDraftQuote = document.getElementById('btnDraftQuote');
+        if (btnDraftQuote) btnDraftQuote.disabled = true;
+        
         currentSelectedId = null;
         renderList();
     }
@@ -1112,35 +1177,54 @@
 
         const username = localStorage.getItem('cat_user');
         const password = localStorage.getItem('cat_pass');
-        const id = document.getElementById('fieldId').value;
+        const fieldId = document.getElementById('fieldId');
+        const id = fieldId ? fieldId.value : '';
         const action = id ? 'update' : 'add';
 
         showLoader(true, "Saving order to spreadsheet...");
 
+        const schoolDropdown = document.getElementById('fieldSchool');
+        const coordDropdown = document.getElementById('fieldCoordinator');
+        const carryoutDropdown = document.getElementById('fieldCarryout');
+        const dateInput = document.getElementById('fieldDate');
+        const timeInput = document.getElementById('fieldTime');
+        const storeInput = document.getElementById('fieldStore');
+        const poNumInput = document.getElementById('fieldPoNum');
+        const totalInput = document.getElementById('fieldTotal');
+        const tipInput = document.getElementById('fieldTip');
+        const poPdfInput = document.getElementById('fieldPoPdf');
+        
+        const checkPulse = document.getElementById('checkPulse');
+        const checkCe = document.getElementById('checkCe');
+        const checkPoProcessed = document.getElementById('checkPoProcessed');
+        const checkAccountingSent = document.getElementById('checkAccountingSent');
+        const checkChaserSent = document.getElementById('checkChaserSent');
+
+        const phoneInput = document.getElementById('fieldPhone');
+        const emailInput = document.getElementById('fieldEmail');
+
         const payload = {
-            username: localStorage.getItem('cat_user'),
-            password: localStorage.getItem('cat_pass'),
+            username: username,
+            password: password,
             action: action,
             id: id,
-            schoolName: document.getElementById('fieldSchool').value,
-            coordinatorName: document.getElementById('fieldCoordinator').value,
-            serviceMethod: document.getElementById('fieldCarryout').value,
-            date: document.getElementById('fieldDate').value,
-            time: document.getElementById('fieldTime').value,
-            storeNum: document.getElementById('fieldStore').value,
-            poNum: document.getElementById('fieldPoNum').value.trim(),
-            totalCost: document.getElementById('fieldTotal').value.trim(),
-            tipAmount: document.getElementById('fieldTip').value.trim(),
-            poPdfLink: document.getElementById('fieldPoPdf').value.trim(),
-            enteredInPulse: document.getElementById('checkPulse').checked,
-            ceSent: document.getElementById('checkCe').checked,
-            poProcessed: document.getElementById('checkPoProcessed').checked,
-            accountingSent: document.getElementById('checkAccountingSent').checked,
-            chaserSent: document.getElementById('checkChaserSent').checked,
-            
-            // coordinator details
-            phoneNumber: document.getElementById('fieldPhone').value.trim(),
-            email: document.getElementById('fieldEmail').value.trim()
+            schoolName: schoolDropdown ? schoolDropdown.value : '',
+            coordinatorName: coordDropdown ? coordDropdown.value : '',
+            serviceMethod: carryoutDropdown ? carryoutDropdown.value : '',
+            date: dateInput ? dateInput.value : '',
+            time: timeInput ? timeInput.value : '',
+            storeNum: storeInput ? storeInput.value : '',
+            poNum: poNumInput ? poNumInput.value.trim() : '',
+            totalCost: totalInput ? totalInput.value.trim() : '',
+            tipAmount: tipInput ? tipInput.value.trim() : '',
+            poPdfLink: poPdfInput ? poPdfInput.value.trim() : '',
+            enteredInPulse: checkPulse ? checkPulse.checked : false,
+            ceSent: checkCe ? checkCe.checked : false,
+            poProcessed: checkPoProcessed ? checkPoProcessed.checked : false,
+            accountingSent: checkAccountingSent ? checkAccountingSent.checked : false,
+            chaserSent: checkChaserSent ? checkChaserSent.checked : false,
+            phoneNumber: phoneInput ? phoneInput.value.trim() : '',
+            email: emailInput ? emailInput.value.trim() : ''
         };
 
         fetch(API_URL, {
@@ -1168,12 +1252,12 @@
         });
     }
 
-    // ==========================================
     // WEB APP ACTION: CREATE THE QUOTE GOOGLE SHEET
-    // ==========================================
     function triggerQuoteGeneration() {
-        const id = document.getElementById('fieldId').value;
-        const savedQuoteUrl = document.getElementById('fieldQuoteUrl').value;
+        const fieldId = document.getElementById('fieldId');
+        const id = fieldId ? fieldId.value : '';
+        const fieldQuoteUrl = document.getElementById('fieldQuoteUrl');
+        const savedQuoteUrl = fieldQuoteUrl ? fieldQuoteUrl.value : '';
         
         if (!id) return;
 
@@ -1278,17 +1362,24 @@
             }
         });
 
-        // Write metrics to UI elements
-        document.getElementById('metricsQuotesThisWeek').textContent = quotesThisWeek;
-        document.getElementById('metricsQuotesLastWeek').textContent = quotesLastWeek;
-        document.getElementById('metricsOrdersThisWeek').textContent = ordersThisWeek;
-        document.getElementById('metricsOrdersLastWeek').textContent = ordersLastWeek;
+        // Write metrics to UI elements with safety checks
+        const quotesThisWeekEl = document.getElementById('metricsQuotesThisWeek');
+        const quotesLastWeekEl = document.getElementById('metricsQuotesLastWeek');
+        const ordersThisWeekEl = document.getElementById('metricsOrdersThisWeek');
+        const ordersLastWeekEl = document.getElementById('metricsOrdersLastWeek');
+        const weekRangeEl = document.getElementById('metricsWeekRange');
+
+        if (quotesThisWeekEl) quotesThisWeekEl.textContent = quotesThisWeek;
+        if (quotesLastWeekEl) quotesLastWeekEl.textContent = quotesLastWeek;
+        if (ordersThisWeekEl) ordersThisWeekEl.textContent = ordersThisWeek;
+        if (ordersLastWeekEl) ordersLastWeekEl.textContent = ordersLastWeek;
         
         // Display current calendar week range (e.g., Monday "7/13" to Sunday "7/19")
         const endOfWeek = new Date(thisMonday.getTime());
         endOfWeek.setDate(thisMonday.getDate() + 6);
-        document.getElementById('metricsWeekRange').textContent = 
-            `${thisMonday.getMonth() + 1}/${thisMonday.getDate()} - ${endOfWeek.getMonth() + 1}/${endOfWeek.getDate()}`;
+        if (weekRangeEl) {
+            weekRangeEl.textContent = `${thisMonday.getMonth() + 1}/${thisMonday.getDate()} - ${endOfWeek.getMonth() + 1}/${endOfWeek.getDate()}`;
+        }
     }
 
     // ==========================================
@@ -1302,6 +1393,9 @@
         const btnList = document.getElementById('btnModeList');
         const areaText = document.getElementById('scratchpad');
         const areaList = document.getElementById('scratchpadChecklist');
+
+        // Safety check to prevent visual script crash if old/mismatched HTML is loaded
+        if (!btnText || !btnList || !areaText || !areaList) return;
 
         if (mode === 'list') {
             btnList.style.background = 'var(--dark-blue)';
@@ -1332,6 +1426,7 @@
 
     function addChecklistItem() {
         const input = document.getElementById('newChecklistItem');
+        if (!input) return;
         const val = input.value.trim();
         if (!val) return;
 
@@ -1342,6 +1437,7 @@
     }
 
     function toggleChecklistItem(index) {
+        if (!checklistItems[index]) return;
         checklistItems[index].completed = !checklistItems[index].completed;
         saveChecklist();
         renderChecklist();
@@ -1359,6 +1455,7 @@
 
     function renderChecklist() {
         const container = document.getElementById('checklistItems');
+        if (!container) return;
         container.innerHTML = '';
 
         if (checklistItems.length === 0) {
