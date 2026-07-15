@@ -271,11 +271,15 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group">
+                        <div class="form-group" style="flex: 1.5;">
                             <label>Coordinator Name</label>
-                            <select id="fieldCoordinator" required onchange="handleCoordinatorChange()">
-                                <option value="">-- Select School First --</option>
-                            </select>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <select id="fieldCoordinator" required onchange="handleCoordinatorChange()" style="flex: 1;">
+                                    <option value="">-- Select School First --</option>
+                                </select>
+                                <!-- Quick Add Trigger -->
+                                <button type="button" id="btnQuickAddCoord" onclick="toggleQuickAddCoord()" style="padding: 6px 12px; background: var(--brand-blue);" disabled>➕</button>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Service Method</label>
@@ -286,14 +290,26 @@
                         </div>
                     </div>
 
-                    <div class="form-row">
+                    <!-- Mini Form: Quick Add Coordinator (Hidden by default) -->
+                    <div id="quickAddCoordArea" class="hidden" style="background: var(--crust-light); border: 2.5px solid var(--crust-dark); padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 6px solid var(--brand-orange);">
+                        <h4 style="margin: 0 0 8px 0; font-family: 'OneDotCd-Bold'; font-size: 14px; color: var(--brand-orange);">Quick Add Coordinator</h4>
                         <div class="form-group">
-                            <label>Office / Contact Phone</label>
-                            <input type="text" id="fieldPhone" readonly>
+                            <label>Coordinator Name</label>
+                            <input type="text" id="newCoordName" placeholder="e.g., Jane Doe">
                         </div>
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="text" id="fieldEmail" readonly>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" id="newCoordPhone" placeholder="(xxx) xxx-xxxx">
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="text" id="newCoordEmail" placeholder="name@school.org">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px; margin-top: 10px;">
+                            <button type="button" style="background: var(--brand-green); flex: 1.5;" onclick="submitQuickAddCoordinator()">Save & Select</button>
+                            <button type="button" class="secondary" style="flex: 1;" onclick="toggleQuickAddCoord()">Cancel</button>
                         </div>
                     </div>
 
@@ -445,6 +461,114 @@
         else loader.classList.add('hidden');
     }
 
+    // Toggle Quick Add Area
+    function toggleQuickAddCoord() {
+        const area = document.getElementById('quickAddCoordArea');
+        area.classList.toggle('hidden');
+        if (!area.classList.contains('hidden')) {
+            document.getElementById('newCoordName').focus();
+        }
+    }
+
+    // Submit Coordinator to Google Sheets via API
+    async function submitQuickAddCoordinator() {
+        const school = document.getElementById('fieldSchool').value;
+        const name = document.getElementById('newCoordName').value.trim();
+        const phone = document.getElementById('newCoordPhone').value.trim();
+        const email = document.getElementById('newCoordEmail').value.trim();
+
+        if (!school || !name || !email) {
+            alert("School, Coordinator Name, and Email are required to save.");
+            return;
+        }
+
+        showLoader(true, "Saving coordinator to directory...");
+
+        const payload = {
+            username: localStorage.getItem('cat_user'),
+            password: localStorage.getItem('cat_pass'),
+            action: "addCoordinator",
+            school: school,
+            name: name,
+            phone: phone,
+            email: email
+        };
+
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+
+            if (!result.success) throw new Error(result.error);
+
+            // 1. Locally update your coordinators dropdown dataset
+            if (!coordinatorsMap[school]) {
+                coordinatorsMap[school] = [];
+            }
+            coordinatorsMap[school].push({ name: name, phone: phone, email: email });
+
+            // 2. Re-trigger school dropdown refresh to rebuild selections
+            handleSchoolChange();
+
+            // 3. Select the newly added coordinator
+            document.getElementById('fieldCoordinator').value = name;
+            handleCoordinatorChange();
+
+            // 4. Reset & Hide Quick Add Form
+            document.getElementById('newCoordName').value = "";
+            document.getElementById('newCoordPhone').value = "";
+            document.getElementById('newCoordEmail').value = "";
+            toggleQuickAddCoord();
+
+            showLoader(false);
+        } catch (err) {
+            showLoader(false);
+            alert("Failed to save coordinator: " + err.message);
+        }
+    }
+
+    // Adjust your existing handleSchoolChange() so the "+" button is enabled/disabled properly
+    function handleSchoolChange() {
+        const selectedSchool = document.getElementById('fieldSchool').value;
+        const coordDropdown = document.getElementById('fieldCoordinator');
+        const storeInput = document.getElementById('fieldStore');
+        const btnAdd = document.getElementById('btnQuickAddCoord'); // Target the "+" button
+        
+        coordDropdown.innerHTML = '<option value="">-- Select Coordinator --</option>';
+        document.getElementById('fieldPhone').value = "";
+        document.getElementById('fieldEmail').value = "";
+        storeInput.value = "";
+
+        if (!selectedSchool) {
+            coordDropdown.disabled = true;
+            btnAdd.disabled = true; // Disable "+" button if no school selected
+            return;
+        }
+
+        btnAdd.disabled = false; // Enable "+" button
+
+        const schoolObj = schoolsList.find(s => s.name === selectedSchool);
+        if (schoolObj) {
+            storeInput.value = schoolObj.storeNum || '';
+        }
+
+        const coords = coordinatorsMap[selectedSchool] || [];
+        if (coords.length > 0) {
+            coordDropdown.disabled = false;
+            coords.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.name;
+                opt.textContent = c.name;
+                coordDropdown.appendChild(opt);
+            });
+        } else {
+            coordDropdown.disabled = false; // Keep active so they can select a newly quick-added coord
+            coordDropdown.innerHTML = '<option value="">-- Select Quick Add (+) to add --</option>';
+        }
+    }
+    
     function populateSchoolsDropdown() {
         const schoolDropdown = document.getElementById('fieldSchool');
         // Clear except first index option
@@ -666,8 +790,8 @@
         showLoader(true, "Saving order to spreadsheet...");
 
         const payload = {
-            username: username,
-            password: password,
+            username: localStorage.getItem('cat_user'),
+            password: localStorage.getItem('cat_pass'),
             action: action,
             id: id,
             schoolName: document.getElementById('fieldSchool').value,
@@ -684,7 +808,11 @@
             ceSent: document.getElementById('checkCe').checked,
             poProcessed: document.getElementById('checkPoProcessed').checked,
             accountingSent: document.getElementById('checkAccountingSent').checked,
-            chaserSent: document.getElementById('checkChaserSent').checked
+            chaserSent: document.getElementById('checkChaserSent').checked,
+            
+            // CRITICAL FIX: Include coordinator details so they don't get wiped on save
+            phoneNumber: document.getElementById('fieldPhone').value.trim(),
+            email: document.getElementById('fieldEmail').value.trim()
         };
 
         fetch(API_URL, {
