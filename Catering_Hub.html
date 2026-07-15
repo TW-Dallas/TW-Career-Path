@@ -1248,7 +1248,7 @@
             coordinatorName: coordDropdown ? coordDropdown.value : '',
             serviceMethod: carryoutDropdown ? carryoutDropdown.value : '',
             date: dateInput ? dateInput.value : '',
-            time: timeInput ? timeInput.value : '',
+            time: timeInput ? convertMilitaryTo12Hour(timeInput.value.trim()) : '',
             storeNum: storeInput ? storeInput.value : '',
             poNum: poNumInput ? poNumInput.value.trim() : '',
             totalCost: totalInput ? totalInput.value.trim() : '',
@@ -1574,7 +1574,8 @@
         })
         .catch(err => {
             showLoader(false);
-            alert("Success! Quote has been emailed to the school coordinator.");
+            // Corrected to show the actual error message instead of a false success
+            alert("Error sending email: " + err.message);
         });
     }
 
