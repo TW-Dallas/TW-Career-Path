@@ -295,17 +295,27 @@
         }
 
         /* --- READABILITY FONT-SIZE UPGRADES --- */
-        .card-name { font-size: 17px; } 
-        .card-sub { font-size: 14px; }  
+        h1 { font-size: 24px; } /* Main logo header */
+        .subtitle { font-size: 14px; } /* Header subtitle */
+        #formTitle { font-size: 21px !important; } /* Form details panel title */
+
+        .card-name { font-size: 19px; } /* School names on sidebar cards */
+        .card-sub { font-size: 15px; }  /* Card status and dates */
         
-        .form-group label { font-size: 15px; } 
-        input[type="text"], input[type="password"], textarea, select { font-size: 15px; } 
+        .form-group label { font-size: 16px; margin-bottom: 4px; } /* Input labels */
+        input[type="text"], input[type="password"], textarea, select { 
+            font-size: 16px; 
+            padding: 8px 10px; /* Slightly taller input boxes */
+        } 
         
-        .section-header { font-size: 13px; } 
-        .checkbox-item { font-size: 14px; }  
-        .checkbox-item input { width: 16px; height: 16px; } 
+        .section-header { font-size: 14px; margin-top: 10px; } /* Group headers (e.g. Stage 1, Stage 2) */
+        .checkbox-item { font-size: 15px; }  /* Checklist text */
+        .checkbox-item input { width: 17px; height: 17px; } /* Slightly larger checkbox boxes */
         
-        button { font-size: 15px; } 
+        button { 
+            font-size: 16px; 
+            padding: 10px 18px; /* Taller, robust action buttons */
+        }
     </style>
 </head>
 <body>
@@ -362,6 +372,38 @@
 
             <div id="orderList"></div>
         </div>
+    
+    <!-- Left Panel: List of Catering Orders -->
+    <div class="list-panel">
+        <button class="btn-add" onclick="prepareAddNew()">➕ Create New Order Entry</button>
+        
+        <!-- NEW: Dynamic Weekly Activity Audit Box -->
+        <div id="metricsBox" style="background: var(--crust-light); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 12px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); color: var(--crust-burnt);">
+            <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; align-items: center;">
+                <span style="font-family: 'ExtraBold', sans-serif; font-size: 14px; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">Weekly Activity Audit</span>
+                <!-- Displays the current week date range (e.g. 7/12 - 7/18) -->
+                <span id="metricsWeekRange" style="font-size: 12px; font-family: 'Compact'; color: var(--crust-deep);"></span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; font-size: 14px; font-family: 'Body';">
+                <span>Quotes Written:</span>
+                <span style="font-family: 'Compact'; font-size: 13px;">
+                    This Week: <strong id="metricsQuotesThisWeek" style="color: var(--med-blue); font-family: 'Bold';">0</strong> | 
+                    Last Week: <strong id="metricsQuotesLastWeek" style="font-family: 'Bold';">0</strong>
+                </span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; font-size: 14px; font-family: 'Body';">
+                <span>Orders Placed:</span>
+                <span style="font-family: 'Compact'; font-size: 13px;">
+                    This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Bold';">0</strong> | 
+                    Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Bold';">0</strong>
+                </span>
+            </div>
+        </div>
+        
+        <div class="control-row">
+            <select id="sortControl" onchange="renderList()">
 
         <!-- Right Panel: Order Form Area -->
         <div class="form-panel" id="formPanel">
@@ -976,6 +1018,72 @@
             toggleBtn.style.color = 'var(--brand-blue)'; 
         }
     };
+
+    // Dynamic Weekly Activity Audit Calculator (Monday to Sunday)
+    function updateWeeklyMetrics() {
+        const now = new Date();
+        
+        // 1. Calculate Monday of "This Week" (Midnight)
+        const thisMonday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const day = now.getDay();
+        // Adjusts so Sunday (0) counts as the end of the previous Monday-started week
+        const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+        thisMonday.setDate(diff);
+        thisMonday.setHours(0, 0, 0, 0);
+        
+        // 2. Calculate Monday of "Last Week"
+        const lastMonday = new Date(thisMonday.getTime());
+        lastMonday.setDate(thisMonday.getDate() - 7);
+        
+        // 3. Calculate Sunday of "Last Week" (End of last week)
+        const lastSunday = new Date(thisMonday.getTime());
+        lastSunday.setDate(thisMonday.getDate() - 1);
+        lastSunday.setHours(23, 59, 59, 999);
+
+        let quotesThisWeek = 0;
+        let quotesLastWeek = 0;
+        let ordersThisWeek = 0;
+        let ordersLastWeek = 0;
+
+        orders.forEach(item => {
+            // Process Quotes Written
+            if (item.dateWritten) {
+                const dateWritten = new Date(item.dateWritten);
+                if (!isNaN(dateWritten.getTime())) {
+                    if (dateWritten >= thisMonday) {
+                        quotesThisWeek++;
+                    } else if (dateWritten >= lastMonday && dateWritten <= lastSunday) {
+                        quotesLastWeek++;
+                    }
+                }
+            }
+
+            // Process Orders Placed in Pulse
+            if (item.datePlaced) {
+                const datePlaced = new Date(item.datePlaced);
+                if (!isNaN(datePlaced.getTime())) {
+                    if (datePlaced >= thisMonday) {
+                        ordersThisWeek++;
+                    } else if (datePlaced >= lastMonday && datePlaced <= lastSunday) {
+                        ordersLastWeek++;
+                    }
+                }
+            }
+        });
+
+        // Write metrics to UI elements
+        document.getElementById('metricsQuotesThisWeek').textContent = quotesThisWeek;
+        document.getElementById('metricsQuotesLastWeek').textContent = quotesLastWeek;
+        document.getElementById('metricsOrdersThisWeek').textContent = ordersThisWeek;
+        document.getElementById('metricsOrdersLastWeek').textContent = ordersLastWeek;
+        
+        // Display current calendar week range (e.g., Monday "7/13" to Sunday "7/19")
+        const endOfWeek = new Date(thisMonday.getTime());
+        endOfWeek.setDate(thisMonday.getDate() + 6);
+        document.getElementById('metricsWeekRange').textContent = 
+            `${thisMonday.getMonth() + 1}/${thisMonday.getDate()} - ${endOfWeek.getMonth() + 1}/${endOfWeek.getDate()}`;
+    }
+
 </script>
 </body>
 </html>
