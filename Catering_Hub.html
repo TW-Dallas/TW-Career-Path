@@ -1601,16 +1601,42 @@
         return dateStr;
         }
 
-        function formatPhoneNumber(value) {
-            if (!value) return value;
-            const phoneNumber = value.toString().replace(/[^\d]/g, '');
-            const numLength = phoneNumber.length;
-            if (numLength < 4) return phoneNumber;
-            if (numLength < 7) {
-                return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
-            }
-            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+    function formatPhoneNumber(value) {
+        if (!value) return value;
+        const phoneNumber = value.toString().replace(/[^\d]/g, '');
+        const numLength = phoneNumber.length;
+        if (numLength < 4) return phoneNumber;
+        if (numLength < 7) {
+            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
         }
+        return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+    }
+
+    function convertMilitaryTo12Hour(timeStr) {
+    if (!timeStr) return '';
+    const trimmed = timeStr.trim();
+    
+    // If it already has AM or PM, leave it exactly as is
+    if (trimmed.toLowerCase().includes('am') || trimmed.toLowerCase().includes('pm')) {
+        return trimmed;
+    }
+    
+    // Check if the input is a valid 24-hour format like "HH:MM" or "H:MM"
+    const match = trimmed.match(/^(\d{1,2}):(\d{2})$/);
+    if (match) {
+        let hours = parseInt(match[1], 10);
+        const minutes = match[2];
+        
+        if (hours >= 0 && hours <= 23) {
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // Converts '0' hours to '12'
+            return `${hours}:${minutes} ${ampm}`;
+        }
+    }
+    
+    return trimmed; // Return original if it doesn't match a time format
+}
 </script>
 </body>
 </html>
