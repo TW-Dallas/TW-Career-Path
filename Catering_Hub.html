@@ -285,7 +285,20 @@
         
         /* --- BADGES --- */
         .badge-drafted { background: #e3f2fd; color: #0d47a1; font-family: 'Compact', sans-serif; font-size: 12px; padding: 3px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #bbdefb; }
-
+        
+        /* --- BRAND COMPLIANT SENT BADGE --- */
+        .badge-sent { 
+            background: var(--crust-light); 
+            color: var(--crust-burnt); 
+            font-family: 'Compact', sans-serif; 
+            font-size: 12px; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            border: 1px solid var(--crust-dark); 
+            margin-left: 4px; 
+        }
+        
         /* --- LOADING OVERLAY --- */
         .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 26px; z-index: 1000; color: var(--crust-burnt); text-transform: uppercase; }
         
@@ -604,6 +617,7 @@
                     <div class="checkbox-grid">
                         <div class="section-header">Stage 1: Quote Tracking</div>
                         <label class="checkbox-item"><input type="checkbox" id="checkQuoteDrafted"> Quote Drafted / Created</label>
+                        <label class="checkbox-item"><input type="checkbox" id="checkQuoteSent"> Quote Email Sent</label> <!-- <-- Add this line -->
                         
                         <div class="section-header">Stage 2: Store Processing</div>
                         <label class="checkbox-item"><input type="checkbox" id="checkPulse"> Entered in Pulse (POS)</label>
@@ -1035,6 +1049,7 @@
             
             let badges = '';
             if (item.quoteUrl) badges += '<span class="badge-drafted">📄 Quote Ready</span> ';
+            if (item.quoteEmailSent) badges += '<span class="badge-sent">📧 Sent</span>';
 
             // Human readable date formatting
             const localDate = item.date ? new Date(item.date).toLocaleDateString(undefined, {month: 'numeric', day: 'numeric', year: '2-digit'}) : 'No Date';
@@ -1141,6 +1156,7 @@
 
         // Checkboxes
         const checkQuoteDrafted = document.getElementById('checkQuoteDrafted');
+        const checkQuoteSent = document.getElementById('checkQuoteSent'); // <-- Add this line
         const checkPulse = document.getElementById('checkPulse');
         const checkCe = document.getElementById('checkCe');
         const checkPoProcessed = document.getElementById('checkPoProcessed');
@@ -1148,6 +1164,7 @@
         const checkChaserSent = document.getElementById('checkChaserSent');
 
         if (checkQuoteDrafted) checkQuoteDrafted.checked = item.quoteUrl ? true : false;
+        if (checkQuoteSent) checkQuoteSent.checked = item.quoteEmailSent || false; // <-- Add this line
         if (checkPulse) checkPulse.checked = item.enteredInPulse || false;
         if (checkCe) checkCe.checked = item.ceSent || false;
         if (checkPoProcessed) checkPoProcessed.checked = item.poProcessed || false;
@@ -1243,6 +1260,7 @@
         const poPdfInput = document.getElementById('fieldPoPdf');
         
         const checkPulse = document.getElementById('checkPulse');
+        const checkQuoteSent = document.getElementById('checkQuoteSent'); // <-- Add this line
         const checkCe = document.getElementById('checkCe');
         const checkPoProcessed = document.getElementById('checkPoProcessed');
         const checkAccountingSent = document.getElementById('checkAccountingSent');
@@ -1266,6 +1284,7 @@
             totalCost: totalInput ? totalInput.value.trim() : '',
             tipAmount: tipInput ? tipInput.value.trim() : '',
             poPdfLink: poPdfInput ? poPdfInput.value.trim() : '',
+            quoteEmailSent: checkQuoteSent ? checkQuoteSent.checked : false, // <-- Add this line
             enteredInPulse: checkPulse ? checkPulse.checked : false,
             ceSent: checkCe ? checkCe.checked : false,
             poProcessed: checkPoProcessed ? checkPoProcessed.checked : false,
