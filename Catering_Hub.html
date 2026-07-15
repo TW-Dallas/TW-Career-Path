@@ -1095,11 +1095,39 @@
 
         if (fieldId) fieldId.value = item.id;
         if (fieldSchool) fieldSchool.value = item.schoolName;
-        handleSchoolChange(); // Re-trigger mapping
         
-        if (fieldCoordinator) fieldCoordinator.value = item.coordinatorName;
-        handleCoordinatorChange(); // Re-populate contact values
+        // 1. Re-populate coordinator dropdown options based on the selected school
+        handleSchoolChange(); 
         
+        // 2. Ensure the saved coordinator displays in the dropdown, even if missing from the directory map
+        if (fieldCoordinator) {
+            if (item.coordinatorName) {
+                // Check if the saved coordinator name is already an option in the dropdown list
+                const optionExists = Array.from(fieldCoordinator.options).some(opt => opt.value === item.coordinatorName);
+                
+                // If it doesn't exist, dynamically create the option and append it to the dropdown
+                if (!optionExists) {
+                    const opt = document.createElement('option');
+                    opt.value = item.coordinatorName;
+                    opt.textContent = item.coordinatorName;
+                    fieldCoordinator.appendChild(opt);
+                }
+                fieldCoordinator.value = item.coordinatorName;
+            } else {
+                fieldCoordinator.value = '';
+            }
+        }
+
+        // 3. Directly populate contact inputs from the selected order object
+        // (Note: Backend sends "phone", frontend saves as "phoneNumber")
+        const phoneInput = document.getElementById('fieldPhone');
+        const emailInput = document.getElementById('fieldEmail');
+        if (phoneInput) phoneInput.value = item.phone || '';
+        if (emailInput) emailInput.value = item.email || '';
+
+        // 4. Run the coordinator change triggers to keep secondary dependencies in sync
+        handleCoordinatorChange();
+
         if (fieldCarryout) fieldCarryout.value = item.serviceMethod || '';
         if (fieldDate) fieldDate.value = item.date ? item.date.split('T')[0] : '';
         if (fieldTime) fieldTime.value = item.time || '';
@@ -1128,7 +1156,7 @@
         const btnCancel = document.getElementById('btnCancel');
         if (btnCancel) btnCancel.innerText = "Cancel Edit";
         
-        // Enable "Draft Quote Sheet" button because an saved order exists
+        // Enable "Draft Quote Sheet" button because a saved order exists
         const btnDraftQuote = document.getElementById('btnDraftQuote');
         if (btnDraftQuote) btnDraftQuote.disabled = false;
     }
