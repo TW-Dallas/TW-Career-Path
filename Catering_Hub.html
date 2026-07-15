@@ -232,7 +232,7 @@
             <img src="New_Logo_v2.png" alt="Logo" class="logo" onerror="this.style.display='none'">
             <div>
                 <h1 id="headerTitle">Catering & Quote Portal</h1>
-                <div id="headerCity" class="subtitle">Checking Workspace...</div>
+                <div class="subtitle">District Catering Workspace</div>
             </div>
         </div>
         <button class="secondary" onclick="handleLogout()">Log Out</button>
@@ -397,26 +397,18 @@
         }
     });
 
-    function getCityFromUser(username) {
-        if (username.startsWith('denver')) return 'Denver';
-        if (username.startsWith('dallas')) return 'Dallas';
-        return 'System';
-    }
-
     function handleLogin(savedUser, savedPass) {
         const u = savedUser || document.getElementById('loginUser').value.trim();
         const p = savedPass || document.getElementById('loginPass').value;
         const errorEl = document.getElementById('loginError');
-
+    
         if (!u || !p) return;
-
+    
         showLoader(true, "Logging in and fetching directory...");
         errorEl.classList.add('hidden');
-
-        const city = getCityFromUser(u);
-        
-        // Load initial school details, coordinator lists, and active orders list
-        fetch(`${API_URL}?action=getInitialData&city=${city}`)
+    
+        // Simple GET fetch without needing separate city paths
+        fetch(`${API_URL}?action=getInitialData`)
             .then(res => res.json())
             .then(data => {
                 if (data.error) {
@@ -429,9 +421,6 @@
                 document.getElementById('authContainer').classList.add('hidden');
                 document.getElementById('appContainer').classList.remove('hidden');
                 
-                document.getElementById('headerCity').innerText = `${city} Catering District`;
-                
-                // Set Up Dropdowns Data
                 schoolsList = data.schools || [];
                 coordinatorsMap = data.coordinators || {};
                 storeLookup = data.storeLookup || {};
@@ -448,7 +437,7 @@
                 localStorage.clear();
             });
     }
-
+    
     function handleLogout() {
         localStorage.clear();
         location.reload();
@@ -528,8 +517,21 @@
             alert("Failed to save coordinator: " + err.message);
         }
     }
+    
+    function populateSchoolsDropdown() {
+        const schoolDropdown = document.getElementById('fieldSchool');
+        // Clear except first index option
+        schoolDropdown.innerHTML = '<option value="">-- Select School --</option>';
+        
+        schoolsList.forEach(school => {
+            const opt = document.createElement('option');
+            opt.value = school.name;
+            opt.textContent = school.name;
+            schoolDropdown.appendChild(opt);
+        });
+    }
 
-    // Adjust your existing handleSchoolChange() so the "+" button is enabled/disabled properly
+    // UNIFIED SCHOOL CHANGE HANDLER: Auto-populates Store # and handles the "+" button
     function handleSchoolChange() {
         const selectedSchool = document.getElementById('fieldSchool').value;
         const coordDropdown = document.getElementById('fieldCoordinator');
@@ -549,55 +551,6 @@
 
         btnAdd.disabled = false; // Enable "+" button
 
-        const schoolObj = schoolsList.find(s => s.name === selectedSchool);
-        if (schoolObj) {
-            storeInput.value = schoolObj.storeNum || '';
-        }
-
-        const coords = coordinatorsMap[selectedSchool] || [];
-        if (coords.length > 0) {
-            coordDropdown.disabled = false;
-            coords.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c.name;
-                opt.textContent = c.name;
-                coordDropdown.appendChild(opt);
-            });
-        } else {
-            coordDropdown.disabled = false; // Keep active so they can select a newly quick-added coord
-            coordDropdown.innerHTML = '<option value="">-- Select Quick Add (+) to add --</option>';
-        }
-    }
-    
-    function populateSchoolsDropdown() {
-        const schoolDropdown = document.getElementById('fieldSchool');
-        // Clear except first index option
-        schoolDropdown.innerHTML = '<option value="">-- Select School --</option>';
-        
-        schoolsList.forEach(school => {
-            const opt = document.createElement('option');
-            opt.value = school.name;
-            opt.textContent = school.name;
-            schoolDropdown.appendChild(opt);
-        });
-    }
-
-    // Dynamic School Dropdown trigger
-    function handleSchoolChange() {
-        const selectedSchool = document.getElementById('fieldSchool').value;
-        const coordDropdown = document.getElementById('fieldCoordinator');
-        const storeInput = document.getElementById('fieldStore');
-        
-        coordDropdown.innerHTML = '<option value="">-- Select Coordinator --</option>';
-        document.getElementById('fieldPhone').value = "";
-        document.getElementById('fieldEmail').value = "";
-        storeInput.value = "";
-
-        if (!selectedSchool) {
-            coordDropdown.disabled = true;
-            return;
-        }
-
         // Auto-populate Store number for School
         const schoolObj = schoolsList.find(s => s.name === selectedSchool);
         if (schoolObj) {
@@ -615,8 +568,8 @@
                 coordDropdown.appendChild(opt);
             });
         } else {
-            coordDropdown.disabled = true;
-            coordDropdown.innerHTML = '<option value="">-- No coordinators found --</option>';
+            coordDropdown.disabled = false; // Keep active so they can select a newly quick-added coord
+            coordDropdown.innerHTML = '<option value="">-- Select Quick Add (+) to add --</option>';
         }
     }
 
@@ -825,8 +778,7 @@
                 throw new Error(result.error || "Save action failed");
             }
             
-            const city = getCityFromUser(username);
-            return fetch(`${API_URL}?action=getInitialData&city=${city}`);
+            return fetch(`${API_URL}?action=getInitialData`);
         })
         .then(res => res.json())
         .then(data => {
@@ -885,8 +837,8 @@
             window.open(result.quoteUrl, '_blank');
             
             // Reload local data to reflect that the quote is now drafted
-            const city = getCityFromUser(username);
-            return fetch(`${API_URL}?action=getInitialData&city=${city}`);
+            // New Block
+            return fetch(`${API_URL}?action=getInitialData`);
         })
         .then(res => res.json())
         .then(data => {
