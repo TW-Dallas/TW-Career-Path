@@ -61,15 +61,11 @@
             --border-radius: 12px;
         }
 
-    /* Lock the body to prevent page-wide scrolling and apply premium SVG watermark */
         html, body { height: 100%; overflow: hidden; margin: 0; padding: 0; }
         body { 
             font-family: 'Condensed', sans-serif; 
             background-color: var(--crust-light); 
-            /* Reduced overlay opacity from 0.94 to 0.80 so the line art can shine through */
-            background-image: 
-               /* linear-gradient(rgba(250, 242, 233, 0.80), rgba(250, 242, 233, 0.80)),*/
-                url('image/Pizza_800.svg');
+            background-image: url('image/Pizza_800.svg');
             background-repeat: repeat;
             background-size: 320px; 
             color: var(--crust-burnt); 
@@ -78,7 +74,6 @@
             height: 100vh;
         }
 
-        /* Modern CSS Selector: Automatically removes the background pattern once logged into the workspace dashboard */
         body:has(#appContainer:not(.hidden)) {
             background-image: none;
             background-color: var(--crust-light);
@@ -111,7 +106,6 @@
             overflow: hidden;
         }
 
-        /* Left Panel: Fixed Narrow Width, Scrollable inside */
         .list-panel { 
             flex: 0 0 380px; 
             display: flex; 
@@ -128,7 +122,6 @@
             gap: 12px;
         }
 
-        /* Middle Panel: Widescreen expanded, flexible height with locked footer buttons */
         .form-panel { 
             flex: 1.5; 
             background: var(--card-bg); 
@@ -143,7 +136,6 @@
             overflow: hidden;
         }
         
-        /* Right Panel for Audit & Notepad */
         .notes-panel {
             flex: 0 0 340px; 
             display: flex;
@@ -160,7 +152,6 @@
             overflow: hidden;
         }
         
-        /* Inner scrollable area for inputs (excluding footer action buttons) */
         .form-scroll-area {
             flex: 1;
             overflow-y: auto;
@@ -168,7 +159,6 @@
             margin-bottom: 8px;
         }
         
-        /* Pinned bottom action buttons */
         .form-actions { 
             flex: 0 0 auto;
             display: flex; 
@@ -178,7 +168,6 @@
             border-top: 1px solid var(--crust-med);
         }
         
-        /* --- SORT CONTROLS --- */
         .control-row { display: flex; gap: 10px; margin-bottom: 8px; }
         .control-row select { padding: 8px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'Subhead2', sans-serif; font-size: 16px; background: var(--card-bg); flex: 1; }
         
@@ -198,7 +187,6 @@
         .order-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
         .order-card.selected { background: var(--crust-base); box-shadow: 0 4px 12px rgba(0,92,145,0.08); }
         
-        /* Status border overrides (Stripped Green and Orange from brand palette) */
         .order-card.status-blue { border-left-color: var(--brand-blue); }
         .order-card.status-green { border-left-color: var(--brand-blue); }
         .order-card.status-red { border-left-color: var(--brand-red); border-color: var(--brand-red); }
@@ -216,13 +204,11 @@
             align-items: flex-start; 
         }
         
-/* --- FORMS & INPUTS --- */
-        .form-group { margin-bottom: 6px; } /* Optimized from 8px to save vertical gap */
-        .form-group label { display: block; font-family: 'Subhead1', sans-serif; font-size: 17px; margin-bottom: 2px; color: var(--crust-burnt); } /* Optimized from 4px */
+        .form-group { margin-bottom: 6px; } 
+        .form-group label { display: block; font-family: 'Subhead1', sans-serif; font-size: 17px; margin-bottom: 2px; color: var(--crust-burnt); } 
         .form-row { display: flex; gap: 10px; }
         .form-row .form-group { flex: 1; }
         
-        /* Widescreen 3-Column horizontal row mapping */
         .form-row.flex-three { display: flex; gap: 10px; }
         .form-row.flex-three .form-group { flex: 1; }
         .form-row.flex-three .flex-two-weight { flex: 1.5; } 
@@ -240,31 +226,27 @@
         }
         textarea { height: 45px; resize: none; }
         
-        /* --- COMPACT 3-COLUMN CHECKBOX GRID --- */
-        .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 8px; background: var(--crust-light); padding: 10px 12px; border-radius: 8px; } /* Optimized gap, margin, and padding */
+        .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 8px; background: var(--crust-light); padding: 10px 12px; border-radius: 8px; } 
         .checkbox-item { display: flex; align-items: center; gap: 6px; font-family: 'Compact', sans-serif; font-size: 16px; cursor: pointer; color: var(--crust-burnt); }
         .checkbox-item input { width: 18px; height: 18px; cursor: pointer; }
         
-        /* Section Headers spanning 3 columns */
         .section-header {
             grid-column: span 3;
             font-family: 'Subhead1', sans-serif;
             font-size: 15px;
             color: var(--dark-blue);
             border-bottom: 2px solid var(--crust-dark);
-            padding-bottom: 2px; /* Optimized from 4px */
-            margin-top: 6px; /* Optimized from 10px */
-            margin-bottom: 4px; /* Optimized from 6px */
+            padding-bottom: 2px; 
+            margin-top: 6px; 
+            margin-bottom: 4px; 
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
-        /* --- ACTION FLAGS --- */
         .flag-box { padding: 4px 6px; border-radius: 4px; display: flex; align-items: center; gap: 6px; }
         .flag-incorrect { background: #ffebee; color: var(--brand-red); font-weight: bold; }
         .flag-inactive { background: #f5f5f5; color: var(--brand-grey); font-weight: bold; }
 
-        /* --- BUTTONS --- */
         button { 
             background: var(--dark-blue); 
             color: white; 
@@ -286,23 +268,12 @@
         /* --- BADGES --- */
         .badge-drafted { background: #e3f2fd; color: #0d47a1; font-family: 'Compact', sans-serif; font-size: 12px; padding: 3px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #bbdefb; }
         
-        /* --- BRAND COMPLIANT SENT BADGE --- */
-        .badge-sent { 
-            background: var(--crust-light); 
-            color: var(--crust-burnt); 
-            font-family: 'Compact', sans-serif; 
-            font-size: 12px; 
-            padding: 3px 8px; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            border: 1px solid var(--crust-dark); 
-            margin-left: 4px; 
-        }
-        
-        /* --- LOADING OVERLAY --- */
+        /* --- BRAND COMPLIANT SENT BADGE (WARM DOUGH) --- */
+        .badge-sent { background: var(--crust-light); color: var(--crust-burnt); font-family: 'Compact', sans-serif; font-size: 12px; padding: 3px 8px; border-radius: 4px; font-weight: bold; border: 1px solid var(--crust-dark); margin-left: 4px; }
+
         .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 26px; z-index: 1000; color: var(--crust-burnt); text-transform: uppercase; }
         
-        /* --- PREMIUM AUTH SCREEN (SCALED UP) --- */
+        /* --- PREMIUM AUTH SCREEN --- */
         .auth-container { 
             max-width: 520px; 
             margin: 10vh auto; 
@@ -387,7 +358,6 @@
 
         .hidden { display: none !important; }
 
-        /* --- INTERACTIVE CHECKLIST STYLING --- */
         .checklist-row {
             display: flex;
             align-items: center;
@@ -443,11 +413,8 @@
 
 <!-- Login Container -->
 <div id="authContainer" class="auth-container">
-    <!-- Split Domino color stripe -->
     <div class="auth-brand-stripe"></div>
-    
     <div class="auth-inner">
-        <!-- Brand Logo Header -->
         <img src="New_Logo_v2.png" alt="Logo" style="height: 65px; width: auto; margin: 0 auto 24px auto; display: block;" onerror="this.style.display='none'">
         
         <h2>Workspace Access</h2>
@@ -458,7 +425,6 @@
             <input type="text" id="loginUser" placeholder="e.g., dallas_catering">
         </div>
         
-        <!-- Password Form Group with Center-Aligned toggle helper -->
         <div class="form-group" style="margin-bottom: 34px;">
             <label>Password</label>
             <div style="position: relative; display: flex; align-items: center;">
@@ -514,14 +480,45 @@
             <h2 id="formTitle" style="margin-top: 0; font-family: 'ExtraBold', sans-serif; font-size: 23px; margin-bottom: 8px;">Order Details</h2>
             <form id="orderForm" onsubmit="saveOrder(event)">
                 <input type="hidden" id="fieldId">
-                <input type="hidden" id="fieldQuoteUrl"> <!-- Hidden input to hold quote sheet link -->
+                <input type="hidden" id="fieldQuoteUrl"> 
                 
                 <div class="form-scroll-area">
+                    <!-- School Selection Container (with Quick Add School Toggle) -->
                     <div class="form-group">
                         <label>School Name</label>
-                        <select id="fieldSchool" required onchange="handleSchoolChange()">
-                            <option value="">-- Select School --</option>
-                        </select>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <select id="fieldSchool" required onchange="handleSchoolChange()" style="flex: 1;">
+                                <option value="">-- Select School --</option>
+                            </select>
+                            <button type="button" id="btnQuickAddSchool" onclick="toggleQuickAddSchool()" style="padding: 6px 12px; background: var(--dark-blue);">📝</button>
+                        </div>
+                    </div>
+
+                    <!-- Mini Form: Quick Add School -->
+                    <div id="quickAddSchoolArea" class="hidden" style="background: var(--crust-light); border: 2.5px solid var(--crust-dark); padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 6px solid var(--dark-red);">
+                        <h4 style="margin: 0 0 8px 0; font-family: 'Subhead1', sans-serif; font-size: 16px; color: var(--dark-red);">Quick Add School</h4>
+                        <div class="form-group">
+                            <label>School Name</label>
+                            <input type="text" id="newSchoolName" placeholder="e.g., Highland Park High">
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input type="text" id="newSchoolAddress" placeholder="e.g., 4220 Emerson Ave">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" id="newSchoolPhone" placeholder="e.g., (214) 555-0199">
+                            </div>
+                            <div class="form-group">
+                                <label>Assigned Store #</label>
+                                <input type="text" id="newSchoolStore" placeholder="e.g., 6916">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px; margin-top: 10px;">
+                            <button type="button" style="background: var(--brand-blue); flex: 1.5;" onclick="submitQuickAddSchool()">Save & Select</button>
+                            <button type="button" class="secondary" style="flex: 1;" onclick="toggleQuickAddSchool()">Cancel</button>
+                        </div>
                     </div>
 
                     <div class="form-row">
@@ -531,7 +528,6 @@
                                 <select id="fieldCoordinator" required onchange="handleCoordinatorChange()" style="flex: 1;">
                                     <option value="">-- Select School First --</option>
                                 </select>
-                                <!-- Quick Add Trigger -->
                                 <button type="button" id="btnQuickAddCoord" onclick="toggleQuickAddCoord()" style="padding: 6px 12px; background: var(--dark-blue);" disabled>📝</button>
                             </div>
                         </div>
@@ -617,7 +613,7 @@
                     <div class="checkbox-grid">
                         <div class="section-header">Stage 1: Quote Tracking</div>
                         <label class="checkbox-item"><input type="checkbox" id="checkQuoteDrafted"> Quote Drafted / Created</label>
-                        <label class="checkbox-item"><input type="checkbox" id="checkQuoteSent"> Quote Email Sent</label> <!-- <-- Add this line -->
+                        <label class="checkbox-item"><input type="checkbox" id="checkQuoteSent"> Quote Email Sent</label>
                         
                         <div class="section-header">Stage 2: Store Processing</div>
                         <label class="checkbox-item"><input type="checkbox" id="checkPulse"> Entered in Pulse (POS)</label>
@@ -634,7 +630,6 @@
                 <div class="form-actions">
                     <button type="submit" style="flex: 1.5; background: var(--med-blue);">💾 Save Row Details</button>
                     <button type="button" id="btnDraftQuote" style="flex: 1.5; background: var(--brand-red);" onclick="triggerQuoteGeneration()" disabled>📄 Draft Quote Sheet</button>
-                    <!-- Changed background to Brand Red and replaced the green sphere with a mail emoji -->
                     <button type="button" id="btnSendQuote" style="flex: 1.5; background: var(--brand-red);" class="hidden" onclick="triggerQuoteSend()">📧 Send Quote to School</button>
                     <button type="button" class="secondary" id="btnCancel" onclick="clearForm()" style="flex: 1;">Cancel</button>
                 </div>
@@ -643,7 +638,6 @@
 
         <!-- COLUMN 3: Audit & Notepad Panel (Right) -->
         <div class="notes-panel">
-            <!-- Dynamic Weekly Activity Audit Box (Monday to Sunday) -->
             <div id="metricsBox" style="background: var(--crust-light); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); color: var(--crust-burnt);">
                 <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--crust-med); padding-bottom: 8px; align-items: center;">
                     <span style="font-family: 'ExtraBold', sans-serif; font-size: 16px; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">Weekly Activity Audit</span>
@@ -665,9 +659,7 @@
                 </div>
             </div>
             
-            <!-- Notepad / Scratchpad Container -->
             <div style="flex: 1; display: flex; flex-direction: column; background: var(--crust-base); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
-                <!-- Lined Paper Header Accent with Text/List Toggle Buttons -->
                 <div style="font-family: 'ExtraBold', sans-serif; font-size: 15px; color: var(--dark-blue); border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px; flex: 0 0 auto;">
                     <span>📋 Quick Scratchpad</span>
                     <div style="display: flex; gap: 4px; align-items: center;">
@@ -676,17 +668,13 @@
                     </div>
                 </div>
                 
-                <!-- MODE 1: Premium Text Scratchpad -->
                 <textarea id="scratchpad" placeholder="• Type any temporary notes here...&#10;• Perfect for last-minute coordinator requests...&#10;• Or driver routing details..." style="flex: 1; width: 100%; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 17px; line-height: 1.5; outline: none; padding: 0; color: var(--crust-burnt); resize: none;"></textarea>
 
-                <!-- MODE 2: Premium Google Keep-Style Checklist -->
                 <div id="scratchpadChecklist" class="hidden" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
-                    <!-- Add Item Row -->
                     <div id="checklistInputRow" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; border-bottom: 1.5px solid var(--crust-med); padding-bottom: 8px; flex-shrink: 0;">
                         <span style="font-size: 20px; color: var(--brand-grey); line-height: 1; font-weight: bold;">+</span>
                         <input type="text" id="newChecklistItem" placeholder="Add list item..." style="flex: 1; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 17px; outline: none; padding: 0;" onkeydown="handleChecklistKeydown(event)">
                     </div>
-                    <!-- Scrollable Items Area -->
                     <div id="checklistItems" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 2px;"></div>
                 </div>
             </div>
@@ -695,9 +683,6 @@
 </div>
 
 <script>
-    // ========================================================
-    // DEPLOYED WEB APP URL (Pasted from Google Apps Script)
-    // ========================================================
     const API_URL = "https://script.google.com/macros/s/AKfycbz8rmjlFsMNcK0Sb1LA9bzpoqDG8V74y2pPM93QutukpETTDjSeu6TlHAR8cJ6wVR2F/exec"; 
 
     let orders = [];
@@ -706,7 +691,6 @@
     let storeLookup = {}; 
     let currentSelectedId = null;
 
-    // Checklist state variables
     let scratchpadMode = 'text'; 
     let checklistItems = [];
 
@@ -719,25 +703,21 @@
                 handleLogin(savedUser, savedPass);
             }
 
-            // Auto-Load Scratchpad mode on startup
             const savedMode = localStorage.getItem('cat_scratchpad_mode') || 'text';
             setScratchpadMode(savedMode);
 
-            // Auto-Load Text Scratchpad content on startup
             const scratchpad = document.getElementById('scratchpad');
             const savedNotes = localStorage.getItem('cat_scratchpad');
             if (scratchpad && savedNotes) {
                 scratchpad.value = savedNotes;
             }
 
-            // Auto-Save Text Scratchpad content to LocalStorage on every keystroke
             if (scratchpad) {
                 scratchpad.addEventListener('input', () => {
                     localStorage.setItem('cat_scratchpad', scratchpad.value);
                 });
             }
 
-            // Load Checklist items
             const savedList = localStorage.getItem('cat_checklist');
             if (savedList) {
                 try {
@@ -749,7 +729,7 @@
             renderChecklist();
         } catch (e) {
             console.error("Initialization error:", e);
-            showLoader(false); // Safeguard overlay from freezing if init throws
+            showLoader(false); 
         }
     });
 
@@ -821,6 +801,17 @@
         }
     }
 
+    // Toggle Quick Add School Area
+    function toggleQuickAddSchool() {
+        const area = document.getElementById('quickAddSchoolArea');
+        if (!area) return;
+        area.classList.toggle('hidden');
+        if (!area.classList.contains('hidden')) {
+            const nameInput = document.getElementById('newSchoolName');
+            if (nameInput) nameInput.focus();
+        }
+    }
+
     // Submit Coordinator to Google Sheets via API
     async function submitQuickAddCoordinator() {
         const schoolDropdown = document.getElementById('fieldSchool');
@@ -883,6 +874,69 @@
             alert("Failed to save coordinator: " + err.message);
         }
     }
+
+    // Submit School to Google Sheets via API
+    async function submitQuickAddSchool() {
+        const nameInput = document.getElementById('newSchoolName');
+        const addressInput = document.getElementById('newSchoolAddress');
+        const phoneInput = document.getElementById('newSchoolPhone');
+        const storeInput = document.getElementById('newSchoolStore');
+        
+        const name = nameInput ? nameInput.value.trim() : '';
+        const address = addressInput ? addressInput.value.trim() : '';
+        const phone = phoneInput ? phoneInput.value.trim() : '';
+        const store = storeInput ? storeInput.value.trim() : '';
+
+        if (!name || !store) {
+            alert("School Name and Assigned Store # are required.");
+            return;
+        }
+
+        showLoader(true, "Saving school to directory...");
+
+        const payload = {
+            username: localStorage.getItem('cat_user'),
+            password: localStorage.getItem('cat_pass'),
+            action: "addSchool",
+            name: name,
+            address: address,
+            phone: phone,
+            storeNum: store
+        };
+
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+
+            if (!result.success) throw new Error(result.error);
+
+            // Inject the new school locally
+            schoolsList.push({ name: name, address: address, phone: phone, storeNum: store });
+
+            // Refresh the school dropdown list
+            populateSchoolsDropdown();
+
+            const schoolDropdown = document.getElementById('fieldSchool');
+            if (schoolDropdown) {
+                schoolDropdown.value = name;
+                handleSchoolChange();
+            }
+
+            if (nameInput) nameInput.value = "";
+            if (addressInput) addressInput.value = "";
+            if (phoneInput) phoneInput.value = "";
+            if (storeInput) storeInput.value = "";
+            toggleQuickAddSchool();
+
+            showLoader(false);
+        } catch (err) {
+            showLoader(false);
+            alert("Failed to save school: " + err.message);
+        }
+    }
     
     function populateSchoolsDropdown() {
         const schoolDropdown = document.getElementById('fieldSchool');
@@ -942,7 +996,6 @@
         }
     }
 
-    // Dynamic Coordinator Dropdown trigger
     function handleCoordinatorChange() {
         const schoolDropdown = document.getElementById('fieldSchool');
         const coordDropdown = document.getElementById('fieldCoordinator');
@@ -963,7 +1016,6 @@
         }
     }
 
-    // Password visibility toggle
     window.togglePasswordVisibility = function() {
         const passInput = document.getElementById('loginPass');
         const toggleBtn = document.getElementById('toggle-password');
@@ -980,7 +1032,6 @@
         }
     };
 
-    // PO Status Logic for List rendering
     function getPoStatusText(item) {
         if (item.accountingSent) return "Sent to Accounting";
         if (item.poProcessed) return "PO Received";
@@ -994,7 +1045,7 @@
         if (item.poProcessed) return "status-blue";
         if (item.poNum && item.poNum.toLowerCase().includes("credit card")) return "status-blue";
         if (item.chaserSent) return "status-blue";
-        return "status-red"; // Default missing paperwork is Red
+        return "status-red"; 
     }
 
     function renderList() {
@@ -1005,7 +1056,6 @@
         const sortControl = document.getElementById('sortControl');
         const sortBy = sortControl ? sortControl.value : 'date';
 
-        // Clone so we don't mutate master list
         let sortedOrders = [...orders];
 
         sortedOrders.sort((a, b) => {
@@ -1023,11 +1073,10 @@
                     if (item.poProcessed) return 3;
                     if (item.poNum && item.poNum.toLowerCase().includes("credit card")) return 2;
                     if (item.chaserSent) return 1;
-                    return 0; // Missing PO is highest priority to chase
+                    return 0; 
                 };
                 return statusWeight(a) - statusWeight(b);
             }
-            // Default: "date" (Soonest delivery date first)
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
             return dateA - dateB;
@@ -1051,29 +1100,22 @@
             if (item.quoteUrl) badges += '<span class="badge-drafted">📄 Quote Ready</span> ';
             if (item.quoteEmailSent) badges += '<span class="badge-sent">📧 Sent</span>';
 
-            // Human readable date formatting
             const localDate = item.date ? new Date(item.date).toLocaleDateString(undefined, {month: 'numeric', day: 'numeric', year: '2-digit'}) : 'No Date';
 
             card.innerHTML = `
-                <!-- Row 1: School Name & Action Badges -->
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px;">
                     <div class="card-name" style="line-height: 1.25; font-family: 'Subhead1', sans-serif;">${item.schoolName}</div>
                     <div style="display: flex; gap: 4px; flex-shrink: 0;">${badges}</div>
                 </div>
                 
-                <!-- Clean, non-disjointed locked layout using a grid for alignment -->
                 <div class="card-sub">
                     <div style="display: grid; grid-template-columns: auto 1fr; row-gap: 6px; column-gap: 8px; font-size: 17px; font-family: 'Compact', sans-serif; color: var(--crust-deep); width: 100%;">
-                        <!-- Row 1: Date & Time -->
                         <span style="font-size: 18px; line-height: 1;">📅</span>
                         <span style="font-family: 'Condensed', sans-serif;">${localDate} at ${item.time || 'No Time'}</span>
-                        
-                        <!-- Row 2: Store Number (Left-Justified) -->
                         <span style="font-size: 18px; line-height: 1;">🏬</span>
                         <span style="font-family: 'Condensed', sans-serif;">Store #${item.storeNum}</span>
                     </div>
                     
-                    <!-- Clean Bottom Divider and Status Alignment -->
                     <div style="width: 100%; margin-top: 10px; padding-top: 8px; border-top: 1.5px solid var(--crust-med); display: flex; justify-content: space-between; align-items: center;">
                         <span style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--brand-grey); font-family: 'Compact', sans-serif; font-weight: bold;">PO Status</span>
                         <span style="font-family: 'Subhead2', sans-serif; font-size: 17px; color: ${statusColor}; font-weight: bold;">${poStatus}</span>
@@ -1085,7 +1127,6 @@
             listContainer.appendChild(card);
         });
 
-        // Dynamic metrics update call
         updateWeeklyMetrics();
     }
 
@@ -1112,16 +1153,11 @@
         if (fieldId) fieldId.value = item.id;
         if (fieldSchool) fieldSchool.value = item.schoolName;
         
-        // 1. Re-populate coordinator dropdown options based on the selected school
         handleSchoolChange(); 
         
-        // 2. Ensure the saved coordinator displays in the dropdown, even if missing from the directory map
         if (fieldCoordinator) {
             if (item.coordinatorName) {
-                // Check if the saved coordinator name is already an option in the dropdown list
                 const optionExists = Array.from(fieldCoordinator.options).some(opt => opt.value === item.coordinatorName);
-                
-                // If it doesn't exist, dynamically create the option and append it to the dropdown
                 if (!optionExists) {
                     const opt = document.createElement('option');
                     opt.value = item.coordinatorName;
@@ -1134,14 +1170,11 @@
             }
         }
 
-        // 3. Directly populate contact inputs from the selected order object
-        // (Note: Backend sends "phone", frontend saves as "phoneNumber")
         const phoneInput = document.getElementById('fieldPhone');
         const emailInput = document.getElementById('fieldEmail');
         if (phoneInput) phoneInput.value = item.phone || '';
         if (emailInput) emailInput.value = item.email || '';
 
-        // 4. Run the coordinator change triggers to keep secondary dependencies in sync
         handleCoordinatorChange();
 
         if (fieldCarryout) fieldCarryout.value = item.serviceMethod || '';
@@ -1156,7 +1189,7 @@
 
         // Checkboxes
         const checkQuoteDrafted = document.getElementById('checkQuoteDrafted');
-        const checkQuoteSent = document.getElementById('checkQuoteSent'); // <-- Add this line
+        const checkQuoteSent = document.getElementById('checkQuoteSent');
         const checkPulse = document.getElementById('checkPulse');
         const checkCe = document.getElementById('checkCe');
         const checkPoProcessed = document.getElementById('checkPoProcessed');
@@ -1164,7 +1197,7 @@
         const checkChaserSent = document.getElementById('checkChaserSent');
 
         if (checkQuoteDrafted) checkQuoteDrafted.checked = item.quoteUrl ? true : false;
-        if (checkQuoteSent) checkQuoteSent.checked = item.quoteEmailSent || false; // <-- Add this line
+        if (checkQuoteSent) checkQuoteSent.checked = item.quoteEmailSent || false;
         if (checkPulse) checkPulse.checked = item.enteredInPulse || false;
         if (checkCe) checkCe.checked = item.ceSent || false;
         if (checkPoProcessed) checkPoProcessed.checked = item.poProcessed || false;
@@ -1174,22 +1207,21 @@
         const btnCancel = document.getElementById('btnCancel');
         if (btnCancel) btnCancel.innerText = "Cancel Edit";
         
-        // Enable "Draft Quote Sheet" button because a saved order exists
         const btnDraftQuote = document.getElementById('btnDraftQuote');
         const btnSendQuote = document.getElementById('btnSendQuote');
 
-            if (btnDraftQuote) {
-                btnDraftQuote.disabled = false;
-                if (item.quoteUrl) {
-                    btnDraftQuote.innerText = "📄 Open Spreadsheet";
-                    btnDraftQuote.style.background = "var(--brand-blue)";
-                    if (btnSendQuote) btnSendQuote.classList.remove('hidden');
-                } else {
-                    btnDraftQuote.innerText = "⌨️ Draft Quote Sheet";
-                    btnDraftQuote.style.background = "var(--brand-red)";
-                    if (btnSendQuote) btnSendQuote.classList.add('hidden');
-                }
+        if (btnDraftQuote) {
+            btnDraftQuote.disabled = false;
+            if (item.quoteUrl) {
+                btnDraftQuote.innerText = "📄 Open Spreadsheet";
+                btnDraftQuote.style.background = "var(--brand-blue)";
+                if (btnSendQuote) btnSendQuote.classList.remove('hidden');
+            } else {
+                btnDraftQuote.innerText = "⌨️ Draft Quote Sheet";
+                btnDraftQuote.style.background = "var(--brand-red)";
+                if (btnSendQuote) btnSendQuote.classList.add('hidden');
             }
+        }
     }
 
     function prepareAddNew() {
@@ -1218,7 +1250,6 @@
         const fieldCoordinator = document.getElementById('fieldCoordinator');
         if (fieldCoordinator) fieldCoordinator.disabled = true;
 
-        // --- BUTTON RESET FIX ---
         const btnDraftQuote = document.getElementById('btnDraftQuote');
         if (btnDraftQuote) {
             btnDraftQuote.disabled = true;
@@ -1230,13 +1261,11 @@
         if (btnSendQuote) {
             btnSendQuote.classList.add('hidden');
         }
-        // -------------------------
         
         currentSelectedId = null;
         renderList();
     }
 
-    // SAVE DETAILS TO GOOGLE SHEETS
     function saveOrder(e) {
         e.preventDefault();
 
@@ -1259,8 +1288,8 @@
         const tipInput = document.getElementById('fieldTip');
         const poPdfInput = document.getElementById('fieldPoPdf');
         
+        const checkQuoteSent = document.getElementById('checkQuoteSent');
         const checkPulse = document.getElementById('checkPulse');
-        const checkQuoteSent = document.getElementById('checkQuoteSent'); // <-- Add this line
         const checkCe = document.getElementById('checkCe');
         const checkPoProcessed = document.getElementById('checkPoProcessed');
         const checkAccountingSent = document.getElementById('checkAccountingSent');
@@ -1284,7 +1313,7 @@
             totalCost: totalInput ? totalInput.value.trim() : '',
             tipAmount: tipInput ? tipInput.value.trim() : '',
             poPdfLink: poPdfInput ? poPdfInput.value.trim() : '',
-            quoteEmailSent: checkQuoteSent ? checkQuoteSent.checked : false, // <-- Add this line
+            quoteEmailSent: checkQuoteSent ? checkQuoteSent.checked : false,
             enteredInPulse: checkPulse ? checkPulse.checked : false,
             ceSent: checkCe ? checkCe.checked : false,
             poProcessed: checkPoProcessed ? checkPoProcessed.checked : false,
@@ -1303,7 +1332,6 @@
             if (!result.success) {
                 throw new Error(result.error || "Save action failed");
             }
-            
             return fetch(`${API_URL}?action=getInitialData`);
         })
         .then(res => res.json())
@@ -1327,7 +1355,6 @@
         
         if (!id) return;
 
-        // If a quote spreadsheet link already exists, just open it!
         if (savedQuoteUrl && savedQuoteUrl.startsWith("http")) {
             window.open(savedQuoteUrl, '_blank');
             return;
@@ -1369,8 +1396,6 @@
         .catch(err => {
             showLoader(false);
             
-            // --- CORS FAIL-SAFE ---
-            // If it is a harmless redirect timeout from Google, check if the quote actually generated anyway
             if (err.message === "Failed to fetch") {
                 showLoader(true, "Verifying status with spreadsheet...");
                 fetch(`${API_URL}?action=getInitialData`)
@@ -1398,23 +1423,17 @@
         });
     }
 
-    // Dynamic Weekly Activity Audit Calculator (Monday to Sunday)
     function updateWeeklyMetrics() {
         const now = new Date();
-        
-        // 1. Calculate Monday of "This Week" (Midnight)
         const thisMonday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const day = now.getDay();
-        // Adjusts so Sunday (0) counts as the end of the previous Monday-started week
         const diff = now.getDate() - day + (day === 0 ? -6 : 1);
         thisMonday.setDate(diff);
         thisMonday.setHours(0, 0, 0, 0);
         
-        // 2. Calculate Monday of "Last Week"
         const lastMonday = new Date(thisMonday.getTime());
         lastMonday.setDate(thisMonday.getDate() - 7);
         
-        // 3. Calculate Sunday of "Last Week" (End of last week)
         const lastSunday = new Date(thisMonday.getTime());
         lastSunday.setDate(thisMonday.getDate() - 1);
         lastSunday.setHours(23, 59, 59, 999);
@@ -1425,7 +1444,6 @@
         let ordersLastWeek = 0;
 
         orders.forEach(item => {
-            // Process Quotes Written
             if (item.dateWritten) {
                 const dateWritten = new Date(item.dateWritten);
                 if (!isNaN(dateWritten.getTime())) {
@@ -1437,7 +1455,6 @@
                 }
             }
 
-            // Process Orders Placed in Pulse
             if (item.datePlaced) {
                 const datePlaced = new Date(item.datePlaced);
                 if (!isNaN(datePlaced.getTime())) {
@@ -1450,7 +1467,6 @@
             }
         });
 
-        // Write metrics to UI elements with safety checks
         const quotesThisWeekEl = document.getElementById('metricsQuotesThisWeek');
         const quotesLastWeekEl = document.getElementById('metricsQuotesLastWeek');
         const ordersThisWeekEl = document.getElementById('metricsOrdersThisWeek');
@@ -1462,7 +1478,6 @@
         if (ordersThisWeekEl) ordersThisWeekEl.textContent = ordersThisWeek;
         if (ordersLastWeekEl) ordersLastWeekEl.textContent = ordersLastWeek;
         
-        // Display current calendar week range (e.g., Monday "7/13" to Sunday "7/19")
         const endOfWeek = new Date(thisMonday.getTime());
         endOfWeek.setDate(thisMonday.getDate() + 6);
         if (weekRangeEl) {
@@ -1470,9 +1485,6 @@
         }
     }
 
-    // ==========================================
-    // INTERACTIVE SCRATCHPAD CHECKLIST LOGIC
-    // ==========================================
     function setScratchpadMode(mode) {
         scratchpadMode = mode;
         localStorage.setItem('cat_scratchpad_mode', mode);
@@ -1482,7 +1494,6 @@
         const areaText = document.getElementById('scratchpad');
         const areaList = document.getElementById('scratchpadChecklist');
 
-        // Safety check to prevent visual script crash if old/mismatched HTML is loaded
         if (!btnText || !btnList || !areaText || !areaList) return;
 
         if (mode === 'list') {
@@ -1551,10 +1562,7 @@
             return;
         }
 
-        // Map checklist items with their original indices so status changes hit the correct element
         let mapped = checklistItems.map((item, idx) => ({ ...item, originalIndex: idx }));
-
-        // Sort checklist items: Uncompleted at the top, Completed at the bottom (Google Keep behavior)
         mapped.sort((a, b) => a.completed - b.completed);
 
         mapped.forEach(item => {
@@ -1602,36 +1610,46 @@
                 throw new Error(result.error || "Failed to send email.");
             }
             alert("Quote emailed successfully to the school coordinator!");
+            
+            // Reload the local state from Google Sheets so the UI maps the Sent badge immediately
+            showLoader(true, "Updating dashboard state...");
+            return fetch(`${API_URL}?action=getInitialData`);
+        })
+        .then(res => res.json())
+        .then(data => {
+            orders = data.orders || [];
+            renderList();
+            
+            // Re-select current order to update checkboxes on screen
+            const currentItem = orders.find(o => o.id === id);
+            if (currentItem) selectOrder(currentItem);
+            
+            showLoader(false);
         })
         .catch(err => {
             showLoader(false);
-            // Corrected to show the actual error message instead of a false success
             alert("Error sending email: " + err.message);
         });
     }
 
     function formatStringToInputDate(dateStr) {
         if (!dateStr) return '';
-        
-        // If it's already in ISO format, just take the date part
         if (dateStr.includes('T')) {
             return dateStr.split('T')[0];
         }
         
-        // Parse M/D/YY or MM/DD/YYYY formats
         const parts = dateStr.split('/');
         if (parts.length === 3) {
             let month = parts[0].padStart(2, '0');
             let day = parts[1].padStart(2, '0');
             let year = parts[2];
             if (year.length === 2) {
-            year = '20' + year; // Convert "26" to "2026"
+                year = '20' + year; 
             }
             return `${year}-${month}-${day}`;
         }
-        
         return dateStr;
-        }
+    }
 
     function formatPhoneNumber(value) {
         if (!value) return value;
@@ -1645,30 +1663,27 @@
     }
 
     function convertMilitaryTo12Hour(timeStr) {
-    if (!timeStr) return '';
-    const trimmed = timeStr.trim();
-    
-    // If it already has AM or PM, leave it exactly as is
-    if (trimmed.toLowerCase().includes('am') || trimmed.toLowerCase().includes('pm')) {
-        return trimmed;
-    }
-    
-    // Check if the input is a valid 24-hour format like "HH:MM" or "H:MM"
-    const match = trimmed.match(/^(\d{1,2}):(\d{2})$/);
-    if (match) {
-        let hours = parseInt(match[1], 10);
-        const minutes = match[2];
+        if (!timeStr) return '';
+        const trimmed = timeStr.trim();
         
-        if (hours >= 0 && hours <= 23) {
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12; // Converts '0' hours to '12'
-            return `${hours}:${minutes} ${ampm}`;
+        if (trimmed.toLowerCase().includes('am') || trimmed.toLowerCase().includes('pm')) {
+            return trimmed;
         }
+        
+        const match = trimmed.match(/^(\d{1,2}):(\d{2})$/);
+        if (match) {
+            let hours = parseInt(match[1], 10);
+            const minutes = match[2];
+            
+            if (hours >= 0 && hours <= 23) {
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; 
+                return `${hours}:${minutes} ${ampm}`;
+            }
+        }
+        return trimmed; 
     }
-    
-    return trimmed; // Return original if it doesn't match a time format
-}
 </script>
 </body>
 </html>
