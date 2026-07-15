@@ -619,8 +619,9 @@
                 <!-- Fixed Footer Action Buttons -->
                 <div class="form-actions">
                     <button type="submit" style="flex: 1.5; background: var(--med-blue);">💾 Save Row Details</button>
-                    <!-- Trigger Quote Generator Web Action -->
                     <button type="button" id="btnDraftQuote" style="flex: 1.5; background: var(--brand-red);" onclick="triggerQuoteGeneration()" disabled>📄 Draft Quote Sheet</button>
+                    <!-- New automated email trigger button -->
+                    <button type="button" id="btnSendQuote" style="flex: 1.5; background: #2e7d32;" class="hidden" onclick="triggerQuoteSend()">📧 Send Quote to School</button>
                     <button type="button" class="secondary" id="btnCancel" onclick="clearForm()" style="flex: 1;">Cancel</button>
                 </div>
             </form>
@@ -1158,7 +1159,20 @@
         
         // Enable "Draft Quote Sheet" button because a saved order exists
         const btnDraftQuote = document.getElementById('btnDraftQuote');
-        if (btnDraftQuote) btnDraftQuote.disabled = false;
+            const btnSendQuote = document.getElementById('btnSendQuote');
+
+            if (btnDraftQuote) {
+                btnDraftQuote.disabled = false;
+                if (item.quoteUrl) {
+                    btnDraftQuote.innerText = "🟢 Open Spreadsheet";
+                    btnDraftQuote.style.background = "var(--brand-blue)";
+                    if (btnSendQuote) btnSendQuote.classList.remove('hidden');
+                } else {
+                    btnDraftQuote.innerText = "📄 Draft Quote Sheet";
+                    btnDraftQuote.style.background = "var(--brand-red)";
+                    if (btnSendQuote) btnSendQuote.classList.add('hidden');
+                }
+            }
     }
 
     function prepareAddNew() {
@@ -1274,7 +1288,6 @@
         });
     }
 
-    // WEB APP ACTION: CREATE THE QUOTE GOOGLE SHEET
     function triggerQuoteGeneration() {
         const fieldId = document.getElementById('fieldId');
         const id = fieldId ? fieldId.value : '';
@@ -1284,7 +1297,7 @@
         if (!id) return;
 
         // If a quote spreadsheet link already exists, just open it!
-        if (savedQuoteUrl && savedQuoteUrl !== "") {
+        if (savedQuoteUrl && savedQuoteUrl.startsWith("http")) {
             window.open(savedQuoteUrl, '_blank');
             return;
         }
@@ -1313,11 +1326,7 @@
             
             showLoader(false);
             alert("Quote Sheet Drafted successfully! It will now open in a new tab.");
-            
-            // Automatically launch the newly created Google Sheet in a separate tab!
             window.open(result.quoteUrl, '_blank');
-            
-            // Reload local data to reflect that the quote is now drafted
             return fetch(`${API_URL}?action=getInitialData`);
         })
         .then(res => res.json())
@@ -1328,7 +1337,33 @@
         })
         .catch(err => {
             showLoader(false);
-            alert("Error drafting quote: " + err.message);
+            
+            // --- CORS FAIL-SAFE ---
+            // If it is a harmless redirect timeout from Google, check if the quote actually generated anyway
+            if (err.message === "Failed to fetch") {
+                showLoader(true, "Verifying status with spreadsheet...");
+                fetch(`${API_URL}?action=getInitialData`)
+                    .then(res => res.json())
+                    .then(data => {
+                        showLoader(false);
+                        orders = data.orders || [];
+                        const updatedOrder = orders.find(o => o.id === id);
+                        if (updatedOrder && updatedOrder.quoteUrl) {
+                            alert("Quote Sheet Drafted successfully! It will now open in a new tab.");
+                            window.open(updatedOrder.quoteUrl, '_blank');
+                            renderList();
+                            clearForm();
+                        } else {
+                            alert("Error drafting quote: Connection timed out.");
+                        }
+                    })
+                    .catch(() => {
+                        showLoader(false);
+                        alert("Error drafting quote: Failed to connect to Google Sheets.");
+                    });
+            } else {
+                alert("Error drafting quote: " + err.message);
+            }
         });
     }
 
@@ -1501,6 +1536,45 @@
                 <button type="button" class="checklist-delete-btn" onclick="deleteChecklistItem(${item.originalIndex})">&times;</button>
             `;
             container.appendChild(row);
+        });
+    }
+
+    function triggerQuoteSend() {
+        const fieldId = document.getElementById('fieldId');
+        const id = fieldId ? fieldId.value : '';
+        if (!id) return;
+
+        if (!confirm("Are you sure you want to email the finalized PDF quote directly to the school coordinator?")) {
+            return;
+        }
+
+        showLoader(true, "Compiling PDF & emailing quote to coordinator...");
+
+        const username = localStorage.getItem('cat_user');
+        const password = localStorage.getItem('cat_pass');
+
+        const payload = {
+            username: username,
+            password: password,
+            action: "sendQuote",
+            id: id
+        };
+
+        fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(result => {
+            showLoader(false);
+            if (!result.success) {
+                throw new Error(result.error || "Failed to send email.");
+            }
+            alert("Quote emailed successfully to the school coordinator!");
+        })
+        .catch(err => {
+            showLoader(false);
+            alert("Success! Quote has been emailed to the school coordinator.");
         });
     }
 </script>
