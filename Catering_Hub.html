@@ -278,13 +278,36 @@
         /* --- LOADING OVERLAY --- */
         .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 26px; z-index: 1000; color: var(--crust-burnt); text-transform: uppercase; }
         
-        /* --- PREMIUM AUTH SCREEN --- */
+/* --- PREMIUM AUTH SCREEN (SCALED UP) --- */
+        
+        /* Default page background containing the subtle pizza pattern watermark */
+        body { 
+            font-family: 'Condensed', sans-serif; 
+            background-color: var(--crust-light); 
+            /* Merges the repeating pizza pattern with a soft, warm 94% opacity dough tint overlay */
+            background-image: 
+                linear-gradient(rgba(250, 242, 233, 0.94), rgba(250, 242, 233, 0.94)),
+                url('pizza_pattern.png');
+            background-repeat: repeat;
+            background-size: 320px; /* Adjust this value to scale the pizza pattern bigger or smaller */
+            color: var(--crust-burnt); 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh;
+        }
+
+        /* Modern CSS Selector: Automatically removes the background pattern once logged into the workspace dashboard */
+        body:has(#appContainer:not(.hidden)) {
+            background-image: none;
+            background-color: var(--crust-light);
+        }
+
         .auth-container { 
-            max-width: 460px; 
-            margin: 12vh auto; 
+            max-width: 520px; /* Scaled up from 460px */
+            margin: 10vh auto; 
             background: var(--card-bg); 
             border-radius: var(--border-radius); 
-            box-shadow: 0 12px 36px rgba(71, 43, 16, 0.15); 
+            box-shadow: 0 16px 48px rgba(71, 43, 16, 0.18); 
             border: 2px solid var(--crust-dark);
             position: relative;
             overflow: hidden;
@@ -292,16 +315,16 @@
         }
         .auth-brand-stripe {
             background: linear-gradient(90deg, var(--brand-red) 50%, var(--brand-blue) 50%); 
-            height: 8px; 
+            height: 10px; /* Thickened stripe */
             width: 100%;
         }
         .auth-inner {
-            padding: 40px;
+            padding: 44px; /* Increased interior padding */
         }
         .auth-container h2 { 
             margin-top: 0; 
             font-family: 'ExtraBlack', sans-serif; 
-            font-size: 26px; 
+            font-size: 30px; /* Scaled up from 26px */
             text-align: center; 
             color: var(--dark-blue); 
             margin-bottom: 6px; 
@@ -311,23 +334,23 @@
         .auth-subtitle {
             text-align: center;
             font-family: 'Compact', sans-serif;
-            font-size: 15px;
+            font-size: 17px; /* Scaled up from 15px */
             color: var(--crust-deep);
-            margin-bottom: 32px;
+            margin-bottom: 36px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .auth-container label {
             font-family: 'Subhead1', sans-serif;
-            font-size: 15px;
+            font-size: 16px; /* Scaled up from 15px */
             color: var(--crust-burnt);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             display: block;
         }
         .auth-container input[type="text"], 
         .auth-container input[type="password"] {
-            font-size: 17px;
-            padding: 12px 14px;
+            font-size: 18px; /* Scaled up from 17px */
+            padding: 14px 16px; /* Scaled up from 12px */
             border-radius: 8px;
             border: 2px solid var(--crust-med);
             background-color: var(--crust-base);
@@ -341,8 +364,8 @@
         }
         .auth-container button {
             width: 100%;
-            padding: 14px;
-            font-size: 18px;
+            padding: 16px; /* Scaled up from 14px */
+            font-size: 20px; /* Scaled up from 18px */
             font-family: 'ExtraBold', sans-serif;
             background: var(--dark-blue);
             color: white;
@@ -351,7 +374,7 @@
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(0, 92, 145, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 92, 145, 0.25);
             transition: background 0.15s ease, transform 0.1s ease;
         }
         .auth-container button:hover {
@@ -359,20 +382,6 @@
         }
         .auth-container button:active {
             transform: translateY(1px);
-        }
-
-        .hidden { display: none !important; }
-
-        /* --- MOBILE STYLES --- */
-        @media (max-width: 768px) {
-            html, body { overflow: auto; height: auto; }
-            .dashboard { flex-direction: column; height: auto; overflow: visible; }
-            .list-panel { flex: none; height: auto; overflow: visible; }
-            .form-panel { position: static; height: auto; overflow: visible; }
-            .notes-panel { position: static; height: auto; overflow: visible; width: 100%; }
-            #orderForm { height: auto; overflow: visible; }
-            .form-scroll-area { overflow-y: visible; height: auto; }
-            .form-row.flex-three { flex-direction: column; gap: 8px; }
         }
 
         /* --- DESKTOP SCALE CONFIGURATION --- */
@@ -440,33 +449,33 @@
     <div class="auth-brand-stripe"></div>
     
     <div class="auth-inner">
-        <!-- Brand Logo Header -->
-        <img src="New_Logo_v2.png" alt="Logo" style="height: 52px; width: auto; margin: 0 auto 20px auto; display: block;" onerror="this.style.display='none'">
+        <!-- Scaled up Brand Logo Header -->
+        <img src="New_Logo_v2.png" alt="Logo" style="height: 65px; width: auto; margin: 0 auto 24px auto; display: block;" onerror="this.style.display='none'">
         
         <h2>Workspace Access</h2>
         <div class="auth-subtitle">Catering & Quote Portal</div>
         
-        <div class="form-group" style="margin-bottom: 20px;">
+        <div class="form-group" style="margin-bottom: 24px;">
             <label>Username</label>
             <input type="text" id="loginUser" placeholder="e.g., dallas_catering">
         </div>
         
         <!-- Password Form Group with Center-Aligned toggle helper -->
-        <div class="form-group" style="margin-bottom: 28px;">
+        <div class="form-group" style="margin-bottom: 34px;">
             <label>Password</label>
             <div style="position: relative; display: flex; align-items: center;">
                 <input type="password" id="loginPass" style="padding-right: 70px;" placeholder="••••••••">
-                <span id="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; right: 14px; cursor: pointer; color: var(--brand-blue); font-family: 'Subhead2', sans-serif; font-size: 15px; font-weight: bold; user-select: none;">
+                <span id="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; right: 14px; cursor: pointer; color: var(--brand-blue); font-family: 'Subhead2', sans-serif; font-size: 16px; font-weight: bold; user-select: none;">
                     SHOW
                 </span>
             </div>
         </div>
         
-        <div id="loginError" style="color: var(--brand-red); font-family: 'Condensed', sans-serif; font-size: 16px; margin-bottom: 16px; text-align: center;" class="hidden"></div>
+        <div id="loginError" style="color: var(--brand-red); font-family: 'Condensed', sans-serif; font-size: 16px; margin-bottom: 18px; text-align: center;" class="hidden"></div>
         
         <button onclick="handleLogin()">Sign In to Portal</button>
         
-        <div style="text-align: center; margin-top: 32px; font-size: 13px; color: var(--crust-dark); font-family: 'Compact', sans-serif; letter-spacing: 0.5px;">
+        <div style="text-align: center; margin-top: 36px; font-size: 14px; color: var(--crust-dark); font-family: 'Compact', sans-serif; letter-spacing: 0.5px;">
             🔒 SECURE WORKSPACE &bull; AUTHORIZED CATERING PERSONNEL ONLY
         </div>
     </div>
