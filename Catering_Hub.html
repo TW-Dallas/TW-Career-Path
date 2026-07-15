@@ -309,6 +309,54 @@
         h1 { font-size: 26px; } 
         .subtitle { font-size: 15px; } 
         #formTitle { font-size: 23px !important; } 
+
+        /* --- INTERACTIVE CHECKLIST STYLING --- */
+        .checklist-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 0;
+            border-bottom: 1px dashed var(--crust-med);
+            animation: fadeIn 0.12s ease-in-out;
+        }
+        .checklist-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--brand-blue);
+            flex-shrink: 0;
+            margin: 0;
+        }
+        .checklist-row-text {
+            flex: 1;
+            font-family: 'Condensed', sans-serif;
+            font-size: 17px;
+            color: var(--crust-burnt);
+            outline: none;
+            word-break: break-word;
+        }
+        .checklist-row.completed .checklist-row-text {
+            text-decoration: line-through;
+            color: var(--brand-grey);
+            opacity: 0.65;
+        }
+        .checklist-delete-btn {
+            background: transparent !important;
+            border: none;
+            color: var(--brand-grey);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 2px 6px;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .checklist-delete-btn:hover {
+            color: var(--brand-red);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-3px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -520,15 +568,29 @@
             </div>
             
             <!-- Notepad / Scratchpad Container -->
-            <!-- FIXED: Added display: flex and flex-direction: column directly to make sure it fills vertical column height exactly! -->
             <div style="flex: 1; display: flex; flex-direction: column; background: var(--crust-base); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
-                <!-- Lined Paper Header Accent -->
+                <!-- Lined Paper Header Accent with Text/List Toggle Buttons -->
                 <div style="font-family: 'ExtraBold', sans-serif; font-size: 15px; color: var(--dark-blue); border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px; flex: 0 0 auto;">
                     <span>📋 Quick Scratchpad</span>
-                    <span style="font-size: 13px; font-family: 'Compact'; color: var(--brand-grey);">Auto-Saves</span>
+                    <div style="display: flex; gap: 4px; align-items: center;">
+                        <button type="button" id="btnModeText" onclick="setScratchpadMode('text')" style="font-size: 11px; padding: 2px 6px; background: var(--dark-blue); color: white; border-radius: 4px; font-family: 'Compact'; min-width: 40px; text-transform: uppercase;">Text</button>
+                        <button type="button" id="btnModeList" onclick="setScratchpadMode('list')" style="font-size: 11px; padding: 2px 6px; background: var(--crust-med); color: var(--crust-burnt); border-radius: 4px; font-family: 'Compact'; min-width: 40px; text-transform: uppercase;">List</button>
+                    </div>
                 </div>
-                <!-- Premium Lined Textarea -->
+                
+                <!-- MODE 1: Premium Text Scratchpad -->
                 <textarea id="scratchpad" placeholder="• Type any temporary notes here...&#10;• Perfect for last-minute coordinator requests...&#10;• Or driver routing details..." style="flex: 1; width: 100%; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 17px; line-height: 1.5; outline: none; padding: 0; color: var(--crust-burnt); resize: none;"></textarea>
+
+                <!-- MODE 2: Premium Google Keep-Style Checklist -->
+                <div id="scratchpadChecklist" class="hidden" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+                    <!-- Add Item Row -->
+                    <div id="checklistInputRow" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; border-bottom: 1.5px solid var(--crust-med); padding-bottom: 8px; flex-shrink: 0;">
+                        <span style="font-size: 20px; color: var(--brand-grey); line-height: 1; font-weight: bold;">+</span>
+                        <input type="text" id="newChecklistItem" placeholder="Add list item..." style="flex: 1; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 17px; outline: none; padding: 0;" onkeydown="handleChecklistKeydown(event)">
+                    </div>
+                    <!-- Scrollable Items Area -->
+                    <div id="checklistItems" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 2px;"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -546,6 +608,10 @@
     let storeLookup = {}; // Map of Store Details
     let currentSelectedId = null;
 
+    // Checklist state variables
+    let scratchpadMode = 'text'; // 'text' or 'list'
+    let checklistItems = [];
+
     window.addEventListener('DOMContentLoaded', () => {
         const savedUser = localStorage.getItem('cat_user');
         const savedPass = localStorage.getItem('cat_pass');
@@ -554,17 +620,32 @@
             handleLogin(savedUser, savedPass);
         }
 
-        // Auto-Load Scratchpad content on startup
+        // Auto-Load Scratchpad mode on startup
+        const savedMode = localStorage.getItem('cat_scratchpad_mode') || 'text';
+        setScratchpadMode(savedMode);
+
+        // Auto-Load Text Scratchpad content on startup
         const scratchpad = document.getElementById('scratchpad');
         const savedNotes = localStorage.getItem('cat_scratchpad');
         if (savedNotes) {
             scratchpad.value = savedNotes;
         }
 
-        // Auto-Save Scratchpad content to LocalStorage on every keystroke
+        // Auto-Save Text Scratchpad content to LocalStorage on every keystroke
         scratchpad.addEventListener('input', () => {
             localStorage.setItem('cat_scratchpad', scratchpad.value);
         });
+
+        // Load Checklist items
+        const savedList = localStorage.getItem('cat_checklist');
+        if (savedList) {
+            try {
+                checklistItems = JSON.parse(savedList);
+            } catch(e) {
+                checklistItems = [];
+            }
+        }
+        renderChecklist();
     });
 
     function handleLogin(savedUser, savedPass) {
@@ -1120,6 +1201,100 @@
         endOfWeek.setDate(thisMonday.getDate() + 6);
         document.getElementById('metricsWeekRange').textContent = 
             `${thisMonday.getMonth() + 1}/${thisMonday.getDate()} - ${endOfWeek.getMonth() + 1}/${endOfWeek.getDate()}`;
+    }
+
+    // ==========================================
+    // INTERACTIVE SCRATCHPAD CHECKLIST LOGIC
+    // ==========================================
+    function setScratchpadMode(mode) {
+        scratchpadMode = mode;
+        localStorage.setItem('cat_scratchpad_mode', mode);
+
+        const btnText = document.getElementById('btnModeText');
+        const btnList = document.getElementById('btnModeList');
+        const areaText = document.getElementById('scratchpad');
+        const areaList = document.getElementById('scratchpadChecklist');
+
+        if (mode === 'list') {
+            btnList.style.background = 'var(--dark-blue)';
+            btnList.style.color = 'white';
+            btnText.style.background = 'var(--crust-med)';
+            btnText.style.color = 'var(--crust-burnt)';
+
+            areaText.classList.add('hidden');
+            areaList.classList.remove('hidden');
+            renderChecklist();
+        } else {
+            btnText.style.background = 'var(--dark-blue)';
+            btnText.style.color = 'white';
+            btnList.style.background = 'var(--crust-med)';
+            btnList.style.color = 'var(--crust-burnt)';
+
+            areaList.classList.add('hidden');
+            areaText.classList.remove('hidden');
+        }
+    }
+
+    function handleChecklistKeydown(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addChecklistItem();
+        }
+    }
+
+    function addChecklistItem() {
+        const input = document.getElementById('newChecklistItem');
+        const val = input.value.trim();
+        if (!val) return;
+
+        checklistItems.push({ text: val, completed: false });
+        input.value = '';
+        saveChecklist();
+        renderChecklist();
+    }
+
+    function toggleChecklistItem(index) {
+        checklistItems[index].completed = !checklistItems[index].completed;
+        saveChecklist();
+        renderChecklist();
+    }
+
+    function deleteChecklistItem(index) {
+        checklistItems.splice(index, 1);
+        saveChecklist();
+        renderChecklist();
+    }
+
+    function saveChecklist() {
+        localStorage.setItem('cat_checklist', JSON.stringify(checklistItems));
+    }
+
+    function renderChecklist() {
+        const container = document.getElementById('checklistItems');
+        container.innerHTML = '';
+
+        if (checklistItems.length === 0) {
+            container.innerHTML = '<div style="text-align: center; padding: 24px; color: var(--brand-grey); font-family: \'Condensed\'; font-size: 15px;">Your list is empty.<br>Add items using the field above!</div>';
+            return;
+        }
+
+        // Map checklist items with their original indices so status changes hit the correct element
+        let mapped = checklistItems.map((item, idx) => ({ ...item, originalIndex: idx }));
+
+        // Sort checklist items: Uncompleted at the top, Completed at the bottom (Google Keep behavior)
+        mapped.sort((a, b) => a.completed - b.completed);
+
+        mapped.forEach(item => {
+            const row = document.createElement('div');
+            row.className = `checklist-row ${item.completed ? 'completed' : ''}`;
+
+            row.innerHTML = `
+                <input type="checkbox" ${item.completed ? 'checked' : ''} onchange="toggleChecklistItem(${item.originalIndex})">
+                <span class="checklist-row-text">${item.text}</span>
+                <button type="button" class="checklist-delete-btn" onclick="deleteChecklistItem(${item.originalIndex})">&times;</button>
+            `;
+            container.appendChild(row);
+        });
     }
 </script>
 </body>
