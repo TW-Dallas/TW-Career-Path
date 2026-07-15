@@ -279,19 +279,88 @@
         /* --- LOADING OVERLAY --- */
         .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 26px; z-index: 1000; color: var(--crust-burnt); }
         
-        /* --- AUTH SCREEN --- */
+        /* --- PREMIUM AUTH SCREEN --- */
         .auth-container { 
-            max-width: 400px; 
-            margin: 80px auto; 
-            padding: 24px; 
+            max-width: 460px; 
+            margin: 12vh auto; 
             background: var(--card-bg); 
             border-radius: var(--border-radius); 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
-            border-top: 6px solid var(--brand-blue); 
+            box-shadow: 0 12px 36px rgba(71, 43, 16, 0.15); 
+            border: 2px solid var(--crust-dark);
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
         }
-        .auth-container h2 { margin-top: 0; font-family: 'ExtraBold', sans-serif; color: var(--crust-burnt); }
-
-        .hidden { display: none !important; }
+        .auth-brand-stripe {
+            background: linear-gradient(90deg, var(--brand-red) 50%, var(--brand-blue) 50%); 
+            height: 8px; 
+            width: 100%;
+        }
+        .auth-inner {
+            padding: 40px;
+        }
+        .auth-container h2 { 
+            margin-top: 0; 
+            font-family: 'ExtraBlack', sans-serif; 
+            font-size: 26px; 
+            text-align: center; 
+            color: var(--dark-blue); 
+            margin-bottom: 6px; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .auth-subtitle {
+            text-align: center;
+            font-family: 'Compact', sans-serif;
+            font-size: 15px;
+            color: var(--crust-deep);
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .auth-container label {
+            font-family: 'Subhead1', sans-serif;
+            font-size: 15px;
+            color: var(--crust-burnt);
+            margin-bottom: 6px;
+            display: block;
+        }
+        .auth-container input[type="text"], 
+        .auth-container input[type="password"] {
+            font-size: 17px;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 2px solid var(--crust-med);
+            background-color: var(--crust-base);
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        .auth-container input[type="text"]:focus, 
+        .auth-container input[type="password"]:focus {
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 4px rgba(0, 144, 226, 0.15);
+            outline: none;
+        }
+        .auth-container button {
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            font-family: 'ExtraBold', sans-serif;
+            background: var(--dark-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0, 92, 145, 0.2);
+            transition: background 0.15s ease, transform 0.1s ease;
+        }
+        .auth-container button:hover {
+            background: var(--med-blue);
+        }
+        .auth-container button:active {
+            transform: translateY(1px);
+        }
 
         /* --- MOBILE STYLES --- */
         @media (max-width: 768px) {
@@ -366,21 +435,40 @@
 
 <!-- Login Container -->
 <div id="authContainer" class="auth-container">
-    <h2>Catering Workspace Login</h2>
-    <div class="form-group">
-        <label>Username</label>
-        <input type="text" id="loginUser" placeholder="e.g., dallas_catering">
+    <!-- Split Domino color stripe -->
+    <div class="auth-brand-stripe"></div>
+    
+    <div class="auth-inner">
+        <!-- Brand Logo Header -->
+        <img src="New_Logo_v2.png" alt="Logo" style="height: 52px; width: auto; margin: 0 auto 20px auto; display: block;" onerror="this.style.display='none'">
+        
+        <h2>Workspace Access</h2>
+        <div class="auth-subtitle">Catering & Quote Portal</div>
+        
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label>Username</label>
+            <input type="text" id="loginUser" placeholder="e.g., dallas_catering">
+        </div>
+        
+        <!-- Password Form Group with Center-Aligned toggle helper -->
+        <div class="form-group" style="margin-bottom: 28px;">
+            <label>Password</label>
+            <div style="position: relative; display: flex; align-items: center;">
+                <input type="password" id="loginPass" style="padding-right: 70px;" placeholder="••••••••">
+                <span id="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; right: 14px; cursor: pointer; color: var(--brand-blue); font-family: 'Subhead2', sans-serif; font-size: 15px; font-weight: bold; user-select: none;">
+                    SHOW
+                </span>
+            </div>
+        </div>
+        
+        <div id="loginError" style="color: var(--brand-red); font-family: 'Condensed', sans-serif; font-size: 16px; margin-bottom: 16px; text-align: center;" class="hidden"></div>
+        
+        <button onclick="handleLogin()">Sign In to Portal</button>
+        
+        <div style="text-align: center; margin-top: 32px; font-size: 13px; color: var(--crust-dark); font-family: 'Compact', sans-serif; letter-spacing: 0.5px;">
+            🔒 SECURE WORKSPACE &bull; AUTHORIZED CATERING PERSONNEL ONLY
+        </div>
     </div>
-    <!-- Password Form Group with Relative Positioning for eye toggle -->
-    <div class="form-group" style="position: relative;">
-        <label>Password</label>
-        <input type="password" id="loginPass" style="padding-right: 60px;">
-        <span id="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; right: 10px; bottom: 8px; cursor: pointer; color: var(--brand-blue); font-family: 'Subhead2', sans-serif; font-size: 16px; font-weight: bold; user-select: none;">
-            SHOW
-        </span>
-    </div>
-    <div id="loginError" style="color: var(--brand-red); font-family: 'Condensed', sans-serif; font-size: 16px; margin-bottom: 12px;" class="hidden"></div>
-    <button onclick="handleLogin()">Login</button>
 </div>
 
 <!-- Main App Wrapper -->
@@ -390,7 +478,7 @@
             <img src="New_Logo_v2.png" alt="Logo" class="logo" onerror="this.style.display='none'">
             <div>
                 <h1 id="headerTitle">Catering & Quote Portal</h1>
-                <div class="subtitle">District Catering Workspace</div>
+                <div class="subtitle">Mike's Overengineered Catering Workspace 💁🏻‍♂️</div>
             </div>
         </div>
         <button class="secondary" onclick="handleLogout()">Log Out</button>
@@ -551,18 +639,18 @@
                     <span style="font-family: 'ExtraBold', sans-serif; font-size: 16px; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">Weekly Activity Audit</span>
                     <span id="metricsWeekRange" style="font-size: 13px; font-family: 'Compact'; color: var(--crust-deep); font-weight: bold;"></span>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 17px;">
                     <span>Quotes Written:</span>
-                    <span style="font-family: 'Compact'; font-size: 15px;">
-                        This Week: <strong id="metricsQuotesThisWeek" style="color: var(--med-blue); font-family: 'Subhead2'; font-size: 16px;">0</strong> | 
-                        Last Week: <strong id="metricsQuotesLastWeek" style="font-family: 'Subhead2'; font-size: 16px;">0</strong>
+                    <span style="font-family: 'Compact'; font-size: 17px;">
+                        This Week: <strong id="metricsQuotesThisWeek" style="color: var(--med-blue); font-family: 'Subhead2'; font-size: 17px;">0</strong> | 
+                        Last Week: <strong id="metricsQuotesLastWeek" style="font-family: 'Subhead2'; font-size: 17px;">0</strong>
                     </span>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 17px;">
                     <span>Orders Placed:</span>
-                    <span style="font-family: 'Compact'; font-size: 15px;">
-                        This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Subhead2'; font-size: 16px;">0</strong> | 
-                        Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Subhead2'; font-size: 16px;">0</strong>
+                    <span style="font-family: 'Compact'; font-size: 17px;">
+                        This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Subhead2'; font-size: 17px;">0</strong> | 
+                        Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Subhead2'; font-size: 17px;">0</strong>
                     </span>
                 </div>
             </div>
@@ -935,20 +1023,20 @@
                 
                 <!-- Clean, non-disjointed locked layout using a grid for alignment -->
                 <div class="card-sub">
-                    <div style="display: grid; grid-template-columns: auto 1fr; row-gap: 6px; column-gap: 8px; font-size: 15px; font-family: 'Compact', sans-serif; color: var(--crust-deep); width: 100%;">
+                    <div style="display: grid; grid-template-columns: auto 1fr; row-gap: 6px; column-gap: 8px; font-size: 17px; font-family: 'Compact', sans-serif; color: var(--crust-deep); width: 100%;">
                         <!-- Row 1: Date & Time -->
-                        <span style="font-size: 16px;">📅</span>
+                        <span style="font-size: 18px; line-height: 1;">📅</span>
                         <span style="font-family: 'Condensed', sans-serif;">${localDate} at ${item.time || 'No Time'}</span>
                         
                         <!-- Row 2: Store Number (Left-Justified) -->
-                        <span style="font-size: 16px;">🏬</span>
+                        <span style="font-size: 18px; line-height: 1;">🏬</span>
                         <span style="font-family: 'Condensed', sans-serif;">Store #${item.storeNum}</span>
                     </div>
                     
                     <!-- Clean Bottom Divider and Status Alignment -->
                     <div style="width: 100%; margin-top: 10px; padding-top: 8px; border-top: 1.5px solid var(--crust-med); display: flex; justify-content: space-between; align-items: center;">
                         <span style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--brand-grey); font-family: 'Compact', sans-serif; font-weight: bold;">PO Status</span>
-                        <span style="font-family: 'Subhead2', sans-serif; font-size: 15px; color: ${statusColor}; font-weight: bold;">${poStatus}</span>
+                        <span style="font-family: 'Subhead2', sans-serif; font-size: 17px; color: ${statusColor}; font-weight: bold;">${poStatus}</span>
                     </div>
                 </div>
             `;
