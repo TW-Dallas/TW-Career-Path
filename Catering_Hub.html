@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Wow Catering Portal</title>
-    <link class="favicon" rel="icon" type="image/png" href="tile_blue.png">
+    <link class="favicon" rel="icon" type="image/png" href="image/tile_blue.png">
     <style>
         /* --- BRAND FONTS --- */
         @font-face {
@@ -97,18 +97,6 @@
         .subtitle { font-family: 'Compact', sans-serif; font-size: 13px; opacity: 0.9; }
         .logo { height: 32px; width: auto; margin-right: 12px; }
         
-        /* --- AUTH SCREEN --- */
-        .auth-container { 
-            max-width: 400px; 
-            margin: 80px auto; 
-            padding: 24px; 
-            background: var(--card-bg); 
-            border-radius: var(--border-radius); 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
-            border-top: 6px solid var(--brand-blue); 
-        }
-        .auth-container h2 { margin-top: 0; font-family: 'ExtraBold', sans-serif; color: var(--crust-burnt); }
-        
         /* --- DASHBOARD VIEWPORT LOCK LAYOUT --- */
         .dashboard { 
             display: flex; 
@@ -140,7 +128,7 @@
             gap: 10px;
         }
 
-        /* Right Panel: Widescreen expanded, flexible height with locked footer buttons */
+        /* Middle Panel: Widescreen expanded, flexible height with locked footer buttons */
         .form-panel { 
             flex: 1.5; 
             background: var(--card-bg); 
@@ -154,10 +142,21 @@
             box-sizing: border-box;
             overflow: hidden;
         }
-        #orderForm {
+        
+        /* NEW: Right Panel for Audit & Notepad */
+        .notes-panel {
+            flex: 0 0 320px; /* Clean, compact width for notes and metrics */
             display: flex;
             flex-direction: column;
             height: 100%;
+            overflow: hidden;
+            gap: 16px; /* Clean spacing between audit box and notepad */
+        }
+
+        #orderForm {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
             overflow: hidden;
         }
         
@@ -202,7 +201,7 @@
         .order-card.status-blue { border-left-color: var(--brand-blue); }
         .order-card.status-green { border-left-color: var(--brand-green); }
         .order-card.status-red { border-left-color: var(--brand-red); border: 1.5px solid var(--brand-red); }
-        .order-card.status-reviewing { border-left-color: var(--brand-orange); box-shadow: 0 0 8px rgba(255,143,0,0.2); }
+        .order-card.status-reviewing { border-left-color: var(--dark-red); box-shadow: 0 0 8px rgba(255,143,0,0.2); }
         .order-card.status-gray { border-left-color: var(--brand-grey); opacity: 0.6; background-color: #fbfbfb; }
 
         .card-name { font-family: 'Bold', sans-serif; font-size: 15px; }
@@ -281,6 +280,18 @@
         /* --- LOADING OVERLAY --- */
         .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 20px; z-index: 1000; color: var(--crust-burnt); }
         
+        /* --- AUTH SCREEN --- */
+        .auth-container { 
+            max-width: 400px; 
+            margin: 80px auto; 
+            padding: 24px; 
+            background: var(--card-bg); 
+            border-radius: var(--border-radius); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+            border-top: 6px solid var(--brand-blue); 
+        }
+        .auth-container h2 { margin-top: 0; font-family: 'ExtraBold', sans-serif; color: var(--crust-burnt); }
+
         .hidden { display: none !important; }
 
         /* --- MOBILE STYLES --- */
@@ -289,6 +300,7 @@
             .dashboard { flex-direction: column; height: auto; overflow: visible; }
             .list-panel { flex: none; height: auto; overflow: visible; }
             .form-panel { position: static; height: auto; overflow: visible; }
+            .notes-panel { position: static; height: auto; overflow: visible; width: 100%; }
             #orderForm { height: auto; overflow: visible; }
             .form-scroll-area { overflow-y: visible; height: auto; }
             .form-row.flex-three { flex-direction: column; gap: 8px; }
@@ -353,31 +365,9 @@
     </header>
 
     <div class="dashboard">
-        <!-- Left Panel: List of Catering Orders (HEALED NESTING HERE) -->
+        <!-- COLUMN 1: List of Catering Orders (Sidebar) -->
         <div class="list-panel">
-            <button class="btn-add" onclick="prepareAddNew()">➕ Create New Order Entry</button>
-            
-            <!-- Dynamic Weekly Activity Audit Box (Monday to Sunday) -->
-            <div id="metricsBox" style="background: var(--crust-light); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 12px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); color: var(--crust-burnt);">
-                <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; align-items: center;">
-                    <span style="font-family: 'ExtraBold', sans-serif; font-size: 14px; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">Weekly Activity Audit</span>
-                    <span id="metricsWeekRange" style="font-size: 12px; font-family: 'Compact'; color: var(--crust-deep);"></span>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 14px; font-family: 'Body';">
-                    <span>Quotes Written:</span>
-                    <span style="font-family: 'Compact'; font-size: 13px;">
-                        This Week: <strong id="metricsQuotesThisWeek" style="color: var(--med-blue); font-family: 'Bold';">0</strong> | 
-                        Last Week: <strong id="metricsQuotesLastWeek" style="font-family: 'Bold';">0</strong>
-                    </span>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 14px; font-family: 'Body';">
-                    <span>Orders Placed:</span>
-                    <span style="font-family: 'Compact'; font-size: 13px;">
-                        This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Bold';">0</strong> | 
-                        Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Bold';">0</strong>
-                    </span>
-                </div>
-            </div>
+            <button class="btn-add" onclick="prepareAddNew()">🍕 Create New Order Entry</button>
             
             <div class="control-row">
                 <select id="sortControl" onchange="renderList()">
@@ -391,7 +381,7 @@
             <div id="orderList"></div>
         </div>
 
-        <!-- Right Panel: Order Form Area -->
+        <!-- COLUMN 2: Order Details Form Panel (Center) -->
         <div class="form-panel" id="formPanel">
             <h2 id="formTitle" style="margin-top: 0; font-family: 'ExtraBold', sans-serif; font-size: 18px; margin-bottom: 8px;">Order Details</h2>
             <form id="orderForm" onsubmit="saveOrder(event)">
@@ -414,7 +404,7 @@
                                     <option value="">-- Select School First --</option>
                                 </select>
                                 <!-- Quick Add Trigger -->
-                                <button type="button" id="btnQuickAddCoord" onclick="toggleQuickAddCoord()" style="padding: 6px 12px; background: var(--dark-blue);" disabled>➕</button>
+                                <button type="button" id="btnQuickAddCoord" onclick="toggleQuickAddCoord()" style="padding: 6px 12px; background: var(--dark-blue);" disabled>📝</button>
                             </div>
                         </div>
                         <div class="form-group">
@@ -427,8 +417,8 @@
                     </div>
 
                     <!-- Mini Form: Quick Add Coordinator -->
-                    <div id="quickAddCoordArea" class="hidden" style="background: var(--crust-light); border: 2.5px solid var(--crust-dark); padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 6px solid var(--brand-orange);">
-                        <h4 style="margin: 0 0 8px 0; font-family: 'Subhead1', sans-serif; font-size: 14px; color: var(--brand-orange);">Quick Add Coordinator</h4>
+                    <div id="quickAddCoordArea" class="hidden" style="background: var(--crust-light); border: 2.5px solid var(--crust-dark); padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 6px solid var(--dark-red);">
+                        <h4 style="margin: 0 0 8px 0; font-family: 'Subhead1', sans-serif; font-size: 14px; color: var(--dark-red);">Quick Add Coordinator</h4>
                         <div class="form-group">
                             <label>Coordinator Name</label>
                             <input type="text" id="newCoordName" placeholder="e.g., Jane Doe">
@@ -515,10 +505,46 @@
                 <div class="form-actions">
                     <button type="submit" style="flex: 1.5; background: var(--med-blue);">💾 Save Row Details</button>
                     <!-- Trigger Quote Generator Web Action -->
-                    <button type="button" id="btnDraftQuote" style="flex: 1.5; background: var(--brand-orange);" onclick="triggerQuoteGeneration()" disabled>📄 Draft Quote Sheet</button>
+                    <button type="button" id="btnDraftQuote" style="flex: 1.5; background: var(--dark-red);" onclick="triggerQuoteGeneration()" disabled>📄 Draft Quote Sheet</button>
                     <button type="button" class="secondary" id="btnCancel" onclick="clearForm()" style="flex: 1;">Cancel</button>
                 </div>
             </form>
+        </div>
+
+        <!-- NEW COLUMN 3: Audit & Notepad Panel (Right) -->
+        <div class="notes-panel">
+            <!-- Dynamic Weekly Activity Audit Box (Monday to Sunday) -->
+            <div id="metricsBox" style="background: var(--crust-light); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); color: var(--crust-burnt);">
+                <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; align-items: center;">
+                    <span style="font-family: 'ExtraBold', sans-serif; font-size: 14px; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">Weekly Activity Audit</span>
+                    <span id="metricsWeekRange" style="font-size: 12px; font-family: 'Compact'; color: var(--crust-deep);"></span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 14px; font-family: 'Body';">
+                    <span>Quotes Written:</span>
+                    <span style="font-family: 'Compact'; font-size: 13px;">
+                        This Week: <strong id="metricsQuotesThisWeek" style="color: var(--med-blue); font-family: 'Bold';">0</strong> | 
+                        Last Week: <strong id="metricsQuotesLastWeek" style="font-family: 'Bold';">0</strong>
+                    </span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 14px; font-family: 'Body';">
+                    <span>Orders Placed:</span>
+                    <span style="font-family: 'Compact'; font-size: 13px;">
+                        This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Bold';">0</strong> | 
+                        Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Bold';">0</strong>
+                    </span>
+                </div>
+            </div>
+            
+            <!-- Notepad / Scratchpad Container -->
+            <div style="flex: 1; background: #fffde7; border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 16px; display: flex; flex-direction: column; box-shadow: 0 2px 6px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
+                <!-- Lined Paper Header Accent -->
+                <div style="font-family: 'ExtraBold', sans-serif; font-size: 14px; color: #d84315; border-bottom: 2px solid #ffb74d; padding-bottom: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px;">
+                    <span>📋 Quick Scratchpad</span>
+                    <span style="font-size: 11px; font-family: 'Compact'; color: var(--brand-grey);">Auto-Saves</span>
+                </div>
+                <!-- Yellow Notepad Lined Textarea -->
+                <textarea id="scratchpad" placeholder="• Type any temporary notes here...&#10;• Perfect for last-minute coordinator requests...&#10;• Or driver routing details..." style="flex: 1; width: 100%; border: none; background: transparent; font-family: 'Body', sans-serif; font-size: 15px; line-height: 1.5; outline: none; padding: 0; color: #5d4037; resize: none;"></textarea>
+            </div>
         </div>
     </div>
 </div>
@@ -542,6 +568,18 @@
         if (savedUser && savedPass) {
             handleLogin(savedUser, savedPass);
         }
+
+        // Auto-Load Scratchpad content on startup
+        const scratchpad = document.getElementById('scratchpad');
+        const savedNotes = localStorage.getItem('cat_scratchpad');
+        if (savedNotes) {
+            scratchpad.value = savedNotes;
+        }
+
+        // Auto-Save Scratchpad content to LocalStorage on every keystroke
+        scratchpad.addEventListener('input', () => {
+            localStorage.setItem('cat_scratchpad', scratchpad.value);
+        });
     });
 
     function handleLogin(savedUser, savedPass) {
@@ -735,6 +773,22 @@
         }
     }
 
+    // Password visibility toggle
+    window.togglePasswordVisibility = function() {
+        const passInput = document.getElementById('loginPass');
+        const toggleBtn = document.getElementById('toggle-password');
+
+        if (passInput.type === 'password') {
+            passInput.type = 'text';
+            toggleBtn.innerText = 'HIDE';
+            toggleBtn.style.color = 'var(--crust-dark)'; 
+        } else {
+            passInput.type = 'password';
+            toggleBtn.innerText = 'SHOW';
+            toggleBtn.style.color = 'var(--brand-blue)'; 
+        }
+    };
+
     // PO Status Logic for List rendering
     function getPoStatusText(item) {
         if (item.accountingSent) return "🏦 Sent to Accounting";
@@ -813,7 +867,7 @@
                 <div class="card-sub">
                     <span>${localDate} at ${item.time || ''} (Store #${item.storeNum})</span>
                     <!-- Font-Family Updated to Bold -->
-                    <span style="font-family: 'Bold', sans-serif; color: ${getStatusClass(item) === 'status-green' ? 'var(--brand-green)' : (getStatusClass(item) === 'status-blue' ? 'var(--brand-blue)' : (getStatusClass(item) === 'status-reviewing' ? 'var(--brand-orange)' : 'var(--brand-red)'))};">${poStatus}</span>
+                    <span style="font-family: 'Bold', sans-serif; color: ${getStatusClass(item) === 'status-green' ? 'var(--brand-green)' : (getStatusClass(item) === 'status-blue' ? 'var(--brand-blue)' : (getStatusClass(item) === 'status-reviewing' ? 'var(--dark-red)' : 'var(--brand-red)'))};">${poStatus}</span>
                 </div>
             `;
             
