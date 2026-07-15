@@ -69,6 +69,7 @@
             color: var(--crust-burnt); 
             display: flex; 
             flex-direction: column; 
+            height: 100vh;
         }
         
         header { 
@@ -88,19 +89,20 @@
         /* --- DASHBOARD VIEWPORT LOCK LAYOUT --- */
         .dashboard { 
             display: flex; 
-            max-width: 1600px; /* Expanded from 1400px to sit beautifully on large monitors */
+            max-width: 1600px; 
             width: 100%;
-            margin: 0 auto; /* Replaced vertical margin with safe interior padding to prevent vertical taskbar overflow */
+            margin: 0 auto; 
+            /* Set height explicitly so all columns stretch beautifully and never dip below OS taskbar */
+            height: calc(100vh - 75px); 
             padding: 12px 16px 16px 16px; 
             gap: 16px; 
-            flex: 1; /* Locks container height perfectly to fill remaining browser screen */
             box-sizing: border-box;
             overflow: hidden;
         }
 
         /* Left Panel: Fixed Narrow Width, Scrollable inside */
         .list-panel { 
-            flex: 0 0 380px; /* Slightly wider sidebar to accommodate larger fonts */
+            flex: 0 0 380px; 
             display: flex; 
             flex-direction: column; 
             height: 100%; 
@@ -132,7 +134,7 @@
         
         /* Right Panel for Audit & Notepad */
         .notes-panel {
-            flex: 0 0 340px; /* Slightly wider panel for Quick Scratchpad comfort */
+            flex: 0 0 340px; 
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -200,7 +202,7 @@
             margin-top: 4px; 
             display: flex; 
             flex-direction: column; 
-            align-items: flex-start; /* Corrected to left-justify layout elements */
+            align-items: flex-start; 
         }
         
         /* --- FORMS & INPUTS --- */
@@ -214,7 +216,8 @@
         .form-row.flex-three .form-group { flex: 1; }
         .form-row.flex-three .flex-two-weight { flex: 1.5; } 
 
-        input[type="text"], input[type="password"], textarea, select { 
+        /* FIXED: Added input[type="date"] directly to this selector so it formats properly! */
+        input[type="text"], input[type="password"], input[type="date"], textarea, select { 
             width: 100%; 
             padding: 8px 10px; 
             border-radius: 6px; 
@@ -517,9 +520,10 @@
             </div>
             
             <!-- Notepad / Scratchpad Container -->
-            <div style="flex: 1; background: var(--crust-base); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 16px; display: flex; flex-direction: column; box-shadow: 0 2px 6px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
+            <!-- FIXED: Added display: flex and flex-direction: column directly to make sure it fills vertical column height exactly! -->
+            <div style="flex: 1; display: flex; flex-direction: column; background: var(--crust-base); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
                 <!-- Lined Paper Header Accent -->
-                <div style="font-family: 'ExtraBold', sans-serif; font-size: 15px; color: var(--dark-blue); border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px;">
+                <div style="font-family: 'ExtraBold', sans-serif; font-size: 15px; color: var(--dark-blue); border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px; flex: 0 0 auto;">
                     <span>📋 Quick Scratchpad</span>
                     <span style="font-size: 13px; font-family: 'Compact'; color: var(--brand-grey);">Auto-Saves</span>
                 </div>
