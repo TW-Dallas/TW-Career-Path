@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Wow Catering Portal</title>
-    <link class="favicon" rel="icon" type="image/png" href="image/tile_blue.png">
+    <link class="favicon" rel="icon" type="image/png" href="tile_blue.png">
     <style>
         /* --- BRAND FONTS --- */
         @font-face {
@@ -294,28 +294,25 @@
             .form-row.flex-three { flex-direction: column; gap: 8px; }
         }
 
-        /* --- READABILITY FONT-SIZE UPGRADES --- */
-        h1 { font-size: 24px; } /* Main logo header */
-        .subtitle { font-size: 14px; } /* Header subtitle */
-        #formTitle { font-size: 21px !important; } /* Form details panel title */
+        /* --- READABILITY FONT-SIZE UPGRADES (32" Monitor Optimization) --- */
+        h1 { font-size: 24px; } 
+        .subtitle { font-size: 14px; } 
+        #formTitle { font-size: 21px !important; } 
 
-        .card-name { font-size: 19px; } /* School names on sidebar cards */
-        .card-sub { font-size: 15px; }  /* Card status and dates */
+        .card-name { font-size: 19px; } 
+        .card-sub { font-size: 15px; }  
         
-        .form-group label { font-size: 16px; margin-bottom: 4px; } /* Input labels */
+        .form-group label { font-size: 16px; margin-bottom: 4px; } 
         input[type="text"], input[type="password"], textarea, select { 
             font-size: 16px; 
-            padding: 8px 10px; /* Slightly taller input boxes */
+            padding: 8px 10px; 
         } 
         
-        .section-header { font-size: 14px; margin-top: 10px; } /* Group headers (e.g. Stage 1, Stage 2) */
-        .checkbox-item { font-size: 15px; }  /* Checklist text */
-        .checkbox-item input { width: 17px; height: 17px; } /* Slightly larger checkbox boxes */
+        .section-header { font-size: 14px; margin-top: 10px; } 
+        .checkbox-item { font-size: 15px; }  
+        .checkbox-item input { width: 17px; height: 17px; } 
         
-        button { 
-            font-size: 16px; 
-            padding: 10px 18px; /* Taller, robust action buttons */
-        }
+        button { font-size: 16px; padding: 10px 18px; } 
     </style>
 </head>
 <body>
@@ -330,15 +327,14 @@
         <label>Username</label>
         <input type="text" id="loginUser" placeholder="e.g., dallas_catering">
     </div>
+    <!-- Password Form Group with Relative Positioning for eye toggle -->
     <div class="form-group" style="position: relative;">
         <label>Password</label>
-        <!-- Added padding-right so text doesn't overlap the "SHOW" button -->
         <input type="password" id="loginPass" style="padding-right: 60px;">
-        <!-- Positioned from the bottom to account for the label height -->
-        <span id="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; right: 10px; bottom: 8px; cursor: pointer; color: var(--brand-blue); font-size: 14px; font-weight: bold; user-select: none;">
+        <span id="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; right: 10px; bottom: 8px; cursor: pointer; color: var(--brand-blue); font-family: 'Bold', sans-serif; font-size: 14px; font-weight: bold; user-select: none;">
             SHOW
         </span>
-    </div>  
+    </div>
     <div id="loginError" style="color: var(--brand-red); font-family: 'Bold', sans-serif; font-size: 14px; margin-bottom: 12px;" class="hidden"></div>
     <button onclick="handleLogin()">Login</button>
 </div>
@@ -357,9 +353,31 @@
     </header>
 
     <div class="dashboard">
-        <!-- Left Panel: List of Catering Orders -->
+        <!-- Left Panel: List of Catering Orders (HEALED NESTING HERE) -->
         <div class="list-panel">
             <button class="btn-add" onclick="prepareAddNew()">➕ Create New Order Entry</button>
+            
+            <!-- Dynamic Weekly Activity Audit Box (Monday to Sunday) -->
+            <div id="metricsBox" style="background: var(--crust-light); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 12px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); color: var(--crust-burnt);">
+                <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; align-items: center;">
+                    <span style="font-family: 'ExtraBold', sans-serif; font-size: 14px; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">Weekly Activity Audit</span>
+                    <span id="metricsWeekRange" style="font-size: 12px; font-family: 'Compact'; color: var(--crust-deep);"></span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 14px; font-family: 'Body';">
+                    <span>Quotes Written:</span>
+                    <span style="font-family: 'Compact'; font-size: 13px;">
+                        This Week: <strong id="metricsQuotesThisWeek" style="color: var(--med-blue); font-family: 'Bold';">0</strong> | 
+                        Last Week: <strong id="metricsQuotesLastWeek" style="font-family: 'Bold';">0</strong>
+                    </span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 14px; font-family: 'Body';">
+                    <span>Orders Placed:</span>
+                    <span style="font-family: 'Compact'; font-size: 13px;">
+                        This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Bold';">0</strong> | 
+                        Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Bold';">0</strong>
+                    </span>
+                </div>
+            </div>
             
             <div class="control-row">
                 <select id="sortControl" onchange="renderList()">
@@ -372,42 +390,9 @@
 
             <div id="orderList"></div>
         </div>
-    
-    <!-- Left Panel: List of Catering Orders -->
-    <div class="list-panel">
-        <button class="btn-add" onclick="prepareAddNew()">➕ Create New Order Entry</button>
-        
-        <!-- NEW: Dynamic Weekly Activity Audit Box -->
-        <div id="metricsBox" style="background: var(--crust-light); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 12px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); color: var(--crust-burnt);">
-            <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; align-items: center;">
-                <span style="font-family: 'ExtraBold', sans-serif; font-size: 14px; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">Weekly Activity Audit</span>
-                <!-- Displays the current week date range (e.g. 7/12 - 7/18) -->
-                <span id="metricsWeekRange" style="font-size: 12px; font-family: 'Compact'; color: var(--crust-deep);"></span>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; font-size: 14px; font-family: 'Body';">
-                <span>Quotes Written:</span>
-                <span style="font-family: 'Compact'; font-size: 13px;">
-                    This Week: <strong id="metricsQuotesThisWeek" style="color: var(--med-blue); font-family: 'Bold';">0</strong> | 
-                    Last Week: <strong id="metricsQuotesLastWeek" style="font-family: 'Bold';">0</strong>
-                </span>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; font-size: 14px; font-family: 'Body';">
-                <span>Orders Placed:</span>
-                <span style="font-family: 'Compact'; font-size: 13px;">
-                    This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Bold';">0</strong> | 
-                    Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Bold';">0</strong>
-                </span>
-            </div>
-        </div>
-        
-        <div class="control-row">
-            <select id="sortControl" onchange="renderList()">
 
         <!-- Right Panel: Order Form Area -->
         <div class="form-panel" id="formPanel">
-            <!-- Font-Family Updated to ExtraBold -->
             <h2 id="formTitle" style="margin-top: 0; font-family: 'ExtraBold', sans-serif; font-size: 18px; margin-bottom: 8px;">Order Details</h2>
             <form id="orderForm" onsubmit="saveOrder(event)">
                 <input type="hidden" id="fieldId">
@@ -428,7 +413,7 @@
                                 <select id="fieldCoordinator" required onchange="handleCoordinatorChange()" style="flex: 1;">
                                     <option value="">-- Select School First --</option>
                                 </select>
-                                <!-- Quick Add Trigger using Dark Blue Background -->
+                                <!-- Quick Add Trigger -->
                                 <button type="button" id="btnQuickAddCoord" onclick="toggleQuickAddCoord()" style="padding: 6px 12px; background: var(--dark-blue);" disabled>➕</button>
                             </div>
                         </div>
@@ -441,7 +426,7 @@
                         </div>
                     </div>
 
-                    <!-- Mini Form: Quick Add Coordinator (Hidden by default) with Subhead1 Font -->
+                    <!-- Mini Form: Quick Add Coordinator -->
                     <div id="quickAddCoordArea" class="hidden" style="background: var(--crust-light); border: 2.5px solid var(--crust-dark); padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 6px solid var(--brand-orange);">
                         <h4 style="margin: 0 0 8px 0; font-family: 'Subhead1', sans-serif; font-size: 14px; color: var(--brand-orange);">Quick Add Coordinator</h4>
                         <div class="form-group">
@@ -461,6 +446,17 @@
                         <div style="display: flex; gap: 8px; margin-top: 10px;">
                             <button type="button" style="background: var(--brand-green); flex: 1.5;" onclick="submitQuickAddCoordinator()">Save & Select</button>
                             <button type="button" class="secondary" style="flex: 1;" onclick="toggleQuickAddCoord()">Cancel</button>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Office / Contact Phone</label>
+                            <input type="text" id="fieldPhone" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="text" id="fieldEmail" readonly>
                         </div>
                     </div>
 
@@ -515,7 +511,7 @@
                     </div>
                 </div>
 
-                <!-- Fixed Footer Action Buttons with med-blue and brand-orange -->
+                <!-- Fixed Footer Action Buttons -->
                 <div class="form-actions">
                     <button type="submit" style="flex: 1.5; background: var(--med-blue);">💾 Save Row Details</button>
                     <!-- Trigger Quote Generator Web Action -->
@@ -531,7 +527,7 @@
     // ========================================================
     // DEPLOYED WEB APP URL (Pasted from Google Apps Script)
     // ========================================================
-    const API_URL = "https://script.google.com/macros/s/AKfycbwr8tuSd6RyR2LqGfdfHm0LqH1Yq6bdBso9p0FTTLLcchtRKPl3D-7TkFcdvi2nc097/exec"; 
+    const API_URL = "https://script.google.com/a/macros/team-wow.com/s/AKfycbwr8tuSd6RyR2LqGfdfHm0LqH1Yq6bdBso9p0FTTLLcchtRKPl3D-7TkFcdvi2nc097/exec"; 
 
     let orders = [];
     let schoolsList = [];
@@ -824,6 +820,9 @@
             card.onclick = () => selectOrder(item);
             listContainer.appendChild(card);
         });
+
+        // Dynamic metrics update call
+        updateWeeklyMetrics();
     }
 
     function selectOrder(item) {
@@ -1004,21 +1003,6 @@
         });
     }
 
-    window.togglePasswordVisibility = function() {
-        const passInput = document.getElementById('loginPass'); // FIXED: Matches 'loginPass' ID
-        const toggleBtn = document.getElementById('toggle-password');
-
-        if (passInput.type === 'password') {
-            passInput.type = 'text';
-            toggleBtn.innerText = 'HIDE';
-            toggleBtn.style.color = 'var(--crust-dark)'; 
-        } else {
-            passInput.type = 'password';
-            toggleBtn.innerText = 'SHOW';
-            toggleBtn.style.color = 'var(--brand-blue)'; 
-        }
-    };
-
     // Dynamic Weekly Activity Audit Calculator (Monday to Sunday)
     function updateWeeklyMetrics() {
         const now = new Date();
@@ -1083,7 +1067,6 @@
         document.getElementById('metricsWeekRange').textContent = 
             `${thisMonday.getMonth() + 1}/${thisMonday.getDate()} - ${endOfWeek.getMonth() + 1}/${endOfWeek.getDate()}`;
     }
-
 </script>
 </body>
 </html>
