@@ -1200,8 +1200,20 @@
         
         const fieldCoordinator = document.getElementById('fieldCoordinator');
         if (fieldCoordinator) fieldCoordinator.disabled = true;
+
+        // --- BUTTON RESET FIX ---
         const btnDraftQuote = document.getElementById('btnDraftQuote');
-        if (btnDraftQuote) btnDraftQuote.disabled = true;
+        if (btnDraftQuote) {
+            btnDraftQuote.disabled = true;
+            btnDraftQuote.innerText = "📄 Draft Quote Sheet";
+            btnDraftQuote.style.background = "var(--brand-red)";
+        }
+        
+        const btnSendQuote = document.getElementById('btnSendQuote');
+        if (btnSendQuote) {
+            btnSendQuote.classList.add('hidden');
+        }
+        // -------------------------
         
         currentSelectedId = null;
         renderList();
