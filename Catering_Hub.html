@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Wow Catering Portal</title>
+    <link class="favicon" rel="icon" type="image/png" href="tile_blue.png">
+    <style>
+        @font-face { font-family: 'PizzaPress'; src: url('fonts/Dominos Sans Header 1.ttf') format('truetype'); font-weight: bold; }
+        @font-face { font-family: 'OneDotCd-Bold'; src: url('fonts/Dominos Sans Bold.ttf') format('truetype'); font-weight: bold; }
+        @font-face { font-family: 'OneDotCd'; src: url('fonts/Dominos Sans Body Compact.ttf') format('truetype'); font-weight: normal; }
+
+        :root {
+            --brand-red: #ff0000;
+            --brand-blue: #0090e2;
+            --brand-green: #28a745;
+            --brand-orange: #ff8f00;
+            --brand-grey: #6c757d;
+            --crust-light: #faf2e9;
+            --crust-med: #f0decc;
+            --crust-dark: #c0a588;
+            --bg-color: var(--crust-light);
+            --card-bg: #FFFFFF;
+            --text-dark: #472b10;
+            --text-light: #603913;
+            --border-radius: 12px;
+        }
+
+        /* Lock the body to prevent page-wide scrolling */
+        html, body { height: 100%; overflow: hidden; margin: 0; padding: 0; }
+        body { font-family: 'OneDotCd', sans-serif; background-color: var(--bg-color); color: var(--text-dark); display: flex; flex-direction: column; }
+        
+        header { background-color: #005c91; color: white; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(71, 43, 16, 0.15); flex: 0 0 auto; }
+        h1 { margin: 0; font-family: 'PizzaPress', serif; font-size: 20px; text-transform: uppercase; }
+        .subtitle { font-family: 'OneDotCd', sans-serif; font-size: 12px; opacity: 0.9; }
+        .logo { height: 32px; width: auto; margin-right: 12px; }
+        
+        /* --- AUTH SCREEN --- */
+        .auth-container { max-width: 400px; margin: 80px auto; padding: 24px; background: white; border-radius: var(--border-radius); box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid var(--brand-blue); }
+        .auth-container h2 { margin-top: 0; font-family: 'OneDotCd-Bold', sans-serif; }
+        
+        /* --- DASHBOARD VIEWPORT LOCK LAYOUT --- */
+        .dashboard { 
+            display: flex; 
+            max-width: 1400px; 
+            width: 100%;
+            margin: 12px auto; 
+            padding: 0 16px; 
+            gap: 16px; 
+            flex: 1; /* Fills remaining height below the header */
+            height: calc(100vh - 75px); /* Forces fit inside viewport */
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        /* Left Panel: Fixed Narrow Width, Scrollable inside */
+        .list-panel { 
+            flex: 0 0 350px; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100%; 
+            overflow: hidden;
+        }
+        #orderList { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding-right: 4px; 
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Right Panel: Widescreen expanded, flexible height with locked footer buttons */
+        .form-panel { 
+            flex: 1.5; 
+            background: white; 
+            padding: 16px; 
+            border-radius: var(--border-radius); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+            border-top: 4px solid var(--brand-blue); 
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        #orderForm {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        /* Inner scrollable area for inputs (excluding footer action buttons) */
+        .form-scroll-area {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        /* Pinned bottom action buttons */
+        .form-actions { 
+            flex: 0 0 auto;
+            display: flex; 
+            gap: 12px; 
+            background: white;
+            padding-top: 10px;
+            border-top: 1px solid var(--crust-med);
+        }
+        
+        /* --- SORT CONTROLS --- */
+        .control-row { display: flex; gap: 10px; margin-bottom: 8px; }
+        .control-row select { padding: 6px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'OneDotCd-Bold', sans-serif; font-size: 14px; background: white; flex: 1; }
+        
+        /* --- CARDS WITH COLORS --- */
+        .order-card { background: white; padding: 10px 14px; border-radius: var(--border-radius); box-shadow: 0 3px 5px rgba(0,0,0,0.02); border-left: 6px solid var(--brand-blue); cursor: pointer; transition: transform 0.15s ease; position: relative; }
+        .order-card:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.04); }
+        .order-card.selected { background: #fffcf9; box-shadow: 0 4px 12px rgba(255,143,0,0.12); }
+        
+        /* Status border overrides */
+        .order-card.status-blue { border-left-color: var(--brand-blue); }
+        .order-card.status-green { border-left-color: var(--brand-green); }
+        .order-card.status-red { border-left-color: var(--brand-red); border: 1.5px solid var(--brand-red); }
+        .order-card.status-reviewing { border-left-color: var(--brand-orange); box-shadow: 0 0 8px rgba(255,143,0,0.2); }
+        .order-card.status-gray { border-left-color: var(--brand-grey); opacity: 0.6; background-color: #fbfbfb; }
+
+        .card-name { font-family: 'OneDotCd-Bold', sans-serif; font-size: 15px; }
+        .card-sub { font-size: 12px; color: var(--text-light); margin-top: 4px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* --- FORMS & INPUTS --- */
+        .form-group { margin-bottom: 8px; }
+        .form-group label { display: block; font-family: 'OneDotCd-Bold', sans-serif; font-size: 13px; margin-bottom: 3px; }
+        .form-row { display: flex; gap: 10px; }
+        .form-row .form-group { flex: 1; }
+        
+        /* Widescreen 3-Column horizontal row mapping */
+        .form-row.flex-three { display: flex; gap: 10px; }
+        .form-row.flex-three .form-group { flex: 1; }
+        .form-row.flex-three .flex-two-weight { flex: 1.5; } 
+
+        input[type="text"], input[type="password"], textarea, select { width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'OneDotCd', sans-serif; box-sizing: border-box; font-size: 13px; }
+        textarea { height: 45px; resize: none; }
+        
+        /* --- COMPACT 3-COLUMN CHECKBOX GRID --- */
+        .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; background: var(--crust-light); padding: 10px; border-radius: 8px; }
+        .checkbox-item { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+        .checkbox-item input { width: 14px; height: 14px; cursor: pointer; }
+        
+        /* Section Headers spanning 3 columns */
+        .section-header {
+            grid-column: span 3;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 11px;
+            color: #005c91;
+            border-bottom: 2px solid var(--crust-dark);
+            padding-bottom: 2px;
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* --- ACTION FLAGS --- */
+        .flag-box { padding: 4px 6px; border-radius: 4px; display: flex; align-items: center; gap: 6px; }
+        .flag-incorrect { background: #ffebee; color: var(--brand-red); font-weight: bold; }
+        .flag-inactive { background: #f5f5f5; color: var(--brand-grey); font-weight: bold; }
+
+        /* --- BUTTONS --- */
+        button { background: #005c91; color: white; border: none; padding: 8px 14px; border-radius: 6px; font-family: 'OneDotCd-Bold', sans-serif; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        button:hover { opacity: 0.9; }
+        button.secondary { background: var(--brand-grey); }
+        button.btn-add { margin-bottom: 8px; background: var(--brand-green); width: 100%; flex: 0 0 auto; }
+        
+        /* --- BADGES --- */
+        .badge-missing { background: #ffebee; color: var(--brand-red); font-size: 10px; padding: 1px 5px; border-radius: 4px; font-weight: bold; border: 1px solid #ffcdd2; }
+        .badge-drafted { background: #e3f2fd; color: #0d47a1; font-size: 10px; padding: 1px 5px; border-radius: 4px; font-weight: bold; border: 1px solid #bbdefb; }
+
+        /* --- LOADING OVERLAY --- */
+        .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'PizzaPress', sans-serif; font-size: 20px; z-index: 1000; }
+        
+        .hidden { display: none !important; }
+
+        /* --- MOBILE STYLES --- */
+        @media (max-width: 768px) {
+            html, body { overflow: auto; height: auto; }
+            .dashboard { flex-direction: column; height: auto; overflow: visible; }
+            .list-panel { flex: none; height: auto; overflow: visible; }
+            .form-panel { position: static; height: auto; overflow: visible; }
+            #orderForm { height: auto; overflow: visible; }
+            .form-scroll-area { overflow-y: visible; height: auto; }
+            .form-row.flex-three { flex-direction: column; gap: 8px; }
+        }
+
+        /* --- READABILITY FONT-SIZE UPGRADES --- */
+        .card-name { font-size: 17px; } 
+        .card-sub { font-size: 14px; }  
+        
+        .form-group label { font-size: 15px; } 
+        input[type="text"], input[type="password"], textarea, select { font-size: 15px; } 
+        
+        .section-header { font-size: 13px; } 
+        .checkbox-item { font-size: 14px; }  
+        .checkbox-item input { width: 16px; height: 16px; } 
+        
+        button { font-size: 15px; } 
+    </style>
+</head>
+<body>
+
+<!-- Loader Overlay -->
+<div id="loadingOverlay" class="overlay hidden">Saving Database...</div>
+
+<!-- Login Container -->
+<div id="authContainer" class="auth-container">
+    <h2>Catering Workspace Login</h2>
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="loginUser" placeholder="e.g., dallas_catering">
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPass">
+    </div>
+    <div id="loginError" style="color: var(--brand-red); font-size: 14px; margin-bottom: 12px;" class="hidden"></div>
+    <button onclick="handleLogin()">Login</button>
+</div>
+
+<!-- Main App Wrapper -->
+<div id="appContainer" class="hidden">
+    <header>
+        <div style="display: flex; align-items: center;">
+            <img src="New_Logo_v2.png" alt="Logo" class="logo" onerror="this.style.display='none'">
+            <div>
+                <h1 id="headerTitle">Catering & Quote Portal</h1>
+                <div id="headerCity" class="subtitle">Checking Workspace...</div>
+            </div>
+        </div>
+        <button class="secondary" onclick="handleLogout()">Log Out</button>
+    </header>
+
+    <div class="dashboard">
+        <!-- Left Panel: List of Catering Orders -->
+        <div class="list-panel">
+            <button class="btn-add" onclick="prepareAddNew()">➕ Create New Order Entry</button>
+            
+            <div class="control-row">
+                <select id="sortControl" onchange="renderList()">
+                    <option value="date">📅 Sort: Order Date (Soonest)</option>
+                    <option value="school">🔤 Sort: School Name (A-Z)</option>
+                    <option value="store">🏬 Sort: Store #</option>
+                    <option value="status">📊 Sort: PO Status</option>
+                </select>
+            </div>
+
+            <div id="orderList"></div>
+        </div>
+
+        <!-- Right Panel: Order Form Area -->
+        <div class="form-panel" id="formPanel">
+            <h2 id="formTitle" style="margin-top: 0; font-family: 'OneDotCd-Bold', sans-serif; font-size: 18px; margin-bottom: 8px;">Order Details</h2>
+            <form id="orderForm" onsubmit="saveOrder(event)">
+                <input type="hidden" id="fieldId">
+                <input type="hidden" id="fieldQuoteUrl"> <!-- Hidden input to hold quote sheet link -->
+                
+                <div class="form-scroll-area">
+                    <div class="form-group">
+                        <label>School Name</label>
+                        <select id="fieldSchool" required onchange="handleSchoolChange()">
+                            <option value="">-- Select School --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Coordinator Name</label>
+                            <select id="fieldCoordinator" required onchange="handleCoordinatorChange()">
+                                <option value="">-- Select School First --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Service Method</label>
+                            <select id="fieldCarryout">
+                                <option value="">🚗 Delivery</option>
+                                <option value="Carryout">🏬 Carryout</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Office / Contact Phone</label>
+                            <input type="text" id="fieldPhone" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="text" id="fieldEmail" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row flex-three">
+                        <div class="form-group">
+                            <label>Order Date</label>
+                            <input type="date" id="fieldDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Delivery/Pickup Time</label>
+                            <input type="text" id="fieldTime" placeholder="e.g., 12:00 PM" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Store #</label>
+                            <input type="text" id="fieldStore" readonly placeholder="Auto-filled">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>PO # (or Payment Method)</label>
+                            <input type="text" id="fieldPoNum" placeholder="PO # or write 'Credit Card'" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Total Quote Cost</label>
+                            <input type="text" id="fieldTotal" placeholder="$0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Tip Amount</label>
+                            <input type="text" id="fieldTip" placeholder="$0.00">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>PO PDF Link (Google Drive Link)</label>
+                        <input type="text" id="fieldPoPdf" placeholder="Paste Google Drive PDF URL here">
+                    </div>
+
+                    <!-- Structured Active Stages Checklist Grid -->
+                    <div class="checkbox-grid">
+                        <div class="section-header">Stage 1: Quote Tracking</div>
+                        <label class="checkbox-item"><input type="checkbox" id="checkQuoteDrafted"> Quote Drafted / Created</label>
+                        
+                        <div class="section-header">Stage 2: Store Processing</div>
+                        <label class="checkbox-item"><input type="checkbox" id="checkPulse"> Entered in Pulse (POS)</label>
+                        <label class="checkbox-item"><input type="checkbox" id="checkCe"> C/E Sent (Confirm & Email)</label>
+                        
+                        <div class="section-header">Stage 3: Accounts Payable & PO</div>
+                        <label class="checkbox-item"><input type="checkbox" id="checkPoProcessed"> PO Approved / Received</label>
+                        <label class="checkbox-item"><input type="checkbox" id="checkAccountingSent"> Sent to Accounting</label>
+                        <label class="checkbox-item"><input type="checkbox" id="checkChaserSent"> PO Chaser Sent</label>
+                    </div>
+                </div>
+
+                <!-- Fixed Footer Action Buttons -->
+                <div class="form-actions">
+                    <button type="submit" style="flex: 1.5; background: var(--brand-blue);">💾 Save Row Details</button>
+                    <!-- Trigger Quote Generator Web Action -->
+                    <button type="button" id="btnDraftQuote" style="flex: 1.5; background: var(--brand-orange);" onclick="triggerQuoteGeneration()" disabled>📄 Draft Quote Sheet</button>
+                    <button type="button" class="secondary" id="btnCancel" onclick="clearForm()" style="flex: 1;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ========================================================
+    // DEPLOYED WEB APP URL (Pasted from Google Apps Script)
+    // ========================================================
+    const API_URL = "https://script.google.com/macros/s/AKfycbxa1XNdNgwOULiYpeAoBIjTy1wv034pON4-hnR444XB07vegHhoSR56UacR7UaktTaGZg/exec"; 
+
+    let orders = [];
+    let schoolsList = [];
+    let coordinatorsMap = {};
+    let storeLookup = {}; // Map of Store Details
+    let currentSelectedId = null;
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedUser = localStorage.getItem('cat_user');
+        const savedPass = localStorage.getItem('cat_pass');
+        
+        if (savedUser && savedPass) {
+            handleLogin(savedUser, savedPass);
+        }
+    });
+
+    function getCityFromUser(username) {
+        if (username.startsWith('denver')) return 'Denver';
+        if (username.startsWith('dallas')) return 'Dallas';
+        return 'System';
+    }
+
+    function handleLogin(savedUser, savedPass) {
+        const u = savedUser || document.getElementById('loginUser').value.trim();
+        const p = savedPass || document.getElementById('loginPass').value;
+        const errorEl = document.getElementById('loginError');
+
+        if (!u || !p) return;
+
+        showLoader(true, "Logging in and fetching directory...");
+        errorEl.classList.add('hidden');
+
+        const city = getCityFromUser(u);
+        
+        // Load initial school details, coordinator lists, and active orders list
+        fetch(`${API_URL}?action=getInitialData&city=${city}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                localStorage.setItem('cat_user', u);
+                localStorage.setItem('cat_pass', p);
+                
+                document.getElementById('authContainer').classList.add('hidden');
+                document.getElementById('appContainer').classList.remove('hidden');
+                
+                document.getElementById('headerCity').innerText = `${city} Catering District`;
+                
+                // Set Up Dropdowns Data
+                schoolsList = data.schools || [];
+                coordinatorsMap = data.coordinators || {};
+                storeLookup = data.storeLookup || {};
+                orders = data.orders || [];
+                
+                populateSchoolsDropdown();
+                renderList();
+                showLoader(false);
+            })
+            .catch(err => {
+                showLoader(false);
+                errorEl.innerText = "Error verifying login or connecting to Google Sheets.";
+                errorEl.classList.remove('hidden');
+                localStorage.clear();
+            });
+    }
+
+    function handleLogout() {
+        localStorage.clear();
+        location.reload();
+    }
+
+    function showLoader(show, text = "Loading...") {
+        const loader = document.getElementById('loadingOverlay');
+        loader.innerText = text;
+        if (show) loader.classList.remove('hidden');
+        else loader.classList.add('hidden');
+    }
+
+    function populateSchoolsDropdown() {
+        const schoolDropdown = document.getElementById('fieldSchool');
+        // Clear except first index option
+        schoolDropdown.innerHTML = '<option value="">-- Select School --</option>';
+        
+        schoolsList.forEach(school => {
+            const opt = document.createElement('option');
+            opt.value = school.name;
+            opt.textContent = school.name;
+            schoolDropdown.appendChild(opt);
+        });
+    }
+
+    // Dynamic School Dropdown trigger
+    function handleSchoolChange() {
+        const selectedSchool = document.getElementById('fieldSchool').value;
+        const coordDropdown = document.getElementById('fieldCoordinator');
+        const storeInput = document.getElementById('fieldStore');
+        
+        coordDropdown.innerHTML = '<option value="">-- Select Coordinator --</option>';
+        document.getElementById('fieldPhone').value = "";
+        document.getElementById('fieldEmail').value = "";
+        storeInput.value = "";
+
+        if (!selectedSchool) {
+            coordDropdown.disabled = true;
+            return;
+        }
+
+        // Auto-populate Store number for School
+        const schoolObj = schoolsList.find(s => s.name === selectedSchool);
+        if (schoolObj) {
+            storeInput.value = schoolObj.storeNum || '';
+        }
+
+        // Enable and build coordinator dropdown options
+        const coords = coordinatorsMap[selectedSchool] || [];
+        if (coords.length > 0) {
+            coordDropdown.disabled = false;
+            coords.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.name;
+                opt.textContent = c.name;
+                coordDropdown.appendChild(opt);
+            });
+        } else {
+            coordDropdown.disabled = true;
+            coordDropdown.innerHTML = '<option value="">-- No coordinators found --</option>';
+        }
+    }
+
+    // Dynamic Coordinator Dropdown trigger
+    function handleCoordinatorChange() {
+        const selectedSchool = document.getElementById('fieldSchool').value;
+        const selectedCoord = document.getElementById('fieldCoordinator').value;
+        
+        if (selectedSchool && selectedCoord) {
+            const coordsList = coordinatorsMap[selectedSchool] || [];
+            const match = coordsList.find(c => c.name === selectedCoord);
+            if (match) {
+                document.getElementById('fieldPhone').value = match.phone || '';
+                document.getElementById('fieldEmail').value = match.email || '';
+            }
+        }
+    }
+
+    // PO Status Logic for List rendering
+    function getPoStatusText(item) {
+        if (item.accountingSent) return "🏦 Sent to Accounting";
+        if (item.poProcessed) return "✓ PO Received";
+        if (item.chaserSent) return "⏳ Chaser Active";
+        if (item.poNum && item.poNum.toLowerCase().includes("credit card")) return "💳 Paying Card";
+        return "⚠️ Missing PO Paperwork";
+    }
+
+    function getStatusClass(item) {
+        if (item.accountingSent) return "status-green";
+        if (item.poProcessed) return "status-green";
+        if (item.poNum && item.poNum.toLowerCase().includes("credit card")) return "status-blue";
+        if (item.chaserSent) return "status-reviewing";
+        return "status-red"; // Default missing paperwork is Red!
+    }
+
+    function renderList() {
+        const listContainer = document.getElementById('orderList');
+        listContainer.innerHTML = '';
+
+        const sortBy = document.getElementById('sortControl').value;
+
+        // Clone so we don't mutate master list
+        let sortedOrders = [...orders];
+
+        sortedOrders.sort((a, b) => {
+            if (sortBy === 'school') {
+                return a.schoolName.localeCompare(b.schoolName);
+            }
+            if (sortBy === 'store') {
+                const storeA = parseInt(a.storeNum) || 0;
+                const storeB = parseInt(b.storeNum) || 0;
+                return storeA - storeB;
+            }
+            if (sortBy === 'status') {
+                const statusWeight = (item) => {
+                    if (item.accountingSent) return 4;
+                    if (item.poProcessed) return 3;
+                    if (item.poNum && item.poNum.toLowerCase().includes("credit card")) return 2;
+                    if (item.chaserSent) return 1;
+                    return 0; // Missing PO is highest priority to chase
+                };
+                return statusWeight(a) - statusWeight(b);
+            }
+            // Default: "date" (Soonest delivery date first)
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            return dateA - dateB;
+        });
+
+        if (sortedOrders.length === 0) {
+            listContainer.innerHTML = '<div style="text-align:center; padding: 20px; color:#aaa;">No catering orders scheduled.</div>';
+            return;
+        }
+
+        sortedOrders.forEach(item => {
+            const card = document.createElement('div');
+            card.className = `order-card ${getStatusClass(item)}`;
+            if (item.id === currentSelectedId) card.classList.add('selected');
+            
+            const poStatus = getPoStatusText(item);
+            
+            let badges = '';
+            if (!item.poNum && !item.poProcessed) badges += '<span class="badge-missing">⚠️ NO PO</span> ';
+            if (item.quoteUrl) badges += '<span class="badge-drafted">📄 Quote Ready</span> ';
+
+            // Human readable date formatting
+            const localDate = item.date ? new Date(item.date).toLocaleDateString(undefined, {month: 'numeric', day: 'numeric', year: '2-digit'}) : 'No Date';
+
+            card.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div class="card-name" style="max-width:70%; line-height: 1.2;">${item.schoolName}</div>
+                    <div style="display: flex; gap: 4px;">${badges}</div>
+                </div>
+                <div class="card-sub">
+                    <span>${localDate} at ${item.time || ''} (Store #${item.storeNum})</span>
+                    <span style="font-family: 'OneDotCd-Bold', sans-serif;">${poStatus}</span>
+                </div>
+            `;
+            
+            card.onclick = () => selectOrder(item);
+            listContainer.appendChild(card);
+        });
+    }
+
+    function selectOrder(item) {
+        currentSelectedId = item.id;
+        renderList();
+
+        document.getElementById('formTitle').innerText = `Edit Order: ${item.schoolName}`;
+        
+        document.getElementById('fieldId').value = item.id;
+        document.getElementById('fieldSchool').value = item.schoolName;
+        handleSchoolChange(); // Re-trigger mapping
+        
+        document.getElementById('fieldCoordinator').value = item.coordinatorName;
+        handleCoordinatorChange(); // Re-populate contact values
+        
+        document.getElementById('fieldCarryout').value = item.serviceMethod || '';
+        document.getElementById('fieldDate').value = item.date ? item.date.split('T')[0] : '';
+        document.getElementById('fieldTime').value = item.time || '';
+        document.getElementById('fieldStore').value = item.storeNum || '';
+        document.getElementById('fieldPoNum').value = item.poNum || '';
+        document.getElementById('fieldTotal').value = item.totalCost || '';
+        document.getElementById('fieldTip').value = item.tipAmount || '';
+        document.getElementById('fieldPoPdf').value = item.poPdfLink || '';
+        document.getElementById('fieldQuoteUrl').value = item.quoteUrl || '';
+
+        // Checkboxes
+        document.getElementById('checkQuoteDrafted').checked = item.quoteUrl ? true : false;
+        document.getElementById('checkPulse').checked = item.enteredInPulse || false;
+        document.getElementById('checkCe').checked = item.ceSent || false;
+        document.getElementById('checkPoProcessed').checked = item.poProcessed || false;
+        document.getElementById('checkAccountingSent').checked = item.accountingSent || false;
+        document.getElementById('checkChaserSent').checked = item.chaserSent || false;
+
+        document.getElementById('btnCancel').innerText = "Cancel Edit";
+        
+        // Enable "Draft Quote Sheet" button because an saved order exists
+        document.getElementById('btnDraftQuote').disabled = false;
+    }
+
+    function prepareAddNew() {
+        clearForm();
+        currentSelectedId = null;
+        renderList();
+        document.getElementById('formTitle').innerText = "Create New Order";
+        document.getElementById('fieldSchool').focus();
+    }
+
+    function clearForm() {
+        document.getElementById('orderForm').reset();
+        document.getElementById('fieldId').value = '';
+        document.getElementById('fieldQuoteUrl').value = '';
+        document.getElementById('formTitle').innerText = "Order Details";
+        document.getElementById('btnCancel').innerText = "Cancel";
+        document.getElementById('fieldCoordinator').disabled = true;
+        document.getElementById('btnDraftQuote').disabled = true;
+        currentSelectedId = null;
+        renderList();
+    }
+
+    // SAVE DETAILS TO GOOGLE SHEETS
+    function saveOrder(e) {
+        e.preventDefault();
+
+        const username = localStorage.getItem('cat_user');
+        const password = localStorage.getItem('cat_pass');
+        const id = document.getElementById('fieldId').value;
+        const action = id ? 'update' : 'add';
+
+        showLoader(true, "Saving order to spreadsheet...");
+
+        const payload = {
+            username: username,
+            password: password,
+            action: action,
+            id: id,
+            schoolName: document.getElementById('fieldSchool').value,
+            coordinatorName: document.getElementById('fieldCoordinator').value,
+            serviceMethod: document.getElementById('fieldCarryout').value,
+            date: document.getElementById('fieldDate').value,
+            time: document.getElementById('fieldTime').value,
+            storeNum: document.getElementById('fieldStore').value,
+            poNum: document.getElementById('fieldPoNum').value.trim(),
+            totalCost: document.getElementById('fieldTotal').value.trim(),
+            tipAmount: document.getElementById('fieldTip').value.trim(),
+            poPdfLink: document.getElementById('fieldPoPdf').value.trim(),
+            enteredInPulse: document.getElementById('checkPulse').checked,
+            ceSent: document.getElementById('checkCe').checked,
+            poProcessed: document.getElementById('checkPoProcessed').checked,
+            accountingSent: document.getElementById('checkAccountingSent').checked,
+            chaserSent: document.getElementById('checkChaserSent').checked
+        };
+
+        fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(result => {
+            if (!result.success) {
+                throw new Error(result.error || "Save action failed");
+            }
+            
+            const city = getCityFromUser(username);
+            return fetch(`${API_URL}?action=getInitialData&city=${city}`);
+        })
+        .then(res => res.json())
+        .then(data => {
+            orders = data.orders || [];
+            renderList();
+            clearForm();
+            showLoader(false);
+        })
+        .catch(err => {
+            showLoader(false);
+            alert("Error saving order details: " + err.message);
+        });
+    }
+
+    // ==========================================
+    // WEB APP ACTION: CREATE THE QUOTE GOOGLE SHEET
+    // ==========================================
+    function triggerQuoteGeneration() {
+        const id = document.getElementById('fieldId').value;
+        const savedQuoteUrl = document.getElementById('fieldQuoteUrl').value;
+        
+        if (!id) return;
+
+        // If a quote spreadsheet link already exists, just open it!
+        if (savedQuoteUrl && savedQuoteUrl !== "") {
+            window.open(savedQuoteUrl, '_blank');
+            return;
+        }
+
+        showLoader(true, "Duplicating template & drafting custom quote...");
+
+        const username = localStorage.getItem('cat_user');
+        const password = localStorage.getItem('cat_pass');
+
+        const payload = {
+            username: username,
+            password: password,
+            action: "draftQuote",
+            id: id
+        };
+
+        fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(result => {
+            if (!result.success) {
+                throw new Error(result.error || "Draft quote process failed");
+            }
+            
+            showLoader(false);
+            alert("Quote Sheet Drafted successfully! It will now open in a new tab.");
+            
+            // Automatically launch the newly created Google Sheet in a separate tab!
+            window.open(result.quoteUrl, '_blank');
+            
+            // Reload local data to reflect that the quote is now drafted
+            const city = getCityFromUser(username);
+            return fetch(`${API_URL}?action=getInitialData&city=${city}`);
+        })
+        .then(res => res.json())
+        .then(data => {
+            orders = data.orders || [];
+            renderList();
+            clearForm();
+        })
+        .catch(err => {
+            showLoader(false);
+            alert("Error drafting quote: " + err.message);
+        });
+    }
+</script>
+</body>
+</html>
