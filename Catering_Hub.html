@@ -620,8 +620,8 @@
                 <div class="form-actions">
                     <button type="submit" style="flex: 1.5; background: var(--med-blue);">💾 Save Row Details</button>
                     <button type="button" id="btnDraftQuote" style="flex: 1.5; background: var(--brand-red);" onclick="triggerQuoteGeneration()" disabled>📄 Draft Quote Sheet</button>
-                    <!-- New automated email trigger button -->
-                    <button type="button" id="btnSendQuote" style="flex: 1.5; background: #2e7d32;" class="hidden" onclick="triggerQuoteSend()">📧 Send Quote to School</button>
+                    <!-- Changed background to Brand Red and replaced the green sphere with a mail emoji -->
+                    <button type="button" id="btnSendQuote" style="flex: 1.5; background: var(--brand-red);" class="hidden" onclick="triggerQuoteSend()">📧 Send Quote to School</button>
                     <button type="button" class="secondary" id="btnCancel" onclick="clearForm()" style="flex: 1;">Cancel</button>
                 </div>
             </form>
@@ -1159,16 +1159,16 @@
         
         // Enable "Draft Quote Sheet" button because a saved order exists
         const btnDraftQuote = document.getElementById('btnDraftQuote');
-            const btnSendQuote = document.getElementById('btnSendQuote');
+        const btnSendQuote = document.getElementById('btnSendQuote');
 
             if (btnDraftQuote) {
                 btnDraftQuote.disabled = false;
                 if (item.quoteUrl) {
-                    btnDraftQuote.innerText = "🟢 Open Spreadsheet";
+                    btnDraftQuote.innerText = "📄 Open Spreadsheet";
                     btnDraftQuote.style.background = "var(--brand-blue)";
                     if (btnSendQuote) btnSendQuote.classList.remove('hidden');
                 } else {
-                    btnDraftQuote.innerText = "📄 Draft Quote Sheet";
+                    btnDraftQuote.innerText = "⌨️ Draft Quote Sheet";
                     btnDraftQuote.style.background = "var(--brand-red)";
                     if (btnSendQuote) btnSendQuote.classList.add('hidden');
                 }
@@ -1259,7 +1259,7 @@
             poProcessed: checkPoProcessed ? checkPoProcessed.checked : false,
             accountingSent: checkAccountingSent ? checkAccountingSent.checked : false,
             chaserSent: checkChaserSent ? checkChaserSent.checked : false,
-            phoneNumber: phoneInput ? phoneInput.value.trim() : '',
+            phoneNumber: phoneInput ? formatPhoneNumber(phoneInput.value) : '',
             email: emailInput ? emailInput.value.trim() : ''
         };
 
@@ -1599,6 +1599,17 @@
         }
         
         return dateStr;
+        }
+
+        function formatPhoneNumber(value) {
+            if (!value) return value;
+            const phoneNumber = value.toString().replace(/[^\d]/g, '');
+            const numLength = phoneNumber.length;
+            if (numLength < 4) return phoneNumber;
+            if (numLength < 7) {
+                return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+            }
+            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
         }
 </script>
 </body>
