@@ -320,10 +320,15 @@
         <label>Username</label>
         <input type="text" id="loginUser" placeholder="e.g., dallas_catering">
     </div>
-    <div class="form-group">
+    <div class="form-group" style="position: relative;">
         <label>Password</label>
-        <input type="password" id="loginPass">
-    </div>
+        <!-- Added padding-right so text doesn't overlap the "SHOW" button -->
+        <input type="password" id="loginPass" style="padding-right: 60px;">
+        <!-- Positioned from the bottom to account for the label height -->
+        <span id="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; right: 10px; bottom: 8px; cursor: pointer; color: var(--brand-blue); font-size: 14px; font-weight: bold; user-select: none;">
+            SHOW
+        </span>
+    </div>  
     <div id="loginError" style="color: var(--brand-red); font-family: 'Bold', sans-serif; font-size: 14px; margin-bottom: 12px;" class="hidden"></div>
     <button onclick="handleLogin()">Login</button>
 </div>
@@ -956,6 +961,21 @@
             alert("Error drafting quote: " + err.message);
         });
     }
+
+    window.togglePasswordVisibility = function() {
+        const passInput = document.getElementById('loginPass'); // FIXED: Matches 'loginPass' ID
+        const toggleBtn = document.getElementById('toggle-password');
+
+        if (passInput.type === 'password') {
+            passInput.type = 'text';
+            toggleBtn.innerText = 'HIDE';
+            toggleBtn.style.color = 'var(--crust-dark)'; 
+        } else {
+            passInput.type = 'password';
+            toggleBtn.innerText = 'SHOW';
+            toggleBtn.style.color = 'var(--brand-blue)'; 
+        }
+    };
 </script>
 </body>
 </html>
