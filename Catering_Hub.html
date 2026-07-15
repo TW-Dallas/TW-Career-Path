@@ -4,40 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Wow Catering Portal</title>
-    <link class="favicon" rel="icon" type="image/png" href="image/tile_blue.png">
+    <link class="favicon" rel="icon" type="image/png" href="tile_blue.png">
     <style>
-        @font-face { font-family: 'PizzaPress'; src: url('fonts/Dominos Sans Header 1.ttf') format('truetype'); font-weight: bold; }
-        @font-face { font-family: 'OneDotCd-Bold'; src: url('fonts/Dominos Sans Bold.ttf') format('truetype'); font-weight: bold; }
-        @font-face { font-family: 'OneDotCd'; src: url('fonts/Dominos Sans Body Compact.ttf') format('truetype'); font-weight: normal; }
+        /* --- BRAND FONTS --- */
+        @font-face {
+            font-family: 'ExtraBlack';
+            src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'ExtraBold';
+            src: url('fonts/Dominos Sans Header 2.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'Subhead1';
+            src: url('fonts/Dominos Sans Subhead 1.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'Subhead2';
+            src: url('fonts/Dominos Sans Subhead 2.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'Bold';
+            src: url('fonts/Dominos Sans Bold.ttf') format('truetype');
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: 'Body';
+            src: url('fonts/Dominos Sans Body.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'Condensed';
+            src: url('fonts/Dominos Sans Body Condensed.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'Compact';
+            src: url('fonts/Dominos Sans Body Compact.ttf') format('truetype');
+            font-weight: normal;
+        }
 
+        /* --- DESIGN VARIABLES --- */
         :root {
+            /* Brand Identity Colors */
             --brand-red: #ff0000;
+            --dark-red: #910000;
             --brand-blue: #0090e2;
-            --brand-green: #28a745;
-            --brand-orange: #ff8f00;
-            --brand-grey: #6c757d;
+            --med-blue: #0077bd;
+            --dark-blue: #005c91;
+            
+            /* Warm Dough/Crust Neutrals */
+            --crust-base: #fefaf6;
             --crust-light: #faf2e9;
             --crust-med: #f0decc;
             --crust-dark: #c0a588;
-            --bg-color: var(--crust-light);
+            --crust-deep: #603913;
+            --crust-burnt: #472b10;
+            
+            /* UI Helper Constants */
+            --brand-green: #28a745;
+            --brand-orange: #ff8f00;
+            --brand-grey: #6c757d;
             --card-bg: #FFFFFF;
-            --text-dark: #472b10;
-            --text-light: #603913;
             --border-radius: 12px;
         }
 
         /* Lock the body to prevent page-wide scrolling */
         html, body { height: 100%; overflow: hidden; margin: 0; padding: 0; }
-        body { font-family: 'OneDotCd', sans-serif; background-color: var(--bg-color); color: var(--text-dark); display: flex; flex-direction: column; }
+        body { 
+            font-family: 'Body', sans-serif; 
+            background-color: var(--crust-light); 
+            color: var(--crust-burnt); 
+            display: flex; 
+            flex-direction: column; 
+        }
         
-        header { background-color: #005c91; color: white; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(71, 43, 16, 0.15); flex: 0 0 auto; }
-        h1 { margin: 0; font-family: 'PizzaPress', serif; font-size: 20px; text-transform: uppercase; }
-        .subtitle { font-family: 'OneDotCd', sans-serif; font-size: 12px; opacity: 0.9; }
+        header { 
+            background-color: var(--dark-blue); 
+            color: white; 
+            padding: 10px 16px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            box-shadow: 0 4px 12px rgba(71, 43, 16, 0.15); 
+            flex: 0 0 auto; 
+        }
+        h1 { margin: 0; font-family: 'ExtraBlack', sans-serif; font-size: 20px; text-transform: uppercase; }
+        .subtitle { font-family: 'Compact', sans-serif; font-size: 13px; opacity: 0.9; }
         .logo { height: 32px; width: auto; margin-right: 12px; }
         
         /* --- AUTH SCREEN --- */
-        .auth-container { max-width: 400px; margin: 80px auto; padding: 24px; background: white; border-radius: var(--border-radius); box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid var(--brand-blue); }
-        .auth-container h2 { margin-top: 0; font-family: 'OneDotCd-Bold', sans-serif; }
+        .auth-container { 
+            max-width: 400px; 
+            margin: 80px auto; 
+            padding: 24px; 
+            background: var(--card-bg); 
+            border-radius: var(--border-radius); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+            border-top: 6px solid var(--brand-blue); 
+        }
+        .auth-container h2 { margin-top: 0; font-family: 'ExtraBold', sans-serif; color: var(--crust-burnt); }
         
         /* --- DASHBOARD VIEWPORT LOCK LAYOUT --- */
         .dashboard { 
@@ -73,7 +143,7 @@
         /* Right Panel: Widescreen expanded, flexible height with locked footer buttons */
         .form-panel { 
             flex: 1.5; 
-            background: white; 
+            background: var(--card-bg); 
             padding: 16px; 
             border-radius: var(--border-radius); 
             box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
@@ -104,19 +174,29 @@
             flex: 0 0 auto;
             display: flex; 
             gap: 12px; 
-            background: white;
+            background: var(--card-bg);
             padding-top: 10px;
             border-top: 1px solid var(--crust-med);
         }
         
         /* --- SORT CONTROLS --- */
         .control-row { display: flex; gap: 10px; margin-bottom: 8px; }
-        .control-row select { padding: 6px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'OneDotCd-Bold', sans-serif; font-size: 14px; background: white; flex: 1; }
+        .control-row select { padding: 6px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'Bold', sans-serif; font-size: 14px; background: var(--card-bg); flex: 1; }
         
         /* --- CARDS WITH COLORS --- */
-        .order-card { background: white; padding: 10px 14px; border-radius: var(--border-radius); box-shadow: 0 3px 5px rgba(0,0,0,0.02); border-left: 6px solid var(--brand-blue); cursor: pointer; transition: transform 0.15s ease; position: relative; }
+        .order-card { 
+            background: var(--card-bg); 
+            padding: 10px 14px; 
+            border-radius: var(--border-radius); 
+            box-shadow: 0 3px 5px rgba(0,0,0,0.02); 
+            border-left: 6px solid var(--brand-blue); 
+            cursor: pointer; 
+            transition: transform 0.15s ease; 
+            position: relative; 
+            color: var(--crust-burnt);
+        }
         .order-card:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.04); }
-        .order-card.selected { background: #fffcf9; box-shadow: 0 4px 12px rgba(255,143,0,0.12); }
+        .order-card.selected { background: var(--crust-base); box-shadow: 0 4px 12px rgba(255,143,0,0.12); }
         
         /* Status border overrides */
         .order-card.status-blue { border-left-color: var(--brand-blue); }
@@ -125,12 +205,12 @@
         .order-card.status-reviewing { border-left-color: var(--brand-orange); box-shadow: 0 0 8px rgba(255,143,0,0.2); }
         .order-card.status-gray { border-left-color: var(--brand-grey); opacity: 0.6; background-color: #fbfbfb; }
 
-        .card-name { font-family: 'OneDotCd-Bold', sans-serif; font-size: 15px; }
-        .card-sub { font-size: 12px; color: var(--text-light); margin-top: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .card-name { font-family: 'Bold', sans-serif; font-size: 15px; }
+        .card-sub { font-family: 'Compact', sans-serif; font-size: 12px; color: var(--crust-deep); margin-top: 4px; display: flex; justify-content: space-between; align-items: center; }
         
         /* --- FORMS & INPUTS --- */
         .form-group { margin-bottom: 8px; }
-        .form-group label { display: block; font-family: 'OneDotCd-Bold', sans-serif; font-size: 13px; margin-bottom: 3px; }
+        .form-group label { display: block; font-family: 'Bold', sans-serif; font-size: 13px; margin-bottom: 3px; color: var(--crust-burnt); }
         .form-row { display: flex; gap: 10px; }
         .form-row .form-group { flex: 1; }
         
@@ -139,20 +219,30 @@
         .form-row.flex-three .form-group { flex: 1; }
         .form-row.flex-three .flex-two-weight { flex: 1.5; } 
 
-        input[type="text"], input[type="password"], textarea, select { width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'OneDotCd', sans-serif; box-sizing: border-box; font-size: 13px; }
+        input[type="text"], input[type="password"], textarea, select { 
+            width: 100%; 
+            padding: 6px; 
+            border-radius: 6px; 
+            border: 1px solid var(--crust-dark); 
+            font-family: 'Body', sans-serif; 
+            box-sizing: border-box; 
+            font-size: 13px; 
+            background-color: var(--card-bg);
+            color: var(--crust-burnt);
+        }
         textarea { height: 45px; resize: none; }
         
         /* --- COMPACT 3-COLUMN CHECKBOX GRID --- */
         .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; background: var(--crust-light); padding: 10px; border-radius: 8px; }
-        .checkbox-item { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+        .checkbox-item { display: flex; align-items: center; gap: 6px; font-family: 'Compact', sans-serif; font-size: 13px; cursor: pointer; color: var(--crust-burnt); }
         .checkbox-item input { width: 14px; height: 14px; cursor: pointer; }
         
         /* Section Headers spanning 3 columns */
         .section-header {
             grid-column: span 3;
-            font-family: 'OneDotCd-Bold', sans-serif;
+            font-family: 'Subhead1', sans-serif;
             font-size: 11px;
-            color: #005c91;
+            color: var(--dark-blue);
             border-bottom: 2px solid var(--crust-dark);
             padding-bottom: 2px;
             margin-top: 6px;
@@ -166,17 +256,30 @@
         .flag-inactive { background: #f5f5f5; color: var(--brand-grey); font-weight: bold; }
 
         /* --- BUTTONS --- */
-        button { background: #005c91; color: white; border: none; padding: 8px 14px; border-radius: 6px; font-family: 'OneDotCd-Bold', sans-serif; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        button { 
+            background: var(--dark-blue); 
+            color: white; 
+            border: none; 
+            padding: 8px 14px; 
+            border-radius: 6px; 
+            font-family: 'Bold', sans-serif; 
+            font-size: 14px; 
+            cursor: pointer; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px; 
+        }
         button:hover { opacity: 0.9; }
         button.secondary { background: var(--brand-grey); }
         button.btn-add { margin-bottom: 8px; background: var(--brand-green); width: 100%; flex: 0 0 auto; }
         
         /* --- BADGES --- */
-        .badge-missing { background: #ffebee; color: var(--brand-red); font-size: 10px; padding: 1px 5px; border-radius: 4px; font-weight: bold; border: 1px solid #ffcdd2; }
-        .badge-drafted { background: #e3f2fd; color: #0d47a1; font-size: 10px; padding: 1px 5px; border-radius: 4px; font-weight: bold; border: 1px solid #bbdefb; }
+        .badge-missing { background: #ffebee; color: var(--brand-red); font-family: 'Compact', sans-serif; font-size: 10px; padding: 1px 5px; border-radius: 4px; font-weight: bold; border: 1px solid #ffcdd2; }
+        .badge-drafted { background: #e3f2fd; color: #0d47a1; font-family: 'Compact', sans-serif; font-size: 10px; padding: 1px 5px; border-radius: 4px; font-weight: bold; border: 1px solid #bbdefb; }
 
         /* --- LOADING OVERLAY --- */
-        .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'PizzaPress', sans-serif; font-size: 20px; z-index: 1000; }
+        .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 20px; z-index: 1000; color: var(--crust-burnt); }
         
         .hidden { display: none !important; }
 
@@ -221,7 +324,7 @@
         <label>Password</label>
         <input type="password" id="loginPass">
     </div>
-    <div id="loginError" style="color: var(--brand-red); font-size: 14px; margin-bottom: 12px;" class="hidden"></div>
+    <div id="loginError" style="color: var(--brand-red); font-family: 'Bold', sans-serif; font-size: 14px; margin-bottom: 12px;" class="hidden"></div>
     <button onclick="handleLogin()">Login</button>
 </div>
 
@@ -257,7 +360,8 @@
 
         <!-- Right Panel: Order Form Area -->
         <div class="form-panel" id="formPanel">
-            <h2 id="formTitle" style="margin-top: 0; font-family: 'OneDotCd-Bold', sans-serif; font-size: 18px; margin-bottom: 8px;">Order Details</h2>
+            <!-- Font-Family Updated to ExtraBold -->
+            <h2 id="formTitle" style="margin-top: 0; font-family: 'ExtraBold', sans-serif; font-size: 18px; margin-bottom: 8px;">Order Details</h2>
             <form id="orderForm" onsubmit="saveOrder(event)">
                 <input type="hidden" id="fieldId">
                 <input type="hidden" id="fieldQuoteUrl"> <!-- Hidden input to hold quote sheet link -->
@@ -277,8 +381,8 @@
                                 <select id="fieldCoordinator" required onchange="handleCoordinatorChange()" style="flex: 1;">
                                     <option value="">-- Select School First --</option>
                                 </select>
-                                <!-- Quick Add Trigger -->
-                                <button type="button" id="btnQuickAddCoord" onclick="toggleQuickAddCoord()" style="padding: 6px 12px; background: var(--brand-blue);" disabled>➕</button>
+                                <!-- Quick Add Trigger using Dark Blue Background -->
+                                <button type="button" id="btnQuickAddCoord" onclick="toggleQuickAddCoord()" style="padding: 6px 12px; background: var(--dark-blue);" disabled>➕</button>
                             </div>
                         </div>
                         <div class="form-group">
@@ -290,9 +394,9 @@
                         </div>
                     </div>
 
-                    <!-- Mini Form: Quick Add Coordinator (Hidden by default) -->
+                    <!-- Mini Form: Quick Add Coordinator (Hidden by default) with Subhead1 Font -->
                     <div id="quickAddCoordArea" class="hidden" style="background: var(--crust-light); border: 2.5px solid var(--crust-dark); padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 6px solid var(--brand-orange);">
-                        <h4 style="margin: 0 0 8px 0; font-family: 'OneDotCd-Bold'; font-size: 14px; color: var(--brand-orange);">Quick Add Coordinator</h4>
+                        <h4 style="margin: 0 0 8px 0; font-family: 'Subhead1', sans-serif; font-size: 14px; color: var(--brand-orange);">Quick Add Coordinator</h4>
                         <div class="form-group">
                             <label>Coordinator Name</label>
                             <input type="text" id="newCoordName" placeholder="e.g., Jane Doe">
@@ -364,9 +468,9 @@
                     </div>
                 </div>
 
-                <!-- Fixed Footer Action Buttons -->
+                <!-- Fixed Footer Action Buttons with med-blue and brand-orange -->
                 <div class="form-actions">
-                    <button type="submit" style="flex: 1.5; background: var(--brand-blue);">💾 Save Row Details</button>
+                    <button type="submit" style="flex: 1.5; background: var(--med-blue);">💾 Save Row Details</button>
                     <!-- Trigger Quote Generator Web Action -->
                     <button type="button" id="btnDraftQuote" style="flex: 1.5; background: var(--brand-orange);" onclick="triggerQuoteGeneration()" disabled>📄 Draft Quote Sheet</button>
                     <button type="button" class="secondary" id="btnCancel" onclick="clearForm()" style="flex: 1;">Cancel</button>
@@ -660,12 +764,13 @@
 
             card.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                    <div class="card-name" style="max-width:70%; line-height: 1.2;">${item.schoolName}</div>
+                    <div class="card-name" style="max-width:70%; line-height: 1.2; font-family: 'Bold', sans-serif;">${item.schoolName}</div>
                     <div style="display: flex; gap: 4px;">${badges}</div>
                 </div>
                 <div class="card-sub">
                     <span>${localDate} at ${item.time || ''} (Store #${item.storeNum})</span>
-                    <span style="font-family: 'OneDotCd-Bold', sans-serif;">${poStatus}</span>
+                    <!-- Font-Family Updated to Bold -->
+                    <span style="font-family: 'Bold', sans-serif; color: ${getStatusClass(item) === 'status-green' ? 'var(--brand-green)' : (getStatusClass(item) === 'status-blue' ? 'var(--brand-blue)' : (getStatusClass(item) === 'status-reviewing' ? 'var(--brand-orange)' : 'var(--brand-red)'))};">${poStatus}</span>
                 </div>
             `;
             
