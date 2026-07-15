@@ -860,14 +860,24 @@
             const localDate = item.date ? new Date(item.date).toLocaleDateString(undefined, {month: 'numeric', day: 'numeric', year: '2-digit'}) : 'No Date';
 
             card.innerHTML = `
+                <!-- Row 1: School Name & Action Badges -->
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                     <div class="card-name" style="max-width:70%; line-height: 1.2; font-family: 'Bold', sans-serif;">${item.schoolName}</div>
                     <div style="display: flex; gap: 4px;">${badges}</div>
                 </div>
-                <div class="card-sub">
-                    <span>${localDate} at ${item.time || ''} (Store #${item.storeNum})</span>
-                    <!-- Font-Family Updated to Bold -->
-                    <span style="font-family: 'Bold', sans-serif; color: ${getStatusClass(item) === 'status-green' ? 'var(--brand-green)' : (getStatusClass(item) === 'status-blue' ? 'var(--brand-blue)' : (getStatusClass(item) === 'status-reviewing' ? 'var(--dark-red)' : 'var(--brand-red)'))};">${poStatus}</span>
+                
+                <!-- Healed Sub-row layout with multi-line stacking -->
+                <div class="card-sub" style="display: flex; flex-direction: column; gap: 4px; margin-top: 6px;">
+                    <!-- Row 2: Event Date/Time & PO Status -->
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>📅 ${localDate} at ${item.time || 'No Time'}</span>
+                        <span style="font-family: 'Bold', sans-serif; color: ${getStatusClass(item) === 'status-green' ? 'var(--brand-green)' : (getStatusClass(item) === 'status-blue' ? 'var(--brand-blue)' : (getStatusClass(item) === 'status-reviewing' ? 'var(--brand-orange)' : 'var(--brand-red)'))};">${poStatus}</span>
+                    </div>
+                    
+                    <!-- Row 3: Assigned Store Number (On its own clean line) -->
+                    <div style="font-size: 13px; color: var(--crust-deep); font-family: 'Compact', sans-serif; display: flex; align-items: center; gap: 4px;">
+                        🏬 Store #${item.storeNum}
+                    </div>
                 </div>
             `;
             
