@@ -1477,7 +1477,7 @@
     function handleTemplateSelectChange() {
         const select = document.getElementById('replyTemplateSelect');
         const groupPeopleCount = document.getElementById('groupPeopleCount');
-        const groupCustomText = document.getElementById('groupCustomText'); // Read custom input container
+        const groupCustomText = document.getElementById('groupCustomText'); 
         const preview = document.getElementById('templatePreviewArea');
         const btnCopy = document.getElementById('btnCopyTemplate');
     
@@ -1492,11 +1492,12 @@
             preview.classList.remove('hidden');
             btnCopy.classList.remove('hidden');
             
-            if (select.value === 'info') {
+            // Show headcount input for both onboarding info and carryout templates
+            if (select.value === 'info' || select.value === 'carryout') {
                 groupPeopleCount.classList.remove('hidden');
-                groupCustomText.classList.add('hidden'); // Hide custom input on info template
+                groupCustomText.classList.add('hidden'); 
             } else if (select.value === 'custom') {
-                groupCustomText.classList.remove('hidden'); // Show custom input on custom template
+                groupCustomText.classList.remove('hidden'); 
                 groupPeopleCount.classList.add('hidden');
             } else {
                 groupPeopleCount.classList.add('hidden');
@@ -1520,14 +1521,12 @@
         
         const fSchool = schoolObj ? schoolObj.name : boldRedPlaceholder;
         const fAddress = schoolObj && schoolObj.address ? schoolObj.address : boldRedPlaceholder;
-        // friendly greeting name, but keeps the full "coordinator" variable for contact records
         const greetingName = coordinator ? extractFirstName(coordinator) : boldRedPlaceholder; 
         const fCoord = coordinator ? coordinator : boldRedPlaceholder;
         
         const rawDate = document.getElementById('fieldDate').value;
         let fDate = boldRedPlaceholder;
         if (rawDate) {
-            // Robust split-parser translates "YYYY-MM-DD" on-screen inputs into a standard "M/D/YY" string
             const dateParts = rawDate.split('-');
             if (dateParts.length === 3) {
                 fDate = `${parseInt(dateParts[1], 10)}/${parseInt(dateParts[2], 10)}/${dateParts[0].slice(-2)}`;
@@ -1540,13 +1539,31 @@
         const rawPhone = document.getElementById('fieldPhone').value;
         const fPhone = rawPhone ? rawPhone : (schoolObj && schoolObj.phone ? schoolObj.phone : boldRedPlaceholder);
 
+        // Get headcount calculations for templates
+        const peopleCountInput = document.getElementById('templatePeopleCount').value;
+        const headcount = parseInt(peopleCountInput, 10);
+
         let htmlString = "";
 
         if (select.value === 'carryout') {
-            // Look up carryout store physical address
             let storeAddr = boldRedPlaceholder;
             if (schoolObj && schoolObj.carryoutStore && storeLookup[schoolObj.carryoutStore]) {
                 storeAddr = storeLookup[schoolObj.carryoutStore].address || boldRedPlaceholder;
+            }
+
+            // Build optional portion block if a headcount is provided
+            let portionBlock = "";
+            if (!isNaN(headcount) && headcount > 0) {
+                const pizzas2Slices = Math.ceil((headcount * 2) / 8);
+                const pizzas3Slices = Math.ceil((headcount * 3) / 8);
+                portionBlock = `
+                    <p style="margin-bottom: 4px; font-weight: bold; color: #005c91; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Portion Recommendation</p>
+                    <p style="margin-top: 0; margin-bottom: 8px;">Based on your headcount of <strong>${headcount} people</strong> (assuming 2 to 3 slices per person):</p>
+                    <ul style="margin: 0 0 16px 0; padding-left: 20px; list-style-type: circle;">
+                        <li style="margin-bottom: 4px;">2 slices each: <strong>${pizzas2Slices} pizzas</strong></li>
+                        <li style="margin-bottom: 4px;">3 slices each: <strong>${pizzas3Slices} pizzas</strong></li>
+                    </ul>
+                `;
             }
 
             htmlString = `
@@ -1555,24 +1572,21 @@
                     <p>Thank you so much for reaching out! I received your catering request for <strong>${fSchool}</strong> on <strong>${fDate}</strong>.</p>
                     <p>While we are an approved vendor for your district, your specific school address unfortunately falls outside of our standard delivery routing zone.</p>
                     <p>However, we would absolutely love to serve your team via <strong>Carryout</strong>! Your closest pickup location is:</p>
-                    <ul style="margin: 8px 0; padding-left: 20px;">
+                    <ul style="margin: 8px 0; padding-left: 20px; style="margin-bottom: 16px;">
                         <li style="margin-bottom: 6px;">📍 <strong>Address:</strong> ${storeAddr}</li>
                     </ul>
+                    ${portionBlock}
                     <p>If you would like to proceed with a carryout order, please let me know. I will generate a formal quote for you to submit to your purchasing department to secure a purchase order. <em>Please note that the formal quote will arrive in a separate email.</em></p>
                     <p style="margin-bottom: 12px;">Let me know if you need any other adjustments!</p>
                     <p style="margin: 0;">Best regards,</p>
                     <div style="margin-top: 10px;">
-                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 410px; height: auto; display: block;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 290px; height: auto; display: block;">
                     </div>
                 </div>
             `;
         } else if (select.value === 'info') {
-            const peopleCountInput = document.getElementById('templatePeopleCount').value;
-            const headcount = parseInt(peopleCountInput, 10);
-            
             let portionBlock = `* 🍕 <strong>Portion Recommendation:</strong> 2 - 3 slices per person`;
             
-            // Dynamic Portions calculation replacing manual math entirely!
             if (!isNaN(headcount) && headcount > 0) {
                 const pizzas2Slices = Math.ceil((headcount * 2) / 8);
                 const pizzas3Slices = Math.ceil((headcount * 3) / 8);
@@ -1614,15 +1628,13 @@
                     <p style="margin-bottom: 16px;">If you have any questions or need help planning your order, feel free to reach out. I look forward to working with you!</p>
                     <p style="margin: 0;">Best regards,</p>
                     <div style="margin-top: 10px;">
-                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 410px; height: auto; display: block;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 290px; height: auto; display: block;">
                     </div>
                 </div>
             `;
         } else if (select.value === 'custom') { 
             const customInput = document.getElementById('templateCustomText');
             const customText = customInput ? customInput.value.trim() : "";
-            
-            // Replaces manual typing line breaks with clean HTML break tags
             const formattedText = customText ? customText.replace(/\n/g, '<br>') : `<span style="color: #ff0000; font-weight: bold;">[TYPE YOUR CUSTOM REPLY HERE]</span>`;
 
             htmlString = `
@@ -1631,7 +1643,7 @@
                     <p>${formattedText}</p>
                     <p style="margin: 0;">Best regards,</p>
                     <div style="margin-top: 10px;">
-                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 410px; height: auto; display: block;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 290px; height: auto; display: block;">
                     </div>
                 </div>
             `;
