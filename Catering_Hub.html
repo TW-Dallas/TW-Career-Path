@@ -1471,8 +1471,25 @@
                     </div>
                 </div>
             `;
-        }
+        } else if (select.value === 'custom') { // <--- Unified else if block [1]
+            const customInput = document.getElementById('templateCustomText');
+            const customText = customInput ? customInput.value.trim() : "";
+            
+            // Replaces manual typing line breaks with clean HTML break tags [1]
+            const formattedText = customText ? customText.replace(/\n/g, '<br>') : `<span style="color: #ff0000; font-weight: bold;">[TYPE YOUR CUSTOM REPLY HERE]</span>`;
 
+            htmlString = `
+                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #603913; line-height: 1.55;">
+                    <p style="margin-top: 0;">Hi ${fCoord},</p>
+                    <p>${formattedText}</p>
+                    <p style="margin: 0; color: #6c757d;">Best regards,</p>
+                    <div style="margin-top: 10px;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 270px; height: auto; display: block;">
+                    </div>
+                </div>
+            `;
+        }
+    
         preview.innerHTML = htmlString;
     }
 
