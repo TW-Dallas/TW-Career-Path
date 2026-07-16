@@ -449,15 +449,15 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 17px;">
                     <span>Quotes Written:</span>
                     <span style="font-family: 'Compact'; font-size: 17px;">
-                        This Week: <strong id="metricsQuotesThisWeek" style="color: var(--med-blue); font-family: 'Subhead2'; font-size: 17px;">0</strong> | 
-                        Last Week: <strong id="metricsQuotesLastWeek" style="font-family: 'Subhead2'; font-size: 17px;">0</strong>
+                        This Week: <strong id="metricsQuotesThisWeek" style="color: var(--med-blue); font-family: 'Subhead2', sans-serif; font-size: 17px;">0</strong> | 
+                        Last Week: <strong id="metricsQuotesLastWeek" style="font-family: 'Subhead2', sans-serif; font-size: 17px;">0</strong>
                     </span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 17px;">
                     <span>Orders Placed:</span>
                     <span style="font-family: 'Compact'; font-size: 17px;">
-                        This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Subhead2'; font-size: 16px;">0</strong> | 
-                        Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Subhead2'; font-size: 16px;">0</strong>
+                        This Week: <strong id="metricsOrdersThisWeek" style="color: var(--med-blue); font-family: 'Subhead2', sans-serif; font-size: 16px;">0</strong> | 
+                        Last Week: <strong id="metricsOrdersLastWeek" style="font-family: 'Subhead2', sans-serif; font-size: 16px;">0</strong>
                     </span>
                 </div>
             </div>
@@ -901,6 +901,7 @@
         return "Missing PO";
     }
 
+    // Assigns neutral visual status parameters based strictly on domino brand palettes
     function getStatusClass(item) {
         if (item.accountingSent || item.poProcessed || (item.poNum && item.poNum.toLowerCase().includes("credit card")) || item.chaserSent) {
             return "status-blue";
@@ -1373,14 +1374,29 @@
             if (!result.success) {
                 throw new Error(result.error || "Save action failed");
             }
-            return fetch(`${API_URL}?action=getInitialData`);
-        })
-        .then(res => res.json())
-        .then(data => {
-            orders = data.orders || [];
-            renderList();
-            clearForm();
-            showLoader(false);
+            
+            // Capture the newly saved or updated ID [1]
+            const savedId = id || result.id;
+
+            return fetch(`${API_URL}?action=getInitialData`)
+                .then(res => res.json())
+                .then(data => {
+                    orders = data.orders || [];
+                    renderList();
+                    
+                    // UPGRADED: Find the saved ID and auto-select/load it instead of clearing the screen [1]
+                    if (savedId) {
+                        const matchedOrder = orders.find(o => o.id === savedId);
+                        if (matchedOrder) {
+                            selectOrder(matchedOrder);
+                        } else {
+                            clearForm();
+                        }
+                    } else {
+                        clearForm();
+                    }
+                    showLoader(false);
+                });
         })
         .catch(err => {
             showLoader(false);
