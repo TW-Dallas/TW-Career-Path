@@ -1214,6 +1214,9 @@
             tabBtnDetails.classList.remove('active');
             orderForm.classList.add('hidden');
             schoolProfileView.classList.remove('hidden');
+            
+            // UPGRADED: Instantly reads unsaved on-screen fields to build your template preview [1]
+            updateTemplatePreview(); 
         } else {
             tabBtnDetails.classList.add('active');
             tabBtnProfile.classList.remove('active');
@@ -1381,7 +1384,16 @@
         const fCoord = coordinator ? coordinator : boldRedPlaceholder;
         
         const rawDate = document.getElementById('fieldDate').value;
-        const fDate = rawDate ? new Date(rawDate).toLocaleDateString() : boldRedPlaceholder;
+        let fDate = boldRedPlaceholder;
+        if (rawDate) {
+            // Robust split-parser translates "YYYY-MM-DD" on-screen inputs into a standard "M/D/YY" string [1]
+            const dateParts = rawDate.split('-');
+            if (dateParts.length === 3) {
+                fDate = `${parseInt(dateParts[1], 10)}/${parseInt(dateParts[2], 10)}/${dateParts[0].slice(-2)}`;
+            } else {
+                fDate = rawDate;
+            }
+        }
         const rawTime = document.getElementById('fieldTime').value;
         const fTime = rawTime ? rawTime : boldRedPlaceholder;
         const rawPhone = document.getElementById('fieldPhone').value;
