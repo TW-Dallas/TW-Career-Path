@@ -58,9 +58,12 @@
             flex: 0 0 auto; 
         }
         h1 { margin: 0; font-family: 'ExtraBlack', sans-serif; font-size: 26px; text-transform: uppercase; }
-        .subtitle { font-family: 'Compact', sans-serif; font-size: 15px; opacity: 0.9; }
+        .subtitle { font-family: 'Compact', sans-serif; font-size: 17px; opacity: 0.9; }
         .logo { height: 32px; width: auto; margin-right: 12px; }
         
+        /* Keep header button elements (e.g. Log Out) at original size */
+        header button { font-size: 17px !important; }
+
         .dashboard { 
             display: flex; 
             max-width: 1600px; 
@@ -97,7 +100,7 @@
         .form-actions { flex: 0 0 auto; display: flex; gap: 12px; background: var(--card-bg); padding-top: 10px; border-top: 1px solid var(--crust-med); }
         
         .control-row { display: flex; gap: 10px; margin-bottom: 8px; }
-        .control-row select { padding: 8px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'Subhead2', sans-serif; font-size: 16px; background: var(--card-bg); flex: 1; }
+        .control-row select { padding: 8px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'Subhead2', sans-serif; font-size: 18px; background: var(--card-bg); flex: 1; }
         
         /* --- CARDS WITH COLORS --- */
         .order-card { 
@@ -120,10 +123,10 @@
         .order-card.status-gray { border-left-color: var(--brand-grey); opacity: 0.6; background-color: #fbfbfb; }
 
         .card-name { font-family: 'Subhead1', sans-serif; font-size: 20px; }
-        .card-sub { font-family: 'Compact', sans-serif; font-size: 16px; color: var(--crust-deep); margin-top: 4px; display: flex; flex-direction: column; align-items: flex-start; }
+        .card-sub { font-family: 'Compact', sans-serif; font-size: 17px; color: var(--crust-deep); margin-top: 4px; display: flex; flex-direction: column; align-items: flex-start; }
         
         .form-group { margin-bottom: 6px; } 
-        .form-group label { display: block; font-family: 'Subhead1', sans-serif; font-size: 17px; margin-bottom: 2px; color: var(--crust-burnt); } 
+        .form-group label { display: block; font-family: 'Subhead1', sans-serif; font-size: 19px; margin-bottom: 2px; color: var(--crust-burnt); } 
         .form-row { display: flex; gap: 10px; }
         .form-row .form-group { flex: 1; }
         
@@ -132,7 +135,7 @@
 
         input[type="text"], input[type="password"], input[type="date"], textarea, select { 
             width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--crust-dark); 
-            font-family: 'Condensed', sans-serif; box-sizing: border-box; font-size: 17px; background-color: var(--card-bg); color: var(--crust-burnt);
+            font-family: 'Condensed', sans-serif; box-sizing: border-box; font-size: 18px; background-color: var(--card-bg); color: var(--crust-burnt);
         }
         textarea { height: 45px; resize: none; }
         
@@ -152,12 +155,12 @@
 
         button { 
             background: var(--dark-blue); color: white; border: none; padding: 10px 18px; border-radius: 6px; 
-            font-family: 'Subhead2', sans-serif; font-size: 17px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; 
+            font-family: 'Subhead2', sans-serif; font-size: 18px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; 
         }
         button:hover { opacity: 0.9; }
         button:disabled { background: var(--crust-med) !important; color: var(--crust-dark) !important; cursor: not-allowed; }
         button.secondary { background: var(--brand-grey); }
-        button.btn-add { margin-bottom: 8px; background: var(--brand-blue); width: 100%; flex: 0 0 auto; padding: 12px; font-size: 17px; }
+        button.btn-add { margin-bottom: 8px; background: var(--brand-blue); width: 100%; flex: 0 0 auto; padding: 12px; font-size: 18px; }
         
         .badge-drafted { background: #e3f2fd; color: #0d47a1; font-family: 'Compact', sans-serif; font-size: 12px; padding: 3px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #bbdefb; }
         .badge-sent { background: var(--crust-light); color: var(--crust-burnt); font-family: 'Compact', sans-serif; font-size: 12px; padding: 3px 8px; border-radius: 4px; font-weight: bold; border: 1px solid var(--crust-dark); margin-left: 4px; }
@@ -175,18 +178,18 @@
 
         .checklist-row { display: flex; align-items: center; gap: 10px; padding: 4px 0; border-bottom: 1px dashed var(--crust-med); animation: fadeIn 0.12s ease-in-out; }
         .checklist-row input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--brand-blue); flex-shrink: 0; margin: 0; }
-        .checklist-row-text { flex: 1; font-family: 'Condensed', sans-serif; font-size: 17px; color: var(--crust-burnt); outline: none; word-break: break-word; }
+        .checklist-row-text { flex: 1; font-family: 'Condensed', sans-serif; font-size: 18px; color: var(--crust-burnt); outline: none; word-break: break-word; }
         .checklist-row.completed .checklist-row-text { text-decoration: line-through; color: var(--brand-grey); opacity: 0.65; }
         .checklist-delete-btn { background: transparent !important; border: none; color: var(--brand-grey); font-size: 18px; cursor: pointer; padding: 2px 6px; flex-shrink: 0; line-height: 1; }
         .checklist-delete-btn:hover { color: var(--brand-red); }
 
         /* --- STYLED INTERACTIVE TABS --- */
         .tab-btn-group { display: flex; gap: 8px; border-bottom: 2px solid var(--crust-med); padding-bottom: 8px; margin-bottom: 12px; }
-        .tab-btn { flex: 1; background: var(--crust-light); border: 1.5px solid var(--crust-med); color: var(--crust-burnt); padding: 8px; font-family: 'Subhead2', sans-serif; font-size: 16px; border-radius: 6px; cursor: pointer; }
+        .tab-btn { flex: 1; background: var(--crust-light); border: 1.5px solid var(--crust-med); color: var(--crust-burnt); padding: 8px; font-family: 'Subhead2', sans-serif; font-size: 18px; border-radius: 6px; cursor: pointer; }
         .tab-btn.active { background: var(--dark-blue); color: white; border-color: var(--dark-blue); }
 
         .profile-card { background: var(--crust-base); border: 1.5px solid var(--crust-dark); padding: 14px; border-radius: 8px; margin-bottom: 12px; }
-        .profile-label { font-family: 'Subhead1', sans-serif; font-size: 15px; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 2px; }
+        .profile-label { font-family: 'Subhead1', sans-serif; font-size: 17px; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 2px; }
         .profile-val { font-family: 'Condensed', sans-serif; font-size: 18px; color: var(--crust-burnt); margin-bottom: 8px; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
@@ -417,7 +420,7 @@
                 <div class="profile-card" style="flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 180px;">
                     <div class="profile-label" style="border-bottom: 1.5px dashed var(--crust-med); padding-bottom: 4px; margin-bottom: 8px;">Event & Order History</div>
                     <div style="flex: 1; overflow-y: auto;">
-                        <table style="width: 100%; border-collapse: collapse; font-family: 'Condensed', sans-serif; font-size: 15px;" id="profileHistoryTable">
+                        <table style="width: 100%; border-collapse: collapse; font-family: 'Condensed', sans-serif; font-size: 18px;" id="profileHistoryTable">
                             <thead>
                                 <tr style="border-bottom: 2px solid var(--crust-dark); text-align: left; color: var(--dark-blue);">
                                     <th style="padding: 4px;">Date</th>
@@ -478,7 +481,7 @@
         <div class="notes-panel">
             <div id="metricsBox" style="background: var(--crust-light); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); color: var(--crust-burnt);">
                 <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--crust-med); padding-bottom: 8px; align-items: center;">
-                    <span style="font-family: 'ExtraBold', sans-serif; font-size: 16px; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">Weekly Activity Audit</span>
+                    <span style="font-family: 'ExtraBold', sans-serif; font-size: 18px; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">Weekly Activity Audit</span>
                     <span id="metricsWeekRange" style="font-size: 13px; font-family: 'Compact'; color: var(--crust-deep); font-weight: bold;"></span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 17px;">
@@ -498,7 +501,7 @@
             </div>
             
             <div style="flex: 1; display: flex; flex-direction: column; background: var(--crust-base); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
-                <div style="font-family: 'ExtraBold', sans-serif; font-size: 15px; color: var(--dark-blue); border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px; flex: 0 0 auto;">
+                <div style="font-family: 'ExtraBold', sans-serif; font-size: 18px; color: var(--dark-blue); border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px; flex: 0 0 auto;" id="scratchpadTitleHeader">
                     <span>📋 Sync Scratchpad</span>
                     <div style="display: flex; gap: 4px; align-items: center;">
                         <button type="button" id="btnModeText" onclick="setScratchpadMode('text')" style="font-size: 11px; padding: 2px 6px; background: var(--dark-blue); color: white; border-radius: 4px; font-family: 'Compact'; min-width: 40px; text-transform: uppercase;">Text</button>
@@ -1246,7 +1249,7 @@
         } else {
             coords.forEach(c => {
                 const el = document.createElement('div');
-                el.style = "padding: 6px 8px; border-bottom: 1.5px solid var(--crust-med); font-size:16px;";
+                el.style = "padding: 6px 8px; border-bottom: 1.5px solid var(--crust-med); font-size:18px;";
                 el.innerHTML = `<strong>👤 ${c.name}</strong> &bull; 📞 ${c.phone || 'N/A'} &bull; ✉️ ${c.email || 'N/A'}`;
                 coordsList.appendChild(el);
             });
@@ -1423,7 +1426,7 @@
                     <p style="margin-bottom: 12px;">Let me know if you need any other adjustments!</p>
                     <p style="margin: 0; color: #6c757d;">Best regards,</p>
                     <div style="margin-top: 10px;">
-                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 290px; height: auto; display: block;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 320px; height: auto; display: block;">
                     </div>
                 </div>
             `;
@@ -1475,7 +1478,7 @@
                     <p style="margin-bottom: 16px;">If you have any questions or need help planning your order, feel free to reach out. I look forward to working with you!</p>
                     <p style="margin: 0; color: #6c757d;">Best regards,</p>
                     <div style="margin-top: 10px;">
-                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 290px; height: auto; display: block;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 320px; height: auto; display: block;">
                     </div>
                 </div>
             `;
@@ -1492,7 +1495,7 @@
                     <p>${formattedText}</p>
                     <p style="margin: 0; color: #6c757d;">Best regards,</p>
                     <div style="margin-top: 10px;">
-                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 290px; height: auto; display: block;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 320px; height: auto; display: block;">
                     </div>
                 </div>
             `;
@@ -1870,6 +1873,7 @@
         });
     }
 
+    // Trigger Email Direct Pipeline
     function triggerQuoteSend() {
         const fieldId = document.getElementById('fieldId');
         const id = fieldId ? fieldId.value : '';
