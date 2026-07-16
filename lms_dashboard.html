@@ -718,9 +718,15 @@
         <div class="modal-content">
             <span class="close-modal" onclick="toggleSupportModal()">&times;</span>
             <h2 style="font-family: 'PizzaPress'; color: var(--brand-blue); margin-bottom: 5px;">Report an Issue</h2>
-            <p style="font-family: 'OneDotCd'; color: #666; margin-bottom: 20px;">Found a problem with your profile data? Let us know.</p>
+            
+            <!-- Updated color to var(--crust-deep) for consistent brand styling -->
+            <p style="font-family: 'OneDotCd'; color: var(--crust-deep); margin-bottom: 20px;">Found a problem with your profile data? Let us know.</p>
             
             <form id="supportForm" onsubmit="submitSupport(event)">
+                
+                <!-- Automatically captures the filename/path of the page -->
+                <input type="hidden" name="pageSource" id="supportPageSource">
+
                 <div class="form-group">
                     <label class="form-label">Name</label>
                     <input type="text" class="form-input" name="name" id="supportName" required placeholder="Your Name">
@@ -883,6 +889,10 @@
                 }, 100);
             }
         });
+
+        // This exact same line can be copied to all files without changes:
+        document.getElementById('supportPageSource').value = window.location.pathname.split('/').pop() || "index.html";
+        
     </script>
 </body>
 </html>
