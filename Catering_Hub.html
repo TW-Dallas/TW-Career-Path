@@ -7,55 +7,26 @@
     <link class="favicon" rel="icon" type="image/png" href="image/tile_blue.png">
     <style>
         /* --- BRAND FONTS --- */
-        @font-face {
-            font-family: 'ExtraBlack';
-            src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
-            font-weight: normal;
-        }
-        @font-face {
-            font-family: 'ExtraBold';
-            src: url('fonts/Dominos Sans Header 2.ttf') format('truetype');
-            font-weight: normal;
-        }
-        @font-face {
-            font-family: 'Subhead1';
-            src: url('fonts/Dominos Sans Subhead 1.ttf') format('truetype');
-            font-weight: normal;
-        }
-        @font-face {
-            font-family: 'Subhead2';
-            src: url('fonts/Dominos Sans Subhead 2.ttf') format('truetype');
-            font-weight: normal;
-        }
-        @font-face {
-            font-family: 'Condensed';
-            src: url('fonts/Dominos Sans Body Condensed.ttf') format('truetype');
-            font-weight: normal;
-        }
-        @font-face {
-            font-family: 'Compact';
-            src: url('fonts/Dominos Sans Body Compact.ttf') format('truetype');
-            font-weight: normal;
-        }
+        @font-face { font-family: 'ExtraBlack'; src: url('fonts/Dominos Sans Header 1.ttf') format('truetype'); font-weight: normal; }
+        @font-face { font-family: 'ExtraBold'; src: url('fonts/Dominos Sans Header 2.ttf') format('truetype'); font-weight: normal; }
+        @font-face { font-family: 'Subhead1'; src: url('fonts/Dominos Sans Subhead 1.ttf') format('truetype'); font-weight: normal; }
+        @font-face { font-family: 'Subhead2'; src: url('fonts/Dominos Sans Subhead 2.ttf') format('truetype'); font-weight: normal; }
+        @font-face { font-family: 'Condensed'; src: url('fonts/Dominos Sans Body Condensed.ttf') format('truetype'); font-weight: normal; }
+        @font-face { font-family: 'Compact'; src: url('fonts/Dominos Sans Body Compact.ttf') format('truetype'); font-weight: normal; }
 
         /* --- DESIGN VARIABLES --- */
         :root {
-            /* Brand Identity Colors */
             --brand-red: #ff0000;
             --dark-red: #910000;
             --brand-blue: #0090e2;
             --med-blue: #0077bd;
             --dark-blue: #005c91;
-            
-            /* Warm Dough/Crust Neutrals */
             --crust-base: #fefaf6;
             --crust-light: #faf2e9;
             --crust-med: #f0decc;
             --crust-dark: #c0a588;
             --crust-deep: #603913;
             --crust-burnt: #472b10;
-            
-            /* UI Helper Constants */
             --brand-grey: #6c757d;
             --card-bg: #FFFFFF;
             --border-radius: 12px;
@@ -74,10 +45,7 @@
             height: 100vh;
         }
 
-        body:has(#appContainer:not(.hidden)) {
-            background-image: none;
-            background-color: var(--crust-light);
-        }
+        body:has(#appContainer:not(.hidden)) { background-image: none; background-color: var(--crust-light); }
         
         header { 
             background-color: var(--dark-blue); 
@@ -93,7 +61,6 @@
         .subtitle { font-family: 'Compact', sans-serif; font-size: 15px; opacity: 0.9; }
         .logo { height: 32px; width: auto; margin-right: 12px; }
         
-        /* --- DASHBOARD VIEWPORT LOCK LAYOUT --- */
         .dashboard { 
             display: flex; 
             max-width: 1600px; 
@@ -106,21 +73,8 @@
             overflow: hidden;
         }
 
-        .list-panel { 
-            flex: 0 0 380px; 
-            display: flex; 
-            flex-direction: column; 
-            height: 100%; 
-            overflow: hidden;
-        }
-        #orderList { 
-            flex: 1; 
-            overflow-y: auto; 
-            padding-right: 4px; 
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .list-panel { flex: 0 0 380px; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+        #orderList { flex: 1; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; gap: 12px; }
 
         .form-panel { 
             flex: 1.5; 
@@ -136,37 +90,11 @@
             overflow: hidden;
         }
         
-        .notes-panel {
-            flex: 0 0 340px; 
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            overflow: hidden;
-            gap: 16px; 
-        }
+        .notes-panel { flex: 0 0 340px; display: flex; flex-direction: column; height: 100%; overflow: hidden; gap: 16px; }
 
-        #orderForm {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            overflow: hidden;
-        }
-        
-        .form-scroll-area {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 8px;
-            margin-bottom: 8px;
-        }
-        
-        .form-actions { 
-            flex: 0 0 auto;
-            display: flex; 
-            gap: 12px; 
-            background: var(--card-bg);
-            padding-top: 10px;
-            border-top: 1px solid var(--crust-med);
-        }
+        #orderForm { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+        .form-scroll-area { flex: 1; overflow-y: auto; padding-right: 8px; margin-bottom: 8px; }
+        .form-actions { flex: 0 0 auto; display: flex; gap: 12px; background: var(--card-bg); padding-top: 10px; border-top: 1px solid var(--crust-med); }
         
         .control-row { display: flex; gap: 10px; margin-bottom: 8px; }
         .control-row select { padding: 8px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'Subhead2', sans-serif; font-size: 16px; background: var(--card-bg); flex: 1; }
@@ -188,21 +116,11 @@
         .order-card.selected { background: var(--crust-base); box-shadow: 0 4px 12px rgba(0,92,145,0.08); }
         
         .order-card.status-blue { border-left-color: var(--brand-blue); }
-        .order-card.status-green { border-left-color: var(--brand-blue); }
         .order-card.status-red { border-left-color: var(--brand-red); border-color: var(--brand-red); }
-        .order-card.status-reviewing { border-left-color: var(--brand-blue); }
         .order-card.status-gray { border-left-color: var(--brand-grey); opacity: 0.6; background-color: #fbfbfb; }
 
         .card-name { font-family: 'Subhead1', sans-serif; font-size: 20px; }
-        .card-sub { 
-            font-family: 'Compact', sans-serif; 
-            font-size: 16px; 
-            color: var(--crust-deep); 
-            margin-top: 4px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: flex-start; 
-        }
+        .card-sub { font-family: 'Compact', sans-serif; font-size: 16px; color: var(--crust-deep); margin-top: 4px; display: flex; flex-direction: column; align-items: flex-start; }
         
         .form-group { margin-bottom: 6px; } 
         .form-group label { display: block; font-family: 'Subhead1', sans-serif; font-size: 17px; margin-bottom: 2px; color: var(--crust-burnt); } 
@@ -211,199 +129,67 @@
         
         .form-row.flex-three { display: flex; gap: 10px; }
         .form-row.flex-three .form-group { flex: 1; }
-        .form-row.flex-three .flex-two-weight { flex: 1.5; } 
 
         input[type="text"], input[type="password"], input[type="date"], textarea, select { 
-            width: 100%; 
-            padding: 8px 10px; 
-            border-radius: 6px; 
-            border: 1px solid var(--crust-dark); 
-            font-family: 'Condensed', sans-serif; 
-            box-sizing: border-box; 
-            font-size: 17px; 
-            background-color: var(--card-bg);
-            color: var(--crust-burnt);
+            width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--crust-dark); 
+            font-family: 'Condensed', sans-serif; box-sizing: border-box; font-size: 17px; background-color: var(--card-bg); color: var(--crust-burnt);
         }
         textarea { height: 45px; resize: none; }
         
-        .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 8px; background: var(--crust-light); padding: 10px 12px; border-radius: 8px; } 
+        /* --- COLLAPSIBLE DETAILS STYLING --- */
+        .manual-overrides-details { margin-top: 12px; background: var(--crust-light); border-radius: 8px; border: 1.5px solid var(--crust-med); overflow: hidden; }
+        .manual-overrides-details summary { padding: 10px 12px; font-family: 'Subhead1', sans-serif; font-size: 16px; cursor: pointer; color: var(--dark-blue); user-select: none; outline: none; }
+        .manual-overrides-details summary:hover { background: var(--crust-med); }
+
+        .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; padding: 10px 12px; background: var(--crust-light); border-top: 1.5px solid var(--crust-med); } 
         .checkbox-item { display: flex; align-items: center; gap: 6px; font-family: 'Compact', sans-serif; font-size: 16px; cursor: pointer; color: var(--crust-burnt); }
         .checkbox-item input { width: 18px; height: 18px; cursor: pointer; }
         
         .section-header {
-            grid-column: span 3;
-            font-family: 'Subhead1', sans-serif;
-            font-size: 15px;
-            color: var(--dark-blue);
-            border-bottom: 2px solid var(--crust-dark);
-            padding-bottom: 2px; 
-            margin-top: 6px; 
-            margin-bottom: 4px; 
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            grid-column: span 3; font-family: 'Subhead1', sans-serif; font-size: 15px; color: var(--dark-blue);
+            border-bottom: 2px solid var(--crust-dark); padding-bottom: 2px; margin-top: 4px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;
         }
-        
-        .flag-box { padding: 4px 6px; border-radius: 4px; display: flex; align-items: center; gap: 6px; }
-        .flag-incorrect { background: #ffebee; color: var(--brand-red); font-weight: bold; }
-        .flag-inactive { background: #f5f5f5; color: var(--brand-grey); font-weight: bold; }
 
         button { 
-            background: var(--dark-blue); 
-            color: white; 
-            border: none; 
-            padding: 10px 18px; 
-            border-radius: 6px; 
-            font-family: 'Subhead2', sans-serif; 
-            font-size: 17px; 
-            cursor: pointer; 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 8px; 
+            background: var(--dark-blue); color: white; border: none; padding: 10px 18px; border-radius: 6px; 
+            font-family: 'Subhead2', sans-serif; font-size: 17px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; 
         }
         button:hover { opacity: 0.9; }
+        button:disabled { background: var(--crust-med) !important; color: var(--crust-dark) !important; cursor: not-allowed; }
         button.secondary { background: var(--brand-grey); }
         button.btn-add { margin-bottom: 8px; background: var(--brand-blue); width: 100%; flex: 0 0 auto; padding: 12px; font-size: 17px; }
         
-        /* --- BADGES --- */
         .badge-drafted { background: #e3f2fd; color: #0d47a1; font-family: 'Compact', sans-serif; font-size: 12px; padding: 3px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #bbdefb; }
-        
-        /* --- BRAND COMPLIANT SENT BADGE (WARM DOUGH) --- */
         .badge-sent { background: var(--crust-light); color: var(--crust-burnt); font-family: 'Compact', sans-serif; font-size: 12px; padding: 3px 8px; border-radius: 4px; font-weight: bold; border: 1px solid var(--crust-dark); margin-left: 4px; }
 
         .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 26px; z-index: 1000; color: var(--crust-burnt); text-transform: uppercase; }
         
-        /* --- PREMIUM AUTH SCREEN --- */
-        .auth-container { 
-            max-width: 520px; 
-            margin: 10vh auto; 
-            background: var(--card-bg); 
-            border-radius: var(--border-radius); 
-            box-shadow: 0 16px 48px rgba(71, 43, 16, 0.18); 
-            border: 2px solid var(--crust-dark);
-            position: relative;
-            overflow: hidden;
-            box-sizing: border-box;
-        }
-        .auth-brand-stripe {
-            background: linear-gradient(90deg, var(--brand-red) 50%, var(--brand-blue) 50%); 
-            height: 10px; 
-            width: 100%;
-        }
-        .auth-inner {
-            padding: 44px; 
-        }
-        .auth-container h2 { 
-            margin-top: 0; 
-            font-family: 'ExtraBlack', sans-serif; 
-            font-size: 30px; 
-            text-align: center; 
-            color: var(--dark-blue); 
-            margin-bottom: 6px; 
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .auth-subtitle {
-            text-align: center;
-            font-family: 'Compact', sans-serif;
-            font-size: 17px; 
-            color: var(--crust-deep);
-            margin-bottom: 36px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .auth-container label {
-            font-family: 'Subhead1', sans-serif;
-            font-size: 16px; 
-            color: var(--crust-burnt);
-            margin-bottom: 8px;
-            display: block;
-        }
-        .auth-container input[type="text"], 
-        .auth-container input[type="password"] {
-            font-size: 18px; 
-            padding: 14px 16px; 
-            border-radius: 8px;
-            border: 2px solid var(--crust-med);
-            background-color: var(--crust-base);
-            transition: border-color 0.15s ease, box-shadow 0.15s ease;
-        }
-        .auth-container input[type="text"]:focus, 
-        .auth-container input[type="password"]:focus {
-            border-color: var(--brand-blue);
-            box-shadow: 0 0 0 4px rgba(0, 144, 226, 0.15);
-            outline: none;
-        }
-        .auth-container button {
-            width: 100%;
-            padding: 16px; 
-            font-size: 20px; 
-            font-family: 'ExtraBold', sans-serif;
-            background: var(--dark-blue);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 12px rgba(0, 92, 145, 0.25);
-            transition: background 0.15s ease, transform 0.1s ease;
-        }
-        .auth-container button:hover {
-            background: var(--med-blue);
-        }
-        .auth-container button:active {
-            transform: translateY(1px);
-        }
+        .auth-container { max-width: 520px; margin: 10vh auto; background: var(--card-bg); border-radius: var(--border-radius); box-shadow: 0 16px 48px rgba(71, 43, 16, 0.18); border: 2px solid var(--crust-dark); position: relative; overflow: hidden; box-sizing: border-box; }
+        .auth-brand-stripe { background: linear-gradient(90deg, var(--brand-red) 50%, var(--brand-blue) 50%); height: 10px; width: 100%; }
+        .auth-inner { padding: 44px; }
+        .auth-container h2 { margin-top: 0; font-family: 'ExtraBlack', sans-serif; font-size: 30px; text-align: center; color: var(--dark-blue); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .auth-subtitle { text-align: center; font-family: 'Compact', sans-serif; font-size: 17px; color: var(--crust-deep); margin-bottom: 36px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .auth-container button { width: 100%; padding: 16px; font-size: 20px; font-family: 'ExtraBold', sans-serif; background: var(--dark-blue); color: white; border: none; border-radius: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(0, 92, 145, 0.25); }
 
         .hidden { display: none !important; }
 
-        .checklist-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 4px 0;
-            border-bottom: 1px dashed var(--crust-med);
-            animation: fadeIn 0.12s ease-in-out;
-        }
-        .checklist-row input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: var(--brand-blue);
-            flex-shrink: 0;
-            margin: 0;
-        }
-        .checklist-row-text {
-            flex: 1;
-            font-family: 'Condensed', sans-serif;
-            font-size: 17px;
-            color: var(--crust-burnt);
-            outline: none;
-            word-break: break-word;
-        }
-        .checklist-row.completed .checklist-row-text {
-            text-decoration: line-through;
-            color: var(--brand-grey);
-            opacity: 0.65;
-        }
-        .checklist-delete-btn {
-            background: transparent !important;
-            border: none;
-            color: var(--brand-grey);
-            font-size: 18px;
-            cursor: pointer;
-            padding: 2px 6px;
-            flex-shrink: 0;
-            line-height: 1;
-        }
-        .checklist-delete-btn:hover {
-            color: var(--brand-red);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-3px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .checklist-row { display: flex; align-items: center; gap: 10px; padding: 4px 0; border-bottom: 1px dashed var(--crust-med); animation: fadeIn 0.12s ease-in-out; }
+        .checklist-row input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--brand-blue); flex-shrink: 0; margin: 0; }
+        .checklist-row-text { flex: 1; font-family: 'Condensed', sans-serif; font-size: 17px; color: var(--crust-burnt); outline: none; word-break: break-word; }
+        .checklist-row.completed .checklist-row-text { text-decoration: line-through; color: var(--brand-grey); opacity: 0.65; }
+        .checklist-delete-btn { background: transparent !important; border: none; color: var(--brand-grey); font-size: 18px; cursor: pointer; padding: 2px 6px; flex-shrink: 0; line-height: 1; }
+        .checklist-delete-btn:hover { color: var(--brand-red); }
+
+        /* --- STYLED INTERACTIVE TABS --- */
+        .tab-btn-group { display: flex; gap: 8px; border-bottom: 2px solid var(--crust-med); padding-bottom: 8px; margin-bottom: 12px; }
+        .tab-btn { flex: 1; background: var(--crust-light); border: 1.5px solid var(--crust-med); color: var(--crust-burnt); padding: 8px; font-family: 'Subhead2', sans-serif; font-size: 16px; border-radius: 6px; cursor: pointer; }
+        .tab-btn.active { background: var(--dark-blue); color: white; border-color: var(--dark-blue); }
+
+        .profile-card { background: var(--crust-base); border: 1.5px solid var(--crust-dark); padding: 14px; border-radius: 8px; margin-bottom: 12px; }
+        .profile-label { font-family: 'Subhead1', sans-serif; font-size: 15px; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 2px; }
+        .profile-val { font-family: 'Condensed', sans-serif; font-size: 18px; color: var(--crust-burnt); margin-bottom: 8px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -416,29 +202,21 @@
     <div class="auth-brand-stripe"></div>
     <div class="auth-inner">
         <img src="New_Logo_v2.png" alt="Logo" style="height: 65px; width: auto; margin: 0 auto 24px auto; display: block;" onerror="this.style.display='none'">
-        
         <h2>Workspace Access</h2>
         <div class="auth-subtitle">Catering & Quote Portal</div>
-        
         <div class="form-group" style="margin-bottom: 24px;">
             <label>Username</label>
             <input type="text" id="loginUser" placeholder="e.g., dallas_catering">
         </div>
-        
         <div class="form-group" style="margin-bottom: 34px;">
             <label>Password</label>
             <div style="position: relative; display: flex; align-items: center;">
                 <input type="password" id="loginPass" style="padding-right: 70px;" placeholder="••••••••">
-                <span id="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; right: 14px; cursor: pointer; color: var(--brand-blue); font-family: 'Subhead2', sans-serif; font-size: 16px; font-weight: bold; user-select: none;">
-                    SHOW
-                </span>
+                <span id="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; right: 14px; cursor: pointer; color: var(--brand-blue); font-family: 'Subhead2', sans-serif; font-size: 16px; font-weight: bold; user-select: none;">SHOW</span>
             </div>
         </div>
-        
         <div id="loginError" style="color: var(--brand-red); font-family: 'Condensed', sans-serif; font-size: 16px; margin-bottom: 18px; text-align: center;" class="hidden"></div>
-        
         <button onclick="handleLogin()">Sign In to Portal</button>
-        
         <div style="text-align: center; margin-top: 36px; font-size: 14px; color: var(--crust-dark); font-family: 'Compact', sans-serif; letter-spacing: 0.5px;">
             🔒 SECURE WORKSPACE &bull; AUTHORIZED CATERING PERSONNEL ONLY
         </div>
@@ -459,11 +237,13 @@
     </header>
 
     <div class="dashboard">
-        <!-- COLUMN 1: List of Catering Orders (Sidebar) -->
+        <!-- COLUMN 1: Sidebar Order Index & Interactive Search -->
         <div class="list-panel">
             <button class="btn-add" onclick="prepareAddNew()">🍕 Create New Order Entry</button>
-            
             <div class="control-row">
+                <input type="text" id="orderSearchInput" placeholder="🔍 Search school, coordinator, store..." oninput="renderList()" style="width: 100%; border: 1.5px solid var(--crust-dark);">
+            </div>
+            <div class="control-row" style="margin-top: 4px;">
                 <select id="sortControl" onchange="renderList()">
                     <option value="date">📅 Sort: Order Date (Soonest)</option>
                     <option value="school">🔤 Sort: School Name (A-Z)</option>
@@ -471,50 +251,48 @@
                     <option value="status">📊 Sort: PO Status</option>
                 </select>
             </div>
-
-            <div id="orderList"></div>
+            <div id="orderList" style="margin-top: 8px;"></div>
         </div>
 
-        <!-- COLUMN 2: Order Details Form Panel (Center) -->
+        <!-- COLUMN 2: Central Interactive Work Panel (Dynamic Tabs) -->
         <div class="form-panel" id="formPanel">
-            <h2 id="formTitle" style="margin-top: 0; font-family: 'ExtraBold', sans-serif; font-size: 23px; margin-bottom: 8px;">Order Details</h2>
+            <div class="tab-btn-group">
+                <button type="button" class="tab-btn active" id="tabBtnDetails" onclick="setPanelTab('details')">📝 Order Details</button>
+                <button type="button" class="tab-btn" id="tabBtnProfile" onclick="setPanelTab('profile')" disabled>🏫 School Profile</button>
+            </div>
+
+            <!-- TAB CONTAINER A: Order Details Form -->
             <form id="orderForm" onsubmit="saveOrder(event)">
                 <input type="hidden" id="fieldId">
                 <input type="hidden" id="fieldQuoteUrl"> 
                 
-                <div class="form-scroll-area">
-                    <!-- School Selection Container (with Quick Add School Toggle) -->
+                <div class="form-scroll-area" id="orderFormScrollArea">
                     <div class="form-group">
                         <label>School Name</label>
                         <div style="display: flex; gap: 8px; align-items: center;">
                             <select id="fieldSchool" required onchange="handleSchoolChange()" style="flex: 1;">
                                 <option value="">-- Select School --</option>
                             </select>
-                            <button type="button" id="btnQuickAddSchool" onclick="toggleQuickAddSchool()" style="padding: 6px 12px; background: var(--dark-blue);">📝</button>
+                            <button type="button" onclick="toggleQuickAddSchool()" style="padding: 6px 12px; background: var(--dark-blue);">📝</button>
                         </div>
+                    </div>
+
+                    <!-- Carryout Only Warning Banner -->
+                    <div id="carryoutWarning" class="hidden" style="background: var(--crust-light); border-left: 5px solid var(--brand-red); padding: 10px 12px; border-radius: 6px; margin-bottom: 12px; color: var(--brand-red); font-family: 'Subhead1', sans-serif; font-size: 15px;">
+                        ⚠️ This school is flagged as CARRYOUT-ONLY. Delivery routing is unavailable.
                     </div>
 
                     <!-- Mini Form: Quick Add School -->
                     <div id="quickAddSchoolArea" class="hidden" style="background: var(--crust-light); border: 2.5px solid var(--crust-dark); padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 6px solid var(--dark-red);">
                         <h4 style="margin: 0 0 8px 0; font-family: 'Subhead1', sans-serif; font-size: 16px; color: var(--dark-red);">Quick Add School</h4>
-                        <div class="form-group">
-                            <label>School Name</label>
-                            <input type="text" id="newSchoolName" placeholder="e.g., Highland Park High">
-                        </div>
-                        <div class="form-group">
-                            <label>Address</label>
-                            <input type="text" id="newSchoolAddress" placeholder="e.g., 4220 Emerson Ave">
-                        </div>
+                        <div class="form-group"><label>School Name</label><input type="text" id="newSchoolName" placeholder="e.g., Highland Park High"></div>
+                        <div class="form-group"><label>Main Phone #</label><input type="text" id="newSchoolPhone" placeholder="e.g., (214) 555-0199"></div>
+                        <div class="form-group"><label>Address</label><input type="text" id="newSchoolAddress" placeholder="e.g., 4220 Emerson Ave"></div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>Phone Number</label>
-                                <input type="text" id="newSchoolPhone" placeholder="e.g., (214) 555-0199">
-                            </div>
-                            <div class="form-group">
-                                <label>Assigned Store #</label>
-                                <input type="text" id="newSchoolStore" placeholder="e.g., 6916">
-                            </div>
+                            <div class="form-group"><label>Delivery Store #</label><input type="text" id="newSchoolDeliveryStore" placeholder="Leave blank if carryout-only"></div>
+                            <div class="form-group"><label>Carryout Store #</label><input type="text" id="newSchoolCarryoutStore" placeholder="Assigned carryout store"></div>
                         </div>
+                        <div class="form-group"><label>District Name</label><input type="text" id="newSchoolDistrict" placeholder="e.g., HPISD"></div>
                         <div style="display: flex; gap: 8px; margin-top: 10px;">
                             <button type="button" style="background: var(--brand-blue); flex: 1.5;" onclick="submitQuickAddSchool()">Save & Select</button>
                             <button type="button" class="secondary" style="flex: 1;" onclick="toggleQuickAddSchool()">Cancel</button>
@@ -533,7 +311,7 @@
                         </div>
                         <div class="form-group">
                             <label>Service Method</label>
-                            <select id="fieldCarryout">
+                            <select id="fieldCarryout" onchange="handleServiceMethodChange()">
                                 <option value="">🚗 Delivery</option>
                                 <option value="Carryout">🏬 Carryout</option>
                             </select>
@@ -543,19 +321,20 @@
                     <!-- Mini Form: Quick Add Coordinator -->
                     <div id="quickAddCoordArea" class="hidden" style="background: var(--crust-light); border: 2.5px solid var(--crust-dark); padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 6px solid var(--dark-red);">
                         <h4 style="margin: 0 0 8px 0; font-family: 'Subhead1', sans-serif; font-size: 16px; color: var(--dark-red);">Quick Add Coordinator</h4>
-                        <div class="form-group">
-                            <label>Coordinator Name</label>
-                            <input type="text" id="newCoordName" placeholder="e.g., Jane Doe">
-                        </div>
+                        <div class="form-group"><label>Coordinator Name</label><input type="text" id="newCoordName" placeholder="e.g., Jane Doe"></div>
                         <div class="form-row">
-                            <div class="form-group">
+                            <div class="form-group" style="flex: 2;">
                                 <label>Phone Number</label>
                                 <input type="text" id="newCoordPhone" placeholder="(xxx) xxx-xxxx">
                             </div>
-                            <div class="form-group">
-                                <label>Email Address</label>
-                                <input type="text" id="newCoordEmail" placeholder="name@school.org">
+                            <div class="form-group" style="flex: 1;">
+                                <label>Ext</label>
+                                <input type="text" id="newCoordExt" placeholder="e.g., 401">
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="text" id="newCoordEmail" placeholder="name@school.org">
                         </div>
                         <div style="display: flex; gap: 8px; margin-top: 10px;">
                             <button type="button" style="background: var(--brand-blue); flex: 1.5;" onclick="submitQuickAddCoordinator()">Save & Select</button>
@@ -564,44 +343,20 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>Office / Contact Phone</label>
-                            <input type="text" id="fieldPhone" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="text" id="fieldEmail" readonly>
-                        </div>
+                        <div class="form-group"><label>Office / Contact Phone</label><input type="text" id="fieldPhone" readonly></div>
+                        <div class="form-group"><label>Email Address</label><input type="text" id="fieldEmail" readonly></div>
                     </div>
 
                     <div class="form-row flex-three">
-                        <div class="form-group">
-                            <label>Order Date</label>
-                            <input type="date" id="fieldDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Delivery/Pickup Time</label>
-                            <input type="text" id="fieldTime" placeholder="e.g., 12:00 PM" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Store #</label>
-                            <input type="text" id="fieldStore" readonly placeholder="Auto-filled">
-                        </div>
+                        <div class="form-group"><label>Order Date</label><input type="date" id="fieldDate" required></div>
+                        <div class="form-group"><label>Delivery/Pickup Time</label><input type="text" id="fieldTime" placeholder="e.g., 12:00 PM" required></div>
+                        <div class="form-group"><label>Store #</label><input type="text" id="fieldStore" readonly placeholder="Auto-filled"></div>
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>PO # (or Payment Method)</label>
-                            <input type="text" id="fieldPoNum" placeholder="PO # or write 'Credit Card'">
-                        </div>
-                        <div class="form-group">
-                            <label>Total Quote Cost</label>
-                            <input type="text" id="fieldTotal" placeholder="$0.00">
-                        </div>
-                        <div class="form-group">
-                            <label>Tip Amount</label>
-                            <input type="text" id="fieldTip" placeholder="$0.00">
-                        </div>
+                        <div class="form-group"><label>PO # (or Payment Method)</label><input type="text" id="fieldPoNum" placeholder="PO # or write 'Credit Card'"></div>
+                        <div class="form-group"><label>Total Quote Cost</label><input type="text" id="fieldTotal" placeholder="$0.00"></div>
+                        <div class="form-group"><label>Tip Amount</label><input type="text" id="fieldTip" placeholder="$0.00"></div>
                     </div>
 
                     <div class="form-group">
@@ -609,34 +364,82 @@
                         <input type="text" id="fieldPoPdf" placeholder="Paste Google Drive PDF URL here">
                     </div>
 
-                    <!-- Structured Active Stages Checklist Grid -->
-                    <div class="checkbox-grid">
-                        <div class="section-header">Stage 1: Quote Tracking</div>
-                        <label class="checkbox-item"><input type="checkbox" id="checkQuoteDrafted"> Quote Drafted / Created</label>
-                        <label class="checkbox-item"><input type="checkbox" id="checkQuoteSent"> Quote Email Sent</label>
-                        
-                        <div class="section-header">Stage 2: Store Processing</div>
-                        <label class="checkbox-item"><input type="checkbox" id="checkPulse"> Entered in Pulse (POS)</label>
-                        <label class="checkbox-item"><input type="checkbox" id="checkCe"> C/E Sent (Confirm & Email)</label>
-                        
-                        <div class="section-header">Stage 3: Accounts Payable & PO</div>
-                        <label class="checkbox-item"><input type="checkbox" id="checkPoProcessed"> PO Approved / Received</label>
-                        <label class="checkbox-item"><input type="checkbox" id="checkAccountingSent"> Sent to Accounting</label>
-                        <label class="checkbox-item"><input type="checkbox" id="checkChaserSent"> PO Chaser Sent</label>
-                    </div>
+                    <!-- COLLAPSIBLE ACTIVE STAGE CHECKBOXES (Manual Overrides) -->
+                    <details class="manual-overrides-details">
+                        <summary>⚙️ View Active Stages & Manual Overrides</summary>
+                        <div class="checkbox-grid">
+                            <div class="section-header">Stage 1: Quote Tracking</div>
+                            <label class="checkbox-item"><input type="checkbox" id="checkQuoteDrafted" disabled style="opacity:0.75;"> Quote Drafted / Created</label>
+                            <label class="checkbox-item"><input type="checkbox" id="checkQuoteSent"> Quote Email Sent</label>
+                            
+                            <div class="section-header">Stage 2: Store Processing</div>
+                            <label class="checkbox-item"><input type="checkbox" id="checkPulse"> Entered in Pulse (POS)</label>
+                            <label class="checkbox-item"><input type="checkbox" id="checkCe"> C/E Sent (Confirm & Email)</label>
+                            
+                            <div class="section-header">Stage 3: Accounts Payable & PO</div>
+                            <label class="checkbox-item"><input type="checkbox" id="checkPoProcessed"> PO Approved / Received</label>
+                            <label class="checkbox-item"><input type="checkbox" id="checkAccountingSent" disabled style="opacity:0.75;"> Sent to AP (By Trigger)</label>
+                            <label class="checkbox-item"><input type="checkbox" id="checkChaserSent" disabled style="opacity:0.75;"> PO Chaser (By Trigger)</label>
+                        </div>
+                    </details>
                 </div>
 
-                <!-- Fixed Footer Action Buttons -->
-                <div class="form-actions">
+                <div class="form-actions" id="orderFormActions">
                     <button type="submit" style="flex: 1.5; background: var(--med-blue);">💾 Save Row Details</button>
                     <button type="button" id="btnDraftQuote" style="flex: 1.5; background: var(--brand-red);" onclick="triggerQuoteGeneration()" disabled>📄 Draft Quote Sheet</button>
                     <button type="button" id="btnSendQuote" style="flex: 1.5; background: var(--brand-red);" class="hidden" onclick="triggerQuoteSend()">📧 Send Quote to School</button>
                     <button type="button" class="secondary" id="btnCancel" onclick="clearForm()" style="flex: 1;">Cancel</button>
                 </div>
             </form>
+
+            <!-- TAB CONTAINER B: School Directory Dashboard & Historical Audit -->
+            <div id="schoolProfileView" class="hidden form-scroll-area" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="profile-card">
+                    <div style="font-family: 'Subhead2', sans-serif; font-size: 20px; color: var(--dark-blue); border-bottom: 2px solid var(--crust-med); padding-bottom: 4px; margin-bottom: 12px;" id="profileSchoolName">School Information</div>
+                    <div class="form-row">
+                        <div style="flex: 1;">
+                            <div class="profile-label">District</div><div class="profile-val" id="profileDistrict">-</div>
+                            <div class="profile-label">Main Address</div><div class="profile-val" id="profileAddress">-</div>
+                            <div class="profile-label">Main Telephone</div><div class="profile-val" id="profilePhone">-</div>
+                        </div>
+                        <div style="flex: 1; border-left: 1.5px dashed var(--crust-med); padding-left: 16px;">
+                            <div class="profile-label">Delivery Store Location</div><div class="profile-val" id="profileDeliveryStore">-</div>
+                            <div class="profile-label">Carryout Store Location</div><div class="profile-val" id="profileCarryoutStore">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-card" style="flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 180px;">
+                    <div class="profile-label" style="border-bottom: 1.5px dashed var(--crust-med); padding-bottom: 4px; margin-bottom: 8px;">Associated School Coordinators</div>
+                    <div id="profileCoordinatorsList" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;"></div>
+                </div>
+
+                <div class="profile-card" style="flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 180px;">
+                    <div class="profile-label" style="border-bottom: 1.5px dashed var(--crust-med); padding-bottom: 4px; margin-bottom: 8px;">Event & Order History</div>
+                    <div style="flex: 1; overflow-y: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-family: 'Condensed', sans-serif; font-size: 15px;" id="profileHistoryTable">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--crust-dark); text-align: left; color: var(--dark-blue);">
+                                    <th style="padding: 4px;">Date</th>
+                                    <th style="padding: 4px;">Time</th>
+                                    <th style="padding: 4px;">Total</th>
+                                    <th style="padding: 4px;">PO Status</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-label">School Specific Instructions / Credit Balance Notes</div>
+                    <textarea id="profileNotesText" style="height: 60px; margin-top: 6px;" placeholder="Leave instructions, special credits, or delivery gate codes specific to this school..."></textarea>
+                    <button type="button" style="background: var(--med-blue); width: 100%; margin-top: 8px;" onclick="saveSchoolNotes()">💾 Save School Notes</button>
+                </div>
+            </div>
         </div>
 
-        <!-- COLUMN 3: Audit & Notepad Panel (Right) -->
+        <!-- COLUMN 3: Activity Audits & Synchronized Scratchpad (Right) -->
         <div class="notes-panel">
             <div id="metricsBox" style="background: var(--crust-light); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); color: var(--crust-burnt);">
                 <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--crust-med); padding-bottom: 8px; align-items: center;">
@@ -661,19 +464,19 @@
             
             <div style="flex: 1; display: flex; flex-direction: column; background: var(--crust-base); border: 2px solid var(--crust-dark); border-radius: var(--border-radius); padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
                 <div style="font-family: 'ExtraBold', sans-serif; font-size: 15px; color: var(--dark-blue); border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px; flex: 0 0 auto;">
-                    <span>📋 Quick Scratchpad</span>
+                    <span>📋 Sync Scratchpad</span>
                     <div style="display: flex; gap: 4px; align-items: center;">
                         <button type="button" id="btnModeText" onclick="setScratchpadMode('text')" style="font-size: 11px; padding: 2px 6px; background: var(--dark-blue); color: white; border-radius: 4px; font-family: 'Compact'; min-width: 40px; text-transform: uppercase;">Text</button>
                         <button type="button" id="btnModeList" onclick="setScratchpadMode('list')" style="font-size: 11px; padding: 2px 6px; background: var(--crust-med); color: var(--crust-burnt); border-radius: 4px; font-family: 'Compact'; min-width: 40px; text-transform: uppercase;">List</button>
                     </div>
                 </div>
                 
-                <textarea id="scratchpad" placeholder="• Type any temporary notes here...&#10;• Perfect for last-minute coordinator requests...&#10;• Or driver routing details..." style="flex: 1; width: 100%; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 17px; line-height: 1.5; outline: none; padding: 0; color: var(--crust-burnt); resize: none;"></textarea>
+                <textarea id="scratchpad" placeholder="• Scratchpad text is saved continuously to your sheet..." style="flex: 1; width: 100%; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 17px; line-height: 1.5; outline: none; padding: 0; color: var(--crust-burnt); resize: none;" oninput="triggerNotesCloudSync()"></textarea>
 
                 <div id="scratchpadChecklist" class="hidden" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
                     <div id="checklistInputRow" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; border-bottom: 1.5px solid var(--crust-med); padding-bottom: 8px; flex-shrink: 0;">
                         <span style="font-size: 20px; color: var(--brand-grey); line-height: 1; font-weight: bold;">+</span>
-                        <input type="text" id="newChecklistItem" placeholder="Add list item..." style="flex: 1; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 17px; outline: none; padding: 0;" onkeydown="handleChecklistKeydown(event)">
+                        <input type="text" id="newChecklistItem" placeholder="Add checklist task..." style="flex: 1; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 17px; outline: none; padding: 0;" onkeydown="handleChecklistKeydown(event)">
                     </div>
                     <div id="checklistItems" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 2px;"></div>
                 </div>
@@ -693,6 +496,7 @@
 
     let scratchpadMode = 'text'; 
     let checklistItems = [];
+    let cloudSaveTimer = null;
 
     window.addEventListener('DOMContentLoaded', () => {
         try {
@@ -705,28 +509,6 @@
 
             const savedMode = localStorage.getItem('cat_scratchpad_mode') || 'text';
             setScratchpadMode(savedMode);
-
-            const scratchpad = document.getElementById('scratchpad');
-            const savedNotes = localStorage.getItem('cat_scratchpad');
-            if (scratchpad && savedNotes) {
-                scratchpad.value = savedNotes;
-            }
-
-            if (scratchpad) {
-                scratchpad.addEventListener('input', () => {
-                    localStorage.setItem('cat_scratchpad', scratchpad.value);
-                });
-            }
-
-            const savedList = localStorage.getItem('cat_checklist');
-            if (savedList) {
-                try {
-                    checklistItems = JSON.parse(savedList);
-                } catch(e) {
-                    checklistItems = [];
-                }
-            }
-            renderChecklist();
         } catch (e) {
             console.error("Initialization error:", e);
             showLoader(false); 
@@ -763,8 +545,18 @@
                 storeLookup = data.storeLookup || {};
                 orders = data.orders || [];
                 
+                // Populate Persistent Scratchpad & Checklist Notes [1]
+                const textScratch = document.getElementById('scratchpad');
+                if (textScratch && data.scratchpadText !== undefined) {
+                    textScratch.value = data.scratchpadText;
+                }
+                if (data.checklistJson) {
+                    try { checklistItems = JSON.parse(data.checklistJson); } catch (e) { checklistItems = []; }
+                }
+                
                 populateSchoolsDropdown();
                 renderList();
+                renderChecklist();
                 showLoader(false);
             })
             .catch(err => {
@@ -790,7 +582,7 @@
         else loader.classList.add('hidden');
     }
 
-    // Toggle Quick Add Area
+    // Toggle Panels (Quick Add Actions)
     function toggleQuickAddCoord() {
         const area = document.getElementById('quickAddCoordArea');
         if (!area) return;
@@ -801,7 +593,6 @@
         }
     }
 
-    // Toggle Quick Add School Area
     function toggleQuickAddSchool() {
         const area = document.getElementById('quickAddSchoolArea');
         if (!area) return;
@@ -812,22 +603,27 @@
         }
     }
 
-    // Submit Coordinator to Google Sheets via API
+    // Submit Coordinator via API (Robust automatic phone formatting parsed) [1]
     async function submitQuickAddCoordinator() {
         const schoolDropdown = document.getElementById('fieldSchool');
         const school = schoolDropdown ? schoolDropdown.value : '';
         const nameInput = document.getElementById('newCoordName');
         const phoneInput = document.getElementById('newCoordPhone');
+        const extInput = document.getElementById('newCoordExt');
         const emailInput = document.getElementById('newCoordEmail');
         
         const name = nameInput ? nameInput.value.trim() : '';
-        const phone = phoneInput ? phoneInput.value.trim() : '';
+        const rawPhone = phoneInput ? phoneInput.value.trim() : '';
+        const ext = extInput ? extInput.value.trim() : '';
         const email = emailInput ? emailInput.value.trim() : '';
 
         if (!school || !name || !email) {
             alert("School, Coordinator Name, and Email are required to save.");
             return;
         }
+
+        // Apply clean split-parsing algorithm [1]
+        const phone = formatPhoneNumber(ext ? `${rawPhone} x${ext}` : rawPhone);
 
         showLoader(true, "Saving coordinator to directory...");
 
@@ -842,10 +638,7 @@
         };
 
         try {
-            const response = await fetch(API_URL, {
-                method: "POST",
-                body: JSON.stringify(payload)
-            });
+            const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
             const result = await response.json();
 
             if (!result.success) throw new Error(result.error);
@@ -865,6 +658,7 @@
 
             if (nameInput) nameInput.value = "";
             if (phoneInput) phoneInput.value = "";
+            if (extInput) extInput.value = "";
             if (emailInput) emailInput.value = "";
             toggleQuickAddCoord();
 
@@ -875,22 +669,29 @@
         }
     }
 
-    // Submit School to Google Sheets via API
+    // Submit School Directory addition via API
     async function submitQuickAddSchool() {
         const nameInput = document.getElementById('newSchoolName');
-        const addressInput = document.getElementById('newSchoolAddress');
         const phoneInput = document.getElementById('newSchoolPhone');
-        const storeInput = document.getElementById('newSchoolStore');
+        const addressInput = document.getElementById('newSchoolAddress');
+        const deliveryInput = document.getElementById('newSchoolDeliveryStore');
+        const carryoutInput = document.getElementById('newSchoolCarryoutStore');
+        const districtInput = document.getElementById('newSchoolDistrict');
         
         const name = nameInput ? nameInput.value.trim() : '';
+        const rawPhone = phoneInput ? phoneInput.value.trim() : '';
         const address = addressInput ? addressInput.value.trim() : '';
-        const phone = phoneInput ? phoneInput.value.trim() : '';
-        const store = storeInput ? storeInput.value.trim() : '';
+        const delivery = deliveryInput ? deliveryInput.value.trim() : '';
+        const carryout = carryoutInput ? carryoutInput.value.trim() : '';
+        const district = districtInput ? districtInput.value.trim() : '';
 
-        if (!name || !store) {
-            alert("School Name and Assigned Store # are required.");
+        if (!name || !carryout) {
+            alert("School Name and assigned Carryout Store # are required.");
             return;
         }
+
+        // Enforce robust format formatting for School directory phone entry [1]
+        const phone = formatPhoneNumber(rawPhone);
 
         showLoader(true, "Saving school to directory...");
 
@@ -899,24 +700,30 @@
             password: localStorage.getItem('cat_pass'),
             action: "addSchool",
             name: name,
-            address: address,
             phone: phone,
-            storeNum: store
+            address: address,
+            deliveryStore: delivery,
+            carryoutStore: carryout,
+            district: district
         };
 
         try {
-            const response = await fetch(API_URL, {
-                method: "POST",
-                body: JSON.stringify(payload)
-            });
+            const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
             const result = await response.json();
 
             if (!result.success) throw new Error(result.error);
 
-            // Inject the new school locally
-            schoolsList.push({ name: name, address: address, phone: phone, storeNum: store });
+            // Inject school locally [1]
+            schoolsList.push({ 
+                name: name, 
+                phone: phone, 
+                address: address, 
+                deliveryStore: delivery, 
+                carryoutStore: carryout, 
+                district: district,
+                notes: "" 
+            });
 
-            // Refresh the school dropdown list
             populateSchoolsDropdown();
 
             const schoolDropdown = document.getElementById('fieldSchool');
@@ -926,9 +733,11 @@
             }
 
             if (nameInput) nameInput.value = "";
-            if (addressInput) addressInput.value = "";
             if (phoneInput) phoneInput.value = "";
-            if (storeInput) storeInput.value = "";
+            if (addressInput) addressInput.value = "";
+            if (deliveryInput) deliveryInput.value = "";
+            if (carryoutInput) carryoutInput.value = "";
+            if (districtInput) districtInput.value = "";
             toggleQuickAddSchool();
 
             showLoader(false);
@@ -951,11 +760,14 @@
         });
     }
 
-    // UNIFIED SCHOOL CHANGE HANDLER
+    // UNIFIED SCHOOL CHANGE AND CARRYOUT-ONLY DIRECT ROUTING [1]
     function handleSchoolChange() {
         const schoolDropdown = document.getElementById('fieldSchool');
         const coordDropdown = document.getElementById('fieldCoordinator');
         const storeInput = document.getElementById('fieldStore');
+        const carryoutDropdown = document.getElementById('fieldCarryout');
+        const carryoutWarning = document.getElementById('carryoutWarning');
+        const tabBtnProfile = document.getElementById('tabBtnProfile');
         const btnAdd = document.getElementById('btnQuickAddCoord');
         
         if (!schoolDropdown || !coordDropdown) return;
@@ -967,18 +779,47 @@
         if (phoneInput) phoneInput.value = "";
         if (emailInput) emailInput.value = "";
         if (storeInput) storeInput.value = "";
+        if (carryoutWarning) carryoutWarning.classList.add('hidden');
 
         if (!selectedSchool) {
             coordDropdown.disabled = true;
+            if (tabBtnProfile) tabBtnProfile.disabled = true;
             if (btnAdd) btnAdd.disabled = true;
             return;
         }
 
         if (btnAdd) btnAdd.disabled = false;
+        if (tabBtnProfile) tabBtnProfile.disabled = false;
 
         const schoolObj = schoolsList.find(s => s.name === selectedSchool);
-        if (schoolObj && storeInput) {
-            storeInput.value = schoolObj.storeNum || '';
+        
+        if (schoolObj) {
+            // Apply Carryout-Only Protections [1]
+            const isCarryoutOnly = (!schoolObj.deliveryStore || schoolObj.deliveryStore.trim() === "");
+            
+            if (isCarryoutOnly) {
+                if (carryoutWarning) carryoutWarning.classList.remove('hidden');
+                
+                // Block Delivery Option
+                Array.from(carryoutDropdown.options).forEach(opt => {
+                    if (opt.value === "") opt.disabled = true; // Block Delivery
+                });
+                
+                carryoutDropdown.value = "Carryout"; 
+                if (storeInput) storeInput.value = schoolObj.carryoutStore || "";
+            } else {
+                // Clear block/locks
+                Array.from(carryoutDropdown.options).forEach(opt => {
+                    opt.disabled = false;
+                });
+                
+                // Default store fill based on currently selected service mode
+                if (carryoutDropdown.value === "Carryout") {
+                    if (storeInput) storeInput.value = schoolObj.carryoutStore || "";
+                } else {
+                    if (storeInput) storeInput.value = schoolObj.deliveryStore || "";
+                }
+            }
         }
 
         const coords = coordinatorsMap[selectedSchool] || [];
@@ -993,6 +834,27 @@
         } else {
             coordDropdown.disabled = false;
             coordDropdown.innerHTML = '<option value="">-- Select Quick Add (+) to add --</option>';
+        }
+
+        // Trigger school profile view compilation [1]
+        compileSchoolProfile(schoolObj);
+    }
+
+    function handleServiceMethodChange() {
+        const schoolDropdown = document.getElementById('fieldSchool');
+        const carryoutDropdown = document.getElementById('fieldCarryout');
+        const storeInput = document.getElementById('fieldStore');
+
+        if (!schoolDropdown || !carryoutDropdown || !storeInput) return;
+        const selectedSchool = schoolDropdown.value;
+        const schoolObj = schoolsList.find(s => s.name === selectedSchool);
+
+        if (schoolObj) {
+            if (carryoutDropdown.value === "Carryout") {
+                storeInput.value = schoolObj.carryoutStore || "";
+            } else {
+                storeInput.value = schoolObj.deliveryStore || "";
+            }
         }
     }
 
@@ -1041,13 +903,13 @@
     }
 
     function getStatusClass(item) {
-        if (item.accountingSent) return "status-blue";
-        if (item.poProcessed) return "status-blue";
-        if (item.poNum && item.poNum.toLowerCase().includes("credit card")) return "status-blue";
-        if (item.chaserSent) return "status-blue";
+        if (item.accountingSent || item.poProcessed || (item.poNum && item.poNum.toLowerCase().includes("credit card")) || item.chaserSent) {
+            return "status-blue";
+        }
         return "status-red"; 
     }
 
+    // Renders Searchable Order List sidebar
     function renderList() {
         const listContainer = document.getElementById('orderList');
         if (!listContainer) return;
@@ -1056,7 +918,25 @@
         const sortControl = document.getElementById('sortControl');
         const sortBy = sortControl ? sortControl.value : 'date';
 
+        // Read Search query
+        const searchInput = document.getElementById('orderSearchInput');
+        const searchQuery = searchInput ? searchInput.value.trim().toLowerCase() : "";
+
         let sortedOrders = [...orders];
+
+        // Apply Search Filtering [1]
+        if (searchQuery !== "") {
+            sortedOrders = sortedOrders.filter(o => {
+                const localDateStr = o.date ? new Date(o.date).toLocaleDateString() : "";
+                return (
+                    o.schoolName.toLowerCase().includes(searchQuery) ||
+                    o.coordinatorName.toLowerCase().includes(searchQuery) ||
+                    o.storeNum.toString().includes(searchQuery) ||
+                    localDateStr.includes(searchQuery) ||
+                    getPoStatusText(o).toLowerCase().includes(searchQuery)
+                );
+            });
+        }
 
         sortedOrders.sort((a, b) => {
             if (sortBy === 'school') {
@@ -1083,7 +963,7 @@
         });
 
         if (sortedOrders.length === 0) {
-            listContainer.innerHTML = '<div style="text-align:center; padding: 20px; color:#aaa;">No catering orders scheduled.</div>';
+            listContainer.innerHTML = '<div style="text-align:center; padding: 20px; color:#aaa;">No catering orders matched search.</div>';
             return;
         }
 
@@ -1097,7 +977,8 @@
             const statusColor = isRed ? 'var(--brand-red)' : 'var(--brand-blue)';
             
             let badges = '';
-            if (item.quoteUrl) badges += '<span class="badge-drafted">📄 Quote Ready</span> ';
+            // Quote Ready disappears once sent to school [1]
+            if (item.quoteUrl && !item.quoteEmailSent) badges += '<span class="badge-drafted">📄 Quote Ready</span> ';
             if (item.quoteEmailSent) badges += '<span class="badge-sent">📧 Sent</span>';
 
             const localDate = item.date ? new Date(item.date).toLocaleDateString(undefined, {month: 'numeric', day: 'numeric', year: '2-digit'}) : 'No Date';
@@ -1133,6 +1014,8 @@
     function selectOrder(item) {
         currentSelectedId = item.id;
         renderList();
+
+        setPanelTab('details'); // Defaults view back to form when changing selection
 
         const formTitle = document.getElementById('formTitle');
         if (formTitle) formTitle.innerText = `Edit Order: ${item.schoolName}`;
@@ -1178,6 +1061,10 @@
         handleCoordinatorChange();
 
         if (fieldCarryout) fieldCarryout.value = item.serviceMethod || '';
+        
+        // Retain original carryout protection state
+        handleSchoolChange();
+
         if (fieldDate) fieldDate.value = formatStringToInputDate(item.date);
         if (fieldTime) fieldTime.value = item.time || '';
         if (fieldStore) fieldStore.value = item.storeNum || '';
@@ -1261,13 +1148,169 @@
         if (btnSendQuote) {
             btnSendQuote.classList.add('hidden');
         }
+
+        const carryoutWarning = document.getElementById('carryoutWarning');
+        if (carryoutWarning) carryoutWarning.classList.add('hidden');
+
+        const fieldCarryout = document.getElementById('fieldCarryout');
+        if (fieldCarryout) {
+            Array.from(fieldCarryout.options).forEach(opt => opt.disabled = false);
+        }
         
         currentSelectedId = null;
         renderList();
+        setPanelTab('details');
+        
+        const tabBtnProfile = document.getElementById('tabBtnProfile');
+        if (tabBtnProfile) tabBtnProfile.disabled = true;
+    }
+
+    // Dynamic Central Panel Tabs [1]
+    function setPanelTab(tabName) {
+        const tabBtnDetails = document.getElementById('tabBtnDetails');
+        const tabBtnProfile = document.getElementById('tabBtnProfile');
+        const orderForm = document.getElementById('orderForm');
+        const schoolProfileView = document.getElementById('schoolProfileView');
+
+        if (tabName === 'profile') {
+            tabBtnProfile.classList.add('active');
+            tabBtnDetails.classList.remove('active');
+            orderForm.classList.add('hidden');
+            schoolProfileView.classList.remove('hidden');
+        } else {
+            tabBtnDetails.classList.add('active');
+            tabBtnProfile.classList.remove('active');
+            schoolProfileView.classList.add('hidden');
+            orderForm.classList.remove('hidden');
+        }
+    }
+
+    // Compiles selected school profile [1]
+    function compileSchoolProfile(schoolObj) {
+        if (!schoolObj) return;
+
+        document.getElementById('profileSchoolName').innerText = `${schoolObj.name} Profile`;
+        document.getElementById('profileDistrict').innerText = schoolObj.district || 'Unassigned';
+        document.getElementById('profileAddress').innerText = schoolObj.address || '-';
+        document.getElementById('profilePhone').innerText = schoolObj.phone || '-';
+        document.getElementById('profileDeliveryStore').innerText = schoolObj.deliveryStore ? `Store #${schoolObj.deliveryStore}` : 'N/A (Carryout Only)';
+        document.getElementById('profileCarryoutStore').innerText = schoolObj.carryoutStore ? `Store #${schoolObj.carryoutStore}` : '-';
+        document.getElementById('profileNotesText').value = schoolObj.notes || '';
+
+        // Build Coordinator list for selected school [1]
+        const coordsList = document.getElementById('profileCoordinatorsList');
+        coordsList.innerHTML = '';
+        const coords = coordinatorsMap[schoolObj.name] || [];
+        if (coords.length === 0) {
+            coordsList.innerHTML = '<div style="color:var(--brand-grey); font-size:15px; font-style:italic;">No registered coordinators.</div>';
+        } else {
+            coords.forEach(c => {
+                const el = document.createElement('div');
+                el.style = "padding: 6px 8px; border-bottom: 1.5px solid var(--crust-med); font-size:16px;";
+                el.innerHTML = `<strong>👤 ${c.name}</strong> &bull; 📞 ${c.phone || 'N/A'} &bull; ✉️ ${c.email || 'N/A'}`;
+                coordsList.appendChild(el);
+            });
+        }
+
+        // Build Order History list [1]
+        const historyTbody = document.querySelector('#profileHistoryTable tbody');
+        historyTbody.innerHTML = '';
+        const historyOrders = orders.filter(o => o.schoolName === schoolObj.name);
+        
+        if (historyOrders.length === 0) {
+            historyTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:10px; color:var(--brand-grey); font-style:italic;">No historical order record found.</td></tr>';
+        } else {
+            historyOrders.forEach(o => {
+                const tr = document.createElement('tr');
+                tr.style = "border-bottom: 1px dashed var(--crust-med);";
+                tr.innerHTML = `
+                    <td style="padding:6px 4px;">${o.date}</td>
+                    <td style="padding:6px 4px;">${o.time}</td>
+                    <td style="padding:6px 4px;">$${o.totalCost || '0.00'}</td>
+                    <td style="padding:6px 4px; font-weight:bold; color:var(--brand-blue);">${getPoStatusText(o)}</td>
+                `;
+                historyTbody.appendChild(tr);
+            });
+        }
+    }
+
+    // Save School specific instruction notes directly back to the database [1]
+    async function saveSchoolNotes() {
+        const schoolDropdown = document.getElementById('fieldSchool');
+        const selectedSchool = schoolDropdown ? schoolDropdown.value : '';
+        const notesText = document.getElementById('profileNotesText').value.trim();
+
+        if (!selectedSchool) return;
+
+        showLoader(true, "Updating school record...");
+
+        const payload = {
+            username: localStorage.getItem('cat_user'),
+            password: localStorage.getItem('cat_pass'),
+            action: "updateSchoolNotes",
+            schoolName: selectedSchool,
+            notes: notesText
+        };
+
+        try {
+            const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
+            const data = await res.json();
+            showLoader(false);
+
+            if (!data.success) throw new Error(data.error);
+
+            // Update school info locally [1]
+            const sObj = schoolsList.find(s => s.name === selectedSchool);
+            if (sObj) sObj.notes = notesText;
+            
+            alert("School notes saved successfully to lookup directory!");
+        } catch (e) {
+            showLoader(false);
+            alert("Failed to save school notes: " + e.message);
+        }
+    }
+
+    // Cloud Synchronized Scratchpad Text Sync [1]
+    function triggerNotesCloudSync() {
+        const scratchpadVal = document.getElementById('scratchpad').value;
+        localStorage.setItem('cat_scratchpad', scratchpadVal);
+
+        clearTimeout(cloudSaveTimer);
+        cloudSaveTimer = setTimeout(() => {
+            const payload = {
+                username: localStorage.getItem('cat_user'),
+                password: localStorage.getItem('cat_pass'),
+                action: "saveScratchpad",
+                scratchpadText: scratchpadVal,
+                checklistJson: JSON.stringify(checklistItems)
+            };
+
+            fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) })
+                .then(res => res.json())
+                .then(data => {
+                    console.log("Notes synchronized successfully with Google Sheet.");
+                })
+                .catch(err => console.error("Cloud note backup failed:", err));
+        }, 2000); // 2 second debounce limit [1]
     }
 
     function saveOrder(e) {
         e.preventDefault();
+
+        const dateInput = document.getElementById('fieldDate').value;
+
+        // DATE SAFEGUARD WARN DIALOG (Catch manual typo input like 7/6 instead of 8/6) [1]
+        if (dateInput) {
+            const orderDate = new Date(dateInput);
+            const today = new Date();
+            today.setHours(0,0,0,0); // Truncate time limits for objective calendar day comparisons
+
+            if (orderDate < today) {
+                if (!confirm("⚠️ DATE TYPO WARNING: The order date you typed is in the PAST. Are you sure you want to save this date?")) {
+                    return;
+                }
+            }
+        }
 
         const username = localStorage.getItem('cat_user');
         const password = localStorage.getItem('cat_pass');
@@ -1275,12 +1318,11 @@
         const id = fieldId ? fieldId.value : '';
         const action = id ? 'update' : 'add';
 
-        showLoader(true, "Saving order to spreadsheet...");
+        showLoader(true, "Saving order details...");
 
         const schoolDropdown = document.getElementById('fieldSchool');
         const coordDropdown = document.getElementById('fieldCoordinator');
         const carryoutDropdown = document.getElementById('fieldCarryout');
-        const dateInput = document.getElementById('fieldDate');
         const timeInput = document.getElementById('fieldTime');
         const storeInput = document.getElementById('fieldStore');
         const poNumInput = document.getElementById('fieldPoNum');
@@ -1306,7 +1348,7 @@
             schoolName: schoolDropdown ? schoolDropdown.value : '',
             coordinatorName: coordDropdown ? coordDropdown.value : '',
             serviceMethod: carryoutDropdown ? carryoutDropdown.value : '',
-            date: dateInput ? dateInput.value : '',
+            date: dateInput,
             time: timeInput ? convertMilitaryTo12Hour(timeInput.value.trim()) : '',
             storeNum: storeInput ? storeInput.value : '',
             poNum: poNumInput ? poNumInput.value.trim() : '',
@@ -1531,25 +1573,21 @@
 
         checklistItems.push({ text: val, completed: false });
         input.value = '';
-        saveChecklist();
+        triggerNotesCloudSync();
         renderChecklist();
     }
 
     function toggleChecklistItem(index) {
         if (!checklistItems[index]) return;
         checklistItems[index].completed = !checklistItems[index].completed;
-        saveChecklist();
+        triggerNotesCloudSync();
         renderChecklist();
     }
 
     function deleteChecklistItem(index) {
         checklistItems.splice(index, 1);
-        saveChecklist();
+        triggerNotesCloudSync();
         renderChecklist();
-    }
-
-    function saveChecklist() {
-        localStorage.setItem('cat_checklist', JSON.stringify(checklistItems));
     }
 
     function renderChecklist() {
@@ -1611,7 +1649,6 @@
             }
             alert("Quote emailed successfully to the school coordinator!");
             
-            // Reload the local state from Google Sheets so the UI maps the Sent badge immediately
             showLoader(true, "Updating dashboard state...");
             return fetch(`${API_URL}?action=getInitialData`);
         })
@@ -1620,7 +1657,6 @@
             orders = data.orders || [];
             renderList();
             
-            // Re-select current order to update checkboxes on screen
             const currentItem = orders.find(o => o.id === id);
             if (currentItem) selectOrder(currentItem);
             
@@ -1651,15 +1687,45 @@
         return dateStr;
     }
 
+    // Intelligent Phone Parser (Resolves Right-Alignment slip-ups in Google Sheets) [1]
     function formatPhoneNumber(value) {
-        if (!value) return value;
-        const phoneNumber = value.toString().replace(/[^\d]/g, '');
-        const numLength = phoneNumber.length;
-        if (numLength < 4) return phoneNumber;
-        if (numLength < 7) {
-            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+        if (!value) return "";
+        let str = value.toString().trim();
+        
+        let basePart = str;
+        let extPart = "";
+        
+        // Match extension indicators (Ext., ext, x, X, etc.)
+        const extRegex = /(?:ext|ext\.|x|ext\s|Ext|Ext\.|X)\s*(\d+)/i;
+        const match = str.match(extRegex);
+        if (match) {
+            extPart = match[1]; 
+            basePart = str.replace(extRegex, "").trim();
         }
-        return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+        
+        const digits = basePart.replace(/[^\d]/g, '');
+        let formattedBase = "";
+        
+        if (digits.length === 10) {
+            formattedBase = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+        } else if (digits.length === 11 && digits.startsWith('1')) {
+            formattedBase = `(${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7, 11)}`;
+        } else {
+            // Standardizing fallback lengths to consistently use string formatting (forcing Left alignment in Sheets)
+            if (digits.length < 4) {
+                formattedBase = digits;
+            } else if (digits.length < 7) {
+                formattedBase = `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+            } else {
+                formattedBase = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+            }
+        }
+        
+        // Re-append standardized extension syntax if applicable [1]
+        if (extPart) {
+            return `${formattedBase} x${extPart}`;
+        }
+        return formattedBase;
     }
 
     function convertMilitaryTo12Hour(timeStr) {
