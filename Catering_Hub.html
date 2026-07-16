@@ -269,16 +269,16 @@
                 <div class="form-scroll-area" id="orderFormScrollArea">
                     <div class="form-group">
                         <label>School Name</label>
+                        <!-- UPGRADED: Intelligent Search-As-You-Type Datalist Field [1] -->
                         <div style="display: flex; gap: 8px; align-items: center;">
-                            <select id="fieldSchool" required onchange="handleSchoolChange()" style="flex: 1;">
-                                <option value="">-- Select School --</option>
-                            </select>
+                            <input type="text" id="fieldSchool" list="schoolDatalist" placeholder="🔍 Search or type school name..." required onchange="handleSchoolChange()" style="flex: 1;">
+                            <datalist id="schoolDatalist"></datalist>
                             <button type="button" onclick="toggleQuickAddSchool()" style="padding: 6px 12px; background: var(--dark-blue);">📝</button>
                         </div>
                     </div>
 
                     <!-- Carryout Only Warning Banner -->
-                    <div id="carryoutWarning" class="hidden" style="background: var(--crust-light); border-left: 5px solid var(--brand-red); padding: 10px 12px; border-radius: 6px; margin-bottom: 12px; color: var(--brand-red); font-family: 'Subhead1', sans-serif; font-size: 16px;">
+                    <div id="carryoutWarning" class="hidden" style="background: var(--crust-light); border-left: 5px solid var(--brand-red); padding: 10px 12px; border-radius: 6px; margin-bottom: 12px; color: var(--brand-red); font-family: 'Subhead1', sans-serif; font-size: 15px;">
                         ⚠️ This school is flagged as CARRYOUT-ONLY. Delivery routing is unavailable.
                     </div>
 
@@ -747,16 +747,16 @@
         }
     }
     
+    // Populates HTML5 Datalist for fuzzy search-as-you-type [1]
     function populateSchoolsDropdown() {
-        const schoolDropdown = document.getElementById('fieldSchool');
-        if (!schoolDropdown) return;
-        schoolDropdown.innerHTML = '<option value="">-- Select School --</option>';
+        const schoolDatalist = document.getElementById('schoolDatalist');
+        if (!schoolDatalist) return;
+        schoolDatalist.innerHTML = '';
         
         schoolsList.forEach(school => {
             const opt = document.createElement('option');
             opt.value = school.name;
-            opt.textContent = school.name;
-            schoolDropdown.appendChild(opt);
+            schoolDatalist.appendChild(opt);
         });
     }
 
@@ -781,7 +781,10 @@
         if (storeInput) storeInput.value = "";
         if (carryoutWarning) carryoutWarning.classList.add('hidden');
 
-        if (!selectedSchool) {
+        // Safely find school matching the text inputted in the search-input datalist box [1]
+        const schoolObj = schoolsList.find(s => s.name.trim().toLowerCase() === selectedSchool.trim().toLowerCase());
+
+        if (!schoolObj) {
             coordDropdown.disabled = true;
             if (tabBtnProfile) tabBtnProfile.disabled = true;
             if (btnAdd) btnAdd.disabled = true;
@@ -791,38 +794,34 @@
         if (btnAdd) btnAdd.disabled = false;
         if (tabBtnProfile) tabBtnProfile.disabled = false;
 
-        const schoolObj = schoolsList.find(s => s.name === selectedSchool);
+        // Apply Carryout-Only Protections [1]
+        const isCarryoutOnly = (!schoolObj.deliveryStore || schoolObj.deliveryStore.trim() === "");
         
-        if (schoolObj) {
-            // Apply Carryout-Only Protections [1]
-            const isCarryoutOnly = (!schoolObj.deliveryStore || schoolObj.deliveryStore.trim() === "");
+        if (isCarryoutOnly) {
+            if (carryoutWarning) carryoutWarning.classList.remove('hidden');
             
-            if (isCarryoutOnly) {
-                if (carryoutWarning) carryoutWarning.classList.remove('hidden');
-                
-                // Block Delivery Option
-                Array.from(carryoutDropdown.options).forEach(opt => {
-                    if (opt.value === "") opt.disabled = true; // Block Delivery
-                });
-                
-                carryoutDropdown.value = "Carryout"; 
+            // Block Delivery Option
+            Array.from(carryoutDropdown.options).forEach(opt => {
+                if (opt.value === "") opt.disabled = true; // Block Delivery
+            });
+            
+            carryoutDropdown.value = "Carryout"; 
+            if (storeInput) storeInput.value = schoolObj.carryoutStore || "";
+        } else {
+            // Clear block/locks
+            Array.from(carryoutDropdown.options).forEach(opt => {
+                opt.disabled = false;
+            });
+            
+            // Default store fill based on currently selected service mode
+            if (carryoutDropdown.value === "Carryout") {
                 if (storeInput) storeInput.value = schoolObj.carryoutStore || "";
             } else {
-                // Clear block/locks
-                Array.from(carryoutDropdown.options).forEach(opt => {
-                    opt.disabled = false;
-                });
-                
-                // Default store fill based on currently selected service mode
-                if (carryoutDropdown.value === "Carryout") {
-                    if (storeInput) storeInput.value = schoolObj.carryoutStore || "";
-                } else {
-                    if (storeInput) storeInput.value = schoolObj.deliveryStore || "";
-                }
+                if (storeInput) storeInput.value = schoolObj.deliveryStore || "";
             }
         }
 
-        const coords = coordinatorsMap[selectedSchool] || [];
+        const coords = coordinatorsMap[schoolObj.name] || [];
         if (coords.length > 0) {
             coordDropdown.disabled = false;
             coords.forEach(c => {
@@ -847,7 +846,7 @@
 
         if (!schoolDropdown || !carryoutDropdown || !storeInput) return;
         const selectedSchool = schoolDropdown.value;
-        const schoolObj = schoolsList.find(s => s.name === selectedSchool);
+        const schoolObj = schoolsList.find(s => s.name.trim().toLowerCase() === selectedSchool.trim().toLowerCase());
 
         if (schoolObj) {
             if (carryoutDropdown.value === "Carryout") {
@@ -1260,7 +1259,7 @@
             if (!data.success) throw new Error(data.error);
 
             // Update school info locally [1]
-            const sObj = schoolsList.find(s => s.name === selectedSchool);
+            const sObj = schoolsList.find(s => s.name.trim().toLowerCase() === selectedSchool.trim().toLowerCase());
             if (sObj) sObj.notes = notesText;
             
             alert("School notes saved successfully to lookup directory!");
