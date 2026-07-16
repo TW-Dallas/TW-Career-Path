@@ -525,10 +525,15 @@
                             </select>
                         </div>
                         <div class="form-group hidden" id="groupPeopleCount">
-                            <label>Head Count (Portion Calculator)</label>
-                            <input type="text" id="templatePeopleCount" placeholder="e.g., 65" oninput="updateTemplatePreview()">
+                        <label>Portion Calculator (Head Count or Slices)</label>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <input type="text" id="templatePeopleCount" placeholder="e.g., 65" oninput="updateTemplatePreview()" style="flex: 2;">
+                                <select id="calculatorModeSelect" onchange="updateTemplatePreview()" style="flex: 1.2; padding: 8px;">
+                                    <option value="people">👥 People</option>
+                                    <option value="slices">🍕 Slices</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
                 
                     <!-- ADD THIS BLOCK DIRECTLY UNDER THE ROW ABOVE -->
                     <div class="form-group hidden" id="groupCustomText" style="margin-top: 8px;">
@@ -1539,9 +1544,12 @@
         const rawPhone = document.getElementById('fieldPhone').value;
         const fPhone = rawPhone ? rawPhone : (schoolObj && schoolObj.phone ? schoolObj.phone : boldRedPlaceholder);
 
-        // Get headcount calculations for templates
+        // Get headcount or slice count calculations for templates
         const peopleCountInput = document.getElementById('templatePeopleCount').value;
         const headcount = parseInt(peopleCountInput, 10);
+        
+        const calcModeSelect = document.getElementById('calculatorModeSelect');
+        const calcMode = calcModeSelect ? calcModeSelect.value : 'people';
 
         let htmlString = "";
 
@@ -1551,19 +1559,30 @@
                 storeAddr = storeLookup[schoolObj.carryoutStore].address || boldRedPlaceholder;
             }
 
-            // Build optional portion block if a headcount is provided
+            // Build optional portion block based on selection mode
             let portionBlock = "";
             if (!isNaN(headcount) && headcount > 0) {
-                const pizzas2Slices = Math.ceil((headcount * 2) / 8);
-                const pizzas3Slices = Math.ceil((headcount * 3) / 8);
-                portionBlock = `
-                    <p style="margin-bottom: 4px; font-weight: bold; color: #005c91; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Portion Recommendation</p>
-                    <p style="margin-top: 0; margin-bottom: 8px;">Based on your headcount of <strong>${headcount} people</strong> (assuming 2 to 3 slices per person):</p>
-                    <ul style="margin: 0 0 16px 0; padding-left: 20px; list-style-type: circle;">
-                        <li style="margin-bottom: 4px;">2 slices each: <strong>${pizzas2Slices} pizzas</strong></li>
-                        <li style="margin-bottom: 4px;">3 slices each: <strong>${pizzas3Slices} pizzas</strong></li>
-                    </ul>
-                `;
+                if (calcMode === 'slices') {
+                    const pizzas = Math.ceil(headcount / 8);
+                    portionBlock = `
+                        <p style="margin-bottom: 4px; font-weight: bold; color: #005c91; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Portion Recommendation</p>
+                        <p style="margin-top: 0; margin-bottom: 8px;">Based on your request for <strong>${headcount} slices</strong> (assuming 8 slices per pizza):</p>
+                        <ul style="margin: 0 0 16px 0; padding-left: 20px; list-style-type: circle;">
+                            <li style="margin-bottom: 4px;">Recommended Order: <strong>${pizzas} pizzas</strong> (yielding ${pizzas * 8} total slices)</li>
+                        </ul>
+                    `;
+                } else {
+                    const pizzas2Slices = Math.ceil((headcount * 2) / 8);
+                    const pizzas3Slices = Math.ceil((headcount * 3) / 8);
+                    portionBlock = `
+                        <p style="margin-bottom: 4px; font-weight: bold; color: #005c91; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Portion Recommendation</p>
+                        <p style="margin-top: 0; margin-bottom: 8px;">Based on your headcount of <strong>${headcount} people</strong> (assuming 2 to 3 slices per person):</p>
+                        <ul style="margin: 0 0 16px 0; padding-left: 20px; list-style-type: circle;">
+                            <li style="margin-bottom: 4px;">2 slices each: <strong>${pizzas2Slices} pizzas</strong></li>
+                            <li style="margin-bottom: 4px;">3 slices each: <strong>${pizzas3Slices} pizzas</strong></li>
+                        </ul>
+                    `;
+                }
             }
 
             htmlString = `
@@ -1588,15 +1607,25 @@
             let portionBlock = `* 🍕 <strong>Portion Recommendation:</strong> 2 - 3 slices per person`;
             
             if (!isNaN(headcount) && headcount > 0) {
-                const pizzas2Slices = Math.ceil((headcount * 2) / 8);
-                const pizzas3Slices = Math.ceil((headcount * 3) / 8);
-                portionBlock = `
-                    * 🍕 <strong>Portion Recommendation:</strong> 2 - 3 slices per person (${headcount} people)
-                    <ul style="margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; list-style-type: circle;">
-                        <li style="margin-bottom: 4px;">2 slices each: <strong>${pizzas2Slices} pizzas</strong></li>
-                        <li style="margin-bottom: 4px;">3 slices each: <strong>${pizzas3Slices} pizzas</strong></li>
-                    </ul>
-                `;
+                if (calcMode === 'slices') {
+                    const pizzas = Math.ceil(headcount / 8);
+                    portionBlock = `
+                        * 🍕 <strong>Order Recommendation:</strong> ${pizzas} pizzas (${pizzas * 8} slices total)
+                        <ul style="margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; list-style-type: circle;">
+                            <li style="margin-bottom: 4px;">Based on your request for <strong>${headcount} slices</strong>.</li>
+                        </ul>
+                    `;
+                } else {
+                    const pizzas2Slices = Math.ceil((headcount * 2) / 8);
+                    const pizzas3Slices = Math.ceil((headcount * 3) / 8);
+                    portionBlock = `
+                        * 🍕 <strong>Portion Recommendation:</strong> 2 - 3 slices per person (${headcount} people)
+                        <ul style="margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; list-style-type: circle;">
+                            <li style="margin-bottom: 4px;">2 slices each: <strong>${pizzas2Slices} pizzas</strong></li>
+                            <li style="margin-bottom: 4px;">3 slices each: <strong>${pizzas3Slices} pizzas</strong></li>
+                        </ul>
+                    `;
+                }
             }
 
             htmlString = `
