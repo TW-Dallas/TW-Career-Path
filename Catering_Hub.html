@@ -269,7 +269,7 @@
                 <div class="form-scroll-area" id="orderFormScrollArea">
                     <div class="form-group">
                         <label>School Name</label>
-                        <!-- UPGRADED: Intelligent Search-As-You-Type Datalist Field [1] -->
+                        <!-- UPGRADED: Intelligent Search-As-You-Type Datalist Field  -->
                         <div style="display: flex; gap: 8px; align-items: center;">
                             <input type="text" id="fieldSchool" list="schoolDatalist" placeholder="🔍 Search or type school name..." required onchange="handleSchoolChange()" style="flex: 1;">
                             <datalist id="schoolDatalist"></datalist>
@@ -460,7 +460,7 @@
                     <!-- ADD THIS BLOCK DIRECTLY UNDER THE ROW ABOVE -->
                     <div class="form-group hidden" id="groupCustomText" style="margin-top: 8px;">
                         <label>Write Your Custom Reply</label>
-                        <textarea id="templateCustomText" style="height: 120px;" placeholder="Type your custom response here... your greeting and signature are automatically attached [1]." oninput="updateTemplatePreview()"></textarea>
+                        <textarea id="templateCustomText" style="height: 120px;" placeholder="Type your custom response here... your greeting and signature are automatically attached." oninput="updateTemplatePreview()"></textarea>
                     </div>
                 
                     <div id="templatePreviewArea" class="hidden" style="margin-top: 12px; background: var(--crust-light); border: 1.5px solid var(--crust-dark); padding: 12px; border-radius: 6px; max-height: 250px; overflow-y: auto; font-family: Arial, sans-serif; font-size: 13px; color: #603913; line-height: 1.45;">
@@ -580,7 +580,7 @@
                 storeLookup = data.storeLookup || {};
                 orders = data.orders || [];
                 
-                // Populate Persistent Scratchpad & Checklist Notes [1]
+                // Populate Persistent Scratchpad & Checklist Notes
                 const textScratch = document.getElementById('scratchpad');
                 if (textScratch && data.scratchpadText !== undefined) {
                     textScratch.value = data.scratchpadText;
@@ -639,7 +639,7 @@
         }
     }
 
-    // Submit Coordinator via API (Robust automatic phone formatting parsed) [1]
+    // Submit Coordinator via API (Robust automatic phone formatting parsed)
     async function submitQuickAddCoordinator() {
         const schoolDropdown = document.getElementById('fieldSchool');
         const school = schoolDropdown ? schoolDropdown.value : '';
@@ -658,7 +658,7 @@
             return;
         }
 
-        // Apply clean split-parsing algorithm [1]
+        // Apply clean split-parsing algorithm
         const phone = formatPhoneNumber(ext ? `${rawPhone} x${ext}` : rawPhone);
 
         showLoader(true, "Saving coordinator to directory...");
@@ -726,7 +726,7 @@
             return;
         }
 
-        // Enforce robust format formatting for School directory phone entry [1]
+        // Enforce robust format formatting for School directory phone entry
         const phone = formatPhoneNumber(rawPhone);
 
         showLoader(true, "Saving school to directory...");
@@ -749,7 +749,7 @@
 
             if (!result.success) throw new Error(result.error);
 
-            // Inject school locally [1]
+            // Inject school locally
             schoolsList.push({ 
                 name: name, 
                 phone: phone, 
@@ -783,7 +783,7 @@
         }
     }
     
-    // Populates HTML5 Datalist for fuzzy search-as-you-type [1]
+    // Populates HTML5 Datalist for fuzzy search-as-you-type
     function populateSchoolsDropdown() {
         const schoolDatalist = document.getElementById('schoolDatalist');
         if (!schoolDatalist) return;
@@ -796,7 +796,7 @@
         });
     }
 
-    // UNIFIED SCHOOL CHANGE AND CARRYOUT-ONLY DIRECT ROUTING [1]
+    // UNIFIED SCHOOL CHANGE AND CARRYOUT-ONLY DIRECT ROUTING
     function handleSchoolChange() {
         const schoolDropdown = document.getElementById('fieldSchool');
         const coordDropdown = document.getElementById('fieldCoordinator');
@@ -817,7 +817,7 @@
         if (storeInput) storeInput.value = "";
         if (carryoutWarning) carryoutWarning.classList.add('hidden');
 
-        // Safely find school matching the text inputted in the search-input datalist box [1]
+        // Safely find school matching the text inputted in the search-input datalist box
         const schoolObj = schoolsList.find(s => s.name.trim().toLowerCase() === selectedSchool.trim().toLowerCase());
 
         if (!schoolObj) {
@@ -830,7 +830,7 @@
         if (btnAdd) btnAdd.disabled = false;
         if (tabBtnProfile) tabBtnProfile.disabled = false;
 
-        // Apply Carryout-Only Protections [1]
+        // Apply Carryout-Only Protections
         const isCarryoutOnly = (!schoolObj.deliveryStore || schoolObj.deliveryStore.trim() === "");
         
         if (isCarryoutOnly) {
@@ -871,7 +871,7 @@
             coordDropdown.innerHTML = '<option value="">-- Select Quick Add (+) to add --</option>';
         }
 
-        // Trigger school profile view compilation [1]
+        // Trigger school profile view compilation
         compileSchoolProfile(schoolObj);
         updateTemplatePreview(); // Force email reply builder state to sync
     }
@@ -961,7 +961,7 @@
 
         let sortedOrders = [...orders];
 
-        // Apply Search Filtering [1]
+        // Apply Search Filtering
         if (searchQuery !== "") {
             sortedOrders = sortedOrders.filter(o => {
                 const localDateStr = o.date ? new Date(o.date).toLocaleDateString() : "";
@@ -1014,7 +1014,7 @@
             const statusColor = isRed ? 'var(--brand-red)' : 'var(--brand-blue)';
             
             let badges = '';
-            // Quote Ready disappears once sent to school [1]
+            // Quote Ready disappears once sent to school
             if (item.quoteUrl && !item.quoteEmailSent) badges += '<span class="badge-drafted">📄 Quote Ready</span> ';
             if (item.quoteEmailSent) badges += '<span class="badge-sent">📧 Sent</span>';
 
@@ -1202,7 +1202,7 @@
         if (tabBtnProfile) tabBtnProfile.disabled = true;
     }
 
-    // Dynamic Central Panel Tabs [1]
+    // Dynamic Central Panel Tabs
     function setPanelTab(tabName) {
         const tabBtnDetails = document.getElementById('tabBtnDetails');
         const tabBtnProfile = document.getElementById('tabBtnProfile');
@@ -1215,7 +1215,7 @@
             orderForm.classList.add('hidden');
             schoolProfileView.classList.remove('hidden');
             
-            // UPGRADED: Instantly reads unsaved on-screen fields to build your template preview [1]
+            // UPGRADED: Instantly reads unsaved on-screen fields to build your template preview
             updateTemplatePreview(); 
         } else {
             tabBtnDetails.classList.add('active');
@@ -1225,7 +1225,7 @@
         }
     }
 
-    // Compiles selected school profile [1]
+    // Compiles selected school profile
     function compileSchoolProfile(schoolObj) {
         if (!schoolObj) return;
 
@@ -1237,7 +1237,7 @@
         document.getElementById('profileCarryoutStore').innerText = schoolObj.carryoutStore ? `Store #${schoolObj.carryoutStore}` : '-';
         document.getElementById('profileNotesText').value = schoolObj.notes || '';
 
-        // Build Coordinator list for selected school [1]
+        // Build Coordinator list for selected school
         const coordsList = document.getElementById('profileCoordinatorsList');
         coordsList.innerHTML = '';
         const coords = coordinatorsMap[schoolObj.name] || [];
@@ -1252,7 +1252,7 @@
             });
         }
 
-        // Build Order History list [1]
+        // Build Order History list
         const historyTbody = document.querySelector('#profileHistoryTable tbody');
         historyTbody.innerHTML = '';
         const historyOrders = orders.filter(o => o.schoolName === schoolObj.name);
@@ -1274,7 +1274,7 @@
         }
     }
 
-    // Save School specific instruction notes directly back to the database [1]
+    // Save School specific instruction notes directly back to the database
     async function saveSchoolNotes() {
         const schoolDropdown = document.getElementById('fieldSchool');
         const selectedSchool = schoolDropdown ? schoolDropdown.value : '';
@@ -1299,7 +1299,7 @@
 
             if (!data.success) throw new Error(data.error);
 
-            // Update school info locally [1]
+            // Update school info locally
             const sObj = schoolsList.find(s => s.name.trim().toLowerCase() === selectedSchool.trim().toLowerCase());
             if (sObj) sObj.notes = notesText;
             
@@ -1310,7 +1310,7 @@
         }
     }
 
-    // Cloud Synchronized Scratchpad Text Sync [1]
+    // Cloud Synchronized Scratchpad Text Sync
     function triggerNotesCloudSync() {
         const scratchpadVal = document.getElementById('scratchpad').value;
         localStorage.setItem('cat_scratchpad', scratchpadVal);
@@ -1331,10 +1331,10 @@
                     console.log("Notes synchronized successfully with Google Sheet.");
                 })
                 .catch(err => console.error("Cloud note backup failed:", err));
-        }, 2000); // 2 second debounce limit [1]
+        }, 2000); // 2 second debounce limit
     }
 
-    // INTERACTIVE BRAND EMAIL BUILDER & COPY MODULE [1]
+    // INTERACTIVE BRAND EMAIL BUILDER & COPY MODULE
     function handleTemplateSelectChange() {
         const select = document.getElementById('replyTemplateSelect');
         const groupPeopleCount = document.getElementById('groupPeopleCount');
@@ -1357,7 +1357,7 @@
                 groupPeopleCount.classList.remove('hidden');
                 groupCustomText.classList.add('hidden'); // Hide custom input on info template
             } else if (select.value === 'custom') {
-                groupCustomText.classList.remove('hidden'); // Show custom input on custom template [1]
+                groupCustomText.classList.remove('hidden'); // Show custom input on custom template
                 groupPeopleCount.classList.add('hidden');
             } else {
                 groupPeopleCount.classList.add('hidden');
@@ -1376,19 +1376,19 @@
         const schoolObj = schoolsList.find(s => s.name.trim().toLowerCase() === schoolName.trim().toLowerCase());
         const coordinator = document.getElementById('fieldCoordinator').value;
 
-        // Dynamic highlights using brand neutrals and red placeholders [1]
+        // Dynamic highlights using brand neutrals and red placeholders
         const boldRedPlaceholder = `<span style="color: #ff0000; font-weight: bold;">[PLEASE PROVIDE]</span>`;
         
         const fSchool = schoolObj ? schoolObj.name : boldRedPlaceholder;
         const fAddress = schoolObj && schoolObj.address ? schoolObj.address : boldRedPlaceholder;
-        // friendly greeting name, but keeps the full "coordinator" variable for contact records [1]
+        // friendly greeting name, but keeps the full "coordinator" variable for contact records
         const greetingName = coordinator ? extractFirstName(coordinator) : boldRedPlaceholder; 
         const fCoord = coordinator ? coordinator : boldRedPlaceholder;
         
         const rawDate = document.getElementById('fieldDate').value;
         let fDate = boldRedPlaceholder;
         if (rawDate) {
-            // Robust split-parser translates "YYYY-MM-DD" on-screen inputs into a standard "M/D/YY" string [1]
+            // Robust split-parser translates "YYYY-MM-DD" on-screen inputs into a standard "M/D/YY" string
             const dateParts = rawDate.split('-');
             if (dateParts.length === 3) {
                 fDate = `${parseInt(dateParts[1], 10)}/${parseInt(dateParts[2], 10)}/${dateParts[0].slice(-2)}`;
@@ -1433,7 +1433,7 @@
             
             let portionBlock = `* 🍕 <strong>Portion Recommendation:</strong> 2 - 3 slices per person`;
             
-            // Dynamic Portions calculation replacing manual math entirely! [1]
+            // Dynamic Portions calculation replacing manual math entirely!
             if (!isNaN(headcount) && headcount > 0) {
                 const pizzas2Slices = Math.ceil((headcount * 2) / 8);
                 const pizzas3Slices = Math.ceil((headcount * 3) / 8);
@@ -1479,11 +1479,11 @@
                     </div>
                 </div>
             `;
-        } else if (select.value === 'custom') { // <--- Unified else if block [1]
+        } else if (select.value === 'custom') { // <--- Unified else if block
             const customInput = document.getElementById('templateCustomText');
             const customText = customInput ? customInput.value.trim() : "";
             
-            // Replaces manual typing line breaks with clean HTML break tags [1]
+            // Replaces manual typing line breaks with clean HTML break tags
             const formattedText = customText ? customText.replace(/\n/g, '<br>') : `<span style="color: #ff0000; font-weight: bold;">[TYPE YOUR CUSTOM REPLY HERE]</span>`;
 
             htmlString = `
@@ -1501,7 +1501,7 @@
         preview.innerHTML = htmlString;
     }
 
-    // Robust dual-payload rich-text copy to clipboard [1]
+    // Robust dual-payload rich-text copy to clipboard 
     async function copyTemplateToClipboard() {
         const preview = document.getElementById('templatePreviewArea');
         if (!preview) return;
@@ -1525,7 +1525,7 @@
 
             await navigator.clipboard.write([item]);
             showLoader(false);
-            alert("Rich-text email response copied to clipboard! Switch to Gmail and press Paste (Ctrl+V) [1].");
+            alert("Rich-text email response copied to clipboard! Switch to Gmail and press Paste (Ctrl+V) .");
         } catch (err) {
             showLoader(false);
             console.error("Clipboard write blocked:", err);
@@ -1538,7 +1538,7 @@
 
         const dateInput = document.getElementById('fieldDate').value;
 
-        // DATE SAFEGUARD WARN DIALOG (Catch manual typo input like 7/6 instead of 8/6) [1]
+        // DATE SAFEGUARD WARN DIALOG (Catch manual typo input like 7/6 instead of 8/6) 
         if (dateInput) {
             const orderDate = new Date(dateInput);
             const today = new Date();
@@ -1614,7 +1614,7 @@
                 throw new Error(result.error || "Save action failed");
             }
             
-            // Capture the newly saved or updated ID [1]
+            // Capture the newly saved or updated ID 
             const savedId = id || result.id;
 
             return fetch(`${API_URL}?action=getInitialData`)
@@ -1623,7 +1623,7 @@
                     orders = data.orders || [];
                     renderList();
                     
-                    // UPGRADED: Find the saved ID and auto-select/load it instead of clearing the screen [1]
+                    // UPGRADED: Find the saved ID and auto-select/load it instead of clearing the screen 
                     if (savedId) {
                         const matchedOrder = orders.find(o => o.id === savedId);
                         if (matchedOrder) {
@@ -1931,7 +1931,7 @@
         const parts = dateStr.split('/');
         if (parts.length === 3) {
             let month = parts[0].padStart(2, '0');
-            let day = parts[1].padStart(2, '0');
+            let day = parts.padStart(2, '0');
             let year = parts[2];
             if (year.length === 2) {
                 year = '20' + year; 
@@ -1941,7 +1941,7 @@
         return dateStr;
     }
 
-    // Intelligent Phone Parser (Resolves Right-Alignment slip-ups in Google Sheets) [1]
+    // Intelligent Phone Parser (Resolves Right-Alignment slip-ups in Google Sheets) 
     function formatPhoneNumber(value) {
         if (!value) return "";
         let str = value.toString().trim();
@@ -1975,7 +1975,7 @@
             }
         }
         
-        // Re-append standardized extension syntax if applicable [1]
+        // Re-append standardized extension syntax if applicable 
         if (extPart) {
             return `${formattedBase} x${extPart}`;
         }
@@ -2005,14 +2005,14 @@
         return trimmed; 
     }
 
-    // Safely extracts a friendly first name (retains titles like Dr. or Coach) [1]
+    // Safely extracts a friendly first name (retains titles like Dr. or Coach) 
     function extractFirstName(fullName) {
         if (!fullName) return "";
         let name = fullName.toString().trim();
         const parts = name.split(/\s+/); // Splits by any spacing
         if (parts.length === 0) return "";
         
-        // Check for common titles to keep them combined [1]
+        // Check for common titles to keep them combined 
         const titles = ["dr", "dr.", "mr", "mr.", "mrs", "mrs.", "ms", "ms.", "coach", "principal", "officer"];
         const firstPartLower = parts[0].toLowerCase();
         
