@@ -437,7 +437,7 @@
                     <button type="button" style="background: var(--med-blue); width: 100%; margin-top: 8px;" onclick="saveSchoolNotes()">💾 Save School Notes</button>
                 </div>
 
-                <!-- NEW: Integrated Branded Email Reply Builder [1] -->
+                <!-- NEW: Integrated Branded Email Reply Builder -->
                 <div class="profile-card" style="margin-top: 12px;">
                     <div class="profile-label" style="border-bottom: 1.5px dashed var(--crust-med); padding-bottom: 4px; margin-bottom: 12px; color: var(--dark-blue);">📋 Branded Email Reply Builder</div>
                     
@@ -448,6 +448,7 @@
                                 <option value="">-- Choose Template --</option>
                                 <option value="info">📋 Onboarding / Information Request</option>
                                 <option value="carryout">🏬 Carryout-Only Redirect</option>
+                                <option value="custom">✍️ Custom Reply Template</option> <!-- ADD THIS LINE -->
                             </select>
                         </div>
                         <div class="form-group hidden" id="groupPeopleCount">
@@ -455,11 +456,17 @@
                             <input type="text" id="templatePeopleCount" placeholder="e.g., 65" oninput="updateTemplatePreview()">
                         </div>
                     </div>
-
+                
+                    <!-- ADD THIS BLOCK DIRECTLY UNDER THE ROW ABOVE -->
+                    <div class="form-group hidden" id="groupCustomText" style="margin-top: 8px;">
+                        <label>Write Your Custom Reply</label>
+                        <textarea id="templateCustomText" style="height: 120px;" placeholder="Type your custom response here... your greeting and signature are automatically attached [1]." oninput="updateTemplatePreview()"></textarea>
+                    </div>
+                
                     <div id="templatePreviewArea" class="hidden" style="margin-top: 12px; background: var(--crust-light); border: 1.5px solid var(--crust-dark); padding: 12px; border-radius: 6px; max-height: 250px; overflow-y: auto; font-family: Arial, sans-serif; font-size: 13px; color: #603913; line-height: 1.45;">
                         <!-- Live Dynamic Email Preview displays here -->
                     </div>
-
+                
                     <button type="button" id="btnCopyTemplate" class="hidden" style="background: var(--med-blue); width: 100%; margin-top: 12px;" onclick="copyTemplateToClipboard()">
                         📋 Copy Rich-Text Response to Clipboard
                     </button>
@@ -1328,13 +1335,15 @@
     function handleTemplateSelectChange() {
         const select = document.getElementById('replyTemplateSelect');
         const groupPeopleCount = document.getElementById('groupPeopleCount');
+        const groupCustomText = document.getElementById('groupCustomText'); // Read custom input container
         const preview = document.getElementById('templatePreviewArea');
         const btnCopy = document.getElementById('btnCopyTemplate');
-
-        if (!select || !groupPeopleCount || !preview || !btnCopy) return;
-
+    
+        if (!select || !groupPeopleCount || !preview || !btnCopy || !groupCustomText) return;
+    
         if (select.value === "") {
             groupPeopleCount.classList.add('hidden');
+            groupCustomText.classList.add('hidden');
             preview.classList.add('hidden');
             btnCopy.classList.add('hidden');
         } else {
@@ -1343,8 +1352,13 @@
             
             if (select.value === 'info') {
                 groupPeopleCount.classList.remove('hidden');
+                groupCustomText.classList.add('hidden'); // Hide custom input on info template
+            } else if (select.value === 'custom') {
+                groupCustomText.classList.remove('hidden'); // Show custom input on custom template [1]
+                groupPeopleCount.classList.add('hidden');
             } else {
                 groupPeopleCount.classList.add('hidden');
+                groupCustomText.classList.add('hidden');
             }
             updateTemplatePreview();
         }
