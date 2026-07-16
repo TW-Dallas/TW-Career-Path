@@ -436,6 +436,34 @@
                     <textarea id="profileNotesText" style="height: 60px; margin-top: 6px;" placeholder="Leave instructions, special credits, or delivery gate codes specific to this school..."></textarea>
                     <button type="button" style="background: var(--med-blue); width: 100%; margin-top: 8px;" onclick="saveSchoolNotes()">💾 Save School Notes</button>
                 </div>
+
+                <!-- NEW: Integrated Branded Email Reply Builder [1] -->
+                <div class="profile-card" style="margin-top: 12px;">
+                    <div class="profile-label" style="border-bottom: 1.5px dashed var(--crust-med); padding-bottom: 4px; margin-bottom: 12px; color: var(--dark-blue);">📋 Branded Email Reply Builder</div>
+                    
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1.5;">
+                            <label>Select Response Template</label>
+                            <select id="replyTemplateSelect" onchange="handleTemplateSelectChange()">
+                                <option value="">-- Choose Template --</option>
+                                <option value="info">📋 Onboarding / Information Request</option>
+                                <option value="carryout">🏬 Carryout-Only Redirect</option>
+                            </select>
+                        </div>
+                        <div class="form-group hidden" id="groupPeopleCount">
+                            <label>Head Count (Portion Calculator)</label>
+                            <input type="text" id="templatePeopleCount" placeholder="e.g., 65" oninput="updateTemplatePreview()">
+                        </div>
+                    </div>
+
+                    <div id="templatePreviewArea" class="hidden" style="margin-top: 12px; background: var(--crust-light); border: 1.5px solid var(--crust-dark); padding: 12px; border-radius: 6px; max-height: 250px; overflow-y: auto; font-family: Arial, sans-serif; font-size: 13px; color: #603913; line-height: 1.45;">
+                        <!-- Live Dynamic Email Preview displays here -->
+                    </div>
+
+                    <button type="button" id="btnCopyTemplate" class="hidden" style="background: var(--med-blue); width: 100%; margin-top: 12px;" onclick="copyTemplateToClipboard()">
+                        📋 Copy Rich-Text Response to Clipboard
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -593,6 +621,7 @@
         }
     }
 
+    // Toggle Quick Add School Area
     function toggleQuickAddSchool() {
         const area = document.getElementById('quickAddSchoolArea');
         if (!area) return;
@@ -837,6 +866,7 @@
 
         // Trigger school profile view compilation [1]
         compileSchoolProfile(schoolObj);
+        updateTemplatePreview(); // Force email reply builder state to sync
     }
 
     function handleServiceMethodChange() {
@@ -875,6 +905,7 @@
                 if (emailInput) emailInput.value = match.email || '';
             }
         }
+        updateTemplatePreview(); // Keep builder variables up to date
     }
 
     window.togglePasswordVisibility = function() {
@@ -901,7 +932,6 @@
         return "Missing PO";
     }
 
-    // Assigns neutral visual status parameters based strictly on domino brand palettes
     function getStatusClass(item) {
         if (item.accountingSent || item.poProcessed || (item.poNum && item.poNum.toLowerCase().includes("credit card")) || item.chaserSent) {
             return "status-blue";
@@ -1292,6 +1322,176 @@
                 })
                 .catch(err => console.error("Cloud note backup failed:", err));
         }, 2000); // 2 second debounce limit [1]
+    }
+
+    // INTERACTIVE BRAND EMAIL BUILDER & COPY MODULE [1]
+    function handleTemplateSelectChange() {
+        const select = document.getElementById('replyTemplateSelect');
+        const groupPeopleCount = document.getElementById('groupPeopleCount');
+        const preview = document.getElementById('templatePreviewArea');
+        const btnCopy = document.getElementById('btnCopyTemplate');
+
+        if (!select || !groupPeopleCount || !preview || !btnCopy) return;
+
+        if (select.value === "") {
+            groupPeopleCount.classList.add('hidden');
+            preview.classList.add('hidden');
+            btnCopy.classList.add('hidden');
+        } else {
+            preview.classList.remove('hidden');
+            btnCopy.classList.remove('hidden');
+            
+            if (select.value === 'info') {
+                groupPeopleCount.classList.remove('hidden');
+            } else {
+                groupPeopleCount.classList.add('hidden');
+            }
+            updateTemplatePreview();
+        }
+    }
+
+    function updateTemplatePreview() {
+        const select = document.getElementById('replyTemplateSelect');
+        const preview = document.getElementById('templatePreviewArea');
+        if (!select || !preview || select.value === "") return;
+
+        const schoolName = document.getElementById('fieldSchool').value;
+        const schoolObj = schoolsList.find(s => s.name.trim().toLowerCase() === schoolName.trim().toLowerCase());
+        const coordinator = document.getElementById('fieldCoordinator').value;
+
+        // Dynamic highlights using brand neutrals and red placeholders [1]
+        const boldRedPlaceholder = `<span style="color: #ff0000; font-weight: bold;">[PLEASE PROVIDE]</span>`;
+        
+        const fSchool = schoolObj ? schoolObj.name : boldRedPlaceholder;
+        const fAddress = schoolObj && schoolObj.address ? schoolObj.address : boldRedPlaceholder;
+        const fCoord = coordinator ? coordinator : boldRedPlaceholder;
+        
+        const rawDate = document.getElementById('fieldDate').value;
+        const fDate = rawDate ? new Date(rawDate).toLocaleDateString() : boldRedPlaceholder;
+        const rawTime = document.getElementById('fieldTime').value;
+        const fTime = rawTime ? rawTime : boldRedPlaceholder;
+        const rawPhone = document.getElementById('fieldPhone').value;
+        const fPhone = rawPhone ? rawPhone : (schoolObj && schoolObj.phone ? schoolObj.phone : boldRedPlaceholder);
+
+        let htmlString = "";
+
+        if (select.value === 'carryout') {
+            const carryStore = schoolObj && schoolObj.carryoutStore ? schoolObj.carryoutStore : boldRedPlaceholder;
+            
+            // Look up carryout store physical coordinates
+            let storeAddr = boldRedPlaceholder;
+            let storePh = boldRedPlaceholder;
+            if (schoolObj && schoolObj.carryoutStore && storeLookup[schoolObj.carryoutStore]) {
+                storeAddr = storeLookup[schoolObj.carryoutStore].address || boldRedPlaceholder;
+                storePh = storeLookup[schoolObj.carryoutStore].phone || boldRedPlaceholder;
+            }
+
+            htmlString = `
+                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #603913; line-height: 1.55;">
+                    <p style="margin-top: 0;">Hello ${fCoord},</p>
+                    <p>Thank you so much for reaching out! We received your catering request for <strong>${fSchool}</strong> on <strong>${fDate}</strong>.</p>
+                    <p>While we are an approved vendor for your district, your specific school address unfortunately falls outside of our standard delivery routing zone.</p>
+                    <p>However, we would absolutely love to serve your team via <strong>Carryout</strong>! Your closest pickup location is:</p>
+                    <ul style="margin: 8px 0; padding-left: 20px;">
+                        <li style="margin-bottom: 6px;">🏬 <strong>Store #${carryStore}</strong></li>
+                        <li style="margin-bottom: 6px;">📍 <strong>Address:</strong> ${storeAddr}</li>
+                        <li style="margin-bottom: 6px;">📞 <strong>Store Telephone:</strong> ${storePh}</li>
+                    </ul>
+                    <p>If you would like to proceed with a carryout order, please let me know. I will generate a formal quote for you to submit to your purchasing department to secure a purchase order [1]. <em>Please note that the formal quote will arrive in a separate email [1].</em></p>
+                    <p style="margin-bottom: 12px;">Let me know if you need any other adjustments!</p>
+                    <p style="margin: 0; color: #6c757d;">Best regards,</p>
+                    <div style="margin-top: 10px;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 270px; height: auto; display: block;">
+                    </div>
+                </div>
+            `;
+        } else if (select.value === 'info') {
+            const peopleCountInput = document.getElementById('templatePeopleCount').value;
+            const headcount = parseInt(peopleCountInput, 10);
+            
+            let portionBlock = `* 🍕 <strong>Portion Recommendation:</strong> 2 - 3 slices per person`;
+            
+            // Dynamic Portions calculation replacing manual math entirely! [1]
+            if (!isNaN(headcount) && headcount > 0) {
+                const pizzas2Slices = Math.ceil((headcount * 2) / 8);
+                const pizzas3Slices = Math.ceil((headcount * 3) / 8);
+                portionBlock = `
+                    * 🍕 <strong>Portion Recommendation:</strong> 2 - 3 slices per person (${headcount} people)
+                    <ul style="margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; list-style-type: circle;">
+                        <li style="margin-bottom: 4px;">2 slices each: <strong>${pizzas2Slices} pizzas</strong></li>
+                        <li style="margin-bottom: 4px;">3 slices each: <strong>${pizzas3Slices} pizzas</strong></li>
+                    </ul>
+                `;
+            }
+
+            htmlString = `
+                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #603913; line-height: 1.55;">
+                    <p style="margin-top: 0;">Hi ${fCoord},</p>
+                    <p>I hope this email finds you well! My name is Mike, and I manage catering orders for Team Wow Domino’s stores in North Texas. I’m happy to assist you. I have provided details regarding our catering process below.</p>
+                    
+                    <p style="margin-bottom: 4px; font-weight: bold; color: #005c91; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Quick Overview</p>
+                    <ul style="margin: 0 0 16px 0; padding-left: 20px; list-style-type: square;">
+                        <li style="margin-bottom: 6px;">📋 <strong>Menu Options:</strong> Any item from our menu can be delivered (see attached).</li>
+                        <li style="margin-bottom: 6px;">🏷️ <strong>School Discounts:</strong> Special pricing is available for schools (see attached).</li>
+                        <li style="margin-bottom: 6px;">${portionBlock}</li>
+                    </ul>
+
+                    <p style="margin-bottom: 4px; font-weight: bold; color: #005c91; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Next Steps</p>
+                    <p style="margin-top: 0; margin-bottom: 8px;">When you’re ready to place your order, please verify or provide the following details:</p>
+                    <ul style="margin: 0 0 16px 0; padding-left: 20px; list-style-type: square;">
+                        <li style="margin-bottom: 6px;">🏫 <strong>School Name:</strong> ${fSchool}</li>
+                        <li style="margin-bottom: 6px;">📍 <strong>Delivery Address:</strong> ${fAddress}</li>
+                        <li style="margin-bottom: 6px;">📅 <strong>Order Date:</strong> ${fDate}</li>
+                        <li style="margin-bottom: 6px;">🕒 <strong>Order Time:</strong> ${fTime}</li>
+                        <li style="margin-bottom: 6px;">👤 <strong>Contact Name & Phone:</strong> ${fCoord} &bull; ${fPhone}</li>
+                        <li style="margin-bottom: 6px;">📦 <strong>Items Wanted:</strong> ${boldRedPlaceholder} (including toppings and quantities of each)</li>
+                        <li style="margin-bottom: 6px;">🚗 <strong>Delivery Instructions:</strong> ${boldRedPlaceholder}</li>
+                        <li style="margin-bottom: 6px;">💳 <strong>Payment Method:</strong> ${boldRedPlaceholder}</li>
+                    </ul>
+
+                    <p>I’ve attached both our school pricing and a comprehensive menu for your review.</p>
+                    <p style="margin-bottom: 16px;">If you have any questions or need help planning your order, feel free to reach out. I look forward to working with you!</p>
+                    <p style="margin: 0; color: #6c757d;">Best regards,</p>
+                    <div style="margin-top: 10px;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 270px; height: auto; display: block;">
+                    </div>
+                </div>
+            `;
+        }
+
+        preview.innerHTML = htmlString;
+    }
+
+    // Robust dual-payload rich-text copy to clipboard [1]
+    async function copyTemplateToClipboard() {
+        const preview = document.getElementById('templatePreviewArea');
+        if (!preview) return;
+
+        showLoader(true, "Compiling rich-text clipboard payload...");
+
+        const htmlContent = preview.innerHTML;
+        // Generate fallback plain text stripping html elements safely
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlContent;
+        const plainTextContent = tempDiv.innerText || tempDiv.textContent;
+
+        try {
+            const blobHtml = new Blob([htmlContent], { type: 'text/html' });
+            const blobText = new Blob([plainTextContent], { type: 'text/plain' });
+            
+            const item = new ClipboardItem({
+                'text/html': blobHtml,
+                'text/plain': blobText
+            });
+
+            await navigator.clipboard.write([item]);
+            showLoader(false);
+            alert("Rich-text email response copied to clipboard! Switch to Gmail and press Paste (Ctrl+V) [1].");
+        } catch (err) {
+            showLoader(false);
+            console.error("Clipboard write blocked:", err);
+            alert("Clipboard write failed. Ensure your browser is using an HTTPS connection to use the Clipboard API.");
+        }
     }
 
     function saveOrder(e) {
