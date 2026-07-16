@@ -1570,21 +1570,16 @@
                 if (calcMode === 'slices') {
                     const pizzas = Math.ceil(headcount / 8);
                     portionBlock = `
-                        <p style="margin-bottom: 4px; font-weight: bold; color: #005c91; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Portion Recommendation</p>
-                        <p style="margin-top: 0; margin-bottom: 8px;">Based on your request for <strong>${headcount} slices</strong> (assuming 8 slices per pizza):</p>
-                        <ul style="margin: 0 0 16px 0; padding-left: 20px; list-style-type: circle;">
-                            <li style="margin-bottom: 4px;">Recommended Order: <strong>${pizzas} pizzas</strong> (yielding ${pizzas * 8} total slices)</li>
-                        </ul>
+                        <p>For portioning, since you mentioned needing <strong>${headcount} slices</strong>, that would come out to <strong>${pizzas} large pizzas</strong> (which provides ${pizzas * 8} total slices cut into standard 8ths).</p>
                     `;
                 } else {
                     const pizzas2Slices = Math.ceil((headcount * 2) / 8);
                     const pizzas3Slices = Math.ceil((headcount * 3) / 8);
                     portionBlock = `
-                        <p style="margin-bottom: 4px; font-weight: bold; color: #005c91; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Portion Recommendation</p>
-                        <p style="margin-top: 0; margin-bottom: 8px;">Based on your headcount of <strong>${headcount} people</strong> (assuming 2 to 3 slices per person):</p>
+                        <p>For portioning, since you have a headcount of <strong>${headcount} people</strong>, we generally recommend aiming for 2 to 3 slices per person:</p>
                         <ul style="margin: 0 0 16px 0; padding-left: 20px; list-style-type: circle;">
-                            <li style="margin-bottom: 4px;">2 slices each: <strong>${pizzas2Slices} pizzas</strong></li>
-                            <li style="margin-bottom: 4px;">3 slices each: <strong>${pizzas3Slices} pizzas</strong></li>
+                            <li style="margin-bottom: 6px;">At 2 slices each, that would be <strong>${pizzas2Slices} large pizzas</strong> (providing ${pizzas2Slices * 8} slices).</li>
+                            <li style="margin-bottom: 6px;">At 3 slices each, that would be <strong>${pizzas3Slices} large pizzas</strong> (providing ${pizzas3Slices * 8} slices).</li>
                         </ul>
                     `;
                 }
@@ -1596,7 +1591,7 @@
                     <p>Thank you so much for reaching out! I received your catering request for <strong>${fSchool}</strong> on <strong>${fDate}</strong>.</p>
                     <p>While we are an approved vendor for your district, your specific school address unfortunately falls outside of our standard delivery routing zone.</p>
                     <p>However, we would absolutely love to serve your team via <strong>Carryout</strong>! Your closest pickup location is:</p>
-                    <ul style="margin: 8px 0; padding-left: 20px; style="margin-bottom: 16px;">
+                    <ul style="margin: 8px 0; padding-left: 20px; margin-bottom: 16px;">
                         <li style="margin-bottom: 6px;">📍 <strong>Address:</strong> ${storeAddr}</li>
                     </ul>
                     ${portionBlock}
@@ -1604,7 +1599,7 @@
                     <p style="margin-bottom: 12px;">Let me know if you need any other adjustments!</p>
                     <p style="margin: 0;">Best regards,</p>
                     <div style="margin-top: 10px;">
-                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 290px; height: auto; display: block;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 410px; height: auto; display: block;">
                     </div>
                 </div>
             `;
@@ -1615,10 +1610,7 @@
                 if (calcMode === 'slices') {
                     const pizzas = Math.ceil(headcount / 8);
                     portionBlock = `
-                        * 🍕 <strong>Order Recommendation:</strong> ${pizzas} pizzas (${pizzas * 8} slices total)
-                        <ul style="margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; list-style-type: circle;">
-                            <li style="margin-bottom: 4px;">Based on your request for <strong>${headcount} slices</strong>.</li>
-                        </ul>
+                        * 🍕 <strong>Order Recommendation:</strong> ${pizzas} pizzas (provides ${pizzas * 8} slices based on your request for ${headcount} slices)
                     `;
                 } else {
                     const pizzas2Slices = Math.ceil((headcount * 2) / 8);
@@ -1662,11 +1654,29 @@
                     <p style="margin-bottom: 16px;">If you have any questions or need help planning your order, feel free to reach out. I look forward to working with you!</p>
                     <p style="margin: 0;">Best regards,</p>
                     <div style="margin-top: 10px;">
-                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 290px; height: auto; display: block;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 410px; height: auto; display: block;">
                     </div>
                 </div>
             `;
         } else if (select.value === 'custom') { 
+            const customInput = document.getElementById('templateCustomText');
+            const customText = customInput ? customInput.value.trim() : "";
+            const formattedText = customText ? customText.replace(/\n/g, '<br>') : `<span style="color: #ff0000; font-weight: bold;">[TYPE YOUR CUSTOM REPLY HERE]</span>`;
+
+            htmlString = `
+                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #603913; line-height: 1.55;">
+                    <p style="margin-top: 0;">Hi ${greetingName},</p>
+                    <p>${formattedText}</p>
+                    <p style="margin: 0;">Best regards,</p>
+                    <div style="margin-top: 10px;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 410px; height: auto; display: block;">
+                    </div>
+                </div>
+            `;
+        }
+    
+        preview.innerHTML = htmlString;
+    } else if (select.value === 'custom') { 
             const customInput = document.getElementById('templateCustomText');
             const customText = customInput ? customInput.value.trim() : "";
             const formattedText = customText ? customText.replace(/\n/g, '<br>') : `<span style="color: #ff0000; font-weight: bold;">[TYPE YOUR CUSTOM REPLY HERE]</span>`;
