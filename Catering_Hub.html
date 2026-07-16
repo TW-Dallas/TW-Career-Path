@@ -1424,9 +1424,9 @@
                     </ul>
                     <p>If you would like to proceed with a carryout order, please let me know. I will generate a formal quote for you to submit to your purchasing department to secure a purchase order. <em>Please note that the formal quote will arrive in a separate email.</em></p>
                     <p style="margin-bottom: 12px;">Let me know if you need any other adjustments!</p>
-                    <p style="margin: 0; color: #6c757d;">Best regards,</p>
+                    <p style="margin: 0;">Best regards,</p>
                     <div style="margin-top: 10px;">
-                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 320px; height: auto; display: block;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 400px; height: auto; display: block;">
                     </div>
                 </div>
             `;
@@ -1476,13 +1476,13 @@
 
                     <p>I’ve attached both our school pricing and a comprehensive menu for your review.</p>
                     <p style="margin-bottom: 16px;">If you have any questions or need help planning your order, feel free to reach out. I look forward to working with you!</p>
-                    <p style="margin: 0; color: #6c757d;">Best regards,</p>
+                    <p style="margin: 0;">Best regards,</p>
                     <div style="margin-top: 10px;">
-                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 320px; height: auto; display: block;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 400px; height: auto; display: block;">
                     </div>
                 </div>
             `;
-        } else if (select.value === 'custom') { // <--- Unified else if block
+        } else if (select.value === 'custom') { 
             const customInput = document.getElementById('templateCustomText');
             const customText = customInput ? customInput.value.trim() : "";
             
@@ -1493,9 +1493,9 @@
                 <div style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #603913; line-height: 1.55;">
                     <p style="margin-top: 0;">Hi ${greetingName},</p>
                     <p>${formattedText}</p>
-                    <p style="margin: 0; color: #6c757d;">Best regards,</p>
+                    <p style="margin: 0;">Best regards,</p>
                     <div style="margin-top: 10px;">
-                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 320px; height: auto; display: block;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 400px; height: auto; display: block;">
                     </div>
                 </div>
             `;
