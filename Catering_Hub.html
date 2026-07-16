@@ -514,6 +514,7 @@
                 <div class="profile-card" style="margin-top: 12px;">
                     <div class="profile-label" style="border-bottom: 1.5px dashed var(--crust-med); padding-bottom: 4px; margin-bottom: 12px; color: var(--dark-blue);">📋 Branded Email Reply Builder</div>
                     
+                    <!-- This row only contains the dropdown and the calculator -->
                     <div class="form-row">
                         <div class="form-group" style="flex: 1.5;">
                             <label>Select Response Template</label>
@@ -521,30 +522,34 @@
                                 <option value="">-- Choose Template --</option>
                                 <option value="info">📋 Onboarding / Information Request</option>
                                 <option value="carryout">🏬 Carryout-Only Redirect</option>
-                                <option value="custom">✍️ Custom Reply Template</option> <!-- ADD THIS LINE -->
+                                <option value="custom">✍️ Custom Reply Template</option>
                             </select>
                         </div>
+
                         <div class="form-group hidden" id="groupPeopleCount">
-                        <label>Portion Calculator (Head Count or Slices)</label>
+                            <label>Portion Calculator (Head Count or Slices)</label>
                             <div style="display: flex; gap: 8px; align-items: center;">
-                                <input type="text" id="templatePeopleCount" placeholder="e.g., 65" oninput="updateTemplatePreview()" style="flex: 2;">
-                                <select id="calculatorModeSelect" onchange="updateTemplatePreview()" style="flex: 1.2; padding: 8px;">
+                                <input type="text" id="templatePeopleCount" placeholder="e.g., 65" oninput="updateTemplatePreview()" style="flex: 1.8; min-width: 0;">
+                                <select id="calculatorModeSelect" onchange="updateTemplatePreview()" style="flex: 1.2; padding: 8px; min-width: 0;">
                                     <option value="people">👥 People</option>
                                     <option value="slices">🍕 Slices</option>
                                 </select>
                             </div>
                         </div>
+                    </div> <!-- This closing div prevents everything below from aligning horizontally -->
                 
-                    <!-- ADD THIS BLOCK DIRECTLY UNDER THE ROW ABOVE -->
+                    <!-- Custom text area (stacks vertically below) -->
                     <div class="form-group hidden" id="groupCustomText" style="margin-top: 8px;">
                         <label>Write Your Custom Reply</label>
                         <textarea id="templateCustomText" style="height: 120px;" placeholder="Type your custom response here... your greeting and signature are automatically attached." oninput="updateTemplatePreview()"></textarea>
                     </div>
                 
+                    <!-- Preview area (stacks vertically below) -->
                     <div id="templatePreviewArea" class="hidden" style="margin-top: 12px; background: var(--crust-light); border: 1.5px solid var(--crust-dark); padding: 12px; border-radius: 6px; max-height: 250px; overflow-y: auto; font-family: Arial, sans-serif; font-size: 13px; color: #603913; line-height: 1.45;">
                         <!-- Live Dynamic Email Preview displays here -->
                     </div>
                 
+                    <!-- Copy button (stacks vertically below at full-width) -->
                     <button type="button" id="btnCopyTemplate" class="hidden" style="background: var(--med-blue); width: 100%; margin-top: 12px;" onclick="copyTemplateToClipboard()">
                         📋 Copy Rich-Text Response to Clipboard
                     </button>
