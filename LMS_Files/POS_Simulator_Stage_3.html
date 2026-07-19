@@ -143,16 +143,12 @@
                 "step": 2,
                 "image": "resources/POS_assets/Stage_0/POS_9.png",
                 "activeHitbox": "hb-phone-field",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> Please type: 555-1234</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click inside the phone field and type <strong>5551234</strong>, then press <strong>Enter</strong>.</p>",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the <strong>Phone #</strong> field to begin.</p>",
                 "audio": {
-                    "file": "resources/audio/customer_phone_number.mp3", // Update with your actual segmented mp3 route
+                    "file": "resources/audio/customer_phone_number.mp3", // The audio plays here
                     "autoPlay": true
-                },
-                "input": {
-                    "type": "text",
-                    "expectedValue": "5551234",
-                    "placeholder": "Enter Phone Number..."
                 }
+                // 👈 The "input" block was deleted, making this a standard click step again.
             },
             {
                 "step": 3,
