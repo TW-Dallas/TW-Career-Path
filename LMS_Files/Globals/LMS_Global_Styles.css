@@ -513,7 +513,8 @@
         font-family: 'OneDotCd-Bold', sans-serif;
         font-size: 1.25rem;
         box-sizing: border-box;
-        text-align: center;
+        text-align: left;       /* 👈 Changes typing direction to left-justified */
+        padding-left: 8px;      /* 👈 Keeps the text from hitting the left border */
         border-radius: 4px;
         outline: none;
     }
