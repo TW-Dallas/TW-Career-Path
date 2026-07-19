@@ -166,10 +166,9 @@
                 "step": 5,
                 "image": "resources/POS_assets/Stage_1.1/POS_1.3.png",
                 "activeHitbox": "hb-cust-name",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Please type: Training</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click inside the name field and type <strong>Training</strong>, then press <strong>Enter</strong>.</p>",
+                "instruction": "<p>👉 Listen to the audio and enter the customer's name.</p>",
                 "audio": {
-                    "file": "resources/audio/customer_name.mp3", // Update with your actual segmented mp3 route
-                    "autoPlay": true
+                    "file": "resources/audio/customer_name.mp3" // Simple and clean
                 },
                 "input": {
                     "type": "text",
@@ -233,8 +232,10 @@
 
         function handleAudioForStep(stepData) {
             if (stepData.audio) {
+                // Show the call control card
                 audioPanel.style.display = 'block';
                 
+                // Load the new audio track if it has changed
                 const currentSrc = audioPlayer.getAttribute('src');
                 const newSrc = stepData.audio.file;
                 
@@ -242,20 +243,17 @@
                     audioPlayer.src = newSrc;
                     audioPlayer.load();
                 }
-
-                if (stepData.audio.autoPlay) {
-                    audioPlayer.play()
-                        .then(() => updateAudioUI(true))
-                        .catch(err => console.log("Auto-play blocked, waiting for user click.", err));
-                } else {
-                    updateAudioUI(false);
-                }
+        
+                // 👈 REMOVED THE AUTOPLAY TRIGGER HERE
+                // The audio is prepared, but we keep it paused until they click "Play Call"
+                updateAudioUI(false); 
+                
             } else {
+                // Hide the panel and pause the player if this step has no audio
                 audioPanel.style.display = 'none';
                 audioPlayer.pause();
             }
         }
-
         function toggleAudio() {
             if (audioPlayer.paused) {
                 audioPlayer.play();
