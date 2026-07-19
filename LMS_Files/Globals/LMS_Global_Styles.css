@@ -425,3 +425,95 @@
         color: var(--dark-blue);
         transform: scale(1.02);
     }
+    /* ==========================================
+   STAGE 3: CALL AUDIO CONTROLLER CARD
+   ========================================== */
+    #audio-control-panel {
+        background-color: var(--crust-light);
+        border: 1px solid var(--crust-med);
+        border-left: 5px solid var(--brand-blue);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .audio-header {
+        font-family: 'OneDotCd-Bold', sans-serif;
+        color: var(--dark-blue);
+        font-size: 1.05rem;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    /* Red pulsing recording light */
+    .audio-pulse-indicator {
+        width: 8px;
+        height: 8px;
+        background-color: var(--brand-red);
+        border-radius: 50%;
+        display: inline-block;
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(0.9); opacity: 0.5; }
+        50% { transform: scale(1.2); opacity: 1; }
+        100% { transform: scale(0.9); opacity: 0.5; }
+    }
+
+    .audio-btn-row {
+        display: flex;
+        gap: 10px;
+    }
+
+    .audio-btn {
+        flex-grow: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        background: var(--brand-blue);
+        color: var(--crust-base);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-family: 'OneDotCd-Bold';
+        font-size: 0.95rem;
+        cursor: pointer;
+        border: none;
+        transition: 0.2s ease;
+    }
+
+    .audio-btn:hover {
+        background: var(--dark-blue);
+    }
+
+    .audio-btn.btn-outline {
+        background: transparent;
+        color: var(--brand-blue);
+        border: 2px solid var(--brand-blue);
+    }
+
+    .audio-btn.btn-outline:hover {
+        background: rgba(0, 144, 226, 0.08);
+    }
+
+    /* ==========================================
+    STAGE 3: OVERLAY TEXT INPUT FOR HITBOXES
+    ========================================== */
+    .hitbox-text-input {
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--brand-blue);
+        background-color: white;
+        color: var(--crust-burnt);
+        font-family: 'OneDotCd-Bold', sans-serif;
+        font-size: 1.25rem;
+        box-sizing: border-box;
+        text-align: center;
+        border-radius: 4px;
+        outline: none;
+    }
