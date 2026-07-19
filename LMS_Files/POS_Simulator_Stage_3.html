@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Order Entry Practice (Stage 3)</title>
+  
+<!-- LINK TO YOUR GLOBALS -->
+<link rel="icon" type="image/png" href="../image/tile_blue.png">
+<link rel="stylesheet" href="Globals/LMS_Global_Styles.css">  
+<link rel="stylesheet" href="Globals/LMS_Master_hitboxes.css">
+<script src="Globals/lms_feedback.js"></script>
+</head>
+<body>
+    <!-- Mobile Blocker -->
+    <div id="mobile-blocker">
+        <h2>Desktop Required</h2>
+        <p>This POS simulator requires a larger screen. You must use a Laptop or Desktop to complete this module.</p>
+    </div>
+
+    <!-- UNIFIED MODULE BRAND NAVBAR (POS SIMULATOR) -->
+    <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="lms_dashboard.html#day1" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Back to Day 1
+            </a>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 4: Order Entry Practice (Stage 3)</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Practice Simulator</span>
+        </div>
+    </header>
+
+    <!-- Main Wrapper -->
+    <div id="simulator-wrapper">
+        
+        <!-- LEFT: Instructions Panel -->
+        <div id="instruction-panel">
+            
+            <!-- Hidden Audio Elements -->
+            <audio id="global-audio-player"></audio>
+
+            <!-- Play / Pause Call Card -->
+            <div id="audio-control-panel" style="display: none;">
+                <div class="audio-header">
+                    <span class="audio-pulse-indicator"></span> Live Audio Call
+                </div>
+                <div class="audio-btn-row">
+                    <button id="audio-play-pause-btn" class="audio-btn" onclick="toggleAudio()">
+                        <span class="icon">▶</span> Play Call
+                    </button>
+                    <button id="audio-replay-btn" class="audio-btn btn-outline" onclick="replayAudio()">
+                        <span class="icon">🔄</span> Replay
+                    </button>
+                </div>
+            </div>
+
+            <div id="instruction-text">
+                <!-- JavaScript will inject the text/tickets here -->
+            </div>
+            <div id="error-message" class="error-msg">❌ Incorrect Action. Try again.</div>
+
+            <!-- THE TEST BUTTONS -->
+            <div class="nav-strip" style="margin-top: auto; display: flex; gap: 10px;">
+                <button class="btn" onclick="goBack()">&#8592; Back</button>
+                <button class="btn" id="finish-sim-btn" style="display: none; background-color: var(--brand-red);" onclick="endSimulation()">Finish</button>
+            </div>
+        </div>
+      
+        <!-- RIGHT: POS Screen & Hitboxes -->
+        <div id="pos-container">
+            <div id="hitbox-wrapper">
+                <img id="pos-image" src="" alt="POS Screen">
+                <!-- HITBOXES WILL BE INJECTED HERE BY JAVASCRIPT -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT FOR STAGE 3.0 -->
+    <script>
+
+        // --- AUTO ERROR REPORTING ---
+        function reportErrorToDeveloper(errorType, details) {
+            const market = localStorage.getItem('tw_market') || 'Unknown Market';
+            const id = localStorage.getItem('tw_id') || 'Unknown ID';
+            const currentStepNum = typeof currentStep !== 'undefined' ? currentStep : 'N/A';
+            
+            // Create an informative payload
+            const payload = {
+                market: market,
+                userId: id,
+                module: 'Day 1 Mod 4 Practice Stage 3',
+                step: currentStepNum,
+                errorType: errorType,
+                details: details,
+                userAgent: navigator.userAgent
+            };
+
+            const url = `${AUTH_SCRIPT_URL}?action=error&data=${encodeURIComponent(JSON.stringify(payload))}`;
+            
+            // Send it in the background
+            fetch(url, { method: 'GET', credentials: 'omit' })
+                .then(() => console.log("Error report sent successfully."))
+                .catch(err => console.error("Could not send error report:", err));
+        }
+
+        // 1. Capture general JavaScript exceptions (e.g., code crashes)
+        window.onerror = function (message, source, lineno, colno, error) {
+            const details = `${message} at ${source}:${lineno}:${colno}`;
+            reportErrorToDeveloper('JavaScript Exception', details);
+            return false; // let browser handle it normally too
+        };
+
+        // 2. Capture asset-loading failures
+        window.addEventListener('error', function (event) {
+            if (event.target && event.target.tagName === 'IMG') {
+                reportErrorToDeveloper('Broken Image Asset', event.target.src);
+            }
+        }, true);
+
+        // Sequence Data (Configured with test audio and typing rules) [1]
+        const sequence = [
+            {
+                "step": 0,
+                "image": "resources/POS_assets/Stage_0/POS_7.png",
+                "activeHitbox": "hb-carryout",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 8px;'><br><strong>Placing Side Orders</strong><br><br>Now, we are going to review the non-pizza items. Similar to the pizza section, we'll give you the exact details. Enter them in the order you saw in the tutorial and see below. This will always be the order of operations you will follow.</p><p style='margin-bottom: 32px;'>Go back to the carry out tab to access the order taking screen.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the <strong>Carry Out</strong> button to continue.</p>"
+            },
+            {
+                "step": 1,
+                "image": "resources/POS_assets/Stage_0/POS_8.png",
+                "activeHitbox": "hb-cust-add",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 24px;'>📋 <strong>Greeting:</strong> Listen to the customer call greeting. Then, prepare to enter customer info.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the <strong>Carry Out</strong> button to continue.</p>",
+                "audio": {
+                    "file": "resources/audio/customer_greeting.mp3", // Update with your actual segmented mp3 route
+                    "autoPlay": true
+                }
+            },
+            {
+                "step": 2,
+                "image": "resources/POS_assets/Stage_0/POS_9.png",
+                "activeHitbox": "hb-phone-field",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> Please type: 555-1234</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click inside the phone field and type <strong>5551234</strong>, then press <strong>Enter</strong>.</p>",
+                "audio": {
+                    "file": "resources/audio/customer_phone_number.mp3", // Update with your actual segmented mp3 route
+                    "autoPlay": true
+                },
+                "input": {
+                    "type": "text",
+                    "expectedValue": "5551234",
+                    "placeholder": "Enter Phone Number..."
+                }
+            },
+            {
+                "step": 3,
+                "image": "resources/POS_assets/Stage_1.1/POS_1.1.png",
+                "activeHitbox": "hb-phone-0",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click '0'.</p>"
+            },
+            {
+                "step": 4,
+                "image": "resources/POS_assets/Stage_1.1/POS_1.2.png",
+                "activeHitbox": "hb-phone-OK",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click <strong>OK</strong> to close the phone field.</p>"
+            },
+            {
+                "step": 5,
+                "image": "resources/POS_assets/Stage_1.1/POS_1.3.png",
+                "activeHitbox": "hb-cust-name",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Please type: Training</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click inside the name field and type <strong>Training</strong>, then press <strong>Enter</strong>.</p>",
+                "audio": {
+                    "file": "resources/audio/customer_name.mp3", // Update with your actual segmented mp3 route
+                    "autoPlay": true
+                },
+                "input": {
+                    "type": "text",
+                    "expectedValue": "Training",
+                    "placeholder": "Enter Name..."
+                }
+            },
+            {
+                "step": 6,
+                "image": "resources/POS_assets/Stage_1.1/POS_1.4.png",
+                "activeHitbox": "hb-add-number",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the first address field to enter the address number.</p>"
+            },
+            {
+                "step": 7,
+                "image": "resources/POS_assets/Stage_1.1/POS_1.5.png",
+                "activeHitbox": "hb-street-name",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the next address field to enter the street name.</p>"
+            },
+            {
+                "step": 8,
+                "image": "resources/POS_assets/Stage_1.1/POS_1.6.png",
+                "activeHitbox": "hb-street-select",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Select the corresponding street name.</p>"
+            },
+            {
+                "step": 9,
+                "image": "resources/POS_assets/Stage_0/POS_11.png",
+                "activeHitbox": "hb-rewards-checker",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Confirm the Rewards Status.</p>"
+            },
+            {
+                "step": 10,
+                "image": "resources/POS_assets/Stage_0/POS_12.png",
+                "activeHitbox": "hb-rewards-ok",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Check the Rewards Status.</p>"
+            },
+            {
+                "step": 11,
+                "image": "resources/POS_assets/Stage_0/POS_13.png",
+                "activeHitbox": "hb-greeting-tab",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> After verifying all information is correct, navigate back to the <strong>Greetings/Specials</strong> screen to continue.</p>"
+            }
+        ];
+        
+        // --- RELATIONAL TRACKING STATE ---
+        const moduleStartTime = Date.now(); // Start timer as soon as practice loads
+        let wrongClicks = 0;               // Tracks practice mistakes
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+
+        let currentStep = 0;
+        const posImage = document.getElementById('pos-image');
+        const instructionText = document.getElementById('instruction-text');
+        const errorMsg = document.getElementById('error-message');
+        const hitboxWrapper = document.getElementById('hitbox-wrapper');
+
+        // --- AUDIO COMPONENT ENGINE ---
+        const audioPlayer = document.getElementById('global-audio-player');
+        const playPauseBtn = document.getElementById('audio-play-pause-btn');
+        const audioPanel = document.getElementById('audio-control-panel');
+
+        function handleAudioForStep(stepData) {
+            if (stepData.audio) {
+                audioPanel.style.display = 'block';
+                
+                const currentSrc = audioPlayer.getAttribute('src');
+                const newSrc = stepData.audio.file;
+                
+                if (currentSrc !== newSrc) {
+                    audioPlayer.src = newSrc;
+                    audioPlayer.load();
+                }
+
+                if (stepData.audio.autoPlay) {
+                    audioPlayer.play()
+                        .then(() => updateAudioUI(true))
+                        .catch(err => console.log("Auto-play blocked, waiting for user click.", err));
+                } else {
+                    updateAudioUI(false);
+                }
+            } else {
+                audioPanel.style.display = 'none';
+                audioPlayer.pause();
+            }
+        }
+
+        function toggleAudio() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                updateAudioUI(true);
+            } else {
+                audioPlayer.pause();
+                updateAudioUI(false);
+            }
+        }
+
+        function replayAudio() {
+            audioPlayer.currentTime = 0;
+            audioPlayer.play();
+            updateAudioUI(true);
+        }
+
+        function updateAudioUI(isPlaying) {
+            if (isPlaying) {
+                playPauseBtn.innerHTML = '<span class="icon">⏸</span> Pause';
+            } else {
+                playPauseBtn.innerHTML = '<span class="icon">▶</span> Play Call';
+            }
+        }
+
+        audioPlayer.addEventListener('ended', () => {
+            updateAudioUI(false);
+        });
+
+        // --- DYNAMIC TEXT INPUT OVERLAY ENGINE ---
+        function handleInputForStep(stepData, activeHb) {
+            const existingInput = document.querySelector('.hitbox-text-input');
+            if (existingInput) existingInput.remove();
+
+            if (stepData.input && stepData.input.type === 'text') {
+                activeHb.style.cursor = 'text';
+                activeHb.style.caretColor = 'auto';
+
+                const inputEl = document.createElement('input');
+                inputEl.type = 'text';
+                inputEl.className = 'hitbox-text-input';
+                inputEl.placeholder = stepData.input.placeholder || '';
+                inputEl.autofocus = true;
+
+                // Stop dynamic background clicking issues while working in the field
+                inputEl.addEventListener('click', (e) => e.stopPropagation());
+
+                // Enter Key Submission event
+                inputEl.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        validateTextEntry(inputEl.value, stepData.input.expectedValue);
+                    }
+                });
+
+                activeHb.appendChild(inputEl);
+                inputEl.focus();
+            } else {
+                activeHb.style.cursor = 'default';
+                activeHb.style.caretColor = 'transparent';
+            }
+        }
+
+        function validateTextEntry(userTyped, expectedValue) {
+            const cleanUser = userTyped.trim().toLowerCase();
+            const cleanExpected = expectedValue.trim().toLowerCase();
+
+            if (cleanUser === cleanExpected) {
+                errorMsg.style.display = 'none';
+                currentStep++;
+                loadStep(currentStep);
+            } else {
+                errorMsg.style.display = 'block';
+                wrongClicks++; 
+            }
+        }
+
+
+        // Fetch the global hitboxes automatically
+        fetch('Globals/LMS_Master_html.html')
+            .then(response => response.text())
+            .then(html => {
+                hitboxWrapper.insertAdjacentHTML('beforeend', html);
+                initializeSimulator();
+            })
+            .catch(error => {
+                console.error("Error loading hitboxes:", error);
+                instructionText.innerHTML = "<strong>Error:</strong> Could not load hitboxes. Check console.";
+            });
+
+        // Global advanceStep function capable of parsing any argument structure
+        window.advanceStep = function(target) {
+            let clickedId = "";
+
+            if (typeof target === 'string') {
+                clickedId = target;
+            } else if (target && target.id) {
+                clickedId = target.id;
+            } else if (target && target.target) {
+                clickedId = target.target.id;
+            } else if (window.event) {
+                const eventTarget = window.event.currentTarget || window.event.target;
+                if (eventTarget) {
+                    clickedId = eventTarget.id;
+                }
+            } 
+
+            const stepData = sequence[currentStep];
+
+            // If this is a typing step, ignore click advances on this hitbox
+            if (stepData.input && stepData.input.type === 'text') {
+                return;
+            }
+
+            const activeHitboxId = stepData.activeHitbox;
+
+            // If the clicked ID matches the active hitbox for the current step
+            if (clickedId === activeHitboxId) {
+                errorMsg.style.display = 'none'; 
+                currentStep++; 
+                loadStep(currentStep); 
+            }
+        };
+
+        function initializeSimulator() {
+            // Bind listeners to all hitboxes to guarantee execution if inline onclick is missing
+            document.querySelectorAll('.hitbox').forEach(hb => {
+                hb.addEventListener('click', function(e) {
+                    advanceStep(this);
+                });
+            });
+
+            // Tracks incorrect clicks on the background image
+            posImage.addEventListener('click', function() {
+                // If it is a text-typing step, clicking the BG image does not register as incorrect immediately
+                const stepData = sequence[currentStep];
+                if (stepData.input && stepData.input.type === 'text') {
+                    return;
+                }
+                errorMsg.style.display = 'block';
+                wrongClicks++; 
+            });
+
+            // ---- JUMP TO STEP VIA URL QUERY PARAMETER ----
+            const urlParams = new URLSearchParams(window.location.search);
+            const stepParam = urlParams.get('step');
+            
+            if (stepParam !== null) {
+                const targetStep = parseInt(stepParam, 10);
+                if (!isNaN(targetStep) && targetStep >= 0 && targetStep < sequence.length) {
+                    currentStep = targetStep;
+                }
+            }
+
+            loadStep(currentStep);
+        }
+
+        function sendProgressUpdate(moduleName, status = "Completed") {
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            if (!market || !id) return;
+
+            const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            
+            const answers = {
+                "Stage 3 Wrong Clicks": wrongClicks,
+                "Stage 3 Status": "Finished Tutorial"
+            };
+            const answersStr = encodeURIComponent(JSON.stringify(answers));
+
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${status}`;
+            
+            console.log("SENDING STAGE 3 DATA: ", url);
+            fetch(url, { method: 'GET', credentials: 'omit' });
+        }
+
+        function loadStep(stepIndex) {
+            if (stepIndex >= sequence.length) {
+                instructionText.innerHTML = "<strong>🎉 Simulation Complete!</strong><br><br>You've successfully completed the currently completed stages.";
+                posImage.src = "resources/POS_assets/under_construction.png";
+                document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+                audioPanel.style.display = 'none';
+                audioPlayer.pause();
+                return;
+            }
+
+            const stepData = sequence[stepIndex];
+            posImage.src = stepData.image;
+            instructionText.innerHTML = stepData.instruction;
+            
+            document.querySelectorAll('.hitbox').forEach(hb => {
+                hb.style.display = 'none';
+            });
+            
+            const activeHb = document.getElementById(stepData.activeHitbox);
+            if (activeHb) {
+                activeHb.style.display = 'block';
+                activeHb.classList.remove('arrow-bottom'); 
+
+                if (stepIndex >= 58) { 
+                    activeHb.classList.add('hide-arrow'); 
+                } else {
+                    activeHb.classList.remove('hide-arrow'); 
+                }
+
+                // Call modular processors for audio files and text overlays
+                handleAudioForStep(stepData);
+                handleInputForStep(stepData, activeHb);
+
+            } else {
+                // Validation error check if asset missing from DOM
+                reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${stepData.activeHitbox}" but it was not found in the DOM.`);
+            }            
+
+            const finishBtn = document.getElementById('finish-sim-btn');
+            if (finishBtn) {
+                if (stepIndex === sequence.length - 1) {
+                    finishBtn.style.display = 'inline-block'; 
+                } else {
+                    finishBtn.style.display = 'none'; 
+                }
+            }
+        }
+        
+        function endSimulation() {
+            posImage.src = "resources/POS_assets/Stage_1.1/under_construction.png"; 
+            instructionText.innerHTML = "<strong>Stage 3 Complete</strong><br><br>The next phase of the simulator is currently in development.<br><br>Click the red button below to save your progress and return to the Day 1 Dashboard.";
+            document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+            audioPanel.style.display = 'none';
+            audioPlayer.pause();
+            
+            const finishBtn = document.getElementById('finish-sim-btn');
+            finishBtn.style.display = 'inline-block'; 
+            finishBtn.innerText = "Save & Return to Day 1"; 
+
+            finishBtn.onclick = function() {
+                finishBtn.innerText = "Saving...";
+                finishBtn.style.pointerEvents = "none";
+                finishBtn.style.opacity = "0.5";
+
+                sendProgressUpdate('Day 1 Mod 4', 'Completed');
+                localStorage.setItem('mod4_complete', 'true');
+
+                setTimeout(() => {
+                    window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
+                }, 1500);
+            };
+        }
+
+        function goBack() {
+            if (currentStep > 0) {
+                currentStep--;
+                loadStep(currentStep);
+            }        
+        }
+
+        function goNext() {
+            if (currentStep < sequence.length - 1) {
+                currentStep++;
+                loadStep(currentStep);
+            }
+        }
+    </script>
+</body>
+</html>
