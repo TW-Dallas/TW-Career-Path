@@ -2106,7 +2106,7 @@ function updateTemplatePreview() {
         const parts = dateStr.split('/');
         if (parts.length === 3) {
             let month = parts[0].padStart(2, '0');
-            let day = parts.padStart(2, '0');
+            let day = parts[1].padStart(2, '0'); // Fixed by adding the [1] index
             let year = parts[2];
             if (year.length === 2) {
                 year = '20' + year; 
