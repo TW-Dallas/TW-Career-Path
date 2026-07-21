@@ -244,29 +244,41 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Styling for urgent upcoming orders */
+        /* Specificity-chained selector to guarantee overrides over status-red/blue classes */
         .order-card.urgent-unplaced {
-            border-color: #ff9100 !important; /* Warning Amber */
-            background-color: #fffbf5 !important; /* Soft warm glow background */
-            box-shadow: 0 4px 12px rgba(255, 145, 0, 0.15) !important;
+            background-color: #fff2f2 !important; /* Very soft brand-red background tint */
+            border: 2px dashed var(--brand-red) !important; /* High-visibility dashed brand red */
+            border-left: 8px solid var(--brand-red) !important; /* Strong left accent anchor */
+            
+            /* Using an outline with negative offset to guarantee no clipping occurs inside the sidebar scroll list */
+            outline: 2px solid rgba(255, 0, 0, 0.15) !important;
+            outline-offset: 2px;
+            
+            /* Amplified red drop glow */
+            box-shadow: 0 4px 14px rgba(255, 0, 0, 0.22) !important;
+            
+            /* Add subtle side margins to ensure the outer glow has physical space to render */
+            margin: 4px 6px !important;
         }
         
+        /* Pulsing High-Contrast Brand Red Badge */
         .badge-urgent {
-            background: #fff3e0;
-            color: #e65100;
+            background: var(--brand-red) !important;
+            color: white !important;
             font-family: 'Compact', sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             padding: 3px 8px;
             border-radius: 4px;
             font-weight: bold;
-            border: 1px solid #ffb74d;
-            animation: urgentPulse 1.8s infinite ease-in-out;
+            letter-spacing: 0.5px;
+            border: 1.5px solid var(--dark-red) !important;
+            animation: urgentPulse 1.5s infinite ease-in-out;
         }
         
         @keyframes urgentPulse {
-            0% { opacity: 0.75; transform: scale(0.98); }
+            0% { opacity: 0.85; transform: scale(0.96); }
             50% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0.75; transform: scale(0.98); }
+            100% { opacity: 0.85; transform: scale(0.96); }
         }
     </style>
 </head>
