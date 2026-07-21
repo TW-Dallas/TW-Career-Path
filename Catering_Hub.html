@@ -422,7 +422,13 @@
 
                     <div class="form-row">
                         <div class="form-group"><label>PO # (or Payment Method)</label><input type="text" id="fieldPoNum" placeholder="PO # or write 'Credit Card'"></div>
-                        <div class="form-group"><label>Total Quote Cost</label><input type="text" id="fieldTotal" placeholder="$0.00"></div>
+                        <div class="form-group">
+                            <label>Total Quote Cost</label>
+                            <div style="display: flex; gap: 6px; align-items: center;">
+                                <input type="text" id="fieldTotal" placeholder="$0.00">
+                                <button type="button" onclick="syncQuoteTotal()" title="Sync total from quote sheet" style="padding: 8px 10px; background: var(--dark-blue);">🔄</button>
+                            </div>
+                        </div>
                         <div class="form-group"><label>Tip Amount</label><input type="text" id="fieldTip" placeholder="$0.00"></div>
                     </div>
 
