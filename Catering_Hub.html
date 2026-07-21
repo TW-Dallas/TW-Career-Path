@@ -1287,14 +1287,24 @@
         }
 
     function prepareAddNew() {
-        clearForm();
-        currentSelectedId = null;
-        renderList();
-        const formTitle = document.getElementById('formTitle');
-        if (formTitle) formTitle.innerText = "Create New Order";
-        const fieldSchool = document.getElementById('fieldSchool');
-        if (fieldSchool) fieldSchool.focus();
-    }
+            clearForm();
+            currentSelectedId = null;
+            renderList();
+    
+            // Auto-populate Order Date field with today's date (auto-detects 2026, 2027, etc.)
+            const today = new Date();
+            const yyyy = today.getFullYear(); 
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            
+            const fieldDate = document.getElementById('fieldDate');
+            if (fieldDate) fieldDate.value = `${yyyy}-${mm}-${dd}`;
+    
+            const formTitle = document.getElementById('formTitle');
+            if (formTitle) formTitle.innerText = "Create New Order";
+            const fieldSchool = document.getElementById('fieldSchool');
+            if (fieldSchool) fieldSchool.focus();
+        }
 
     function clearForm() {
         const orderForm = document.getElementById('orderForm');
