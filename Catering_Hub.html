@@ -61,7 +61,6 @@
         .subtitle { font-family: 'Compact', sans-serif; font-size: 17px; opacity: 0.9; }
         .logo { height: 32px; width: auto; margin-right: 12px; }
         
-        /* Keep header button elements (e.g. Log Out) at original size */
         header button { font-size: 17px !important; }
 
         .dashboard { 
@@ -102,7 +101,6 @@
         .control-row { display: flex; gap: 10px; margin-bottom: 8px; }
         .control-row select { padding: 8px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'Subhead2', sans-serif; font-size: 18px; background: var(--card-bg); flex: 1; }
         
-        /* --- CARDS WITH COLORS --- */
         .order-card { 
             background: var(--card-bg); 
             padding: 14px 16px; 
@@ -139,7 +137,6 @@
         }
         textarea { height: 45px; resize: none; }
         
-        /* --- COLLAPSIBLE DETAILS STYLING --- */
         .manual-overrides-details { margin-top: 12px; background: var(--crust-light); border-radius: 8px; border: 1.5px solid var(--crust-med); overflow: hidden; }
         .manual-overrides-details summary { padding: 10px 12px; font-family: 'Subhead1', sans-serif; font-size: 16px; cursor: pointer; color: var(--dark-blue); user-select: none; outline: none; }
         .manual-overrides-details summary:hover { background: var(--crust-med); }
@@ -183,7 +180,6 @@
         .checklist-delete-btn { background: transparent !important; border: none; color: var(--brand-grey); font-size: 18px; cursor: pointer; padding: 2px 6px; flex-shrink: 0; line-height: 1; }
         .checklist-delete-btn:hover { color: var(--brand-red); }
 
-        /* --- STYLED INTERACTIVE TABS --- */
         .tab-btn-group { display: flex; gap: 8px; border-bottom: 2px solid var(--crust-med); padding-bottom: 8px; margin-bottom: 12px; }
         .tab-btn { flex: 1; background: var(--crust-light); border: 1.5px solid var(--crust-med); color: var(--crust-burnt); padding: 8px; font-family: 'Subhead2', sans-serif; font-size: 18px; border-radius: 6px; cursor: pointer; }
         .tab-btn.active { background: var(--dark-blue); color: white; border-color: var(--dark-blue); }
@@ -192,7 +188,6 @@
         .profile-label { font-family: 'Subhead1', sans-serif; font-size: 17px; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 2px; }
         .profile-val { font-family: 'Condensed', sans-serif; font-size: 18px; color: var(--crust-burnt); margin-bottom: 8px; }
 
-        /* --- BRAND DIALOG MODAL STYLING --- */
         .brand-modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -598,7 +593,7 @@
         </div>
     </div>
 </div>
-    
+
 <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbz8rmjlFsMNcK0Sb1LA9bzpoqDG8V74y2pPM93QutukpETTDjSeu6TlHAR8cJ6wVR2F/exec"; 
 
@@ -696,8 +691,8 @@
     }
 
     function handleLogin(savedUser, savedPass) {
-        const u = savedUser || document.getElementById('loginUser').value.trim();
-        const p = savedPass || document.getElementById('loginPass').value;
+        const u = savedUser || (document.getElementById('loginUser') ? document.getElementById('loginUser').value.trim() : '');
+        const p = savedPass || (document.getElementById('loginPass') ? document.getElementById('loginPass').value : '');
         const errorEl = document.getElementById('loginError');
     
         if (!u || !p) return;
@@ -762,7 +757,6 @@
         else loader.classList.add('hidden');
     }
 
-    // Toggle Panels (Quick Add Actions)
     function toggleQuickAddCoord() {
         const area = document.getElementById('quickAddCoordArea');
         if (!area) return;
@@ -773,7 +767,6 @@
         }
     }
 
-    // Toggle Quick Add School Area
     function toggleQuickAddSchool() {
         const area = document.getElementById('quickAddSchoolArea');
         if (!area) return;
@@ -784,7 +777,6 @@
         }
     }
 
-    // Submit Coordinator via API (Robust automatic phone formatting parsed)
     async function submitQuickAddCoordinator() {
         const schoolDropdown = document.getElementById('fieldSchool');
         const school = schoolDropdown ? schoolDropdown.value : '';
@@ -803,7 +795,6 @@
             return;
         }
 
-        // Apply clean split-parsing algorithm
         const phone = formatPhoneNumber(ext ? `${rawPhone} x${ext}` : rawPhone);
 
         showLoader(true, "Saving coordinator to directory...");
@@ -850,7 +841,6 @@
         }
     }
 
-    // Submit School Directory addition via API
     async function submitQuickAddSchool() {
         const nameInput = document.getElementById('newSchoolName');
         const phoneInput = document.getElementById('newSchoolPhone');
@@ -876,12 +866,10 @@
             return;
         }
 
-        // If delivery store is provided but carryout store is left blank, default carryout to delivery
         if (delivery && !carryout) {
             carryout = delivery;
         }
 
-        // Apply clean format formatting for phone entry
         const phone = formatPhoneNumber(rawPhone);
 
         showLoader(true, "Saving school to directory...");
@@ -904,7 +892,6 @@
 
             if (!result.success) throw new Error(result.error);
 
-            // Inject school locally
             schoolsList.push({ 
                 name: name, 
                 phone: phone, 
@@ -938,7 +925,18 @@
         }
     }
     
-    // UNIFIED SCHOOL CHANGE AND CARRYOUT-ONLY DIRECT ROUTING
+    function populateSchoolsDropdown() {
+        const schoolDatalist = document.getElementById('schoolDatalist');
+        if (!schoolDatalist) return;
+        schoolDatalist.innerHTML = '';
+        
+        schoolsList.forEach(school => {
+            const opt = document.createElement('option');
+            opt.value = school.name;
+            schoolDatalist.appendChild(opt);
+        });
+    }
+
     function handleSchoolChange() {
         const schoolDropdown = document.getElementById('fieldSchool');
         const coordDropdown = document.getElementById('fieldCoordinator');
@@ -959,8 +957,7 @@
         if (storeInput) storeInput.value = "";
         if (carryoutWarning) carryoutWarning.classList.add('hidden');
 
-        // Safely find school matching the text inputted in the search-input datalist box
-        const schoolObj = schoolsList.find(s => s.name.trim().toLowerCase() === selectedSchool.trim().toLowerCase());
+        const schoolObj = schoolsList.find(s => (s.name || '').trim().toLowerCase() === selectedSchool.trim().toLowerCase());
 
         if (!schoolObj) {
             coordDropdown.disabled = true;
@@ -972,26 +969,22 @@
         if (btnAdd) btnAdd.disabled = false;
         if (tabBtnProfile) tabBtnProfile.disabled = false;
 
-        // Apply Carryout-Only Protections
         const isCarryoutOnly = (!schoolObj.deliveryStore || schoolObj.deliveryStore.trim() === "");
         
         if (isCarryoutOnly) {
             if (carryoutWarning) carryoutWarning.classList.remove('hidden');
             
-            // Block Delivery Option
             Array.from(carryoutDropdown.options).forEach(opt => {
-                if (opt.value === "") opt.disabled = true; // Block Delivery
+                if (opt.value === "") opt.disabled = true;
             });
             
             carryoutDropdown.value = "Carryout"; 
             if (storeInput) storeInput.value = schoolObj.carryoutStore || "";
         } else {
-            // Clear block/locks
             Array.from(carryoutDropdown.options).forEach(opt => {
                 opt.disabled = false;
             });
             
-            // Default store fill based on currently selected service mode
             if (carryoutDropdown.value === "Carryout") {
                 if (storeInput) storeInput.value = schoolObj.carryoutStore || "";
             } else {
@@ -1013,9 +1006,8 @@
             coordDropdown.innerHTML = '<option value="">-- Select Quick Add (+) to add --</option>';
         }
 
-        // Trigger school profile view compilation
         compileSchoolProfile(schoolObj);
-        updateTemplatePreview(); // Force email reply builder state to sync
+        updateTemplatePreview();
     }
 
     function handleServiceMethodChange() {
@@ -1025,7 +1017,7 @@
 
         if (!schoolDropdown || !carryoutDropdown || !storeInput) return;
         const selectedSchool = schoolDropdown.value;
-        const schoolObj = schoolsList.find(s => s.name.trim().toLowerCase() === selectedSchool.trim().toLowerCase());
+        const schoolObj = schoolsList.find(s => (s.name || '').trim().toLowerCase() === selectedSchool.trim().toLowerCase());
 
         if (schoolObj) {
             if (carryoutDropdown.value === "Carryout") {
@@ -1054,7 +1046,7 @@
                 if (emailInput) emailInput.value = match.email || '';
             }
         }
-        updateTemplatePreview(); // Keep builder variables up to date
+        updateTemplatePreview();
     }
 
     window.togglePasswordVisibility = function() {
@@ -1074,21 +1066,22 @@
     };
 
     function getPoStatusText(item) {
+        if (!item) return "Missing PO";
         if (item.accountingSent) return "Sent to Accounting";
         if (item.poProcessed) return "PO Received";
         if (item.chaserSent) return "Chaser Active";
-        if (item.poNum && item.poNum.toLowerCase().includes("credit card")) return "Paying Card";
+        if (item.poNum && item.poNum.toString().toLowerCase().includes("credit card")) return "Paying Card";
         return "Missing PO";
     }
 
     function getStatusClass(item) {
-        if (item.accountingSent || item.poProcessed || (item.poNum && item.poNum.toLowerCase().includes("credit card")) || item.chaserSent) {
+        if (!item) return "status-red";
+        if (item.accountingSent || item.poProcessed || (item.poNum && item.poNum.toString().toLowerCase().includes("credit card")) || item.chaserSent) {
             return "status-blue";
         }
         return "status-red"; 
     }
 
-    // Renders Searchable Order List sidebar
     function renderList() {
         const listContainer = document.getElementById('orderList');
         if (!listContainer) return;
@@ -1097,29 +1090,34 @@
         const sortControl = document.getElementById('sortControl');
         const sortBy = sortControl ? sortControl.value : 'date';
 
-        // Read Search query
         const searchInput = document.getElementById('orderSearchInput');
         const searchQuery = searchInput ? searchInput.value.trim().toLowerCase() : "";
 
         let sortedOrders = [...orders];
 
-        // Apply Search Filtering
         if (searchQuery !== "") {
             sortedOrders = sortedOrders.filter(o => {
+                const schoolNameStr = (o.schoolName || "").toString().toLowerCase();
+                const coordNameStr = (o.coordinatorName || "").toString().toLowerCase();
+                const storeNumStr = (o.storeNum || "").toString().toLowerCase();
                 const localDateStr = o.date ? new Date(o.date).toLocaleDateString() : "";
+                const poStatusStr = getPoStatusText(o).toLowerCase();
+                
                 return (
-                    o.schoolName.toLowerCase().includes(searchQuery) ||
-                    o.coordinatorName.toLowerCase().includes(searchQuery) ||
-                    o.storeNum.toString().includes(searchQuery) ||
+                    schoolNameStr.includes(searchQuery) ||
+                    coordNameStr.includes(searchQuery) ||
+                    storeNumStr.includes(searchQuery) ||
                     localDateStr.includes(searchQuery) ||
-                    getPoStatusText(o).toLowerCase().includes(searchQuery)
+                    poStatusStr.includes(searchQuery)
                 );
             });
         }
 
         sortedOrders.sort((a, b) => {
             if (sortBy === 'school') {
-                return a.schoolName.localeCompare(b.schoolName);
+                const nameA = (a.schoolName || "").toString();
+                const nameB = (b.schoolName || "").toString();
+                return nameA.localeCompare(nameB);
             }
             if (sortBy === 'store') {
                 const storeA = parseInt(a.storeNum) || 0;
@@ -1128,9 +1126,10 @@
             }
             if (sortBy === 'status') {
                 const statusWeight = (item) => {
+                    if (!item) return 0;
                     if (item.accountingSent) return 4;
                     if (item.poProcessed) return 3;
-                    if (item.poNum && item.poNum.toLowerCase().includes("credit card")) return 2;
+                    if (item.poNum && item.poNum.toString().toLowerCase().includes("credit card")) return 2;
                     if (item.chaserSent) return 1;
                     return 0; 
                 };
@@ -1156,7 +1155,6 @@
             const statusColor = isRed ? 'var(--brand-red)' : 'var(--brand-blue)';
             
             let badges = '';
-            // Quote Ready disappears once sent to school
             if (item.quoteUrl && !item.quoteEmailSent) badges += '<span class="badge-drafted">📄 Quote Ready</span> ';
             if (item.quoteEmailSent) badges += '<span class="badge-sent">📧 Sent</span>';
 
@@ -1164,7 +1162,7 @@
 
             card.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px;">
-                    <div class="card-name" style="line-height: 1.25; font-family: 'Subhead1', sans-serif;">${item.schoolName}</div>
+                    <div class="card-name" style="line-height: 1.25; font-family: 'Subhead1', sans-serif;">${item.schoolName || ''}</div>
                     <div style="display: flex; gap: 4px; flex-shrink: 0;">${badges}</div>
                 </div>
                 
@@ -1173,7 +1171,7 @@
                         <span style="font-size: 18px; line-height: 1;">📅</span>
                         <span style="font-family: 'Condensed', sans-serif;">${localDate} at ${item.time || 'No Time'}</span>
                         <span style="font-size: 18px; line-height: 1;">🏬</span>
-                        <span style="font-family: 'Condensed', sans-serif;">Store #${item.storeNum}</span>
+                        <span style="font-family: 'Condensed', sans-serif;">Store #${item.storeNum || ''}</span>
                     </div>
                     
                     <div style="width: 100%; margin-top: 10px; padding-top: 8px; border-top: 1.5px solid var(--crust-med); display: flex; justify-content: space-between; align-items: center;">
@@ -1191,121 +1189,119 @@
     }
 
     function selectOrder(item) {
-            currentSelectedId = item.id;
-            renderList();
-    
-            setPanelTab('details'); // Defaults view back to form when changing selection
-    
-            const formTitle = document.getElementById('formTitle');
-            if (formTitle) formTitle.innerText = `Edit Order: ${item.schoolName}`;
-            
-            const fieldId = document.getElementById('fieldId');
-            const fieldSchool = document.getElementById('fieldSchool');
-            const fieldCoordinator = document.getElementById('fieldCoordinator');
-            const fieldCarryout = document.getElementById('fieldCarryout');
-            const fieldDate = document.getElementById('fieldDate');
-            const fieldTime = document.getElementById('fieldTime');
-            const fieldStore = document.getElementById('fieldStore');
-            const fieldPoNum = document.getElementById('fieldPoNum');
-            const fieldTotal = document.getElementById('fieldTotal');
-            const fieldTip = document.getElementById('fieldTip');
-            const fieldPoPdf = document.getElementById('fieldPoPdf');
-            const fieldQuoteUrl = document.getElementById('fieldQuoteUrl');
-    
-            if (fieldId) fieldId.value = item.id;
-            if (fieldSchool) fieldSchool.value = item.schoolName || '';
-            if (fieldCarryout) fieldCarryout.value = item.serviceMethod || '';
-            
-            // Populate school routing and build coordinator list options
-            handleSchoolChange(); 
-            
-            if (fieldCoordinator) {
-                if (item.coordinatorName) {
-                    const optionExists = Array.from(fieldCoordinator.options).some(opt => opt.value === item.coordinatorName);
-                    if (!optionExists) {
-                        const opt = document.createElement('option');
-                        opt.value = item.coordinatorName;
-                        opt.textContent = item.coordinatorName;
-                        fieldCoordinator.appendChild(opt);
-                    }
-                    fieldCoordinator.value = item.coordinatorName;
-                } else {
-                    fieldCoordinator.value = '';
+        currentSelectedId = item.id;
+        renderList();
+
+        setPanelTab('details');
+
+        const formTitle = document.getElementById('formTitle');
+        if (formTitle) formTitle.innerText = `Edit Order: ${item.schoolName || ''}`;
+        
+        const fieldId = document.getElementById('fieldId');
+        const fieldSchool = document.getElementById('fieldSchool');
+        const fieldCoordinator = document.getElementById('fieldCoordinator');
+        const fieldCarryout = document.getElementById('fieldCarryout');
+        const fieldDate = document.getElementById('fieldDate');
+        const fieldTime = document.getElementById('fieldTime');
+        const fieldStore = document.getElementById('fieldStore');
+        const fieldPoNum = document.getElementById('fieldPoNum');
+        const fieldTotal = document.getElementById('fieldTotal');
+        const fieldTip = document.getElementById('fieldTip');
+        const fieldPoPdf = document.getElementById('fieldPoPdf');
+        const fieldQuoteUrl = document.getElementById('fieldQuoteUrl');
+
+        if (fieldId) fieldId.value = item.id || '';
+        if (fieldSchool) fieldSchool.value = item.schoolName || '';
+        if (fieldCarryout) fieldCarryout.value = item.serviceMethod || '';
+        
+        handleSchoolChange(); 
+        
+        if (fieldCoordinator) {
+            if (item.coordinatorName) {
+                const optionExists = Array.from(fieldCoordinator.options).some(opt => opt.value === item.coordinatorName);
+                if (!optionExists) {
+                    const opt = document.createElement('option');
+                    opt.value = item.coordinatorName;
+                    opt.textContent = item.coordinatorName;
+                    fieldCoordinator.appendChild(opt);
                 }
-            }
-    
-            const phoneInput = document.getElementById('fieldPhone');
-            const emailInput = document.getElementById('fieldEmail');
-            if (phoneInput) phoneInput.value = item.phone || item.phoneNumber || '';
-            if (emailInput) emailInput.value = item.email || '';
-    
-            handleCoordinatorChange();
-    
-            if (fieldDate) fieldDate.value = formatStringToInputDate(item.date);
-            if (fieldTime) fieldTime.value = item.time || '';
-            if (fieldStore) fieldStore.value = item.storeNum || '';
-            if (fieldPoNum) fieldPoNum.value = item.poNum || '';
-            if (fieldTotal) fieldTotal.value = item.totalCost || '';
-            if (fieldTip) fieldTip.value = item.tipAmount || '';
-            if (fieldPoPdf) fieldPoPdf.value = item.poPdfLink || '';
-            if (fieldQuoteUrl) fieldQuoteUrl.value = item.quoteUrl || '';
-    
-            // Checkboxes
-            const checkQuoteDrafted = document.getElementById('checkQuoteDrafted');
-            const checkQuoteSent = document.getElementById('checkQuoteSent');
-            const checkPulse = document.getElementById('checkPulse');
-            const checkCe = document.getElementById('checkCe');
-            const checkPoProcessed = document.getElementById('checkPoProcessed');
-            const checkAccountingSent = document.getElementById('checkAccountingSent');
-            const checkChaserSent = document.getElementById('checkChaserSent');
-    
-            if (checkQuoteDrafted) checkQuoteDrafted.checked = item.quoteUrl ? true : false;
-            if (checkQuoteSent) checkQuoteSent.checked = item.quoteEmailSent || false;
-            if (checkPulse) checkPulse.checked = item.enteredInPulse || false;
-            if (checkCe) checkCe.checked = item.ceSent || false;
-            if (checkPoProcessed) checkPoProcessed.checked = item.poProcessed || false;
-            if (checkAccountingSent) checkAccountingSent.checked = item.accountingSent || false;
-            if (checkChaserSent) checkChaserSent.checked = item.chaserSent || false;
-    
-            const btnCancel = document.getElementById('btnCancel');
-            if (btnCancel) btnCancel.innerText = "Cancel Edit";
-            
-            const btnDraftQuote = document.getElementById('btnDraftQuote');
-            const btnSendQuote = document.getElementById('btnSendQuote');
-    
-            if (btnDraftQuote) {
-                btnDraftQuote.disabled = false;
-                if (item.quoteUrl) {
-                    btnDraftQuote.innerText = "📄 Open Spreadsheet";
-                    btnDraftQuote.style.background = "var(--brand-blue)";
-                    if (btnSendQuote) btnSendQuote.classList.remove('hidden');
-                } else {
-                    btnDraftQuote.innerText = "⌨️ Draft Quote Sheet";
-                    btnDraftQuote.style.background = "var(--brand-red)";
-                    if (btnSendQuote) btnSendQuote.classList.add('hidden');
-                }
+                fieldCoordinator.value = item.coordinatorName;
+            } else {
+                fieldCoordinator.value = '';
             }
         }
 
-    function prepareAddNew() {
-            clearForm();
-            currentSelectedId = null;
-            renderList();
-    
-            // Auto-populate Order Date field with today's date (auto-detects 2026, 2027, etc.)
-            const today = new Date();
-            const yyyy = today.getFullYear(); 
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const dd = String(today.getDate()).padStart(2, '0');
-            
-            const fieldDate = document.getElementById('fieldDate');
-            if (fieldDate) fieldDate.value = `${yyyy}-${mm}-${dd}`;
-    
-            const formTitle = document.getElementById('formTitle');
-            if (formTitle) formTitle.innerText = "Create New Order";
-            const fieldSchool = document.getElementById('fieldSchool');
-            if (fieldSchool) fieldSchool.focus();
+        const phoneInput = document.getElementById('fieldPhone');
+        const emailInput = document.getElementById('fieldEmail');
+        if (phoneInput) phoneInput.value = item.phone || item.phoneNumber || '';
+        if (emailInput) emailInput.value = item.email || '';
+
+        handleCoordinatorChange();
+
+        if (fieldDate) fieldDate.value = formatStringToInputDate(item.date);
+        if (fieldTime) fieldTime.value = item.time || '';
+        if (fieldStore) fieldStore.value = item.storeNum || '';
+        if (fieldPoNum) fieldPoNum.value = item.poNum || '';
+        if (fieldTotal) fieldTotal.value = item.totalCost || '';
+        if (fieldTip) fieldTip.value = item.tipAmount || '';
+        if (fieldPoPdf) fieldPoPdf.value = item.poPdfLink || '';
+        if (fieldQuoteUrl) fieldQuoteUrl.value = item.quoteUrl || '';
+
+        // Checkboxes
+        const checkQuoteDrafted = document.getElementById('checkQuoteDrafted');
+        const checkQuoteSent = document.getElementById('checkQuoteSent');
+        const checkPulse = document.getElementById('checkPulse');
+        const checkCe = document.getElementById('checkCe');
+        const checkPoProcessed = document.getElementById('checkPoProcessed');
+        const checkAccountingSent = document.getElementById('checkAccountingSent');
+        const checkChaserSent = document.getElementById('checkChaserSent');
+
+        if (checkQuoteDrafted) checkQuoteDrafted.checked = item.quoteUrl ? true : false;
+        if (checkQuoteSent) checkQuoteSent.checked = item.quoteEmailSent || false;
+        if (checkPulse) checkPulse.checked = item.enteredInPulse || false;
+        if (checkCe) checkCe.checked = item.ceSent || false;
+        if (checkPoProcessed) checkPoProcessed.checked = item.poProcessed || false;
+        if (checkAccountingSent) checkAccountingSent.checked = item.accountingSent || false;
+        if (checkChaserSent) checkChaserSent.checked = item.chaserSent || false;
+
+        const btnCancel = document.getElementById('btnCancel');
+        if (btnCancel) btnCancel.innerText = "Cancel Edit";
+        
+        const btnDraftQuote = document.getElementById('btnDraftQuote');
+        const btnSendQuote = document.getElementById('btnSendQuote');
+
+        if (btnDraftQuote) {
+            btnDraftQuote.disabled = false;
+            if (item.quoteUrl) {
+                btnDraftQuote.innerText = "📄 Open Spreadsheet";
+                btnDraftQuote.style.background = "var(--brand-blue)";
+                if (btnSendQuote) btnSendQuote.classList.remove('hidden');
+            } else {
+                btnDraftQuote.innerText = "⌨️ Draft Quote Sheet";
+                btnDraftQuote.style.background = "var(--brand-red)";
+                if (btnSendQuote) btnSendQuote.classList.add('hidden');
+            }
         }
+    }
+
+    function prepareAddNew() {
+        clearForm();
+        currentSelectedId = null;
+        renderList();
+
+        const today = new Date();
+        const yyyy = today.getFullYear(); 
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        
+        const fieldDate = document.getElementById('fieldDate');
+        if (fieldDate) fieldDate.value = `${yyyy}-${mm}-${dd}`;
+
+        const formTitle = document.getElementById('formTitle');
+        if (formTitle) formTitle.innerText = "Create New Order";
+        const fieldSchool = document.getElementById('fieldSchool');
+        if (fieldSchool) fieldSchool.focus();
+    }
 
     function clearForm() {
         const orderForm = document.getElementById('orderForm');
@@ -1351,7 +1347,6 @@
         if (tabBtnProfile) tabBtnProfile.disabled = true;
     }
 
-    // Dynamic Central Panel Tabs
     function setPanelTab(tabName) {
         const tabBtnDetails = document.getElementById('tabBtnDetails');
         const tabBtnProfile = document.getElementById('tabBtnProfile');
@@ -1363,8 +1358,6 @@
             tabBtnDetails.classList.remove('active');
             orderForm.classList.add('hidden');
             schoolProfileView.classList.remove('hidden');
-            
-            // UPGRADED: Instantly reads unsaved on-screen fields to build your template preview
             updateTemplatePreview(); 
         } else {
             tabBtnDetails.classList.add('active');
@@ -1374,7 +1367,6 @@
         }
     }
 
-    // Compiles selected school profile
     function compileSchoolProfile(schoolObj) {
         if (!schoolObj) return;
 
@@ -1386,7 +1378,6 @@
         document.getElementById('profileCarryoutStore').innerText = schoolObj.carryoutStore ? `Store #${schoolObj.carryoutStore}` : '-';
         document.getElementById('profileNotesText').value = schoolObj.notes || '';
 
-        // Build Coordinator list for selected school
         const coordsList = document.getElementById('profileCoordinatorsList');
         coordsList.innerHTML = '';
         const coords = coordinatorsMap[schoolObj.name] || [];
@@ -1401,7 +1392,6 @@
             });
         }
 
-        // Build Order History list
         const historyTbody = document.querySelector('#profileHistoryTable tbody');
         historyTbody.innerHTML = '';
         const historyOrders = orders.filter(o => o.schoolName === schoolObj.name);
@@ -1423,7 +1413,6 @@
         }
     }
 
-    // Save School specific instruction notes directly back to the database
     async function saveSchoolNotes() {
         const schoolDropdown = document.getElementById('fieldSchool');
         const selectedSchool = schoolDropdown ? schoolDropdown.value : '';
@@ -1448,8 +1437,7 @@
 
             if (!data.success) throw new Error(data.error);
 
-            // Update school info locally
-            const sObj = schoolsList.find(s => s.name.trim().toLowerCase() === selectedSchool.trim().toLowerCase());
+            const sObj = schoolsList.find(s => (s.name || '').trim().toLowerCase() === selectedSchool.trim().toLowerCase());
             if (sObj) sObj.notes = notesText;
             
             await showBrandAlert("School notes saved successfully to lookup directory!", "Success");
@@ -1459,7 +1447,6 @@
         }
     }
 
-    // Cloud Synchronized Scratchpad Text Sync
     function triggerNotesCloudSync() {
         const scratchpadVal = document.getElementById('scratchpad').value;
         localStorage.setItem('cat_scratchpad', scratchpadVal);
@@ -1480,10 +1467,9 @@
                     console.log("Notes synchronized successfully with Google Sheet.");
                 })
                 .catch(err => console.error("Cloud note backup failed:", err));
-        }, 2000); // 2 second debounce limit
+        }, 2000);
     }
 
-    // INTERACTIVE BRAND EMAIL BUILDER & COPY MODULE
     function handleTemplateSelectChange() {
         const select = document.getElementById('replyTemplateSelect');
         const groupPeopleCount = document.getElementById('groupPeopleCount');
@@ -1502,7 +1488,6 @@
             preview.classList.remove('hidden');
             btnCopy.classList.remove('hidden');
             
-            // Show headcount input for both onboarding info and carryout templates
             if (select.value === 'info' || select.value === 'carryout') {
                 groupPeopleCount.classList.remove('hidden');
                 groupCustomText.classList.add('hidden'); 
@@ -1517,16 +1502,15 @@
         }
     }
 
-function updateTemplatePreview() {
+    function updateTemplatePreview() {
         const select = document.getElementById('replyTemplateSelect');
         const preview = document.getElementById('templatePreviewArea');
         if (!select || !preview || select.value === "") return;
 
-        const schoolName = document.getElementById('fieldSchool').value;
-        const schoolObj = schoolsList.find(s => s.name.trim().toLowerCase() === schoolName.trim().toLowerCase());
-        const coordinator = document.getElementById('fieldCoordinator').value;
+        const schoolName = document.getElementById('fieldSchool') ? document.getElementById('fieldSchool').value : '';
+        const schoolObj = schoolsList.find(s => (s.name || '').trim().toLowerCase() === (schoolName || '').trim().toLowerCase());
+        const coordinator = document.getElementById('fieldCoordinator') ? document.getElementById('fieldCoordinator').value : '';
 
-        // Dynamic highlights using brand neutrals and red placeholders
         const boldRedPlaceholder = `<span style="color: #ff0000; font-weight: bold;">[Please provide]</span>`;
         
         const fSchool = schoolObj ? schoolObj.name : boldRedPlaceholder;
@@ -1534,7 +1518,7 @@ function updateTemplatePreview() {
         const greetingName = coordinator ? extractFirstName(coordinator) : boldRedPlaceholder; 
         const fCoord = coordinator ? coordinator : boldRedPlaceholder;
         
-        const rawDate = document.getElementById('fieldDate').value;
+        const rawDate = document.getElementById('fieldDate') ? document.getElementById('fieldDate').value : '';
         let fDate = boldRedPlaceholder;
         if (rawDate) {
             const dateParts = rawDate.split('-');
@@ -1544,13 +1528,12 @@ function updateTemplatePreview() {
                 fDate = rawDate;
             }
         }
-        const rawTime = document.getElementById('fieldTime').value;
+        const rawTime = document.getElementById('fieldTime') ? document.getElementById('fieldTime').value : '';
         const fTime = rawTime ? rawTime : boldRedPlaceholder;
-        const rawPhone = document.getElementById('fieldPhone').value;
+        const rawPhone = document.getElementById('fieldPhone') ? document.getElementById('fieldPhone').value : '';
         const fPhone = rawPhone ? rawPhone : (schoolObj && schoolObj.phone ? schoolObj.phone : boldRedPlaceholder);
 
-        // Get headcount or slice count calculations for templates
-        const peopleCountInput = document.getElementById('templatePeopleCount').value;
+        const peopleCountInput = document.getElementById('templatePeopleCount') ? document.getElementById('templatePeopleCount').value : '';
         const headcount = parseInt(peopleCountInput, 10);
         
         const calcModeSelect = document.getElementById('calculatorModeSelect');
@@ -1564,7 +1547,6 @@ function updateTemplatePreview() {
                 storeAddr = storeLookup[schoolObj.carryoutStore].address || boldRedPlaceholder;
             }
 
-            // Build optional portion bullet directly as a list item
             let portionBullets = "";
             if (!isNaN(headcount) && headcount > 0) {
                 if (calcMode === 'slices') {
@@ -1678,7 +1660,7 @@ function updateTemplatePreview() {
     
         preview.innerHTML = htmlString;
     }
-    // Robust dual-payload rich-text copy to clipboard 
+
     async function copyTemplateToClipboard() {
         const preview = document.getElementById('templatePreviewArea');
         if (!preview) return;
@@ -1686,7 +1668,6 @@ function updateTemplatePreview() {
         showLoader(true, "Compiling rich-text clipboard payload...");
 
         const htmlContent = preview.innerHTML;
-        // Generate fallback plain text stripping html elements safely
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = htmlContent;
         const plainTextContent = tempDiv.innerText || tempDiv.textContent;
@@ -1702,7 +1683,7 @@ function updateTemplatePreview() {
 
             await navigator.clipboard.write([item]);
             showLoader(false);
-            await showBrandAlert("Rich-text email response copied to clipboard! Switch to Gmail and press Paste (Ctrl+V) .", "Success");
+            await showBrandAlert("Rich-text email response copied to clipboard! Switch to Gmail and press Paste (Ctrl+V).", "Success");
         } catch (err) {
             showLoader(false);
             console.error("Clipboard write blocked:", err);
@@ -1715,11 +1696,10 @@ function updateTemplatePreview() {
 
         const dateInput = document.getElementById('fieldDate').value;
 
-        // DATE SAFEGUARD WARN DIALOG (Catch manual typo input like 7/6 instead of 8/6) 
         if (dateInput) {
             const orderDate = new Date(dateInput);
             const today = new Date();
-            today.setHours(0,0,0,0); // Truncate time limits for objective calendar day comparisons
+            today.setHours(0,0,0,0);
 
             if (orderDate < today) {
                 const proceed = await showBrandConfirm("⚠️ DATE TYPO WARNING: The order date you typed is in the PAST. Are you sure you want to save this date?", "Date Warning");
@@ -1793,7 +1773,6 @@ function updateTemplatePreview() {
                 throw new Error(result.error || "Save action failed");
             }
             
-            // Capture the newly saved or updated ID 
             const savedId = id || result.id;
 
             const initRes = await fetch(`${API_URL}?action=getInitialData`);
@@ -1802,7 +1781,6 @@ function updateTemplatePreview() {
             orders = data.orders || [];
             renderList();
             
-            // UPGRADED: Find the saved ID and auto-select/load it instead of clearing the screen 
             if (savedId) {
                 const matchedOrder = orders.find(o => o.id === savedId);
                 if (matchedOrder) {
@@ -2106,7 +2084,7 @@ function updateTemplatePreview() {
         const parts = dateStr.split('/');
         if (parts.length === 3) {
             let month = parts[0].padStart(2, '0');
-            let day = parts[1].padStart(2, '0'); // Fixed by adding the [1] index
+            let day = parts[1].padStart(2, '0');
             let year = parts[2];
             if (year.length === 2) {
                 year = '20' + year; 
@@ -2116,7 +2094,6 @@ function updateTemplatePreview() {
         return dateStr;
     }
 
-    // Intelligent Phone Parser (Resolves Right-Alignment slip-ups in Google Sheets) 
     function formatPhoneNumber(value) {
         if (!value) return "";
         let str = value.toString().trim();
@@ -2124,7 +2101,6 @@ function updateTemplatePreview() {
         let basePart = str;
         let extPart = "";
         
-        // Match extension indicators (Ext., ext, x, X, etc.)
         const extRegex = /(?:ext|ext\.|x|ext\s|Ext|Ext\.|X)\s*(\d+)/i;
         const match = str.match(extRegex);
         if (match) {
@@ -2140,7 +2116,6 @@ function updateTemplatePreview() {
         } else if (digits.length === 11 && digits.startsWith('1')) {
             formattedBase = `(${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7, 11)}`;
         } else {
-            // Standardizing fallback lengths to consistently use string formatting (forcing Left alignment in Sheets)
             if (digits.length < 4) {
                 formattedBase = digits;
             } else if (digits.length < 7) {
@@ -2150,7 +2125,6 @@ function updateTemplatePreview() {
             }
         }
         
-        // Re-append standardized extension syntax if applicable 
         if (extPart) {
             return `${formattedBase} x${extPart}`;
         }
@@ -2180,22 +2154,20 @@ function updateTemplatePreview() {
         return trimmed; 
     }
 
-    // Safely extracts a friendly first name (retains titles like Dr. or Coach) 
     function extractFirstName(fullName) {
         if (!fullName) return "";
         let name = fullName.toString().trim();
-        const parts = name.split(/\s+/); // Splits by any spacing
+        const parts = name.split(/\s+/);
         if (parts.length === 0) return "";
         
-        // Check for common titles to keep them combined 
         const titles = ["dr", "dr.", "mr", "mr.", "mrs", "mrs.", "ms", "ms.", "coach", "principal", "officer"];
         const firstPartLower = parts[0].toLowerCase();
         
         if (titles.includes(firstPartLower) && parts.length > 1) {
-            return parts[0] + " " + parts[1]; // e.g., "Dr. Jane" or "Coach Mike"
+            return parts[0] + " " + parts[1];
         }
         
-        return parts[0]; // Returns "Jane"
+        return parts[0];
     }
 </script>
 </body>
