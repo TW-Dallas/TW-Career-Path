@@ -362,8 +362,7 @@
                         <div class="form-group"><label>Address</label><input type="text" id="newSchoolAddress" placeholder="e.g., 4220 Emerson Ave"></div>
                         <div class="form-row">
                             <div class="form-group"><label>Delivery Store #</label><input type="text" id="newSchoolDeliveryStore" placeholder="Leave blank if carryout-only"></div>
-                            <div class="form-group"><label>Carryout Store #</label><input type="text" id="newSchoolCarryoutStore" placeholder="Assigned carryout store"></div>
-                        </div>
+                            <div class="form-group"><label>Carryout Store #</label><input type="text" id="newSchoolCarryoutStore" placeholder="Defaults to Delivery Store # if blank"></div>
                         <div class="form-group"><label>District Name</label><input type="text" id="newSchoolDistrict" placeholder="e.g., HPISD"></div>
                         <div style="display: flex; gap: 8px; margin-top: 10px;">
                             <button type="button" style="background: var(--brand-blue); flex: 1.5;" onclick="submitQuickAddSchool()">Save & Select</button>
@@ -862,16 +861,26 @@
         const name = nameInput ? nameInput.value.trim() : '';
         const rawPhone = phoneInput ? phoneInput.value.trim() : '';
         const address = addressInput ? addressInput.value.trim() : '';
-        const delivery = deliveryInput ? deliveryInput.value.trim() : '';
-        const carryout = carryoutInput ? carryoutInput.value.trim() : '';
+        let delivery = deliveryInput ? deliveryInput.value.trim() : '';
+        let carryout = carryoutInput ? carryoutInput.value.trim() : '';
         const district = districtInput ? districtInput.value.trim() : '';
 
-        if (!name || !carryout) {
-            await showBrandAlert("School Name and assigned Carryout Store # are required.", "Validation Error");
+        if (!name) {
+            await showBrandAlert("School Name is required.", "Validation Error");
             return;
         }
 
-        // Enforce robust format formatting for School directory phone entry
+        if (!delivery && !carryout) {
+            await showBrandAlert("Please enter at least a Delivery Store # or Carryout Store #.", "Validation Error");
+            return;
+        }
+
+        // If delivery store is provided but carryout store is left blank, default carryout to delivery
+        if (delivery && !carryout) {
+            carryout = delivery;
+        }
+
+        // Apply clean format formatting for phone entry
         const phone = formatPhoneNumber(rawPhone);
 
         showLoader(true, "Saving school to directory...");
@@ -928,19 +937,6 @@
         }
     }
     
-    // Populates HTML5 Datalist for fuzzy search-as-you-type
-    function populateSchoolsDropdown() {
-        const schoolDatalist = document.getElementById('schoolDatalist');
-        if (!schoolDatalist) return;
-        schoolDatalist.innerHTML = '';
-        
-        schoolsList.forEach(school => {
-            const opt = document.createElement('option');
-            opt.value = school.name;
-            schoolDatalist.appendChild(opt);
-        });
-    }
-
     // UNIFIED SCHOOL CHANGE AND CARRYOUT-ONLY DIRECT ROUTING
     function handleSchoolChange() {
         const schoolDropdown = document.getElementById('fieldSchool');
