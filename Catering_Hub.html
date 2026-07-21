@@ -342,7 +342,6 @@
                 <div class="form-scroll-area" id="orderFormScrollArea">
                     <div class="form-group">
                         <label>School Name</label>
-                        <!-- UPGRADED: Intelligent Search-As-You-Type Datalist Field  -->
                         <div style="display: flex; gap: 8px; align-items: center;">
                             <input type="text" id="fieldSchool" list="schoolDatalist" placeholder="🔍 Search or type school name..." required onchange="handleSchoolChange()" style="flex: 1;">
                             <datalist id="schoolDatalist"></datalist>
@@ -437,6 +436,48 @@
                         <input type="text" id="fieldPoPdf" placeholder="Paste Google Drive PDF URL here">
                     </div>
 
+                    <!-- COLLAPSIBLE BRANDED EMAIL REPLY BUILDER -->
+                    <details class="manual-overrides-details" style="margin-top: 12px;">
+                        <summary>📋 Branded Email Reply Builder</summary>
+                        <div style="padding: 12px; background: var(--card-bg); border-top: 1.5px solid var(--crust-med);">
+                            <div class="form-row">
+                                <div class="form-group" style="flex: 1.5;">
+                                    <label>Select Response Template</label>
+                                    <select id="replyTemplateSelect" onchange="handleTemplateSelectChange()">
+                                        <option value="">-- Choose Template --</option>
+                                        <option value="info">📋 Onboarding / Information Request</option>
+                                        <option value="carryout">🏬 Carryout-Only Redirect</option>
+                                        <option value="custom">✍️ Custom Reply Template</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group hidden" id="groupPeopleCount">
+                                    <label>Portion Calculator (Head Count or Slices)</label>
+                                    <div style="display: flex; gap: 8px; align-items: center;">
+                                        <input type="text" id="templatePeopleCount" placeholder="e.g., 65" oninput="updateTemplatePreview()" style="flex: 1.8; min-width: 0;">
+                                        <select id="calculatorModeSelect" onchange="updateTemplatePreview()" style="flex: 1.2; padding: 8px; min-width: 0;">
+                                            <option value="people">👥 People</option>
+                                            <option value="slices">🍕 Slices</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group hidden" id="groupCustomText" style="margin-top: 8px;">
+                                <label>Write Your Custom Reply</label>
+                                <textarea id="templateCustomText" style="height: 120px;" placeholder="Type your custom response here... your greeting and signature are automatically attached." oninput="updateTemplatePreview()"></textarea>
+                            </div>
+
+                            <div id="templatePreviewArea" class="hidden" style="margin-top: 12px; background: var(--crust-light); border: 1.5px solid var(--crust-dark); padding: 12px; border-radius: 6px; max-height: 250px; overflow-y: auto; font-family: Arial, sans-serif; font-size: 13px; color: #603913; line-height: 1.45;">
+                                <!-- Live Dynamic Email Preview displays here -->
+                            </div>
+
+                            <button type="button" id="btnCopyTemplate" class="hidden" style="background: var(--med-blue); width: 100%; margin-top: 12px;" onclick="copyTemplateToClipboard()">
+                                📋 Copy Rich-Text Response to Clipboard
+                            </button>
+                        </div>
+                    </details>
+
                     <!-- COLLAPSIBLE ACTIVE STAGE CHECKBOXES (Manual Overrides) -->
                     <details class="manual-overrides-details">
                         <summary>⚙️ View Active Stages & Manual Overrides</summary>
@@ -508,51 +549,6 @@
                     <div class="profile-label">School Specific Instructions / Credit Balance Notes</div>
                     <textarea id="profileNotesText" style="height: 60px; margin-top: 6px;" placeholder="Leave instructions, special credits, or delivery gate codes specific to this school..."></textarea>
                     <button type="button" style="background: var(--med-blue); width: 100%; margin-top: 8px;" onclick="saveSchoolNotes()">💾 Save School Notes</button>
-                </div>
-
-                <!-- NEW: Integrated Branded Email Reply Builder -->
-                <div class="profile-card" style="margin-top: 12px;">
-                    <div class="profile-label" style="border-bottom: 1.5px dashed var(--crust-med); padding-bottom: 4px; margin-bottom: 12px; color: var(--dark-blue);">📋 Branded Email Reply Builder</div>
-                    
-                    <!-- This row only contains the dropdown and the calculator -->
-                    <div class="form-row">
-                        <div class="form-group" style="flex: 1.5;">
-                            <label>Select Response Template</label>
-                            <select id="replyTemplateSelect" onchange="handleTemplateSelectChange()">
-                                <option value="">-- Choose Template --</option>
-                                <option value="info">📋 Onboarding / Information Request</option>
-                                <option value="carryout">🏬 Carryout-Only Redirect</option>
-                                <option value="custom">✍️ Custom Reply Template</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group hidden" id="groupPeopleCount">
-                            <label>Portion Calculator (Head Count or Slices)</label>
-                            <div style="display: flex; gap: 8px; align-items: center;">
-                                <input type="text" id="templatePeopleCount" placeholder="e.g., 65" oninput="updateTemplatePreview()" style="flex: 1.8; min-width: 0;">
-                                <select id="calculatorModeSelect" onchange="updateTemplatePreview()" style="flex: 1.2; padding: 8px; min-width: 0;">
-                                    <option value="people">👥 People</option>
-                                    <option value="slices">🍕 Slices</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div> <!-- This closing div prevents everything below from aligning horizontally -->
-                
-                    <!-- Custom text area (stacks vertically below) -->
-                    <div class="form-group hidden" id="groupCustomText" style="margin-top: 8px;">
-                        <label>Write Your Custom Reply</label>
-                        <textarea id="templateCustomText" style="height: 120px;" placeholder="Type your custom response here... your greeting and signature are automatically attached." oninput="updateTemplatePreview()"></textarea>
-                    </div>
-                
-                    <!-- Preview area (stacks vertically below) -->
-                    <div id="templatePreviewArea" class="hidden" style="margin-top: 12px; background: var(--crust-light); border: 1.5px solid var(--crust-dark); padding: 12px; border-radius: 6px; max-height: 250px; overflow-y: auto; font-family: Arial, sans-serif; font-size: 13px; color: #603913; line-height: 1.45;">
-                        <!-- Live Dynamic Email Preview displays here -->
-                    </div>
-                
-                    <!-- Copy button (stacks vertically below at full-width) -->
-                    <button type="button" id="btnCopyTemplate" class="hidden" style="background: var(--med-blue); width: 100%; margin-top: 12px;" onclick="copyTemplateToClipboard()">
-                        📋 Copy Rich-Text Response to Clipboard
-                    </button>
                 </div>
             </div>
         </div>
