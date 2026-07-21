@@ -243,6 +243,31 @@
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Styling for urgent upcoming orders */
+        .order-card.urgent-unplaced {
+            border-color: #ff9100 !important; /* Warning Amber */
+            background-color: #fffbf5 !important; /* Soft warm glow background */
+            box-shadow: 0 4px 12px rgba(255, 145, 0, 0.15) !important;
+        }
+        
+        .badge-urgent {
+            background: #fff3e0;
+            color: #e65100;
+            font-family: 'Compact', sans-serif;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            border: 1px solid #ffb74d;
+            animation: urgentPulse 1.8s infinite ease-in-out;
+        }
+        
+        @keyframes urgentPulse {
+            0% { opacity: 0.75; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.75; transform: scale(0.98); }
+        }
     </style>
 </head>
 <body>
@@ -1089,7 +1114,7 @@
         return "status-red"; 
     }
 
-    function renderList() {
+function renderList() {
         const listContainer = document.getElementById('orderList');
         if (!listContainer) return;
         listContainer.innerHTML = '';
@@ -1099,6 +1124,41 @@
 
         const searchInput = document.getElementById('orderSearchInput');
         const searchQuery = searchInput ? searchInput.value.trim().toLowerCase() : "";
+
+        // --- NEW: Calculate 10-Day Range relative to local midnight ---
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const tenDaysFromNow = new Date();
+        tenDaysFromNow.setDate(today.getDate() + 10);
+        tenDaysFromNow.setHours(23, 59, 59, 999);
+
+        // Helper to parse dates locally and avoid UTC offset shifts
+        const parseToLocalDate = (dateVal) => {
+            if (!dateVal) return new Date(0);
+            const dateString = dateVal.toString().split('T')[0];
+            const parts = dateString.split(/[-/]/);
+            if (parts.length === 3) {
+                if (parts[0].length === 4) { // YYYY-MM-DD
+                    return new Date(parts[0], parts[1] - 1, parts[2]);
+                } else { // MM-DD-YYYY or MM/DD/YYYY
+                    let year = parts[2];
+                    if (year.length === 2) year = '20' + year;
+                    return new Date(year, parts[0] - 1, parts[1]);
+                }
+            }
+            return new Date(dateVal);
+        };
+
+        // Helper to determine if an item is upcoming (within 10 days) and unplaced
+        const checkIsUrgentUnplaced = (item) => {
+            if (!item.date) return false;
+            const orderDate = parseToLocalDate(item.date);
+            const isUpcoming = (orderDate >= today && orderDate <= tenDaysFromNow);
+            const isNotPlaced = !item.enteredInPulse; // Relies on Pulse POS checkbox
+            return isUpcoming && isNotPlaced;
+        };
+        // -------------------------------------------------------------
 
         let sortedOrders = [...orders];
 
@@ -1121,6 +1181,15 @@
         }
 
         sortedOrders.sort((a, b) => {
+            // --- NEW: Force Urgent/Unplaced orders to the top ---
+            const aUrgent = checkIsUrgentUnplaced(a);
+            const bUrgent = checkIsUrgentUnplaced(b);
+
+            if (aUrgent && !bUrgent) return -1;
+            if (!aUrgent && bUrgent) return 1;
+            // ----------------------------------------------------
+
+            // Fall back to standard sort option chosen by user
             if (sortBy === 'school') {
                 const nameA = (a.schoolName || "").toString();
                 const nameB = (b.schoolName || "").toString();
@@ -1142,8 +1211,8 @@
                 };
                 return statusWeight(a) - statusWeight(b);
             }
-            const dateA = new Date(a.date);
-            const dateB = new Date(b.date);
+            const dateA = parseToLocalDate(a.date);
+            const dateB = parseToLocalDate(b.date);
             return dateA - dateB;
         });
 
@@ -1153,8 +1222,14 @@
         }
 
         sortedOrders.forEach(item => {
+            const isUrgent = checkIsUrgentUnplaced(item);
             const card = document.createElement('div');
+            
+            // --- NEW: Add dynamic status classes ---
             card.className = `order-card ${getStatusClass(item)}`;
+            if (isUrgent) {
+                card.classList.add('urgent-unplaced');
+            }
             if (item.id === currentSelectedId) card.classList.add('selected');
             
             const poStatus = getPoStatusText(item);
@@ -1162,21 +1237,25 @@
             const statusColor = isRed ? 'var(--brand-red)' : 'var(--brand-blue)';
             
             let badges = '';
+            // --- NEW: Prepend warning badge if urgent/unplaced ---
+            if (isUrgent) {
+                badges += '<span class="badge-urgent">⚠️ Urgent: Entry Needed</span> ';
+            }
             if (item.quoteUrl && !item.quoteEmailSent) badges += '<span class="badge-drafted">📄 Quote Ready</span> ';
             if (item.quoteEmailSent) badges += '<span class="badge-sent">📧 Sent</span>';
 
-            const localDate = item.date ? new Date(item.date).toLocaleDateString(undefined, {month: 'numeric', day: 'numeric', year: '2-digit'}) : 'No Date';
+            const localDate = item.date ? parseToLocalDate(item.date).toLocaleDateString(undefined, {month: 'numeric', day: 'numeric', year: '2-digit'}) : 'No Date';
 
             card.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px;">
                     <div class="card-name" style="line-height: 1.25; font-family: 'Subhead1', sans-serif;">${item.schoolName || ''}</div>
-                    <div style="display: flex; gap: 4px; flex-shrink: 0;">${badges}</div>
+                    <div style="display: flex; gap: 4px; flex-shrink: 0; align-items: center;">${badges}</div>
                 </div>
                 
                 <div class="card-sub">
                     <div style="display: grid; grid-template-columns: auto 1fr; row-gap: 6px; column-gap: 8px; font-size: 17px; font-family: 'Compact', sans-serif; color: var(--crust-deep); width: 100%;">
                         <span style="font-size: 18px; line-height: 1;">📅</span>
-                        <span style="font-family: 'Condensed', sans-serif;">${localDate} at ${item.time || 'No Time'}</span>
+                        <span style="font-family: 'Condensed', sans-serif; ${isUrgent ? 'color: #e65100; font-weight: bold;' : ''}">${localDate} at ${item.time || 'No Time'}</span>
                         <span style="font-size: 18px; line-height: 1;">🏬</span>
                         <span style="font-family: 'Condensed', sans-serif;">Store #${item.storeNum || ''}</span>
                     </div>
@@ -1194,7 +1273,7 @@
 
         updateWeeklyMetrics();
     }
-
+    
     function selectOrder(item) {
         currentSelectedId = item.id;
         renderList();
