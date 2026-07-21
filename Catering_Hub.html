@@ -2175,6 +2175,56 @@
         
         return parts[0];
     }
+
+    async function syncQuoteTotal() {
+        const fieldId = document.getElementById('fieldId');
+        const id = fieldId ? fieldId.value : '';
+        if (!id) {
+            await showBrandAlert("Please save or select an order entry first.", "Notice");
+            return;
+        }
+
+        showLoader(true, "Reading updated total from quote spreadsheet...");
+
+        const username = localStorage.getItem('cat_user');
+        const password = localStorage.getItem('cat_pass');
+
+        const payload = {
+            username: username,
+            password: password,
+            action: "syncQuoteTotal",
+            id: id
+        };
+
+        try {
+            const res = await fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            });
+            const result = await res.json();
+            showLoader(false);
+
+            if (!result.success) throw new Error(result.error || "Sync action failed");
+
+            if (result.totalCost !== undefined && result.totalCost !== "") {
+                document.getElementById('fieldTotal').value = result.totalCost;
+            }
+            if (result.tipAmount !== undefined && result.tipAmount !== "") {
+                document.getElementById('fieldTip').value = result.tipAmount;
+            }
+
+            const initRes = await fetch(`${API_URL}?action=getInitialData`);
+            const data = await initRes.json();
+            orders = data.orders || [];
+            renderList();
+
+            await showBrandAlert("Total and tip updated from quote spreadsheet!", "Synced");
+        } catch (err) {
+            showLoader(false);
+            await showBrandAlert("Error syncing total: " + err.message, "Sync Error");
+        }
+    }
+    
 </script>
 </body>
 </html>
