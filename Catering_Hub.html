@@ -446,6 +446,7 @@
                                     <label>Select Response Template</label>
                                     <select id="replyTemplateSelect" onchange="handleTemplateSelectChange()">
                                         <option value="">-- Choose Template --</option>
+                                        <option value="quote_receipt">💬 Quote Request Receipt</option>
                                         <option value="info">📋 Onboarding / Information Request</option>
                                         <option value="carryout">🏬 Carryout-Only Redirect</option>
                                         <option value="custom">✍️ Custom Reply Template</option>
@@ -1547,7 +1548,18 @@
 
         let htmlString = "";
 
-        if (select.value === 'carryout') {
+        if (select.value === 'quote_receipt') {
+            htmlString = `
+                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #603913; line-height: 1.55;">
+                    <p style="margin-top: 0;">Hello ${greetingName},</p>
+                    <p>I have received your request for a quote and am happy to assist you. I will put the details together and have your quote sent over as soon as it is ready.</p>
+                    <p style="margin: 0;">Best regards,</p>
+                    <div style="margin-top: 10px;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 410px; height: auto; display: block;">
+                    </div>
+                </div>
+            `;
+        } else if (select.value === 'carryout') {
             let storeAddr = boldRedPlaceholder;
             if (schoolObj && schoolObj.carryoutStore && storeLookup[schoolObj.carryoutStore]) {
                 storeAddr = storeLookup[schoolObj.carryoutStore].address || boldRedPlaceholder;
@@ -1878,7 +1890,7 @@
         }
     }
 
-    function updateWeeklyMetrics() {
+    updateWeeklyMetrics() {
         const now = new Date();
         const thisMonday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const day = now.getDay();
