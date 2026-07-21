@@ -1198,104 +1198,101 @@
     }
 
     function selectOrder(item) {
-        currentSelectedId = item.id;
-        renderList();
-
-        setPanelTab('details'); // Defaults view back to form when changing selection
-
-        const formTitle = document.getElementById('formTitle');
-        if (formTitle) formTitle.innerText = `Edit Order: ${item.schoolName}`;
-        
-        const fieldId = document.getElementById('fieldId');
-        const fieldSchool = document.getElementById('fieldSchool');
-        const fieldCoordinator = document.getElementById('fieldCoordinator');
-        const fieldCarryout = document.getElementById('fieldCarryout');
-        const fieldDate = document.getElementById('fieldDate');
-        const fieldTime = document.getElementById('fieldTime');
-        const fieldStore = document.getElementById('fieldStore');
-        const fieldPoNum = document.getElementById('fieldPoNum');
-        const fieldTotal = document.getElementById('fieldTotal');
-        const fieldTip = document.getElementById('fieldTip');
-        const fieldPoPdf = document.getElementById('fieldPoPdf');
-        const fieldQuoteUrl = document.getElementById('fieldQuoteUrl');
-
-        if (fieldId) fieldId.value = item.id;
-        if (fieldSchool) fieldSchool.value = item.schoolName;
-        
-        handleSchoolChange(); 
-        
-        if (fieldCoordinator) {
-            if (item.coordinatorName) {
-                const optionExists = Array.from(fieldCoordinator.options).some(opt => opt.value === item.coordinatorName);
-                if (!optionExists) {
-                    const opt = document.createElement('option');
-                    opt.value = item.coordinatorName;
-                    opt.textContent = item.coordinatorName;
-                    fieldCoordinator.appendChild(opt);
+            currentSelectedId = item.id;
+            renderList();
+    
+            setPanelTab('details'); // Defaults view back to form when changing selection
+    
+            const formTitle = document.getElementById('formTitle');
+            if (formTitle) formTitle.innerText = `Edit Order: ${item.schoolName}`;
+            
+            const fieldId = document.getElementById('fieldId');
+            const fieldSchool = document.getElementById('fieldSchool');
+            const fieldCoordinator = document.getElementById('fieldCoordinator');
+            const fieldCarryout = document.getElementById('fieldCarryout');
+            const fieldDate = document.getElementById('fieldDate');
+            const fieldTime = document.getElementById('fieldTime');
+            const fieldStore = document.getElementById('fieldStore');
+            const fieldPoNum = document.getElementById('fieldPoNum');
+            const fieldTotal = document.getElementById('fieldTotal');
+            const fieldTip = document.getElementById('fieldTip');
+            const fieldPoPdf = document.getElementById('fieldPoPdf');
+            const fieldQuoteUrl = document.getElementById('fieldQuoteUrl');
+    
+            if (fieldId) fieldId.value = item.id;
+            if (fieldSchool) fieldSchool.value = item.schoolName || '';
+            if (fieldCarryout) fieldCarryout.value = item.serviceMethod || '';
+            
+            // Populate school routing and build coordinator list options
+            handleSchoolChange(); 
+            
+            if (fieldCoordinator) {
+                if (item.coordinatorName) {
+                    const optionExists = Array.from(fieldCoordinator.options).some(opt => opt.value === item.coordinatorName);
+                    if (!optionExists) {
+                        const opt = document.createElement('option');
+                        opt.value = item.coordinatorName;
+                        opt.textContent = item.coordinatorName;
+                        fieldCoordinator.appendChild(opt);
+                    }
+                    fieldCoordinator.value = item.coordinatorName;
+                } else {
+                    fieldCoordinator.value = '';
                 }
-                fieldCoordinator.value = item.coordinatorName;
-            } else {
-                fieldCoordinator.value = '';
+            }
+    
+            const phoneInput = document.getElementById('fieldPhone');
+            const emailInput = document.getElementById('fieldEmail');
+            if (phoneInput) phoneInput.value = item.phone || item.phoneNumber || '';
+            if (emailInput) emailInput.value = item.email || '';
+    
+            handleCoordinatorChange();
+    
+            if (fieldDate) fieldDate.value = formatStringToInputDate(item.date);
+            if (fieldTime) fieldTime.value = item.time || '';
+            if (fieldStore) fieldStore.value = item.storeNum || '';
+            if (fieldPoNum) fieldPoNum.value = item.poNum || '';
+            if (fieldTotal) fieldTotal.value = item.totalCost || '';
+            if (fieldTip) fieldTip.value = item.tipAmount || '';
+            if (fieldPoPdf) fieldPoPdf.value = item.poPdfLink || '';
+            if (fieldQuoteUrl) fieldQuoteUrl.value = item.quoteUrl || '';
+    
+            // Checkboxes
+            const checkQuoteDrafted = document.getElementById('checkQuoteDrafted');
+            const checkQuoteSent = document.getElementById('checkQuoteSent');
+            const checkPulse = document.getElementById('checkPulse');
+            const checkCe = document.getElementById('checkCe');
+            const checkPoProcessed = document.getElementById('checkPoProcessed');
+            const checkAccountingSent = document.getElementById('checkAccountingSent');
+            const checkChaserSent = document.getElementById('checkChaserSent');
+    
+            if (checkQuoteDrafted) checkQuoteDrafted.checked = item.quoteUrl ? true : false;
+            if (checkQuoteSent) checkQuoteSent.checked = item.quoteEmailSent || false;
+            if (checkPulse) checkPulse.checked = item.enteredInPulse || false;
+            if (checkCe) checkCe.checked = item.ceSent || false;
+            if (checkPoProcessed) checkPoProcessed.checked = item.poProcessed || false;
+            if (checkAccountingSent) checkAccountingSent.checked = item.accountingSent || false;
+            if (checkChaserSent) checkChaserSent.checked = item.chaserSent || false;
+    
+            const btnCancel = document.getElementById('btnCancel');
+            if (btnCancel) btnCancel.innerText = "Cancel Edit";
+            
+            const btnDraftQuote = document.getElementById('btnDraftQuote');
+            const btnSendQuote = document.getElementById('btnSendQuote');
+    
+            if (btnDraftQuote) {
+                btnDraftQuote.disabled = false;
+                if (item.quoteUrl) {
+                    btnDraftQuote.innerText = "📄 Open Spreadsheet";
+                    btnDraftQuote.style.background = "var(--brand-blue)";
+                    if (btnSendQuote) btnSendQuote.classList.remove('hidden');
+                } else {
+                    btnDraftQuote.innerText = "⌨️ Draft Quote Sheet";
+                    btnDraftQuote.style.background = "var(--brand-red)";
+                    if (btnSendQuote) btnSendQuote.classList.add('hidden');
+                }
             }
         }
-
-        const phoneInput = document.getElementById('fieldPhone');
-        const emailInput = document.getElementById('fieldEmail');
-        if (phoneInput) phoneInput.value = item.phone || '';
-        if (emailInput) emailInput.value = item.email || '';
-
-        handleCoordinatorChange();
-
-        if (fieldCarryout) fieldCarryout.value = item.serviceMethod || '';
-        
-        // Retain original carryout protection state
-        handleSchoolChange();
-
-        if (fieldDate) fieldDate.value = formatStringToInputDate(item.date);
-        if (fieldTime) fieldTime.value = item.time || '';
-        if (fieldStore) fieldStore.value = item.storeNum || '';
-        if (fieldPoNum) fieldPoNum.value = item.poNum || '';
-        if (fieldTotal) fieldTotal.value = item.totalCost || '';
-        if (fieldTip) fieldTip.value = item.tipAmount || '';
-        if (fieldPoPdf) fieldPoPdf.value = item.poPdfLink || '';
-        if (fieldQuoteUrl) fieldQuoteUrl.value = item.quoteUrl || '';
-
-        // Checkboxes
-        const checkQuoteDrafted = document.getElementById('checkQuoteDrafted');
-        const checkQuoteSent = document.getElementById('checkQuoteSent');
-        const checkPulse = document.getElementById('checkPulse');
-        const checkCe = document.getElementById('checkCe');
-        const checkPoProcessed = document.getElementById('checkPoProcessed');
-        const checkAccountingSent = document.getElementById('checkAccountingSent');
-        const checkChaserSent = document.getElementById('checkChaserSent');
-
-        if (checkQuoteDrafted) checkQuoteDrafted.checked = item.quoteUrl ? true : false;
-        if (checkQuoteSent) checkQuoteSent.checked = item.quoteEmailSent || false;
-        if (checkPulse) checkPulse.checked = item.enteredInPulse || false;
-        if (checkCe) checkCe.checked = item.ceSent || false;
-        if (checkPoProcessed) checkPoProcessed.checked = item.poProcessed || false;
-        if (checkAccountingSent) checkAccountingSent.checked = item.accountingSent || false;
-        if (checkChaserSent) checkChaserSent.checked = item.chaserSent || false;
-
-        const btnCancel = document.getElementById('btnCancel');
-        if (btnCancel) btnCancel.innerText = "Cancel Edit";
-        
-        const btnDraftQuote = document.getElementById('btnDraftQuote');
-        const btnSendQuote = document.getElementById('btnSendQuote');
-
-        if (btnDraftQuote) {
-            btnDraftQuote.disabled = false;
-            if (item.quoteUrl) {
-                btnDraftQuote.innerText = "📄 Open Spreadsheet";
-                btnDraftQuote.style.background = "var(--brand-blue)";
-                if (btnSendQuote) btnSendQuote.classList.remove('hidden');
-            } else {
-                btnDraftQuote.innerText = "⌨️ Draft Quote Sheet";
-                btnDraftQuote.style.background = "var(--brand-red)";
-                if (btnSendQuote) btnSendQuote.classList.add('hidden');
-            }
-        }
-    }
 
     function prepareAddNew() {
         clearForm();
