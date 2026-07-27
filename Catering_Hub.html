@@ -1371,11 +1371,11 @@ function renderList() {
         if (btnDraftQuote) {
             btnDraftQuote.disabled = false;
             if (item.quoteUrl) {
-                btnDraftQuote.innerText = "📄 Open Spreadsheet";
+                btnDraftQuote.innerText = "📄 Open Quote";
                 btnDraftQuote.style.background = "var(--brand-blue)";
                 if (btnSendQuote) btnSendQuote.classList.remove('hidden');
             } else {
-                btnDraftQuote.innerText = "⌨️ Draft Quote Sheet";
+                btnDraftQuote.innerText = "📝 Draft Quote";
                 btnDraftQuote.style.background = "var(--brand-red)";
                 if (btnSendQuote) btnSendQuote.classList.add('hidden');
             }
