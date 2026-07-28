@@ -519,60 +519,59 @@
         outline: none;
     }
 
-    /* --- DUAL AUDIO STACK (STRICT BRAND PALETTE) --- */
+    /* --- COMPACT AUDIO PANEL (ELIMINATES PANEL SCROLL) --- */
+    #audio-control-panel {
+        padding: 8px 12px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .audio-header {
+        font-size: 0.85rem !important;
+        margin-bottom: 4px !important;
+    }
+
     .audio-track-stack {
         display: flex;
         flex-direction: column;
-        gap: 8px;
-        margin-top: 10px;
+        gap: 4px !important; /* Compact gap between track rows */
+        margin-top: 4px !important;
     }
 
     .audio-track-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(254, 250, 246, 0.1); /* derived from var(--crust-base) */
-        border: 1px solid rgba(254, 250, 246, 0.25);
+        background: rgba(0, 92, 145, 0.06);
+        border: 1px solid var(--crust-dark);
         border-radius: 6px;
-        padding: 8px 12px;
-        transition: opacity 0.25s ease, border-color 0.25s ease;
+        padding: 4px 8px !important; /* Slim row padding */
+        transition: opacity 0.25s ease;
     }
 
-    /* Locked state using opacity & crust tones */
     .audio-track-row.locked {
-        opacity: 0.45;
+        opacity: 0.5;
         pointer-events: none;
-        border-color: var(--crust-dark);
     }
 
+    /* Fix text contrast: readable dark text */
     .audio-track-row .track-label {
         font-family: 'OneDotCd-Bold', sans-serif;
-        font-size: 0.95rem;
-        color: var(--crust-base);
+        font-size: 0.85rem;
+        color: var(--crust-burnt) !important;
+        flex: 1;
+        min-width: 0;
+        padding-right: 6px;
     }
 
-    .track-badge {
-        font-family: 'OneDotCd-Bold', sans-serif;
-        font-size: 0.75rem;
-        padding: 3px 8px;
-        border-radius: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    /* Badge States mapped strictly to brand kit */
-    .track-badge.pending {
-        background: var(--crust-dark);
-        color: var(--crust-burnt);
-    }
-
-    .track-badge.playing {
-        background: var(--brand-blue);
-        color: var(--crust-base);
-    }
-
-    .track-badge.complete {
-        background: var(--dark-blue);
-        color: var(--crust-base);
-        border: 1px solid var(--med-blue);
+    /* FIX BUTTON SHAPE: Locks height & prevents text wrapping */
+    .audio-btn {
+        white-space: nowrap !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 26px !important; /* Locks identical button height */
+        padding: 0 10px !important;
+        border-radius: 20px !important;
+        flex-shrink: 0 !important;
+        font-size: 0.8rem !important;
     }
