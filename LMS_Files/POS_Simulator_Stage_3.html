@@ -133,23 +133,27 @@
             {
                 "step": 0,
                 "image": "resources/POS_assets/Stage_0/POS_7.png",
-                "activeHitbox": "hb-carryout",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 8px;'><br><strong>Taking Calls</strong><br><br>This time, we will take everything you've learned and tie it together. When answering the phone, customers won't always give you the information in the order you need. It is important to listen for the ke words, enter the information in the order that is necessary, and ask and clarifying questions you may need.</p><p style='margin-bottom: 32px;'>Go back to the carry out tab to access the order taking screen.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the <strong>Carry Out</strong> button to continue.</p>"
+                "activeHitbox": "hb-anywhere",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 8px;'><br><strong>Taking Calls</strong><br><br>This time, we will take everything you've learned and tie it together. When answering the phone, customers won't always give you the information in the order you need. It is important to listen for the ke words, enter the information in the order that is necessary, and ask and clarifying questions you may need.</p><p style='margin-bottom: 32px;'>A strong greeting is the best way to ensure a great customer experience.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click anywhere on the order screen to continue.</p>"
             },
             {
                 "step": 1,
-                "image": "resources/POS_assets/Stage_0/POS_8.png",
-                "activeHitbox": "hb-cust-add",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 24px;'>📋 <strong>Greeting:</strong> Listen to the customer call greeting. Then, prepare to enter customer info.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the <strong>Customer Address</strong> button to continue.</p>",
+                "image": "resources/POS_assets/Stage_0/POS_7.png",
+                "activeHitbox": "hb-anywhere",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 8px;'><br><strong>Call Greetings</strong><br><br>A strong, welcoming greeting sets the tone for a great customer experience. Listen closely to these two greeting examples to hear how to open a phone order professionally.</p><p style='margin-bottom: 32px;'>Listen to Part 1 first to unlock Part 2. Once both recordings finish, the screen will activate.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the <strong>Customer Address</strong> button to continue.</p>",
                 "audio": {
-                    "file": "resources/POS_assets/Stage_3_audio/Example_1_pt1.mp3", // Update with your actual segmented mp3 route
-                    "autoPlay": true
+                    "tracks": [
+                        { "id": "t1", "label": "Call 1: Greeting Example 1", "file": "resources/POS_assets/Stage_3_audio/Victor_Example_1.m4a" },
+                        { "id": "t2", "label": "Call 2: Greeting Example 2", "file": "resources/POS_assets/Stage_3_audio/Victor_Example_2.m4a" }
+                    ],
+                    "requireAllPlayed": true, // Holds hitbox until both tracks complete
+                    "sequential": true        // Locks Track 2 until Track 1 finishes
                 }
             },
             {
                 "step": 2,
-                "image": "resources/POS_assets/Stage_0/POS_9.png",
-                "activeHitbox": "hb-phone-field",
+                "image": "resources/POS_assets/Stage_0/POS_7.png",
+                "activeHitbox": "hb-carryout",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the <strong>Phone #</strong> field to begin.</p>",
                 "audio": {
                     "file": "resources/audio/customer_phone_number.mp3", // The audio plays here
@@ -234,60 +238,140 @@
 
         // --- AUDIO COMPONENT ENGINE ---
         const audioPlayer = document.getElementById('global-audio-player');
-        const playPauseBtn = document.getElementById('audio-play-pause-btn');
         const audioPanel = document.getElementById('audio-control-panel');
 
+        let completedTracks = new Set();
+        let currentPlayingTrackIndex = null;
+
         function handleAudioForStep(stepData) {
-            if (stepData.audio) {
-                // Show the call control card
-                audioPanel.style.display = 'block';
-                
-                // Load the new audio track if it has changed
-                const currentSrc = audioPlayer.getAttribute('src');
-                const newSrc = stepData.audio.file;
-                
-                if (currentSrc !== newSrc) {
-                    audioPlayer.src = newSrc;
-                    audioPlayer.load();
-                }
-        
-                // 👈 REMOVED THE AUTOPLAY TRIGGER HERE
-                // The audio is prepared, but we keep it paused until they click "Play Call"
-                updateAudioUI(false); 
-                
-            } else {
-                // Hide the panel and pause the player if this step has no audio
+            completedTracks.clear();
+            currentPlayingTrackIndex = null;
+
+            if (!stepData.audio) {
                 audioPanel.style.display = 'none';
                 audioPlayer.pause();
+                return;
+            }
+
+            audioPanel.style.display = 'block';
+
+            // Supports single-track or multi-track audio steps seamlessly
+            const tracks = stepData.audio.tracks || [
+                { id: "track-0", label: "Live Call", file: stepData.audio.file }
+            ];
+
+            const isSequential = stepData.audio.sequential !== false && tracks.length > 1;
+            const requireAll = stepData.audio.requireAllPlayed === true || tracks.length > 1;
+
+            let html = `<div class="audio-header"><span class="audio-pulse-indicator"></span> Live Audio Call</div>`;
+            html += `<div class="audio-track-stack">`;
+
+            tracks.forEach((track, index) => {
+                const isLocked = isSequential && index > 0;
+                const lockClass = isLocked ? 'locked' : '';
+                const lockIcon = isLocked ? '🔒 ' : '';
+
+                html += `
+                    <div id="track-row-${index}" class="audio-track-row ${lockClass}">
+                        <div class="track-label">${lockIcon}${track.label}</div>
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <span id="badge-track-${index}" class="track-badge pending">Unheard</span>
+                            <button id="btn-track-${index}" class="audio-btn" style="padding: 4px 10px; font-size: 0.8rem;" 
+                                ${isLocked ? 'disabled' : ''} onclick="playTrack(${index})">
+                                ▶ Play
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            audioPanel.innerHTML = html;
+
+            // Gate active hitbox visibility until required audio finishes
+            const activeHb = document.getElementById(stepData.activeHitbox);
+            if (activeHb && requireAll) {
+                activeHb.style.display = 'none';
             }
         }
-        function toggleAudio() {
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-                updateAudioUI(true);
-            } else {
+
+        function playTrack(index) {
+            const stepData = sequence[currentStep];
+            const tracks = stepData.audio.tracks || [
+                { id: "track-0", label: "Live Call", file: stepData.audio.file }
+            ];
+
+            const targetTrack = tracks[index];
+
+            // Toggle pause/play on current track
+            if (currentPlayingTrackIndex === index && !audioPlayer.paused) {
                 audioPlayer.pause();
-                updateAudioUI(false);
+                updateTrackUI(index, 'paused');
+                return;
             }
-        }
 
-        function replayAudio() {
-            audioPlayer.currentTime = 0;
+            audioPlayer.src = targetTrack.file;
             audioPlayer.play();
-            updateAudioUI(true);
+            currentPlayingTrackIndex = index;
+
+            tracks.forEach((_, i) => {
+                if (i === index) {
+                    updateTrackUI(i, 'playing');
+                } else if (!completedTracks.has(i)) {
+                    updateTrackUI(i, 'pending');
+                }
+            });
+
+            audioPlayer.onended = function() {
+                completedTracks.add(index);
+                updateTrackUI(index, 'complete');
+
+                // Unlock next sequential track row
+                const nextIndex = index + 1;
+                if (tracks[nextIndex]) {
+                    const nextRow = document.getElementById(`track-row-${nextIndex}`);
+                    const nextBtn = document.getElementById(`btn-track-${nextIndex}`);
+                    if (nextRow && nextBtn) {
+                        nextRow.classList.remove('locked');
+                        nextBtn.disabled = false;
+                        const labelEl = nextRow.querySelector('.track-label');
+                        if (labelEl) labelEl.innerText = tracks[nextIndex].label;
+                    }
+                }
+
+                // Un-hide the hitbox once all tracks complete
+                if (completedTracks.size === tracks.length) {
+                    const activeHb = document.getElementById(stepData.activeHitbox);
+                    if (activeHb) {
+                        activeHb.style.display = 'block';
+                    }
+                }
+            };
         }
 
-        function updateAudioUI(isPlaying) {
-            if (isPlaying) {
-                playPauseBtn.innerHTML = '<span class="icon">⏸</span> Pause';
-            } else {
-                playPauseBtn.innerHTML = '<span class="icon">▶</span> Play Call';
+        function updateTrackUI(index, state) {
+            const badge = document.getElementById(`badge-track-${index}`);
+            const btn = document.getElementById(`btn-track-${index}`);
+            if (!badge || !btn) return;
+
+            if (state === 'playing') {
+                badge.className = 'track-badge playing';
+                badge.innerText = 'Playing';
+                btn.innerHTML = '⏸ Pause';
+            } else if (state === 'paused') {
+                badge.className = 'track-badge pending';
+                badge.innerText = 'Paused';
+                btn.innerHTML = '▶ Resume';
+            } else if (state === 'complete') {
+                badge.className = 'track-badge complete';
+                badge.innerText = '✓ Complete';
+                btn.innerHTML = '🔄 Replay';
+            } else if (state === 'pending') {
+                badge.className = 'track-badge pending';
+                badge.innerText = 'Unheard';
+                btn.innerHTML = '▶ Play';
             }
         }
-
-        audioPlayer.addEventListener('ended', () => {
-            updateAudioUI(false);
-        });
 
         // --- DYNAMIC TEXT INPUT OVERLAY ENGINE ---
         function handleInputForStep(stepData, activeHb) {
