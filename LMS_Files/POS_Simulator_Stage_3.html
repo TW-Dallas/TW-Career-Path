@@ -154,27 +154,20 @@
                 "step": 2,
                 "image": "resources/POS_assets/Stage_0/POS_7.png",
                 "activeHitbox": "hb-carryout",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the <strong>Phone #</strong> field to begin.</p>",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 8px;'><br><strong>Full Order Call</strong><br><br>Now that you have a strong place to start, try listening to a complete customer call. See if you can identify the different parts of the call that resemble the order entry steps you learned previously.</p><p style='margin-bottom: 32px;'>Pay close attention to how the customer provides their contact and order details, as well as what the team member says to help guide them throughout the conversation.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> After the recording completes, click anywhere on the screen to continue.</p>",
                 "audio": {
-                    "file": "resources/audio/customer_phone_number.mp3", // The audio plays here
-                    "autoPlay": true
+                    "file": "resources/POS_assets/Stage_3_audio/Example_1_Full.mp3",
+                    "requireAllPlayed": true
                 }
-                // 👈 The "input" block was deleted, making this a standard click step again.
             },
             {
                 "step": 3,
-                "image": "resources/POS_assets/Stage_1.1/POS_1.1.png",
-                "activeHitbox": "hb-phone-0",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click '0'.</p>"
+                "image": "resources/POS_assets/Stage_0/POS_7.png",
+                "activeHitbox": "hb-carryout",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 8px;'><br><strong>Step-by-Step Order Entry</strong><br><br>Now we will break that call down into smaller segments. For each step, you will listen to a short audio clip and enter the corresponding customer details directly into the POS system.</p><p style='margin-bottom: 32px;'>Take your time to listen for key details like phone numbers, customer names, and street addresses.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the <strong>Carry Out</strong> button to start entering the order.</p>"
             },
             {
                 "step": 4,
-                "image": "resources/POS_assets/Stage_1.1/POS_1.2.png",
-                "activeHitbox": "hb-phone-OK",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click <strong>OK</strong> to close the phone field.</p>"
-            },
-            {
-                "step": 5,
                 "image": "resources/POS_assets/Stage_1.1/POS_1.3.png",
                 "activeHitbox": "hb-cust-name",
                 "instruction": "<p>👉 Listen to the audio and enter the customer's name.</p>",
@@ -188,37 +181,37 @@
                 }
             },
             {
-                "step": 6,
+                "step": 5,
                 "image": "resources/POS_assets/Stage_1.1/POS_1.4.png",
                 "activeHitbox": "hb-add-number",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the first address field to enter the address number.</p>"
             },
             {
-                "step": 7,
+                "step": 6,
                 "image": "resources/POS_assets/Stage_1.1/POS_1.5.png",
                 "activeHitbox": "hb-street-name",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the next address field to enter the street name.</p>"
             },
             {
-                "step": 8,
+                "step": 7,
                 "image": "resources/POS_assets/Stage_1.1/POS_1.6.png",
                 "activeHitbox": "hb-street-select",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Select the corresponding street name.</p>"
             },
             {
-                "step": 9,
+                "step": 8,
                 "image": "resources/POS_assets/Stage_0/POS_11.png",
                 "activeHitbox": "hb-rewards-checker",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Confirm the Rewards Status.</p>"
             },
             {
-                "step": 10,
+                "step": 9,
                 "image": "resources/POS_assets/Stage_0/POS_12.png",
                 "activeHitbox": "hb-rewards-ok",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Check the Rewards Status.</p>"
             },
             {
-                "step": 11,
+                "step": 10,
                 "image": "resources/POS_assets/Stage_0/POS_13.png",
                 "activeHitbox": "hb-greeting-tab",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> After verifying all information is correct, navigate back to the <strong>Greetings/Specials</strong> screen to continue.</p>"
