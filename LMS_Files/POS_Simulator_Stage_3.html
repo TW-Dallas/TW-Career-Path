@@ -139,15 +139,15 @@
             {
                 "step": 1,
                 "image": "resources/POS_assets/Stage_0/POS_7.png",
-                "activeHitbox": "hb-anywhere",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 8px;'><br><strong>Call Greetings</strong><br><br>A strong, welcoming greeting sets the tone for a great customer experience. Listen closely to these two greeting examples to hear how to open a phone order professionally.</p><p style='margin-bottom: 32px;'>Listen to Part 1 first to unlock Part 2. Once both recordings finish, the screen will activate.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the <strong>Customer Address</strong> button to continue.</p>",
+                "activeHitbox": "hb-carryout",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 16px;'><strong>Call Greetings</strong><br><br>A strong, welcoming greeting sets the tone for a great customer experience. Listen closely to these two greeting examples to hear how to open a phone order professionally.</p><p style='margin-bottom: 24px;'>Listen to Part 1 first to unlock Part 2. Once both recordings finish, the screen will activate.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Once the calls are complete, click anywhere on the POS screen to continue.</p>",
                 "audio": {
                     "tracks": [
-                        { "id": "t1", "label": "Call 1: Greeting Example 1", "file": "resources/POS_assets/Stage_3_audio/Victor_Example_1.m4a" },
-                        { "id": "t2", "label": "Call 2: Greeting Example 2", "file": "resources/POS_assets/Stage_3_audio/Victor_Example_2.m4a" }
+                        { "id": "t1", "label": "Call 1: Greeting Example 1", "file": "resources/audio/greeting_1.mp3" },
+                        { "id": "t2", "label": "Call 2: Greeting Example 2", "file": "resources/audio/greeting_2.m4a" }
                     ],
-                    "requireAllPlayed": true, // Holds hitbox until both tracks complete
-                    "sequential": true        // Locks Track 2 until Track 1 finishes
+                    "requireAllPlayed": true,
+                    "sequential": true
                 }
             },
             {
