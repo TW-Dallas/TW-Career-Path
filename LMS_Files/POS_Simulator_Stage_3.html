@@ -183,7 +183,7 @@
                 "step": 5,
                 "image": "resources/POS_assets/Stage_3/POS_3.2.png",
                 "activeHitbox": "hb-cust-add",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div>Carryout</div>",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Type:</strong> Carryout</div>",
                 "audio": {
                     "file": "resources/POS_assets/Stage_3_audio/Example_1_pt1.mp3"
                 }
@@ -192,7 +192,7 @@
                 "step": 6,
                 "image": "resources/POS_assets/Stage_3/POS_3.3.png",
                 "activeHitbox": "hb-phone-field",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div>Carryout</div>",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Type:</strong> Carryout</div>",
                 "audio": {
                     "file": "resources/POS_assets/Stage_3_audio/Example_1_pt1.mp3"
                 }
@@ -201,7 +201,7 @@
                 "step": 7,
                 "image": "resources/POS_assets/Stage_3/POS_3.4.png",
                 "activeHitbox": "hb-phone-entry",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><p style='margin-top: 16px;'>💡 <strong>Hint:</strong> Use the Keyboard to type in the phone number.</p>",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Type:</strong> </div><p style='margin-top: 16px;'>💡 <strong>Hint:</strong> Use the Keyboard to type in the phone number and hit enter to continue.</p>",
                 "audio": {
                     "file": "resources/POS_assets/Stage_3_audio/Example_1_pt1.mp3"
                 },
@@ -209,6 +209,39 @@
                     "type": "text",
                     "expectedValue": "2145821300",
                     "placeholder": "Enter Phone Number"
+                }
+            },
+            {
+                "step": 8,
+                "image": "resources/POS_assets/Stage_3/POS_3.5.png",
+                "activeHitbox": "hb-phone-OK",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Type:</strong> Carryout<div class='pos-ticket-header' style='margin-top: 12px;'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (214) 582-1300</div>",
+                "audio": {
+                    "file": "resources/POS_assets/Stage_3_audio/Example_1_pt1.mp3",
+                    "requireAllPlayed": true
+                }
+            },
+            {
+                "step": 9,
+                "image": "resources/POS_assets/Stage_3/POS_3.6.png",
+                "activeHitbox": "hb-cust-name",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Type:</strong> Carryout<div class='pos-ticket-header' style='margin-top: 12px;'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (214) 582-1300</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Press 'Play' to hear the next section.</p>",
+                "audio": {
+                    "file": "resources/POS_assets/Stage_3_audio/Example_1_pt2.mp3"
+                }
+            },
+            {
+                "step": 10,
+                "image": "resources/POS_assets/Stage_3/POS_3.6.png",
+                "activeHitbox": "hb-cust-name",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Type:</strong> Carryout<div class='pos-ticket-header' style='margin-top: 12px;'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (214) 582-1300</div>",
+                "audio": {
+                    "file": "resources/POS_assets/Stage_3_audio/Example_1_pt2.mp3"
+                },
+                "input": {
+                    "type": "text",
+                    "expectedValue": "Tim",
+                    "placeholder": "Enter Name"
                 }
             },
         ];
