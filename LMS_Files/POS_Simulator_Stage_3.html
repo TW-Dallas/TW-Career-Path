@@ -166,63 +166,54 @@
             },
             {
                 "step": 3,
-                "image": "resources/POS_assets/Stage_0/POS_7.png",
-                "activeHitbox": "hb-carryout",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 8px;'><br><strong>Step-by-Step Order Entry</strong><br><br>Now we will break that call down into smaller segments. For each step, you will listen to a short audio clip and enter the corresponding customer details directly into the POS system.</p><p style='margin-bottom: 32px;'>Take your time to listen for key details like phone numbers, customer names, and street addresses.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the <strong>Carry Out</strong> button to start entering the order.</p>"
+                "image": "resources/POS_assets/Stage_3/POS_3.1.png",
+                "activeHitbox": "hb-anywhere",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 16px;'><strong>Flexible Order of Operations</strong><br><br>Up to this point, you have followed a strict sequence for entering order details. However, real phone customers do not follow a script and will often provide information in a different order.</p><p style='margin-bottom: 24px;'>To handle these calls smoothly, you will need to adapt. If a customer starts by stating their service method, you will select that method first rather than waiting until the end. Flexibility is key to guiding the conversation naturally.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click anywhere on the POS screen to begin the step-by-step entry.</p>"
             },
             {
                 "step": 4,
-                "image": "resources/POS_assets/Stage_1.1/POS_1.3.png",
-                "activeHitbox": "hb-cust-name",
-                "instruction": "<p>👉 Listen to the audio and enter the customer's name.</p>",
+                "image": "resources/POS_assets/Stage_3/POS_3.1.png",
+                "activeHitbox": "hb-carryout-service",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><p style='margin-bottom: 16px;'>Now, you will listen to the first part of the call. You can play the clip as many times as you need.</p><p style='margin-bottom: 32px;'>Enter the information on the POS screen as you hear it. You will not be able to proceed to the next step until all information in this clip has been completed.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Press 'Play' and select the correct service method to begin the order.</p>",
                 "audio": {
-                    "file": "resources/audio/customer_name.mp3" // Simple and clean
-                },
-                "input": {
-                    "type": "text",
-                    "expectedValue": "Training",
-                    "placeholder": "Enter Name..."
+                    "file": "resources/POS_assets/Stage_3_audio/Example_1_pt1.mp3"
                 }
             },
             {
-                "step": 5,
-                "image": "resources/POS_assets/Stage_1.1/POS_1.4.png",
-                "activeHitbox": "hb-add-number",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the first address field to enter the address number.</p>"
-            },
-            {
-                "step": 6,
-                "image": "resources/POS_assets/Stage_1.1/POS_1.5.png",
-                "activeHitbox": "hb-street-name",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click the next address field to enter the street name.</p>"
-            },
-            {
-                "step": 7,
-                "image": "resources/POS_assets/Stage_1.1/POS_1.6.png",
-                "activeHitbox": "hb-street-select",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Select the corresponding street name.</p>"
-            },
-            {
-                "step": 8,
-                "image": "resources/POS_assets/Stage_0/POS_11.png",
-                "activeHitbox": "hb-rewards-checker",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Confirm the Rewards Status.</p>"
-            },
-            {
-                "step": 9,
-                "image": "resources/POS_assets/Stage_0/POS_12.png",
-                "activeHitbox": "hb-rewards-ok",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Check the Rewards Status.</p>"
-            },
-            {
-                "step": 10,
-                "image": "resources/POS_assets/Stage_0/POS_13.png",
-                "activeHitbox": "hb-greeting-tab",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (000) 000-0000<br><strong>Name:</strong> Training<br><strong>Address:</strong> 4550 Eldorado Pkwy, McKinney, TX 75070</div><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> After verifying all information is correct, navigate back to the <strong>Greetings/Specials</strong> screen to continue.</p>"
-            }
+        "step": 5,
+        "image": "resources/POS_assets/Stage_3/POS_3.2.png",
+        "activeHitbox": "hb-cust-add",
+        "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div>Carryout</div>",
+        "audio": {
+            "file": "resources/POS_assets/Stage_3_audio/Example_1_pt1.mp3"
+        }
+    },
+    {
+        "step": 6,
+        "image": "resources/POS_assets/Stage_3/POS_3.3.png",
+        "activeHitbox": "hb-phone-field",
+        "instruction": "\"<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div>Carryout</div>\",",
+        "audio": {
+            "file": "resources/POS_assets/Stage_3_audio/Example_2_pt1.mp3"
+        }
+    },
+    {
+        "step": 7,
+        "image": "resources/POS_assets/Stage_3/POS_3.4.png",
+        "activeHitbox": "hb-phone-entry",
+        "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><p style='margin-top: 16px;'>💡 <strong>Hint:</strong> Use the Keyboard to type in the phone number.</p>",
+        "audio": {
+            "file": "resources/POS_assets/Stage_3_audio/Example_2_pt1.mp3"
+        },
+        "input": {
+            "type": "text",
+            "expectedValue": "2145821300",
+            "placeholder": "Enter Phone Number"
+        }
+    },
         ];
         
-        // --- RELATIONAL TRACKING STATE ---
+// --- RELATIONAL TRACKING STATE ---
         const moduleStartTime = Date.now(); // Start timer as soon as practice loads
         let wrongClicks = 0;               // Tracks practice mistakes
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
@@ -239,16 +230,59 @@
 
         let completedTracks = new Set();
         let currentPlayingTrackIndex = null;
+        let currentAudioKey = null; // Track the currently loaded audio configuration globally
+
+        /**
+         * Generates a unique key for the step's audio configuration.
+         * This allows us to compare single tracks and multi-tracks accurately.
+         */
+        function getAudioKey(stepData) {
+            if (!stepData || !stepData.audio) return null;
+            if (stepData.audio.tracks) {
+                return stepData.audio.tracks.map(t => t.file).join('|');
+            }
+            return stepData.audio.file || null;
+        }
 
         function handleAudioForStep(stepData) {
-            completedTracks.clear();
-            currentPlayingTrackIndex = null;
+            const nextAudioKey = getAudioKey(stepData);
 
-            if (!stepData.audio) {
+            // Case 1: The next step does not have any audio. Clear the state.
+            if (!nextAudioKey) {
                 audioPanel.style.display = 'none';
                 audioPlayer.pause();
+                audioPlayer.src = "";
+                currentAudioKey = null;
+                completedTracks.clear();
+                currentPlayingTrackIndex = null;
                 return;
             }
+
+            // Case 2: Same audio configuration. Bypasses rebuilding the UI/reloading.
+            if (nextAudioKey === currentAudioKey) {
+                console.log("Continuous audio: Playback uninterrupted.");
+                
+                // If this is a gated step, ensure hitbox visibility stays hidden 
+                // if the continuous audio has not finished playing yet.
+                const requireAll = stepData.audio.requireAllPlayed === true || (stepData.audio.tracks && stepData.audio.tracks.length > 1);
+                const activeHb = document.getElementById(stepData.activeHitbox);
+                if (activeHb) {
+                    const totalTracks = stepData.audio.tracks ? stepData.audio.tracks.length : 1;
+                    if (requireAll && completedTracks.size < totalTracks) {
+                        activeHb.style.display = 'none';
+                    } else {
+                        activeHb.style.display = 'block';
+                    }
+                }
+                return;
+            }
+
+            // Case 3: A completely new audio chunk. Stop play, reset UI, and load the new file.
+            currentAudioKey = nextAudioKey;
+            completedTracks.clear();
+            currentPlayingTrackIndex = null;
+            audioPlayer.pause();
+            audioPlayer.src = "";
 
             audioPanel.style.display = 'block';
 
@@ -385,6 +419,14 @@
                 inputEl.placeholder = stepData.input.placeholder || '';
                 inputEl.autofocus = true;
 
+                // Add phone number masking if it's a phone input step
+                if (stepData.activeHitbox === "hb-phone-entry" || (stepData.input.placeholder && stepData.input.placeholder.toLowerCase().includes("phone"))) {
+                    inputEl.addEventListener("input", (e) => {
+                        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+                        e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+                    });
+                }
+
                 // Stop dynamic background clicking issues while working in the field
                 inputEl.addEventListener('click', (e) => e.stopPropagation());
 
@@ -403,20 +445,41 @@
             }
         }
 
+        /**
+         * Smart validator: Checks if the expected value is numeric (like a phone number).
+         * If it is numeric, it compares strictly by stripped digits.
+         * If it is alphabetical text (like names), it compares case-insensitively.
+         */
         function validateTextEntry(userTyped, expectedValue) {
-            const cleanUser = userTyped.trim().toLowerCase();
-            const cleanExpected = expectedValue.trim().toLowerCase();
+            const cleanExpectedDigits = expectedValue.replace(/\D/g, '');
+            const isNumericTarget = cleanExpectedDigits.length > 0 && /^\d+$/.test(cleanExpectedDigits);
 
-            if (cleanUser === cleanExpected) {
-                errorMsg.style.display = 'none';
-                currentStep++;
-                loadStep(currentStep);
+            if (isNumericTarget) {
+                const cleanUser = userTyped.replace(/\D/g, '');
+                const cleanExpected = cleanExpectedDigits;
+
+                if (cleanUser === cleanExpected) {
+                    errorMsg.style.display = 'none';
+                    currentStep++;
+                    loadStep(currentStep);
+                } else {
+                    errorMsg.style.display = 'block';
+                    wrongClicks++; 
+                }
             } else {
-                errorMsg.style.display = 'block';
-                wrongClicks++; 
+                const cleanUser = userTyped.trim().toLowerCase();
+                const cleanExpected = expectedValue.trim().toLowerCase();
+
+                if (cleanUser === cleanExpected) {
+                    errorMsg.style.display = 'none';
+                    currentStep++;
+                    loadStep(currentStep);
+                } else {
+                    errorMsg.style.display = 'block';
+                    wrongClicks++; 
+                }
             }
         }
-
 
         // Fetch the global hitboxes automatically
         fetch('Globals/LMS_Master_html.html')
@@ -601,7 +664,7 @@
                 currentStep++;
                 loadStep(currentStep);
             }
-        }
+        }        
     </script>
 </body>
 </html>
