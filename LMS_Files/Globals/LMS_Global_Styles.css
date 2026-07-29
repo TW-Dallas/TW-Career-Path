@@ -580,15 +580,34 @@
     .hitbox-text-input {
         width: 100% !important;
         height: 100% !important;
-        border: 1px solid #7c7c7c !important; /* Subtle gray border matching the POS popup */
-        background: #ffffff !important; /* Solid white to completely cover the pre-rendered brackets */
-        font-size: 1.5rem !important; /* Clean, highly-readable size */
+        border: 1px solid #7c7c7c !important;
+        background: #ffffff !important;
+        font-size: 1.5rem !important;
         font-family: Arial, Helvetica, sans-serif !important;
-        font-weight: bold !important; /* <--- This forces all typed text and numbers to be bold */
-        color: #1a1a1a !important; /* Solid dark text to match POS */
+        font-weight: bold !important;
+        color: #1a1a1a !important;
         padding-left: 10px !important;
         box-sizing: border-box !important;
         outline: none !important;
+
+        /* --- ADDED FOR DELAYED APPEARANCE --- */
+        opacity: 0;                                 /* Start invisible */
+        animation: delayInputAppear 0.1s forwards;  /* Transition to visible */
+        animation-delay: 0.15s;                     /* Wait 150ms for the image to change */
+    }
+
+    /* Keyframe animation to handle the delay and clean pop-in */
+    @keyframes delayInputAppear {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Add this rule to strip the browser's focus glow / outline when active */
+    .hitbox-text-input:focus {
+        outline: none !important;
+        outline: 0 !important;
+        box-shadow: none !important;
+        border: 1px solid #7c7c7c !important; /* Keeps the border color stable while typing */
     }
 
     /* Style the placeholder text differently than the typed text */
