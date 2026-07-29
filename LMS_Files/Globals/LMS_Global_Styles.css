@@ -590,3 +590,9 @@
         box-sizing: border-box !important;
         outline: none !important;
     }
+
+    /* Style the placeholder text differently than the typed text */
+    .hitbox-text-input::placeholder {
+        font-weight: normal !important; /* <--- Forces placeholder to be normal weight */
+        opacity: 0.65 !important;       /* Slightly fades the placeholder to look native */
+    }
