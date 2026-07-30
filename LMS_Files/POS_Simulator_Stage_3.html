@@ -401,7 +401,7 @@
                 console.warn("No audio configuration found for step", currentStep);
                 return;
             }
-            
+
             const tracks = stepData.audio.tracks || [
                 { id: "track-0", label: "Live Call", file: stepData.audio.file }
             ];
@@ -444,15 +444,15 @@
                     }
                 }
 
-                // Un-hide the hitbox once all tracks complete
+                // --- FIX: Reference the CURRENT step's hitbox dynamically ---
+                const currentStepData = sequence[currentStep]; 
                 if (completedTracks.size === tracks.length) {
-                    const activeHb = document.getElementById(stepData.activeHitbox);
+                    const activeHb = document.getElementById(currentStepData.activeHitbox);
                     if (activeHb) {
                         activeHb.style.display = 'block';
                     }
                 }
             };
-        }
 
         function updateTrackUI(index, state) {
             const badge = document.getElementById(`badge-track-${index}`);
