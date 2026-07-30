@@ -257,7 +257,7 @@
             {
                 "step": 12,
                 "image": "resources/POS_assets/Stage_3/POS_3.8.png",
-                "activeHitbox": "hb-rewards-OK",
+                "activeHitbox": "hb-rewards-ok",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Type:</strong> Carryout<div class='pos-ticket-header' style='margin-top: 12px;'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (214) 582-1300<br><strong>Name:</strong> Tim</div>"
             },
             {
@@ -395,6 +395,13 @@
 
         function playTrack(index) {
             const stepData = sequence[currentStep];
+
+            // Safety check: Exit early if the current step has no audio configured
+            if (!stepData || !stepData.audio) {
+                console.warn("No audio configuration found for step", currentStep);
+                return;
+            }
+            
             const tracks = stepData.audio.tracks || [
                 { id: "track-0", label: "Live Call", file: stepData.audio.file }
             ];
