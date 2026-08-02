@@ -1273,9 +1273,12 @@
         }
 
         function loadStep(stepIndex) {
-            // If we've reached the end of the sequence array, automatically run endSimulation
+            // 1. UNIFIED REDIRECT TO STAGE 4
             if (stepIndex >= sequence.length) {
-                endSimulation();
+                sendProgressUpdate('Day 1 Mod 4', 'In Progress');
+                setTimeout(() => {
+                    window.location.href = "POS_Simulator_Stage_4.html";
+                }, 1000);
                 return;
             }
 
@@ -1283,7 +1286,6 @@
             posImage.src = stepData.image;
             instructionText.innerHTML = stepData.instruction;
             
-            // Hide all hitboxes first
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
             
             const activeIds = getActiveHitboxIds(stepData);
@@ -1301,29 +1303,17 @@
                             activeHb.classList.remove('hide-arrow'); 
                         }
 
-                        // Call modular processor for text overlays
                         handleInputForStep(stepData, activeHb);
                     } else {
                         reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${id}" but it was not found in the DOM.`);
                     }
                 });
 
-                // Call modular processor for audio files
                 handleAudioForStep(stepData);
 
             } else {
                 reportErrorToDeveloper('Missing Hitbox Configuration', `No active hitboxes specified for step ${stepIndex}`);
             }            
-
-            // Show Finish button on the very last step if needed
-            const finishBtn = document.getElementById('finish-sim-btn');
-            if (finishBtn) {
-                if (stepIndex === sequence.length - 1) {
-                    finishBtn.style.display = 'inline-block'; 
-                } else {
-                    finishBtn.style.display = 'none'; 
-                }
-            }
         }
 
         function endSimulation() {

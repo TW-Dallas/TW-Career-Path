@@ -888,14 +888,9 @@
         }
 
         function loadStep(stepIndex) {
+            // 1. UNIFIED REDIRECT TO STAGE 3
             if (stepIndex >= sequence.length) {
-                // Write progress before redirecting
                 sendProgressUpdate('Day 1 Mod 4', 'In Progress');
-
-                instructionText.innerHTML = "<strong>Stage 2 Complete!</strong><br><br>Loading Stage 3...";
-                document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
-
-                // Redirect to Stage 3 after 1 second buffer
                 setTimeout(() => {
                     window.location.href = "POS_Simulator_Stage_3.html";
                 }, 1000);
@@ -906,7 +901,6 @@
             posImage.src = stepData.image; 
             instructionText.innerHTML = stepData.instruction;
             
-            // Hide all hitboxes first
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.style.display = 'none';
             });
@@ -919,22 +913,19 @@
                     if (activeHb) {
                         activeHb.style.display = 'block';
 
-                        // Arrow styling logic
                         if (stepIndex === 0) {
                             activeHb.classList.add('arrow-bottom');
                         } else {
                             activeHb.classList.remove('arrow-bottom'); 
                         }
 
-                        // Detect if the instruction contains "ORDER 2" (case-insensitive)
                         const isOrderTwo = stepData.instruction.toUpperCase().includes('ORDER 2');
                         if (isOrderTwo) {
-                            activeHb.classList.add('hide-arrow');    // Hide arrow on Order 2
+                            activeHb.classList.add('hide-arrow');
                         } else {
-                            activeHb.classList.remove('hide-arrow'); // Show arrow otherwise
+                            activeHb.classList.remove('hide-arrow');
                         }
 
-                        // Process text input overlays if step specifies an input
                         if (typeof handleInputForStep === 'function') {
                             handleInputForStep(stepData, activeHb);
                         }
@@ -943,7 +934,6 @@
                     }
                 });
 
-                // Process audio if step specifies audio
                 if (typeof handleAudioForStep === 'function') {
                     handleAudioForStep(stepData);
                 }
