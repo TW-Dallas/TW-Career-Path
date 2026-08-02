@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Order Entry Practice (Stage 4)</title>
+  
+<!-- LINK TO YOUR GLOBALS -->
+<link rel="icon" type="image/png" href="../image/tile_blue.png">
+<link rel="stylesheet" href="Globals/LMS_Global_Styles.css">  
+<link rel="stylesheet" href="Globals/LMS_Master_hitboxes.css">
+<script src="Globals/lms_feedback.js"></script>
+
+<!-- STAGE 4 LOCAL OVERRIDES & HOLD/SCORECARD STYLES -->
+<style>
+    /* Disables the red arrows completely for this page only */
+    .hitbox::before {
+        display: none !important;
+    }
+
+    /* HOLD & AUDIO ENHANCEMENTS */
+    .hold-status-bar {
+        display: none;
+        background: #dc3545;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-family: 'OneDotCd-Bold', sans-serif;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-top: 8px;
+        animation: pulse-hold 1.5s infinite;
+    }
+
+    @keyframes pulse-hold {
+        0% { opacity: 1; }
+        50% { opacity: 0.6; }
+        100% { opacity: 1; }
+    }
+
+    .audio-btn-row-extra {
+        display: flex;
+        gap: 6px;
+        margin-top: 8px;
+        flex-wrap: wrap;
+    }
+
+    .hold-btn {
+        background-color: #f39c12 !important;
+        color: #fff !important;
+    }
+
+    .hold-btn:hover {
+        background-color: #d68910 !important;
+    }
+
+    /* SCORECARD MODAL / CARD STYLES */
+    .scorecard-card {
+        background: #ffffff;
+        border: 2px solid var(--brand-blue, #0055a5);
+        border-radius: 10px;
+        padding: 16px;
+        margin-top: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        color: #2c3e50;
+    }
+
+    .scorecard-header {
+        font-family: 'OneDotCd-Bold', sans-serif;
+        font-size: 1.2rem;
+        color: var(--brand-blue, #0055a5);
+        text-transform: uppercase;
+        border-bottom: 2px solid #eef2f5;
+        padding-bottom: 8px;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .scorecard-metric {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+
+    .scorecard-metric strong {
+        color: #34495e;
+    }
+
+    .scorecard-stars {
+        font-size: 1.5rem;
+        color: #f1c40f;
+        text-align: center;
+        margin: 12px 0 6px 0;
+    }
+
+    .scorecard-grade {
+        text-align: center;
+        font-family: 'OneDotCd-Bold', sans-serif;
+        font-size: 1.1rem;
+        color: #27ae60;
+        margin-bottom: 8px;
+    }
+</style>
+</head>
+<body>
+    <!-- Mobile Blocker -->
+    <div id="mobile-blocker">
+        <h2>Desktop Required</h2>
+        <p>This POS simulator requires a larger screen. You must use a Laptop or Desktop to complete this module.</p>
+    </div>
+
+    <!-- UNIFIED MODULE BRAND NAVBAR (POS SIMULATOR) -->
+    <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="lms_dashboard.html#day1" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Back to Day 1
+            </a>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 4: Order Entry Practice (Stage 4)</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Practice Simulator</span>
+        </div>
+    </header>
+
+    <!-- Main Wrapper -->
+    <div id="simulator-wrapper">
+        
+        <!-- LEFT: Instructions Panel -->
+        <div id="instruction-panel">
+            
+            <!-- Hidden Audio Elements -->
+            <audio id="global-audio-player"></audio>
+
+            <!-- Play / Pause / Hold Call Card -->
+            <div id="audio-control-panel" style="display: none;">
+                <div class="audio-header">
+                    <span class="audio-pulse-indicator"></span> Live Audio Call
+                </div>
+                
+                <!-- Dynamic Track Stack dynamically generated in JS -->
+                <div id="audio-track-container"></div>
+
+                <!-- HOLD & REWIND CONTROLS -->
+                <div class="audio-btn-row-extra">
+                    <button id="audio-hold-btn" class="audio-btn hold-btn" onclick="toggleHold()">
+                        ⏸️ Put on Hold
+                    </button>
+                    <button id="audio-rewind-btn" class="audio-btn btn-outline" onclick="rewindAudio5s()">
+                        ⏪ Rewind 5s
+                    </button>
+                </div>
+
+                <div id="hold-status-bar" class="hold-status-bar">
+                    🔴 LINE 1 ON HOLD — <span id="hold-timer-text">00:00</span>
+                </div>
+            </div>
+
+            <div id="instruction-text">
+                <!-- JavaScript will inject the text/tickets here -->
+            </div>
+            <div id="error-message" class="error-msg">❌ Incorrect Action. Try again.</div>
+
+            <!-- THE TEST BUTTONS -->
+            <div class="nav-strip" style="margin-top: auto; display: flex; gap: 10px;">
+                <button class="btn" onclick="goBack()">&#8592; Back</button>
+                <button class="btn" id="finish-sim-btn" style="display: none; background-color: var(--brand-red);" onclick="endSimulation()">Finish</button>
+            </div>
+        </div>
+      
+        <!-- RIGHT: POS Screen & Hitboxes -->
+        <div id="pos-container">
+            <div id="hitbox-wrapper">
+                <img id="pos-image" src="" alt="POS Screen">
+                <!-- HITBOXES WILL BE INJECTED HERE BY JAVASCRIPT -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT FOR STAGE 4 -->
+    <script>
+
+        // --- AUTO ERROR REPORTING ---
+        function reportErrorToDeveloper(errorType, details) {
+            const market = localStorage.getItem('tw_market') || 'Unknown Market';
+            const id = localStorage.getItem('tw_id') || 'Unknown ID';
+            const currentStepNum = typeof currentStep !== 'undefined' ? currentStep : 'N/A';
+            
+            const payload = {
+                market: market,
+                userId: id,
+                module: 'Day 1 Mod 4 Practice Stage 4',
+                step: currentStepNum,
+                errorType: errorType,
+                details: details,
+                userAgent: navigator.userAgent
+            };
+
+            const url = `${AUTH_SCRIPT_URL}?action=error&data=${encodeURIComponent(JSON.stringify(payload))}`;
+            
+            fetch(url, { method: 'GET', credentials: 'omit' })
+                .then(() => console.log("Error report sent successfully."))
+                .catch(err => console.error("Could not send error report:", err));
+        }
+
+        window.onerror = function (message, source, lineno, colno, error) {
+            const details = `${message} at ${source}:${lineno}:${colno}`;
+            reportErrorToDeveloper('JavaScript Exception', details);
+            return false;
+        };
+
+        window.addEventListener('error', function (event) {
+            if (event.target && event.target.tagName === 'IMG') {
+                reportErrorToDeveloper('Broken Image Asset', event.target.src);
+            }
+        }, true);
+
+        // --- SEQUENCE DATA (ORDER 1: HOLD PERMITTED | ORDER 2: BOSS MODE) ---
+        const sequence = [
+            {
+                "step": 0,
+                "image": "resources/POS_assets/Stage_3/POS_A.png",
+                "activeHitbox": "hb-anywhere",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 16px;'><strong>Taking Phone Calls (Stage 4 Final Challenge)</strong><br><br>Listen to a quick overview on phone etiquette and taking customer orders like a pro.</p><p style='margin-bottom: 24px;'>Press 'Play' above to hear an overview before jumping into the simulator.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Listen to the audio message, then click anywhere on the POS screen to begin.</p>",
+                "audio": {
+                    "file": "resources/POS_assets/Stage_3_audio/Coach_Bobby_Phone_Intro.m4a",
+                    "requireAllPlayed": true,
+                    "allowHold": false
+                }
+            },
+            {
+                "step": 1,
+                "image": "resources/POS_assets/Stage_3/POS_B.png",
+                "activeHitbox": "hb-anywhere",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 16px;'><strong>Call Greetings</strong><br><br>A strong, welcoming greeting sets the tone for a great customer experience. Listen closely to these two greeting examples to hear how to open a phone order professionally.</p><p style='margin-bottom: 24px;'>Listen to Part 1 first to unlock Part 2. You must listen to both recordings before moving to the next step.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Once the calls are complete, click anywhere on the POS screen to continue.</p>",
+                "audio": {
+                    "tracks": [
+                        { "id": "t1", "label": "Call 1: Greeting Example 1", "file": "resources/POS_assets/Stage_3_audio/Victor_Example_1.mp3" },
+                        { "id": "t2", "label": "Call 2: Greeting Example 2", "file": "resources/POS_assets/Stage_3_audio/Victor_Example_2.mp3" }
+                    ],
+                    "requireAllPlayed": true,
+                    "sequential": true,
+                    "allowHold": false
+                }
+            },
+            {
+                "step": 2,
+                "image": "resources/POS_assets/Stage_0/POS_7.png",
+                "activeHitbox": "hb-carryout",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 8px;'><br><strong>Full Order Call</strong><br><br>Now that you have a strong place to start, try listening to a complete customer call. See if you can identify the different parts of the call that resemble the order entry steps you learned previously.</p><p style='margin-bottom: 32px;'>Pay close attention to how the customer provides their contact and order details, as well as what the team member says to help guide them throughout the conversation.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> After the recording completes, click the <strong>Carryout</strong> button to continue.</p>",
+                "audio": {
+                    "file": "resources/POS_assets/Stage_3_audio/Example_1_Full.mp3",
+                    "requireAllPlayed": true,
+                    "allowHold": true
+                }
+            },
+            {
+                "step": 3,
+                "image": "resources/POS_assets/Stage_3/POS_3.1.png",
+                "activeHitbox": "hb-anywhere",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 16px;'><strong>Flexible Order of Operations</strong><br><br>Up to this point, you have followed a strict sequence for entering order details. However, real phone customers do not follow a script and will often provide information in a different order.</p><p style='margin-bottom: 24px;'>To handle these calls smoothly, you will need to adapt. If a customer starts by stating their service method, you will select that method first rather than waiting until the end. Flexibility is key to guiding the conversation naturally.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click anywhere on the POS screen to begin the step-by-step entry.</p>"
+            },
+            {
+                "step": 4,
+                "image": "resources/POS_assets/Stage_3/POS_3.1.png",
+                "activeHitbox": "hb-carryout-service",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><p style='margin-bottom: 16px;'>Now, you will listen to the first part of the call. You can play the clip as many times as you need.</p><p style='margin-bottom: 32px;'>Enter the information on the POS screen as you hear it. You can use <strong>⏸️ Put on Hold</strong> or <strong>⏪ Rewind 5s</strong> if you fall behind!</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Press 'Play' and select the correct service method to begin the order.</p>",
+                "audio": {
+                    "file": "resources/POS_assets/Stage_3_audio/Example_1_pt1.mp3",
+                    "allowHold": true
+                }
+            },
+            {
+                "step": 5,
+                "image": "resources/POS_assets/Stage_3/POS_3.2.png",
+                "activeHitbox": "hb-cust-add",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Type:</strong> Carryout</div>",
+                "audio": {
+                    "file": "resources/POS_assets/Stage_3_audio/Example_1_pt1.mp3",
+                    "allowHold": true
+                }
+            }
+        ];
+        
+        function getActiveHitboxIds(stepData) {
+            if (!stepData || !stepData.activeHitbox) return [];
+            return Array.isArray(stepData.activeHitbox) ? stepData.activeHitbox : [stepData.activeHitbox];
+        }
+        
+        // --- RELATIONAL TRACKING & SCORECARD STATE ---
+        const moduleStartTime = Date.now();
+        let wrongClicks = 0;
+        let holdCount = 0;
+        let replayCount = 0;
+        let holdDurationSeconds = 0;
+        let isOnHold = false;
+        let holdTimerInterval = null;
+
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+
+        let currentStep = 0;
+        const posImage = document.getElementById('pos-image');
+        const instructionText = document.getElementById('instruction-text');
+        const errorMsg = document.getElementById('error-message');
+        const hitboxWrapper = document.getElementById('hitbox-wrapper');
+
+        // --- AUDIO ENGINE ELEMENTS ---
+        const audioPlayer = document.getElementById('global-audio-player');
+        const audioPanel = document.getElementById('audio-control-panel');
+        const holdBtn = document.getElementById('audio-hold-btn');
+        const rewindBtn = document.getElementById('audio-rewind-btn');
+        const holdStatusBar = document.getElementById('hold-status-bar');
+        const holdTimerText = document.getElementById('hold-timer-text');
+
+        let completedTracks = new Set();
+        let currentPlayingTrackIndex = null;
+        let currentAudioKey = null;
+
+        // --- STAGE 4 HOLD & REWIND MECHANICS ---
+        function toggleHold() {
+            if (!audioPlayer.src && !currentAudioKey) return;
+
+            if (!isOnHold) {
+                // PUT ON HOLD
+                isOnHold = true;
+                holdCount++;
+                audioPlayer.pause();
+                
+                holdBtn.innerHTML = "▶ Resume Call";
+                holdBtn.style.backgroundColor = "#27ae60";
+                holdStatusBar.style.display = "block";
+
+                holdTimerInterval = setInterval(() => {
+                    holdDurationSeconds++;
+                    const mins = Math.floor(holdDurationSeconds / 60).toString().padStart(2, '0');
+                    const secs = (holdDurationSeconds % 60).toString().padStart(2, '0');
+                    holdTimerText.innerText = `${mins}:${secs}`;
+                }, 1000);
+
+            } else {
+                // RESUME FROM HOLD
+                isOnHold = false;
+                clearInterval(holdTimerInterval);
+                
+                holdBtn.innerHTML = "⏸️ Put on Hold";
+                holdBtn.style.backgroundColor = "#f39c12";
+                holdStatusBar.style.display = "none";
+                
+                audioPlayer.play().catch(e => console.log("Audio play error:", e));
+            }
+        }
+
+        function rewindAudio5s() {
+            if (!audioPlayer.src) return;
+            replayCount++;
+            audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 5);
+            
+            if (isOnHold) {
+                toggleHold(); // Auto-resume if rewinding while on hold
+            } else {
+                audioPlayer.play().catch(e => console.log("Audio play error:", e));
+            }
+        }
+
+        function getAudioKey(stepData) {
+            if (!stepData || !stepData.audio) return null;
+            if (stepData.audio.tracks) {
+                return stepData.audio.tracks.map(t => t.file).join('|');
+            }
+            return stepData.audio.file || null;
+        }
+
+        function handleAudioForStep(stepData) {
+            const nextAudioKey = getAudioKey(stepData);
+
+            if (!nextAudioKey) {
+                audioPanel.style.display = 'none';
+                audioPlayer.pause();
+                audioPlayer.src = "";
+                currentAudioKey = null;
+                completedTracks.clear();
+                currentPlayingTrackIndex = null;
+                return;
+            }
+
+            // Enable or disable Hold controls based on step config
+            const allowHold = stepData.audio && stepData.audio.allowHold !== false;
+            holdBtn.style.display = allowHold ? "inline-block" : "none";
+            rewindBtn.style.display = allowHold ? "inline-block" : "none";
+
+            if (nextAudioKey === currentAudioKey) {
+                const requireAll = stepData.audio.requireAllPlayed === true || (stepData.audio.tracks && stepData.audio.tracks.length > 1);
+                const totalTracks = stepData.audio.tracks ? stepData.audio.tracks.length : 1;
+                
+                getActiveHitboxIds(stepData).forEach(id => {
+                    const activeHb = document.getElementById(id);
+                    if (activeHb) {
+                        if (requireAll && completedTracks.size < totalTracks) {
+                            activeHb.style.display = 'none';
+                        } else {
+                            activeHb.style.display = 'block';
+                        }
+                    }
+                });
+                return;
+            }
+
+            currentAudioKey = nextAudioKey;
+            completedTracks.clear();
+            currentPlayingTrackIndex = null;
+            audioPlayer.pause();
+            audioPlayer.src = "";
+
+            audioPanel.style.display = 'block';
+
+            const tracks = stepData.audio.tracks || [
+                { id: "track-0", label: "Live Call", file: stepData.audio.file }
+            ];
+
+            const isSequential = stepData.audio.sequential !== false && tracks.length > 1;
+            const requireAll = stepData.audio.requireAllPlayed === true || tracks.length > 1;
+
+            let html = `<div class="audio-track-stack">`;
+
+            tracks.forEach((track, index) => {
+                const isLocked = isSequential && index > 0;
+                const lockClass = isLocked ? 'locked' : '';
+                const lockIcon = isLocked ? '🔒 ' : '';
+
+                html += `
+                    <div id="track-row-${index}" class="audio-track-row ${lockClass}">
+                        <div class="track-label">${lockIcon}${track.label}</div>
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <span id="badge-track-${index}" class="track-badge pending">Unheard</span>
+                            <button id="btn-track-${index}" class="audio-btn" style="padding: 4px 10px; font-size: 0.8rem;" 
+                                ${isLocked ? 'disabled' : ''} onclick="playTrack(${index})">
+                                ▶ Play
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            document.getElementById('audio-track-container').innerHTML = html;
+
+            if (requireAll) {
+                getActiveHitboxIds(stepData).forEach(id => {
+                    const activeHb = document.getElementById(id);
+                    if (activeHb) activeHb.style.display = 'none';
+                });
+            }
+        }
+
+        function playTrack(index) {
+            const stepData = sequence[currentStep];
+            if (!stepData || !stepData.audio) return;
+
+            const tracks = stepData.audio.tracks || [
+                { id: "track-0", label: "Live Call", file: stepData.audio.file }
+            ];
+
+            const targetTrack = tracks[index];
+
+            if (currentPlayingTrackIndex === index && !audioPlayer.paused) {
+                audioPlayer.pause();
+                updateTrackUI(index, 'paused');
+                return;
+            }
+
+            if (isOnHold) toggleHold(); // Auto-unhold if playing
+
+            audioPlayer.src = targetTrack.file;
+            audioPlayer.play().catch(e => console.log("Playback error:", e));
+            currentPlayingTrackIndex = index;
+
+            tracks.forEach((_, i) => {
+                if (i === index) {
+                    updateTrackUI(i, 'playing');
+                } else if (!completedTracks.has(i)) {
+                    updateTrackUI(i, 'pending');
+                }
+            });
+
+            audioPlayer.onended = function() {
+                completedTracks.add(index);
+                updateTrackUI(index, 'complete');
+
+                const nextIndex = index + 1;
+                if (tracks[nextIndex]) {
+                    const nextRow = document.getElementById(`track-row-${nextIndex}`);
+                    const nextBtn = document.getElementById(`btn-track-${nextIndex}`);
+                    if (nextRow && nextBtn) {
+                        nextRow.classList.remove('locked');
+                        nextBtn.disabled = false;
+                        const labelEl = nextRow.querySelector('.track-label');
+                        if (labelEl) labelEl.innerText = tracks[nextIndex].label;
+                    }
+                }
+
+                const currentStepData = sequence[currentStep]; 
+                if (completedTracks.size === tracks.length) {
+                    getActiveHitboxIds(currentStepData).forEach(id => {
+                        const activeHb = document.getElementById(id);
+                        if (activeHb) activeHb.style.display = 'block';
+                    });
+                }
+            };
+        }
+
+        function updateTrackUI(index, state) {
+            const badge = document.getElementById(`badge-track-${index}`);
+            const btn = document.getElementById(`btn-track-${index}`);
+            if (!badge || !btn) return;
+
+            if (state === 'playing') {
+                badge.className = 'track-badge playing';
+                badge.innerText = 'Playing';
+                btn.innerHTML = '⏸ Pause';
+            } else if (state === 'paused') {
+                badge.className = 'track-badge pending';
+                badge.innerText = 'Paused';
+                btn.innerHTML = '▶ Resume';
+            } else if (state === 'complete') {
+                badge.className = 'track-badge complete';
+                badge.innerText = '✓ Complete';
+                btn.innerHTML = '🔄 Replay';
+            } else if (state === 'pending') {
+                badge.className = 'track-badge pending';
+                badge.innerText = 'Unheard';
+                btn.innerHTML = '▶ Play';
+            }
+        }
+
+        // --- DYNAMIC TEXT INPUT OVERLAY ENGINE ---
+        function handleInputForStep(stepData, activeHb) {
+            const existingInput = document.querySelector('.hitbox-text-input');
+            if (existingInput) existingInput.remove();
+
+            if (stepData.input && stepData.input.type === 'text') {
+                activeHb.style.cursor = 'text';
+                activeHb.style.caretColor = 'auto';
+
+                const inputEl = document.createElement('input');
+                inputEl.type = 'text';
+                inputEl.className = 'hitbox-text-input';
+                inputEl.placeholder = stepData.input.placeholder || '';
+                inputEl.autofocus = true;
+
+                if (stepData.activeHitbox === "hb-phone-entry" || (stepData.input.placeholder && stepData.input.placeholder.toLowerCase().includes("phone"))) {
+                    inputEl.addEventListener("input", (e) => {
+                        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+                        e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+                    });
+                }
+
+                inputEl.addEventListener('click', (e) => e.stopPropagation());
+                inputEl.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        validateTextEntry(inputEl.value, stepData.input.expectedValue);
+                    }
+                });
+
+                activeHb.appendChild(inputEl);
+                inputEl.focus();
+            } else {
+                activeHb.style.cursor = 'default';
+                activeHb.style.caretColor = 'transparent';
+            }
+        }
+
+        function validateTextEntry(userTyped, expectedValue) {
+            const cleanExpectedDigits = expectedValue.replace(/\D/g, '');
+            const isNumericTarget = cleanExpectedDigits.length > 0 && /^\d+$/.test(cleanExpectedDigits);
+
+            if (isNumericTarget) {
+                const cleanUser = userTyped.replace(/\D/g, '');
+                if (cleanUser === cleanExpectedDigits) {
+                    errorMsg.style.display = 'none';
+                    currentStep++;
+                    loadStep(currentStep);
+                } else {
+                    errorMsg.style.display = 'block';
+                    wrongClicks++; 
+                }
+            } else {
+                if (userTyped.trim().toLowerCase() === expectedValue.trim().toLowerCase()) {
+                    errorMsg.style.display = 'none';
+                    currentStep++;
+                    loadStep(currentStep);
+                } else {
+                    errorMsg.style.display = 'block';
+                    wrongClicks++; 
+                }
+            }
+        }
+
+        // Fetch Master Hitbox HTML
+        fetch('Globals/LMS_Master_html.html')
+            .then(response => response.text())
+            .then(html => {
+                hitboxWrapper.insertAdjacentHTML('beforeend', html);
+                initializeSimulator();
+            })
+            .catch(error => {
+                console.error("Error loading hitboxes:", error);
+                instructionText.innerHTML = "<strong>Error:</strong> Could not load hitboxes. Check console.";
+            });
+
+        window.advanceStep = function(target) {
+            let clickedId = "";
+
+            if (typeof target === 'string') clickedId = target;
+            else if (target && target.id) clickedId = target.id;
+            else if (target && target.target) clickedId = target.target.id;
+            else if (window.event) {
+                const eventTarget = window.event.currentTarget || window.event.target;
+                if (eventTarget) clickedId = eventTarget.id;
+            } 
+
+            const stepData = sequence[currentStep];
+            if (stepData.input && stepData.input.type === 'text') return;
+
+            const activeHitboxIds = getActiveHitboxIds(stepData);
+
+            if (activeHitboxIds.includes(clickedId)) {
+                errorMsg.style.display = 'none'; 
+                currentStep++; 
+                loadStep(currentStep); 
+            }
+        };
+
+        function initializeSimulator() {
+            document.querySelectorAll('.hitbox').forEach(hb => {
+                hb.addEventListener('click', function(e) {
+                    advanceStep(this);
+                });
+            });
+
+            posImage.addEventListener('click', function() {
+                const stepData = sequence[currentStep];
+                if (stepData.input && stepData.input.type === 'text') return;
+                errorMsg.style.display = 'block';
+                wrongClicks++; 
+            });
+            
+            window.addEventListener('keydown', function (event) {
+                if (event.target && event.target.tagName === 'INPUT') return;
+
+                const stepData = sequence[currentStep];
+                if (!stepData || !stepData.expectedKey) return;
+
+                const allowedKeys = Array.isArray(stepData.expectedKey)
+                    ? stepData.expectedKey.map(k => String(k).toLowerCase())
+                    : [String(stepData.expectedKey).toLowerCase()];
+
+                const pressedKey = event.key.toLowerCase();
+
+                if (stepData.audio && (stepData.audio.requireAllPlayed || (stepData.audio.tracks && stepData.audio.tracks.length > 1))) {
+                    const totalTracks = stepData.audio.tracks ? stepData.audio.tracks.length : 1;
+                    if (completedTracks.size < totalTracks) return;
+                }
+
+                if (allowedKeys.includes(pressedKey)) {
+                    errorMsg.style.display = 'none';
+                    currentStep++;
+                    loadStep(currentStep);
+                } else {
+                    errorMsg.style.display = 'block';
+                    wrongClicks++;
+                }
+            });
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const stepParam = urlParams.get('step');
+            if (stepParam !== null) {
+                const targetStep = parseInt(stepParam, 10);
+                if (!isNaN(targetStep) && targetStep >= 0 && targetStep < sequence.length) {
+                    currentStep = targetStep;
+                }
+            }
+
+            loadStep(currentStep);
+        }
+
+        // --- SCORECARD CALCULATION & SENDING DATA ---
+        function calculateScorecard() {
+            const timeSpentSeconds = Math.floor((Date.now() - moduleStartTime) / 1000);
+            const accuracyScore = Math.max(0, 100 - (wrongClicks * 5));
+            
+            let grade = 'A+';
+            let stars = '⭐⭐⭐⭐⭐';
+
+            if (accuracyScore < 70 || wrongClicks > 5) {
+                grade = 'C (Needs Review)';
+                stars = '⭐⭐⭐';
+            } else if (accuracyScore < 85 || wrongClicks > 2) {
+                grade = 'B (Good Job)';
+                stars = '⭐⭐⭐⭐';
+            } else if (accuracyScore < 95) {
+                grade = 'A (Shift Ready)';
+                stars = '⭐⭐⭐⭐⭐';
+            }
+
+            return {
+                timeSpentSeconds,
+                accuracyScore,
+                grade,
+                stars
+            };
+        }
+
+        function sendProgressUpdate(moduleName, status = "Completed") {
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            if (!market || !id) return;
+
+            const metrics = calculateScorecard();
+
+            const answers = {
+                "Stage 4 Wrong Clicks": wrongClicks,
+                "Stage 4 Holds Used": holdCount,
+                "Stage 4 Replays Used": replayCount,
+                "Stage 4 Hold Secs": holdDurationSeconds,
+                "Stage 4 Accuracy Score": metrics.accuracyScore + "%",
+                "Stage 4 Grade": metrics.grade,
+                "Stage 4 Status": status
+            };
+
+            const answersStr = encodeURIComponent(JSON.stringify(answers));
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${metrics.timeSpentSeconds}&answers=${answersStr}&status=${status}`;
+            
+            console.log("SENDING STAGE 4 EVALUATION DATA: ", url);
+            fetch(url, { method: 'GET', credentials: 'omit' });
+        }
+
+        function loadStep(stepIndex) {
+            if (stepIndex >= sequence.length) {
+                endSimulation();
+                return;
+            }
+
+            const stepData = sequence[stepIndex];
+            posImage.src = stepData.image;
+            instructionText.innerHTML = stepData.instruction;
+            
+            document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+            
+            const activeIds = getActiveHitboxIds(stepData);
+
+            if (activeIds.length > 0) {
+                activeIds.forEach(id => {
+                    const activeHb = document.getElementById(id);
+                    if (activeHb) {
+                        activeHb.style.display = 'block';
+                        activeHb.classList.remove('arrow-bottom'); 
+
+                        if (stepIndex >= 58) { 
+                            activeHb.classList.add('hide-arrow'); 
+                        } else {
+                            activeHb.classList.remove('hide-arrow'); 
+                        }
+
+                        handleInputForStep(stepData, activeHb);
+                    } else {
+                        reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${id}" but it was not found in the DOM.`);
+                    }
+                });
+
+                handleAudioForStep(stepData);
+
+            } else {
+                reportErrorToDeveloper('Missing Hitbox Configuration', `No active hitboxes specified for step ${stepIndex}`);
+            }            
+
+            const finishBtn = document.getElementById('finish-sim-btn');
+            if (finishBtn) {
+                finishBtn.style.display = (stepIndex === sequence.length - 1) ? 'inline-block' : 'none';
+            }
+        }
+
+        // --- END SIMULATION & SCORECARD DISPLAY ---
+        function endSimulation() {
+            posImage.src = "resources/POS_assets/under_construction.png"; 
+            
+            const metrics = calculateScorecard();
+            const mins = Math.floor(metrics.timeSpentSeconds / 60);
+            const secs = metrics.timeSpentSeconds % 60;
+            const formattedTime = `${mins}m ${secs}s`;
+
+            instructionText.innerHTML = `
+                <p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase;'>Stage 4 Complete</p>
+                <h3 style="margin-top: 0; color: var(--brand-blue);">Order Entry Practice Finished!</h3>
+                <p>Great job! You have completed the final stage of the Order Entry simulator.</p>
+                
+                <div class="scorecard-card">
+                    <div class="scorecard-header">
+                        <span>📋 Shift Evaluation</span>
+                        <span>${metrics.stars}</span>
+                    </div>
+                    <div class="scorecard-metric">
+                        <span>⏱️ Total Practice Time:</span>
+                        <strong>${formattedTime}</strong>
+                    </div>
+                    <div class="scorecard-metric">
+                        <span>🎯 Order Accuracy:</span>
+                        <strong>${metrics.accuracyScore}%</strong>
+                    </div>
+                    <div class="scorecard-metric">
+                        <span>❌ Incorrect Clicks:</span>
+                        <strong>${wrongClicks}</strong>
+                    </div>
+                    <div class="scorecard-metric">
+                        <span>⏸️ Holds Placed:</span>
+                        <strong>${holdCount}</strong>
+                    </div>
+                    <div class="scorecard-metric">
+                        <span>⏪ 5s Rewinds Used:</span>
+                        <strong>${replayCount}</strong>
+                    </div>
+                    <div class="scorecard-stars">${metrics.stars}</div>
+                    <div class="scorecard-grade">Rating: ${metrics.grade}</div>
+                </div>
+                <p style="margin-top: 16px;">Click the button below to save your metrics and return to your Day 1 dashboard.</p>
+            `;
+            
+            document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+            audioPanel.style.display = 'none';
+            audioPlayer.pause();
+            
+            const finishBtn = document.getElementById('finish-sim-btn');
+            finishBtn.style.display = 'inline-block'; 
+            finishBtn.innerText = "Save & Return to Day 1"; 
+
+            finishBtn.onclick = function() {
+                finishBtn.innerText = "Saving Evaluation...";
+                finishBtn.style.pointerEvents = "none";
+                finishBtn.style.opacity = "0.5";
+
+                sendProgressUpdate('Day 1 Mod 4', 'Completed');
+                localStorage.setItem('mod4_complete', 'true');
+
+                setTimeout(() => {
+                    window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
+                }, 1500);
+            };
+        }
+
+        function goBack() {
+            if (currentStep > 0) {
+                currentStep--;
+                loadStep(currentStep);
+            }        
+        }     
+    </script>
+</body>
+</html>
