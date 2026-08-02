@@ -861,17 +861,23 @@
             loadStep(currentStep);
         }
 
-        function sendProgressUpdate(moduleName, status = "Completed") {
+        // Helper to get active hitboxes as an array regardless of single string or array input
+        function getActiveHitboxIds(stepData) {
+            if (!stepData || !stepData.activeHitbox) return [];
+            return Array.isArray(stepData.activeHitbox) ? stepData.activeHitbox : [stepData.activeHitbox];
+        }
+
+        function sendProgressUpdate(moduleName, status = "In Progress") {
             const market = localStorage.getItem('tw_market');
             const id = localStorage.getItem('tw_id');
             if (!market || !id) return;
 
             const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
             
-            // Capture Practice mistakes to merge with Tutorial mistakes
+            // Capture Stage 2 metrics
             const answers = {
                 "Stage 2 Wrong Clicks": wrongClicks,
-                "Stage 2 Status": "Finished Tutorial"
+                "Stage 2 Status": "Completed Stage 2"
             };
             const answersStr = encodeURIComponent(JSON.stringify(answers));
 
@@ -882,76 +888,68 @@
         }
 
         function loadStep(stepIndex) {
-            // If the user reaches the end of Stage 2 steps, transition to End Screen
             if (stepIndex >= sequence.length) {
-                endSimulation();
+                // Write progress before redirecting
+                sendProgressUpdate('Day 1 Mod 4', 'In Progress');
+
+                instructionText.innerHTML = "<strong>Stage 2 Complete!</strong><br><br>Loading Stage 3...";
+                document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+
+                // Redirect to Stage 3 after 1 second buffer
+                setTimeout(() => {
+                    window.location.href = "POS_Simulator_Stage_3.html";
+                }, 1000);
                 return;
             }
-        
+
             const stepData = sequence[stepIndex];
             posImage.src = stepData.image; 
             instructionText.innerHTML = stepData.instruction;
             
+            // Hide all hitboxes first
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.style.display = 'none';
             });
             
-            const activeHb = document.getElementById(stepData.activeHitbox);
-            if (activeHb) {
-                activeHb.style.display = 'block';
-                if (stepIndex === 0) {
-                    activeHb.classList.add('arrow-bottom');
-                } else {
-                    activeHb.classList.remove('arrow-bottom'); 
-                }
-        
-                // Detect if the subtitle contains "Order 2" (case-insensitive)
-                const isOrderTwo = stepData.instruction.toUpperCase().includes('ORDER 2');
-                
-                if (isOrderTwo) {
-                    activeHb.classList.add('hide-arrow');    // Hide arrow on Order 2
-                } else {
-                    activeHb.classList.remove('hide-arrow'); // Show arrow on Practice / Order 1
+            const activeIds = getActiveHitboxIds(stepData);
+
+            if (activeIds.length > 0) {
+                activeIds.forEach(id => {
+                    const activeHb = document.getElementById(id);
+                    if (activeHb) {
+                        activeHb.style.display = 'block';
+
+                        // Arrow styling logic
+                        if (stepIndex === 0) {
+                            activeHb.classList.add('arrow-bottom');
+                        } else {
+                            activeHb.classList.remove('arrow-bottom'); 
+                        }
+
+                        // Detect if the instruction contains "ORDER 2" (case-insensitive)
+                        const isOrderTwo = stepData.instruction.toUpperCase().includes('ORDER 2');
+                        if (isOrderTwo) {
+                            activeHb.classList.add('hide-arrow');    // Hide arrow on Order 2
+                        } else {
+                            activeHb.classList.remove('hide-arrow'); // Show arrow otherwise
+                        }
+
+                        // Process text input overlays if step specifies an input
+                        if (typeof handleInputForStep === 'function') {
+                            handleInputForStep(stepData, activeHb);
+                        }
+                    } else {
+                        reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${id}" but it was not found in the DOM.`);
+                    }
+                });
+
+                // Process audio if step specifies audio
+                if (typeof handleAudioForStep === 'function') {
+                    handleAudioForStep(stepData);
                 }
             } else {
-                // ---- NEW VALIDATION CHECK ----
-                // If the sequence expects a hitbox but it isn't in your HTML file:
-                reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${stepData.activeHitbox}" but it was not found in the DOM.`);
-            } // <--- This now safely closes the else block
-
-            // Put the finish button visibility check back inside loadStep
-            const finishBtn = document.getElementById('finish-sim-btn');
-            if (finishBtn) {
-                if (stepIndex === sequence.length - 1) {
-                    finishBtn.style.display = 'inline-block'; 
-                } else {
-                    finishBtn.style.display = 'none'; 
-                }
+                reportErrorToDeveloper('Missing Hitbox Configuration', `No active hitboxes specified for step ${stepIndex}`);
             }
-        } // <--- loadStep correctly closes here now
-        
-        function endSimulation() {
-            posImage.src = "resources/POS_assets/Stage_1.1/under_construction.png"; 
-            instructionText.innerHTML = "<strong>Stage 2 Complete</strong><br><br>The next phase of the simulator is currently in development.<br><br>Click the red button below to save your progress and return to the Day 1 Dashboard.";
-            document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
-            
-            const finishBtn = document.getElementById('finish-sim-btn');
-            finishBtn.style.display = 'inline-block'; 
-            finishBtn.innerText = "Save & Return to Day 1"; 
-
-            finishBtn.onclick = function() {
-                finishBtn.innerText = "Saving...";
-                finishBtn.style.pointerEvents = "none";
-                finishBtn.style.opacity = "0.5";
-
-                // Save time and answers, then mark module as Complete
-                sendProgressUpdate('Day 1 Mod 4', 'Completed');
-                localStorage.setItem('mod4_complete', 'true');
-
-                setTimeout(() => {
-                    window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
-                }, 1500);
-            };
         }
 
         function goBack() {
@@ -959,13 +957,6 @@
                 currentStep--;
                 loadStep(currentStep);
             }        
-        }
-
-        function goNext() {
-            if (currentStep < sequence.length - 1) {
-                currentStep++;
-                loadStep(currentStep);
-            }
         }
     </script>
 </body>
