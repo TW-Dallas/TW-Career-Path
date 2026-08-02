@@ -888,7 +888,7 @@
         }
 
         function loadStep(stepIndex) {
-            // 1. UNIFIED REDIRECT TO STAGE 3
+            // 1. AUTO-REDIRECT TO STAGE 3 WHEN SEQUENCE ENDS
             if (stepIndex >= sequence.length) {
                 sendProgressUpdate('Day 1 Mod 4', 'In Progress');
                 setTimeout(() => {
@@ -901,6 +901,7 @@
             posImage.src = stepData.image; 
             instructionText.innerHTML = stepData.instruction;
             
+            // Hide all hitboxes first
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.style.display = 'none';
             });
@@ -913,19 +914,21 @@
                     if (activeHb) {
                         activeHb.style.display = 'block';
 
+                        // Flip arrow to bottom for Step 0
                         if (stepIndex === 0) {
                             activeHb.classList.add('arrow-bottom');
                         } else {
                             activeHb.classList.remove('arrow-bottom'); 
                         }
 
-                        const isOrderTwo = stepData.instruction.toUpperCase().includes('ORDER 2');
-                        if (isOrderTwo) {
-                            activeHb.classList.add('hide-arrow');
+                        // 2. HIDE ARROWS ON STEP 58 AND ABOVE (ORDER 2)
+                        if (stepIndex >= 59) {
+                            activeHb.classList.add('hide-arrow');    // Hide arrows on Step 59+
                         } else {
-                            activeHb.classList.remove('hide-arrow');
+                            activeHb.classList.remove('hide-arrow'); // Show arrows for Order 1
                         }
 
+                        // Process text input overlays if step specifies an input
                         if (typeof handleInputForStep === 'function') {
                             handleInputForStep(stepData, activeHb);
                         }
@@ -934,6 +937,7 @@
                     }
                 });
 
+                // Process audio if step specifies audio
                 if (typeof handleAudioForStep === 'function') {
                     handleAudioForStep(stepData);
                 }

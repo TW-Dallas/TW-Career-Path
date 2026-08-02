@@ -1273,12 +1273,9 @@
         }
 
         function loadStep(stepIndex) {
-            // 1. UNIFIED REDIRECT TO STAGE 4
+            // 1. ENDS STAGE 3 SIMULATION AND RETURNS TO DASHBOARD
             if (stepIndex >= sequence.length) {
-                sendProgressUpdate('Day 1 Mod 4', 'In Progress');
-                setTimeout(() => {
-                    window.location.href = "POS_Simulator_Stage_4.html";
-                }, 1000);
+                endSimulation();
                 return;
             }
 
@@ -1286,6 +1283,7 @@
             posImage.src = stepData.image;
             instructionText.innerHTML = stepData.instruction;
             
+            // Hide all hitboxes first
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
             
             const activeIds = getActiveHitboxIds(stepData);
@@ -1295,14 +1293,6 @@
                     const activeHb = document.getElementById(id);
                     if (activeHb) {
                         activeHb.style.display = 'block';
-                        activeHb.classList.remove('arrow-bottom'); 
-
-                        if (stepIndex >= 58) { 
-                            activeHb.classList.add('hide-arrow'); 
-                        } else {
-                            activeHb.classList.remove('hide-arrow'); 
-                        }
-
                         handleInputForStep(stepData, activeHb);
                     } else {
                         reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${id}" but it was not found in the DOM.`);
@@ -1314,10 +1304,16 @@
             } else {
                 reportErrorToDeveloper('Missing Hitbox Configuration', `No active hitboxes specified for step ${stepIndex}`);
             }            
+
+            // Keep Finish button hidden on step 78 so clicking the POS screen finishes Stage 3
+            const finishBtn = document.getElementById('finish-sim-btn');
+            if (finishBtn) {
+                finishBtn.style.display = 'none';
+            }
         }
 
         function endSimulation() {
-            posImage.src = "resources/POS_assets/under_construction.png"; 
+            posImage.src = "resources/POS_assets/Stage_1.1/under_construction.png"; 
             instructionText.innerHTML = "<strong>Stage 3 Complete</strong><br><br>You've successfully completed this module!<br><br>Click the red button below to save your progress and return to the Day 1 Dashboard.";
             
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
