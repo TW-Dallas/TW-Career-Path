@@ -426,3 +426,7 @@
   #hb-exit-custom { top: 80.768%; left: 28.482%; width: 40.2612%; height: 9.41347%; }
   #hb-exit-other { top: 80.768%; left: 70.1034%; width: 9.65724%; height: 9.41347%; }
   #hb-anywhere { top: 0.479085%; left: 0.0149916%; width: 99.5989%; height: 98.6314%; }
+
+  /* Phone Training */
+  #hb-phone-mute { top: 71.0359%; left: 74.9464%; width: 4.00857%; height: 4.7848%; }
+  #hb-phone-park { top: 27.8254%; left: 74.67%; width: 7.04955%; height: 9.5696%; }

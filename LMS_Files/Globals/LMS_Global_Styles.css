@@ -212,6 +212,64 @@
       100% { bottom: -50px; opacity: 1; }
   }
 
+    /* POPUP MODAL OVERLAY */
+    #phone-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .phone-modal-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 24px;
+        max-width: 420px;
+        width: 90%;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        border-top: 6px solid var(--brand-blue, #0055a5);
+        animation: modalSlide 0.25s ease-out;
+    }
+
+    @keyframes modalSlide {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+        font-family: 'OneDotCd-Bold', sans-serif;
+        font-size: 1.3rem;
+        color: var(--brand-blue, #0055a5);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .modal-body {
+        font-size: 0.95rem;
+        color: #333;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    .modal-close-btn {
+        background: var(--brand-blue, #0055a5);
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        font-family: 'OneDotCd-Bold', sans-serif;
+        cursor: pointer;
+        width: 100%;
+    }
+
   /* --- POS TICKET STYLING --- */  
   .pos-ticket {
       background-color: var(--crust-light);
@@ -615,4 +673,95 @@
     .hitbox-text-input::placeholder {
         font-weight: normal !important; /* Forces placeholder to be normal weight */
         opacity: 0.65 !important;       /* Slightly fades the placeholder to look native */
+    }
+
+    /* ==========================================
+    STAGE 4: HOLD STATUS BAR & SCORECARD
+    (STRICT BRAND PALETTE ONLY)
+    ========================================== */
+    .hold-status-bar {
+        display: none;
+        background: var(--brand-red);
+        color: var(--crust-base);
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-family: 'OneDotCd-Bold', sans-serif;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-top: 8px;
+        animation: pulse-hold 1.5s infinite;
+    }
+
+    @keyframes pulse-hold {
+        0% { opacity: 1; }
+        50% { opacity: 0.65; }
+        100% { opacity: 1; }
+    }
+
+    .hold-btn {
+        background-color: var(--dark-blue) !important;
+        color: var(--crust-base) !important;
+    }
+
+    .hold-btn:hover {
+        background-color: var(--med-blue) !important;
+    }
+
+    .scorecard-card {
+        background: var(--crust-light);
+        border: 2px solid var(--brand-blue);
+        border-radius: 8px;
+        padding: 16px;
+        margin-top: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        color: var(--crust-burnt);
+    }
+
+    .scorecard-header {
+        font-family: 'OneDotCd-Bold', sans-serif;
+        font-size: 1.2rem;
+        color: var(--dark-blue);
+        text-transform: uppercase;
+        border-bottom: 2px solid var(--crust-med);
+        padding-bottom: 8px;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .scorecard-metric {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+        color: var(--crust-deep);
+    }
+
+    .scorecard-metric strong {
+        color: var(--crust-burnt);
+        font-family: 'OneDotCd-Bold', sans-serif;
+    }
+
+    .scorecard-stars {
+        font-size: 1.4rem;
+        color: var(--brand-red); /* Uses brand red for star accent */
+        text-align: center;
+        margin: 12px 0 6px 0;
+    }
+
+    .scorecard-grade {
+        text-align: center;
+        font-family: 'OneDotCd-Bold', sans-serif;
+        font-size: 1.1rem;
+        color: var(--dark-blue);
+        margin-bottom: 8px;
+    }
+
+    /* STAGE 4: HOLD & REWIND BUTTON ROW */
+    .audio-btn-row-extra {
+        display: flex;
+        gap: 6px;
+        margin-top: 8px;
+        flex-wrap: wrap;
     }

@@ -10,100 +10,12 @@
 <link rel="stylesheet" href="Globals/LMS_Global_Styles.css">  
 <link rel="stylesheet" href="Globals/LMS_Master_hitboxes.css">
 <script src="Globals/lms_feedback.js"></script>
-
-<!-- STAGE 4 LOCAL OVERRIDES & HOLD/SCORECARD STYLES -->
-<style>
-    /* Disables the red arrows completely for this page only */
-    .hitbox::before {
-        display: none !important;
-    }
-
-    /* HOLD & AUDIO ENHANCEMENTS */
-    .hold-status-bar {
-        display: none;
-        background: #dc3545;
-        color: white;
-        padding: 6px 12px;
-        border-radius: 6px;
-        font-family: 'OneDotCd-Bold', sans-serif;
-        font-size: 0.9rem;
-        text-align: center;
-        margin-top: 8px;
-        animation: pulse-hold 1.5s infinite;
-    }
-
-    @keyframes pulse-hold {
-        0% { opacity: 1; }
-        50% { opacity: 0.6; }
-        100% { opacity: 1; }
-    }
-
-    .audio-btn-row-extra {
-        display: flex;
-        gap: 6px;
-        margin-top: 8px;
-        flex-wrap: wrap;
-    }
-
-    .hold-btn {
-        background-color: #f39c12 !important;
-        color: #fff !important;
-    }
-
-    .hold-btn:hover {
-        background-color: #d68910 !important;
-    }
-
-    /* SCORECARD MODAL / CARD STYLES */
-    .scorecard-card {
-        background: #ffffff;
-        border: 2px solid var(--brand-blue, #0055a5);
-        border-radius: 10px;
-        padding: 16px;
-        margin-top: 15px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        color: #2c3e50;
-    }
-
-    .scorecard-header {
-        font-family: 'OneDotCd-Bold', sans-serif;
-        font-size: 1.2rem;
-        color: var(--brand-blue, #0055a5);
-        text-transform: uppercase;
-        border-bottom: 2px solid #eef2f5;
-        padding-bottom: 8px;
-        margin-bottom: 12px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .scorecard-metric {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
-        font-size: 0.95rem;
-    }
-
-    .scorecard-metric strong {
-        color: #34495e;
-    }
-
-    .scorecard-stars {
-        font-size: 1.5rem;
-        color: #f1c40f;
-        text-align: center;
-        margin: 12px 0 6px 0;
-    }
-
-    .scorecard-grade {
-        text-align: center;
-        font-family: 'OneDotCd-Bold', sans-serif;
-        font-size: 1.1rem;
-        color: #27ae60;
-        margin-bottom: 8px;
-    }
-</style>
+    <style>
+        /* Disables red arrows on Stage 4 page only */
+        .hitbox::before {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
     <!-- Mobile Blocker -->
@@ -222,68 +134,33 @@
 
         // --- SEQUENCE DATA (ORDER 1: HOLD PERMITTED | ORDER 2: BOSS MODE) ---
         const sequence = [
+        // STEP 0: Coach Victor Hold Example Call (Audio Step)
             {
                 "step": 0,
-                "image": "resources/POS_assets/Stage_3/POS_A.png",
+                "image": "resources/POS_assets/Stage_4/POS_4.0.A.png",
                 "activeHitbox": "hb-anywhere",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 16px;'><strong>Taking Phone Calls (Stage 4 Final Challenge)</strong><br><br>Listen to a quick overview on phone etiquette and taking customer orders like a pro.</p><p style='margin-bottom: 24px;'>Press 'Play' above to hear an overview before jumping into the simulator.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Listen to the audio message, then click anywhere on the POS screen to begin.</p>",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Phone Etiquette</p><p style='margin-bottom: 16px;'><strong>Hold Call Example</strong><br><br>Listen closely to this example recording to hear how a team member professionally places a customer on hold.</p><p style='margin-bottom: 24px;'>Press 'Play' above to listen to the recording. You must listen to the full call before moving to the next step.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Once the recording is complete, click anywhere on the POS screen to continue.</p>",
                 "audio": {
-                    "file": "resources/POS_assets/Stage_3_audio/Coach_Bobby_Phone_Intro.m4a",
+                    "file": "resources/POS_assets/Stage_4_audio/Victor_Example_Phone.m4a", 
                     "requireAllPlayed": true,
                     "allowHold": false
                 }
             },
+
+            // STEP 1: Interactive Phone Hardware (Click Park & Mute)
             {
                 "step": 1,
-                "image": "resources/POS_assets/Stage_3/POS_B.png",
-                "activeHitbox": "hb-anywhere",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 16px;'><strong>Call Greetings</strong><br><br>A strong, welcoming greeting sets the tone for a great customer experience. Listen closely to these two greeting examples to hear how to open a phone order professionally.</p><p style='margin-bottom: 24px;'>Listen to Part 1 first to unlock Part 2. You must listen to both recordings before moving to the next step.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Once the calls are complete, click anywhere on the POS screen to continue.</p>",
-                "audio": {
-                    "tracks": [
-                        { "id": "t1", "label": "Call 1: Greeting Example 1", "file": "resources/POS_assets/Stage_3_audio/Victor_Example_1.mp3" },
-                        { "id": "t2", "label": "Call 2: Greeting Example 2", "file": "resources/POS_assets/Stage_3_audio/Victor_Example_2.mp3" }
-                    ],
-                    "requireAllPlayed": true,
-                    "sequential": true,
-                    "allowHold": false
-                }
+                "image": "resources/POS_assets/Stage_4/POS_4.0.B.png", // Clean Phone Image
+                "activeHitbox": ["hb-phone-park", "hb-phone-mute"],
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Phone Hardware</p><p style='margin-bottom: 16px;'><strong>Managing Calls Like a Pro</strong><br><br>On a busy shift, you will often need to pause a conversation to look up an order or ask a teammate a question. Using the right phone feature keeps store noise out of the customer's ear and prevents dropped calls.</p><p style='margin-bottom: 24px;'>Click both <strong>PARK</strong> and <strong>MUTE</strong> on the phone hardware screen to learn when and why to use each feature on shift.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Review both phone features to unlock the order simulator.</p>"
             },
+
+            // STEP 2: Order Practice Begins
             {
                 "step": 2,
                 "image": "resources/POS_assets/Stage_0/POS_7.png",
                 "activeHitbox": "hb-carryout",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 8px;'><br><strong>Full Order Call</strong><br><br>Now that you have a strong place to start, try listening to a complete customer call. See if you can identify the different parts of the call that resemble the order entry steps you learned previously.</p><p style='margin-bottom: 32px;'>Pay close attention to how the customer provides their contact and order details, as well as what the team member says to help guide them throughout the conversation.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> After the recording completes, click the <strong>Carryout</strong> button to continue.</p>",
-                "audio": {
-                    "file": "resources/POS_assets/Stage_3_audio/Example_1_Full.mp3",
-                    "requireAllPlayed": true,
-                    "allowHold": true
-                }
-            },
-            {
-                "step": 3,
-                "image": "resources/POS_assets/Stage_3/POS_3.1.png",
-                "activeHitbox": "hb-anywhere",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 16px;'><strong>Flexible Order of Operations</strong><br><br>Up to this point, you have followed a strict sequence for entering order details. However, real phone customers do not follow a script and will often provide information in a different order.</p><p style='margin-bottom: 24px;'>To handle these calls smoothly, you will need to adapt. If a customer starts by stating their service method, you will select that method first rather than waiting until the end. Flexibility is key to guiding the conversation naturally.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click anywhere on the POS screen to begin the step-by-step entry.</p>"
-            },
-            {
-                "step": 4,
-                "image": "resources/POS_assets/Stage_3/POS_3.1.png",
-                "activeHitbox": "hb-carryout-service",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><p style='margin-bottom: 16px;'>Now, you will listen to the first part of the call. You can play the clip as many times as you need.</p><p style='margin-bottom: 32px;'>Enter the information on the POS screen as you hear it. You can use <strong>⏸️ Put on Hold</strong> or <strong>⏪ Rewind 5s</strong> if you fall behind!</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Press 'Play' and select the correct service method to begin the order.</p>",
-                "audio": {
-                    "file": "resources/POS_assets/Stage_3_audio/Example_1_pt1.mp3",
-                    "allowHold": true
-                }
-            },
-            {
-                "step": 5,
-                "image": "resources/POS_assets/Stage_3/POS_3.2.png",
-                "activeHitbox": "hb-cust-add",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Type:</strong> Carryout</div>",
-                "audio": {
-                    "file": "resources/POS_assets/Stage_3_audio/Example_1_pt1.mp3",
-                    "allowHold": true
-                }
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1 Practice</p><p style='margin-bottom: 16px;'><strong>Full Order Call</strong><br><br>Now you are ready to take your first full customer order! Enter the details on the POS screen as the customer provides them.</p><p style='margin-bottom: 24px;'>Press 'Play' above to start the call. If you fall behind, use <strong>⏸️ Put on Hold</strong> or <strong>⏪ Rewind 5s</strong> to manage your call pace.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Select the 'Carry Out' button to begin the order.</p>"
             }
         ];
         
@@ -535,6 +412,44 @@
                 badge.innerText = 'Unheard';
                 btn.innerHTML = '▶ Play';
             }
+        }
+
+        // TRACKING BOTH CLICKED DEFINITIONS
+        let viewedPark = false;
+        let viewedMute = false;
+
+        function showPhoneDefinition(type) {
+            const overlay = document.getElementById('phone-modal-overlay');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body-text');
+
+            if (type === 'park') {
+                viewedPark = true;
+                title.innerHTML = "🅿️ PARK (Store Hold Queue)";
+                body.innerHTML = `
+                    <p><strong>WHY WE USE PARK:</strong> Use this when you need to put a customer on hold to check an oven, grab a manager, or step away from the handset.</p>
+                    <ul style="margin-top: 10px; padding-left: 18px; font-size: 0.9rem; line-height: 1.5;">
+                        <li><strong>What the customer hears:</strong> Professional store hold music.</li>
+                        <li><strong>Store Flexibility:</strong> Any team member on any phone in the store can pick up the line.</li>
+                        <li><strong>Ring-Back Safety:</strong> If left on Park too long, the phone automatically rings back so no customer is forgotten.</li>
+                    </ul>
+                `;
+            } else if (type === 'mute') {
+                viewedMute = true;
+                title.innerHTML = "🎙️ MUTE (Quick Silence)";
+                body.innerHTML = `
+                    <p><strong>WHY WE USE MUTE:</strong> Use this for a quick 2-second question to a teammate standing right next to you.</p>
+                    <ul style="margin-top: 10px; padding-left: 18px; font-size: 0.9rem; line-height: 1.5;">
+                        <li><strong>What the customer hears:</strong> Silence (keeps store noise out of their ear).</li>
+                        <li><strong>Quick Use Only:</strong> Use Mute <em>only</em> for brief questions. Leaving a customer on Mute too long makes them think you hung up!</li>
+                    </ul>
+                    <div style="background: var(--crust-med); border-left: 4px solid var(--brand-red); padding: 8px 12px; margin-top: 12px; font-size: 0.85rem; border-radius: 4px; color: var(--crust-burnt);">
+                        ⚠️ <strong>Golden Rule:</strong> NEVER just set the handset on the counter and yell across the store!
+                    </div>
+                `;
+            }
+
+            overlay.style.display = 'flex';
         }
 
         // --- DYNAMIC TEXT INPUT OVERLAY ENGINE ---
@@ -858,5 +773,19 @@
             }        
         }     
     </script>
+    
+    <!-- PHONE DEFINITION POPUP MODAL -->
+    <div id="phone-modal-overlay">
+        <div class="phone-modal-card">
+            <div class="modal-header" id="modal-title">
+                <span>📞 Phone Playbook</span>
+            </div>
+            <div class="modal-body" id="modal-body-text">
+                <!-- Text injected dynamically via JS -->
+            </div>
+            <button class="modal-close-btn" onclick="closePhoneModal()">Got It!</button>
+        </div>
+    </div>
+
 </body>
 </html>
