@@ -765,3 +765,8 @@
         margin-top: 8px;
         flex-wrap: wrap;
     }
+
+    /* Removes default browser top margin on instruction paragraphs */
+    #instruction-text p {
+        margin-top: 0;
+    }
