@@ -452,6 +452,20 @@
             overlay.style.display = 'flex';
         }
 
+        function closePhoneModal() {
+            const overlay = document.getElementById('phone-modal-overlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+
+            // Optional: Auto-advance Step 1 if the user has viewed both PARK and MUTE
+            if (currentStep === 1 && viewedPark && viewedMute) {
+                errorMsg.style.display = 'none';
+                currentStep++;
+                loadStep(currentStep);
+            }
+        }
+
         // --- DYNAMIC TEXT INPUT OVERLAY ENGINE ---
         function handleInputForStep(stepData, activeHb) {
             const existingInput = document.querySelector('.hitbox-text-input');
@@ -541,6 +555,20 @@
             const stepData = sequence[currentStep];
             if (stepData.input && stepData.input.type === 'text') return;
 
+            // --- SPECIAL INTERACTIVE LOGIC FOR STEP 1 ---
+            if (currentStep === 1) {
+                if (clickedId === 'hb-phone-park') {
+                    showPhoneDefinition('park');
+                    document.getElementById('hb-phone-park')?.classList.add('viewed');
+                    return;
+                } else if (clickedId === 'hb-phone-mute') {
+                    showPhoneDefinition('mute');
+                    document.getElementById('hb-phone-mute')?.classList.add('viewed');
+                    return;
+                }
+            }
+
+            // Standard Step Progression
             const activeHitboxIds = getActiveHitboxIds(stepData);
 
             if (activeHitboxIds.includes(clickedId)) {
