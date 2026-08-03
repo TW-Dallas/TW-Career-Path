@@ -106,7 +106,7 @@
 
     </div>
 
-    <!-- MODAL POP-UP PLAYER -->
+    <!-- MODAL POP-UP PLAYER WITH SHIELDS & INTERACTIVE STAGES -->
     <div id="video-modal" class="video-modal-overlay hidden">
         <div class="video-modal-content">
             <span class="video-modal-close" onclick="closeVideoModal()">&times;</span>
@@ -122,6 +122,39 @@
                 
                 <!-- Vimeo Player Target -->
                 <div id="vimeo-player" style="width: 100%; height: 100%;"></div>
+
+                <!-- EXERCISE 1 OVERLAY (Triggered at 3:20 = 200s) -->
+                <div id="trash-interactive-stage-1" class="hidden" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20000; background: rgba(0,0,0,0.35); pointer-events: auto;">
+                    <div style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: var(--dark-blue); color: white; padding: 8px 24px; border-radius: 30px; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.1rem; border: 2px solid var(--brand-blue); box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 20010; white-space: nowrap;">
+                        🔍 Spot & Click all infractions! (<span id="trash-count-display-1">8</span> remaining)
+                    </div>
+                    <div id="hb-trash-A" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-B" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-C" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-D" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-E" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-F" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-G" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-H" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                </div>
+
+                <!-- EXERCISE 2 OVERLAY (Triggered at 3:38 = 218s) -->
+                <div id="trash-interactive-stage-2" class="hidden" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20000; background: rgba(0,0,0,0.35); pointer-events: auto;">
+                    <div style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: var(--dark-blue); color: white; padding: 8px 24px; border-radius: 30px; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.1rem; border: 2px solid var(--brand-blue); box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 20010; white-space: nowrap;">
+                        🧹 Store Image Check! Click all 10 trash items (<span id="trash-count-display-2">10</span> remaining)
+                    </div>
+                    <div id="hb-trash-1" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-2" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-3" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-4" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-5" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-6" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-7" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-8" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-9" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-10" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -138,7 +171,6 @@
         let userAnswers = {};
 
         // --- MODULE VIDEOS CONFIGURATION ---
-        // Edit/add video IDs, titles, descriptions, and thumbnails here
         const moduleVideos = [
             {
                 id: '1215101423',
@@ -150,7 +182,7 @@
             },
             {
                 id: '1215101422',
-                title: '2. Store Image  ',
+                title: '2. Store Image',
                 desc: 'Maintaining the field for the win.',
                 completed: false,
                 maxTimeWatched: 0,
@@ -183,7 +215,7 @@
             {
                 id: '1215119848',
                 title: '6. Talking Tone',
-                desc: 'Using the equiptment that isn\'t tangible.',
+                desc: 'Using the equipment that isn\'t tangible.',
                 completed: false,
                 maxTimeWatched: 0,
                 thumb: '../resources/Title_Slides/Intangibles_Title.png'
@@ -195,11 +227,25 @@
                 completed: false,
                 maxTimeWatched: 0,
                 thumb: '../resources/Title_Slides/Operations_Title.png'
-            },
+            }
         ];
 
         let activeVideoIndex = 0;
         let isEnforcingHold = false;
+
+        // Interactive Exercise States for Video 2
+        let stage1Remaining = 8;
+        let stage2Remaining = 10;
+        let stage1Triggered = false;
+        let stage2Triggered = false;
+
+        // --- DEV BYPASS SHORTCUT ---
+        // Open Browser Console (F12) and type: unlockAll()
+        window.unlockAll = function() {
+            moduleVideos.forEach(v => v.completed = true);
+            renderVideoCards();
+            console.log("🔓 DEV MODE: All videos unlocked!");
+        };
 
         // --- RENDER VIDEO CARD LIBRARY ---
         function renderVideoCards() {
@@ -249,6 +295,10 @@
             activeVideoIndex = index;
             const video = moduleVideos[index];
 
+            // Hide any open interactive overlays when switching videos
+            document.getElementById('trash-interactive-stage-1').classList.add('hidden');
+            document.getElementById('trash-interactive-stage-2').classList.add('hidden');
+
             document.getElementById('video-modal').classList.remove('hidden');
 
             if (!player) {
@@ -273,7 +323,24 @@
 
             player.on('timeupdate', function(data) {
                 if (isEnforcingHold) return;
-                
+
+                // --- VIDEO 2 INTERACTIVE EXERCISES ---
+                if (activeVideoIndex === 1) {
+                    // Exercise 1 at 3:20 (200 seconds)
+                    if (data.seconds >= 200 && !stage1Triggered) {
+                        stage1Triggered = true;
+                        player.pause();
+                        document.getElementById('trash-interactive-stage-1').classList.remove('hidden');
+                    }
+                    // Exercise 2 at 3:38 (218 seconds)
+                    if (data.seconds >= 218 && !stage2Triggered) {
+                        stage2Triggered = true;
+                        player.pause();
+                        document.getElementById('trash-interactive-stage-2').classList.remove('hidden');
+                    }
+                }
+
+                // Standard anti-scrubbing progress
                 const currentVid = moduleVideos[activeVideoIndex];
                 if (data.seconds > currentVid.maxTimeWatched) {
                     if (data.seconds - currentVid.maxTimeWatched < 2.5) { 
@@ -301,6 +368,33 @@
                 renderVideoCards();
                 closeVideoModal();
             });
+        }
+
+        // --- CLEAN INTERACTIVE TRASH ITEMS ---
+        function cleanTrashItem(element, stageNum) {
+            if (element.classList.contains('resolved')) return;
+
+            element.classList.add('resolved');
+
+            if (stageNum === 1) {
+                stage1Remaining--;
+                document.getElementById('trash-count-display-1').innerText = stage1Remaining;
+                if (stage1Remaining === 0) {
+                    setTimeout(() => {
+                        document.getElementById('trash-interactive-stage-1').classList.add('hidden');
+                        player.play();
+                    }, 500);
+                }
+            } else if (stageNum === 2) {
+                stage2Remaining--;
+                document.getElementById('trash-count-display-2').innerText = stage2Remaining;
+                if (stage2Remaining === 0) {
+                    setTimeout(() => {
+                        document.getElementById('trash-interactive-stage-2').classList.add('hidden');
+                        player.play();
+                    }, 500);
+                }
+            }
         }
 
         function closeVideoModal() {
@@ -465,14 +559,6 @@
 
         // Initialize video cards on DOM ready
         document.addEventListener('DOMContentLoaded', renderVideoCards);
-
-        // --- DEV TEST SHORTCUT: Open Console (F12) and type: unlockAll() ---
-        window.unlockAll = function() {
-            moduleVideos.forEach(v => v.completed = true);
-            renderVideoCards();
-            console.log("🔓 ALL VIDEOS UNLOCKED FOR TESTING!");
-        };
-        
     </script>
 </body>
 </html>

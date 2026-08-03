@@ -437,3 +437,25 @@
   /* Phone Training */
   #hb-phone-mute { top: 71.0359%; left: 74.9464%; width: 4.00857%; height: 4.7848%; }
   #hb-phone-park { top: 27.8254%; left: 74.67%; width: 7.04955%; height: 9.5696%; }
+
+  /* --- EXERCISE 1 HITBOXES (3:20 = 200s) --- */
+  #hb-trash-A { top: 72.3625%; left: 16.8003%; width: 8.37812%; height: 4.78491%; }
+  #hb-trash-B { top: 66.8415%; left: 37.3047%; width: 15.4334%; height: 7.17736%; }
+  #hb-trash-C { top: 66.1054%; left: 75.6676%; width: 10.1419%; height: 5.33701%; }
+  #hb-trash-D { top: 70.3382%; left: 90.4396%; width: 9.26002%; height: 3.86473%; }
+  #hb-trash-E { top: 61.3205%; left: 20.1075%; width: 13.0081%; height: 3.49666%; }
+  #hb-trash-F { top: 60.9524%; left: 37.7456%; width: 3.74811%; height: 2.20842%; }
+  #hb-trash-G { top: 62.0566%; left: 45.0214%; width: 4.18906%; height: 2.20842%; }
+  #hb-trash-H { top: 62.0566%; left: 74.7857%; width: 3.52763%; height: 2.57649%; }
+
+  /* --- EXERCISE 2 HITBOXES (3:38 = 218s) --- */
+  #hb-trash-1 { top: 84.5805%; left: 20.7616%; width: 8.29359%; height: 8.28138%; }
+  #hb-trash-2 { top: 88.6292%; left: 39.4222%; width: 9.12295%; height: 9.75363%; }
+  #hb-trash-3 { top: 73.9067%; left: 38.3164%; width: 9.12295%; height: 5.88898%; }
+  #hb-trash-4 { top: 75.747%; left: 78.8168%; width: 11.7493%; height: 10.4898%; }
+  #hb-trash-5 { top: 34.5242%; left: 18.6882%; width: 5.52906%; height: 10.4898%; }
+  #hb-trash-6 { top: 40.0451%; left: 31.1286%; width: 8.57005%; height: 5.15286%; }
+  #hb-trash-7 { top: 40.5972%; left: 45.2277%; width: 6.35842%; height: 4.23271%; }
+  #hb-trash-8 { top: 33.9721%; left: 64.0265%; width: 4.00857%; height: 9.93766%; }
+  #hb-trash-9 { top: 38.9409%; left: 70.6614%; width: 9.12295%; height: 5.52092%; }
+  #hb-trash-10 { top: 94.8862%; left: 9.84173%; width: 11.4728%; height: 4.7848%; }
