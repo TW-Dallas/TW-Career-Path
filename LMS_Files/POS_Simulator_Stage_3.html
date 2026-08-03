@@ -1100,36 +1100,38 @@
          * If it is alphabetical text (like names), it compares case-insensitively.
          */
         function validateTextEntry(userTyped, expectedValue) {
-            const cleanExpectedDigits = expectedValue.replace(/\D/g, '');
-            const isNumericTarget = cleanExpectedDigits.length > 0 && /^\d+$/.test(cleanExpectedDigits);
-
+    // 1. Normalize expectedValue to an Array regardless of single string or array input
+            const targets = Array.isArray(expectedValue) ? expectedValue : [expectedValue];
+        
+            // 2. Determine if we are matching numbers or text based on the first target
+            const cleanFirstDigits = String(targets[0]).replace(/\D/g, '');
+            const isNumericTarget = cleanFirstDigits.length > 0 && /^\d+$/.test(cleanFirstDigits);
+        
+            let isCorrect = false;
+        
             if (isNumericTarget) {
                 const cleanUser = userTyped.replace(/\D/g, '');
-                const cleanExpected = cleanExpectedDigits;
-
-                if (cleanUser === cleanExpected) {
-                    errorMsg.style.display = 'none';
-                    currentStep++;
-                    loadStep(currentStep);
-                } else {
-                    errorMsg.style.display = 'block';
-                    wrongClicks++; 
-                }
+                isCorrect = targets.some(target => {
+                    const cleanTarget = String(target).replace(/\D/g, '');
+                    return cleanUser === cleanTarget;
+                });
             } else {
                 const cleanUser = userTyped.trim().toLowerCase();
-                const cleanExpected = expectedValue.trim().toLowerCase();
-
-                if (cleanUser === cleanExpected) {
-                    errorMsg.style.display = 'none';
-                    currentStep++;
-                    loadStep(currentStep);
-                } else {
-                    errorMsg.style.display = 'block';
-                    wrongClicks++; 
-                }
+                isCorrect = targets.some(target => {
+                    return cleanUser === String(target).trim().toLowerCase();
+                });
+            }
+        
+            // 3. Handle step advancement or error display
+            if (isCorrect) {
+                errorMsg.style.display = 'none';
+                currentStep++;
+                loadStep(currentStep);
+            } else {
+                errorMsg.style.display = 'block';
+                wrongClicks++; 
             }
         }
-
         // Fetch the global hitboxes automatically
         fetch('Globals/LMS_Master_html.html')
             .then(response => response.text())
