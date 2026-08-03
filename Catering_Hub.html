@@ -785,12 +785,16 @@
                     errorEl.innerText = "Error verifying login or connecting to Google Sheets.";
                     errorEl.classList.remove('hidden');
                 }
-                localStorage.clear();
+                localStorage.removeItem('cat_user');
+                localStorage.removeItem('cat_pass');
             });
     }
     
     function handleLogout() {
-        localStorage.clear();
+        localStorage.removeItem('cat_user');
+        localStorage.removeItem('cat_pass');
+        localStorage.removeItem('cat_scratchpad_mode');
+        localStorage.removeItem('cat_scratchpad');
         location.reload();
     }
 
