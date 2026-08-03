@@ -247,6 +247,15 @@
             console.log("🔓 DEV MODE: All videos unlocked!");
         };
 
+        // --- DEV JUMP SHORTCUT: Type jumpTo(200) or jumpTo(218) in Console ---
+        window.jumpTo = function(seconds) {
+            if (player && moduleVideos[activeVideoIndex]) {
+                moduleVideos[activeVideoIndex].maxTimeWatched = seconds; // Overrides anti-scrubbing guard
+                player.setCurrentTime(seconds);
+                console.log(`⏩ DEV MODE: Jumped to ${seconds} seconds!`);
+            }
+        };
+
         // --- RENDER VIDEO CARD LIBRARY ---
         function renderVideoCards() {
             const container = document.getElementById('video-card-container');
