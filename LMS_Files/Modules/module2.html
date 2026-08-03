@@ -465,6 +465,14 @@
 
         // Initialize video cards on DOM ready
         document.addEventListener('DOMContentLoaded', renderVideoCards);
+
+        // --- DEV TEST SHORTCUT: Open Console (F12) and type: unlockAll() ---
+        window.unlockAll = function() {
+            moduleVideos.forEach(v => v.completed = true);
+            renderVideoCards();
+            console.log("🔓 ALL VIDEOS UNLOCKED FOR TESTING!");
+        };
+        
     </script>
 </body>
 </html>
