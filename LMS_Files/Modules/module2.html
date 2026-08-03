@@ -6,6 +6,7 @@
     <title>Day 1 - Module 2</title>
     <link rel="icon" type="image/png" href="../../image/tile_blue.png">
     <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
+    <link rel="stylesheet" href="../Globals/LMS_Master_hitboxes.css">
     <script src="../Globals/lms_feedback.js"></script>
     <script src="https://player.vimeo.com/api/player.js"></script>
     <style>
@@ -123,36 +124,36 @@
                 <!-- Vimeo Player Target -->
                 <div id="vimeo-player" style="width: 100%; height: 100%;"></div>
 
-                <!-- EXERCISE 1 OVERLAY (Triggered at 3:20 = 200s) -->
+                <!-- EXERCISE 1 (At 3:20 = 200s): LOBBY SCENE - 10 ITEMS -->
                 <div id="trash-interactive-stage-1" class="hidden" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20000; background: rgba(0,0,0,0.35); pointer-events: auto;">
                     <div style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: var(--dark-blue); color: white; padding: 8px 24px; border-radius: 30px; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.1rem; border: 2px solid var(--brand-blue); box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 20010; white-space: nowrap;">
-                        🔍 Spot & Click all infractions! (<span id="trash-count-display-1">8</span> remaining)
+                        🧹 Lobby Check! Click all 10 trash items (<span id="trash-count-display-1">10</span> remaining)
                     </div>
-                    <div id="hb-trash-A" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-B" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-C" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-D" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-E" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-F" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-G" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-H" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-1" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-2" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-3" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-4" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-5" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-6" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-7" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-8" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-9" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-10" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
                 </div>
 
-                <!-- EXERCISE 2 OVERLAY (Triggered at 3:38 = 218s) -->
+                <!-- EXERCISE 2 (At 3:38 = 218s): PARKING LOT SCENE - 8 ITEMS -->
                 <div id="trash-interactive-stage-2" class="hidden" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20000; background: rgba(0,0,0,0.35); pointer-events: auto;">
                     <div style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: var(--dark-blue); color: white; padding: 8px 24px; border-radius: 30px; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.1rem; border: 2px solid var(--brand-blue); box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 20010; white-space: nowrap;">
-                        🧹 Store Image Check! Click all 10 trash items (<span id="trash-count-display-2">10</span> remaining)
+                        🚗 Parking Lot Check! Click all 8 infractions (<span id="trash-count-display-2">8</span> remaining)
                     </div>
-                    <div id="hb-trash-1" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-2" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-3" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-4" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-5" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-6" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-7" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-8" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-9" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-10" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-A" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-B" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-C" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-D" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-E" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-F" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-G" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                    <div id="hb-trash-H" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
                 </div>
 
             </div>
@@ -234,8 +235,8 @@
         let isEnforcingHold = false;
 
         // Interactive Exercise States for Video 2
-        let stage1Remaining = 8;
-        let stage2Remaining = 10;
+        let stage1Remaining = 10;
+        let stage2Remaining = 8;
         let stage1Triggered = false;
         let stage2Triggered = false;
 
@@ -326,22 +327,22 @@
 
         // --- VIMEO PLAYER EVENTS & ANTI-SCRUBBING ---
         function attachVimeoEvents() {
-            player.ready().then(() => {
-                player.setVolume(1);
-            });
+            player.ready().then(() => { player.setVolume(1); });
 
             player.on('timeupdate', function(data) {
                 if (isEnforcingHold) return;
 
                 // --- VIDEO 2 INTERACTIVE EXERCISES ---
                 if (activeVideoIndex === 1) {
-                    // Exercise 1 at 3:20 (200 seconds)
+
+                    // EXERCISE 1: Lobby Check at 3:20 (200 seconds) - 10 ITEMS
                     if (data.seconds >= 200 && !stage1Triggered) {
                         stage1Triggered = true;
                         player.pause();
                         document.getElementById('trash-interactive-stage-1').classList.remove('hidden');
                     }
-                    // Exercise 2 at 3:38 (218 seconds)
+
+                    // EXERCISE 2: Parking Lot Check at 3:38 (218 seconds) - 8 ITEMS
                     if (data.seconds >= 218 && !stage2Triggered) {
                         stage2Triggered = true;
                         player.pause();
@@ -568,6 +569,43 @@
 
         // Initialize video cards on DOM ready
         document.addEventListener('DOMContentLoaded', renderVideoCards);
+
+        function openVideoModal(index) {
+            activeVideoIndex = index;
+            const video = moduleVideos[index];
+
+            // Reset interactive states if opening Video 2
+            if (index === 1) {
+                stage1Remaining = 10;
+                stage2Remaining = 8;
+                stage1Triggered = false;
+                stage2Triggered = false;
+                
+                // Remove 'resolved' green checkmarks from hitboxes
+                document.querySelectorAll('.trash-hotspot').forEach(el => el.classList.remove('resolved'));
+                document.getElementById('trash-count-display-1').innerText = '10';
+                document.getElementById('trash-count-display-2').innerText = '8';
+            }
+
+            // Hide any open interactive overlays when switching videos
+            document.getElementById('trash-interactive-stage-1').classList.add('hidden');
+            document.getElementById('trash-interactive-stage-2').classList.add('hidden');
+
+            document.getElementById('video-modal').classList.remove('hidden');
+
+            if (!player) {
+                player = new Vimeo.Player('vimeo-player', {
+                    id: video.id,
+                    responsive: true,
+                    autoplay: true
+                });
+                attachVimeoEvents();
+            } else {
+                player.loadVideo(video.id).then(() => {
+                    player.play();
+                });
+            }
+        }
     </script>
 </body>
 </html>
