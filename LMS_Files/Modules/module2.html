@@ -606,6 +606,24 @@
                 });
             }
         }
+
+        // --- LIVE CLICK INSPECTOR: Click anywhere on the paused video to get exact coordinates ---
+        document.getElementById('video-modal').addEventListener('click', function(e) {
+            const stage1 = document.getElementById('trash-interactive-stage-1');
+            const stage2 = document.getElementById('trash-interactive-stage-2');
+            
+            // Check which stage is currently visible
+            const activeStage = (!stage1.classList.contains('hidden')) ? stage1 : 
+                                (!stage2.classList.contains('hidden')) ? stage2 : null;
+            
+            if (!activeStage) return;
+
+            const rect = activeStage.getBoundingClientRect();
+            const x = (((e.clientX - rect.left) / rect.width) * 100).toFixed(2);
+            const y = (((e.clientY - rect.top) / rect.height) * 100).toFixed(2);
+
+            console.log(`📍 LIVE CLICK -> top: ${y}%; left: ${x}%;`);
+        });
     </script>
 </body>
 </html>
