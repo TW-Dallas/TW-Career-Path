@@ -451,11 +451,11 @@
   #hb-trash-10 { top: 81.25%; left: 83.59%; width: 6.25%; height: 6.25%; }  /* Bottom Right Floor Paper */
   
   /* --- EXERCISE 2 HITBOXES (3:38) --- */
-  #hb-trash-A { top: 71.67%; left: 16.40%; width: 8.43%; height: 5.00%; }
-  #hb-trash-B { top: 65.83%; left: 36.55%; width: 15.00%; height: 6.67%; }
-  #hb-trash-C { top: 70.00%; left: 74.98%; width: 3.75%; height: 3.33%; }
-  #hb-trash-D { top: 70.00%; left: 89.97%; width: 5.62%; height: 3.33%; }
-  #hb-trash-E { top: 60.83%; left: 19.68%; width: 12.18%; height: 3.33%; }
-  #hb-trash-F { top: 60.00%; left: 37.49%; width: 3.75%; height: 2.50%; }
-  #hb-trash-G { top: 61.33%; left: 44.52%; width: 4.22%; height: 2.00%; }
-  #hb-trash-H { top: 61.33%; left: 74.51%; width: 3.75%; height: 2.33%; }
+  #hb-trash-A { top: 72.3625%; left: 16.8003%; width: 8.37812%; height: 4.78491%; }
+  #hb-trash-B { top: 66.8415%; left: 37.3047%; width: 15.4334%; height: 7.17736%; }
+  #hb-trash-C { top: 66.1054%; left: 75.6676%; width: 10.1419%; height: 5.33701%; }
+  #hb-trash-D { top: 70.3382%; left: 90.4396%; width: 9.26002%; height: 3.86473%; }
+  #hb-trash-E { top: 61.3205%; left: 20.1075%; width: 13.0081%; height: 3.49666%; }
+  #hb-trash-F { top: 60.9524%; left: 37.7456%; width: 3.74811%; height: 2.20842%; }
+  #hb-trash-G { top: 62.0566%; left: 45.0214%; width: 4.18906%; height: 2.20842%; }
+  #hb-trash-H { top: 62.0566%; left: 74.7857%; width: 3.52763%; height: 2.57649%; }
