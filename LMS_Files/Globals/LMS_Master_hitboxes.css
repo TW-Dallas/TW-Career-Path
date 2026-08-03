@@ -438,24 +438,30 @@
   #hb-phone-mute { top: 71.0359%; left: 74.9464%; width: 4.00857%; height: 4.7848%; }
   #hb-phone-park { top: 27.8254%; left: 74.67%; width: 7.04955%; height: 9.5696%; }
 
-  /* --- EXERCISE 1 BOXES (3:20) --- */
-  #hb-trash-1  { top: 86.11%; left: 21.09%; width: 7.42%; height: 4.17%; }  /* Left Floor Receipt */
-  #hb-trash-2  { top: 90.97%; left: 41.80%; width: 5.47%; height: 5.56%; }  /* Bottom Floor Receipt */
-  #hb-trash-3  { top: 83.33%; left: 38.67%; width: 8.59%; height: 6.25%; }  /* Floor Magazine */
-  #hb-trash-4  { top: 77.08%; left: 79.69%; width: 5.08%; height: 5.56%; }  /* Right Floor Bag */
-  #hb-trash-5  { top: 31.94%; left: 19.53%; width: 3.91%; height: 11.11%; } /* McDonald's Cup */
-  #hb-trash-6  { top: 37.50%; left: 31.25%; width: 7.03%; height: 4.86%; }  /* Counter White Cloth */
-  #hb-trash-7  { top: 36.81%; left: 46.09%; width: 5.08%; height: 4.17%; }  /* Middle Counter Paper */
-  #hb-trash-8  { top: 33.33%; left: 64.84%; width: 3.12%; height: 6.94%; }  /* Yellow McCafe Cup */
-  #hb-trash-9  { top: 38.19%; left: 71.09%; width: 4.69%; height: 3.47%; }  /* Right Counter Paper */
-  #hb-trash-10 { top: 81.25%; left: 83.59%; width: 6.25%; height: 6.25%; }  /* Bottom Right Floor Paper */
-  
-  /* --- EXERCISE 2 HITBOXES (3:38) --- */
-  #hb-trash-A { top: 72.3625%; left: 16.8003%; width: 8.37812%; height: 4.78491%; }
-  #hb-trash-B { top: 66.8415%; left: 37.3047%; width: 15.4334%; height: 7.17736%; }
-  #hb-trash-C { top: 66.1054%; left: 75.6676%; width: 10.1419%; height: 5.33701%; }
-  #hb-trash-D { top: 70.3382%; left: 90.4396%; width: 9.26002%; height: 3.86473%; }
-  #hb-trash-E { top: 61.3205%; left: 20.1075%; width: 13.0081%; height: 3.49666%; }
-  #hb-trash-F { top: 60.9524%; left: 37.7456%; width: 3.74811%; height: 2.20842%; }
-  #hb-trash-G { top: 62.0566%; left: 45.0214%; width: 4.18906%; height: 2.20842%; }
-  #hb-trash-H { top: 62.0566%; left: 74.7857%; width: 3.52763%; height: 2.57649%; }
+  /* --- LOBBY SCENE HITBOXES (3:20 = 200s, 11 ITEMS) --- */
+  #hb-trash-1  { top: 79.89%; left: 83.15%; }
+  #hb-trash-2  { top: 75.15%; left: 88.37%; }
+  #hb-trash-3  { top: 94.71%; left: 43.81%; }
+  #hb-trash-4  { top: 87.20%; left: 23.48%; }
+  #hb-trash-5  { top: 71.20%; left: 42.04%; }
+  #hb-trash-6  { top: 20.63%; left: 20.59%; }
+  #hb-trash-7  { top: 23.20%; left: 34.26%; }
+  #hb-trash-8  { top: 22.61%; left: 47.70%; }
+  #hb-trash-9  { top: 18.86%; left: 67.04%; }
+  #hb-trash-10 { top: 23.00%; left: 73.93%; }
+  #hb-trash-11 { top: 21.42%; left: 78.93%; }
+
+  /* --- PARKING LOT SCENE HITBOXES (3:38 = 218s, 13 ITEMS) --- */
+  #hb-trash-A  { top: 90.56%; left: 19.93%; }
+  #hb-trash-B  { top: 85.62%; left: 42.04%; }
+  #hb-trash-C  { top: 81.47%; left: 48.48%; }
+  #hb-trash-D  { top: 76.73%; left: 51.37%; }
+  #hb-trash-E  { top: 84.04%; left: 95.37%; }
+  #hb-trash-F  { top: 76.73%; left: 76.81%; }
+  #hb-trash-G  { top: 73.18%; left: 84.26%; }
+  #hb-trash-H  { top: 63.10%; left: 77.48%; }
+  #hb-trash-I  { top: 63.50%; left: 47.81%; }
+  #hb-trash-J  { top: 61.92%; left: 38.59%; }
+  #hb-trash-K  { top: 63.89%; left: 29.70%; }
+  #hb-trash-L  { top: 66.07%; left: 21.93%; }
+  #hb-trash-M  { top: 59.74%; left: 29.48%; }
