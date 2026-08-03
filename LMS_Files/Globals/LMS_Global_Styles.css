@@ -951,8 +951,8 @@
     }
 
     /* ==========================================
-   INTERACTIVE TRASH HOTSPOTS & COORDINATES
-   ========================================== */
+    INTERACTIVE TRASH HOTSPOTS (CLEANED)
+    ========================================== */
     .trash-hotspot {
         position: absolute;
         cursor: pointer;
@@ -964,33 +964,29 @@
     }
 
     .trash-hotspot:hover {
-        transform: scale(1.15);
+        transform: scale(1.1);
     }
 
+    /* Unclicked State: Invisible over the video */
     .trash-hotspot .hotspot-pulse {
         width: 100%;
         height: 100%;
-        border: 3px solid var(--brand-red, #ff0000);
-        background: rgba(255, 0, 0, 0.3);
-        border-radius: 8px;
-        animation: hotspot-pulse-anim 1.2s infinite;
+        border: none !important;
+        background: transparent !important;
+        animation: none !important;
         box-sizing: border-box;
+        pointer-events: none !important;
     }
 
-    @keyframes hotspot-pulse-anim {
-        0% { transform: scale(0.9); box-shadow: 0 0 0 0px rgba(255, 0, 0, 0.7); }
-        70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
-        100% { transform: scale(0.9); box-shadow: 0 0 0 0px rgba(255, 0, 0, 0); }
-    }
-
+    /* Clicked/Found State: Green Checkmark */
     .trash-hotspot.resolved {
         pointer-events: none;
     }
 
     .trash-hotspot.resolved .hotspot-pulse {
-        animation: none;
-        border-color: #28a745;
-        background: rgba(40, 167, 69, 0.45);
+        border: 2px solid #28a745 !important;
+        background: rgba(40, 167, 69, 0.45) !important;
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1002,14 +998,3 @@
         font-size: 1.2rem;
         font-weight: bold;
     }
-
-    .trash-hotspot .hotspot-pulse {
-    width: 100%;
-    height: 100%;
-    border: 3px solid var(--brand-red, #ff0000);
-    background: rgba(255, 0, 0, 0.3);
-    border-radius: 8px;
-    animation: hotspot-pulse-anim 1.2s infinite;
-    box-sizing: border-box;
-    pointer-events: none !important; /* 👈 ADD THIS LINE */
-}
