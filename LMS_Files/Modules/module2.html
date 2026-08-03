@@ -341,14 +341,14 @@
                 // --- VIDEO 2 INTERACTIVE EXERCISES ---
                 if (activeVideoIndex === 1) {
 
-                    // EXERCISE 1: Lobby Check at 3:20 (200 seconds) - 10 ITEMS
+                    // EXERCISE 1: Lobby Check at 3:20 (200 seconds) - 11 ITEMS
                     if (data.seconds >= 200 && !stage1Triggered) {
                         stage1Triggered = true;
                         player.pause();
                         document.getElementById('trash-interactive-stage-1').classList.remove('hidden');
                     }
 
-                    // EXERCISE 2: Parking Lot Check at 3:38 (218 seconds) - 8 ITEMS
+                    // EXERCISE 2: Parking Lot Check at 3:38 (218 seconds) - 13 ITEMS
                     if (data.seconds >= 218 && !stage2Triggered) {
                         stage2Triggered = true;
                         player.pause();
@@ -582,15 +582,15 @@
 
             // Reset interactive states if opening Video 2
             if (index === 1) {
-                stage1Remaining = 10;
-                stage2Remaining = 8;
+                stage1Remaining = 11;
+                stage2Remaining = 13;
                 stage1Triggered = false;
                 stage2Triggered = false;
                 
                 // Remove 'resolved' green checkmarks from hitboxes
                 document.querySelectorAll('.trash-hotspot').forEach(el => el.classList.remove('resolved'));
-                document.getElementById('trash-count-display-1').innerText = '10';
-                document.getElementById('trash-count-display-2').innerText = '8';
+                document.getElementById('trash-count-display-1').innerText = '11';
+                document.getElementById('trash-count-display-2').innerText = '13';
             }
 
             // Hide any open interactive overlays when switching videos
