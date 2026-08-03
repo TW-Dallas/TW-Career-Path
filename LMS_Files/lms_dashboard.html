@@ -1294,7 +1294,23 @@
     
     function logoutUser() {
         if (confirm("Are you sure you want to sign out? This will clear your current session so another candidate can log in.")) {
-            localStorage.clear();
+            // Safely remove only LMS keys so Admin & Catering stay logged in:
+            localStorage.removeItem('tw_market');
+            localStorage.removeItem('tw_id');
+            localStorage.removeItem('tw_firstName');
+            localStorage.removeItem('tw_lastName');
+            localStorage.removeItem('tw_role');
+            localStorage.removeItem('tw_store');
+            localStorage.removeItem('tw_progress');
+            localStorage.removeItem('mod1_complete');
+            localStorage.removeItem('mod2_complete');
+            localStorage.removeItem('mod3_complete');
+            localStorage.removeItem('mod4_complete');
+            localStorage.removeItem('mod5_complete');
+            localStorage.removeItem('tw_beta_welcome_seen');
+            localStorage.removeItem('tw_tutorial_complete');
+            localStorage.removeItem('mod4_saved_stage');
+            
             window.location.reload();
         }
     }
