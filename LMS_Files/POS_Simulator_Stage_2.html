@@ -874,16 +874,16 @@
 
             const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
             
-            // Capture Stage 2 metrics
+            // Save that Stage 2 is complete and Stage 3 is up next
             const answers = {
+                "currentStage": 3, // <--- Stage 1 is next!
                 "Stage 2 Wrong Clicks": wrongClicks,
-                "Stage 2 Status": "Completed Stage 2"
+                "Stage 2 Status": "Completed"
             };
             const answersStr = encodeURIComponent(JSON.stringify(answers));
 
             const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${status}`;
             
-            console.log("SENDING STAGE 2 DATA: ", url);
             fetch(url, { method: 'GET', credentials: 'omit' });
         }
 

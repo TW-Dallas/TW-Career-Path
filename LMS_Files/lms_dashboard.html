@@ -1090,8 +1090,7 @@
         const unlockRules = [
             { requiredKey: 'mod1_complete', targetCardId: 'card-mod2', targetUrl: 'Modules/module2.html', buttonText: 'Start Module 2' },
             { requiredKey: 'mod2_complete', targetCardId: 'card-mod3', targetUrl: 'Modules/module3.html', buttonText: 'Start Module 3' },
-            { requiredKey: 'mod3_complete', targetCardId: 'card-mod4', targetUrl: 'POS_Simulator_Stage_0.html', buttonText: 'Start Module 4' }
-            // Removed Module 5 rule to keep it locked and marked as "Coming Soon"
+            { requiredKey: 'mod3_complete', targetCardId: 'card-mod4', targetUrl: getModule4Url(), buttonText: 'Start Module 4' } // <--- Updated here!
         ];
 
         unlockRules.forEach(rule => {
@@ -1408,6 +1407,23 @@
             // Failsafe fallback
             window.location.href = "../learning_hub.html";
         }
+    }
+
+    function getModule4Url() {
+        const savedStage = localStorage.getItem('mod4_saved_stage');
+        const stageFiles = {
+            0: "POS_Simulator_Stage_0.html",
+            1: "POS_Simulator_Stage_1.html",
+            2: "POS_Simulator_Stage_2.html",
+            3: "POS_Simulator_Stage_3.html",
+            4: "POS_Simulator_Stage_4.html"
+        };
+
+        // If a saved stage exists in storage from Google Sheets, load that stage!
+        if (savedStage !== null && stageFiles[savedStage]) {
+            return stageFiles[savedStage];
+        }
+        return "POS_Simulator_Stage_0.html"; // Default fallback
     }
     </script>
 </body>

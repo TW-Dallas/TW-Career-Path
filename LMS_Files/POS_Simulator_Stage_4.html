@@ -658,7 +658,7 @@
             };
         }
 
-        function sendProgressUpdate(moduleName, status = "Completed") {
+        function sendProgressUpdate(moduleName = "Day 1 Mod 4", status = "Completed") {
             const market = localStorage.getItem('tw_market');
             const id = localStorage.getItem('tw_id');
             if (!market || !id) return;
@@ -666,6 +666,7 @@
             const metrics = calculateScorecard();
 
             const answers = {
+                "currentStage": 4,
                 "Stage 4 Wrong Clicks": wrongClicks,
                 "Stage 4 Holds Used": holdCount,
                 "Stage 4 Replays Used": replayCount,
@@ -679,6 +680,13 @@
             const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${metrics.timeSpentSeconds}&answers=${answersStr}&status=${status}`;
             
             console.log("SENDING STAGE 4 EVALUATION DATA: ", url);
+
+            // 1. Mark Module 4 complete for the Dashboard
+            localStorage.setItem('mod4_complete', 'true');
+
+            // 2. Clear saved stage (so clicking Module 4 later starts fresh if re-taken)
+            localStorage.removeItem('mod4_saved_stage');
+
             fetch(url, { method: 'GET', credentials: 'omit' });
         }
 

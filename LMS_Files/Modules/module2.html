@@ -166,7 +166,7 @@
         </div>
     </div>
 
-    <script>
+<script>
         let currentStep = 1;
         let videoWatched = false;
         let currentQuizStep = 1;
@@ -181,6 +181,7 @@
         const moduleVideos = [
             {
                 id: '1215101423',
+                h: '6ec396fa85',
                 title: '1. Customer Service and LEADS',
                 desc: 'Core principles of customer service and applying the LEADS framework effectively in-store.',
                 completed: false,
@@ -189,6 +190,7 @@
             },
             {
                 id: '1215101422',
+                h: 'f7739fa5df', 
                 title: '2. Store Image',
                 desc: 'Maintaining the field for the win.',
                 completed: false,
@@ -197,6 +199,7 @@
             },
             {
                 id: '1215101559',
+                h: '562113022c', 
                 title: '3. Perfect Image',
                 desc: 'Suiting up for success.',
                 completed: false,
@@ -205,6 +208,7 @@
             },
             {
                 id: '1215101424',
+                h: 'a4480af631', 
                 title: '4. Uniform Guidelines Explained',
                 desc: 'Know the uniform fouls so you don\'t commit one.',
                 completed: false,
@@ -213,6 +217,7 @@
             },
             {
                 id: '1215101421',
+                h: 'fc5965dadb', 
                 title: '5. Hustle Mentality',
                 desc: 'Take pride in the huddle & the hustle.',
                 completed: false,
@@ -221,6 +226,7 @@
             },
             {
                 id: '1215119848',
+                h: 'b397fb626d', 
                 title: '6. Talking Tone',
                 desc: 'Using the equipment that isn\'t tangible.',
                 completed: false,
@@ -229,6 +235,7 @@
             },
             {
                 id: '1215101650',
+                h: '39fb26a631', 
                 title: '7. Play Hard, Play Well',
                 desc: 'Running the plays with skill & efficiency.',
                 completed: false,
@@ -306,10 +313,23 @@
             checkModuleVideosCompletion();
         }
 
-        // --- OPEN MODAL AND LOAD VIDEO ---
+        // --- OPEN MODAL AND LOAD VIDEO (CONSOLIDATED & FIXED FOR UNLISTED HASH) ---
         function openVideoModal(index) {
             activeVideoIndex = index;
             const video = moduleVideos[index];
+
+            // Reset interactive states if opening Video 2
+            if (index === 1) {
+                stage1Remaining = 11;
+                stage2Remaining = 13;
+                stage1Triggered = false;
+                stage2Triggered = false;
+                
+                // Remove 'resolved' green checkmarks from hitboxes
+                document.querySelectorAll('.trash-hotspot').forEach(el => el.classList.remove('resolved'));
+                document.getElementById('trash-count-display-1').innerText = '11';
+                document.getElementById('trash-count-display-2').innerText = '13';
+            }
 
             // Hide any open interactive overlays when switching videos
             document.getElementById('trash-interactive-stage-1').classList.add('hidden');
@@ -317,16 +337,24 @@
 
             document.getElementById('video-modal').classList.remove('hidden');
 
+            // Construct Vimeo Player parameters including the unlisted 'h' parameter
+            const playerOptions = {
+                id: video.id,
+                responsive: true,
+                autoplay: true
+            };
+            if (video.h) {
+                playerOptions.h = video.h;
+            }
+
             if (!player) {
-                player = new Vimeo.Player('vimeo-player', {
-                    id: video.id,
-                    responsive: true,
-                    autoplay: true
-                });
+                player = new Vimeo.Player('vimeo-player', playerOptions);
                 attachVimeoEvents();
             } else {
-                player.loadVideo(video.id).then(() => {
+                player.loadVideo(playerOptions).then(() => {
                     player.play();
+                }).catch(error => {
+                    console.error("Failed to load Vimeo video:", error);
                 });
             }
         }
@@ -513,16 +541,6 @@
             }
         }
 
-        function requireTrainerPin() {
-            let pin = prompt("TRAINER AUTHORIZATION REQUIRED\n\nPlease have your trainer enter their 4-digit PIN to unlock Module 2:");
-            if (pin === "1234") {
-                alert("Authorization Successful! Unlocking Module 2.");
-                window.location.href = "module2.html";
-            } else if (pin !== null) {
-                alert("Incorrect PIN. Access Denied.");
-            }
-        }
-
         // Vault API script URL
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
 
@@ -575,43 +593,6 @@
 
         // Initialize video cards on DOM ready
         document.addEventListener('DOMContentLoaded', renderVideoCards);
-
-        function openVideoModal(index) {
-            activeVideoIndex = index;
-            const video = moduleVideos[index];
-
-            // Reset interactive states if opening Video 2
-            if (index === 1) {
-                stage1Remaining = 11;
-                stage2Remaining = 13;
-                stage1Triggered = false;
-                stage2Triggered = false;
-                
-                // Remove 'resolved' green checkmarks from hitboxes
-                document.querySelectorAll('.trash-hotspot').forEach(el => el.classList.remove('resolved'));
-                document.getElementById('trash-count-display-1').innerText = '11';
-                document.getElementById('trash-count-display-2').innerText = '13';
-            }
-
-            // Hide any open interactive overlays when switching videos
-            document.getElementById('trash-interactive-stage-1').classList.add('hidden');
-            document.getElementById('trash-interactive-stage-2').classList.add('hidden');
-
-            document.getElementById('video-modal').classList.remove('hidden');
-
-            if (!player) {
-                player = new Vimeo.Player('vimeo-player', {
-                    id: video.id,
-                    responsive: true,
-                    autoplay: true
-                });
-                attachVimeoEvents();
-            } else {
-                player.loadVideo(video.id).then(() => {
-                    player.play();
-                });
-            }
-        }
 
         // --- LIVE CLICK INSPECTOR: Click anywhere on the paused video to get exact coordinates ---
         document.getElementById('video-modal').addEventListener('click', function(e) {

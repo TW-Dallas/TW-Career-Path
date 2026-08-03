@@ -1246,22 +1246,23 @@
             loadStep(currentStep);
         }
 
-        function sendProgressUpdate(moduleName, status = "Completed") {
+        function sendProgressUpdate(moduleName, status = "In Progress") {
             const market = localStorage.getItem('tw_market');
             const id = localStorage.getItem('tw_id');
             if (!market || !id) return;
 
             const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
             
+            // Save that Stage 3 is complete and Stage 4 is up next
             const answers = {
+                "currentStage": 4, // <--- Stage 4 is next!
                 "Stage 3 Wrong Clicks": wrongClicks,
-                "Stage 3 Status": "Finished Tutorial"
+                "Stage 3 Status": "Completed"
             };
             const answersStr = encodeURIComponent(JSON.stringify(answers));
 
             const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${status}`;
             
-            console.log("SENDING STAGE 3 DATA: ", url);
             fetch(url, { method: 'GET', credentials: 'omit' });
         }
 

@@ -697,19 +697,19 @@
 
             const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
             
-            // Capture Practice mistakes to merge with Tutorial mistakes
+            // Save that Stage 1 is complete and Stage 2 is up next
             const answers = {
+                "currentStage": 2, // <--- Stage 1 is next!
                 "Stage 1 Wrong Clicks": wrongClicks,
-                "Stage 1 Status": "Completed Tutorial"
+                "Stage 1 Status": "Completed"
             };
             const answersStr = encodeURIComponent(JSON.stringify(answers));
 
             const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${status}`;
             
-            console.log("SENDING STAGE 1 DATA: ", url);
             fetch(url, { method: 'GET', credentials: 'omit' });
         }
-
+        
         function loadStep(stepIndex) {
             if (stepIndex >= sequence.length) {
                 // Write progress before redirecting
