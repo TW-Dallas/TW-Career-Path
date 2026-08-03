@@ -67,6 +67,7 @@
   /* Everything Else */
   #hb-wings-tab { top: 21.2712%; left: 27.7911%; width: 16.001%; height: 8.81128%; }
   #hb-bread-tab { top: 21.111%; left: 44.514%; width: 16.1213%; height: 8.81128%; }
+  #hb-bread-tab-6386 {top: 21.2003%; left: 27.5347%; width: 16.3107%; height: 8.83347%; }
   #hb-pasta-tab { top: 21.111%; left: 61.4774%; width: 15.8807%; height: 8.97148%; }
   #hb-sandwich-tab { top: 30.5631%; left: 27.9115%; width: 15.8807%; height: 8.97148%; }
   #hb-salad-tab { top: 30.5631%; left: 44.514%; width: 16.001%; height: 8.97148%; }
@@ -96,9 +97,11 @@
 
   /* Pizza Crust Types */
   #hb-crust-hand-tossed { top: 33.464%; left: 27.8693%; width: 7.89401%; height: 7.95538%; }
-  #hb-crust-thin { top: 33.7144%; left: 45.2277%; width: 8.43182%; height: 8.09735%; }
+  #hb-crust-thin { top: 33.6283%; left: 36.9967%; width: 7.48096%; height: 7.60319%; }
+  #hb-thin-6386 { top: 63.7114%; left: 36.6577%; width: 8.01714%; height: 8.09735%; }
   #hb-crust-pan { top: 33.9903%; left: 45.8379%; width: 7.75299%; height: 7.24113%; }
   #hb-crust-new-york { top: 33.8093%; left: 54.815%; width: 7.75299%; height: 7.24113%; }
+  #hb-new-york-6386 { top: 33.7144%; left: 54.2125%; width: 8.70827%; height: 8.09735%; }
   #hb-crust-gluten-free { top: 33.6283%; left: 63.6561%; width: 8.16104%; height: 7.60319%; }
   #hb-crust-PSC { top: 33.8093%; left: 72.9053%; width: 7.75299%; height: 7.42216%; }
 
@@ -112,15 +115,18 @@
   #hb-bacon { top: 63.86%; left: 27.8836%; width: 7.75299%; height: 7.42216%; }
   #hb-jalapeno { top: 65.8513%; left: 72.7693%; width: 8.16104%; height: 7.24113%; }
   #hb-ham { top: 54.8086%; left: 54.951%; width: 7.61697%; height: 7.96524%; }
+  #hb-ham-6386 { top: 55.062%; left: 54.3507%; width: 8.57005%; height: 8.09735%; }
   #hb-sausage { top: 54.6275%; left: 64.0642%; width: 7.61697%; height: 7.96524%; }
   #hb-onions { top: 63.6789%; left: 37.1328%; width: 7.48096%; height: 7.60319%; }
   #hb-green-peppers { top: 63.4979%; left: 46.1099%; width: 7.34494%; height: 7.60319%; }
   #hb-black-olives { top: 63.3169%; left: 54.951%; width: 7.61697%; height: 7.96524%; }
+  #hb-olives-6386 { top: 72.5449%; left: 36.5195%; width: 8.15537%; height: 8.09735%; }
   #hb-pineapple { top: 72.1873%; left: 27.8836%; width: 7.61697%; height: 7.78421%; }
   #hb-premium-chicken { top: 72.1873%; left: 36.8607%; width: 7.88901%; height: 7.78421%; }
   #hb-philly-steak { top: 72.3683%; left: 55.2231%; width: 7.34494%; height: 7.60319%; }
   #hb-diced-tomatoes { top: 72.3683%; left: 63.9282%; width: 7.75299%; height: 7.60319%; }
   #hb-fresh-spinach { top: 72.3683%; left: 72.6333%; width: 8.16104%; height: 7.78421%; }
+  #hb-spinach-6386 {top: 72.1769%; left: 63.4736%; width: 8.29359%; height: 8.09735%; }
   #hb-banana-pepper { top: 54.9896%; left: 27.8836%; width: 7.75299%; height: 7.96524%; }
   #hb-feta-cheese { top: 54.9896%; left: 36.7247%; width: 8.16104%; height: 8.14627%; }
   
@@ -192,6 +198,7 @@
   #hb-bread-parm-bites { top: 33.9903%; left: 63.5201%; width: 8.16104%; height: 7.24113%; }
   #hb-bread-garlic-bites { top: 33.8093%; left: 72.7693%; width: 8.02503%; height: 7.96524%; }
   #hb-bread-cinnamon-bites { top: 42.4986%; left: 27.7476%; width: 7.75299%; height: 7.42216%; }
+  #hb-bread-cinnamon-bites-6386 { top: 41.9958%; left: 27.5347%; width: 8.29359%; height: 8.46541%;}
   #hb-bread-MCB { top: 42.4986%; left: 36.9967%; width: 7.75299%; height: 7.96524%; }
   #hb-bread-choc-lava { top: 42.6797%; left: 45.9739%; width: 7.75299%; height: 7.60319%; }
 
