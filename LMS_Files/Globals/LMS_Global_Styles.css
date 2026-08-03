@@ -802,3 +802,140 @@
             box-shadow: 0 0 0 0px rgba(255, 0, 0, 0);
         }
     }
+
+    /* --- VIDEO CARD LIBRARY --- */
+    .video-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .v-card {
+        background: white;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+        border-top: 5px solid var(--brand-blue);
+        display: flex;
+        flex-direction: column;
+        transition: var(--transition);
+        position: relative;
+    }
+
+    /* Locked Card State */
+    .v-card.locked {
+        opacity: 0.6;
+        filter: grayscale(80%);
+        pointer-events: none;
+        border-top-color: var(--crust-dark);
+    }
+
+    /* Completed Card State */
+    .v-card.completed {
+        border-top-color: #28a745;
+    }
+
+    .v-card-thumb {
+        height: 160px;
+        background-color: #111;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .v-card-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.75);
+        color: white;
+        font-family: 'OneDotCd-Bold', sans-serif;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+    }
+
+    .v-card.completed .v-card-badge {
+        background: #28a745;
+    }
+
+    .v-card-body {
+        padding: 1.2rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .v-card-title {
+        font-family: 'OneDotCd-Bold', sans-serif;
+        font-size: 1.2rem;
+        color: var(--dark-blue);
+        margin-bottom: 0.4rem;
+    }
+
+    .v-card-desc {
+        font-size: 0.95rem;
+        color: #666;
+        margin-bottom: 1rem;
+        flex-grow: 1;
+    }
+
+    /* --- VIDEO MODAL OVERLAY --- */
+    .video-modal-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(4px);
+    }
+
+    .video-modal-content {
+        background: #000;
+        width: 90%;
+        max-width: 900px;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        border: 2px solid var(--crust-med);
+    }
+
+    .video-modal-close {
+        position: absolute;
+        top: 10px; right: 15px;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 1010;
+        font-weight: bold;
+        line-height: 1;
+    }
+
+    .video-wrapper-inner {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        height: 0;
+    }
+
+    .video-wrapper-inner iframe {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+    }
+
+    /* Invisible blocker overlay to prevent clicks/scrubbing on player */
+    .video-scrub-blocker {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: calc(100% - 50px); /* Leaves bottom play/pause accessible if needed */
+        z-index: 1005;
+        background: transparent;
+    }

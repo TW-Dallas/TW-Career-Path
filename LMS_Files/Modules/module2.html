@@ -45,23 +45,13 @@
     <div class="classroom-container">
         <div class="classroom-content">
             
-            <!-- STEP 1: VIDEO -->
+            <!-- STEP 1: VIDEO CARD LIBRARY -->
             <div id="content-video" style="width: 100%; text-align: center;">
-                <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 1.5rem;">Welcome!</h3>
-                <div class="video-wrapper" style="position: relative; background: #000; overflow: hidden; border-radius: 8px;">
-                    <!-- 1. TOP-LEFT SHIELD: Blocks the video title and uploader profile links -->
-                    <div style="position: absolute; top: 0; left: 0; width: calc(100% - 80px); height: 70px; z-index: 10; cursor: default;"></div>
-                    
-                    <!-- 2. RESPONSIVE RIGHT SHIELD: Blocks stacked buttons (Heart, Watch Later, Share) from the top down to the control bar -->
-                    <div style="position: absolute; top: 0; right: 0; width: 80px; height: calc(100% - 50px); z-index: 10; cursor: default;"></div>
-                    
-                    <!-- 3. BOTTOM-RIGHT SHIELD: Blocks only the "vimeo" logo link in the bottom control pill -->
-                    <div style="position: absolute; bottom: 0; right: 0; width: 85px; height: 50px; z-index: 10; cursor: default;"></div>
-                    
-                    <!-- The Vimeo Player will be loaded here -->
-                    <div id="vimeo-player" style="width: 100%; height: 100%;"></div>
-                </div>
-                <p style="color: var(--crust-burnt); font-size: 0.9rem;">You must watch the entire video to proceed.</p>
+                <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 0.5rem;">Customer Service Library</h3>
+                <p id="video-status-msg" style="color: var(--crust-burnt); font-size: 1rem; margin-bottom: 1.5rem;">You must watch all videos in full to unlock the quiz.</p>
+                
+                <!-- Dynamic Video Cards Render Here -->
+                <div class="video-card-grid" id="video-card-container"></div>
             </div>
 
             <!-- STEP 2: KNOWLEDGE CHECK -->
@@ -116,77 +106,229 @@
 
     </div>
 
+    <!-- MODAL POP-UP PLAYER -->
+    <div id="video-modal" class="video-modal-overlay hidden">
+        <div class="video-modal-content">
+            <span class="video-modal-close" onclick="closeVideoModal()">&times;</span>
+            <div class="video-wrapper-modal">
+                <!-- 1. TOP-LEFT SHIELD -->
+                <div style="position: absolute; top: 0; left: 0; width: calc(100% - 80px); height: 70px; z-index: 10; cursor: default;"></div>
+                
+                <!-- 2. RESPONSIVE RIGHT SHIELD -->
+                <div style="position: absolute; top: 0; right: 0; width: 80px; height: calc(100% - 50px); z-index: 10; cursor: default;"></div>
+                
+                <!-- 3. BOTTOM-RIGHT SHIELD -->
+                <div style="position: absolute; bottom: 0; right: 0; width: 85px; height: 50px; z-index: 10; cursor: default;"></div>
+                
+                <!-- Vimeo Player Target -->
+                <div id="vimeo-player" style="width: 100%; height: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
         let currentStep = 1;
         let videoWatched = false;
         let currentQuizStep = 1;
         let quizPassed = false;
-        let player;
+        let player = null;
 
         // --- RELATIONAL TRACKING STATE ---
-        const moduleStartTime = Date.now(); // Starts the timer immediately on load
-        let userAnswers = {};               // Collects options as they answer the quiz
+        const moduleStartTime = Date.now();
+        let userAnswers = {};
 
-        // --- VIMEO PLAYER INITIALIZATION ---
-        const vimeoVideoId = '1205007275'; 
+        // --- MODULE VIDEOS CONFIGURATION ---
+        // Edit/add video IDs, titles, descriptions, and thumbnails here
+        const moduleVideos = [
+            {
+                id: '1215101423',
+                title: '1. Customer Service and LEADS',
+                desc: 'Core principles of customer service and applying the LEADS framework effectively in-store.',
+                completed: false,
+                maxTimeWatched: 0,
+                thumb: '../resources/Title_Slides/Service_Title.jpg'
+            },
+            {
+                id: '1215101422',
+                title: '2. Store Image  ',
+                desc: 'Maintaining the field for the win.',
+                completed: false,
+                maxTimeWatched: 0,
+                thumb: '../resources/Title_Slides/Store_Image_Title.jpg'
+            },
+            {
+                id: '1215101559',
+                title: '3. Perfect Image',
+                desc: 'Suiting up for success.',
+                completed: false,
+                maxTimeWatched: 0,
+                thumb: '../resources/Title_Slides/Perfect_Image_Title.jpg'
+            },
+            {
+                id: '1215101424',
+                title: '4. Uniform Guidelines Explained',
+                desc: 'Know the uniform fouls so you don\'t commit one.',
+                completed: false,
+                maxTimeWatched: 0,
+                thumb: '../resources/Title_Slides/Perfect_Image_2_Title.jpg'
+            },
+            {
+                id: '1215101421',
+                title: '5. Hustle Mentality',
+                desc: 'Take pride in the huddle & the hustle.',
+                completed: false,
+                maxTimeWatched: 0,
+                thumb: '../resources/Title_Slides/Sense_of_Urgency_Title.jpg'
+            },
+            {
+                id: '1215119848',
+                title: '6. Talking Tone',
+                desc: 'Using the equiptment that isn\'t tangible.',
+                completed: false,
+                maxTimeWatched: 0,
+                thumb: '../resources/Title_Slides/Intagibles_Title.jpg'
+            },
+            {
+                id: '1215101650',
+                title: '7. Play Hard, Play Well',
+                desc: 'Running the plays with skill & efficiency.',
+                completed: false,
+                maxTimeWatched: 0,
+                thumb: '../resources/Title_Slides/Operations_Title.jpg'
+            },
+        ];
 
-        const options = {
-            id: vimeoVideoId,
-            loop: false,
-            responsive: true,
-            autoplay: false
-        };
-
-        player = new Vimeo.Player('vimeo-player', options);
-
-        let maxTimeWatched = 0;
+        let activeVideoIndex = 0;
         let isEnforcingHold = false;
 
-        player.ready().then(() => {
-            player.setVolume(1);
-        });
+        // --- RENDER VIDEO CARD LIBRARY ---
+        function renderVideoCards() {
+            const container = document.getElementById('video-card-container');
+            if (!container) return;
+            container.innerHTML = '';
 
-        // Monitor playing position continuously to keep track of farthest progress
-        player.on('timeupdate', function(data) {
-            if (isEnforcingHold) return;
-            
-            // Increment maximum allowed time if playing forward naturally
-            if (data.seconds > maxTimeWatched) {
-                if (data.seconds - maxTimeWatched < 2.5) { 
-                    maxTimeWatched = data.seconds;
+            moduleVideos.forEach((video, index) => {
+                const isUnlocked = (index === 0) || moduleVideos[index - 1].completed;
+                const isCompleted = video.completed;
+
+                let cardStatusClass = 'locked';
+                let badgeText = '🔒 Locked';
+
+                if (isCompleted) {
+                    cardStatusClass = 'completed';
+                    badgeText = '✓ Watched';
+                } else if (isUnlocked) {
+                    cardStatusClass = 'active';
+                    badgeText = '▶ Ready';
                 }
-            }
-        });
 
-        // Catch forward seeking attempts and snap back to furthest watched progress
-        player.on('seeked', function(data) {
-            if (isEnforcingHold) return;
-            
-            if (data.seconds > maxTimeWatched + 1.5) {
-                isEnforcingHold = true;
-                player.setCurrentTime(maxTimeWatched).then(() => {
-                    isEnforcingHold = false;
-                }).catch(() => {
-                    isEnforcingHold = false;
+                const cardHTML = `
+                    <div class="v-card ${cardStatusClass}">
+                        <div class="v-card-thumb" style="background-image: url('${video.thumb}');">
+                            <span class="v-card-badge">${badgeText}</span>
+                        </div>
+                        <div class="v-card-body">
+                            <div class="v-card-title">${video.title}</div>
+                            <div class="v-card-desc">${video.desc}</div>
+                            <button class="btn ${isUnlocked ? '' : 'disabled'}" 
+                                    onclick="openVideoModal(${index})" 
+                                    ${isUnlocked ? '' : 'disabled'}>
+                                ${isCompleted ? 'Rewatch Video' : 'Watch Video'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+
+            checkModuleVideosCompletion();
+        }
+
+        // --- OPEN MODAL AND LOAD VIDEO ---
+        function openVideoModal(index) {
+            activeVideoIndex = index;
+            const video = moduleVideos[index];
+
+            document.getElementById('video-modal').classList.remove('hidden');
+
+            if (!player) {
+                player = new Vimeo.Player('vimeo-player', {
+                    id: video.id,
+                    responsive: true,
+                    autoplay: true
+                });
+                attachVimeoEvents();
+            } else {
+                player.loadVideo(video.id).then(() => {
+                    player.play();
                 });
             }
-        });
+        }
 
-        // Set completed state on finish
-        player.on('ended', function() {
-            videoWatched = true;
+        // --- VIMEO PLAYER EVENTS & ANTI-SCRUBBING ---
+        function attachVimeoEvents() {
+            player.ready().then(() => {
+                player.setVolume(1);
+            });
+
+            player.on('timeupdate', function(data) {
+                if (isEnforcingHold) return;
+                
+                const currentVid = moduleVideos[activeVideoIndex];
+                if (data.seconds > currentVid.maxTimeWatched) {
+                    if (data.seconds - currentVid.maxTimeWatched < 2.5) { 
+                        currentVid.maxTimeWatched = data.seconds;
+                    }
+                }
+            });
+
+            player.on('seeked', function(data) {
+                if (isEnforcingHold) return;
+                
+                const currentVid = moduleVideos[activeVideoIndex];
+                if (data.seconds > currentVid.maxTimeWatched + 1.5) {
+                    isEnforcingHold = true;
+                    player.setCurrentTime(currentVid.maxTimeWatched).then(() => {
+                        isEnforcingHold = false;
+                    }).catch(() => {
+                        isEnforcingHold = false;
+                    });
+                }
+            });
+
+            player.on('ended', function() {
+                moduleVideos[activeVideoIndex].completed = true;
+                renderVideoCards();
+                closeVideoModal();
+            });
+        }
+
+        function closeVideoModal() {
+            if (player) {
+                player.pause();
+            }
+            document.getElementById('video-modal').classList.add('hidden');
+        }
+
+        function checkModuleVideosCompletion() {
+            const allDone = moduleVideos.every(v => v.completed);
             const nextBtn = document.getElementById('btn-next');
-            if (nextBtn) {
-                nextBtn.classList.remove('btn-disabled');
-            }
-            
-            const statusText = document.querySelector('#content-video p');
-            if (statusText) {
-                statusText.innerText = "Video Complete!";
-                statusText.style.color = "#4CAF50";
-            }
-        });
+            const statusMsg = document.getElementById('video-status-msg');
 
+            if (allDone) {
+                videoWatched = true;
+                if (nextBtn) {
+                    nextBtn.classList.remove('btn-disabled');
+                }
+                if (statusMsg) {
+                    statusMsg.innerText = "All videos complete! Click Next Step to take the quiz.";
+                    statusMsg.style.color = "#28a745";
+                    statusMsg.style.fontWeight = "bold";
+                }
+            }
+        }
+
+        // --- QUIZ & STEP LOGIC ---
         function selectOption(element, questionNumber, isCorrect) {
             const block = document.getElementById('q' + questionNumber + '-block');
             block.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
@@ -195,11 +337,9 @@
             const nextBtn = document.getElementById('btn-next');
             const feedback = document.getElementById('quiz-feedback');
             
-            // Save user response text in userAnswers object
             if (!userAnswers['q' + questionNumber]) {
                 userAnswers['q' + questionNumber] = [];
             }
-            // Add the selected answer to the list if they haven't clicked it already
             const selectedText = element.innerText.trim();
             if (!userAnswers['q' + questionNumber].includes(selectedText)) {
                 userAnswers['q' + questionNumber].push(selectedText);
@@ -263,20 +403,17 @@
             }
         }
 
-    function requireTrainerPin() {
-        // This pops up a browser alert asking for the password
-        let pin = prompt("TRAINER AUTHORIZATION REQUIRED\n\nPlease have your trainer enter their 4-digit PIN to unlock Module 2:");
-        
-        // For the presentation tomorrow, the mock PIN is 1234
-        if (pin === "1234") {
-            alert("Authorization Successful! Unlocking Module 2.");
-            window.location.href = "module2.html"; // Send them to the file
-        } else if (pin !== null) { // If they typed wrong (and didn't hit cancel)
-            alert("Incorrect PIN. Access Denied.");
+        function requireTrainerPin() {
+            let pin = prompt("TRAINER AUTHORIZATION REQUIRED\n\nPlease have your trainer enter their 4-digit PIN to unlock Module 2:");
+            if (pin === "1234") {
+                alert("Authorization Successful! Unlocking Module 2.");
+                window.location.href = "module2.html";
+            } else if (pin !== null) {
+                alert("Incorrect PIN. Access Denied.");
+            }
         }
-    }
 
-    // The Web App URL so Module 2 can find the Vault
+        // Vault API script URL
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
 
         function sendProgressUpdate(moduleName) {
@@ -288,13 +425,8 @@
                 return;
             }
             
-            // Calculate active seconds spent since loading
             const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
-            
-            // Stringify and safely encode JSON responses
             const answersStr = encodeURIComponent(JSON.stringify(userAnswers));
-            
-            // Package all information safely to update tracking
             const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=Completed`;
             
             console.log("SENDING DATA TO VAULT: ", url);
@@ -317,24 +449,22 @@
         }
 
         function finishAndReturn() {
-            // 1. Change the button so they know it's working
             const btn = document.getElementById('btn-finish');
             if (btn) {
                 btn.innerText = "Saving Progress...";
-                btn.style.pointerEvents = "none"; // Prevents them from clicking twice
+                btn.style.pointerEvents = "none";
             }
 
-            // 2. Fire the checkmark to Google
             sendProgressUpdate('Day 1 Mod 2');
-
-            // 3. THE BACKPACK DROP: Tell the browser they finished so the Dashboard unlocks Mod 2
             localStorage.setItem('mod2_complete', 'true');
 
-            // 4. Wait 1.5 seconds for Google to catch it, then return directly to the Day 1 map
             setTimeout(() => {
                 window.location.href = '../lms_dashboard.html#day1';
             }, 1500);
         }
+
+        // Initialize video cards on DOM ready
+        document.addEventListener('DOMContentLoaded', renderVideoCards);
     </script>
 </body>
 </html>
