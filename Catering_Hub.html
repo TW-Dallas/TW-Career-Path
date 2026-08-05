@@ -92,6 +92,18 @@
             box-sizing: border-box;
             overflow: hidden;
         }
+
+        .badge-placed { 
+            background: #e8f5e9; 
+            color: #2e7d32; 
+            font-family: 'Compact', sans-serif; 
+            font-size: 12px; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            border: 1px solid #a5d6a7; 
+            margin-left: 4px; 
+        }
         
         .notes-panel { flex: 0 0 340px; display: flex; flex-direction: column; height: 100%; overflow: hidden; gap: 16px; }
 
@@ -542,6 +554,7 @@
                     <button type="submit" style="flex: 1.5; background: var(--med-blue);">💾 Save Row Details</button>
                     <button type="button" id="btnDraftQuote" style="flex: 1.5; background: var(--brand-red);" onclick="triggerQuoteGeneration()" disabled>📄 Draft Quote Sheet</button>
                     <button type="button" id="btnSendQuote" style="flex: 1.5; background: var(--brand-red);" class="hidden" onclick="triggerQuoteSend()">📧 Send Quote to School</button>
+                    <button type="button" id="btnDeleteOrder" style="background: var(--dark-red);" class="hidden" onclick="deleteCurrentOrder()">🗑️ Delete Order</button> <!-- ADDED -->
                     <button type="button" class="secondary" id="btnCancel" onclick="clearForm()" style="flex: 1;">Cancel</button>
                 </div>
             </form>
@@ -1186,13 +1199,17 @@ function renderList() {
                 const storeNumStr = (o.storeNum || "").toString().toLowerCase();
                 const localDateStr = o.date ? new Date(o.date).toLocaleDateString() : "";
                 const poStatusStr = getPoStatusText(o).toLowerCase();
+                const poNumStr = (o.poNum || "").toString().toLowerCase();           // <-- ADDED
+                const totalCostStr = (o.totalCost || "").toString().toLowerCase();   // <-- ADDED
                 
                 return (
                     schoolNameStr.includes(searchQuery) ||
                     coordNameStr.includes(searchQuery) ||
                     storeNumStr.includes(searchQuery) ||
                     localDateStr.includes(searchQuery) ||
-                    poStatusStr.includes(searchQuery)
+                    poStatusStr.includes(searchQuery) ||
+                    poNumStr.includes(searchQuery) ||                                 // <-- ADDED
+                    totalCostStr.includes(searchQuery)                                // <-- ADDED
                 );
             });
         }
@@ -1254,10 +1271,11 @@ function renderList() {
             const statusColor = isRed ? 'var(--brand-red)' : 'var(--brand-blue)';
             
             let badges = '';
-            // --- NEW: Prepend warning badge if urgent/unplaced ---
+            // Prepend warning badge if urgent/unplaced
             if (isUrgent) {
                 badges += '<span class="badge-urgent">⚠️ Urgent: Entry Needed</span> ';
             }
+            if (item.enteredInPulse) badges += '<span class="badge-placed">✅ Placed</span> '; // <-- ADDED
             if (item.quoteUrl && !item.quoteEmailSent) badges += '<span class="badge-drafted">📄 Quote Ready</span> ';
             if (item.quoteEmailSent) badges += '<span class="badge-sent">📧 Sent</span>';
 
@@ -1312,7 +1330,9 @@ function renderList() {
         const fieldTip = document.getElementById('fieldTip');
         const fieldPoPdf = document.getElementById('fieldPoPdf');
         const fieldQuoteUrl = document.getElementById('fieldQuoteUrl');
-
+        const btnDeleteOrder = document.getElementById('btnDeleteOrder');
+        
+        if (btnDeleteOrder) btnDeleteOrder.classList.remove('hidden');
         if (fieldId) fieldId.value = item.id || '';
         if (fieldSchool) fieldSchool.value = item.schoolName || '';
         if (fieldCarryout) fieldCarryout.value = item.serviceMethod || '';
@@ -1448,6 +1468,9 @@ function renderList() {
         
         const tabBtnProfile = document.getElementById('tabBtnProfile');
         if (tabBtnProfile) tabBtnProfile.disabled = true;
+
+        const btnDeleteOrder = document.getElementById('btnDeleteOrder');
+        if (btnDeleteOrder) btnDeleteOrder.classList.add('hidden');
     }
 
     function setPanelTab(tabName) {
@@ -1810,14 +1833,20 @@ function renderList() {
         const dateInput = document.getElementById('fieldDate').value;
 
         if (dateInput) {
-            const orderDate = new Date(dateInput);
-            const today = new Date();
-            today.setHours(0,0,0,0);
-
-            if (orderDate < today) {
-                const proceed = await showBrandConfirm("⚠️ DATE TYPO WARNING: The order date you typed is in the PAST. Are you sure you want to save this date?", "Date Warning");
-                if (!proceed) {
-                    return;
+            const parts = dateInput.split('-');
+            if (parts.length === 3) {
+                // Construct date using local Year, Month (0-indexed), Day
+                const orderDate = new Date(parts[0], parts[1] - 1, parts[2]);
+                orderDate.setHours(0,0,0,0);
+        
+                const today = new Date();
+                today.setHours(0,0,0,0);
+        
+                if (orderDate < today) {
+                    const proceed = await showBrandConfirm("⚠️ DATE TYPO WARNING: The order date you typed is in the PAST. Are you sure you want to save this date?", "Date Warning");
+                    if (!proceed) {
+                        return;
+                    }
                 }
             }
         }
@@ -1918,24 +1947,25 @@ function renderList() {
         const savedQuoteUrl = fieldQuoteUrl ? fieldQuoteUrl.value : '';
         
         if (!id) return;
-
+    
+        // If quote URL already exists, open it in a new tab
         if (savedQuoteUrl && savedQuoteUrl.startsWith("http")) {
             window.open(savedQuoteUrl, '_blank');
             return;
         }
-
+    
         showLoader(true, "Duplicating template & drafting custom quote...");
-
+    
         const username = localStorage.getItem('cat_user');
         const password = localStorage.getItem('cat_pass');
-
+    
         const payload = {
             username: username,
             password: password,
             action: "draftQuote",
             id: id
         };
-
+    
         try {
             const res = await fetch(API_URL, {
                 method: 'POST',
@@ -1951,11 +1981,18 @@ function renderList() {
             await showBrandAlert("Quote Sheet Drafted successfully! It will now open in a new tab.", "Quote Generated");
             window.open(result.quoteUrl, '_blank');
             
+            // Refresh dataset and re-select the order to keep form populated
+            showLoader(true, "Updating order state...");
             const initRes = await fetch(`${API_URL}?action=getInitialData`);
             const data = await initRes.json();
             orders = data.orders || [];
             renderList();
-            clearForm();
+    
+            const updatedOrder = orders.find(o => o.id === id);
+            if (updatedOrder) {
+                selectOrder(updatedOrder); // <-- RE-SELECTS ORDER INSTEAD OF CLEARING FORM
+            }
+            showLoader(false);
         } catch (err) {
             showLoader(false);
             
@@ -1964,17 +2001,18 @@ function renderList() {
                 try {
                     const initRes = await fetch(`${API_URL}?action=getInitialData`);
                     const data = await initRes.json();
-                    showLoader(false);
                     orders = data.orders || [];
+                    renderList();
+    
                     const updatedOrder = orders.find(o => o.id === id);
                     if (updatedOrder && updatedOrder.quoteUrl) {
                         await showBrandAlert("Quote Sheet Drafted successfully! It will now open in a new tab.", "Success");
                         window.open(updatedOrder.quoteUrl, '_blank');
-                        renderList();
-                        clearForm();
+                        selectOrder(updatedOrder); // <-- RE-SELECTS ORDER
                     } else {
                         await showBrandAlert("Error drafting quote: Connection timed out.", "Timeout Error");
                     }
+                    showLoader(false);
                 } catch {
                     showLoader(false);
                     await showBrandAlert("Error drafting quote: Failed to connect to Google Sheets.", "Connection Error");
@@ -1984,7 +2022,7 @@ function renderList() {
             }
         }
     }
-
+    
     function updateWeeklyMetrics() {
         const now = new Date();
         const thisMonday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -2329,6 +2367,62 @@ function renderList() {
         } catch (err) {
             showLoader(false);
             await showBrandAlert("Error syncing total: " + err.message, "Sync Error");
+        }
+    }
+
+    async function deleteCurrentOrder() {
+        const fieldId = document.getElementById('fieldId');
+        const id = fieldId ? fieldId.value : '';
+        const schoolName = document.getElementById('fieldSchool') ? document.getElementById('fieldSchool').value : 'this order';
+    
+        if (!id) return;
+    
+        const confirmed = await showBrandConfirm(
+            `Are you sure you want to permanently DELETE the order for "${schoolName}"? This action removes the row from Google Sheets and cannot be undone.`,
+            "Confirm Delete"
+        );
+    
+        if (!confirmed) return;
+    
+        showLoader(true, "Deleting order from Google Sheets...");
+    
+        const username = localStorage.getItem('cat_user');
+        const password = localStorage.getItem('cat_pass');
+    
+        const payload = {
+            username: username,
+            password: password,
+            action: "deleteOrder",
+            id: id
+        };
+    
+        try {
+            const res = await fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            });
+            const result = await res.json();
+    
+            showLoader(false);
+    
+            if (!result.success) {
+                throw new Error(result.error || "Delete action failed.");
+            }
+    
+            await showBrandAlert("Order deleted successfully.", "Deleted");
+    
+            // Refresh dataset from Google Sheets
+            showLoader(true, "Refreshing orders list...");
+            const initRes = await fetch(`${API_URL}?action=getInitialData`);
+            const data = await initRes.json();
+            orders = data.orders || [];
+            
+            clearForm();
+            renderList();
+            showLoader(false);
+        } catch (err) {
+            showLoader(false);
+            await showBrandAlert("Error deleting order: " + err.message, "Error");
         }
     }
     
