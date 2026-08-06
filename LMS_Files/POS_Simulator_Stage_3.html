@@ -966,7 +966,7 @@
             audioPanel.innerHTML = html;
 
             // Gate all active hitboxes visibility until required audio finishes
-            if (requireAll) {
+            if (requireAll && localStorage.getItem('tw_admin_mode') !== 'true') {
                 getActiveHitboxIds(stepData).forEach(id => {
                     const activeHb = document.getElementById(id);
                     if (activeHb) activeHb.style.display = 'none';

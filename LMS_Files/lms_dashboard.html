@@ -1328,28 +1328,24 @@
         const navWidget = document.getElementById('nav-user-widget');
         const navTagline = document.getElementById('nav-tagline');
 
-        if (navName) navName.innerText = `${firstName} ${lastName}`;
-        if (navRole) {
-            if (localStorage.getItem('tw_admin_mode') === 'true') {
-                navRole.innerHTML = `${role} <span style="background: #ffc107; color: #000; padding: 2px 6px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; margin-left: 4px;">👑 EXEC REVIEW</span>`;
-            } else {
-                navRole.innerText = role;
+        if (localStorage.getItem('tw_admin_mode') === 'true') {
+            if (navName) navName.innerText = "Executive Review";
+            if (navRole) navRole.innerHTML = `<span style="background: #ffc107; color: #000; padding: 2px 8px; border-radius: 10px; font-weight: bold; font-size: 0.75rem;">👑 Master Access</span>`;
+            if (navStore) navStore.innerText = "";
+            if (navStoreDivider) navStoreDivider.innerText = "";
+            if (navAvatar) navAvatar.innerText = "👑";
+        } else {
+            if (navName) navName.innerText = `${firstName} ${lastName}`;
+            if (navRole) navRole.innerText = role;
+            if (navStore && store) {
+                const storeStr = String(store);
+                let formattedStore = storeStr.toLowerCase().includes('store') ? storeStr : "Store " + storeStr;
+                navStore.innerText = formattedStore;
+                if (navStoreDivider) navStoreDivider.innerText = " • ";
             }
-        }
-        
-        // Dynamically display the store with a soft bullet separator next to the role
-        if (navStore && store) {
-            // Safely coerce to a string in case the server returned a numeric value
-            const storeStr = String(store);
-            
-            // Prepend "Store " if the string doesn't already contain it
-            let formattedStore = storeStr.toLowerCase().includes('store') ? storeStr : "Store " + storeStr;
-            navStore.innerText = formattedStore;
-            if (navStoreDivider) navStoreDivider.innerText = " • ";
-        }
-        
-        if (navAvatar && firstName) {
-            navAvatar.innerText = firstName.charAt(0).toUpperCase();
+            if (navAvatar && firstName) {
+                navAvatar.innerText = firstName.charAt(0).toUpperCase();
+            }
         }
 
         // Instantly trigger profile display on refresh if session logged

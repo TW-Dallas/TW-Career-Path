@@ -377,7 +377,7 @@
             if (audioPanel) audioPanel.innerHTML = html;
 
             const activeHb = document.getElementById(stepData.activeHitbox);
-            if (activeHb && requireAll) {
+            if (activeHb && requireAll && localStorage.getItem('tw_admin_mode') !== 'true') {
                 activeHb.style.display = 'none';
             }
         }
