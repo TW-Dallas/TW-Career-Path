@@ -391,11 +391,13 @@
             progressFill.style.width = `${percent}%`;
             progressLabel.innerText = `${completedCount} / 4 Games Completed`;
 
-            // Active boundary: requires at least 3 completed games to continue
-            if (completedCount >= 3) {
+            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+
+            // Active boundary: requires at least 3 completed games to continue (or Admin mode)
+            if (isAdmin || completedCount >= 3) {
                 finishBtn.classList.remove('btn-disabled');
                 finishBtn.removeAttribute('disabled');
-                requiredAlert.innerText = "Mod 4 Unlocked!";
+                requiredAlert.innerText = isAdmin ? "Mod 4 Unlocked (Master Access)" : "Mod 4 Unlocked!";
                 requiredAlert.style.background = "rgba(46,125,50,0.1)";
                 requiredAlert.style.color = "#2e7d32";
             } else {
@@ -456,12 +458,20 @@
                 btn.style.pointerEvents = "none";
             }
 
+            localStorage.setItem('mod3_complete', 'true');
+
+            if (localStorage.getItem('tw_admin_mode') === 'true') {
+                console.log("[ADMIN MODE] Progress tracking bypassed for executive view.");
+                window.location.href = '../lms_dashboard.html#day1';
+                return;
+            }
+
             const market = localStorage.getItem('tw_market');
             const id = localStorage.getItem('tw_id');
             
             if (!market || !id) {
                 // Fail-safe redirect if credentials missing in testing environment
-                window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
+                window.location.href = '../lms_dashboard.html#day1';
                 return;
             }
 
@@ -483,11 +493,9 @@
             console.log("SUBMITTING FINISHED SHEET DATA: ", url);
             fetch(url, { method: 'GET', credentials: 'omit' });
 
-            localStorage.setItem('mod3_complete', 'true');
-
             // Delay redirect slightly to ensure database payload delivery succeeds
             setTimeout(() => {
-                window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
+                window.location.href = '../lms_dashboard.html#day1';
             }, 1500);
         }
 

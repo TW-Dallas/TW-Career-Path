@@ -161,6 +161,7 @@
 
         // Catch forward seeking attempts and snap back to furthest watched progress
         player.on('seeked', function(data) {
+            if (localStorage.getItem('tw_admin_mode') === 'true') return; // Executive Scrubbing Unlocked
             if (isEnforcingHold) return;
             
             if (data.seconds > maxTimeWatched + 1.5) {
@@ -222,7 +223,8 @@
         }
 
         function changeStep(direction) {
-            if (direction === 1) {
+            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+            if (direction === 1 && !isAdmin) {
                 if (currentStep === 1 && !videoWatched) return;
                 if (currentStep === 2 && !quizPassed) {
                     document.getElementById('quiz-feedback').style.display = 'block';
@@ -234,6 +236,7 @@
         }
 
         function updateUI() {
+            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
             document.getElementById('content-video').classList.add('hidden');
             document.getElementById('content-quiz').classList.add('hidden');
             document.getElementById('content-prompt').classList.add('hidden');
@@ -251,11 +254,11 @@
             if (currentStep === 1) {
                 document.getElementById('content-video').classList.remove('hidden');
                 btnBack.classList.add('hidden');
-                if (!videoWatched) btnNext.classList.add('btn-disabled');
+                if (!videoWatched && !isAdmin) btnNext.classList.add('btn-disabled');
             } 
             else if (currentStep === 2) {
                 document.getElementById('content-quiz').classList.remove('hidden');
-                if (!quizPassed) btnNext.classList.add('btn-disabled');
+                if (!quizPassed && !isAdmin) btnNext.classList.add('btn-disabled');
             } 
             else if (currentStep === 3) {
                 document.getElementById('content-prompt').classList.remove('hidden');
@@ -268,6 +271,10 @@
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
 
         function sendProgressUpdate(moduleName) {
+            if (localStorage.getItem('tw_admin_mode') === 'true') {
+                console.log("[ADMIN MODE] Progress tracking bypassed for executive view.");
+                return;
+            }
             const market = localStorage.getItem('tw_market');
             const id = localStorage.getItem('tw_id');
             

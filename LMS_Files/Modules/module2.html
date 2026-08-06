@@ -276,8 +276,10 @@
             if (!container) return;
             container.innerHTML = '';
 
+            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+
             moduleVideos.forEach((video, index) => {
-                const isUnlocked = (index === 0) || moduleVideos[index - 1].completed;
+                const isUnlocked = isAdmin || (index === 0) || moduleVideos[index - 1].completed;
                 const isCompleted = video.completed;
 
                 let cardStatusClass = 'locked';
@@ -394,6 +396,7 @@
             });
 
             player.on('seeked', function(data) {
+                if (localStorage.getItem('tw_admin_mode') === 'true') return; // Executive Scrubbing Unlocked
                 if (isEnforcingHold) return;
                 
                 const currentVid = moduleVideos[activeVideoIndex];
@@ -545,6 +548,10 @@
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
 
         function sendProgressUpdate(moduleName) {
+            if (localStorage.getItem('tw_admin_mode') === 'true') {
+                console.log("[ADMIN MODE] Progress tracking bypassed for executive view.");
+                return;
+            }
             const market = localStorage.getItem('tw_market');
             const id = localStorage.getItem('tw_id');
             

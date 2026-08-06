@@ -658,9 +658,16 @@
             };
         }
 
-        function sendProgressUpdate(moduleName = "Day 1 Mod 4", status = "Completed") {
+        function sendProgressUpdate(moduleName, status = 'Completed') {
+            if (localStorage.getItem('tw_admin_mode') === 'true') {
+                console.log("[ADMIN MODE] Progress tracking bypassed for executive view.");
+                localStorage.setItem('mod4_complete', 'true');
+                localStorage.removeItem('mod4_saved_stage');
+                return;
+            }
             const market = localStorage.getItem('tw_market');
             const id = localStorage.getItem('tw_id');
+            
             if (!market || !id) return;
 
             const metrics = calculateScorecard();
@@ -797,7 +804,7 @@
                 localStorage.setItem('mod4_complete', 'true');
 
                 setTimeout(() => {
-                    window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
+                    window.location.href = 'lms_dashboard.html#day1';
                 }, 1500);
             };
         }

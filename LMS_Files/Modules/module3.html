@@ -918,7 +918,7 @@
             const gameBtn = document.getElementById('btn-start-game');
             if (!gameBtn) return;
             
-            if (visitedCategories.size === totalCategories) {
+            if (localStorage.getItem('tw_admin_mode') === 'true' || visitedCategories.size === totalCategories) {
                 gameBtn.classList.remove('btn-disabled');
                 gameBtn.style.pointerEvents = 'auto';
                 gameBtn.removeAttribute('disabled');
@@ -931,6 +931,10 @@
 
         // --- RELATIONAL OVERVIEW LOGGING ---
         function sendOverviewProgress() {
+            if (localStorage.getItem('tw_admin_mode') === 'true') {
+                console.log("[ADMIN MODE] Progress tracking bypassed for executive view.");
+                return;
+            }
             const market = localStorage.getItem('tw_market');
             const id = localStorage.getItem('tw_id');
             if (!market || !id) return;
