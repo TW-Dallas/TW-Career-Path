@@ -144,19 +144,23 @@
       aspect-ratio: 1600 / 1200; 
       background: #000;
       position: relative;
+      overflow: hidden;
+  }
+
+  /* The wrapper that holds the image and hitboxes */
+  #hitbox-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: block; 
   }
 
   /* The actual POS Image */
   #pos-image {
       width: 100%;
       height: 100%;
-      object-fit: cover; 
-  }
-
-  /* The wrapper that holds the image and hitboxes */
-  #hitbox-wrapper {
-      position: relative;
-      display: inline-block; 
+      display: block;
+      object-fit: fill; 
   }
 
   /* --- HITBOXES (Invisible with Arrows) --- */

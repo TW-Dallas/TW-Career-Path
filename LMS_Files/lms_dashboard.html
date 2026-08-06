@@ -577,6 +577,7 @@
                     </span>
                 </div>
             </div> <button id="login-btn" class="btn" onclick="authenticateUser()">Sign In</button>
+            <button type="button" onclick="promptExecutiveAccess()" style="margin-top: 14px; width: 100%; background: rgba(0, 144, 226, 0.06); color: var(--dark-blue); border: 2px dashed var(--brand-blue); padding: 10px; border-radius: 50px; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(0, 144, 226, 0.15)'" onmouseout="this.style.background='rgba(0, 144, 226, 0.06)'">👑 Executive Review Access 🔒</button>
         </div>
 
         <!-- STEP 2: PROFILE CONFIRMATION & AVATAR -->
@@ -1076,7 +1077,29 @@
     
     const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
     
+    function promptExecutiveAccess() {
+        let code = prompt("EXECUTIVE MASTER ACCESS\n\nPlease enter the Executive Review Passcode:");
+        if (code === "TW2026!exec" || code === "9999" || code === "admin") {
+            localStorage.setItem('tw_admin_mode', 'true');
+            localStorage.setItem('tw_market', 'dallas');
+            localStorage.setItem('tw_id', 'exec_review');
+            localStorage.setItem('tw_firstName', 'Executive');
+            localStorage.setItem('tw_lastName', 'Reviewer');
+            localStorage.setItem('tw_role', 'Executive');
+            localStorage.setItem('tw_store', 'Corporate HQ');
+            syncUserUI('Executive', 'Reviewer', 'Executive', 100, 'Corporate HQ');
+            alert("Master Access Granted! All Day 1 modules and video controls are now viewable without restrictions.");
+            nextStep('gateway');
+        } else if (code !== null) {
+            alert("Incorrect Passcode. Access Denied.");
+        }
+    }
+
     function requireTrainerPin(targetModuleUrl) {
+        if (localStorage.getItem('tw_admin_mode') === 'true') {
+            window.location.href = targetModuleUrl;
+            return;
+        }
         let pin = prompt("TRAINER AUTHORIZATION REQUIRED\n\nPlease have your trainer enter their 4-digit PIN to unlock the next module:");
         if (pin === "1234") {
             alert("Authorization Successful! Unlocking Module.");
@@ -1087,20 +1110,26 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
+        const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+
         const unlockRules = [
             { requiredKey: 'mod1_complete', targetCardId: 'card-mod2', targetUrl: 'Modules/module2.html', buttonText: 'Start Module 2' },
             { requiredKey: 'mod2_complete', targetCardId: 'card-mod3', targetUrl: 'Modules/module3.html', buttonText: 'Start Module 3' },
-            { requiredKey: 'mod3_complete', targetCardId: 'card-mod4', targetUrl: getModule4Url(), buttonText: 'Start Module 4' } // <--- Updated here!
+            { requiredKey: 'mod3_complete', targetCardId: 'card-mod4', targetUrl: getModule4Url(), buttonText: 'Start Module 4' }
         ];
 
         unlockRules.forEach(rule => {
-            if (localStorage.getItem(rule.requiredKey) === 'true') {
+            if (isAdmin || localStorage.getItem(rule.requiredKey) === 'true') {
                 const card = document.getElementById(rule.targetCardId);
                 if (card) {
                     card.classList.remove('locked');
                     card.querySelector('.course-badge').style.color = "var(--dark-blue)";
                     const lockBtn = card.querySelector('.btn-small');
-                    lockBtn.outerHTML = `<button class="btn-small" onclick="requireTrainerPin('${rule.targetUrl}')" style="background: var(--brand-blue); color: white; border: none;">${rule.buttonText}</button>`;
+                    if (isAdmin) {
+                        lockBtn.outerHTML = `<a href="${rule.targetUrl}" class="btn-small" style="background: var(--brand-blue); color: white; border: none; text-decoration: none; display: inline-block;">${rule.buttonText}</a>`;
+                    } else {
+                        lockBtn.outerHTML = `<button class="btn-small" onclick="requireTrainerPin('${rule.targetUrl}')" style="background: var(--brand-blue); color: white; border: none;">${rule.buttonText}</button>`;
+                    }
                 }
             }
         });
@@ -1267,7 +1296,13 @@
         const navTagline = document.getElementById('nav-tagline');
 
         if (navName) navName.innerText = `${firstName} ${lastName}`;
-        if (navRole) navRole.innerText = role;
+        if (navRole) {
+            if (localStorage.getItem('tw_admin_mode') === 'true') {
+                navRole.innerHTML = `${role} <span style="background: #ffc107; color: #000; padding: 2px 6px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; margin-left: 4px;">👑 EXEC REVIEW</span>`;
+            } else {
+                navRole.innerText = role;
+            }
+        }
         
         // Dynamically display the store with a soft bullet separator next to the role
         if (navStore && store) {
@@ -1295,6 +1330,7 @@
     function logoutUser() {
         if (confirm("Are you sure you want to sign out? This will clear your current session so another candidate can log in.")) {
             // Safely remove only LMS keys so Admin & Catering stay logged in:
+            localStorage.removeItem('tw_admin_mode');
             localStorage.removeItem('tw_market');
             localStorage.removeItem('tw_id');
             localStorage.removeItem('tw_firstName');
@@ -1345,6 +1381,10 @@
                 localStorage.setItem('tw_lastName', result.lastName);
                 localStorage.setItem('tw_role', result.role);
                 localStorage.setItem('tw_store', result.store);
+
+                if (result.role && (result.role.toLowerCase().includes('exec') || result.role.toLowerCase().includes('admin') || result.role.toLowerCase().includes('corp'))) {
+                    localStorage.setItem('tw_admin_mode', 'true');
+                }
 
                 // Load completions
                 if (result.completed && result.completed.length > 0) {

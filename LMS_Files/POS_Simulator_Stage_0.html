@@ -549,6 +549,37 @@
                 loadStep(currentStep);
             }        
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem('tw_admin_mode') === 'true') {
+                const headerRight = document.querySelector('header > div:last-child');
+                if (headerRight) {
+                    const select = document.createElement('select');
+                    select.style.cssText = "background: #ffc107; color: #000; border: none; border-radius: 20px; padding: 0.3rem 0.8rem; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; cursor: pointer;";
+                    select.onchange = function() { window.location.href = this.value; };
+                    
+                    const currentFile = window.location.pathname.split('/').pop() || 'POS_Simulator_Stage_0.html';
+                    
+                    const stages = [
+                        { file: 'POS_Simulator_Stage_0.html', label: '👑 Stage 0 (Tutorial)' },
+                        { file: 'POS_Simulator_Stage_1.html', label: '👑 Stage 1 (Basic Order)' },
+                        { file: 'POS_Simulator_Stage_2.html', label: '👑 Stage 2 (Advanced)' },
+                        { file: 'POS_Simulator_Stage_3.html', label: '👑 Stage 3 (Phone Orders)' },
+                        { file: 'POS_Simulator_Stage_4.html', label: '👑 Stage 4 (Evaluation)' }
+                    ];
+
+                    stages.forEach(st => {
+                        const opt = document.createElement('option');
+                        opt.value = st.file;
+                        opt.textContent = st.label;
+                        if (currentFile.includes(st.file)) opt.selected = true;
+                        select.appendChild(opt);
+                    });
+
+                    headerRight.appendChild(select);
+                }
+            }
+        });
     </script>
 </body>
 </html>
