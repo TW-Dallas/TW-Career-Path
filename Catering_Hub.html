@@ -307,6 +307,9 @@
         <div class="brand-modal-content">
             <h3 id="brandModalTitle">Notice</h3>
             <p id="brandModalMessage">Message goes here.</p>
+            <div id="brandModalInputContainer" class="hidden" style="margin-top: 12px; margin-bottom: 12px;">
+                <input type="text" id="brandModalInput" style="width: 100%; font-family: 'Condensed', sans-serif; font-size: 16px; padding: 8px 12px; border: 1.5px solid var(--crust-med); border-radius: 4px; box-sizing: border-box;">
+            </div>
             <div class="brand-modal-actions">
                 <button type="button" id="brandModalCancelBtn" class="secondary">Cancel</button>
                 <button type="button" id="brandModalConfirmBtn">OK</button>
@@ -633,14 +636,14 @@
                 <div style="font-family: 'ExtraBold', sans-serif; font-size: 18px; color: var(--dark-blue); border-bottom: 2px solid var(--crust-med); padding-bottom: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px; flex: 0 0 auto;" id="scratchpadTitleHeader">
                     <span>📋 Sync Scratchpad</span>
                     <div style="display: flex; gap: 4px; align-items: center;">
-                        <button type="button" id="btnModeText" onclick="setScratchpadMode('text')" style="font-size: 11px; padding: 2px 6px; background: var(--dark-blue); color: white; border-radius: 4px; font-family: 'Compact'; min-width: 40px; text-transform: uppercase;">Text</button>
-                        <button type="button" id="btnModeList" onclick="setScratchpadMode('list')" style="font-size: 11px; padding: 2px 6px; background: var(--crust-med); color: var(--crust-burnt); border-radius: 4px; font-family: 'Compact'; min-width: 40px; text-transform: uppercase;">List</button>
+                        <button type="button" id="btnModeText" onclick="setScratchpadMode('text')" style="font-size: 11px; padding: 2px 6px; background: var(--crust-med); color: var(--crust-burnt); border-radius: 4px; font-family: 'Compact'; min-width: 40px; text-transform: uppercase;">Text</button>
+                        <button type="button" id="btnModeList" onclick="setScratchpadMode('list')" style="font-size: 11px; padding: 2px 6px; background: var(--dark-blue); color: white; border-radius: 4px; font-family: 'Compact'; min-width: 40px; text-transform: uppercase;">List</button>
                     </div>
                 </div>
                 
-                <textarea id="scratchpad" placeholder="• Scratchpad text is saved continuously to your sheet..." style="flex: 1; width: 100%; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 17px; line-height: 1.5; outline: none; padding: 0; color: var(--crust-burnt); resize: none;" oninput="triggerNotesCloudSync()"></textarea>
+                <textarea id="scratchpad" class="hidden" placeholder="• Scratchpad text is saved continuously to your sheet..." style="flex: 1; width: 100%; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 17px; line-height: 1.5; outline: none; padding: 0; color: var(--crust-burnt); resize: none;" oninput="triggerNotesCloudSync()"></textarea>
 
-                <div id="scratchpadChecklist" class="hidden" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+                <div id="scratchpadChecklist" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
                     <div id="checklistInputRow" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; border-bottom: 1.5px solid var(--crust-med); padding-bottom: 8px; flex-shrink: 0;">
                         <span style="font-size: 20px; color: var(--brand-grey); line-height: 1; font-weight: bold;">+</span>
                         <input type="text" id="newChecklistItem" placeholder="Add checklist task..." style="flex: 1; border: none; background: transparent; font-family: 'Condensed', sans-serif; font-size: 17px; outline: none; padding: 0;" onkeydown="handleChecklistKeydown(event)">
@@ -661,9 +664,9 @@
     let storeLookup = {}; 
     let currentSelectedId = null;
 
-    let scratchpadMode = 'text'; 
-    let checklistItems = [];
-    let cloudSaveTimer = null;
+    let scratchpadMode = 'list'; 
+    let checklistItemsData = [];
+    let scratchpadTimeout = null;
 
     window.addEventListener('DOMContentLoaded', () => {
         try {
@@ -674,13 +677,78 @@
                 handleLogin(savedUser, savedPass);
             }
 
-            const savedMode = localStorage.getItem('cat_scratchpad_mode') || 'text';
+            const savedMode = localStorage.getItem('cat_scratchpad_mode') || 'list';
             setScratchpadMode(savedMode);
         } catch (e) {
             console.error("Initialization error:", e);
             showLoader(false); 
         }
     });
+
+    /* --- CENTRALIZED API CALL HANDLER (CORS & Auth Safe) --- */
+    async function apiCall(actionOrPayload = 'getInitialData', extraPayload = {}) {
+        const u = localStorage.getItem('cat_user') || (document.getElementById('loginUser') ? document.getElementById('loginUser').value.trim() : '');
+        const p = localStorage.getItem('cat_pass') || (document.getElementById('loginPass') ? document.getElementById('loginPass').value.trim() : '');
+
+        let payload = {};
+        if (typeof actionOrPayload === 'object') {
+            payload = { ...actionOrPayload };
+        } else if (actionOrPayload === 'GET' || actionOrPayload === 'getInitialData') {
+            payload = { action: 'getInitialData' };
+        } else {
+            payload = { action: actionOrPayload, ...extraPayload };
+        }
+
+        if (!payload.action) payload.action = 'getInitialData';
+        payload.password = p;
+        payload.username = u;
+
+        if (payload.action === 'getInitialData' || payload.action === 'getData') {
+            const queryParams = new URLSearchParams(payload).toString();
+            const url = `${API_URL}${API_URL.includes('?') ? '&' : '?'}${queryParams}`;
+            const response = await fetch(url);
+            const text = await response.text();
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                throw new Error("Server returned invalid response page. Please try again.");
+            }
+            if (data.error) {
+                if (data.error.includes("Incorrect Password") || data.error.includes("Unauthorized")) {
+                    localStorage.removeItem('cat_user');
+                    localStorage.removeItem('cat_pass');
+                    localStorage.removeItem('cat_cached_data');
+                }
+                throw new Error(data.error);
+            }
+            return data;
+        }
+
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+        });
+
+        const text = await response.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            throw new Error("Server returned invalid response page. Please try again.");
+        }
+
+        if (data.error) {
+            if (data.error.includes("Incorrect Password") || data.error.includes("Unauthorized")) {
+                localStorage.removeItem('cat_user');
+                localStorage.removeItem('cat_pass');
+                localStorage.removeItem('cat_cached_data');
+            }
+            throw new Error(data.error);
+        }
+        return data;
+    }
 
     /* --- BRANDED MODAL PROMISE WRAPPERS --- */
     function showBrandAlert(message, title = "System Notification") {
@@ -690,10 +758,12 @@
             const msgEl = document.getElementById('brandModalMessage');
             const confirmBtn = document.getElementById('brandModalConfirmBtn');
             const cancelBtn = document.getElementById('brandModalCancelBtn');
+            const inputContainer = document.getElementById('brandModalInputContainer');
             
             titleEl.innerText = title;
             msgEl.innerText = message;
             
+            if (inputContainer) inputContainer.classList.add('hidden');
             cancelBtn.classList.add('hidden'); 
             confirmBtn.innerText = "OK";
             
@@ -716,10 +786,12 @@
             const msgEl = document.getElementById('brandModalMessage');
             const confirmBtn = document.getElementById('brandModalConfirmBtn');
             const cancelBtn = document.getElementById('brandModalCancelBtn');
+            const inputContainer = document.getElementById('brandModalInputContainer');
             
             titleEl.innerText = title;
             msgEl.innerText = message;
             
+            if (inputContainer) inputContainer.classList.add('hidden');
             cancelBtn.classList.remove('hidden');
             confirmBtn.innerText = "Yes";
             cancelBtn.innerText = "No";
@@ -748,66 +820,175 @@
         });
     }
 
-    function handleLogin(savedUser, savedPass) {
+    function showBrandPrompt(message, defaultValue = "", title = "Input Required") {
+        return new Promise((resolve) => {
+            const modal = document.getElementById('brandModal');
+            const titleEl = document.getElementById('brandModalTitle');
+            const msgEl = document.getElementById('brandModalMessage');
+            const confirmBtn = document.getElementById('brandModalConfirmBtn');
+            const cancelBtn = document.getElementById('brandModalCancelBtn');
+            const inputContainer = document.getElementById('brandModalInputContainer');
+            const inputEl = document.getElementById('brandModalInput');
+            
+            titleEl.innerText = title;
+            msgEl.innerText = message;
+            
+            inputEl.value = defaultValue;
+            inputContainer.classList.remove('hidden');
+            cancelBtn.classList.remove('hidden');
+            
+            confirmBtn.innerText = "OK";
+            cancelBtn.innerText = "Cancel";
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => inputEl.focus(), 50);
+            
+            const handleConfirm = () => {
+                const val = inputEl.value;
+                modal.classList.add('hidden');
+                cleanup();
+                resolve(val);
+            };
+
+            const handleCancel = () => {
+                modal.classList.add('hidden');
+                cleanup();
+                resolve(null);
+            };
+            
+            const cleanup = () => {
+                confirmBtn.removeEventListener('click', handleConfirm);
+                cancelBtn.removeEventListener('click', handleCancel);
+                inputContainer.classList.add('hidden');
+            };
+            
+            confirmBtn.addEventListener('click', handleConfirm);
+            cancelBtn.addEventListener('click', handleCancel);
+            
+            inputEl.onkeydown = (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleConfirm();
+                }
+            };
+        });
+    }
+
+    async function handleLogin(savedUser, savedPass) {
         const u = savedUser || (document.getElementById('loginUser') ? document.getElementById('loginUser').value.trim() : '');
         const p = savedPass || (document.getElementById('loginPass') ? document.getElementById('loginPass').value : '');
         const errorEl = document.getElementById('loginError');
     
         if (!u || !p) return;
-    
-        showLoader(true, "Logging in and fetching directory...");
         if (errorEl) errorEl.classList.add('hidden');
     
-        fetch(`${API_URL}?action=getInitialData`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-                
-                localStorage.setItem('cat_user', u);
-                localStorage.setItem('cat_pass', p);
+        // Instant render from localStorage cache if available (< 10ms speed)
+        const cachedRaw = localStorage.getItem('cat_cached_data');
+        let hasCache = false;
+        if (cachedRaw) {
+            try {
+                const cachedData = JSON.parse(cachedRaw);
+                schoolsList = cachedData.schools || [];
+                coordinatorsMap = cachedData.coordinators || {};
+                storeLookup = cachedData.storeLookup || {};
+                orders = cachedData.orders || [];
                 
                 const authC = document.getElementById('authContainer');
                 const appC = document.getElementById('appContainer');
                 if (authC) authC.classList.add('hidden');
                 if (appC) appC.classList.remove('hidden');
-                
-                schoolsList = data.schools || [];
-                coordinatorsMap = data.coordinators || {};
-                storeLookup = data.storeLookup || {};
-                orders = data.orders || [];
-                
-                // Populate Persistent Scratchpad & Checklist Notes
-                const textScratch = document.getElementById('scratchpad');
-                if (textScratch && data.scratchpadText !== undefined) {
-                    textScratch.value = data.scratchpadText;
-                }
-                if (data.checklistJson) {
-                    try { checklistItems = JSON.parse(data.checklistJson); } catch (e) { checklistItems = []; }
-                }
-                
+
                 populateSchoolsDropdown();
                 renderList();
-                renderChecklist();
-                showLoader(false);
-            })
-            .catch(err => {
-                showLoader(false);
-                if (errorEl) {
-                    errorEl.innerText = "Error verifying login or connecting to Google Sheets.";
-                    errorEl.classList.remove('hidden');
-                }
+                initScratchpad();
+                hasCache = true;
+            } catch (e) {
+                console.warn("Cached data parse error:", e);
+            }
+        }
+
+        if (!hasCache) {
+            showLoader(true, "Signing in...");
+        } else {
+            showLoader(true, "Syncing latest data...");
+        }
+
+        try {
+            localStorage.setItem('cat_user', u);
+            localStorage.setItem('cat_pass', p);
+
+            const data = await apiCall('getInitialData');
+            localStorage.setItem('cat_cached_data', JSON.stringify(data));
+
+            const authC = document.getElementById('authContainer');
+            const appC = document.getElementById('appContainer');
+            if (authC) authC.classList.add('hidden');
+            if (appC) appC.classList.remove('hidden');
+
+            schoolsList = data.schools || [];
+            coordinatorsMap = data.coordinators || {};
+            storeLookup = data.storeLookup || {};
+            orders = data.orders || [];
+
+            populateSchoolsDropdown();
+            renderList();
+            initScratchpad();
+            showLoader(false);
+
+            if (!window.syncInterval) window.syncInterval = setInterval(silentSync, 90000);
+
+        } catch (err) {
+            showLoader(false);
+            const isAuthError = err.message.includes("Incorrect Password") || err.message.includes("Unauthorized");
+
+            if (isAuthError) {
                 localStorage.removeItem('cat_user');
                 localStorage.removeItem('cat_pass');
-            });
+                localStorage.removeItem('cat_cached_data');
+                const authC = document.getElementById('authContainer');
+                const appC = document.getElementById('appContainer');
+                if (authC) authC.classList.remove('hidden');
+                if (appC) appC.classList.add('hidden');
+                if (errorEl) {
+                    errorEl.innerText = "Invalid password or credentials.";
+                    errorEl.classList.remove('hidden');
+                }
+            } else if (!hasCache) {
+                showBrandAlert("Server response delayed. Clicking OK will retry connecting.", "Connection Retry").then(() => {
+                    handleLogin(u, p);
+                });
+            }
+        }
+    }
+
+    async function silentSync() {
+        const loader = document.getElementById('loadingOverlay');
+        if (loader && !loader.classList.contains('hidden')) return;
+
+        const u = localStorage.getItem('cat_user');
+        const p = localStorage.getItem('cat_pass');
+        if (!u || !p) return;
+
+        try {
+            const data = await apiCall('getInitialData');
+            schoolsList = data.schools || [];
+            coordinatorsMap = data.coordinators || {};
+            storeLookup = data.storeLookup || {};
+            orders = data.orders || [];
+            localStorage.setItem('cat_cached_data', JSON.stringify(data));
+            renderList();
+        } catch (err) {
+            console.warn("Silent sync skipped:", err.message);
+        }
     }
     
     function handleLogout() {
         localStorage.removeItem('cat_user');
         localStorage.removeItem('cat_pass');
+        localStorage.removeItem('cat_cached_data');
         localStorage.removeItem('cat_scratchpad_mode');
-        localStorage.removeItem('cat_scratchpad');
+        localStorage.removeItem('cat_scratchpad_text');
+        localStorage.removeItem('cat_scratchpad_checklist');
         location.reload();
     }
 
@@ -861,21 +1042,9 @@
 
         showLoader(true, "Saving coordinator to directory...");
 
-        const payload = {
-            username: localStorage.getItem('cat_user'),
-            password: localStorage.getItem('cat_pass'),
-            action: "addCoordinator",
-            school: school,
-            name: name,
-            phone: phone,
-            email: email
-        };
-
         try {
-            const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
-            const result = await response.json();
-
-            if (!result.success) throw new Error(result.error);
+            const result = await apiCall("addCoordinator", { school, name, phone, email });
+            if (!result.success) throw new Error(result.error || "Failed to save coordinator");
 
             if (!coordinatorsMap[school]) {
                 coordinatorsMap[school] = [];
@@ -936,23 +1105,9 @@
 
         showLoader(true, "Saving school to directory...");
 
-        const payload = {
-            username: localStorage.getItem('cat_user'),
-            password: localStorage.getItem('cat_pass'),
-            action: "addSchool",
-            name: name,
-            phone: phone,
-            address: address,
-            deliveryStore: delivery,
-            carryoutStore: carryout,
-            district: district
-        };
-
         try {
-            const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
-            const result = await response.json();
-
-            if (!result.success) throw new Error(result.error);
+            const result = await apiCall("addSchool", { name, phone, address, deliveryStore: delivery, carryoutStore: carryout, district });
+            if (!result.success) throw new Error(result.error || "Failed to save school");
 
             schoolsList.push({ 
                 name: name, 
@@ -1548,17 +1703,8 @@ function renderList() {
 
         showLoader(true, "Updating school record...");
 
-        const payload = {
-            username: localStorage.getItem('cat_user'),
-            password: localStorage.getItem('cat_pass'),
-            action: "updateSchoolNotes",
-            schoolName: selectedSchool,
-            notes: notesText
-        };
-
         try {
-            const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
-            const data = await res.json();
+            const data = await apiCall("updateSchoolNotes", { schoolName: selectedSchool, notes: notesText });
             showLoader(false);
 
             if (!data.success) throw new Error(data.error);
@@ -1574,26 +1720,11 @@ function renderList() {
     }
 
     function triggerNotesCloudSync() {
-        const scratchpadVal = document.getElementById('scratchpad').value;
-        localStorage.setItem('cat_scratchpad', scratchpadVal);
+        const textVal = document.getElementById('scratchpad').value;
+        localStorage.setItem('cat_scratchpad_text', textVal);
 
-        clearTimeout(cloudSaveTimer);
-        cloudSaveTimer = setTimeout(() => {
-            const payload = {
-                username: localStorage.getItem('cat_user'),
-                password: localStorage.getItem('cat_pass'),
-                action: "saveScratchpad",
-                scratchpadText: scratchpadVal,
-                checklistJson: JSON.stringify(checklistItems)
-            };
-
-            fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) })
-                .then(res => res.json())
-                .then(data => {
-                    console.log("Notes synchronized successfully with Google Sheet.");
-                })
-                .catch(err => console.error("Cloud note backup failed:", err));
-        }, 2000);
+        clearTimeout(scratchpadTimeout);
+        scratchpadTimeout = setTimeout(() => syncNotesToBackend(textVal, 'text'), 1500);
     }
 
     function handleTemplateSelectChange() {
@@ -1905,20 +2036,15 @@ function renderList() {
         };
 
         try {
-            const res = await fetch(API_URL, {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            });
-            const result = await res.json();
-            
+            const result = await apiCall(action, payload);
             if (!result.success) {
                 throw new Error(result.error || "Save action failed");
             }
             
             const savedId = id || result.id;
 
-            const initRes = await fetch(`${API_URL}?action=getInitialData`);
-            const data = await initRes.json();
+            const data = await apiCall('getInitialData');
+            localStorage.setItem('cat_cached_data', JSON.stringify(data));
             
             orders = data.orders || [];
             renderList();
@@ -1948,7 +2074,6 @@ function renderList() {
         
         if (!id) return;
     
-        // If quote URL already exists, open it in a new tab
         if (savedQuoteUrl && savedQuoteUrl.startsWith("http")) {
             window.open(savedQuoteUrl, '_blank');
             return;
@@ -1956,23 +2081,8 @@ function renderList() {
     
         showLoader(true, "Duplicating template & drafting custom quote...");
     
-        const username = localStorage.getItem('cat_user');
-        const password = localStorage.getItem('cat_pass');
-    
-        const payload = {
-            username: username,
-            password: password,
-            action: "draftQuote",
-            id: id
-        };
-    
         try {
-            const res = await fetch(API_URL, {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            });
-            const result = await res.json();
-            
+            const result = await apiCall("draftQuote", { id: id });
             if (!result.success) {
                 throw new Error(result.error || "Draft quote process failed");
             }
@@ -1981,26 +2091,24 @@ function renderList() {
             await showBrandAlert("Quote Sheet Drafted successfully! It will now open in a new tab.", "Quote Generated");
             window.open(result.quoteUrl, '_blank');
             
-            // Refresh dataset and re-select the order to keep form populated
             showLoader(true, "Updating order state...");
-            const initRes = await fetch(`${API_URL}?action=getInitialData`);
-            const data = await initRes.json();
+            const data = await apiCall('getInitialData');
+            localStorage.setItem('cat_cached_data', JSON.stringify(data));
             orders = data.orders || [];
             renderList();
     
             const updatedOrder = orders.find(o => o.id === id);
             if (updatedOrder) {
-                selectOrder(updatedOrder); // <-- RE-SELECTS ORDER INSTEAD OF CLEARING FORM
+                selectOrder(updatedOrder);
             }
             showLoader(false);
         } catch (err) {
             showLoader(false);
             
-            if (err.message === "Failed to fetch") {
+            if (err.message.includes("Failed to fetch") || err.message.includes("invalid response")) {
                 showLoader(true, "Verifying status with spreadsheet...");
                 try {
-                    const initRes = await fetch(`${API_URL}?action=getInitialData`);
-                    const data = await initRes.json();
+                    const data = await apiCall('getInitialData');
                     orders = data.orders || [];
                     renderList();
     
@@ -2008,7 +2116,7 @@ function renderList() {
                     if (updatedOrder && updatedOrder.quoteUrl) {
                         await showBrandAlert("Quote Sheet Drafted successfully! It will now open in a new tab.", "Success");
                         window.open(updatedOrder.quoteUrl, '_blank');
-                        selectOrder(updatedOrder); // <-- RE-SELECTS ORDER
+                        selectOrder(updatedOrder);
                     } else {
                         await showBrandAlert("Error drafting quote: Connection timed out.", "Timeout Error");
                     }
@@ -2085,6 +2193,45 @@ function renderList() {
         }
     }
 
+    /* --- SCRATCHPAD ENGINE --- */
+    function initScratchpad() {
+        scratchpadMode = localStorage.getItem('cat_scratchpad_mode') || 'list';
+        
+        const cachedDataRaw = localStorage.getItem('cat_cached_data');
+        let dataScratchText = "";
+        let dataChecklistJson = "[]";
+        if (cachedDataRaw) {
+            try {
+                const parsed = JSON.parse(cachedDataRaw);
+                dataScratchText = parsed.scratchpadText || "";
+                dataChecklistJson = parsed.checklistJson || "[]";
+            } catch(e) {}
+        }
+
+        const savedText = localStorage.getItem('cat_scratchpad_text') || dataScratchText;
+        const textScratch = document.getElementById('scratchpad');
+        if (textScratch) textScratch.value = savedText;
+        
+        const savedChecklist = localStorage.getItem('cat_scratchpad_checklist') || dataChecklistJson;
+        if (savedChecklist) {
+            try { 
+                checklistItemsData = JSON.parse(savedChecklist); 
+            } catch (e) { 
+                checklistItemsData = []; 
+            }
+        } else {
+            checklistItemsData = [];
+        }
+
+        checklistItemsData = checklistItemsData.map((item, idx) => ({
+            id: item.id || (Date.now() + idx),
+            text: item.text || "",
+            done: item.done !== undefined ? item.done : (item.completed === true)
+        }));
+
+        setScratchpadMode(scratchpadMode);
+    }
+
     function setScratchpadMode(mode) {
         scratchpadMode = mode;
         localStorage.setItem('cat_scratchpad_mode', mode);
@@ -2116,36 +2263,19 @@ function renderList() {
         }
     }
 
-    function handleChecklistKeydown(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            addChecklistItem();
-        }
+    function saveChecklist() {
+        localStorage.setItem('cat_scratchpad_checklist', JSON.stringify(checklistItemsData));
+        clearTimeout(scratchpadTimeout);
+        scratchpadTimeout = setTimeout(() => syncNotesToBackend(JSON.stringify(checklistItemsData), 'list'), 1500);
     }
 
-    function addChecklistItem() {
-        const input = document.getElementById('newChecklistItem');
-        if (!input) return;
-        const val = input.value.trim();
-        if (!val) return;
-
-        checklistItems.push({ text: val, completed: false });
-        input.value = '';
-        triggerNotesCloudSync();
-        renderChecklist();
-    }
-
-    function toggleChecklistItem(index) {
-        if (!checklistItems[index]) return;
-        checklistItems[index].completed = !checklistItems[index].completed;
-        triggerNotesCloudSync();
-        renderChecklist();
-    }
-
-    function deleteChecklistItem(index) {
-        checklistItems.splice(index, 1);
-        triggerNotesCloudSync();
-        renderChecklist();
+    function syncNotesToBackend(content, mode) {
+        apiCall('saveScratchpad', {
+            scratchpadMode: mode,
+            scratchpadContent: content,
+            scratchpadText: mode === 'text' ? content : undefined,
+            checklistJson: mode === 'list' ? content : undefined
+        }).catch(err => console.warn("Notes sync retry pending: ", err.message));
     }
 
     function renderChecklist() {
@@ -2153,25 +2283,125 @@ function renderList() {
         if (!container) return;
         container.innerHTML = '';
 
-        if (checklistItems.length === 0) {
+        if (checklistItemsData.length === 0) {
             container.innerHTML = '<div style="text-align: center; padding: 24px; color: var(--brand-grey); font-family: \'Condensed\'; font-size: 15px;">Your list is empty.<br>Add items using the field above!</div>';
             return;
         }
 
-        let mapped = checklistItems.map((item, idx) => ({ ...item, originalIndex: idx }));
-        mapped.sort((a, b) => a.completed - b.completed);
-
-        mapped.forEach(item => {
+        checklistItemsData.forEach((item, index) => {
             const row = document.createElement('div');
-            row.className = `checklist-row ${item.completed ? 'completed' : ''}`;
-
-            row.innerHTML = `
-                <input type="checkbox" ${item.completed ? 'checked' : ''} onchange="toggleChecklistItem(${item.originalIndex})">
-                <span class="checklist-row-text">${item.text}</span>
-                <button type="button" class="checklist-delete-btn" onclick="deleteChecklistItem(${item.originalIndex})">&times;</button>
-            `;
+            row.style.cssText = 'display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px dashed var(--crust-med);';
+            
+            const leftPart = document.createElement('div');
+            leftPart.style.cssText = 'display: flex; align-items: center; gap: 8px; cursor: pointer; flex: 1; overflow: hidden;';
+            
+            const chk = document.createElement('input');
+            chk.type = 'checkbox';
+            chk.checked = item.done;
+            chk.onclick = (e) => { e.stopPropagation(); toggleChecklistItem(item.id); };
+            
+            const labelText = document.createElement('span');
+            labelText.innerText = item.text;
+            labelText.style.cssText = 'font-size: 16px; word-break: break-word; color: var(--crust-burnt);';
+            if (item.done) labelText.style.textDecoration = 'line-through';
+            
+            labelText.title = "Click to edit task";
+            labelText.onclick = (e) => { 
+                e.preventDefault(); 
+                e.stopPropagation(); 
+                editChecklistItem(item.id); 
+            };
+            
+            leftPart.appendChild(chk);
+            leftPart.appendChild(labelText);
+            
+            const controls = document.createElement('div');
+            controls.style.cssText = 'display: flex; gap: 2px; align-items: center;';
+            
+            if (index > 0) {
+                const upBtn = document.createElement('button');
+                upBtn.type = 'button';
+                upBtn.innerHTML = '▲';
+                upBtn.title = "Move Up";
+                upBtn.style.cssText = 'background: transparent; color: var(--dark-blue); border: none; padding: 2px 4px; font-size: 12px; cursor: pointer; border-radius: 3px;';
+                upBtn.onclick = (e) => { e.stopPropagation(); moveChecklistItem(item.id, -1); };
+                controls.appendChild(upBtn);
+            }
+            
+            if (index < checklistItemsData.length - 1) {
+                const downBtn = document.createElement('button');
+                downBtn.type = 'button';
+                downBtn.innerHTML = '▼';
+                downBtn.title = "Move Down";
+                downBtn.style.cssText = 'background: transparent; color: var(--dark-blue); border: none; padding: 2px 4px; font-size: 12px; cursor: pointer; border-radius: 3px;';
+                downBtn.onclick = (e) => { e.stopPropagation(); moveChecklistItem(item.id, 1); };
+                controls.appendChild(downBtn);
+            }
+            
+            const delBtn = document.createElement('button');
+            delBtn.type = 'button';
+            delBtn.innerHTML = '×';
+            delBtn.title = "Delete Task";
+            delBtn.style.cssText = 'background: transparent; color: var(--brand-grey); border: none; padding: 2px 4px; font-size: 18px; font-weight: bold; cursor: pointer;';
+            delBtn.onclick = (e) => { e.stopPropagation(); deleteChecklistItem(item.id); };
+            controls.appendChild(delBtn);
+            
+            row.appendChild(leftPart);
+            row.appendChild(controls);
             container.appendChild(row);
         });
+    }
+
+    function moveChecklistItem(id, direction) {
+        const index = checklistItemsData.findIndex(item => item.id === id);
+        if (index === -1) return;
+        const newIndex = index + direction;
+        if (newIndex < 0 || newIndex >= checklistItemsData.length) return;
+
+        const temp = checklistItemsData[index];
+        checklistItemsData[index] = checklistItemsData[newIndex];
+        checklistItemsData[newIndex] = temp;
+
+        saveChecklist();
+        renderChecklist();
+    }
+
+    async function editChecklistItem(id) {
+        const item = checklistItemsData.find(i => i.id === id);
+        if (!item) return;
+
+        const newText = await showBrandPrompt("Edit task description:", item.text, "Edit Task");
+        if (newText !== null && newText.trim() !== "") {
+            item.text = newText.trim();
+            saveChecklist();
+            renderChecklist();
+        }
+    }
+
+    function handleChecklistKeydown(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const input = document.getElementById('newChecklistItem');
+            if (!input) return;
+            const text = input.value.trim();
+            if (!text) return;
+            checklistItemsData.push({ id: Date.now(), text: text, done: false });
+            input.value = '';
+            saveChecklist();
+            renderChecklist();
+        }
+    }
+
+    function toggleChecklistItem(id) {
+        checklistItemsData = checklistItemsData.map(item => item.id === id ? { ...item, done: !item.done } : item);
+        saveChecklist();
+        renderChecklist();
+    }
+
+    function deleteChecklistItem(id) {
+        checklistItemsData = checklistItemsData.filter(item => item.id !== id);
+        saveChecklist();
+        renderChecklist();
     }
 
     async function triggerQuoteSend() {
@@ -2186,23 +2416,8 @@ function renderList() {
 
         showLoader(true, "Compiling PDF & emailing quote to coordinator...");
 
-        const username = localStorage.getItem('cat_user');
-        const password = localStorage.getItem('cat_pass');
-
-        const payload = {
-            username: username,
-            password: password,
-            action: "sendQuote",
-            id: id
-        };
-
         try {
-            const res = await fetch(API_URL, {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            });
-            const result = await res.json();
-            
+            const result = await apiCall("sendQuote", { id: id });
             showLoader(false);
             if (!result.success) {
                 throw new Error(result.error || "Failed to send email.");
@@ -2210,8 +2425,8 @@ function renderList() {
             await showBrandAlert("Quote emailed successfully to the school coordinator!", "Success");
             
             showLoader(true, "Updating dashboard state...");
-            const initRes = await fetch(`${API_URL}?action=getInitialData`);
-            const data = await initRes.json();
+            const data = await apiCall('getInitialData');
+            localStorage.setItem('cat_cached_data', JSON.stringify(data));
             
             orders = data.orders || [];
             renderList();
@@ -2226,101 +2441,6 @@ function renderList() {
         }
     }
 
-    function formatStringToInputDate(dateStr) {
-        if (!dateStr) return '';
-        if (dateStr.includes('T')) {
-            return dateStr.split('T')[0];
-        }
-        
-        const parts = dateStr.split('/');
-        if (parts.length === 3) {
-            let month = parts[0].padStart(2, '0');
-            let day = parts[1].padStart(2, '0');
-            let year = parts[2];
-            if (year.length === 2) {
-                year = '20' + year; 
-            }
-            return `${year}-${month}-${day}`;
-        }
-        return dateStr;
-    }
-
-    function formatPhoneNumber(value) {
-        if (!value) return "";
-        let str = value.toString().trim();
-        
-        let basePart = str;
-        let extPart = "";
-        
-        const extRegex = /(?:ext|ext\.|x|ext\s|Ext|Ext\.|X)\s*(\d+)/i;
-        const match = str.match(extRegex);
-        if (match) {
-            extPart = match[1]; 
-            basePart = str.replace(extRegex, "").trim();
-        }
-        
-        const digits = basePart.replace(/[^\d]/g, '');
-        let formattedBase = "";
-        
-        if (digits.length === 10) {
-            formattedBase = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
-        } else if (digits.length === 11 && digits.startsWith('1')) {
-            formattedBase = `(${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7, 11)}`;
-        } else {
-            if (digits.length < 4) {
-                formattedBase = digits;
-            } else if (digits.length < 7) {
-                formattedBase = `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
-            } else {
-                formattedBase = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
-            }
-        }
-        
-        if (extPart) {
-            return `${formattedBase} x${extPart}`;
-        }
-        return formattedBase;
-    }
-
-    function convertMilitaryTo12Hour(timeStr) {
-        if (!timeStr) return '';
-        const trimmed = timeStr.trim();
-        
-        if (trimmed.toLowerCase().includes('am') || trimmed.toLowerCase().includes('pm')) {
-            return trimmed;
-        }
-        
-        const match = trimmed.match(/^(\d{1,2}):(\d{2})$/);
-        if (match) {
-            let hours = parseInt(match[1], 10);
-            const minutes = match[2];
-            
-            if (hours >= 0 && hours <= 23) {
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12; 
-                return `${hours}:${minutes} ${ampm}`;
-            }
-        }
-        return trimmed; 
-    }
-
-    function extractFirstName(fullName) {
-        if (!fullName) return "";
-        let name = fullName.toString().trim();
-        const parts = name.split(/\s+/);
-        if (parts.length === 0) return "";
-        
-        const titles = ["dr", "dr.", "mr", "mr.", "mrs", "mrs.", "ms", "ms.", "coach", "principal", "officer"];
-        const firstPartLower = parts[0].toLowerCase();
-        
-        if (titles.includes(firstPartLower) && parts.length > 1) {
-            return parts[0] + " " + parts[1];
-        }
-        
-        return parts[0];
-    }
-
     async function syncQuoteTotal() {
         const fieldId = document.getElementById('fieldId');
         const id = fieldId ? fieldId.value : '';
@@ -2331,22 +2451,8 @@ function renderList() {
 
         showLoader(true, "Reading updated total from quote spreadsheet...");
 
-        const username = localStorage.getItem('cat_user');
-        const password = localStorage.getItem('cat_pass');
-
-        const payload = {
-            username: username,
-            password: password,
-            action: "syncQuoteTotal",
-            id: id
-        };
-
         try {
-            const res = await fetch(API_URL, {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            });
-            const result = await res.json();
+            const result = await apiCall("syncQuoteTotal", { id: id });
             showLoader(false);
 
             if (!result.success) throw new Error(result.error || "Sync action failed");
@@ -2358,8 +2464,8 @@ function renderList() {
                 document.getElementById('fieldTip').value = result.tipAmount;
             }
 
-            const initRes = await fetch(`${API_URL}?action=getInitialData`);
-            const data = await initRes.json();
+            const data = await apiCall('getInitialData');
+            localStorage.setItem('cat_cached_data', JSON.stringify(data));
             orders = data.orders || [];
             renderList();
 
@@ -2386,23 +2492,8 @@ function renderList() {
     
         showLoader(true, "Deleting order from Google Sheets...");
     
-        const username = localStorage.getItem('cat_user');
-        const password = localStorage.getItem('cat_pass');
-    
-        const payload = {
-            username: username,
-            password: password,
-            action: "deleteOrder",
-            id: id
-        };
-    
         try {
-            const res = await fetch(API_URL, {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            });
-            const result = await res.json();
-    
+            const result = await apiCall("deleteOrder", { id: id });
             showLoader(false);
     
             if (!result.success) {
@@ -2411,10 +2502,9 @@ function renderList() {
     
             await showBrandAlert("Order deleted successfully.", "Deleted");
     
-            // Refresh dataset from Google Sheets
             showLoader(true, "Refreshing orders list...");
-            const initRes = await fetch(`${API_URL}?action=getInitialData`);
-            const data = await initRes.json();
+            const data = await apiCall('getInitialData');
+            localStorage.setItem('cat_cached_data', JSON.stringify(data));
             orders = data.orders || [];
             
             clearForm();
