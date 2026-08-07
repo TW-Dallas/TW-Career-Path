@@ -2404,6 +2404,101 @@ function renderList() {
         renderChecklist();
     }
 
+    function formatStringToInputDate(dateStr) {
+        if (!dateStr) return '';
+        if (dateStr.includes('T')) {
+            return dateStr.split('T')[0];
+        }
+        
+        const parts = dateStr.split('/');
+        if (parts.length === 3) {
+            let month = parts[0].padStart(2, '0');
+            let day = parts[1].padStart(2, '0');
+            let year = parts[2];
+            if (year.length === 2) {
+                year = '20' + year; 
+            }
+            return `${year}-${month}-${day}`;
+        }
+        return dateStr;
+    }
+
+    function formatPhoneNumber(value) {
+        if (!value) return "";
+        let str = value.toString().trim();
+        
+        let basePart = str;
+        let extPart = "";
+        
+        const extRegex = /(?:ext|ext\.|x|ext\s|Ext|Ext\.|X)\s*(\d+)/i;
+        const match = str.match(extRegex);
+        if (match) {
+            extPart = match[1]; 
+            basePart = str.replace(extRegex, "").trim();
+        }
+        
+        const digits = basePart.replace(/[^\d]/g, '');
+        let formattedBase = "";
+        
+        if (digits.length === 10) {
+            formattedBase = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+        } else if (digits.length === 11 && digits.startsWith('1')) {
+            formattedBase = `(${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7, 11)}`;
+        } else {
+            if (digits.length < 4) {
+                formattedBase = digits;
+            } else if (digits.length < 7) {
+                formattedBase = `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+            } else {
+                formattedBase = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+            }
+        }
+        
+        if (extPart) {
+            return `${formattedBase} x${extPart}`;
+        }
+        return formattedBase;
+    }
+
+    function convertMilitaryTo12Hour(timeStr) {
+        if (!timeStr) return '';
+        const trimmed = timeStr.trim();
+        
+        if (trimmed.toLowerCase().includes('am') || trimmed.toLowerCase().includes('pm')) {
+            return trimmed;
+        }
+        
+        const match = trimmed.match(/^(\d{1,2}):(\d{2})$/);
+        if (match) {
+            let hours = parseInt(match[1], 10);
+            const minutes = match[2];
+            
+            if (hours >= 0 && hours <= 23) {
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; 
+                return `${hours}:${minutes} ${ampm}`;
+            }
+        }
+        return trimmed; 
+    }
+
+    function extractFirstName(fullName) {
+        if (!fullName) return "";
+        let name = fullName.toString().trim();
+        const parts = name.split(/\s+/);
+        if (parts.length === 0) return "";
+        
+        const titles = ["dr", "dr.", "mr", "mr.", "mrs", "mrs.", "ms", "ms.", "coach", "principal", "officer"];
+        const firstPartLower = parts[0].toLowerCase();
+        
+        if (titles.includes(firstPartLower) && parts.length > 1) {
+            return parts[0] + " " + parts[1];
+        }
+        
+        return parts[0];
+    }
+
     async function triggerQuoteSend() {
         const fieldId = document.getElementById('fieldId');
         const id = fieldId ? fieldId.value : '';
