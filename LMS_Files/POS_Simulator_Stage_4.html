@@ -87,7 +87,7 @@
         <!-- RIGHT: POS Screen & Hitboxes -->
         <div id="pos-container">
             <div id="hitbox-wrapper">
-                <img id="pos-image" src="" alt="POS Screen">
+                <img id="pos-image" src="resources/POS_assets/Stage_4/POS_4.0.A.png" alt="POS Screen">
                 <!-- HITBOXES WILL BE INJECTED HERE BY JAVASCRIPT -->
             </div>
         </div>
@@ -126,9 +126,12 @@
             return false;
         };
 
+        // Capture asset-loading failures (filtering out empty initial src / page URL)
         window.addEventListener('error', function (event) {
             if (event.target && event.target.tagName === 'IMG') {
-                reportErrorToDeveloper('Broken Image Asset', event.target.src);
+                const src = event.target.src || '';
+                if (!src || src === window.location.href || src.endsWith('.html') || src.endsWith('/')) return;
+                reportErrorToDeveloper('Broken Image Asset', src);
             }
         }, true);
 
@@ -542,6 +545,8 @@
             });
 
         window.advanceStep = function(target) {
+            if (currentStep >= sequence.length || !sequence[currentStep]) return;
+
             let clickedId = "";
 
             if (typeof target === 'string') clickedId = target;
@@ -553,6 +558,7 @@
             } 
 
             const stepData = sequence[currentStep];
+            if (!stepData) return;
             if (stepData.input && stepData.input.type === 'text') return;
 
             // --- SPECIAL INTERACTIVE LOGIC FOR STEP 1 ---

@@ -56,7 +56,7 @@
         <!-- RIGHT: POS Screen & Hitboxes -->
         <div id="pos-container">
             <div id="hitbox-wrapper">
-                <img id="pos-image" src="" alt="POS Screen">
+                <img id="pos-image" src="resources/POS_assets/Stage_0/POS_0.01.png" alt="POS Screen">
                 <!-- HITBOXES WILL BE INJECTED HERE BY JAVASCRIPT -->
             </div>
         </div>
@@ -296,26 +296,27 @@
 
         // Global advanceStep function capable of parsing any argument structure
         window.advanceStep = function(target) {
+            if (currentStep >= sequence.length || !sequence[currentStep]) return;
+
             let clickedId = "";
 
             if (typeof target === 'string') {
-                // Case 1: ID string passed (e.g., onclick="advanceStep('hb-id')")
                 clickedId = target;
             } else if (target && target.id) {
-                // Case 2: Full DOM element passed (e.g., onclick="advanceStep(this)")
                 clickedId = target.id;
             } else if (target && target.target) {
-                // Case 3: Event object passed (e.g., onclick="advanceStep(event)")
                 clickedId = target.target.id;
             } else if (window.event) {
-                // Case 4: No arguments passed (e.g., onclick="advanceStep()"), fall back to browser event
                 const eventTarget = window.event.currentTarget || window.event.target;
                 if (eventTarget) {
                     clickedId = eventTarget.id;
                 }
             }
 
-            const activeHitboxId = sequence[currentStep].activeHitbox;
+            const stepData = sequence[currentStep];
+            if (!stepData) return;
+
+            const activeHitboxId = stepData.activeHitbox;
 
             // If the clicked ID matches the active hitbox for the current step
             if (clickedId === activeHitboxId) {
