@@ -1196,14 +1196,14 @@
             });
             
             carryoutDropdown.value = "Carryout"; 
-            if (storeInput) storeInput.value = schoolObj.carryoutStore || "";
+            if (storeInput) storeInput.value = (schoolObj.carryoutStore && schoolObj.carryoutStore.trim() !== "") ? schoolObj.carryoutStore : (schoolObj.deliveryStore || "");
         } else {
             Array.from(carryoutDropdown.options).forEach(opt => {
                 opt.disabled = false;
             });
             
             if (carryoutDropdown.value === "Carryout") {
-                if (storeInput) storeInput.value = schoolObj.carryoutStore || "";
+                if (storeInput) storeInput.value = (schoolObj.carryoutStore && schoolObj.carryoutStore.trim() !== "") ? schoolObj.carryoutStore : (schoolObj.deliveryStore || "");
             } else {
                 if (storeInput) storeInput.value = schoolObj.deliveryStore || "";
             }
@@ -1238,7 +1238,7 @@
 
         if (schoolObj) {
             if (carryoutDropdown.value === "Carryout") {
-                storeInput.value = schoolObj.carryoutStore || "";
+                storeInput.value = (schoolObj.carryoutStore && schoolObj.carryoutStore.trim() !== "") ? schoolObj.carryoutStore : (schoolObj.deliveryStore || "");
             } else {
                 storeInput.value = schoolObj.deliveryStore || "";
             }
@@ -1518,7 +1518,23 @@ function renderList() {
 
         if (fieldDate) fieldDate.value = formatStringToInputDate(item.date);
         if (fieldTime) fieldTime.value = item.time || '';
-        if (fieldStore) fieldStore.value = item.storeNum || '';
+        
+        if (fieldStore) {
+            if (item.storeNum && item.storeNum.toString().trim() !== "") {
+                fieldStore.value = item.storeNum;
+            } else {
+                const sObj = schoolsList.find(s => (s.name || '').trim().toLowerCase() === (item.schoolName || '').trim().toLowerCase());
+                if (sObj) {
+                    if (item.serviceMethod === "Carryout") {
+                        fieldStore.value = (sObj.carryoutStore && sObj.carryoutStore.trim() !== "") ? sObj.carryoutStore : (sObj.deliveryStore || "");
+                    } else {
+                        fieldStore.value = sObj.deliveryStore || "";
+                    }
+                } else {
+                    fieldStore.value = "";
+                }
+            }
+        }
         if (fieldPoNum) fieldPoNum.value = item.poNum || '';
         if (fieldTotal) fieldTotal.value = item.totalCost || '';
         if (fieldTip) fieldTip.value = item.tipAmount || '';
@@ -2010,6 +2026,19 @@ function renderList() {
         const phoneInput = document.getElementById('fieldPhone');
         const emailInput = document.getElementById('fieldEmail');
 
+        let finalStoreNum = storeInput ? storeInput.value.trim() : '';
+        if (!finalStoreNum && schoolDropdown && schoolDropdown.value) {
+            const sObj = schoolsList.find(s => (s.name || '').trim().toLowerCase() === schoolDropdown.value.trim().toLowerCase());
+            if (sObj) {
+                if (carryoutDropdown && carryoutDropdown.value === "Carryout") {
+                    finalStoreNum = (sObj.carryoutStore && sObj.carryoutStore.trim() !== "") ? sObj.carryoutStore : (sObj.deliveryStore || "");
+                } else {
+                    finalStoreNum = sObj.deliveryStore || "";
+                }
+            }
+        }
+        if (storeInput && finalStoreNum) storeInput.value = finalStoreNum;
+
         const payload = {
             username: username,
             password: password,
@@ -2020,7 +2049,7 @@ function renderList() {
             serviceMethod: carryoutDropdown ? carryoutDropdown.value : '',
             date: dateInput,
             time: timeInput ? convertMilitaryTo12Hour(timeInput.value.trim()) : '',
-            storeNum: storeInput ? storeInput.value : '',
+            storeNum: finalStoreNum,
             poNum: poNumInput ? poNumInput.value.trim() : '',
             totalCost: totalInput ? totalInput.value.trim() : '',
             tipAmount: tipInput ? tipInput.value.trim() : '',
