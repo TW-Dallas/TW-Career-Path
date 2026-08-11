@@ -171,21 +171,21 @@
                 <!-- Top HUD / Control Strip -->
                 <div class="uniform-hud-bar">
                     <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="font-family: 'PizzaPress', sans-serif; color: var(--brand-red); font-size: 1.3rem;">👕 PERFECT IMAGE</span>
-                        <span id="uniform-phase-tag" style="background: var(--brand-blue); color: white; padding: 4px 12px; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.85rem;">Guided Presentation</span>
+                        <span style="font-family: 'PizzaPress', sans-serif; color: var(--crust-med); font-size: 1.3rem; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.6);">👕 PERFECT IMAGE</span>
+                        <span id="uniform-phase-tag" style="background: var(--dark-blue); color: var(--crust-light); border: 1px solid var(--crust-med); padding: 4px 12px; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.85rem;">Guided Presentation</span>
                     </div>
 
                     <!-- Audio Player & Scrubber -->
                     <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1; max-width: 480px; margin: 0 15px;">
-                        <button id="uniform-play-btn" onclick="toggleUniformAudio()" style="background: var(--brand-blue); border: none; color: white; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">▶</button>
+                        <button id="uniform-play-btn" onclick="toggleUniformAudio()" style="background: var(--brand-blue); border: none; color: var(--crust-light); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">▶</button>
                         <input type="range" id="uniform-scrubber" min="0" max="419" value="0" step="0.5" oninput="seekUniformAudio(this.value)" style="flex-grow: 1; cursor: pointer;">
-                        <span id="uniform-time-disp" style="font-family: monospace; font-size: 0.85rem; color: #cbd5e1; min-width: 85px; text-align: right;">0:00 / 6:59</span>
+                        <span id="uniform-time-disp" style="font-family: monospace; font-size: 0.85rem; color: var(--crust-med); min-width: 85px; text-align: right;">0:00 / 6:59</span>
                     </div>
 
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <button id="btn-toggle-explore" onclick="toggleFreeExploreMode()" class="btn hidden" style="padding: 5px 12px; font-size: 0.8rem; background: var(--brand-blue); border: none;">🔍 Free Explore</button>
-                        <button onclick="openLookBookModal()" class="btn" style="padding: 5px 12px; font-size: 0.8rem; background: #334155; border: 1px solid var(--brand-blue);">📖 Look Book</button>
-                        <span class="video-modal-close" onclick="closeUniformModal()" style="position: static; font-size: 1.8rem; cursor: pointer; margin-left: 10px;">&times;</span>
+                        <button onclick="openLookBookModal()" class="btn" style="padding: 5px 12px; font-size: 0.8rem; background: var(--dark-blue); color: var(--crust-light); border: 1px solid var(--crust-med);">📖 Look Book</button>
+                        <span class="video-modal-close" onclick="closeUniformModal()" style="position: static; font-size: 1.8rem; cursor: pointer; margin-left: 10px; color: var(--crust-med);">&times;</span>
                     </div>
                 </div>
 
@@ -389,6 +389,12 @@
         ];
 
         function initUniformInteractive() {
+            // Guarantee uniform-modal-overlay is un-nested and attached directly to body
+            const overlay = document.getElementById('uniform-modal-overlay');
+            if (overlay && overlay.parentElement !== document.body) {
+                document.body.appendChild(overlay);
+            }
+
             uniformAudio = document.getElementById('uniform-audio-element');
             if (!uniformAudio) return;
 
