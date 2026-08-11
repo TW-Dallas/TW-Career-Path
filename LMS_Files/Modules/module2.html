@@ -400,6 +400,10 @@
             uniformAudio.onended = () => {
                 onUniformCompleted();
             };
+
+            // Force immediate render of Stage 1 Intro Slide (0:00)
+            updateUniformTimeDisplay();
+            processUniformTimeline(0);
         }
 
         function toggleUniformAudio() {
@@ -628,17 +632,23 @@
                 }
                 if (modalContent) modalContent.classList.add('interactive-mode');
                 if (vimeoWrapper) vimeoWrapper.style.display = 'none';
-                if (uniformModal) uniformModal.classList.remove('hidden');
+                if (uniformModal) {
+                    uniformModal.classList.remove('hidden');
+                    uniformModal.style.display = 'flex';
+                }
                 
                 initUniformInteractive();
                 if (uniformAudio) {
                     uniformAudio.currentTime = 0;
-                    uniformAudio.play();
+                    uniformAudio.play().catch(err => console.log("Audio play caught:", err));
                 }
             } else {
                 if (modalContent) modalContent.classList.remove('interactive-mode');
                 if (vimeoWrapper) vimeoWrapper.style.display = 'block';
-                if (uniformModal) uniformModal.classList.add('hidden');
+                if (uniformModal) {
+                    uniformModal.classList.add('hidden');
+                    uniformModal.style.display = 'none';
+                }
 
                 if (uniformAudio) uniformAudio.pause();
 
