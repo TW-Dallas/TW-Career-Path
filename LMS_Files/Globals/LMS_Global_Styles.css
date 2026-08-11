@@ -1100,16 +1100,7 @@
         text-shadow: 0 2px 4px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.9);
     }
 
-    #explore-text-shirts      { top: 18.9924%; left: 18.6092%; width: 19.4867%; height: 14.1707%; }
-    #explore-text-aprons      { top: 43.4691%; left: 23.255%;  width: 13.8085%; height: 10.1219%; }
-    #explore-text-bracelets   { top: 62.0566%; left: 23.5131%; width: 16.1314%; height: 12.6984%; }
-    #explore-text-shoes       { top: 80.0000%; left: 28.5000%; width: 18.0000%; height: 10.0000%; }
-    #explore-text-hats        { top: 18.8084%; left: 55.6468%; width: 15.099%;  height: 9.20175%; }
-    #explore-text-piercings   { top: 32.9791%; left: 54.7434%; width: 14.3247%; height: 12.5144%; }
-    #explore-text-nails       { top: 51.3826%; left: 57.1954%; width: 15.099%;  height: 8.46561%; }
-    #explore-text-bottoms     { top: 67.9457%; left: 61.0669%; width: 16.0023%; height: 23.9245%; }
-    #explore-text-jackets     { top: 18.9924%; left: 87.9095%; width: 8.77547%; height: 24.8447%; }
-    #explore-text-facial-hair { top: 50.8305%; left: 84.038%;  width: 8.25926%; height: 5.52105%; }
+    /* Callout text coordinates centralized in LMS_Master_hitboxes.css */
 
     .inbox-guideline-text {
         width: 100%;

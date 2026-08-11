@@ -490,3 +490,15 @@
   #hb-click-jackets    { top: 23.5933%; left: 73.1977%; width: 10.7112%; height: 16.7472%; }
   #hb-click-facial-hair { top: 63.7129%; left: 85.1995%; width: 3.35533%; height: 3.31263%; }
   #hb-click-piercings  { top: 27.8261%; left: 42.4836%; width: 5.29109%; height: 4.41684%; }
+
+  /* --- MODULE 2 FREE-EXPLORE CALLOUT TEXT DESTINATIONS --- */
+  #explore-text-shirts      { top: 18.9924%; left: 18.6092%; width: 19.4867%; height: 14.1707%; }
+  #explore-text-aprons      { top: 43.4691%; left: 23.255%;  width: 13.8085%; height: 10.1219%; }
+  #explore-text-bracelets   { top: 62.0566%; left: 23.5131%; width: 16.1314%; height: 12.6984%; }
+  #explore-text-shoes       { top: 81.8956%; left: 27.3846%; width: 9.03357%; height: 14.3547%; }
+  #explore-text-hats        { top: 18.8084%; left: 55.6468%; width: 15.099%;  height: 9.20175%; }
+  #explore-text-piercings   { top: 32.9791%; left: 54.7434%; width: 14.3247%; height: 12.5144%; }
+  #explore-text-nails       { top: 51.3826%; left: 57.1954%; width: 15.099%;  height: 8.46561%; }
+  #explore-text-bottoms     { top: 67.9457%; left: 61.0669%; width: 16.0023%; height: 23.9245%; }
+  #explore-text-jackets     { top: 18.9924%; left: 87.9095%; width: 8.77547%; height: 24.8447%; }
+  #explore-text-facial-hair { top: 50.8305%; left: 84.038%;  width: 8.25926%; height: 5.52105%; }
