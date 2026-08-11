@@ -159,9 +159,15 @@
                     <div id="hb-trash-J" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
                     <div id="hb-trash-K" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
             </div> <!-- END video-wrapper-modal -->
+        </div> <!-- END video-modal-content -->
+    </div> <!-- END video-modal -->
 
+    <!-- STANDALONE INTERACTIVE UNIFORM MODAL OVERLAY (100% INDEPENDENT FROM VIMEO VIDEO PLAYER) -->
+    <div id="uniform-modal-overlay" class="video-modal-overlay hidden">
+        <div class="video-modal-content interactive-mode" style="width: 94vw !important; max-width: 1200px !important; height: 88vh !important; max-height: 820px !important; display: flex; flex-direction: column; background: #090d16 !important; position: relative;">
+            
             <!-- INTERACTIVE UNIFORM JOB AID CONTAINER -->
-            <div id="uniform-interactive-modal" class="uniform-modal-container" style="display: none;">
+            <div id="uniform-interactive-modal" class="uniform-modal-container" style="display: flex; width: 100%; height: 100%; flex-direction: column;">
                 <!-- Top HUD / Control Strip -->
                 <div class="uniform-hud-bar">
                     <div style="display: flex; align-items: center; gap: 12px;">
@@ -169,98 +175,98 @@
                         <span id="uniform-phase-tag" style="background: var(--brand-blue); color: white; padding: 4px 12px; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.85rem;">Guided Presentation</span>
                     </div>
 
-                        <!-- Audio Player & Scrubber -->
-                        <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1; max-width: 480px; margin: 0 15px;">
-                            <button id="uniform-play-btn" onclick="toggleUniformAudio()" style="background: var(--brand-blue); border: none; color: white; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">▶</button>
-                            <input type="range" id="uniform-scrubber" min="0" max="419" value="0" step="0.5" oninput="seekUniformAudio(this.value)" style="flex-grow: 1; cursor: pointer;">
-                            <span id="uniform-time-disp" style="font-family: monospace; font-size: 0.85rem; color: #cbd5e1; min-width: 85px; text-align: right;">0:00 / 6:59</span>
-                        </div>
-
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <button id="btn-toggle-explore" onclick="toggleFreeExploreMode()" class="btn hidden" style="padding: 5px 12px; font-size: 0.8rem; background: var(--brand-blue); border: none;">🔍 Free Explore</button>
-                            <button onclick="openLookBookModal()" class="btn" style="padding: 5px 12px; font-size: 0.8rem; background: #334155; border: 1px solid var(--brand-blue);">📖 Look Book</button>
-                            <span class="video-modal-close" onclick="closeVideoModal()" style="position: static; font-size: 1.8rem; cursor: pointer; margin-left: 10px;">&times;</span>
-                        </div>
+                    <!-- Audio Player & Scrubber -->
+                    <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1; max-width: 480px; margin: 0 15px;">
+                        <button id="uniform-play-btn" onclick="toggleUniformAudio()" style="background: var(--brand-blue); border: none; color: white; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">▶</button>
+                        <input type="range" id="uniform-scrubber" min="0" max="419" value="0" step="0.5" oninput="seekUniformAudio(this.value)" style="flex-grow: 1; cursor: pointer;">
+                        <span id="uniform-time-disp" style="font-family: monospace; font-size: 0.85rem; color: #cbd5e1; min-width: 85px; text-align: right;">0:00 / 6:59</span>
                     </div>
 
-                    <!-- Audio Element -->
-                    <audio id="uniform-audio-element" src="../resources/Image_Guides/Uniform_Audio.mp3" style="display: none;"></audio>
-
-                    <!-- Main Canvas View Area -->
-                    <div class="uniform-canvas-area">
-                        
-                        <!-- STAGE 1: INTRO SLIDES (0:00 - 0:49) -->
-                        <div id="uniform-stage-intro" class="uniform-stage-view" style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-                            <img id="intro-slide-img" src="../resources/Title_Slides/Perfect_Image_2_Title.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block; opacity: 1; transition: opacity 0.4s ease-in-out; z-index: 10;">
-                            <div style="color: #94a3b8; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; text-align: center; padding: 20px;">
-                                👕 Perfect Image Presentation Loading...
-                            </div>
-                        </div>
-
-                        <!-- STAGE 2 & 3: 6-BOX GRID POSTERS (Apparel 0:49-3:58, Grooming 3:58-6:16) -->
-                        <div id="uniform-stage-grid" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
-                            <img id="grid-poster-img" src="../resources/Image_Guides/Perfect_Apparel.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
-                            
-                            <!-- 6 Grid Hitboxes -->
-                            <div id="hb-top-left" class="grid-box-overlay" onclick="onGridBoxClick('top-left')"></div>
-                            <div id="hb-top-mid" class="grid-box-overlay" onclick="onGridBoxClick('top-mid')"></div>
-                            <div id="hb-top-right" class="grid-box-overlay" onclick="onGridBoxClick('top-right')"></div>
-                            <div id="hb-bottom-left" class="grid-box-overlay" onclick="onGridBoxClick('bottom-left')"></div>
-                            <div id="hb-bottom-mid" class="grid-box-overlay" onclick="onGridBoxClick('bottom-mid')"></div>
-                            <div id="hb-bottom-right" class="grid-box-overlay" onclick="onGridBoxClick('bottom-right')"></div>
-
-                            <!-- Active Popover Text Card -->
-                            <div id="active-box-card" class="box-text-card hidden">
-                                <div id="box-card-title" style="font-family: 'PizzaPress'; color: var(--brand-red); font-size: 1.1rem; margin-bottom: 4px;"></div>
-                                <div id="box-card-text" style="font-weight: normal;"></div>
-                            </div>
-                        </div>
-
-                        <!-- STAGE 4: FREE EXPLORE POSTER (Image_Poster.png) -->
-                        <div id="uniform-stage-explore" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
-                            <img src="../resources/Image_Guides/Image_Poster.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
-                            
-                            <!-- Free Explore Hitboxes -->
-                            <div id="hb-shirts" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
-                            <div id="hb-aprons" class="grid-box-overlay" onclick="onPeopleExploreClick('aprons')"></div>
-                            <div id="hb-bracelets" class="grid-box-overlay" onclick="onPeopleExploreClick('bracelets')"></div>
-                            <div id="hb-shoes" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
-                            <div id="hb-hats" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
-                            <div id="hb-piercings" class="grid-box-overlay" onclick="onPeopleExploreClick('piercings')"></div>
-                            <div id="hb-nails" class="grid-box-overlay" onclick="onPeopleExploreClick('nails')"></div>
-                            <div id="hb-bottoms" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
-                            <div id="hb-jackets" class="grid-box-overlay" onclick="onPeopleExploreClick('jackets')"></div>
-                            <div id="hb-facial-hair" class="grid-box-overlay" onclick="onPeopleExploreClick('facial-hair')"></div>
-
-                            <!-- Active Explore Text Card -->
-                            <div id="explore-text-card" class="box-text-card hidden">
-                                <div id="explore-card-title" style="font-family: 'PizzaPress'; color: var(--brand-red); font-size: 1.1rem; margin-bottom: 4px;"></div>
-                                <div id="explore-card-text" style="font-weight: normal;"></div>
-                            </div>
-                        </div>
-
-                        <!-- COMPLETION OVERLAY -->
-                        <div id="uniform-completion-banner" class="hidden" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: #166534; color: white; padding: 12px 28px; border-radius: 30px; border: 2px solid #22c55e; box-shadow: 0 4px 20px rgba(0,0,0,0.6); display: flex; align-items: center; gap: 15px; z-index: 1000;">
-                            <span style="font-size: 1.1rem; font-family: 'OneDotCd-Bold';">✓ Uniform Guidelines Complete! Card Unlocked!</span>
-                            <button onclick="finishUniformInteractive()" class="btn" style="background: white; color: #166534; font-weight: bold; padding: 6px 16px; border: none;">Continue</button>
-                        </div>
-
-                    </div>
-
-                    <!-- LOOK BOOK LIGHTBOX MODAL -->
-                    <div id="lookbook-modal" class="lookbook-modal-overlay hidden">
-                        <div style="width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: white;">
-                            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.2rem;">📖 Uniform Look Book & Catalog Reference</span>
-                            <button onclick="closeLookBookModal()" class="btn" style="background: var(--brand-red); color: white; padding: 4px 16px; border: none;">Close Catalog &times;</button>
-                        </div>
-                        <div class="lookbook-modal-content">
-                            <img src="../resources/Image_Guides/Look_Book.jpg" alt="Look Book Catalog" style="width: 100%; height: auto; display: block;">
-                        </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <button id="btn-toggle-explore" onclick="toggleFreeExploreMode()" class="btn hidden" style="padding: 5px 12px; font-size: 0.8rem; background: var(--brand-blue); border: none;">🔍 Free Explore</button>
+                        <button onclick="openLookBookModal()" class="btn" style="padding: 5px 12px; font-size: 0.8rem; background: #334155; border: 1px solid var(--brand-blue);">📖 Look Book</button>
+                        <span class="video-modal-close" onclick="closeUniformModal()" style="position: static; font-size: 1.8rem; cursor: pointer; margin-left: 10px;">&times;</span>
                     </div>
                 </div>
 
+                <!-- Audio Element -->
+                <audio id="uniform-audio-element" src="../resources/Image_Guides/Uniform_Audio.mp3" style="display: none;"></audio>
+
+                <!-- Main Canvas View Area -->
+                <div class="uniform-canvas-area" style="position: relative; flex-grow: 1; width: 100%; height: calc(100% - 55px); background: #020617; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                    
+                    <!-- STAGE 1: INTRO SLIDES (0:00 - 0:49) -->
+                    <div id="uniform-stage-intro" class="uniform-stage-view" style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <img id="intro-slide-img" src="../resources/Title_Slides/Perfect_Image_2_Title.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block; opacity: 1; transition: opacity 0.4s ease-in-out; z-index: 10;">
+                        <div style="color: #94a3b8; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; text-align: center; padding: 20px;">
+                            👕 Perfect Image Presentation Loading...
+                        </div>
+                    </div>
+
+                    <!-- STAGE 2 & 3: 6-BOX GRID POSTERS (Apparel 0:49-3:58, Grooming 3:58-6:16) -->
+                    <div id="uniform-stage-grid" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
+                        <img id="grid-poster-img" src="../resources/Image_Guides/Perfect_Apparel.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
+                        
+                        <!-- 6 Grid Hitboxes -->
+                        <div id="hb-top-left" class="grid-box-overlay" onclick="onGridBoxClick('top-left')"></div>
+                        <div id="hb-top-mid" class="grid-box-overlay" onclick="onGridBoxClick('top-mid')"></div>
+                        <div id="hb-top-right" class="grid-box-overlay" onclick="onGridBoxClick('top-right')"></div>
+                        <div id="hb-bottom-left" class="grid-box-overlay" onclick="onGridBoxClick('bottom-left')"></div>
+                        <div id="hb-bottom-mid" class="grid-box-overlay" onclick="onGridBoxClick('bottom-mid')"></div>
+                        <div id="hb-bottom-right" class="grid-box-overlay" onclick="onGridBoxClick('bottom-right')"></div>
+
+                        <!-- Active Popover Text Card -->
+                        <div id="active-box-card" class="box-text-card hidden">
+                            <div id="box-card-title" style="font-family: 'PizzaPress'; color: var(--brand-red); font-size: 1.1rem; margin-bottom: 4px;"></div>
+                            <div id="box-card-text" style="font-weight: normal;"></div>
+                        </div>
+                    </div>
+
+                    <!-- STAGE 4: FREE EXPLORE POSTER (Image_Poster.png) -->
+                    <div id="uniform-stage-explore" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
+                        <img src="../resources/Image_Guides/Image_Poster.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
+                        
+                        <!-- Free Explore Hitboxes -->
+                        <div id="hb-shirts" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
+                        <div id="hb-aprons" class="grid-box-overlay" onclick="onPeopleExploreClick('aprons')"></div>
+                        <div id="hb-bracelets" class="grid-box-overlay" onclick="onPeopleExploreClick('bracelets')"></div>
+                        <div id="hb-shoes" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
+                        <div id="hb-hats" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
+                        <div id="hb-piercings" class="grid-box-overlay" onclick="onPeopleExploreClick('piercings')"></div>
+                        <div id="hb-nails" class="grid-box-overlay" onclick="onPeopleExploreClick('nails')"></div>
+                        <div id="hb-bottoms" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
+                        <div id="hb-jackets" class="grid-box-overlay" onclick="onPeopleExploreClick('jackets')"></div>
+                        <div id="hb-facial-hair" class="grid-box-overlay" onclick="onPeopleExploreClick('facial-hair')"></div>
+
+                        <!-- Active Explore Text Card -->
+                        <div id="explore-text-card" class="box-text-card hidden">
+                            <div id="explore-card-title" style="font-family: 'PizzaPress'; color: var(--brand-red); font-size: 1.1rem; margin-bottom: 4px;"></div>
+                            <div id="explore-card-text" style="font-weight: normal;"></div>
+                        </div>
+                    </div>
+
+                    <!-- COMPLETION OVERLAY -->
+                    <div id="uniform-completion-banner" class="hidden" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: #166534; color: white; padding: 12px 28px; border-radius: 30px; border: 2px solid #22c55e; box-shadow: 0 4px 20px rgba(0,0,0,0.6); display: flex; align-items: center; gap: 15px; z-index: 1000;">
+                        <span style="font-size: 1.1rem; font-family: 'OneDotCd-Bold';">✓ Uniform Guidelines Complete! Card Unlocked!</span>
+                        <button onclick="finishUniformInteractive()" class="btn" style="background: white; color: #166534; font-weight: bold; padding: 6px 16px; border: none;">Continue</button>
+                    </div>
+
+                </div>
+
+                <!-- LOOK BOOK LIGHTBOX MODAL -->
+                <div id="lookbook-modal" class="lookbook-modal-overlay hidden">
+                    <div style="width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: white;">
+                        <span style="font-family: 'OneDotCd-Bold'; font-size: 1.2rem;">📖 Uniform Look Book & Catalog Reference</span>
+                        <button onclick="closeLookBookModal()" class="btn" style="background: var(--brand-red); color: white; padding: 4px 16px; border: none;">Close Catalog &times;</button>
+                    </div>
+                    <div class="lookbook-modal-content">
+                        <img src="../resources/Image_Guides/Look_Book.jpg" alt="Look Book Catalog" style="width: 100%; height: auto; display: block;">
+                    </div>
+                </div>
             </div>
+
         </div>
+    </div>
     </div>
 
 <script>
@@ -626,35 +632,32 @@
             document.getElementById('lookbook-modal').classList.add('hidden');
         }
 
+        function closeUniformModal() {
+            if (uniformAudio) {
+                try { uniformAudio.pause(); } catch(e) {}
+            }
+            document.getElementById('uniform-modal-overlay').classList.add('hidden');
+            document.getElementById('lookbook-modal').classList.add('hidden');
+        }
+
+        function finishUniformInteractive() {
+            closeUniformModal();
+        }
+
         // --- OPEN MODAL AND LOAD VIDEO ---
         function openVideoModal(index) {
             activeVideoIndex = index;
             const video = moduleVideos[index];
 
-            document.getElementById('trash-interactive-stage-1').classList.add('hidden');
-            document.getElementById('trash-interactive-stage-2').classList.add('hidden');
-
-            document.getElementById('video-modal').classList.remove('hidden');
-
-            const vimeoWrapper = document.querySelector('.video-wrapper-modal');
-            const uniformModal = document.getElementById('uniform-interactive-modal');
-            const modalContent = document.querySelector('.video-modal-content');
-
             if (video.isInteractive) {
-                // 1. Instantly expand modal container and reveal interactive presentation
-                if (modalContent) modalContent.classList.add('interactive-mode');
-                if (vimeoWrapper) vimeoWrapper.style.display = 'none';
-                if (uniformModal) {
-                    uniformModal.classList.remove('hidden');
-                    uniformModal.style.display = 'flex';
-                }
-
-                // 2. Safely pause any active Vimeo player without crashing
+                // Pause any background Vimeo player safely
                 if (player) {
                     try { player.pause(); } catch(e) {}
                 }
+                // Hide video modal & open standalone uniform modal
+                document.getElementById('video-modal').classList.add('hidden');
+                document.getElementById('uniform-modal-overlay').classList.remove('hidden');
 
-                // 3. Initialize interactive presenter
                 try {
                     initUniformInteractive();
                     if (uniformAudio) {
@@ -664,15 +667,24 @@
                 } catch(e) {
                     console.error("Interactive init error:", e);
                 }
-            } else {
-                if (modalContent) modalContent.classList.remove('interactive-mode');
-                if (vimeoWrapper) vimeoWrapper.style.display = 'block';
-                if (uniformModal) {
-                    uniformModal.classList.add('hidden');
-                    uniformModal.style.display = 'none';
-                }
+                return;
+            }
 
-                if (uniformAudio) uniformAudio.pause();
+            // Standard Vimeo Video Card flow
+            document.getElementById('uniform-modal-overlay').classList.add('hidden');
+            document.getElementById('trash-interactive-stage-1').classList.add('hidden');
+            document.getElementById('trash-interactive-stage-2').classList.add('hidden');
+
+            document.getElementById('video-modal').classList.remove('hidden');
+
+            const vimeoWrapper = document.querySelector('.video-wrapper-modal');
+            const modalContent = document.querySelector('.video-modal-content');
+            if (modalContent) modalContent.classList.remove('interactive-mode');
+            if (vimeoWrapper) vimeoWrapper.style.display = 'block';
+
+            if (uniformAudio) {
+                try { uniformAudio.pause(); } catch(e) {}
+            }
 
                 if (index === 1) {
                     stage1Remaining = 11;
@@ -703,7 +715,6 @@
                         console.error("Failed to load Vimeo video:", error);
                     });
                 }
-            }
         }
 
         // --- DEV BYPASS SHORTCUT ---
