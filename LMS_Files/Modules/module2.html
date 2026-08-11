@@ -819,13 +819,15 @@
 
                 let cardStatusClass = 'locked';
                 let badgeText = '🔒 Locked';
+                let btnText = video.isInteractive ? 'Start Interactive Guide' : 'Watch Video';
 
                 if (isCompleted) {
                     cardStatusClass = 'completed';
-                    badgeText = '✓ Watched';
+                    badgeText = '✓ Completed';
+                    btnText = video.isInteractive ? 'Review Interactive Guide' : 'Rewatch Video';
                 } else if (isUnlocked) {
                     cardStatusClass = 'active';
-                    badgeText = '▶ Ready';
+                    badgeText = video.isInteractive ? '🎮 Interactive' : '▶ Ready';
                 }
 
                 const cardHTML = `
@@ -839,7 +841,7 @@
                             <button class="btn ${isUnlocked ? '' : 'disabled'}" 
                                     onclick="openVideoModal(${index})" 
                                     ${isUnlocked ? '' : 'disabled'}>
-                                ${isCompleted ? 'Rewatch Video' : 'Watch Video'}
+                                ${btnText}
                             </button>
                         </div>
                     </div>
@@ -848,52 +850,6 @@
             });
 
             checkModuleVideosCompletion();
-        }
-
-        // --- OPEN MODAL AND LOAD VIDEO (CONSOLIDATED & FIXED FOR UNLISTED HASH) ---
-        function openVideoModal(index) {
-            activeVideoIndex = index;
-            const video = moduleVideos[index];
-
-            // Reset interactive states if opening Video 2
-            if (index === 1) {
-                stage1Remaining = 11;
-                stage2Remaining = 13;
-                stage1Triggered = false;
-                stage2Triggered = false;
-                
-                // Remove 'resolved' green checkmarks from hitboxes
-                document.querySelectorAll('.trash-hotspot').forEach(el => el.classList.remove('resolved'));
-                document.getElementById('trash-count-display-1').innerText = '11';
-                document.getElementById('trash-count-display-2').innerText = '13';
-            }
-
-            // Hide any open interactive overlays when switching videos
-            document.getElementById('trash-interactive-stage-1').classList.add('hidden');
-            document.getElementById('trash-interactive-stage-2').classList.add('hidden');
-
-            document.getElementById('video-modal').classList.remove('hidden');
-
-            // Construct Vimeo Player parameters including the unlisted 'h' parameter
-            const playerOptions = {
-                id: video.id,
-                responsive: true,
-                autoplay: true
-            };
-            if (video.h) {
-                playerOptions.h = video.h;
-            }
-
-            if (!player) {
-                player = new Vimeo.Player('vimeo-player', playerOptions);
-                attachVimeoEvents();
-            } else {
-                player.loadVideo(playerOptions).then(() => {
-                    player.play();
-                }).catch(error => {
-                    console.error("Failed to load Vimeo video:", error);
-                });
-            }
         }
 
         // --- VIMEO PLAYER EVENTS & ANTI-SCRUBBING ---
