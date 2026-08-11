@@ -24,6 +24,121 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* --- INTERACTIVE UNIFORM JOB AID STYLES --- */
+        .uniform-modal-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: #090d16;
+            color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 200;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .uniform-hud-bar {
+            background: linear-gradient(135deg, var(--dark-blue), #1e293b);
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid var(--brand-blue);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            z-index: 100;
+        }
+
+        .uniform-canvas-area {
+            position: relative;
+            flex-grow: 1;
+            width: 100%;
+            height: calc(100% - 55px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #020617;
+            overflow: hidden;
+        }
+
+        .uniform-stage-view {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 1100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grid-box-overlay {
+            position: absolute;
+            cursor: pointer;
+            z-index: 50;
+            border: 3px transparent solid;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .grid-box-overlay.active-highlight {
+            border-color: var(--brand-red) !important;
+            box-shadow: 0 0 25px rgba(227, 24, 55, 0.7);
+            background: rgba(227, 24, 55, 0.15);
+            animation: pulseGlow 1.5s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px rgba(227, 24, 55, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(227, 24, 55, 0.85); }
+            100% { box-shadow: 0 0 10px rgba(227, 24, 55, 0.4); }
+        }
+
+        .box-text-card {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 2px solid var(--brand-blue);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: white;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.35;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            z-index: 100;
+            animation: fadeIn 0.3s ease-out;
+            max-width: 280px;
+            pointer-events: none;
+        }
+
+        .lookbook-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.88);
+            z-index: 30000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .lookbook-modal-content {
+            position: relative;
+            max-width: 95%;
+            max-height: 90%;
+            background: white;
+            border-radius: 12px;
+            overflow: auto;
+            border: 4px solid var(--brand-blue);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body style="background-color: var(--crust-light);">
@@ -162,6 +277,84 @@
                     <div id="hb-trash-M" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
                 </div>
 
+                <!-- INTERACTIVE UNIFORM JOB AID CONTAINER -->
+                <div id="uniform-interactive-modal" class="uniform-modal-container hidden">
+                    <!-- Top HUD / Control Strip -->
+                    <div class="uniform-hud-bar">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-family: 'PizzaPress', sans-serif; color: var(--brand-red); font-size: 1.3rem;">👕 PERFECT IMAGE</span>
+                            <span id="uniform-phase-tag" style="background: var(--brand-blue); color: white; padding: 4px 12px; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.85rem;">Guided Presentation</span>
+                        </div>
+
+                        <!-- Audio Player & Scrubber -->
+                        <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1; max-width: 480px; margin: 0 15px;">
+                            <button id="uniform-play-btn" onclick="toggleUniformAudio()" style="background: var(--brand-blue); border: none; color: white; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">▶</button>
+                            <input type="range" id="uniform-scrubber" min="0" max="419" value="0" step="0.5" oninput="seekUniformAudio(this.value)" style="flex-grow: 1; cursor: pointer;">
+                            <span id="uniform-time-disp" style="font-family: monospace; font-size: 0.85rem; color: #cbd5e1; min-width: 85px; text-align: right;">0:00 / 6:59</span>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <button id="btn-toggle-explore" onclick="toggleFreeExploreMode()" class="btn hidden" style="padding: 5px 12px; font-size: 0.8rem; background: var(--brand-blue); border: none;">🔍 Free Explore</button>
+                            <button onclick="openLookBookModal()" class="btn" style="padding: 5px 12px; font-size: 0.8rem; background: #334155; border: 1px solid var(--brand-blue);">📖 Look Book</button>
+                            <span class="video-modal-close" onclick="closeVideoModal()" style="position: static; font-size: 1.8rem; cursor: pointer; margin-left: 10px;">&times;</span>
+                        </div>
+                    </div>
+
+                    <!-- Audio Element -->
+                    <audio id="uniform-audio-element" src="../resources/Image_Guides/Uniform_Audio.mp3" style="display: none;"></audio>
+
+                    <!-- Main Canvas View Area -->
+                    <div class="uniform-canvas-area">
+                        
+                        <!-- STAGE 1: INTRO SLIDES (0:00 - 0:49) -->
+                        <div id="uniform-stage-intro" class="uniform-stage-view">
+                            <img id="intro-slide-img" src="../resources/Title_Slides/Perfect_Image_2_Title.png" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: opacity 0.8s ease-in-out;">
+                        </div>
+
+                        <!-- STAGE 2 & 3: 6-BOX GRID POSTERS (Apparel 0:49-3:58, Grooming 3:58-6:16) -->
+                        <div id="uniform-stage-grid" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%; aspect-ratio: 1968 / 1377;">
+                            <img id="grid-poster-img" src="../resources/Image_Guides/Perfect_Apparel.png" style="width: 100%; height: 100%; object-fit: contain;">
+                            
+                            <!-- 6 Grid Hitboxes -->
+                            <div id="hb-top-left" class="grid-box-overlay" onclick="onGridBoxClick('top-left')"></div>
+                            <div id="hb-top-mid" class="grid-box-overlay" onclick="onGridBoxClick('top-mid')"></div>
+                            <div id="hb-top-right" class="grid-box-overlay" onclick="onGridBoxClick('top-right')"></div>
+                            <div id="hb-bottom-left" class="grid-box-overlay" onclick="onGridBoxClick('bottom-left')"></div>
+                            <div id="hb-bottom-mid" class="grid-box-overlay" onclick="onGridBoxClick('bottom-mid')"></div>
+                            <div id="hb-bottom-right" class="grid-box-overlay" onclick="onGridBoxClick('bottom-right')"></div>
+
+                            <!-- Active Popover Text Card -->
+                            <div id="active-box-card" class="box-text-card hidden">
+                                <div id="box-card-title" style="font-family: 'PizzaPress'; color: var(--brand-red); font-size: 1.1rem; margin-bottom: 4px;"></div>
+                                <div id="box-card-text" style="font-weight: normal;"></div>
+                            </div>
+                        </div>
+
+                        <!-- STAGE 4: FREE EXPLORE POSTER (Image_Poster.png) -->
+                        <div id="uniform-stage-explore" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
+                            <img src="../resources/Image_Guides/Image_Poster.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                        </div>
+
+                        <!-- COMPLETION OVERLAY -->
+                        <div id="uniform-completion-banner" class="hidden" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: #166534; color: white; padding: 12px 28px; border-radius: 30px; border: 2px solid #22c55e; box-shadow: 0 4px 20px rgba(0,0,0,0.6); display: flex; align-items: center; gap: 15px; z-index: 1000;">
+                            <span style="font-size: 1.1rem; font-family: 'OneDotCd-Bold';">✓ Uniform Guidelines Complete! Card Unlocked!</span>
+                            <button onclick="finishUniformInteractive()" class="btn" style="background: white; color: #166534; font-weight: bold; padding: 6px 16px; border: none;">Continue</button>
+                        </div>
+
+                    </div>
+
+                    <!-- LOOK BOOK LIGHTBOX MODAL -->
+                    <div id="lookbook-modal" class="lookbook-modal-overlay hidden">
+                        <div style="width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: white;">
+                            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.2rem;">📖 Uniform Look Book & Catalog Reference</span>
+                            <button onclick="closeLookBookModal()" class="btn" style="background: var(--brand-red); color: white; padding: 4px 16px; border: none;">Close Catalog &times;</button>
+                        </div>
+                        <div class="lookbook-modal-content">
+                            <img src="../resources/Image_Guides/Look_Book.jpg" alt="Look Book Catalog" style="width: 100%; height: auto; display: block;">
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -207,10 +400,10 @@
                 thumb: '../resources/Title_Slides/Perfect_Image_Title.png'
             },
             {
-                id: '1215101424',
-                h: 'a4480af631', 
-                title: '4. Uniform Guidelines Explained',
-                desc: 'Know the uniform fouls so you don\'t commit one.',
+                id: 'interactive_uniform',
+                isInteractive: true,
+                title: '4. Uniform Guidelines (Interactive)',
+                desc: 'Interactive uniform standards presentation, audio guide, and catalog.',
                 completed: false,
                 maxTimeWatched: 0,
                 thumb: '../resources/Title_Slides/Perfect_Image_2_Title.png'
@@ -252,6 +445,258 @@
         let stage2Remaining = 13;
         let stage1Triggered = false;
         let stage2Triggered = false;
+
+        // --- INTERACTIVE UNIFORM JOB AID CONTROLLER ---
+        let uniformAudio = null;
+        let isUniformCompleted = false;
+
+        const UNIFORM_TIMELINE = [
+            // Intro Slides
+            { start: 0, end: 15, type: 'intro', slide: '../resources/Title_Slides/Perfect_Image_2_Title.png', title: 'Intro' },
+            { start: 15, end: 27, type: 'intro', slide: '../resources/Image_Guides/Game_Ready1.png', title: 'Game Day Jersey' },
+            { start: 27, end: 36, type: 'intro', slide: '../resources/Image_Guides/Game_Ready2.png', title: 'Professionalism' },
+            { start: 36, end: 49, type: 'intro', slide: '../resources/Image_Guides/Game_Ready3.png', title: 'Cleanliness & Pride' },
+
+            // Apparel Poster Grid (0:49 - 3:58)
+            { start: 49, end: 90, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-top-left', title: 'SHIRTS', text: 'Wear a Domino\'s approved uniform or promo shirt. Undershirts: solid gray, white, or black. Roll sleeves past elbows when prepping food.' },
+            { start: 90, end: 128, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-top-mid', title: 'BOTTOMS', text: 'Approved options: black pants, black denim, blue denim, approved joggers. Sat properly at waist, free from rips/tears. No sweatpants or athletic shorts.' },
+            { start: 128, end: 159, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-top-right', title: 'HATS & HAIR', text: 'Approved hat or visor facing forward while working. Hair touching collar must be restrained behind shoulders.' },
+            { start: 159, end: 185, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-bottom-left', title: 'APRONS', text: 'Worn full-length when preparing/cutting food. Stays inside—never worn outside or into restrooms.' },
+            { start: 185, end: 214, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-bottom-mid', title: 'SHOES & SOCKS', text: 'Must cover entire foot with non-slip soles and tight laces. Socks required. No open toes or holes.' },
+            { start: 214, end: 238, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-bottom-right', title: 'JACKETS', text: 'Keep outerwear solid black with minimal branding, or wear Domino\'s branded outerwear. Black gloves if worn.' },
+
+            // Grooming Poster Grid (3:58 - 6:16)
+            { start: 238, end: 266, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-top-left', title: 'HYGIENE', text: 'Personal cleanliness & body odor controlled. Avoid heavy lotions or perfumes on hands when prepping food.' },
+            { start: 266, end: 286, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-top-mid', title: 'FINGERNAILS', text: 'Clean and neatly trimmed. Food-grade gloves required if long, painted, or artificial nails are worn.' },
+            { start: 286, end: 295, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-top-right', title: 'HAIR RESTRAINTS', text: 'Secured under hat or restrained away from shoulders and food preparation surfaces.' },
+            { start: 295, end: 314, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-bottom-left', title: 'FACIAL HAIR', text: 'Clean & neatly trimmed up to 1" max. Beard snood/net required while prepping food if applicable.' },
+            { start: 314, end: 338, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-bottom-mid', title: 'JEWELRY', text: 'Simple studs/hoops (no dangle earrings). No watches, bracelets, or stone-set rings during food prep.' },
+            { start: 338, end: 376, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-bottom-right', title: 'TATTOOS & MODS', text: 'Professional only (no profanity, offensive, or discriminatory tattoos). Cover body modifications.' },
+
+            // Outro / Pre-Game Check (6:16 - 6:59)
+            { start: 376, end: 419, type: 'outro', title: 'Pre-Game Check', text: 'Am I clean, complete, safe, and ready to represent the brand?' }
+        ];
+
+        function initUniformInteractive() {
+            uniformAudio = document.getElementById('uniform-audio-element');
+            if (!uniformAudio) return;
+
+            uniformAudio.onplay = () => {
+                const btn = document.getElementById('uniform-play-btn');
+                if (btn) btn.innerText = '❚❚';
+            };
+            uniformAudio.onpause = () => {
+                const btn = document.getElementById('uniform-play-btn');
+                if (btn) btn.innerText = '▶';
+            };
+
+            uniformAudio.ontimeupdate = () => {
+                updateUniformTimeDisplay();
+                processUniformTimeline(uniformAudio.currentTime);
+            };
+
+            uniformAudio.onended = () => {
+                onUniformCompleted();
+            };
+        }
+
+        function toggleUniformAudio() {
+            if (!uniformAudio) initUniformInteractive();
+            if (uniformAudio.paused) {
+                uniformAudio.play();
+            } else {
+                uniformAudio.pause();
+            }
+        }
+
+        function seekUniformAudio(val) {
+            if (!uniformAudio) initUniformInteractive();
+            uniformAudio.currentTime = parseFloat(val);
+            processUniformTimeline(parseFloat(val));
+        }
+
+        function updateUniformTimeDisplay() {
+            if (!uniformAudio) return;
+            const time = uniformAudio.currentTime;
+            const scrubber = document.getElementById('uniform-scrubber');
+            const timerDisp = document.getElementById('uniform-time-disp');
+
+            if (scrubber) scrubber.value = time;
+            
+            const mins = Math.floor(time / 60);
+            const secs = Math.floor(time % 60).toString().padStart(2, '0');
+            if (timerDisp) timerDisp.innerText = `${mins}:${secs} / 6:59`;
+        }
+
+        function processUniformTimeline(time) {
+            const currentItem = UNIFORM_TIMELINE.find(item => time >= item.start && time < item.end);
+            
+            const stageIntro = document.getElementById('uniform-stage-intro');
+            const stageGrid = document.getElementById('uniform-stage-grid');
+            const stageExplore = document.getElementById('uniform-stage-explore');
+            const introImg = document.getElementById('intro-slide-img');
+            const gridImg = document.getElementById('grid-poster-img');
+            const card = document.getElementById('active-box-card');
+
+            // Reset box highlights
+            document.querySelectorAll('.grid-box-overlay').forEach(el => el.classList.remove('active-highlight'));
+
+            if (!currentItem || currentItem.type === 'intro') {
+                stageIntro.classList.remove('hidden');
+                stageGrid.classList.add('hidden');
+                stageExplore.classList.add('hidden');
+                if (card) card.classList.add('hidden');
+
+                if (currentItem && introImg && !introImg.src.includes(currentItem.slide.split('/').pop())) {
+                    introImg.style.opacity = 0;
+                    setTimeout(() => {
+                        introImg.src = currentItem.slide;
+                        introImg.style.opacity = 1;
+                    }, 200);
+                }
+            } else if (currentItem.type === 'grid') {
+                stageIntro.classList.add('hidden');
+                stageGrid.classList.remove('hidden');
+                stageExplore.classList.add('hidden');
+
+                if (gridImg && !gridImg.src.includes(currentItem.poster.split('/').pop())) {
+                    gridImg.src = currentItem.poster;
+                }
+
+                const targetBox = document.getElementById(currentItem.boxId);
+                if (targetBox) {
+                    targetBox.classList.add('active-highlight');
+                }
+
+                if (card) {
+                    card.classList.remove('hidden');
+                    document.getElementById('box-card-title').innerText = currentItem.title;
+                    document.getElementById('box-card-text').innerText = currentItem.text;
+                    
+                    if (currentItem.boxId.includes('left')) {
+                        card.style.left = '34%';
+                        card.style.top = currentItem.boxId.includes('top') ? '26%' : '65%';
+                    } else if (currentItem.boxId.includes('right')) {
+                        card.style.left = '38%';
+                        card.style.top = currentItem.boxId.includes('top') ? '26%' : '65%';
+                    } else {
+                        card.style.left = '37%';
+                        card.style.top = currentItem.boxId.includes('top') ? '53%' : '38%';
+                    }
+                }
+            } else if (currentItem.type === 'outro') {
+                stageIntro.classList.remove('hidden');
+                stageGrid.classList.add('hidden');
+                stageExplore.classList.add('hidden');
+                if (card) card.classList.add('hidden');
+                if (introImg) introImg.src = '../resources/Title_Slides/Perfect_Image_2_Title.png';
+            }
+        }
+
+        function onGridBoxClick(boxKey) {
+            if (!uniformAudio) initUniformInteractive();
+            const time = uniformAudio.currentTime;
+            const currentPoster = (time >= 238) ? '../resources/Image_Guides/Perfect_Grooming.png' : '../resources/Image_Guides/Perfect_Apparel.png';
+            const targetBoxId = 'hb-' + boxKey;
+            
+            const match = UNIFORM_TIMELINE.find(item => item.poster === currentPoster && item.boxId === targetBoxId);
+            if (match) {
+                seekUniformAudio(match.start);
+                if (uniformAudio.paused) uniformAudio.play();
+            }
+        }
+
+        function onUniformCompleted() {
+            isUniformCompleted = true;
+            document.getElementById('uniform-completion-banner').classList.remove('hidden');
+            document.getElementById('btn-toggle-explore').classList.remove('hidden');
+            
+            moduleVideos[activeVideoIndex].completed = true;
+            renderVideoCards();
+        }
+
+        function finishUniformInteractive() {
+            closeVideoModal();
+        }
+
+        function toggleFreeExploreMode() {
+            const stageIntro = document.getElementById('uniform-stage-intro');
+            const stageGrid = document.getElementById('uniform-stage-grid');
+            const stageExplore = document.getElementById('uniform-stage-explore');
+
+            stageIntro.classList.add('hidden');
+            stageGrid.classList.add('hidden');
+            stageExplore.classList.remove('hidden');
+            document.getElementById('uniform-phase-tag').innerText = 'Phase 2: Free-Explore Poster';
+        }
+
+        function openLookBookModal() {
+            document.getElementById('lookbook-modal').classList.remove('hidden');
+        }
+
+        function closeLookBookModal() {
+            document.getElementById('lookbook-modal').classList.add('hidden');
+        }
+
+        // --- OPEN MODAL AND LOAD VIDEO ---
+        function openVideoModal(index) {
+            activeVideoIndex = index;
+            const video = moduleVideos[index];
+
+            document.getElementById('trash-interactive-stage-1').classList.add('hidden');
+            document.getElementById('trash-interactive-stage-2').classList.add('hidden');
+
+            document.getElementById('video-modal').classList.remove('hidden');
+
+            const vimeoWrapper = document.querySelector('.video-wrapper-modal');
+            const uniformModal = document.getElementById('uniform-interactive-modal');
+
+            if (video.isInteractive) {
+                if (vimeoWrapper) vimeoWrapper.style.display = 'none';
+                if (uniformModal) uniformModal.classList.remove('hidden');
+                
+                initUniformInteractive();
+                if (uniformAudio) {
+                    uniformAudio.currentTime = 0;
+                    uniformAudio.play();
+                }
+            } else {
+                if (vimeoWrapper) vimeoWrapper.style.display = 'block';
+                if (uniformModal) uniformModal.classList.add('hidden');
+
+                if (uniformAudio) uniformAudio.pause();
+
+                if (index === 1) {
+                    stage1Remaining = 11;
+                    stage2Remaining = 13;
+                    stage1Triggered = false;
+                    stage2Triggered = false;
+                    document.querySelectorAll('.trash-hotspot').forEach(el => el.classList.remove('resolved'));
+                    document.getElementById('trash-count-display-1').innerText = '11';
+                    document.getElementById('trash-count-display-2').innerText = '13';
+                }
+
+                const playerOptions = {
+                    id: video.id,
+                    responsive: true,
+                    autoplay: true
+                };
+                if (video.h) {
+                    playerOptions.h = video.h;
+                }
+
+                if (!player) {
+                    player = new Vimeo.Player('vimeo-player', playerOptions);
+                    attachVimeoEvents();
+                } else {
+                    player.loadVideo(playerOptions).then(() => {
+                        player.play();
+                    }).catch(error => {
+                        console.error("Failed to load Vimeo video:", error);
+                    });
+                }
+            }
+        }
 
         // --- DEV BYPASS SHORTCUT ---
         // Open Browser Console (F12) and type: unlockAll()
@@ -448,7 +893,11 @@
             if (player) {
                 player.pause();
             }
+            if (uniformAudio) {
+                uniformAudio.pause();
+            }
             document.getElementById('video-modal').classList.add('hidden');
+            document.getElementById('lookbook-modal').classList.add('hidden');
         }
 
         function checkModuleVideosCompletion() {

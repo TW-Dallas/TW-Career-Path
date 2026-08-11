@@ -465,3 +465,11 @@
   #hb-trash-K  { top: 63.89%; left: 29.70%; }
   #hb-trash-L  { top: 66.07%; left: 21.93%; }
   #hb-trash-M  { top: 59.74%; left: 29.48%; }
+
+  /* --- MODULE 2 UNIFORM & GROOMING 6-BOX GRID HITBOXES --- */
+  #hb-top-left     { top: 26.3538%; left: 7.25267%; width: 25.6811%; height: 25.3968%; }
+  #hb-top-mid      { top: 26.3538%; left: 37.0634%; width: 25.8102%; height: 24.8447%; }
+  #hb-top-right    { top: 26.3538%; left: 66.358%;  width: 25.6811%; height: 25.0288%; }
+  #hb-bottom-left  { top: 65.7373%; left: 7.12362%; width: 25.6811%; height: 25.2128%; }
+  #hb-bottom-mid   { top: 65.7373%; left: 37.1925%; width: 26.0683%; height: 25.0288%; }
+  #hb-bottom-right { top: 65.7373%; left: 66.6161%; width: 26.0683%; height: 24.8447%; }
