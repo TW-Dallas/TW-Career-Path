@@ -201,81 +201,85 @@
                     </div>
 
                     <!-- STAGE 2 & 3: 6-BOX GRID POSTERS (Apparel 0:49-3:58, Grooming 3:58-6:16) -->
-                    <div id="uniform-stage-grid" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
-                        <img id="grid-poster-img" src="../resources/Image_Guides/Perfect_Apparel.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
-                        
-                        <!-- 6 Grid Hitboxes with In-Box Guidelines Text -->
-                        <div id="hb-top-left" class="grid-box-overlay" onclick="onGridBoxClick('top-left')">
-                            <div class="inbox-guideline-text"></div>
-                        </div>
-                        <div id="hb-top-mid" class="grid-box-overlay" onclick="onGridBoxClick('top-mid')">
-                            <div class="inbox-guideline-text"></div>
-                        </div>
-                        <div id="hb-top-right" class="grid-box-overlay" onclick="onGridBoxClick('top-right')">
-                            <div class="inbox-guideline-text"></div>
-                        </div>
-                        <div id="hb-bottom-left" class="grid-box-overlay" onclick="onGridBoxClick('bottom-left')">
-                            <div class="inbox-guideline-text"></div>
-                        </div>
-                        <div id="hb-bottom-mid" class="grid-box-overlay" onclick="onGridBoxClick('bottom-mid')">
-                            <div class="inbox-guideline-text"></div>
-                        </div>
-                        <div id="hb-bottom-right" class="grid-box-overlay" onclick="onGridBoxClick('bottom-right')">
-                            <div class="inbox-guideline-text"></div>
-                        </div>
+                    <div id="uniform-stage-grid" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <div class="poster-aspect-lock" style="position: relative; height: 100%; max-width: 100%; aspect-ratio: 16 / 9; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                            <img id="grid-poster-img" src="../resources/Image_Guides/Perfect_Apparel.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
+                            
+                            <!-- 6 Grid Hitboxes with In-Box Guidelines Text -->
+                            <div id="hb-top-left" class="grid-box-overlay" onclick="onGridBoxClick('top-left')">
+                                <div class="inbox-guideline-text"></div>
+                            </div>
+                            <div id="hb-top-mid" class="grid-box-overlay" onclick="onGridBoxClick('top-mid')">
+                                <div class="inbox-guideline-text"></div>
+                            </div>
+                            <div id="hb-top-right" class="grid-box-overlay" onclick="onGridBoxClick('top-right')">
+                                <div class="inbox-guideline-text"></div>
+                            </div>
+                            <div id="hb-bottom-left" class="grid-box-overlay" onclick="onGridBoxClick('bottom-left')">
+                                <div class="inbox-guideline-text"></div>
+                            </div>
+                            <div id="hb-bottom-mid" class="grid-box-overlay" onclick="onGridBoxClick('bottom-mid')">
+                                <div class="inbox-guideline-text"></div>
+                            </div>
+                            <div id="hb-bottom-right" class="grid-box-overlay" onclick="onGridBoxClick('bottom-right')">
+                                <div class="inbox-guideline-text"></div>
+                            </div>
 
-                        <!-- Active Popover Text Card (Hidden for In-Box Mode) -->
-                        <div id="active-box-card" class="box-text-card hidden">
-                            <div id="box-card-title" style="font-family: 'PizzaPress'; color: var(--crust-med); font-size: 1.1rem; margin-bottom: 4px;"></div>
-                            <div id="box-card-text" style="font-weight: normal; color: var(--crust-light);"></div>
+                            <!-- Active Popover Text Card (Hidden for In-Box Mode) -->
+                            <div id="active-box-card" class="box-text-card hidden">
+                                <div id="box-card-title" style="font-family: 'PizzaPress'; color: var(--crust-med); font-size: 1.1rem; margin-bottom: 4px;"></div>
+                                <div id="box-card-text" style="font-weight: normal; color: var(--crust-light);"></div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- STAGE 4: FREE EXPLORE POSTER (Image_Poster.png) -->
-                    <div id="uniform-stage-explore" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
-                        <img src="../resources/Image_Guides/Image_Poster.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block; z-index: 1;">
-                        
-                        <!-- Free Explore Body Item Hitboxes (Multiples supported!) -->
-                        <div id="hb-click-shirt-1" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
-                        <div id="hb-click-shirt-2" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
-                        <div id="hb-click-shoes-1" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
-                        <div id="hb-click-shoes-2" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
-                        <div id="hb-click-apron" class="grid-box-overlay" onclick="onPeopleExploreClick('aprons')"></div>
-                        <div id="hb-click-hat-1" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
-                        <div id="hb-click-hat-2" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
-                        <div id="hb-click-bracelet" class="grid-box-overlay" onclick="onPeopleExploreClick('bracelets')"></div>
-                        <div id="hb-click-nails" class="grid-box-overlay" onclick="onPeopleExploreClick('nails')"></div>
-                        <div id="hb-click-bottoms-1" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
-                        <div id="hb-click-bottoms-2" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
-                        <div id="hb-click-bottoms-3" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
-                        <div id="hb-click-jackets" class="grid-box-overlay" onclick="onPeopleExploreClick('jackets')"></div>
-                        <div id="hb-click-facial-hair" class="grid-box-overlay" onclick="onPeopleExploreClick('facial-hair')"></div>
-                        <div id="hb-click-piercings" class="grid-box-overlay" onclick="onPeopleExploreClick('piercings')"></div>
+                    <div id="uniform-stage-explore" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <div class="poster-aspect-lock" style="position: relative; height: 100%; max-width: 100%; aspect-ratio: 16 / 9; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                            <img src="../resources/Image_Guides/Image_Poster.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block; z-index: 1;">
+                            
+                            <!-- Free Explore Body Item Hitboxes (Multiples supported!) -->
+                            <div id="hb-click-shirt-1" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
+                            <div id="hb-click-shirt-2" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
+                            <div id="hb-click-shoes-1" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
+                            <div id="hb-click-shoes-2" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
+                            <div id="hb-click-apron" class="grid-box-overlay" onclick="onPeopleExploreClick('aprons')"></div>
+                            <div id="hb-click-hat-1" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
+                            <div id="hb-click-hat-2" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
+                            <div id="hb-click-bracelet" class="grid-box-overlay" onclick="onPeopleExploreClick('bracelets')"></div>
+                            <div id="hb-click-nails" class="grid-box-overlay" onclick="onPeopleExploreClick('nails')"></div>
+                            <div id="hb-click-bottoms-1" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
+                            <div id="hb-click-bottoms-2" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
+                            <div id="hb-click-bottoms-3" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
+                            <div id="hb-click-jackets" class="grid-box-overlay" onclick="onPeopleExploreClick('jackets')"></div>
+                            <div id="hb-click-facial-hair" class="grid-box-overlay" onclick="onPeopleExploreClick('facial-hair')"></div>
+                            <div id="hb-click-piercings" class="grid-box-overlay" onclick="onPeopleExploreClick('piercings')"></div>
 
-                        <!-- Original Callout Area Hitboxes -->
-                        <div id="hb-shirts" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
-                        <div id="hb-aprons" class="grid-box-overlay" onclick="onPeopleExploreClick('aprons')"></div>
-                        <div id="hb-bracelets" class="grid-box-overlay" onclick="onPeopleExploreClick('bracelets')"></div>
-                        <div id="hb-shoes" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
-                        <div id="hb-hats" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
-                        <div id="hb-piercings" class="grid-box-overlay" onclick="onPeopleExploreClick('piercings')"></div>
-                        <div id="hb-nails" class="grid-box-overlay" onclick="onPeopleExploreClick('nails')"></div>
-                        <div id="hb-bottoms" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
-                        <div id="hb-jackets" class="grid-box-overlay" onclick="onPeopleExploreClick('jackets')"></div>
-                        <div id="hb-facial-hair" class="grid-box-overlay" onclick="onPeopleExploreClick('facial-hair')"></div>
+                            <!-- Original Callout Area Hitboxes -->
+                            <div id="hb-shirts" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
+                            <div id="hb-aprons" class="grid-box-overlay" onclick="onPeopleExploreClick('aprons')"></div>
+                            <div id="hb-bracelets" class="grid-box-overlay" onclick="onPeopleExploreClick('bracelets')"></div>
+                            <div id="hb-shoes" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
+                            <div id="hb-hats" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
+                            <div id="hb-piercings" class="grid-box-overlay" onclick="onPeopleExploreClick('piercings')"></div>
+                            <div id="hb-nails" class="grid-box-overlay" onclick="onPeopleExploreClick('nails')"></div>
+                            <div id="hb-bottoms" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
+                            <div id="hb-jackets" class="grid-box-overlay" onclick="onPeopleExploreClick('jackets')"></div>
+                            <div id="hb-facial-hair" class="grid-box-overlay" onclick="onPeopleExploreClick('facial-hair')"></div>
 
-                        <!-- 10 In-Place Callout Text Containers (Populates on Click & STAYS PERMANENTLY) -->
-                        <div id="explore-text-shirts" class="explore-callout-text"></div>
-                        <div id="explore-text-aprons" class="explore-callout-text"></div>
-                        <div id="explore-text-bracelets" class="explore-callout-text"></div>
-                        <div id="explore-text-shoes" class="explore-callout-text"></div>
-                        <div id="explore-text-hats" class="explore-callout-text"></div>
-                        <div id="explore-text-piercings" class="explore-callout-text"></div>
-                        <div id="explore-text-nails" class="explore-callout-text"></div>
-                        <div id="explore-text-bottoms" class="explore-callout-text"></div>
-                        <div id="explore-text-jackets" class="explore-callout-text"></div>
-                        <div id="explore-text-facial-hair" class="explore-callout-text"></div>
-                        <div id="explore-text-facial-hair-sub" class="explore-callout-text"></div>
+                            <!-- 10 In-Place Callout Text Containers (Populates on Click & STAYS PERMANENTLY) -->
+                            <div id="explore-text-shirts" class="explore-callout-text"></div>
+                            <div id="explore-text-aprons" class="explore-callout-text"></div>
+                            <div id="explore-text-bracelets" class="explore-callout-text"></div>
+                            <div id="explore-text-shoes" class="explore-callout-text"></div>
+                            <div id="explore-text-hats" class="explore-callout-text"></div>
+                            <div id="explore-text-piercings" class="explore-callout-text"></div>
+                            <div id="explore-text-nails" class="explore-callout-text"></div>
+                            <div id="explore-text-bottoms" class="explore-callout-text"></div>
+                            <div id="explore-text-jackets" class="explore-callout-text"></div>
+                            <div id="explore-text-facial-hair" class="explore-callout-text"></div>
+                            <div id="explore-text-facial-hair-sub" class="explore-callout-text"></div>
+                        </div>
                     </div>
 
                 </div>
