@@ -184,7 +184,7 @@
 
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <button id="btn-toggle-explore" onclick="toggleFreeExploreMode()" class="btn hidden" style="padding: 5px 12px; font-size: 0.8rem; background: var(--brand-blue); border: none;">🔍 Free Explore</button>
-                        <button onclick="openLookBookModal()" class="btn" style="padding: 5px 12px; font-size: 0.8rem; background: var(--dark-blue); color: var(--crust-light); border: 1px solid var(--crust-med);">📖 Look Book</button>
+                        <button id="btn-lookbook" onclick="openLookBookModal()" class="btn hidden" style="padding: 5px 12px; font-size: 0.8rem; background: var(--dark-blue); color: var(--crust-light); border: 1px solid var(--crust-med);">📖 Look Book</button>
                         <span class="video-modal-close" onclick="closeUniformModal()" style="position: static; font-size: 1.8rem; cursor: pointer; margin-left: 10px; color: var(--crust-med);">&times;</span>
                     </div>
                 </div>
@@ -207,18 +207,30 @@
                     <div id="uniform-stage-grid" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
                         <img id="grid-poster-img" src="../resources/Image_Guides/Perfect_Apparel.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
                         
-                        <!-- 6 Grid Hitboxes -->
-                        <div id="hb-top-left" class="grid-box-overlay" onclick="onGridBoxClick('top-left')"></div>
-                        <div id="hb-top-mid" class="grid-box-overlay" onclick="onGridBoxClick('top-mid')"></div>
-                        <div id="hb-top-right" class="grid-box-overlay" onclick="onGridBoxClick('top-right')"></div>
-                        <div id="hb-bottom-left" class="grid-box-overlay" onclick="onGridBoxClick('bottom-left')"></div>
-                        <div id="hb-bottom-mid" class="grid-box-overlay" onclick="onGridBoxClick('bottom-mid')"></div>
-                        <div id="hb-bottom-right" class="grid-box-overlay" onclick="onGridBoxClick('bottom-right')"></div>
+                        <!-- 6 Grid Hitboxes with In-Box Guidelines Text -->
+                        <div id="hb-top-left" class="grid-box-overlay" onclick="onGridBoxClick('top-left')">
+                            <div class="inbox-guideline-text"></div>
+                        </div>
+                        <div id="hb-top-mid" class="grid-box-overlay" onclick="onGridBoxClick('top-mid')">
+                            <div class="inbox-guideline-text"></div>
+                        </div>
+                        <div id="hb-top-right" class="grid-box-overlay" onclick="onGridBoxClick('top-right')">
+                            <div class="inbox-guideline-text"></div>
+                        </div>
+                        <div id="hb-bottom-left" class="grid-box-overlay" onclick="onGridBoxClick('bottom-left')">
+                            <div class="inbox-guideline-text"></div>
+                        </div>
+                        <div id="hb-bottom-mid" class="grid-box-overlay" onclick="onGridBoxClick('bottom-mid')">
+                            <div class="inbox-guideline-text"></div>
+                        </div>
+                        <div id="hb-bottom-right" class="grid-box-overlay" onclick="onGridBoxClick('bottom-right')">
+                            <div class="inbox-guideline-text"></div>
+                        </div>
 
-                        <!-- Active Popover Text Card -->
+                        <!-- Active Popover Text Card (Hidden for In-Box Mode) -->
                         <div id="active-box-card" class="box-text-card hidden">
-                            <div id="box-card-title" style="font-family: 'PizzaPress'; color: var(--brand-red); font-size: 1.1rem; margin-bottom: 4px;"></div>
-                            <div id="box-card-text" style="font-weight: normal;"></div>
+                            <div id="box-card-title" style="font-family: 'PizzaPress'; color: var(--crust-med); font-size: 1.1rem; margin-bottom: 4px;"></div>
+                            <div id="box-card-text" style="font-weight: normal; color: var(--crust-light);"></div>
                         </div>
                     </div>
 
@@ -240,8 +252,8 @@
 
                         <!-- Active Explore Text Card -->
                         <div id="explore-text-card" class="box-text-card hidden">
-                            <div id="explore-card-title" style="font-family: 'PizzaPress'; color: var(--brand-red); font-size: 1.1rem; margin-bottom: 4px;"></div>
-                            <div id="explore-card-text" style="font-weight: normal;"></div>
+                            <div id="explore-card-title" style="font-family: 'PizzaPress'; color: var(--crust-med); font-size: 1.1rem; margin-bottom: 4px;"></div>
+                            <div id="explore-card-text" style="font-weight: normal; color: var(--crust-light);"></div>
                         </div>
                     </div>
 
@@ -369,12 +381,12 @@
             { start: 36, end: 49, type: 'intro', slide: '../resources/Image_Guides/Game_Ready3.png', title: 'Cleanliness & Pride' },
 
             // Apparel Poster Grid (0:49 - 3:58)
-            { start: 49, end: 90, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-top-left', title: 'SHIRTS', text: 'Wear a Domino\'s approved uniform or promo shirt. Undershirts: solid gray, white, or black. Roll sleeves past elbows when prepping food.' },
-            { start: 90, end: 128, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-top-mid', title: 'BOTTOMS', text: 'Approved options: black pants, black denim, blue denim, approved joggers. Sat properly at waist, free from rips/tears. No sweatpants or athletic shorts.' },
-            { start: 128, end: 159, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-top-right', title: 'HATS & HAIR', text: 'Approved hat or visor facing forward while working. Hair touching collar must be restrained behind shoulders.' },
-            { start: 159, end: 185, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-bottom-left', title: 'APRONS', text: 'Worn full-length when preparing/cutting food. Stays inside—never worn outside or into restrooms.' },
-            { start: 185, end: 214, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-bottom-mid', title: 'SHOES & SOCKS', text: 'Must cover entire foot with non-slip soles and tight laces. Socks required. No open toes or holes.' },
-            { start: 214, end: 238, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-bottom-right', title: 'JACKETS', text: 'Keep outerwear solid black with minimal branding, or wear Domino\'s branded outerwear. Black gloves if worn.' },
+            { start: 49, end: 90, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-top-left', title: 'APPAREL - SHIRTS/UNDERSHIRTS', text: 'Wear a Domino\'s approved uniform or promo shirt. Undershirts: solid gray, white, or black. Roll sleeves past elbows when prepping food.' },
+            { start: 90, end: 128, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-top-mid', title: 'BOTTOMS - PANTS/SHORTS/SKIRTS', text: 'Approved options: black pants, black denim, blue denim, approved joggers. Sat properly at waist, free from rips/tears. No sweatpants or athletic shorts.' },
+            { start: 128, end: 159, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-top-right', title: 'HAIR & HAT RESTRAINTS', text: 'Approved hat or visor facing forward while working. Hair touching collar must be restrained behind shoulders.' },
+            { start: 159, end: 185, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-bottom-left', title: 'SHOES & SOCKS', text: 'Must cover entire foot with non-slip soles and tight laces. Socks required. No open toes or holes.' },
+            { start: 185, end: 214, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-bottom-mid', title: 'APRONS & ACCESSORIES', text: 'Worn full-length when preparing/cutting food. Stays inside—never worn outside or into restrooms.' },
+            { start: 214, end: 238, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-bottom-right', title: 'OUTERWEAR & JACKETS', text: 'Keep outerwear solid black with minimal branding, or wear Domino\'s branded outerwear. Black gloves if worn.' },
 
             // Grooming Poster Grid (3:58 - 6:16)
             { start: 238, end: 266, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-top-left', title: 'HYGIENE', text: 'Personal cleanliness & body odor controlled. Avoid heavy lotions or perfumes on hands when prepping food.' },
@@ -393,6 +405,20 @@
             const overlay = document.getElementById('uniform-modal-overlay');
             if (overlay && overlay.parentElement !== document.body) {
                 document.body.appendChild(overlay);
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true';
+            const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
+
+            const lookbookBtn = document.getElementById('btn-lookbook');
+            const exploreBtn = document.getElementById('btn-toggle-explore');
+            if (isUniformCompleted || (moduleVideos[3] && moduleVideos[3].completed) || isAdmin) {
+                if (lookbookBtn) lookbookBtn.classList.remove('hidden');
+                if (exploreBtn) exploreBtn.classList.remove('hidden');
+            } else {
+                if (lookbookBtn) lookbookBtn.classList.add('hidden');
+                if (exploreBtn) exploreBtn.classList.add('hidden');
             }
 
             uniformAudio = document.getElementById('uniform-audio-element');
@@ -486,6 +512,10 @@
                 stageIntro.classList.add('hidden');
                 stageGrid.classList.remove('hidden');
                 stageExplore.classList.add('hidden');
+                if (card) card.classList.add('hidden');
+
+                // Clear all in-box guideline texts
+                document.querySelectorAll('.inbox-guideline-text').forEach(el => el.innerText = '');
 
                 if (gridImg) {
                     if (!gridImg.src.includes(currentItem.poster.split('/').pop())) {
@@ -497,22 +527,9 @@
                 const targetBox = document.getElementById(currentItem.boxId);
                 if (targetBox) {
                     targetBox.classList.add('active-highlight');
-                }
-
-                if (card) {
-                    card.classList.remove('hidden');
-                    document.getElementById('box-card-title').innerText = currentItem.title;
-                    document.getElementById('box-card-text').innerText = currentItem.text;
-                    
-                    if (currentItem.boxId.includes('left')) {
-                        card.style.left = '34%';
-                        card.style.top = currentItem.boxId.includes('top') ? '26%' : '65%';
-                    } else if (currentItem.boxId.includes('right')) {
-                        card.style.left = '38%';
-                        card.style.top = currentItem.boxId.includes('top') ? '26%' : '65%';
-                    } else {
-                        card.style.left = '37%';
-                        card.style.top = currentItem.boxId.includes('top') ? '53%' : '38%';
+                    const textContainer = targetBox.querySelector('.inbox-guideline-text');
+                    if (textContainer) {
+                        textContainer.innerText = currentItem.text;
                     }
                 }
             } else if (currentItem.type === 'outro') {
@@ -544,6 +561,8 @@
             isUniformCompleted = true;
             document.getElementById('uniform-completion-banner').classList.remove('hidden');
             document.getElementById('btn-toggle-explore').classList.remove('hidden');
+            const lookbookBtn = document.getElementById('btn-lookbook');
+            if (lookbookBtn) lookbookBtn.classList.remove('hidden');
             
             moduleVideos[activeVideoIndex].completed = true;
             renderVideoCards();
