@@ -161,7 +161,7 @@
             </div> <!-- END video-wrapper-modal -->
 
             <!-- INTERACTIVE UNIFORM JOB AID CONTAINER -->
-            <div id="uniform-interactive-modal" class="uniform-modal-container hidden">
+            <div id="uniform-interactive-modal" class="uniform-modal-container" style="display: none;">
                 <!-- Top HUD / Control Strip -->
                 <div class="uniform-hud-bar">
                     <div style="display: flex; align-items: center; gap: 12px;">
@@ -857,13 +857,16 @@
 
         function closeVideoModal() {
             if (player) {
-                player.pause();
+                try { player.pause(); } catch(e) {}
             }
             if (uniformAudio) {
-                uniformAudio.pause();
+                try { uniformAudio.pause(); } catch(e) {}
             }
             const modalContent = document.querySelector('.video-modal-content');
             if (modalContent) modalContent.classList.remove('interactive-mode');
+
+            const uniformModal = document.getElementById('uniform-interactive-modal');
+            if (uniformModal) uniformModal.style.display = 'none';
 
             document.getElementById('video-modal').classList.add('hidden');
             document.getElementById('lookbook-modal').classList.add('hidden');
