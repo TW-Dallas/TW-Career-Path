@@ -275,6 +275,7 @@
                         <div id="explore-text-bottoms" class="explore-callout-text"></div>
                         <div id="explore-text-jackets" class="explore-callout-text"></div>
                         <div id="explore-text-facial-hair" class="explore-callout-text"></div>
+                        <div id="explore-text-facial-hair-sub" class="explore-callout-text"></div>
                     </div>
 
                     <!-- COMPLETION OVERLAY WITH DOMINO'S BRAND KIT STYLING & COMPACT FOOTPRINT -->
@@ -723,8 +724,10 @@
                 },
                 'facial-hair': {
                     title: 'FACIAL HAIR',
-                    text: 'Keep neat & trimmed up to 1" max. Beard net required during food prep if applicable.',
-                    targetId: 'explore-text-facial-hair'
+                    text: 'Keep neat & trimmed up to 1" max.',
+                    subText: 'Beard net required during food prep if applicable.',
+                    targetId: 'explore-text-facial-hair',
+                    subTargetId: 'explore-text-facial-hair-sub'
                 }
             };
 
@@ -734,6 +737,13 @@
                 if (el) {
                     el.innerHTML = data.text.replace(/\n/g, '<br>');
                     el.style.opacity = '1';
+                }
+                if (data.subTargetId && data.subText) {
+                    const subEl = document.getElementById(data.subTargetId);
+                    if (subEl) {
+                        subEl.innerHTML = data.subText.replace(/\n/g, '<br>');
+                        subEl.style.opacity = '1';
+                    }
                 }
             }
         }
