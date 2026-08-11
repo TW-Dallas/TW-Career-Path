@@ -235,7 +235,24 @@
                     <div id="uniform-stage-explore" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
                         <img src="../resources/Image_Guides/Image_Poster.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
                         
-                        <!-- Free Explore Hitboxes -->
+                        <!-- Free Explore Body Item Hitboxes (Multiples supported!) -->
+                        <div id="hb-click-shirt-1" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
+                        <div id="hb-click-shirt-2" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
+                        <div id="hb-click-shoes-1" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
+                        <div id="hb-click-shoes-2" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
+                        <div id="hb-click-apron" class="grid-box-overlay" onclick="onPeopleExploreClick('aprons')"></div>
+                        <div id="hb-click-hat-1" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
+                        <div id="hb-click-hat-2" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
+                        <div id="hb-click-bracelet" class="grid-box-overlay" onclick="onPeopleExploreClick('bracelets')"></div>
+                        <div id="hb-click-nails" class="grid-box-overlay" onclick="onPeopleExploreClick('nails')"></div>
+                        <div id="hb-click-bottoms-1" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
+                        <div id="hb-click-bottoms-2" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
+                        <div id="hb-click-bottoms-3" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
+                        <div id="hb-click-jackets" class="grid-box-overlay" onclick="onPeopleExploreClick('jackets')"></div>
+                        <div id="hb-click-facial-hair" class="grid-box-overlay" onclick="onPeopleExploreClick('facial-hair')"></div>
+                        <div id="hb-click-piercings" class="grid-box-overlay" onclick="onPeopleExploreClick('piercings')"></div>
+
+                        <!-- Original Callout Area Hitboxes -->
                         <div id="hb-shirts" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
                         <div id="hb-aprons" class="grid-box-overlay" onclick="onPeopleExploreClick('aprons')"></div>
                         <div id="hb-bracelets" class="grid-box-overlay" onclick="onPeopleExploreClick('bracelets')"></div>
@@ -247,11 +264,17 @@
                         <div id="hb-jackets" class="grid-box-overlay" onclick="onPeopleExploreClick('jackets')"></div>
                         <div id="hb-facial-hair" class="grid-box-overlay" onclick="onPeopleExploreClick('facial-hair')"></div>
 
-                        <!-- Active Explore Text Card -->
-                        <div id="explore-text-card" class="box-text-card hidden">
-                            <div id="explore-card-title" style="font-family: 'PizzaPress'; color: var(--crust-med); font-size: 1.1rem; margin-bottom: 4px;"></div>
-                            <div id="explore-card-text" style="font-weight: normal; color: var(--crust-light);"></div>
-                        </div>
+                        <!-- 10 In-Place Callout Text Containers (Populates on Click & STAYS PERMANENTLY) -->
+                        <div id="explore-text-shirts" class="explore-callout-text"></div>
+                        <div id="explore-text-aprons" class="explore-callout-text"></div>
+                        <div id="explore-text-bracelets" class="explore-callout-text"></div>
+                        <div id="explore-text-shoes" class="explore-callout-text"></div>
+                        <div id="explore-text-hats" class="explore-callout-text"></div>
+                        <div id="explore-text-piercings" class="explore-callout-text"></div>
+                        <div id="explore-text-nails" class="explore-callout-text"></div>
+                        <div id="explore-text-bottoms" class="explore-callout-text"></div>
+                        <div id="explore-text-jackets" class="explore-callout-text"></div>
+                        <div id="explore-text-facial-hair" class="explore-callout-text"></div>
                     </div>
 
                     <!-- COMPLETION OVERLAY -->
@@ -640,70 +663,66 @@
         }
 
         function onPeopleExploreClick(key) {
-            const card = document.getElementById('explore-text-card');
-            const titleEl = document.getElementById('explore-card-title');
-            const textEl = document.getElementById('explore-card-text');
-
             const PEOPLE_EXPLORE_MAP = {
                 'shirts': {
                     title: 'SHIRTS',
                     text: 'Wear a Domino\'s-approved uniform. If you wear an undershirt, it can be gray, white, or black. No patterns please. Feel free to wear a sweatshirt or hoodie as an undershirt, just make sure any strings are tucked in.\n\nIf you are working with food, roll up those sleeves past your elbow.',
-                    pos: { top: '34%', left: '20%' }
+                    targetId: 'explore-text-shirts'
                 },
                 'aprons': {
                     title: 'APRONS',
                     text: 'Wear them when you are working with food! Don\'t wear them outside or in the restroom.',
-                    pos: { top: '55%', left: '24%' }
+                    targetId: 'explore-text-aprons'
                 },
                 'bracelets': {
                     title: 'BRACELETS, WATCHES, & RINGS',
                     text: 'Don\'t wear bracelets or watches when making food. You can wear a simple ring, no stones, that can easily be washed when washing your hands.',
-                    pos: { top: '75%', left: '24%' }
+                    targetId: 'explore-text-bracelets'
                 },
                 'shoes': {
                     title: 'SHOES & SOCKS',
                     text: 'Socks must be worn. Shoes need to cover the whole foot. No open toes or holes.',
-                    pos: { top: '70%', left: '30%' }
+                    targetId: 'explore-text-shoes'
                 },
                 'hats': {
                     title: 'HATS & HAIR',
                     text: 'Everyone must wear a Domino\'s-approved hat. If hair touches the shirt collar, it needs to be restrained behind the shoulders.',
-                    pos: { top: '30%', left: '56%' }
+                    targetId: 'explore-text-hats'
                 },
                 'piercings': {
                     title: 'PIERCINGS',
                     text: 'Keep it simple! Dangle earrings and large hoops are not allowed. Any facial piercings should be a small stud or hoop (3/4" or 1.90 cm).',
-                    pos: { top: '45%', left: '55%' }
+                    targetId: 'explore-text-piercings'
                 },
                 'nails': {
                     title: 'NAILS',
                     text: 'If you have long nails >1/4" (0.6 cm), painted nails, or artificial nails, wear gloves when preparing food.',
-                    pos: { top: '62%', left: '57%' }
+                    targetId: 'explore-text-nails'
                 },
                 'bottoms': {
                     title: 'BOTTOMS',
                     text: 'IN:\n• Blue Denim\n• Black Denim\n• Black Pants\n• Domino\'s Joggers\n\nOUT:\n• Sweatpants\n• Leggings\n• Athletic materials\n• Basketball shorts\n• Short shorts – anything more than 4" (10 cm) above the knee.',
-                    pos: { top: '75%', left: '60%' }
+                    targetId: 'explore-text-bottoms'
                 },
                 'jackets': {
                     title: 'JACKETS',
                     text: 'Wear solid black with minimal clothing brand logos. Domino\'s logos are allowed.',
-                    pos: { top: '35%', left: '70%' }
+                    targetId: 'explore-text-jackets'
                 },
                 'facial-hair': {
                     title: 'FACIAL HAIR',
                     text: 'Keep it neat, and shorter than 1" (2.5 cm).',
-                    pos: { top: '58%', left: '72%' }
+                    targetId: 'explore-text-facial-hair'
                 }
             };
 
             const data = PEOPLE_EXPLORE_MAP[key];
-            if (data && card) {
-                card.classList.remove('hidden');
-                titleEl.innerText = data.title;
-                textEl.innerText = data.text;
-                card.style.top = data.pos.top;
-                card.style.left = data.pos.left;
+            if (data) {
+                const el = document.getElementById(data.targetId);
+                if (el) {
+                    el.innerHTML = `<div style="font-family: 'PizzaPress'; color: #ffffff; font-size: 0.95rem; margin-bottom: 2px;">${data.title}</div><div style="font-size: 0.8rem; line-height: 1.25; color: #ffffff;">${data.text.replace(/\n/g, '<br>')}</div>`;
+                    el.style.opacity = '1';
+                }
             }
         }
 

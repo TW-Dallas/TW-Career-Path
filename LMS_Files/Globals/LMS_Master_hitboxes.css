@@ -474,14 +474,19 @@
   #hb-bottom-mid   { top: 65.7373%; left: 37.1925%; width: 26.0683%; height: 25.0288%; }
   #hb-bottom-right { top: 65.7373%; left: 66.6161%; width: 26.0683%; height: 24.8447%; }
 
-  /* --- MODULE 2 FREE-EXPLORE PEOPLE POSTER HITBOXES --- */
-  #hb-shirts       { top: 18.9924%; left: 18.6092%; width: 19.4867%; height: 14.1707%; }
-  #hb-aprons       { top: 43.4691%; left: 23.255%;  width: 13.8085%; height: 10.1219%; }
-  #hb-bracelets    { top: 62.0566%; left: 23.5131%; width: 16.1314%; height: 12.6984%; }
-  #hb-shoes        { top: 80.0000%; left: 28.5000%; width: 18.0000%; height: 10.0000%; }
-  #hb-hats         { top: 18.8084%; left: 55.6468%; width: 15.099%;  height: 9.20175%; }
-  #hb-piercings    { top: 32.9791%; left: 54.7434%; width: 14.3247%; height: 12.5144%; }
-  #hb-nails        { top: 51.3826%; left: 57.1954%; width: 15.099%;  height: 8.46561%; }
-  #hb-bottoms      { top: 67.9457%; left: 61.0669%; width: 16.0023%; height: 23.9245%; }
-  #hb-jackets      { top: 18.9924%; left: 87.9095%; width: 8.77547%; height: 24.8447%; }
-  #hb-facial-hair  { top: 50.8305%; left: 84.038%;  width: 8.25926%; height: 5.52105%; }
+  /* --- MODULE 2 FREE-EXPLORE BODY ITEM CLICK HITBOXES --- */
+  #hb-click-shirt-1    { top: 28.7463%; left: 2.73588%; width: 14.9699%; height: 17.8514%; }
+  #hb-click-shirt-2    { top: 31.3228%; left: 38.6121%; width: 13.2923%; height: 18.5875%; }
+  #hb-click-shoes-1    { top: 77.2947%; left: 11.1242%; width: 9.67882%; height: 15.4589%; }
+  #hb-click-shoes-2    { top: 83.9199%; left: 42.7417%; width: 15.4861%; height: 7.9135%; }
+  #hb-click-apron      { top: 52.9285%; left: 6.47836%; width: 10.8403%; height: 15.0909%; }
+  #hb-click-hat-1      { top: 22.4891%; left: 42.6126%; width: 5.29109%; height: 4.78491%; }
+  #hb-click-hat-2      { top: 16.784%;  left: 6.22026%; width: 5.80729%; height: 5.88912%; }
+  #hb-click-bracelet   { top: 55.6154%; left: 38.9992%; width: 3.22627%; height: 9.20175%; }
+  #hb-click-nails      { top: 58.3759%; left: 50.0976%; width: 2.83912%; height: 6.25719%; }
+  #hb-click-bottoms-1  { top: 50.2784%; left: 42.4836%; width: 6.96875%; height: 34.2305%; }
+  #hb-click-bottoms-2  { top: 64.449%;  left: 49.5814%; width: 5.29109%; height: 21.5321%; }
+  #hb-click-bottoms-3  { top: 40.8926%; left: 74.2301%; width: 7.74306%; height: 20.4279%; }
+  #hb-click-jackets    { top: 23.5933%; left: 73.1977%; width: 10.7112%; height: 16.7472%; }
+  #hb-click-facial-hair { top: 63.7129%; left: 85.1995%; width: 3.35533%; height: 3.31263%; }
+  #hb-click-piercings  { top: 27.8261%; left: 42.4836%; width: 5.29109%; height: 4.41684%; }
