@@ -641,20 +641,28 @@
             const modalContent = document.querySelector('.video-modal-content');
 
             if (video.isInteractive) {
-                if (player) {
-                    player.pause();
-                }
+                // 1. Instantly expand modal container and reveal interactive presentation
                 if (modalContent) modalContent.classList.add('interactive-mode');
                 if (vimeoWrapper) vimeoWrapper.style.display = 'none';
                 if (uniformModal) {
                     uniformModal.classList.remove('hidden');
                     uniformModal.style.display = 'flex';
                 }
-                
-                initUniformInteractive();
-                if (uniformAudio) {
-                    uniformAudio.currentTime = 0;
-                    uniformAudio.play().catch(err => console.log("Audio play caught:", err));
+
+                // 2. Safely pause any active Vimeo player without crashing
+                if (player) {
+                    try { player.pause(); } catch(e) {}
+                }
+
+                // 3. Initialize interactive presenter
+                try {
+                    initUniformInteractive();
+                    if (uniformAudio) {
+                        uniformAudio.currentTime = 0;
+                        uniformAudio.play().catch(err => console.log("Audio play caught:", err));
+                    }
+                } catch(e) {
+                    console.error("Interactive init error:", e);
                 }
             } else {
                 if (modalContent) modalContent.classList.remove('interactive-mode');
