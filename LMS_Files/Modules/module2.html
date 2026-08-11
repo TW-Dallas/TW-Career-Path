@@ -163,7 +163,7 @@
     </div> <!-- END video-modal -->
 
     <!-- STANDALONE INTERACTIVE UNIFORM MODAL OVERLAY (100% INDEPENDENT FROM VIMEO VIDEO PLAYER) -->
-    <div id="uniform-modal-overlay" class="interactive-modal-overlay" style="display: none;">
+    <div id="uniform-modal-overlay" style="position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.9) !important; z-index: 999999 !important; display: none; align-items: center; justify-content: center; backdrop-filter: blur(6px);">
         <div class="video-modal-content interactive-mode" style="width: 94vw !important; max-width: 1200px !important; height: 88vh !important; max-height: 820px !important; display: flex; flex-direction: column; background: #090d16 !important; position: relative;">
             
             <!-- INTERACTIVE UNIFORM JOB AID CONTAINER -->
@@ -653,7 +653,7 @@
             activeVideoIndex = index;
             const video = moduleVideos[index];
 
-            if (video.isInteractive) {
+            if (video && (video.isInteractive || index === 3)) {
                 // Pause any background Vimeo player safely
                 if (player) {
                     try { player.pause(); } catch(e) {}
