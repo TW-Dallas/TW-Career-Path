@@ -511,9 +511,6 @@
                 stageExplore.classList.add('hidden');
                 if (card) card.classList.add('hidden');
 
-                // Clear all in-box guideline texts
-                document.querySelectorAll('.inbox-guideline-text').forEach(el => el.innerText = '');
-
                 if (gridImg) {
                     if (!gridImg.src.includes(currentItem.poster.split('/').pop())) {
                         gridImg.src = currentItem.poster;
@@ -521,14 +518,25 @@
                     gridImg.style.opacity = '1';
                 }
 
-                const targetBox = document.getElementById(currentItem.boxId);
-                if (targetBox) {
-                    targetBox.classList.add('active-highlight');
-                    const textContainer = targetBox.querySelector('.inbox-guideline-text');
-                    if (textContainer) {
-                        textContainer.innerText = currentItem.text;
+                // Progressive fill: Keep all completed box texts visible on current poster!
+                const activePoster = (time >= 238) ? '../resources/Image_Guides/Perfect_Grooming.png' : '../resources/Image_Guides/Perfect_Apparel.png';
+                
+                UNIFORM_TIMELINE.forEach(item => {
+                    if (item.type === 'grid' && item.poster === activePoster) {
+                        const targetBox = document.getElementById(item.boxId);
+                        if (targetBox) {
+                            const textContainer = targetBox.querySelector('.inbox-guideline-text');
+                            if (textContainer) {
+                                if (time >= item.start) {
+                                    textContainer.innerText = item.text;
+                                    textContainer.style.opacity = '1';
+                                } else {
+                                    textContainer.innerText = '';
+                                }
+                            }
+                        }
                     }
-                }
+                });
             } else if (currentItem.type === 'outro') {
                 stageIntro.classList.remove('hidden');
                 stageGrid.classList.add('hidden');
