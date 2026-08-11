@@ -639,7 +639,7 @@
             const overlay = document.getElementById('uniform-modal-overlay');
             if (overlay) {
                 overlay.classList.add('hidden');
-                overlay.style.display = 'none';
+                overlay.style.setProperty('display', 'none', 'important');
             }
             document.getElementById('lookbook-modal').classList.add('hidden');
         }
@@ -664,12 +664,12 @@
 
                 if (videoModal) {
                     videoModal.classList.add('hidden');
-                    videoModal.style.display = 'none';
+                    videoModal.style.setProperty('display', 'none', 'important');
                 }
 
                 if (overlay) {
                     overlay.classList.remove('hidden');
-                    overlay.style.display = 'flex';
+                    overlay.style.setProperty('display', 'flex', 'important');
                 }
 
                 try {
@@ -784,7 +784,7 @@
                             <div class="v-card-title">${video.title}</div>
                             <div class="v-card-desc">${video.desc}</div>
                             <button class="btn ${isUnlocked ? '' : 'disabled'}" 
-                                    onclick="${video.isInteractive ? "document.getElementById('uniform-modal-overlay').style.display='flex';" : ""} openVideoModal(${index});" 
+                                    onclick="openVideoModal(${index})" 
                                     ${isUnlocked ? '' : 'disabled'}>
                                 ${btnText}
                             </button>
