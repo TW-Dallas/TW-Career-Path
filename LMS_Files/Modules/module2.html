@@ -720,7 +720,7 @@
             if (data) {
                 const el = document.getElementById(data.targetId);
                 if (el) {
-                    el.innerHTML = `<div style="font-family: 'PizzaPress'; color: #ffffff; font-size: 0.95rem; margin-bottom: 2px;">${data.title}</div><div style="font-size: 0.8rem; line-height: 1.25; color: #ffffff;">${data.text.replace(/\n/g, '<br>')}</div>`;
+                    el.innerHTML = data.text.replace(/\n/g, '<br>');
                     el.style.opacity = '1';
                 }
             }
