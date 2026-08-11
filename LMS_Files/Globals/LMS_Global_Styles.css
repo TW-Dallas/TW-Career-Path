@@ -1087,16 +1087,10 @@
     }
 
     .grid-box-overlay.active-highlight {
-        border-color: var(--brand-blue) !important;
-        box-shadow: 0 0 18px rgba(0, 144, 226, 0.45);
-        background: rgba(0, 144, 226, 0.08);
-        animation: softBluePulse 2s infinite;
-    }
-
-    @keyframes softBluePulse {
-        0% { box-shadow: 0 0 8px rgba(0, 144, 226, 0.3); }
-        50% { box-shadow: 0 0 20px rgba(0, 144, 226, 0.6); }
-        100% { box-shadow: 0 0 8px rgba(0, 144, 226, 0.3); }
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        animation: none !important;
     }
 
     .inbox-guideline-text {
