@@ -278,13 +278,15 @@
                         <div id="explore-text-facial-hair-sub" class="explore-callout-text"></div>
                     </div>
 
-                    <!-- COMPLETION OVERLAY WITH DOMINO'S BRAND KIT STYLING & COMPACT FOOTPRINT -->
-                    <div id="uniform-completion-banner" class="hidden" style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--dark-blue), #004d7a); color: var(--crust-light); padding: 8px 20px; border-radius: 25px; border: 1.5px solid var(--crust-med); box-shadow: 0 4px 20px rgba(0,0,0,0.8); display: flex; align-items: center; gap: 12px; z-index: 1000;">
-                        <div id="uniform-banner-status-text" style="font-size: 0.9rem; font-family: 'OneDotCd-Bold'; color: var(--crust-light);">
-                            ✓ Audio Complete! Open Free Explore & Look Book to finish!
-                        </div>
-                        <button id="btn-finish-uniform" onclick="finishUniformInteractive()" class="btn disabled" disabled style="background: var(--dark-blue); color: var(--crust-med); border: 1px solid var(--crust-med); font-weight: bold; padding: 4px 14px; font-size: 0.85rem; border-radius: 18px; cursor: not-allowed; transition: all 0.3s ease;">Locked</button>
-                    </div>                </div>
+                </div>
+
+                <!-- COMPLETION OVERLAY DOCK (POSITIONED BELOW POSTER CANVAS) -->
+                <div id="uniform-completion-banner" class="hidden" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--dark-blue), #003859); color: var(--crust-light); padding: 6px 18px; border-radius: 20px; border: 1.5px solid var(--crust-med); box-shadow: 0 4px 20px rgba(0,0,0,0.85); display: flex; align-items: center; gap: 12px; z-index: 2000;">
+                    <div id="uniform-banner-status-text" style="font-size: 0.88rem; font-family: 'OneDotCd-Bold'; color: var(--crust-light);">
+                        ✓ Audio Complete! Open Free Explore & Look Book to finish!
+                    </div>
+                    <button id="btn-finish-uniform" onclick="finishUniformInteractive()" class="btn disabled" disabled style="background: var(--dark-blue); color: var(--crust-med); border: 1px solid var(--crust-med); font-weight: bold; padding: 4px 14px; font-size: 0.85rem; border-radius: 18px; cursor: not-allowed; transition: all 0.3s ease;">Locked</button>
+                </div>
 
                 </div>
 
@@ -462,14 +464,15 @@
             if (allDone) {
                 isUniformCompleted = true;
                 if (statusText) {
-                    statusText.innerHTML = '<span style="color: #22c55e;">✓ All 3 Steps Complete! Card Unlocked!</span>';
+                    statusText.innerHTML = '<span style="color: var(--crust-light);">✓ All 3 Steps Complete! Card Unlocked!</span>';
                 }
                 if (finishBtn) {
                     finishBtn.innerText = 'Continue & Exit';
                     finishBtn.disabled = false;
                     finishBtn.classList.remove('disabled');
-                    finishBtn.style.background = '#22c55e';
-                    finishBtn.style.color = '#ffffff';
+                    finishBtn.style.background = 'var(--brand-blue)';
+                    finishBtn.style.color = 'var(--crust-light)';
+                    finishBtn.style.border = '1.5px solid var(--crust-med)';
                     finishBtn.style.cursor = 'pointer';
                 }
                 if (moduleVideos && moduleVideos[activeVideoIndex]) {
@@ -482,14 +485,15 @@
                 if (!hasOpenedLookBook) missing.push('📖 Look Book');
                 
                 if (statusText) {
-                    statusText.innerHTML = `<span style="color: #f59e0b;">⚠️ Open ${missing.join(' & ')} above to unlock exit!</span>`;
+                    statusText.innerHTML = `<span style="color: var(--crust-med);">⚠️ Open ${missing.join(' & ')} above to unlock exit!</span>`;
                 }
                 if (finishBtn) {
                     finishBtn.innerText = 'Locked';
                     finishBtn.disabled = true;
                     finishBtn.classList.add('disabled');
-                    finishBtn.style.background = '#334155';
-                    finishBtn.style.color = '#94a3b8';
+                    finishBtn.style.background = 'var(--dark-blue)';
+                    finishBtn.style.color = 'var(--crust-med)';
+                    finishBtn.style.border = '1px solid var(--crust-med)';
                     finishBtn.style.cursor = 'not-allowed';
                 }
             }
