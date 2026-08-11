@@ -190,13 +190,13 @@
                     <div class="uniform-canvas-area">
                         
                         <!-- STAGE 1: INTRO SLIDES (0:00 - 0:49) -->
-                        <div id="uniform-stage-intro" class="uniform-stage-view">
-                            <img id="intro-slide-img" src="../resources/Title_Slides/Perfect_Image_2_Title.png" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: opacity 0.8s ease-in-out;">
+                        <div id="uniform-stage-intro" class="uniform-stage-view" style="width: 100%; height: 100%;">
+                            <img id="intro-slide-img" src="../resources/Title_Slides/Perfect_Image_2_Title.png" style="width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; display: block; opacity: 1; transition: opacity 0.8s ease-in-out;">
                         </div>
 
                         <!-- STAGE 2 & 3: 6-BOX GRID POSTERS (Apparel 0:49-3:58, Grooming 3:58-6:16) -->
-                        <div id="uniform-stage-grid" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%; aspect-ratio: 1968 / 1377;">
-                            <img id="grid-poster-img" src="../resources/Image_Guides/Perfect_Apparel.png" style="width: 100%; height: 100%; object-fit: contain;">
+                        <div id="uniform-stage-grid" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
+                            <img id="grid-poster-img" src="../resources/Image_Guides/Perfect_Apparel.png" style="width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; display: block;">
                             
                             <!-- 6 Grid Hitboxes -->
                             <div id="hb-top-left" class="grid-box-overlay" onclick="onGridBoxClick('top-left')"></div>
@@ -214,8 +214,8 @@
                         </div>
 
                         <!-- STAGE 4: FREE EXPLORE POSTER (Image_Poster.png) -->
-                        <div id="uniform-stage-explore" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%; aspect-ratio: 1968 / 1377;">
-                            <img src="../resources/Image_Guides/Image_Poster.png" style="width: 100%; height: 100%; object-fit: contain;">
+                        <div id="uniform-stage-explore" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
+                            <img src="../resources/Image_Guides/Image_Poster.png" style="width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; display: block;">
                             
                             <!-- Free Explore Hitboxes -->
                             <div id="hb-shirts" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
