@@ -277,11 +277,13 @@
                         <div id="explore-text-facial-hair" class="explore-callout-text"></div>
                     </div>
 
-                    <!-- COMPLETION OVERLAY -->
-                    <div id="uniform-completion-banner" class="hidden" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: #166534; color: white; padding: 12px 28px; border-radius: 30px; border: 2px solid #22c55e; box-shadow: 0 4px 20px rgba(0,0,0,0.6); display: flex; align-items: center; gap: 15px; z-index: 1000;">
-                        <span style="font-size: 1.1rem; font-family: 'OneDotCd-Bold';">✓ Uniform Guidelines Complete! Card Unlocked!</span>
-                        <button onclick="finishUniformInteractive()" class="btn" style="background: white; color: #166534; font-weight: bold; padding: 6px 16px; border: none;">Continue</button>
-                    </div>
+                    <!-- COMPLETION OVERLAY WITH DOMINO'S BRAND KIT STYLING & COMPACT FOOTPRINT -->
+                    <div id="uniform-completion-banner" class="hidden" style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--dark-blue), #004d7a); color: var(--crust-light); padding: 8px 20px; border-radius: 25px; border: 1.5px solid var(--crust-med); box-shadow: 0 4px 20px rgba(0,0,0,0.8); display: flex; align-items: center; gap: 12px; z-index: 1000;">
+                        <div id="uniform-banner-status-text" style="font-size: 0.9rem; font-family: 'OneDotCd-Bold'; color: var(--crust-light);">
+                            ✓ Audio Complete! Open Free Explore & Look Book to finish!
+                        </div>
+                        <button id="btn-finish-uniform" onclick="finishUniformInteractive()" class="btn disabled" disabled style="background: var(--dark-blue); color: var(--crust-med); border: 1px solid var(--crust-med); font-weight: bold; padding: 4px 14px; font-size: 0.85rem; border-radius: 18px; cursor: not-allowed; transition: all 0.3s ease;">Locked</button>
+                    </div>                </div>
 
                 </div>
 
@@ -666,52 +668,52 @@
             const PEOPLE_EXPLORE_MAP = {
                 'shirts': {
                     title: 'SHIRTS',
-                    text: 'Wear a Domino\'s-approved uniform. If you wear an undershirt, it can be gray, white, or black. No patterns please. Feel free to wear a sweatshirt or hoodie as an undershirt, just make sure any strings are tucked in.\n\nIf you are working with food, roll up those sleeves past your elbow.',
+                    text: 'Wear a Domino\'s approved uniform. Undershirts: solid gray, white, or black. Roll sleeves past elbows when prepping food.',
                     targetId: 'explore-text-shirts'
                 },
                 'aprons': {
                     title: 'APRONS',
-                    text: 'Wear them when you are working with food! Don\'t wear them outside or in the restroom.',
+                    text: 'Wear full-length when preparing food. Never wear outside or in restrooms.',
                     targetId: 'explore-text-aprons'
                 },
                 'bracelets': {
                     title: 'BRACELETS, WATCHES, & RINGS',
-                    text: 'Don\'t wear bracelets or watches when making food. You can wear a simple ring, no stones, that can easily be washed when washing your hands.',
+                    text: 'No watches or bracelets during food prep. Plain wedding band allowed.',
                     targetId: 'explore-text-bracelets'
                 },
                 'shoes': {
                     title: 'SHOES & SOCKS',
-                    text: 'Socks must be worn. Shoes need to cover the whole foot. No open toes or holes.',
+                    text: 'Socks must be worn. Shoes must cover entire foot. No open toes or holes.',
                     targetId: 'explore-text-shoes'
                 },
                 'hats': {
                     title: 'HATS & HAIR',
-                    text: 'Everyone must wear a Domino\'s-approved hat. If hair touches the shirt collar, it needs to be restrained behind the shoulders.',
+                    text: 'Domino\'s approved hat required. Hair touching collar must be restrained behind shoulders.',
                     targetId: 'explore-text-hats'
                 },
                 'piercings': {
                     title: 'PIERCINGS',
-                    text: 'Keep it simple! Dangle earrings and large hoops are not allowed. Any facial piercings should be a small stud or hoop (3/4" or 1.90 cm).',
+                    text: 'Keep it simple! Small studs or hoops only. No dangle or large hoop earrings.',
                     targetId: 'explore-text-piercings'
                 },
                 'nails': {
                     title: 'NAILS',
-                    text: 'If you have long nails >1/4" (0.6 cm), painted nails, or artificial nails, wear gloves when preparing food.',
+                    text: 'Clean & neatly trimmed. Wear gloves if long, painted, or artificial nails are worn.',
                     targetId: 'explore-text-nails'
                 },
                 'bottoms': {
                     title: 'BOTTOMS',
-                    text: 'IN:\n• Blue Denim\n• Black Denim\n• Black Pants\n• Domino\'s Joggers\n\nOUT:\n• Sweatpants\n• Leggings\n• Athletic materials\n• Basketball shorts\n• Short shorts – anything more than 4" (10 cm) above the knee.',
+                    text: 'Approved: Black pants, blue/black denim, or approved joggers. No sweatpants, leggings, or athletic shorts.',
                     targetId: 'explore-text-bottoms'
                 },
                 'jackets': {
                     title: 'JACKETS',
-                    text: 'Wear solid black with minimal clothing brand logos. Domino\'s logos are allowed.',
+                    text: 'Wear solid black outerwear with minimal branding, or Domino\'s branded outerwear.',
                     targetId: 'explore-text-jackets'
                 },
                 'facial-hair': {
                     title: 'FACIAL HAIR',
-                    text: 'Keep it neat, and shorter than 1" (2.5 cm).',
+                    text: 'Keep neat & trimmed up to 1" max. Beard net required during food prep if applicable.',
                     targetId: 'explore-text-facial-hair'
                 }
             };
