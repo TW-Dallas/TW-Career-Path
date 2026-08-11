@@ -784,7 +784,7 @@
                             <div class="v-card-title">${video.title}</div>
                             <div class="v-card-desc">${video.desc}</div>
                             <button class="btn ${isUnlocked ? '' : 'disabled'}" 
-                                    onclick="openVideoModal(${index})" 
+                                    onclick="${video.isInteractive ? "document.getElementById('uniform-modal-overlay').style.display='flex';" : ""} openVideoModal(${index});" 
                                     ${isUnlocked ? '' : 'disabled'}>
                                 ${btnText}
                             </button>
