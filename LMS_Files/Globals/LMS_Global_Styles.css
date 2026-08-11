@@ -1,42 +1,42 @@
   /* --- FONT LOADING --- */
   @font-face {
       font-family: 'PizzaPress';
-      src: url('../fonts/Dominos Sans Header 1.ttf') format('truetype');
+      src: url('../../fonts/Dominos Sans Header 1.ttf') format('truetype');
       font-weight: normal;
   }
   @font-face {
       font-family: 'Header2';
-      src: url('../fonts/Dominos Sans Header 2.ttf') format('truetype');
+      src: url('../../fonts/Dominos Sans Header 2.ttf') format('truetype');
       font-weight: normal;
   }
   @font-face {
       font-family: 'Subhead1';
-      src: url('../fonts/Dominos Sans Subhead 1.ttf') format('truetype');
+      src: url('../../fonts/Dominos Sans Subhead 1.ttf') format('truetype');
       font-weight: normal;
   }
   @font-face {
       font-family: 'Subhead2';
-      src: url('../fonts/Dominos Sans Subhead 2.ttf') format('truetype');
+      src: url('../../fonts/Dominos Sans Subhead 2.ttf') format('truetype');
       font-weight: normal;
   }
   @font-face {
       font-family: 'OneDotCd-Bold';
-      src: url('../fonts/Dominos Sans Bold.ttf') format('truetype');
+      src: url('../../fonts/Dominos Sans Bold.ttf') format('truetype');
       font-weight: bold;
   }
   @font-face {
       font-family: 'OneDotCd';
-      src: url('../fonts/Dominos Sans Body.ttf') format('truetype');
+      src: url('../../fonts/Dominos Sans Body.ttf') format('truetype');
       font-weight: normal;
   }
   @font-face {
       font-family: 'Condensed';
-      src: url('../fonts/Dominos Sans Body Condensed.ttf') format('truetype');
+      src: url('../../fonts/Dominos Sans Body Condensed.ttf') format('truetype');
       font-weight: normal;
   }
   @font-face {
       font-family: 'Compact';
-      src: url('../fonts/Dominos Sans Body Compact.ttf') format('truetype');
+      src: url('../../fonts/Dominos Sans Body Compact.ttf') format('truetype');
       font-weight: normal;
   }
 
