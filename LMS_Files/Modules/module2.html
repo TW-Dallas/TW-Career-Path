@@ -190,13 +190,16 @@
                     <div class="uniform-canvas-area">
                         
                         <!-- STAGE 1: INTRO SLIDES (0:00 - 0:49) -->
-                        <div id="uniform-stage-intro" class="uniform-stage-view" style="position: relative; width: 100%; height: 100%;">
-                            <img id="intro-slide-img" src="../resources/Title_Slides/Perfect_Image_2_Title.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block; opacity: 1; transition: opacity 0.4s ease-in-out;">
+                        <div id="uniform-stage-intro" class="uniform-stage-view" style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <img id="intro-slide-img" src="../resources/Title_Slides/Perfect_Image_2_Title.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block; opacity: 1; transition: opacity 0.4s ease-in-out; z-index: 10;">
+                            <div style="color: #94a3b8; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; text-align: center; padding: 20px;">
+                                👕 Perfect Image Presentation Loading...
+                            </div>
                         </div>
 
                         <!-- STAGE 2 & 3: 6-BOX GRID POSTERS (Apparel 0:49-3:58, Grooming 3:58-6:16) -->
                         <div id="uniform-stage-grid" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
-                            <img id="grid-poster-img" src="../resources/Image_Guides/Perfect_Apparel.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
+                            <img id="grid-poster-img" src="../resources/Image_Guides/Perfect_Apparel.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
                             
                             <!-- 6 Grid Hitboxes -->
                             <div id="hb-top-left" class="grid-box-overlay" onclick="onGridBoxClick('top-left')"></div>
@@ -215,7 +218,7 @@
 
                         <!-- STAGE 4: FREE EXPLORE POSTER (Image_Poster.png) -->
                         <div id="uniform-stage-explore" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%;">
-                            <img src="../resources/Image_Guides/Image_Poster.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
+                            <img src="../resources/Image_Guides/Image_Poster.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
                             
                             <!-- Free Explore Hitboxes -->
                             <div id="hb-shirts" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
