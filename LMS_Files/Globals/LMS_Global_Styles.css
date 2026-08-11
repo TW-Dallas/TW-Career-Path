@@ -1086,11 +1086,16 @@
         transition: all 0.3s ease;
     }
 
-    .grid-box-overlay.active-highlight {
-        border: none !important;
-        box-shadow: none !important;
-        background: transparent !important;
-        animation: none !important;
+    .pulse-attention {
+        animation: pulseBlueBorder 1.2s infinite !important;
+        border: 2px solid #38bdf8 !important;
+        box-shadow: 0 0 16px rgba(56, 189, 248, 0.8) !important;
+    }
+
+    @keyframes pulseBlueBorder {
+        0% { transform: scale(1); box-shadow: 0 0 8px rgba(56, 189, 248, 0.5); }
+        50% { transform: scale(1.06); box-shadow: 0 0 22px rgba(56, 189, 248, 0.95); }
+        100% { transform: scale(1); box-shadow: 0 0 8px rgba(56, 189, 248, 0.5); }
     }
 
     .inbox-guideline-text {

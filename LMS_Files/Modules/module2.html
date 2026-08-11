@@ -369,6 +369,9 @@
         // --- INTERACTIVE UNIFORM JOB AID CONTROLLER ---
         let uniformAudio = null;
         let isUniformCompleted = false;
+        let hasCompletedAudio = false;
+        let hasOpenedFreeExplore = false;
+        let hasOpenedLookBook = false;
 
         const UNIFORM_TIMELINE = [
             // Intro Slides
@@ -393,9 +396,78 @@
             { start: 314, end: 338, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-bottom-mid', title: 'JEWELRY', text: 'Simple studs/hoops (no dangle earrings). No watches, bracelets, or stone-set rings during food prep.' },
             { start: 338, end: 376, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-bottom-right', title: 'TATTOOS & MODS', text: 'Professional only (no profanity, offensive, or discriminatory tattoos). Cover body modifications.' },
 
-            // Outro / Pre-Game Check (6:16 - 6:59)
-            { start: 376, end: 419, type: 'outro', title: 'Pre-Game Check', text: 'Am I clean, complete, safe, and ready to represent the brand?' }
+            // Outro Slide (6:16 - 6:59)
+            { start: 376, end: 419, type: 'outro', slide: '../resources/Title_Slides/Perfect_Image_2_Title.png', title: 'Conclusion' }
         ];
+
+        function updateUniformRequirementsCheck() {
+            const exploreBtn = document.getElementById('btn-toggle-explore');
+            const lookbookBtn = document.getElementById('btn-lookbook');
+            const banner = document.getElementById('uniform-completion-banner');
+            const statusText = document.getElementById('uniform-banner-status-text');
+            const finishBtn = document.getElementById('btn-finish-uniform');
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true';
+            const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
+
+            if (isAdmin) {
+                hasCompletedAudio = true;
+                hasOpenedFreeExplore = true;
+                hasOpenedLookBook = true;
+            }
+
+            if (hasCompletedAudio || isAdmin) {
+                if (banner) banner.classList.remove('hidden');
+                if (exploreBtn) {
+                    exploreBtn.classList.remove('hidden');
+                    if (!hasOpenedFreeExplore) exploreBtn.classList.add('pulse-attention');
+                    else exploreBtn.classList.remove('pulse-attention');
+                }
+                if (lookbookBtn) {
+                    lookbookBtn.classList.remove('hidden');
+                    if (!hasOpenedLookBook) lookbookBtn.classList.add('pulse-attention');
+                    else lookbookBtn.classList.remove('pulse-attention');
+                }
+            }
+
+            const allDone = hasCompletedAudio && hasOpenedFreeExplore && hasOpenedLookBook;
+
+            if (allDone) {
+                isUniformCompleted = true;
+                if (statusText) {
+                    statusText.innerHTML = '<span style="color: #22c55e;">✓ All 3 Steps Complete! Card Unlocked!</span>';
+                }
+                if (finishBtn) {
+                    finishBtn.innerText = 'Continue & Exit';
+                    finishBtn.disabled = false;
+                    finishBtn.classList.remove('disabled');
+                    finishBtn.style.background = '#22c55e';
+                    finishBtn.style.color = '#ffffff';
+                    finishBtn.style.cursor = 'pointer';
+                }
+                if (moduleVideos && moduleVideos[activeVideoIndex]) {
+                    moduleVideos[activeVideoIndex].completed = true;
+                }
+                renderVideoCards();
+            } else if (hasCompletedAudio) {
+                let missing = [];
+                if (!hasOpenedFreeExplore) missing.push('🔍 Free Explore');
+                if (!hasOpenedLookBook) missing.push('📖 Look Book');
+                
+                if (statusText) {
+                    statusText.innerHTML = `<span style="color: #f59e0b;">⚠️ Open ${missing.join(' & ')} above to unlock exit!</span>`;
+                }
+                if (finishBtn) {
+                    finishBtn.innerText = 'Locked';
+                    finishBtn.disabled = true;
+                    finishBtn.classList.add('disabled');
+                    finishBtn.style.background = '#334155';
+                    finishBtn.style.color = '#94a3b8';
+                    finishBtn.style.cursor = 'not-allowed';
+                }
+            }
+        }
 
         function initUniformInteractive() {
             // Guarantee uniform-modal-overlay is un-nested and attached directly to body
@@ -404,19 +476,7 @@
                 document.body.appendChild(overlay);
             }
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true';
-            const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
-
-            const lookbookBtn = document.getElementById('btn-lookbook');
-            const exploreBtn = document.getElementById('btn-toggle-explore');
-            if (isUniformCompleted || (moduleVideos[3] && moduleVideos[3].completed) || isAdmin) {
-                if (lookbookBtn) lookbookBtn.classList.remove('hidden');
-                if (exploreBtn) exploreBtn.classList.remove('hidden');
-            } else {
-                if (lookbookBtn) lookbookBtn.classList.add('hidden');
-                if (exploreBtn) exploreBtn.classList.add('hidden');
-            }
+            updateUniformRequirementsCheck();
 
             uniformAudio = document.getElementById('uniform-audio-element');
             if (!uniformAudio) return;
@@ -563,21 +623,12 @@
         }
 
         function onUniformCompleted() {
-            isUniformCompleted = true;
-            document.getElementById('uniform-completion-banner').classList.remove('hidden');
-            document.getElementById('btn-toggle-explore').classList.remove('hidden');
-            const lookbookBtn = document.getElementById('btn-lookbook');
-            if (lookbookBtn) lookbookBtn.classList.remove('hidden');
-            
-            moduleVideos[activeVideoIndex].completed = true;
-            renderVideoCards();
-        }
-
-        function finishUniformInteractive() {
-            closeVideoModal();
+            hasCompletedAudio = true;
+            updateUniformRequirementsCheck();
         }
 
         function toggleFreeExploreMode() {
+            hasOpenedFreeExplore = true;
             const stageIntro = document.getElementById('uniform-stage-intro');
             const stageGrid = document.getElementById('uniform-stage-grid');
             const stageExplore = document.getElementById('uniform-stage-explore');
@@ -657,7 +708,9 @@
         }
 
         function openLookBookModal() {
+            hasOpenedLookBook = true;
             document.getElementById('lookbook-modal').classList.remove('hidden');
+            updateUniformRequirementsCheck();
         }
 
         function closeLookBookModal() {
@@ -665,6 +718,22 @@
         }
 
         function closeUniformModal() {
+            const allDone = hasCompletedAudio && hasOpenedFreeExplore && hasOpenedLookBook;
+            const urlParams = new URLSearchParams(window.location.search);
+            const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true';
+            const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
+
+            if (!allDone && !isAdmin) {
+                let missing = [];
+                if (!hasCompletedAudio) missing.push('Listen to full audio presentation (6:59)');
+                if (!hasOpenedFreeExplore) missing.push('Click "🔍 Free Explore" in top header');
+                if (!hasOpenedLookBook) missing.push('Open "📖 Look Book" in top header');
+
+                alert('⚠️ Please complete all required steps to unlock Card #4:\n\n• ' + missing.join('\n• '));
+                updateUniformRequirementsCheck();
+                return;
+            }
+
             if (uniformAudio) {
                 try { uniformAudio.pause(); } catch(e) {}
             }
