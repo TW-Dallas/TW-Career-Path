@@ -697,7 +697,9 @@
             if (!container) return;
             container.innerHTML = '';
 
-            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+            const urlParams = new URLSearchParams(window.location.search);
+            const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true';
+            const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
 
             moduleVideos.forEach((video, index) => {
                 const isUnlocked = isAdmin || (index === 0) || moduleVideos[index - 1].completed;

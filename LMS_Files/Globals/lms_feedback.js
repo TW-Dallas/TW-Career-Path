@@ -19,200 +19,230 @@
             font-family: 'OneDotCd-Bold', sans-serif;
             font-size: 0.95rem;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 10000;
-            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        #beta-feedback-trigger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,144,226,0.4);
+            background-color: #0077bd;
+        }
+
+        /* Feedback Modal Overlay */
+        #beta-feedback-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 1000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        #beta-feedback-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Modal Box */
+        .beta-feedback-card {
+            background-color: #fefaf6; /* var(--crust-base) */
+            width: 90%;
+            max-width: 480px;
+            border-radius: 12px;
+            border-top: 6px solid #ff0000; /* var(--brand-red) */
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            padding: 24px;
+            position: relative;
+            transform: translateY(15px);
+            transition: transform 0.25s ease;
+            box-sizing: border-box;
+        }
+
+        #beta-feedback-modal.active .beta-feedback-card {
+            transform: translateY(0);
+        }
+
+        .beta-feedback-card h3 {
+            margin: 0 0 6px 0;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            color: #005c91;
+            font-size: 1.25rem;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        #beta-feedback-trigger:hover {
-            background-color: #005c91; /* var(--dark-blue) */
-            transform: scale(1.05);
+
+        .beta-feedback-card p {
+            margin: 0 0 16px 0;
+            color: #603913;
+            font-size: 0.85rem;
+            line-height: 1.4;
         }
 
-        /* Modal Overlay Wrapper */
-        #beta-feedback-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 92, 145, 0.4); /* var(--dark-blue) with opacity */
-            z-index: 10001;
-            align-items: center;
-            justify-content: center;
-            font-family: 'OneDotCd', sans-serif;
-        }
-
-        /* Form Container */
-        .beta-form-card {
-            background-color: #fefaf6; /* var(--crust-base) */
-            border: 3px solid #f0decc;  /* var(--crust-med) */
-            border-radius: 12px;
-            width: 90%;
-            max-width: 450px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-            box-sizing: border-box;
-            position: relative;
-        }
-
-        .beta-form-title {
-            font-family: 'OneDotCd-Bold', sans-serif;
-            color: #005c91; /* var(--dark-blue) */
-            font-size: 1.4rem;
-            margin-top: 0;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #ff0000; /* var(--brand-red) */
-            padding-bottom: 5px;
-            text-transform: uppercase;
-        }
-
-        .beta-form-label {
+        .beta-feedback-card label {
             display: block;
             font-family: 'OneDotCd-Bold', sans-serif;
-            color: #603913; /* var(--crust-deep) */
-            margin-bottom: 5px;
-            margin-top: 15px;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            color: #472b10;
+            margin-bottom: 4px;
         }
 
-        .beta-form-select, .beta-form-textarea {
+        .beta-feedback-card textarea {
             width: 100%;
-            box-sizing: border-box;
-            background-color: #faf2e9; /* var(--crust-light) */
-            border: 2px solid #f0decc;    /* var(--crust-med) */
+            height: 100px;
+            border: 2px solid #f0decc;
             border-radius: 6px;
             padding: 10px;
-            font-family: 'OneDotCd', sans-serif;
-            color: #472b10; /* var(--crust-burnt) */
-            font-size: 1rem;
-        }
-
-        .beta-form-select:focus, .beta-form-textarea:focus {
+            font-family: inherit;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            resize: vertical;
             outline: none;
-            border-color: #0090e2; /* var(--brand-blue) */
+            margin-bottom: 16px;
         }
 
-        .beta-form-row {
+        .beta-feedback-card textarea:focus {
+            border-color: #0090e2;
+        }
+
+        .beta-feedback-actions {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
-            margin-top: 20px;
         }
 
         .beta-btn {
-            padding: 10px 20px;
+            padding: 8px 18px;
             border-radius: 50px;
             font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
             border: none;
-            transition: opacity 0.2s;
+            transition: 0.2s ease;
         }
-        .beta-btn:hover { opacity: 0.9; }
 
         .beta-btn-cancel {
             background-color: transparent;
-            color: #0090e2; /* var(--brand-blue) */
-            border: 2px solid #0090e2;
+            color: #603913;
+        }
+
+        .beta-btn-cancel:hover {
+            background-color: #faf2e9;
         }
 
         .beta-btn-submit {
-            background-color: #0090e2; /* var(--brand-blue) */
+            background-color: #ff0000;
             color: #fefaf6;
+        }
+
+        .beta-btn-submit:hover {
+            background-color: #910000;
         }
     `;
 
-    // Append Styles to Head
-    const styleEl = document.createElement('style');
-    styleEl.innerHTML = styles;
-    document.head.appendChild(styleEl);
+    // Append CSS
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = styles;
+    document.head.appendChild(styleSheet);
 
-    // Create and Inject the HTML DOM elements once the page loads
-    document.addEventListener("DOMContentLoaded", function() {
-        // Trigger Button
-        const trigger = document.createElement('button');
-        trigger.id = 'beta-feedback-trigger';
-        trigger.innerHTML = `🛠️ <span>Report Issue</span>`;
-        document.body.appendChild(trigger);
-
-        // Modal Form Container
-        const modal = document.createElement('div');
-        modal.id = 'beta-feedback-modal';
-        modal.innerHTML = `
-            <div class="beta-form-card">
-                <h3 class="beta-form-title">🛠️ Report Beta Issue</h3>
-                
-                <label class="beta-form-label">Issue Category</label>
-                <select id="beta-category" class="beta-form-select">
-                    <option value="Bug / Functionality">Bug (Something is broken)</option>
-                    <option value="Content Typo">Content Typo / Spelling</option>
-                    <option value="Formatting / Layout">Formatting / Layout Shift</option>
-                    <option value="Suggestion">General Suggestion</option>
-                </select>
-
-                <label class="beta-form-label">Describe the Issue</label>
-                <textarea id="beta-comments" class="beta-form-textarea" rows="4" placeholder="Be as specific as possible..."></textarea>
-
-                <div class="beta-form-row">
-                    <button id="beta-cancel" class="beta-btn beta-btn-cancel">Cancel</button>
-                    <button id="beta-submit" class="beta-btn beta-btn-submit">Submit Report</button>
-                </div>
+    // Build Modal HTML
+    const modalHTML = `
+        <button id="beta-feedback-trigger">🛠️ Report Issue</button>
+        <div id="beta-feedback-modal">
+            <div class="beta-feedback-card">
+                <h3>🛠️ Feedback / Bug Report</h3>
+                <p>Spotted a typo, broken button, or layout issue? Let us know!</p>
+                <form id="beta-feedback-form">
+                    <label for="beta-feedback-text">Issue Description:</label>
+                    <textarea id="beta-feedback-text" placeholder="Describe what went wrong or how to improve this step..." required></textarea>
+                    <div class="beta-feedback-actions">
+                        <button type="button" class="beta-btn beta-btn-cancel" id="beta-feedback-close">Cancel</button>
+                        <button type="submit" class="beta-btn beta-btn-submit" id="beta-feedback-send">Submit Report</button>
+                    </div>
+                </form>
             </div>
-        `;
-        document.body.appendChild(modal);
+        </div>
+    `;
 
-        // --- INTERACTION LOGIC ---
-        trigger.addEventListener('click', () => {
-            modal.style.display = 'flex';
+    // Append Component to Body safely after DOM is loaded
+    function initFeedbackUI() {
+        if (!document.body) return;
+        const container = document.createElement('div');
+        container.innerHTML = modalHTML;
+        document.body.appendChild(container);
+
+        // Element References
+        const trigger = document.getElementById('beta-feedback-trigger');
+        const modal = document.getElementById('beta-feedback-modal');
+        const closeBtn = document.getElementById('beta-feedback-close');
+        const form = document.getElementById('beta-feedback-form');
+        const sendBtn = document.getElementById('beta-feedback-send');
+        const textArea = document.getElementById('beta-feedback-text');
+
+        if (!trigger || !modal) return;
+
+        // UI Handlers
+        trigger.addEventListener('click', () => modal.classList.add('active'));
+        closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
         });
 
-        const closeModal = () => {
-            modal.style.display = 'none';
-            document.getElementById('beta-comments').value = '';
-        };
+        // Form Submission Handler
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const feedbackText = textArea.value.trim();
+            if (!feedbackText) return;
 
-        document.getElementById('beta-cancel').addEventListener('click', closeModal);
+            sendBtn.disabled = true;
+            sendBtn.innerText = "Submitting...";
 
-        document.getElementById('beta-submit').addEventListener('click', function() {
-            const category = document.getElementById('beta-category').value;
-            const comments = document.getElementById('beta-comments').value.trim();
-            const submitBtn = document.getElementById('beta-submit');
+            const payload = {
+                timestamp: new Date().toISOString(),
+                page: window.location.pathname.split('/').pop() || 'Dashboard',
+                url: window.location.href,
+                feedback: feedbackText,
+                user_agent: navigator.userAgent
+            };
 
-            if (!comments) {
-                alert("Please add a description before submitting.");
-                return;
-            }
-
-            submitBtn.innerText = "Sending...";
-            submitBtn.style.pointerEvents = "none";
-
-            // Grab browser memory state
-            const id = localStorage.getItem('tw_id') || 'unknown';
-            const market = localStorage.getItem('tw_market') || 'unknown';
-            const pageUrl = window.location.pathname.split('/').pop() || 'unknown';
-
-            // Compile the query payload URL
-            const url = `${AUTH_SCRIPT_URL}?action=feedback&market=${market}&id=${id}&pageUrl=${encodeURIComponent(pageUrl)}&category=${encodeURIComponent(category)}&comments=${encodeURIComponent(comments)}`;
-
-            fetch(url, { method: 'GET', credentials: 'omit' })
-                .then(r => r.json())
-                .then(res => {
-                    if (res.success) {
-                        alert("Thank you! Your issue has been logged directly to the spreadsheet.");
-                        closeModal();
-                    } else {
-                        alert("Failed to submit feedback. Check connection.");
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert("Submission error. Please notify your trainer.");
-                })
-                .finally(() => {
-                    submitBtn.innerText = "Submit Report";
-                    submitBtn.style.pointerEvents = "auto";
-                });
+            fetch(AUTH_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                alert('Thank you! Your feedback has been submitted successfully.');
+                textArea.value = '';
+                modal.classList.remove('active');
+            })
+            .catch(err => {
+                console.error('Feedback Submission Failed:', err);
+                alert('Could not submit feedback at this time. Please try again.');
+            })
+            .finally(() => {
+                sendBtn.disabled = false;
+                sendBtn.innerText = "Submit Report";
+            });
         });
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFeedbackUI);
+    } else {
+        initFeedbackUI();
+    }
 })();
