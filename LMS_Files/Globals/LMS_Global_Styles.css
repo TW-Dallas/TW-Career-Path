@@ -1008,6 +1008,18 @@
     /* ==========================================
        MODULE 2 INTERACTIVE UNIFORM JOB AID STYLES
        ========================================== */
+    .interactive-modal-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(0, 0, 0, 0.88);
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+    }
+
     .video-modal-content.interactive-mode {
         width: 94vw !important;
         max-width: 1200px !important;
