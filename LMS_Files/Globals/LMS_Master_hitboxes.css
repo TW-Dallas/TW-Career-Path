@@ -449,20 +449,16 @@
   #hb-trash-8, #hb-lobby-trash-8 { top: 18.5%; left: 67.5%; width: 5.0%; height: 12.0%; }  /* Counter Yellow Cup */
   #hb-trash-9, #hb-lobby-trash-9 { top: 23.0%; left: 76.0%; width: 8.0%; height: 7.0%; }   /* Counter right paper */
 
-  /* --- PARKING LOT SCENE HITBOXES (3:38 = 218s, 13 ITEMS) --- */
-  #hb-trash-A  { top: 90.56%; left: 19.93%; }
-  #hb-trash-B  { top: 85.62%; left: 42.04%; }
-  #hb-trash-C  { top: 81.47%; left: 48.48%; }
-  #hb-trash-D  { top: 76.73%; left: 51.37%; }
-  #hb-trash-E  { top: 84.04%; left: 95.37%; }
-  #hb-trash-F  { top: 76.73%; left: 76.81%; }
-  #hb-trash-G  { top: 73.18%; left: 84.26%; }
-  #hb-trash-H  { top: 63.10%; left: 77.48%; }
-  #hb-trash-I  { top: 63.50%; left: 47.81%; }
-  #hb-trash-J  { top: 61.92%; left: 38.59%; }
-  #hb-trash-K  { top: 63.89%; left: 29.70%; }
-  #hb-trash-L  { top: 66.07%; left: 21.93%; }
-  #hb-trash-M  { top: 59.74%; left: 29.48%; }
+  /* --- PARKING LOT SCENE HITBOXES (3:38 = 218s, 9 ITEMS) --- */
+  #hb-trash-A, #hb-parking-trash-1 { top: 80.9049%; left: 14.3859%; width: 12.5817%; height: 15.3804%; }
+  #hb-trash-B, #hb-parking-trash-2 { top: 72.4773%; left: 36.2258%; width: 18.3978%; height: 16.6445%; }
+  #hb-trash-C, #hb-parking-trash-3 { top: 77.7446%; left: 91.0630%; width: 8.9370%; height: 14.7483%; }
+  #hb-trash-D, #hb-parking-trash-4 { top: 69.5277%; left: 74.4457%; width: 14.0060%; height: 12.6414%; }
+  #hb-trash-E, #hb-parking-trash-5 { top: 59.8359%; left: 73.8522%; width: 4.8665%; height: 6.5314%; }
+  #hb-trash-F, #hb-parking-trash-6 { top: 59.2039%; left: 44.6532%; width: 4.6291%; height: 8.2169%; }
+  #hb-trash-G, #hb-parking-trash-7 { top: 57.7290%; left: 35.3949%; width: 6.7656%; height: 6.9528%; }
+  #hb-trash-H, #hb-parking-trash-8 { top: 57.5183%; left: 25.6619%; width: 8.4274%; height: 12.2200%; }
+  #hb-trash-I, #hb-parking-trash-9 { top: 61.9428%; left: 18.8963%; width: 5.2226%; height: 8.0062%; }
 
   /* --- MODULE 2 UNIFORM & GROOMING 6-BOX GRID HITBOXES --- */
   #hb-top-left     { top: 26.3538%; left: 7.25267%; width: 25.6811%; height: 25.3968%; }

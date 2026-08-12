@@ -140,10 +140,10 @@
                     <div id="hb-trash-9" class="trash-hotspot" onclick="cleanTrashItem(this, 1)"><div class="hotspot-pulse"></div></div>
                 </div>
 
-                <!-- EXERCISE 2 (At 3:38 = 218s): PARKING LOT SCENE - 13 ITEMS -->
+                <!-- EXERCISE 2 (At 3:38 = 218s): PARKING LOT SCENE - 9 ITEMS -->
                 <div id="trash-interactive-stage-2" class="hidden" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 20000; background: transparent; pointer-events: auto;">
                     <div style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: var(--dark-blue); color: white; padding: 8px 24px; border-radius: 30px; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.1rem; border: 2px solid var(--brand-blue); box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 20010; white-space: nowrap;">
-                        🚗 Parking Lot Check! Click all 13 infractions (<span id="trash-count-display-2">13</span> remaining)
+                        🚗 Parking Lot Check! Click all 9 trash items (<span id="trash-count-display-2">9</span> remaining)
                     </div>
                     <div id="hb-trash-A" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
                     <div id="hb-trash-B" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
@@ -154,8 +154,7 @@
                     <div id="hb-trash-G" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
                     <div id="hb-trash-H" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
                     <div id="hb-trash-I" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-J" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
-                    <div id="hb-trash-K" class="trash-hotspot" onclick="cleanTrashItem(this, 2)"><div class="hotspot-pulse"></div></div>
+                </div>
             </div> <!-- END video-wrapper-modal -->
         </div> <!-- END video-modal-content -->
     </div> <!-- END video-modal -->
@@ -392,7 +391,7 @@
 
         // Interactive Exercise States for Video 2
         let stage1Remaining = 9;
-        let stage2Remaining = 13;
+        let stage2Remaining = 9;
         let stage1Triggered = false;
         let stage2Triggered = false;
 
@@ -853,12 +852,12 @@
 
                 if (index === 1) {
                     stage1Remaining = 9;
-                    stage2Remaining = 13;
+                    stage2Remaining = 9;
                     stage1Triggered = false;
                     stage2Triggered = false;
                     document.querySelectorAll('.trash-hotspot').forEach(el => el.classList.remove('resolved'));
                     document.getElementById('trash-count-display-1').innerText = '9';
-                    document.getElementById('trash-count-display-2').innerText = '13';
+                    document.getElementById('trash-count-display-2').innerText = '9';
                 }
 
                 const playerOptions = {
