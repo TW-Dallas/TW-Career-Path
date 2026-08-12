@@ -112,8 +112,8 @@
         <div class="video-modal-content">
             <span class="video-modal-close" onclick="closeVideoModal()">&times;</span>
             <div class="video-wrapper-modal">
-                <!-- INTERACTIVE STAGE CONTAINER WITH RESERVED BOTTOM DOCK SPACE -->
-                <div style="position: relative; width: 100%; flex-grow: 1; min-height: 0; background: #000000; overflow: hidden; padding-bottom: 54px; box-sizing: border-box;"> z-index: 10; cursor: default;"></div>
+                <!-- 1. RESPONSIVE LEFT SHIELD -->
+                <div style="position: absolute; top: 0; left: 0; width: 80px; height: calc(100% - 50px); z-index: 10; cursor: default;"></div>
                 
                 <!-- 2. RESPONSIVE RIGHT SHIELD -->
                 <div style="position: absolute; top: 0; right: 0; width: 80px; height: calc(100% - 50px); z-index: 10; cursor: default;"></div>
@@ -839,6 +839,9 @@
             document.getElementById('trash-interactive-stage-1').classList.add('hidden');
             document.getElementById('trash-interactive-stage-2').classList.add('hidden');
 
+            const vimeoEl = document.getElementById('vimeo-player');
+            if (vimeoEl) vimeoEl.style.pointerEvents = 'auto';
+
             document.getElementById('video-modal').classList.remove('hidden');
 
             const vimeoWrapper = document.querySelector('.video-wrapper-modal');
@@ -961,6 +964,8 @@
                     if (data.seconds >= 200 && !stage1Triggered) {
                         stage1Triggered = true;
                         player.pause();
+                        const vimeoEl = document.getElementById('vimeo-player');
+                        if (vimeoEl) vimeoEl.style.pointerEvents = 'none';
                         document.getElementById('trash-interactive-stage-1').classList.remove('hidden');
                     }
 
@@ -968,6 +973,8 @@
                     if (data.seconds >= 218 && !stage2Triggered) {
                         stage2Triggered = true;
                         player.pause();
+                        const vimeoEl = document.getElementById('vimeo-player');
+                        if (vimeoEl) vimeoEl.style.pointerEvents = 'none';
                         document.getElementById('trash-interactive-stage-2').classList.remove('hidden');
                     }
                 }
@@ -982,7 +989,10 @@
             });
 
             player.on('seeked', function(data) {
-                if (localStorage.getItem('tw_admin_mode') === 'true') return; // Executive Scrubbing Unlocked
+                const urlParams = new URLSearchParams(window.location.search);
+                const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true';
+                const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
+                if (isAdmin) return; // Executive Scrubbing Unlocked
                 if (isEnforcingHold) return;
                 
                 const currentVid = moduleVideos[activeVideoIndex];
@@ -1015,6 +1025,8 @@
                 if (stage1Remaining === 0) {
                     setTimeout(() => {
                         document.getElementById('trash-interactive-stage-1').classList.add('hidden');
+                        const vimeoEl = document.getElementById('vimeo-player');
+                        if (vimeoEl) vimeoEl.style.pointerEvents = 'auto';
                         player.play();
                     }, 500);
                 }
@@ -1024,6 +1036,8 @@
                 if (stage2Remaining === 0) {
                     setTimeout(() => {
                         document.getElementById('trash-interactive-stage-2').classList.add('hidden');
+                        const vimeoEl = document.getElementById('vimeo-player');
+                        if (vimeoEl) vimeoEl.style.pointerEvents = 'auto';
                         player.play();
                     }, 500);
                 }
