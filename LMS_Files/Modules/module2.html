@@ -111,7 +111,7 @@
     <div id="video-modal" class="video-modal-overlay hidden">
         <div class="video-modal-content">
             <span class="video-modal-close" onclick="closeVideoModal()">&times;</span>
-            <div class="video-wrapper-modal">
+            <div class="video-wrapper-inner">
                 <!-- 1. RESPONSIVE LEFT SHIELD (Top-Left Logo & Title Cover) -->
                 <div style="position: absolute; top: 0; left: 0; width: 280px; height: 85px; z-index: 1000; cursor: default;"></div>
                 
@@ -842,7 +842,7 @@
 
             document.getElementById('video-modal').classList.remove('hidden');
 
-            const vimeoWrapper = document.querySelector('.video-wrapper-modal');
+            const vimeoWrapper = document.querySelector('.video-wrapper-inner');
             const modalContent = document.querySelector('.video-modal-content');
             if (modalContent) modalContent.classList.remove('interactive-mode');
             if (vimeoWrapper) vimeoWrapper.style.display = 'block';
