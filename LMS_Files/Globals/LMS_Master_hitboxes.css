@@ -439,15 +439,15 @@
   #hb-phone-park { top: 27.8254%; left: 74.67%; width: 7.04955%; height: 9.5696%; }
 
   /* --- LOBBY SCENE HITBOXES (3:20 = 200s, 9 ITEMS) --- */
-  #hb-trash-1, #hb-lobby-trash-1 { top: 82.0%; left: 19.5%; width: 8.5%; height: 9.5%; }   /* Bottom-left floor paper */
-  #hb-trash-2, #hb-lobby-trash-2 { top: 89.0%; left: 40.5%; width: 7.5%; height: 8.0%; }   /* Bottom-center floor wrapper */
-  #hb-trash-3, #hb-lobby-trash-3 { top: 72.0%; left: 78.5%; width: 10.5%; height: 10.0%; } /* Bottom-right floor papers */
-  #hb-trash-4, #hb-lobby-trash-4 { top: 66.5%; left: 38.0%; width: 9.5%; height: 8.5%; }   /* Middle floor flyer */
-  #hb-trash-5, #hb-lobby-trash-5 { top: 18.5%; left: 19.5%; width: 5.5%; height: 13.0%; }  /* Counter McDonald's Cup */
-  #hb-trash-6, #hb-lobby-trash-6 { top: 22.0%; left: 30.5%; width: 7.0%; height: 7.0%; }   /* Counter left towel */
-  #hb-trash-7, #hb-lobby-trash-7 { top: 22.0%; left: 43.5%; width: 7.0%; height: 7.0%; }   /* Counter middle trash */
-  #hb-trash-8, #hb-lobby-trash-8 { top: 16.5%; left: 64.5%; width: 5.0%; height: 12.0%; }  /* Counter Yellow Cup */
-  #hb-trash-9, #hb-lobby-trash-9 { top: 21.0%; left: 71.0%; width: 8.0%; height: 7.0%; }   /* Counter right paper */
+  #hb-trash-1, #hb-lobby-trash-1 { top: 85.0%; left: 22.0%; width: 8.5%; height: 9.5%; }   /* Bottom-left floor paper */
+  #hb-trash-2, #hb-lobby-trash-2 { top: 92.0%; left: 43.0%; width: 7.5%; height: 8.0%; }   /* Bottom-center floor wrapper */
+  #hb-trash-3, #hb-lobby-trash-3 { top: 76.5%; left: 81.5%; width: 10.5%; height: 10.0%; } /* Bottom-right floor papers */
+  #hb-trash-4, #hb-lobby-trash-4 { top: 69.5%; left: 40.5%; width: 9.5%; height: 8.5%; }   /* Middle floor flyer */
+  #hb-trash-5, #hb-lobby-trash-5 { top: 17.5%; left: 19.0%; width: 5.5%; height: 13.0%; }  /* Counter McDonald's Cup (SPOT ON) */
+  #hb-trash-6, #hb-lobby-trash-6 { top: 23.5%; left: 32.5%; width: 7.0%; height: 7.0%; }   /* Counter left towel */
+  #hb-trash-7, #hb-lobby-trash-7 { top: 23.5%; left: 45.5%; width: 7.0%; height: 7.0%; }   /* Counter middle trash */
+  #hb-trash-8, #hb-lobby-trash-8 { top: 18.5%; left: 65.0%; width: 5.0%; height: 12.0%; }  /* Counter Yellow Cup */
+  #hb-trash-9, #hb-lobby-trash-9 { top: 23.0%; left: 73.5%; width: 8.0%; height: 7.0%; }   /* Counter right paper */
 
   /* --- PARKING LOT SCENE HITBOXES (3:38 = 218s, 13 ITEMS) --- */
   #hb-trash-A  { top: 90.56%; left: 19.93%; }
