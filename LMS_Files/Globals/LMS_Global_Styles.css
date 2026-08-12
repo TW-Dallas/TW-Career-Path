@@ -961,9 +961,6 @@
    ========================================== */
     .trash-hotspot {
         position: absolute;
-        width: 7%;  /* Generous clickable target area */
-        height: 7%;
-        transform: translate(-50%, -50%); /* Centers the hitbox on your exact click coordinates */
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -972,7 +969,7 @@
     }
 
     .trash-hotspot:hover {
-        transform: translate(-50%, -50%) scale(1.15);
+        transform: scale(1.08);
     }
 
     /* Unclicked state: Completely invisible */
