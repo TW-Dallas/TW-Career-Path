@@ -953,7 +953,26 @@
 
         // --- VIMEO PLAYER EVENTS & ANTI-SCRUBBING ---
         function attachVimeoEvents() {
-            player.ready().then(() => { player.setVolume(1); });
+            player.ready().then(() => { 
+                player.setVolume(1); 
+                Promise.all([player.getVideoWidth(), player.getVideoHeight()]).then(([w, h]) => {
+                    if (w && h) {
+                        const aspectPct = (h / w) * 100;
+                        const wrapper = document.querySelector('.video-wrapper-inner');
+                        if (wrapper) wrapper.style.paddingBottom = aspectPct + '%';
+                    }
+                }).catch(e => {});
+            });
+
+            player.on('loaded', function() {
+                Promise.all([player.getVideoWidth(), player.getVideoHeight()]).then(([w, h]) => {
+                    if (w && h) {
+                        const aspectPct = (h / w) * 100;
+                        const wrapper = document.querySelector('.video-wrapper-inner');
+                        if (wrapper) wrapper.style.paddingBottom = aspectPct + '%';
+                    }
+                }).catch(e => {});
+            });
 
             player.on('timeupdate', function(data) {
                 if (isEnforcingHold) return;
