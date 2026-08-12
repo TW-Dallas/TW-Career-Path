@@ -112,14 +112,14 @@
         <div class="video-modal-content">
             <span class="video-modal-close" onclick="closeVideoModal()">&times;</span>
             <div class="video-wrapper-modal">
-                <!-- 1. RESPONSIVE LEFT SHIELD -->
-                <div style="position: absolute; top: 0; left: 0; width: 80px; height: calc(100% - 50px); z-index: 10; cursor: default;"></div>
+                <!-- 1. RESPONSIVE LEFT SHIELD (Top-Left Logo & Title Cover) -->
+                <div style="position: absolute; top: 0; left: 0; width: 280px; height: 85px; z-index: 1000; cursor: default;"></div>
                 
-                <!-- 2. RESPONSIVE RIGHT SHIELD -->
-                <div style="position: absolute; top: 0; right: 0; width: 80px; height: calc(100% - 50px); z-index: 10; cursor: default;"></div>
+                <!-- 2. RESPONSIVE RIGHT SHIELD (Top-Right Buttons Cover) -->
+                <div style="position: absolute; top: 0; right: 0; width: 90px; height: 90px; z-index: 1000; cursor: default;"></div>
                 
                 <!-- 3. BOTTOM-RIGHT SHIELD -->
-                <div style="position: absolute; bottom: 0; right: 0; width: 85px; height: 50px; z-index: 10; cursor: default;"></div>
+                <div style="position: absolute; bottom: 0; right: 0; width: 85px; height: 50px; z-index: 1000; cursor: default;"></div>
                 
                 <!-- Vimeo Player Target -->
                 <div id="vimeo-player" style="width: 100%; height: 100%;"></div>
@@ -866,7 +866,10 @@
                 const playerOptions = {
                     id: video.id,
                     responsive: true,
-                    autoplay: true
+                    autoplay: true,
+                    title: false,
+                    byline: false,
+                    portrait: false
                 };
                 if (video.h) {
                     playerOptions.h = video.h;
