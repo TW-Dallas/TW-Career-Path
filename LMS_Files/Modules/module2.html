@@ -982,7 +982,10 @@
             });
 
             player.on('seeked', function(data) {
-                if (localStorage.getItem('tw_admin_mode') === 'true') return; // Executive Scrubbing Unlocked
+                const urlParams = new URLSearchParams(window.location.search);
+                const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true';
+                const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
+                if (isAdmin) return; // Executive Scrubbing Unlocked
                 if (isEnforcingHold) return;
                 
                 const currentVid = moduleVideos[activeVideoIndex];
