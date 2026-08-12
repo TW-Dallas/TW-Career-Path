@@ -981,25 +981,32 @@
         pointer-events: none !important;
     }
 
-    /* Clicked/Cleared State: Green Checkmark */
+    /* Clicked/Cleared State: Sleek Floating Green Checkmark Badge */
     .trash-hotspot.resolved {
         pointer-events: none;
-    }
-
-    .trash-hotspot.resolved .hotspot-pulse {
-        border: 2px solid #28a745 !important;
-        background: rgba(40, 167, 69, 0.45) !important;
-        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
+    .trash-hotspot.resolved .hotspot-pulse {
+        width: 34px !important;
+        height: 34px !important;
+        background: #10b981 !important;
+        border: 2px solid #ffffff !important;
+        border-radius: 50% !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        margin: auto;
+    }
+
     .trash-hotspot.resolved .hotspot-pulse::after {
         content: '✓';
         color: white;
-        font-size: 1.3rem;
-        font-weight: bold;
+        font-size: 1rem;
+        font-weight: 900;
     }
 
     /* ==========================================
