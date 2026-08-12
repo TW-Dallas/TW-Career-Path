@@ -439,17 +439,15 @@
   #hb-phone-park { top: 27.8254%; left: 74.67%; width: 7.04955%; height: 9.5696%; }
 
   /* --- LOBBY SCENE HITBOXES (3:20 = 200s, 11 ITEMS) --- */
-  #hb-trash-1  { top: 79.89%; left: 83.15%; }
-  #hb-trash-2  { top: 75.15%; left: 88.37%; }
-  #hb-trash-3  { top: 94.71%; left: 43.81%; }
-  #hb-trash-4  { top: 87.20%; left: 23.48%; }
-  #hb-trash-5  { top: 71.20%; left: 42.04%; }
-  #hb-trash-6  { top: 20.63%; left: 20.59%; }
-  #hb-trash-7  { top: 23.20%; left: 34.26%; }
-  #hb-trash-8  { top: 22.61%; left: 47.70%; }
-  #hb-trash-9  { top: 18.86%; left: 67.04%; }
-  #hb-trash-10 { top: 23.00%; left: 73.93%; }
-  #hb-trash-11 { top: 21.42%; left: 78.93%; }
+  #hb-trash-1, #hb-lobby-trash-1 { top: 78.6246%; left: 17.7124%; width: 12.5869%; height: 16.4051%; }
+  #hb-trash-2, #hb-lobby-trash-2 { top: 88.6277%; left: 40.0513%; width: 9.4118%; height: 11.3723%; }
+  #hb-trash-3, #hb-lobby-trash-3 { top: 68.0213%; left: 78.9460%; width: 14.4012%; height: 18.4058%; }
+  #hb-trash-4, #hb-lobby-trash-4 { top: 64.6202%; left: 36.8762%; width: 13.8343%; height: 15.0047%; }
+  #hb-trash-5, #hb-lobby-trash-5 { top: 10.0031%; left: 15.7847%; width: 9.7520%; height: 21.0066%; }
+  #hb-trash-6, #hb-lobby-trash-6 { top: 17.8056%; left: 30.1859%; width: 8.9582%; height: 11.6036%; }
+  #hb-trash-7, #hb-lobby-trash-7 { top: 17.8056%; left: 44.8139%; width: 7.9377%; height: 12.0038%; }
+  #hb-trash-8, #hb-lobby-trash-8 { top: 10.6033%; left: 63.8644%; width: 5.6698%; height: 16.2051%; }
+  #hb-trash-9, #hb-lobby-trash-9 { top: 16.6052%; left: 70.8949%; width: 11.3396%; height: 10.8034%; }
 
   /* --- PARKING LOT SCENE HITBOXES (3:38 = 218s, 13 ITEMS) --- */
   #hb-trash-A  { top: 90.56%; left: 19.93%; }
