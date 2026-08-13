@@ -1075,19 +1075,19 @@
         position: relative;
         width: 100%;
         height: 100%;
-        max-width: 1100px;
+        max-width: 100% !important; /* Allows container to scale smoothly without squishing */
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    /* --- FIXED 16:9 POSTER LOCK (MAPS IMAGE 1:1 TO CONTAINER) --- */
+    /* --- STRICT 16:9 POSTER CONTAINER (ZERO STRETCHING & UNDISTORTED) --- */
     .poster-aspect-lock {
         position: relative;
         aspect-ratio: 16 / 9;
         height: 100% !important;
         width: auto !important;
-        max-width: 100% !important;
+        max-width: calc((88vh - 65px) * (16 / 9)) !important; /* Mathematically locks width to 16:9 canvas height */
         max-height: 100% !important;
         margin: auto !important;
         display: flex;
@@ -1101,15 +1101,16 @@
         left: 0;
         width: 100% !important;
         height: 100% !important;
-        object-fit: fill !important; /* Stretches 1:1 to container bounds so hitboxes align perfectly */
+        object-fit: contain !important; /* Keeps images crisp with ZERO stretching */
         display: block;
     }
 
-    /* --- GRID OVERLAYS & NO SCROLLBARS --- */
+    /* --- HITBOX OVERLAYS & CLICK HANDLING --- */
     .grid-box-overlay {
         position: absolute;
-        cursor: pointer;
-        z-index: 50;
+        cursor: pointer !important;
+        pointer-events: auto !important;
+        z-index: 50 !important;
         border: 3px transparent solid;
         border-radius: 8px;
         transition: all 0.3s ease;
@@ -1125,23 +1126,44 @@
         height: 0 !important;
     }
 
+    /* --- IN-BOX TEXT (GUIDED PRESENTATION) --- */
     .inbox-guideline-text {
         width: 100%;
         height: 100%;
-        padding: 4% 6% 2% 6% !important;                    /* Clean padding inside white card area */
+        padding: 4% 6% 2% 6% !important;
         box-sizing: border-box;
         color: var(--crust-burnt);
         font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
-        font-size: clamp(0.6rem, 0.92vw, 0.88rem) !important; /* Fits text inside box without overflowing */
+        font-size: clamp(0.6rem, 0.92vw, 0.88rem) !important;
         line-height: 1.3 !important;
         font-weight: 600;
         display: flex;
         align-items: flex-start;
         justify-content: flex-start;
         text-align: left;
-        overflow: hidden !important;                          /* ERADICATES ALL SCROLLBARS */
+        overflow: hidden !important;
         scrollbar-width: none !important;
         pointer-events: none;
+    }
+
+    /* --- FREE EXPLORE CALLOUT POPUP CARDS --- */
+    .explore-callout-text {
+        position: absolute;
+        color: #ffffff !important;
+        background: rgba(15, 23, 42, 0.92) !important; /* High-contrast popup card */
+        border: 1.5px solid var(--brand-blue) !important;
+        border-radius: 8px !important;
+        padding: 8px 12px !important;
+        font-family: 'OneDotCd', sans-serif !important;
+        font-size: clamp(0.68rem, 0.9vw, 0.88rem) !important;
+        line-height: 1.35 !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6) !important;
+        opacity: 0;
+        transition: opacity 0.3s ease !important;
+        pointer-events: none;
+        z-index: 200 !important;
+        text-align: left;
+        max-width: 260px;
     }
 
     .box-text-card {
