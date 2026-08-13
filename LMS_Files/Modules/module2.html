@@ -173,10 +173,15 @@
                     </div>
 
                     <!-- Audio Player & Scrubber / Interactive Instruction Container -->
-                    <div id="uniform-audio-hud-container" style="display: flex; align-items: center; gap: 10px; flex-grow: 1; max-width: 520px; margin: 0 15px;">
-                        <button id="uniform-play-btn" onclick="toggleUniformAudio()" style="background: var(--brand-blue); border: none; color: var(--crust-light); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">▶</button>
-                        <input type="range" id="uniform-scrubber" min="0" max="419" value="0" step="0.5" oninput="seekUniformAudio(this.value)" style="flex-grow: 1; cursor: pointer;">
-                        <span id="uniform-time-disp" style="font-family: monospace; font-size: 0.85rem; color: var(--crust-med); min-width: 85px; text-align: right;">0:00 / 6:59</span>
+                    <div id="uniform-audio-hud-container" style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-grow: 1; max-width: 520px; margin: 0 15px;">
+                        <div id="uniform-audio-controls" style="display: flex; align-items: center; gap: 10px; width: 100%;">
+                            <button id="uniform-play-btn" onclick="toggleUniformAudio()" style="background: var(--brand-blue); border: none; color: var(--crust-light); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">▶</button>
+                            <input type="range" id="uniform-scrubber" min="0" max="419" value="0" step="0.5" oninput="seekUniformAudio(this.value)" style="flex-grow: 1; cursor: pointer;">
+                            <span id="uniform-time-disp" style="font-family: monospace; font-size: 0.85rem; color: var(--crust-med); min-width: 85px; text-align: right;">0:00 / 6:59</span>
+                        </div>
+                        <div id="uniform-explore-tip" class="hidden" style="display: none; align-items: center; justify-content: center; width: 100%;">
+                            <span style="color: var(--crust-light); font-family: 'OneDotCd-Bold'; font-size: 0.95rem; letter-spacing: 0.3px; background: rgba(0, 144, 226, 0.25); padding: 4px 14px; border-radius: 20px; border: 1px solid var(--brand-blue); white-space: nowrap;">💡 Click any team member's hat, shirt, apron, or shoes!</span>
+                        </div>
                     </div>
 
                     <div style="display: flex; align-items: center; gap: 8px;">
@@ -500,12 +505,27 @@
             }
         }
 
+        let isFreeExploreActive = false;
+
         function initUniformInteractive() {
             // Guarantee uniform-modal-overlay is un-nested and attached directly to body
             const overlay = document.getElementById('uniform-modal-overlay');
             if (overlay && overlay.parentElement !== document.body) {
                 document.body.appendChild(overlay);
             }
+
+            isFreeExploreActive = false;
+            const audioControls = document.getElementById('uniform-audio-controls');
+            const exploreTip = document.getElementById('uniform-explore-tip');
+            const phaseTag = document.getElementById('uniform-phase-tag');
+            const exploreBtn = document.getElementById('btn-toggle-explore');
+            if (audioControls) audioControls.style.display = 'flex';
+            if (exploreTip) {
+                exploreTip.classList.add('hidden');
+                exploreTip.style.display = 'none';
+            }
+            if (phaseTag) phaseTag.innerText = 'Guided Presentation';
+            if (exploreBtn) exploreBtn.innerText = '🔍 Free Explore';
 
             updateUniformRequirementsCheck();
 
@@ -537,6 +557,9 @@
 
         function toggleUniformAudio() {
             if (!uniformAudio) initUniformInteractive();
+            if (isFreeExploreActive) {
+                toggleFreeExploreMode();
+            }
             if (uniformAudio.paused) {
                 uniformAudio.play();
             } else {
@@ -546,6 +569,9 @@
 
         function seekUniformAudio(val) {
             if (!uniformAudio) initUniformInteractive();
+            if (isFreeExploreActive) {
+                toggleFreeExploreMode();
+            }
             uniformAudio.currentTime = parseFloat(val);
             processUniformTimeline(parseFloat(val));
         }
@@ -564,6 +590,8 @@
         }
 
         function processUniformTimeline(time) {
+            if (isFreeExploreActive) return; // Prevent background audio timeupdate from kicking out of Free Explore view
+
             const currentItem = UNIFORM_TIMELINE.find(item => time >= item.start && time < item.end);
             
             const stageIntro = document.getElementById('uniform-stage-intro');
@@ -642,6 +670,9 @@
 
         function onGridBoxClick(boxKey) {
             if (!uniformAudio) initUniformInteractive();
+            if (isFreeExploreActive) {
+                toggleFreeExploreMode();
+            }
             const time = uniformAudio.currentTime;
             const currentPoster = (time >= 238) ? '../resources/Image_Guides/Perfect_Grooming.png' : '../resources/Image_Guides/Perfect_Apparel.png';
             const targetBoxId = 'hb-' + boxKey;
@@ -660,21 +691,41 @@
 
         function toggleFreeExploreMode() {
             hasOpenedFreeExplore = true;
+            isFreeExploreActive = !isFreeExploreActive;
+
             const stageIntro = document.getElementById('uniform-stage-intro');
             const stageGrid = document.getElementById('uniform-stage-grid');
             const stageExplore = document.getElementById('uniform-stage-explore');
-
-            stageIntro.classList.add('hidden');
-            stageGrid.classList.add('hidden');
-            stageExplore.classList.remove('hidden');
-            
+            const audioControls = document.getElementById('uniform-audio-controls');
+            const exploreTip = document.getElementById('uniform-explore-tip');
             const phaseTag = document.getElementById('uniform-phase-tag');
-            if (phaseTag) phaseTag.innerText = 'Phase 2: Free-Explore Poster';
+            const exploreBtn = document.getElementById('btn-toggle-explore');
 
-            // Replace audio bar in HUD header with high-visibility instruction banner!
-            const audioHud = document.getElementById('uniform-audio-hud-container');
-            if (audioHud) {
-                audioHud.innerHTML = `<span style="color: var(--crust-light); font-family: 'OneDotCd-Bold'; font-size: 0.95rem; letter-spacing: 0.3px; background: rgba(0, 144, 226, 0.25); padding: 4px 14px; border-radius: 20px; border: 1px solid var(--brand-blue);">💡 Click any team member's hat, shirt, apron, or shoes!</span>`;
+            if (isFreeExploreActive) {
+                if (uniformAudio && !uniformAudio.paused) {
+                    try { uniformAudio.pause(); } catch(e) {}
+                }
+                stageIntro.classList.add('hidden');
+                stageGrid.classList.add('hidden');
+                stageExplore.classList.remove('hidden');
+
+                if (audioControls) audioControls.style.display = 'none';
+                if (exploreTip) {
+                    exploreTip.classList.remove('hidden');
+                    exploreTip.style.display = 'flex';
+                }
+                if (phaseTag) phaseTag.innerText = 'Phase 2: Free-Explore Poster';
+                if (exploreBtn) exploreBtn.innerText = '🎙️ Guided Audio';
+            } else {
+                stageExplore.classList.add('hidden');
+                if (audioControls) audioControls.style.display = 'flex';
+                if (exploreTip) {
+                    exploreTip.classList.add('hidden');
+                    exploreTip.style.display = 'none';
+                }
+                if (phaseTag) phaseTag.innerText = 'Guided Presentation';
+                if (exploreBtn) exploreBtn.innerText = '🔍 Free Explore';
+                processUniformTimeline(uniformAudio ? uniformAudio.currentTime : 0);
             }
 
             updateUniformRequirementsCheck();
