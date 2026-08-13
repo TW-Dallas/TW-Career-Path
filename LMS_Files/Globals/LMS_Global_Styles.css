@@ -1081,6 +1081,27 @@
         justify-content: center;
     }
 
+    /* --- FIXED 16:9 POSTER LOCK (ENFORCES PERFECT ALIGNMENT) --- */
+    .poster-aspect-lock {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        width: auto !important;
+        height: auto !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        margin: auto !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .poster-aspect-lock img {
+        width: 100%;
+        height: 100%;
+        object-fit: fill; /* Fits 1:1 onto the locked 16:9 frame */
+        display: block;
+    }
+
     .grid-box-overlay {
         position: absolute;
         cursor: pointer;
@@ -1088,6 +1109,7 @@
         border: 3px transparent solid;
         border-radius: 8px;
         transition: all 0.3s ease;
+        box-sizing: border-box;
     }
 
     .explore-callout-text {
@@ -1104,23 +1126,24 @@
         text-shadow: 0 2px 4px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.9);
     }
 
-    /* Callout text coordinates centralized in LMS_Master_hitboxes.css */
-
+    /* --- RESPONSIVE IN-BOX GUIDELINE TEXT --- */
     .inbox-guideline-text {
         width: 100%;
         height: 100%;
-        padding: 14px 16px 12px 16px;
+        /* Percentage padding sits below the header banner in the poster graphic */
+        padding: 24% 8% 8% 8%; 
         box-sizing: border-box;
         color: var(--crust-burnt);
         font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
-        font-size: 1.06rem;
-        line-height: 1.4;
+        /* Clamp allows text size to scale fluidly with zoom level */
+        font-size: clamp(0.65rem, 1.1vw, 1.05rem); 
+        line-height: 1.35;
         font-weight: 600;
         display: flex;
         align-items: flex-start;
         justify-content: flex-start;
         text-align: left;
-        overflow: hidden;
+        overflow-y: auto;
         pointer-events: none;
     }
 
@@ -1167,4 +1190,3 @@
         border: 4px solid var(--brand-blue);
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    
