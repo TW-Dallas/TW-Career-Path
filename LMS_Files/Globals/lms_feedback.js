@@ -151,6 +151,80 @@
         .beta-btn-submit:hover {
             background-color: #910000;
         }
+
+        /* Universal Mobile Blocker Overlay */
+        #global-mobile-blocker {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(145deg, #005c91 0%, #002e4d 100%);
+            z-index: 99999999;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            box-sizing: border-box;
+            font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
+            text-align: center;
+        }
+
+        .global-mobile-card {
+            background-color: #fefaf6; /* var(--crust-base) */
+            border-radius: 14px;
+            border-top: 6px solid #ff0000; /* var(--brand-red) */
+            border-bottom: 2px solid #f0decc;
+            border-left: 1px solid #f0decc;
+            border-right: 1px solid #f0decc;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            max-width: 440px;
+            width: 100%;
+            padding: 30px 22px;
+            box-sizing: border-box;
+        }
+
+        .global-mobile-card h2 {
+            font-family: 'PizzaPress', 'OneDotCd-Bold', sans-serif;
+            color: #005c91;
+            font-size: 1.65rem;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .global-mobile-card .mobile-notice-box {
+            background: rgba(255, 0, 0, 0.07);
+            border-left: 4px solid #ff0000;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .global-mobile-card .mobile-notice-title {
+            color: #910000;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .global-mobile-card .mobile-notice-desc {
+            margin: 3px 0 0 0;
+            font-size: 0.88rem;
+            color: #603913;
+            line-height: 1.35;
+            font-family: 'OneDotCd', sans-serif;
+        }
+
+        .global-mobile-card p {
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 0.95rem;
+            color: #603913;
+            line-height: 1.4;
+            margin: 0 0 18px 0;
+        }
     `;
 
     // Append CSS
@@ -158,7 +232,7 @@
     styleSheet.innerText = styles;
     document.head.appendChild(styleSheet);
 
-    // Build Modal HTML
+    // Build Modal & Mobile Blocker HTML
     const modalHTML = `
         <button id="beta-feedback-trigger">🛠️ Report Issue</button>
         <div id="beta-feedback-modal">
@@ -175,7 +249,44 @@
                 </form>
             </div>
         </div>
+
+        <!-- Global Universal Mobile Blocker -->
+        <div id="global-mobile-blocker">
+            <div class="global-mobile-card">
+                <div style="font-size: 3.2rem; margin-bottom: 6px; user-select: none;">💻</div>
+                <h2>Store Laptop Required</h2>
+                <div class="mobile-notice-box">
+                    <div class="mobile-notice-title">Mobile Devices Not Supported</div>
+                    <div class="mobile-notice-desc">
+                        Team WOW LMS modules, interactive training videos, menu games, and POS simulators cannot be completed on mobile phones.
+                    </div>
+                </div>
+                <p>
+                    Please open this link on your store's computer or training laptop to complete your onboarding.
+                </p>
+                <div style="font-family: 'OneDotCd-Bold', sans-serif; color: #005c91; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                    🍕 TEAM WOW LEARNING SYSTEM
+                </div>
+            </div>
+        </div>
     `;
+
+    function checkDeviceSupport() {
+        const blocker = document.getElementById('global-mobile-blocker');
+        if (!blocker) return;
+
+        const isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const isSmallScreen = window.innerWidth <= 850;
+        const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+        if (isMobileUA || (isSmallScreen && isTouch) || (isSmallScreen && window.innerHeight > window.innerWidth)) {
+            blocker.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        } else {
+            blocker.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
 
     // Append Component to Body safely after DOM is loaded
     function initFeedbackUI() {
@@ -183,6 +294,10 @@
         const container = document.createElement('div');
         container.innerHTML = modalHTML;
         document.body.appendChild(container);
+
+        checkDeviceSupport();
+        window.addEventListener('resize', checkDeviceSupport);
+        window.addEventListener('orientationchange', checkDeviceSupport);
 
         // Element References
         const trigger = document.getElementById('beta-feedback-trigger');
