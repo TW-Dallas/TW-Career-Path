@@ -1085,9 +1085,9 @@
     .poster-aspect-lock {
         position: relative;
         aspect-ratio: 16 / 9;
-        width: auto !important;
-        height: auto !important;
-        max-width: 100% !important;
+        height: 100% !important;     /* Guarantees non-zero height in flex containers */
+        width: auto !important;      /* Calculates width dynamically based on 16:9 ratio */
+        max-width: 100% !important;  /* Prevents overflow on narrow screens or high zoom */
         max-height: 100% !important;
         margin: auto !important;
         display: flex;
@@ -1096,9 +1096,12 @@
     }
 
     .poster-aspect-lock img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        object-fit: fill; /* Fits 1:1 onto the locked 16:9 frame */
+        object-fit: contain;          /* Displays full poster artwork crisp and centered */
         display: block;
     }
 
