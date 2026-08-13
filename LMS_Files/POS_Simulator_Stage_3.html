@@ -1187,9 +1187,10 @@
 
             // Tracks incorrect clicks on the background image
             posImage.addEventListener('click', function() {
+                if (currentStep >= sequence.length) return;
                 // If it is a text-typing step, clicking the BG image does not register as incorrect immediately
                 const stepData = sequence[currentStep];
-                if (stepData.input && stepData.input.type === 'text') {
+                if (stepData && stepData.input && stepData.input.type === 'text') {
                     return;
                 }
                 errorMsg.style.display = 'block';
@@ -1198,6 +1199,7 @@
             
             // --- PHYSICAL KEYBOARD SHORTCUT ENGINE ---
             window.addEventListener('keydown', function (event) {
+                if (currentStep >= sequence.length) return;
                 // 1. Ignore if user is actively typing inside an <input> text box (e.g. Name/Phone fields)
                 if (event.target && event.target.tagName === 'INPUT') {
                     return;

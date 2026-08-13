@@ -592,13 +592,15 @@
             });
 
             posImage.addEventListener('click', function() {
+                if (currentStep >= sequence.length) return;
                 const stepData = sequence[currentStep];
-                if (stepData.input && stepData.input.type === 'text') return;
+                if (stepData && stepData.input && stepData.input.type === 'text') return;
                 errorMsg.style.display = 'block';
                 wrongClicks++; 
             });
             
             window.addEventListener('keydown', function (event) {
+                if (currentStep >= sequence.length) return;
                 if (event.target && event.target.tagName === 'INPUT') return;
 
                 const stepData = sequence[currentStep];

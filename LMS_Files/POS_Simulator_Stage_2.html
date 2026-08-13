@@ -845,6 +845,7 @@
 
             // Tracks incorrect clicks on the background image
             posImage.addEventListener('click', function() {
+                if (currentStep >= sequence.length) return;
                 errorMsg.style.display = 'block';
                 wrongClicks++; // Increment wrong clicks for Stage 2
             });
