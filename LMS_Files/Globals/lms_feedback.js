@@ -210,20 +210,15 @@
             sendBtn.disabled = true;
             sendBtn.innerText = "Submitting...";
 
-            const payload = {
-                timestamp: new Date().toISOString(),
-                page: window.location.pathname.split('/').pop() || 'Dashboard',
-                url: window.location.href,
-                feedback: feedbackText,
-                user_agent: navigator.userAgent
-            };
+            const id = localStorage.getItem('tw_id') || 'unknown';
+            const market = localStorage.getItem('tw_market') || 'unknown';
+            const page = window.location.pathname.split('/').pop() || 'Dashboard';
+            const currentStepNum = typeof currentStep !== 'undefined' ? ` (Step ${currentStep})` : '';
+            const pageLocation = `${page}${currentStepNum}`;
 
-            fetch(AUTH_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            })
+            const url = `${AUTH_SCRIPT_URL}?action=feedback&id=${encodeURIComponent(id)}&market=${encodeURIComponent(market)}&pageUrl=${encodeURIComponent(pageLocation)}&category=${encodeURIComponent('Beta Issue Report')}&comments=${encodeURIComponent(feedbackText)}`;
+
+            fetch(url, { method: 'GET', credentials: 'omit' })
             .then(() => {
                 alert('Thank you! Your feedback has been submitted successfully.');
                 textArea.value = '';
