@@ -1417,6 +1417,15 @@
         .then(response => response.json())
         .then(result => {
             if (result.success) {
+                // Clear any leftover session data from previous users on shared devices
+                localStorage.removeItem('mod1_complete');
+                localStorage.removeItem('mod2_complete');
+                localStorage.removeItem('mod3_complete');
+                localStorage.removeItem('mod4_complete');
+                localStorage.removeItem('mod5_complete');
+                localStorage.removeItem('mod4_saved_stage');
+                localStorage.removeItem('tw_admin_mode');
+
                 // Save session states
                 localStorage.setItem('tw_market', market);
                 localStorage.setItem('tw_id', normalizedId);

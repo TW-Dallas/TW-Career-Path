@@ -893,6 +893,7 @@
         function loadStep(stepIndex) {
             // 1. AUTO-REDIRECT TO STAGE 3 WHEN SEQUENCE ENDS
             if (stepIndex >= sequence.length) {
+                localStorage.setItem('mod4_saved_stage', '3');
                 sendProgressUpdate('Day 1 Mod 4', 'In Progress');
                 setTimeout(() => {
                     window.location.href = "POS_Simulator_Stage_3.html";

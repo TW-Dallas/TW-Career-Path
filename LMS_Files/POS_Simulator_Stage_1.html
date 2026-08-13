@@ -713,6 +713,7 @@
         
         function loadStep(stepIndex) {
             if (stepIndex >= sequence.length) {
+                localStorage.setItem('mod4_saved_stage', '2');
                 // Write progress before redirecting
                 sendProgressUpdate('Day 1 Mod 4', 'In Progress');
 

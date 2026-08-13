@@ -851,12 +851,6 @@
                 "image": "resources/POS_assets/Stage_3/POS_3.72.png",
                 "activeHitbox": "hb-send-order",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div>Delivery<div class='pos-ticket-header' style='margin-top: 12px;'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (214) 777-1897<br><strong>Name:</strong> Joseph<br><strong>Address:</strong> 4118 Pleasant Grove Dr 237<div class='pos-ticket-header' style='margin-top: 12px;'>🍴 ORDER ITEMS</div><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 14\" Hand-Tossed — Extra Cheese<br><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 14\" Thin Crust — Spinach & Black Olives<br><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 14\" New York — Ham<br><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> (2) 32-Piece Cinnamon Bread Bites<br><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> (5) Icing Dip Cup<div class='pos-ticket-header' style='margin-top: 12px;'>💳 PAYMENT METHOD</div><strong>Method:</strong> Cash</div>"
-            },
-            {
-                "step": 77,
-                "image": "resources/POS_assets/Stage_3/POS_3.C.png",
-                "activeHitbox": "hb-anywhere",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Stage 3 Complete</p><p style='margin-bottom: 16px;'><strong>Practice Stage 3 Finished</strong><br><br>Great job! You are getting faster and more accurate with every order you enter.</p><p style='margin-bottom: 24px;'>Next up in Stage 4, you will review essential phone hardware features like Park and Mute before taking on full-length customer calls in real time.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click anywhere on the POS screen to proceed to Stage 4.</p>"
             }
         ];
         
@@ -1251,16 +1245,15 @@
             loadStep(currentStep);
         }
 
-        function sendProgressUpdate(moduleName, status = "In Progress") {
+        function sendProgressUpdate(moduleName, status = "Completed") {
             const market = localStorage.getItem('tw_market');
             const id = localStorage.getItem('tw_id');
             if (!market || !id) return;
 
             const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
             
-            // Save that Stage 3 is complete and Stage 4 is up next
             const answers = {
-                "currentStage": 4, // <--- Stage 4 is next!
+                "currentStage": 3,
                 "Stage 3 Wrong Clicks": wrongClicks,
                 "Stage 3 Status": "Completed"
             };
@@ -1272,7 +1265,7 @@
         }
 
         function loadStep(stepIndex) {
-            // 1. ENDS STAGE 3 SIMULATION AND RETURNS TO DASHBOARD
+            // 1. ENDS STAGE 3 SIMULATION AND SHOWS COMPLETION SCREEN
             if (stepIndex >= sequence.length) {
                 endSimulation();
                 return;
@@ -1304,7 +1297,6 @@
                 reportErrorToDeveloper('Missing Hitbox Configuration', `No active hitboxes specified for step ${stepIndex}`);
             }            
 
-            // Keep Finish button hidden on step 78 so clicking the POS screen finishes Stage 3
             const finishBtn = document.getElementById('finish-sim-btn');
             if (finishBtn) {
                 finishBtn.style.display = 'none';
@@ -1312,29 +1304,48 @@
         }
 
         function endSimulation() {
+            // Immediately mark Module 4 as complete and record progress
+            localStorage.setItem('mod4_complete', 'true');
+            localStorage.removeItem('mod4_saved_stage');
+            sendProgressUpdate('Day 1 Mod 4', 'Completed');
+
             posImage.src = "resources/POS_assets/Stage_1.1/under_construction.png"; 
-            instructionText.innerHTML = "<strong>Stage 3 Complete</strong><br><br>You've successfully made it through all the completed stages of this module!<br><br>Click the red button below to save your progress and return to the Day 1 Dashboard.";
+            instructionText.innerHTML = `
+                <div style="padding: 4px 0;">
+                    <h3 style="color: var(--brand-blue); font-family: 'PizzaPress', sans-serif; font-size: 1.5rem; margin-top: 0; margin-bottom: 8px;">🎉 Stage 3 Complete!</h3>
+                    <p style="font-size: 1rem; color: var(--crust-burnt); line-height: 1.4; margin-bottom: 16px;">
+                        <strong>Module 4 Practice Finished!</strong><br><br>
+                        You've successfully completed all active order entry & phone simulator practice stages!
+                    </p>
+                    <div style="background: rgba(0, 144, 226, 0.08); border-left: 4px solid var(--brand-blue); padding: 12px; border-radius: 6px; text-align: left; margin-bottom: 20px;">
+                        <strong style="color: var(--brand-blue); font-family: 'OneDotCd-Bold';">🚧 Stage 4 (Evaluation)</strong>
+                        <p style="margin: 4px 0 0 0; font-size: 0.92rem; color: #555;">Stage 4 is currently under construction. Your Module 4 progress has been recorded!</p>
+                    </div>
+                </div>
+            `;
             
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
-            audioPanel.style.display = 'none';
-            audioPlayer.pause();
+            if (audioPanel) audioPanel.style.display = 'none';
+            if (audioPlayer) audioPlayer.pause();
             
             const finishBtn = document.getElementById('finish-sim-btn');
-            finishBtn.style.display = 'inline-block'; 
-            finishBtn.innerText = "Save & Return to Day 1"; 
+            if (finishBtn) {
+                finishBtn.style.display = 'inline-block'; 
+                finishBtn.style.width = '100%';
+                finishBtn.style.padding = '12px 20px';
+                finishBtn.style.fontSize = '1.05rem';
+                finishBtn.innerText = "✓ Return to Day 1 Dashboard"; 
 
-            finishBtn.onclick = function() {
-                finishBtn.innerText = "Saving...";
-                finishBtn.style.pointerEvents = "none";
-                finishBtn.style.opacity = "0.5";
+                finishBtn.onclick = function() {
+                    finishBtn.innerText = "Returning...";
+                    finishBtn.style.pointerEvents = "none";
+                    finishBtn.style.opacity = "0.6";
 
-                sendProgressUpdate('Day 1 Mod 4', 'Completed');
-                localStorage.setItem('mod4_complete', 'true');
-
-                setTimeout(() => {
-                    window.location.href = 'https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html#day1';
-                }, 1500);
-            };
+                    setTimeout(() => {
+                        window.location.href = 'lms_dashboard.html#day1';
+                    }, 500);
+                };
+            }
         }
 
         function goBack() {

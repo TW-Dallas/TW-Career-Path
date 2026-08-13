@@ -509,6 +509,7 @@
 
         function loadStep(stepIndex) {
             if (stepIndex >= sequence.length) {
+                localStorage.setItem('mod4_saved_stage', '1');
                 sendProgressUpdate('Day 1 Mod 4', 'In Progress');
                 setTimeout(() => {
                     window.location.href = "POS_Simulator_Stage_1.html";
