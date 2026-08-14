@@ -48,6 +48,10 @@
       --crust-burnt: #472b10;
   }
 /* --- GLOBAL ROOT VARIABLES & LAYOUT (RESTORED) --- */
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
   :root {
       --border-radius: 12px;
       --transition: all 0.3s ease;
@@ -589,6 +593,14 @@
                 </div>
             </div> <button id="login-btn" class="btn" onclick="authenticateUser()">Sign In</button>
             <button type="button" onclick="promptExecutiveAccess()" style="margin-top: 14px; width: 100%; background: rgba(0, 144, 226, 0.06); color: var(--dark-blue); border: 2px dashed var(--brand-blue); padding: 10px; border-radius: 50px; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(0, 144, 226, 0.15)'" onmouseout="this.style.background='rgba(0, 144, 226, 0.06)'">👑 Executive Review Access 🔒</button>
+
+            <!-- Need Learner Credentials Link -->
+            <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid #ebebeb;">
+                <a href="javascript:void(0)" onclick="openRosterModal()" style="color: var(--brand-blue); font-family: 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s ease; letter-spacing: 0.3px;" onmouseover="this.style.color='var(--dark-blue)'; this.style.textDecoration='underline';" onmouseout="this.style.color='var(--brand-blue)'; this.style.textDecoration='none';">
+                    <span>Need Learner Credentials? Click here</span>
+                    <span style="font-size: 0.9rem;">↗</span>
+                </a>
+            </div>
         </div>
 
         <!-- STEP 2: PROFILE CONFIRMATION & AVATAR -->
@@ -1048,7 +1060,135 @@
         </div>
     </div>
 
+    <!-- ROSTER / CREDENTIALS REQUEST MODAL -->
+    <div id="roster-modal-overlay" onclick="handleRosterBackdropClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 57, 100, 0.7); z-index: 10006; align-items: center; justify-content: center; backdrop-filter: blur(4px); padding: 16px; box-sizing: border-box;">
+        <div style="background-color: #ffffff; border: 3px solid var(--crust-med); border-top: 6px solid var(--brand-blue); border-radius: 14px; width: 100%; max-width: 840px; height: 90vh; max-height: 860px; display: flex; flex-direction: column; box-shadow: 0 16px 45px rgba(0,0,0,0.35); position: relative; overflow: hidden; animation: fadeIn 0.25s ease-out;">
+            
+            <!-- Modal Header -->
+            <div style="padding: 16px 20px; background: #ffffff; border-bottom: 1px solid var(--crust-med); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 1.6rem; user-select: none;">📋</span>
+                    <div>
+                        <h3 style="margin: 0; font-family: 'PizzaPress', 'OneDotCd-Bold', sans-serif; font-size: 1.25rem; color: var(--dark-blue); letter-spacing: 0.5px; text-transform: uppercase;">Learner Credential Registration</h3>
+                        <p style="margin: 2px 0 0 0; font-family: 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep);">Select your market below to complete your onboarding roster form.</p>
+                    </div>
+                </div>
+                <span onclick="closeRosterModal()" style="font-size: 28px; line-height: 1; cursor: pointer; color: var(--crust-dark); padding: 4px 8px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.color='var(--brand-red)'" onmouseout="this.style.color='var(--crust-dark)'">&times;</span>
+            </div>
+
+            <!-- Market Selection Toolbar -->
+            <div style="padding: 12px 20px; background: var(--crust-light); border-bottom: 1px solid var(--crust-med); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; flex-shrink: 0;">
+                <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1; max-width: 480px;">
+                    <label for="roster-market-select" style="font-family: 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; color: var(--crust-deep); white-space: nowrap;">Market:</label>
+                    <select id="roster-market-select" onchange="handleRosterMarketChange(this.value)" class="form-input" style="margin-bottom: 0; border: 2px solid var(--brand-blue); font-size: 0.95rem; padding: 8px 12px; background: white; border-radius: 8px; cursor: pointer; width: 100%;">
+                        <option value="" disabled selected>-- Select Your Market --</option>
+                        <option value="dallas">Dallas Market</option>
+                        <option value="denver">Denver Market</option>
+                        <option value="elpaso">El Paso Market</option>
+                        <option value="la">Los Angeles (LA) Market</option>
+                    </select>
+                </div>
+                
+                <a id="roster-external-link" href="#" target="_blank" rel="noopener noreferrer" style="display: none; font-family: 'OneDotCd-Bold', sans-serif; font-size: 0.88rem; color: var(--brand-blue); background: white; border: 1.5px solid var(--brand-blue); padding: 7px 14px; border-radius: 20px; text-decoration: none; align-items: center; gap: 6px; transition: all 0.2s;" onmouseover="this.style.background='var(--brand-blue)'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='var(--brand-blue)';">
+                    <span>Open in New Tab</span> ↗
+                </a>
+            </div>
+
+            <!-- Modal Body / Iframe Container -->
+            <div style="flex: 1; background: #fafafa; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+                
+                <!-- Placeholder Prompt -->
+                <div id="roster-placeholder" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 40px 20px; text-align: center; color: #777;">
+                    <div style="font-size: 3.5rem; margin-bottom: 14px; opacity: 0.85;">📍</div>
+                    <h4 style="margin: 0 0 8px 0; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.25rem; color: var(--crust-deep);">Choose Your Market Above</h4>
+                    <p style="margin: 0; font-family: 'OneDotCd', sans-serif; font-size: 0.95rem; max-width: 380px; line-height: 1.4; color: #666;">
+                        Select your market from the dropdown menu above to load your store's credential registration Google Form.
+                    </p>
+                </div>
+
+                <!-- Loading Spinner -->
+                <div id="roster-loading-spinner" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); align-items: center; justify-content: center; flex-direction: column; gap: 12px; z-index: 10;">
+                    <div style="width: 38px; height: 38px; border: 4px solid var(--crust-med); border-top: 4px solid var(--brand-blue); border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+                    <span style="font-family: 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; color: var(--dark-blue);">Loading Market Form...</span>
+                </div>
+
+                <!-- Embedded Form Iframe -->
+                <iframe id="roster-form-frame" src="" style="display: none; width: 100%; height: 100%; border: none; flex-grow: 1;" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
+
+        </div>
+    </div>
+
     <script>
+        // --- MARKET CREDENTIALS ROSTER MODAL LOGIC ---
+        const MARKET_ROSTER_URLS = {
+            dallas: 'https://forms.gle/n5CeLsAGpGbVMLFo8',
+            denver: 'https://forms.gle/AF9izSxaKqNp3hDE8',
+            elpaso: 'https://forms.gle/9QvKYWXLbgLGszV9A',
+            la: 'https://forms.gle/LgMp8UCvNyaefNfs8'
+        };
+
+        function openRosterModal() {
+            const modal = document.getElementById('roster-modal-overlay');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+
+                // If market is already chosen in the login dropdown, pre-populate it
+                const loginMarket = document.getElementById('login-market');
+                const rosterSelect = document.getElementById('roster-market-select');
+                if (loginMarket && loginMarket.value && MARKET_ROSTER_URLS[loginMarket.value] && rosterSelect) {
+                    rosterSelect.value = loginMarket.value;
+                    handleRosterMarketChange(loginMarket.value);
+                }
+            }
+        }
+
+        function closeRosterModal() {
+            const modal = document.getElementById('roster-modal-overlay');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        function handleRosterBackdropClick(event) {
+            if (event.target.id === 'roster-modal-overlay') {
+                closeRosterModal();
+            }
+        }
+
+        function handleRosterMarketChange(market) {
+            const url = MARKET_ROSTER_URLS[market];
+            const frame = document.getElementById('roster-form-frame');
+            const placeholder = document.getElementById('roster-placeholder');
+            const extLink = document.getElementById('roster-external-link');
+            const spinner = document.getElementById('roster-loading-spinner');
+
+            if (url && frame) {
+                if (placeholder) placeholder.style.display = 'none';
+                if (spinner) spinner.style.display = 'flex';
+                
+                frame.style.display = 'block';
+                frame.src = url;
+                frame.onload = function() {
+                    if (spinner) spinner.style.display = 'none';
+                };
+
+                if (extLink) {
+                    extLink.href = url;
+                    extLink.style.display = 'inline-flex';
+                }
+            }
+        }
+
+        // Close modal on Escape key press
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeRosterModal();
+            }
+        });
+
         function checkTrainerAnnouncement() {
             const id = localStorage.getItem('tw_id');
             const seen = localStorage.getItem('tw_trainer_form_announced');
