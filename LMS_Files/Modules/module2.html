@@ -854,6 +854,11 @@
             try {
                 const completedIndices = moduleVideos.map((v, i) => v.completed ? i : null).filter(i => i !== null);
                 localStorage.setItem('tw_mod2_completed_videos', JSON.stringify(completedIndices));
+                
+                // Cloud Sync: Instantly sync completed video checkpoints to Google Sheets
+                if (completedIndices.length > 0) {
+                    sendProgressUpdate('Day 1 Mod 2', 'In Progress', JSON.stringify({ completedVideos: completedIndices }));
+                }
             } catch(e) {}
         }
 
@@ -1265,7 +1270,7 @@
         // Vault API script URL
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
 
-        function sendProgressUpdate(moduleName) {
+        function sendProgressUpdate(moduleName, status = "Completed", payloadAnswers = null) {
             if (localStorage.getItem('tw_admin_mode') === 'true') {
                 console.log("[ADMIN MODE] Progress tracking bypassed for executive view.");
                 return;
@@ -1279,10 +1284,9 @@
             }
             
             const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
-            const answersStr = encodeURIComponent(JSON.stringify(userAnswers));
-            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=Completed`;
-            
-            console.log("SENDING DATA TO VAULT: ", url);
+            const answersToEncode = payloadAnswers ? payloadAnswers : JSON.stringify(userAnswers);
+            const answersStr = encodeURIComponent(answersToEncode);
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${encodeURIComponent(status)}`;
             
             fetch(url, {
                 method: 'GET',
@@ -1291,7 +1295,7 @@
             .then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    console.log(`${moduleName} securely logged to database!`);
+                    console.log(`Cloud sync: ${moduleName} (${status}) logged to database!`);
                 } else {
                     console.error("Failed to update progress: ", result.error);
                 }

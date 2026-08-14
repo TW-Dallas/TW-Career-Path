@@ -2078,6 +2078,13 @@
                     });
                 }
 
+                // Load in-progress video checkpoints from Cloud Tracking Sheet
+                if (result.inProgress) {
+                    if (result.inProgress["day 1 mod 2"] && result.inProgress["day 1 mod 2"].completedVideos) {
+                        localStorage.setItem('tw_mod2_completed_videos', JSON.stringify(result.inProgress["day 1 mod 2"].completedVideos));
+                    }
+                }
+
                 // Pass the store value to dynamically render on the confirmation page and navbar
                 syncUserUI(result.firstName, result.lastName, result.role, result.progress, result.store);
 
