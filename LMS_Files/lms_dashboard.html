@@ -822,7 +822,7 @@
                     <div class="course-content">
                         <div class="course-title">Service Basics</div>
                         <div class="course-meta">Service Expectations & Tone</div>
-                        <button class="btn-small" onclick="requireTrainerPin()" style="background: var(--brand-blue); color: white; border: none;">Start Module 2</button>
+                        <button class="btn-small" onclick="requireTrainerPin('Modules/module2.html', 'Day 1 Mod 2 (Service Basics)')" style="background: var(--brand-blue); color: white; border: none;">Start Module 2</button>
                     </div>
                 </div>
 
@@ -834,7 +834,7 @@
                     <div class="course-content">
                         <div class="course-title">The Menu</div>
                         <div class="course-meta">Learn our selection of products</div>
-                        <button class="btn-small" onclick="requireTrainerPin()" style="background: var(--brand-blue); color: white; border: none;">Start Module 3</button>
+                        <button class="btn-small" onclick="requireTrainerPin('Modules/module3.html', 'Day 1 Mod 3 (The Menu)')" style="background: var(--brand-blue); color: white; border: none;">Start Module 3</button>
                     </div>
                 </div>
                 
@@ -846,7 +846,7 @@
                     <div class="course-content">
                         <div class="course-title">POS Simulator</div>
                         <div class="course-meta">Order Entry system practice</div>
-                        <button class="btn-small" onclick="requireTrainerPin()" style="background: var(--brand-blue); color: white; border: none;">Start Module 4</button>
+                        <button class="btn-small" onclick="requireTrainerPin(getModule4Url(), 'Day 1 Mod 4 (POS Simulator)')" style="background: var(--brand-blue); color: white; border: none;">Start Module 4</button>
                     </div>
                 </div>
 
@@ -954,7 +954,29 @@
                 <div id="exec-modal-error" style="color: var(--brand-red); font-family: 'OneDotCd-Bold'; font-size: 0.95rem; margin-top: 8px; display: none;">❌ Incorrect Passcode. Please try again.</div>
             </div>
 
-            <button class="btn" onclick="verifyExecPasscode()" style="margin-top: 0; width: 100%;">Unlock Master Access</button>
+    <!-- TRAINER AUTHORIZATION CUSTOM MODAL -->
+    <div id="trainerAuthModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 57, 100, 0.6); z-index: 10004; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+        <div class="modal-content" style="background-color: var(--crust-base); border: 3px solid var(--crust-med); border-top: 6px solid var(--brand-red); border-radius: 14px; width: 90%; max-width: 440px; padding: 26px; box-shadow: 0 12px 35px rgba(0,0,0,0.3); position: relative; font-family: 'OneDotCd', sans-serif; text-align: center;">
+            <span class="close-modal" onclick="closeTrainerAuthModal()" style="position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; color: var(--crust-dark);">&times;</span>
+            <div style="font-size: 2.4rem; margin-bottom: 4px;">🔐</div>
+            <h2 style="font-family: 'PizzaPress'; color: var(--dark-blue); margin: 0 0 6px 0; text-transform: uppercase;">Trainer Authorization</h2>
+            <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 0.95rem; margin-bottom: 14px; line-height: 1.35;">
+                Please have your store trainer or manager enter their 4-digit PIN to authorize and unlock this module.
+            </p>
+
+            <div style="background: rgba(0, 144, 226, 0.08); border-left: 4px solid var(--brand-blue); border-radius: 6px; padding: 8px 12px; margin-bottom: 18px; text-align: left;">
+                <div style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue); font-size: 0.9rem;" id="trainer-modal-module-title">Module: Day 1 Mod 2</div>
+                <div style="font-size: 0.82rem; color: #603913; margin-top: 2px;" id="trainer-modal-trainee-info">Trainee: John Doe (Store 101)</div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1.2rem; text-align: left;">
+                <label class="form-label" style="font-family: 'OneDotCd-Bold'; color: var(--crust-deep); font-size: 0.9rem;">Trainer 4-Digit PIN</label>
+                <input type="password" id="trainer-pin-input" class="form-input" placeholder="Enter 4-Digit PIN..." maxlength="6" style="width: 100%; box-sizing: border-box; font-size: 1.4rem; letter-spacing: 6px; text-align: center; font-family: monospace;" onkeyup="if(event.key==='Enter') submitTrainerPin()">
+                <div id="trainer-modal-error" style="color: var(--brand-red); font-family: 'OneDotCd-Bold'; font-size: 0.92rem; margin-top: 8px; display: none;">❌ Incorrect PIN. Access Denied.</div>
+                <div id="trainer-modal-success" style="color: #0077bd; font-family: 'OneDotCd-Bold'; font-size: 0.92rem; margin-top: 8px; display: none;">✓ Authorized by <span id="trainer-authorized-name"></span>! Unlocking...</div>
+            </div>
+
+            <button id="trainer-submit-btn" class="btn" onclick="submitTrainerPin()" style="margin-top: 0; width: 100%;">Authorize & Unlock</button>
         </div>
     </div>
 
@@ -1139,27 +1161,130 @@
         }
     }
 
-    function requireTrainerPin(targetModuleUrl) {
+    let pendingUnlockUrl = null;
+    let pendingModuleName = null;
+
+    function requireTrainerPin(targetModuleUrl, moduleName) {
         if (localStorage.getItem('tw_admin_mode') === 'true') {
             window.location.href = targetModuleUrl;
             return;
         }
-        let pin = prompt("TRAINER AUTHORIZATION REQUIRED\n\nPlease have your trainer enter their 4-digit PIN to unlock the next module:");
-        if (pin === "1234") {
-            alert("Authorization Successful! Unlocking Module.");
-            window.location.href = targetModuleUrl; 
-        } else if (pin !== null) { 
-            alert("Incorrect PIN. Access Denied.");
+
+        pendingUnlockUrl = targetModuleUrl;
+        pendingModuleName = moduleName || "Next Training Module";
+
+        const modal = document.getElementById('trainerAuthModal');
+        const titleEl = document.getElementById('trainer-modal-module-title');
+        const traineeEl = document.getElementById('trainer-modal-trainee-info');
+        const pinInput = document.getElementById('trainer-pin-input');
+        const errorEl = document.getElementById('trainer-modal-error');
+        const successEl = document.getElementById('trainer-modal-success');
+        const submitBtn = document.getElementById('trainer-submit-btn');
+
+        if (titleEl) titleEl.innerText = `Module: ${pendingModuleName}`;
+        
+        const fName = localStorage.getItem('tw_firstName') || 'Trainee';
+        const lName = localStorage.getItem('tw_lastName') || '';
+        const store = localStorage.getItem('tw_store') || '';
+        if (traineeEl) traineeEl.innerText = `Trainee: ${fName} ${lName} ${store ? '(' + store + ')' : ''}`.trim();
+
+        if (errorEl) errorEl.style.display = 'none';
+        if (successEl) successEl.style.display = 'none';
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Authorize & Unlock";
         }
+        if (pinInput) {
+            pinInput.value = '';
+            setTimeout(() => pinInput.focus(), 150);
+        }
+
+        if (modal) modal.style.display = 'flex';
+    }
+
+    function closeTrainerAuthModal() {
+        const modal = document.getElementById('trainerAuthModal');
+        if (modal) modal.style.display = 'none';
+        pendingUnlockUrl = null;
+        pendingModuleName = null;
+    }
+
+    function submitTrainerPin() {
+        const pinInput = document.getElementById('trainer-pin-input');
+        const errorEl = document.getElementById('trainer-modal-error');
+        const successEl = document.getElementById('trainer-modal-success');
+        const submitBtn = document.getElementById('trainer-submit-btn');
+        const nameSpan = document.getElementById('trainer-authorized-name');
+
+        const pin = pinInput ? pinInput.value.trim() : '';
+        if (!pin) {
+            if (errorEl) {
+                errorEl.innerText = "❌ Please enter your 4-digit PIN.";
+                errorEl.style.display = 'block';
+            }
+            return;
+        }
+
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Verifying PIN...";
+        }
+        if (errorEl) errorEl.style.display = 'none';
+
+        const traineeId = localStorage.getItem('tw_id') || 'unknown';
+        const traineeName = `${localStorage.getItem('tw_firstName') || ''} ${localStorage.getItem('tw_lastName') || ''}`.trim();
+        const traineeMarket = localStorage.getItem('tw_market') || 'unknown';
+        const traineeStore = localStorage.getItem('tw_store') || 'unknown';
+
+        const url = `${AUTH_SCRIPT_URL}?action=verifyTrainerPin&pin=${encodeURIComponent(pin)}&traineeId=${encodeURIComponent(traineeId)}&traineeName=${encodeURIComponent(traineeName)}&traineeMarket=${encodeURIComponent(traineeMarket)}&traineeStore=${encodeURIComponent(traineeStore)}&module=${encodeURIComponent(pendingModuleName)}&userAgent=${encodeURIComponent(navigator.userAgent)}`;
+
+        fetch(url, { method: 'GET', credentials: 'omit' })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                if (successEl) {
+                    if (nameSpan) nameSpan.innerText = result.trainerName || "Trainer";
+                    successEl.style.display = 'block';
+                }
+                setTimeout(() => {
+                    const target = pendingUnlockUrl;
+                    closeTrainerAuthModal();
+                    if (target) {
+                        window.location.href = target;
+                    }
+                }, 1000);
+            } else {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Authorize & Unlock";
+                }
+                if (errorEl) {
+                    errorEl.innerText = `❌ ${result.error || "Incorrect PIN. Access Denied."}`;
+                    errorEl.style.display = 'block';
+                }
+                if (pinInput) pinInput.select();
+            }
+        })
+        .catch(err => {
+            console.error("PIN verification error:", err);
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Authorize & Unlock";
+            }
+            if (errorEl) {
+                errorEl.innerText = "❌ Connection error. Please try again.";
+                errorEl.style.display = 'block';
+            }
+        });
     }
 
     document.addEventListener("DOMContentLoaded", function() {
         const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
 
         const unlockRules = [
-            { requiredKey: 'mod1_complete', targetCardId: 'card-mod2', targetUrl: 'Modules/module2.html', buttonText: 'Start Module 2' },
-            { requiredKey: 'mod2_complete', targetCardId: 'card-mod3', targetUrl: 'Modules/module3.html', buttonText: 'Start Module 3' },
-            { requiredKey: 'mod3_complete', targetCardId: 'card-mod4', targetUrl: getModule4Url(), buttonText: 'Start Module 4' }
+            { requiredKey: 'mod1_complete', targetCardId: 'card-mod2', targetUrl: 'Modules/module2.html', moduleName: 'Day 1 Mod 2 (Service Basics)', buttonText: 'Start Module 2' },
+            { requiredKey: 'mod2_complete', targetCardId: 'card-mod3', targetUrl: 'Modules/module3.html', moduleName: 'Day 1 Mod 3 (The Menu)', buttonText: 'Start Module 3' },
+            { requiredKey: 'mod3_complete', targetCardId: 'card-mod4', targetUrl: getModule4Url(), moduleName: 'Day 1 Mod 4 (POS Simulator)', buttonText: 'Start Module 4' }
         ];
 
         unlockRules.forEach(rule => {
@@ -1172,7 +1297,7 @@
                     if (isAdmin) {
                         lockBtn.outerHTML = `<a href="${rule.targetUrl}" class="btn-small" style="background: var(--brand-blue); color: white; border: none; text-decoration: none; display: inline-block;">${rule.buttonText}</a>`;
                     } else {
-                        lockBtn.outerHTML = `<button class="btn-small" onclick="requireTrainerPin('${rule.targetUrl}')" style="background: var(--brand-blue); color: white; border: none;">${rule.buttonText}</button>`;
+                        lockBtn.outerHTML = `<button class="btn-small" onclick="requireTrainerPin('${rule.targetUrl}', '${rule.moduleName}')" style="background: var(--brand-blue); color: white; border: none;">${rule.buttonText}</button>`;
                     }
                 }
             }
