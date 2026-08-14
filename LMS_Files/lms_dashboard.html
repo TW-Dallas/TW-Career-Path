@@ -594,10 +594,15 @@
             </div> <button id="login-btn" class="btn" onclick="authenticateUser()">Sign In</button>
             <button type="button" onclick="promptExecutiveAccess()" style="margin-top: 14px; width: 100%; background: rgba(0, 144, 226, 0.06); color: var(--dark-blue); border: 2px dashed var(--brand-blue); padding: 10px; border-radius: 50px; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(0, 144, 226, 0.15)'" onmouseout="this.style.background='rgba(0, 144, 226, 0.06)'">👑 Executive Review Access 🔒</button>
 
-            <!-- Need Learner Credentials Link -->
-            <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid #ebebeb;">
+            <!-- Need Credentials & Registration Links -->
+            <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid #ebebeb; display: flex; flex-direction: column; gap: 8px; text-align: center;">
                 <a href="javascript:void(0)" onclick="openRosterModal()" style="color: var(--brand-blue); font-family: 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s ease; letter-spacing: 0.3px;" onmouseover="this.style.color='var(--dark-blue)'; this.style.textDecoration='underline';" onmouseout="this.style.color='var(--brand-blue)'; this.style.textDecoration='none';">
                     <span>Need Learner Credentials? Click here</span>
+                    <span style="font-size: 0.9rem;">↗</span>
+                </a>
+
+                <a href="https://forms.gle/uCcPnqn8HShrRg2d7" target="_blank" rel="noopener noreferrer" style="color: var(--crust-deep); font-family: 'OneDotCd-Bold', sans-serif; font-size: 0.92rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s ease; letter-spacing: 0.3px;" onmouseover="this.style.color='var(--brand-blue)'; this.style.textDecoration='underline';" onmouseout="this.style.color='var(--crust-deep)'; this.style.textDecoration='none';">
+                    <span>Manager / Trainer PIN Registration</span>
                     <span style="font-size: 0.9rem;">↗</span>
                 </a>
             </div>
@@ -1061,7 +1066,7 @@
     </div>
 
     <!-- ROSTER / CREDENTIALS REQUEST MODAL -->
-    <div id="roster-modal-overlay" onclick="handleRosterBackdropClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 57, 100, 0.7); z-index: 10006; align-items: center; justify-content: center; backdrop-filter: blur(4px); padding: 16px; box-sizing: border-box;">
+    <div id="roster-modal-overlay" onclick="handleRosterBackdropClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 57, 100, 0.75); z-index: 999999; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); padding: 16px; box-sizing: border-box;">
         <div style="background-color: #ffffff; border: 3px solid var(--crust-med); border-top: 6px solid var(--brand-blue); border-radius: 14px; width: 100%; max-width: 840px; height: 90vh; max-height: 860px; display: flex; flex-direction: column; box-shadow: 0 16px 45px rgba(0,0,0,0.35); position: relative; overflow: hidden; animation: fadeIn 0.25s ease-out;">
             
             <!-- Modal Header -->
@@ -1122,13 +1127,20 @@
     <script>
         // --- MARKET CREDENTIALS ROSTER MODAL LOGIC ---
         const MARKET_ROSTER_URLS = {
+            dallas: 'https://docs.google.com/forms/d/e/1FAIpQLSeRYDM4YA2cmWG9IU_ngj8ODjRypZniEbQLkzCvu8e53-3q4w/viewform?embedded=true',
+            denver: 'https://docs.google.com/forms/d/e/1FAIpQLSc6-5uK9oFDbrVeMUE8dmLrlmJXJwqida4JapEgCWRFo4oTgw/viewform?embedded=true',
+            elpaso: 'https://docs.google.com/forms/d/e/1FAIpQLSeuYL6IO3EQykSoRMBU1S0PhjqgNm9clYVdxmBQMcm8zCOlwQ/viewform?embedded=true',
+            la: 'https://docs.google.com/forms/d/e/1FAIpQLSdHRKMZxKAIVbPda_zbSPHtyRtYtZYIeNDYVYVGrS1V4bt3tg/viewform?embedded=true'
+        };
+
+        const MARKET_EXTERNAL_URLS = {
             dallas: 'https://forms.gle/n5CeLsAGpGbVMLFo8',
             denver: 'https://forms.gle/AF9izSxaKqNp3hDE8',
             elpaso: 'https://forms.gle/9QvKYWXLbgLGszV9A',
             la: 'https://forms.gle/LgMp8UCvNyaefNfs8'
         };
 
-        function openRosterModal() {
+        window.openRosterModal = function() {
             const modal = document.getElementById('roster-modal-overlay');
             if (modal) {
                 modal.style.display = 'flex';
@@ -1142,45 +1154,46 @@
                     handleRosterMarketChange(loginMarket.value);
                 }
             }
-        }
+        };
 
-        function closeRosterModal() {
+        window.closeRosterModal = function() {
             const modal = document.getElementById('roster-modal-overlay');
             if (modal) {
                 modal.style.display = 'none';
                 document.body.style.overflow = '';
             }
-        }
+        };
 
-        function handleRosterBackdropClick(event) {
+        window.handleRosterBackdropClick = function(event) {
             if (event.target.id === 'roster-modal-overlay') {
                 closeRosterModal();
             }
-        }
+        };
 
-        function handleRosterMarketChange(market) {
-            const url = MARKET_ROSTER_URLS[market];
+        window.handleRosterMarketChange = function(market) {
+            const embedUrl = MARKET_ROSTER_URLS[market];
+            const extUrl = MARKET_EXTERNAL_URLS[market] || embedUrl;
             const frame = document.getElementById('roster-form-frame');
             const placeholder = document.getElementById('roster-placeholder');
             const extLink = document.getElementById('roster-external-link');
             const spinner = document.getElementById('roster-loading-spinner');
 
-            if (url && frame) {
+            if (embedUrl && frame) {
                 if (placeholder) placeholder.style.display = 'none';
                 if (spinner) spinner.style.display = 'flex';
                 
                 frame.style.display = 'block';
-                frame.src = url;
+                frame.src = embedUrl;
                 frame.onload = function() {
                     if (spinner) spinner.style.display = 'none';
                 };
 
                 if (extLink) {
-                    extLink.href = url;
+                    extLink.href = extUrl;
                     extLink.style.display = 'inline-flex';
                 }
             }
-        }
+        };
 
         // Close modal on Escape key press
         document.addEventListener('keydown', function(e) {
