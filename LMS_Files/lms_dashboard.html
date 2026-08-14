@@ -1232,6 +1232,8 @@
     </div>
 
     <script>
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+
         // --- MARKET CREDENTIALS ROSTER & PRE-FLIGHT LOGIC ---
         const MARKET_ROSTER_URLS = {
             dallas: 'https://docs.google.com/forms/d/e/1FAIpQLSeRYDM4YA2cmWG9IU_ngj8ODjRypZniEbQLkzCvu8e53-3q4w/viewform?embedded=true',
@@ -1645,8 +1647,6 @@
                 }, 100);
             }
         });
-    
-    const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
     
     function promptExecutiveAccess() {
         const modal = document.getElementById('execAccessModal');
