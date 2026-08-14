@@ -1047,53 +1047,156 @@
             <!-- Modal Header -->
             <div style="padding: 16px 20px; background: #ffffff; border-bottom: 1px solid var(--crust-med); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <span style="font-size: 1.6rem; user-select: none;">📋</span>
+    <!-- 1. LEARNER CREDENTIALS PRE-FLIGHT & ROSTER MODAL -->
+    <div id="roster-modal-overlay" onclick="handleRosterBackdropClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 57, 100, 0.75); z-index: 999999; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); padding: 16px; box-sizing: border-box;">
+        <div style="background-color: #ffffff; border: 3px solid var(--crust-med); border-top: 6px solid var(--brand-blue); border-radius: 14px; width: 100%; max-width: 840px; height: 90vh; max-height: 860px; display: flex; flex-direction: column; box-shadow: 0 16px 45px rgba(0,0,0,0.35); position: relative; overflow: hidden; animation: fadeIn 0.25s ease-out;">
+            
+            <!-- Modal Header -->
+            <div style="padding: 16px 20px; background: #ffffff; border-bottom: 1px solid var(--crust-med); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span id="roster-header-icon" style="font-size: 1.6rem; user-select: none;">🔍</span>
                     <div>
-                        <h3 style="margin: 0; font-family: 'PizzaPress', 'OneDotCd-Bold', sans-serif; font-size: 1.25rem; color: var(--dark-blue); letter-spacing: 0.5px; text-transform: uppercase;">Learner Credential Registration</h3>
-                        <p style="margin: 2px 0 0 0; font-family: 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep);">Select your market below to complete your onboarding roster form.</p>
+                        <h3 id="roster-header-title" style="margin: 0; font-family: 'PizzaPress', 'OneDotCd-Bold', sans-serif; font-size: 1.25rem; color: var(--dark-blue); letter-spacing: 0.5px; text-transform: uppercase;">Learner Credential Verification</h3>
+                        <p id="roster-header-subtitle" style="margin: 2px 0 0 0; font-family: 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep);">Check if your login credentials already exist before creating a new profile.</p>
                     </div>
                 </div>
                 <span onclick="closeRosterModal()" style="font-size: 28px; line-height: 1; cursor: pointer; color: var(--crust-dark); padding: 4px 8px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.color='var(--brand-red)'" onmouseout="this.style.color='var(--crust-dark)'">&times;</span>
             </div>
 
-            <!-- Market Selection Toolbar -->
-            <div style="padding: 12px 20px; background: var(--crust-light); border-bottom: 1px solid var(--crust-med); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; flex-shrink: 0;">
-                <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1; max-width: 480px;">
-                    <label for="roster-market-select" style="font-family: 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; color: var(--crust-deep); white-space: nowrap;">Market:</label>
-                    <select id="roster-market-select" onchange="handleRosterMarketChange(this.value)" class="form-input" style="margin-bottom: 0; border: 2px solid var(--brand-blue); font-size: 0.95rem; padding: 8px 12px; background: white; border-radius: 8px; cursor: pointer; width: 100%;">
-                        <option value="" disabled selected>-- Select Your Market --</option>
-                        <option value="dallas">Dallas Market</option>
-                        <option value="denver">Denver Market</option>
-                        <option value="elpaso">El Paso Market</option>
-                        <option value="la">Los Angeles (LA) Market</option>
-                    </select>
+            <!-- VIEW 1: PRE-FLIGHT SEARCH FORM -->
+            <div id="roster-view-search" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px 24px; flex: 1; overflow-y: auto; text-align: center; background: #fafafa;">
+                <div style="background: white; border: 2px solid var(--crust-med); border-radius: 12px; padding: 28px 24px; max-width: 520px; width: 100%; box-shadow: 0 4px 18px rgba(0,0,0,0.06);">
+                    <div style="font-size: 2.8rem; margin-bottom: 8px;">🆔</div>
+                    <h3 style="font-family: 'PizzaPress'; color: var(--dark-blue); margin: 0 0 8px 0; text-transform: uppercase; font-size: 1.3rem;">Let's Find Your Credentials</h3>
+                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.35;">
+                        Enter your name or personal email address below. We'll search across all market training databases to locate your login info.
+                    </p>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 12px; text-align: left;">
+                        <div style="flex: 1;">
+                            <label style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--crust-deep); display: block; margin-bottom: 4px;">First Name</label>
+                            <input type="text" id="roster-search-first" class="form-input" placeholder="e.g. Pete" style="width: 100%; margin-bottom: 0; box-sizing: border-box; padding: 8px 12px;" onkeyup="if(event.key==='Enter') executeLearnerPreflightSearch()">
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--crust-deep); display: block; margin-bottom: 4px;">Last Name</label>
+                            <input type="text" id="roster-search-last" class="form-input" placeholder="e.g. Zah" style="width: 100%; margin-bottom: 0; box-sizing: border-box; padding: 8px 12px;" onkeyup="if(event.key==='Enter') executeLearnerPreflightSearch()">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 18px; text-align: left;">
+                        <label style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--crust-deep); display: block; margin-bottom: 4px;">Personal Email <span style="font-family: 'OneDotCd'; font-size: 0.8rem; color: #888;">(Optional if name entered)</span></label>
+                        <input type="email" id="roster-search-email" class="form-input" placeholder="e.g. petezah@gmail.com" style="width: 100%; margin-bottom: 0; box-sizing: border-box; padding: 8px 12px;" onkeyup="if(event.key==='Enter') executeLearnerPreflightSearch()">
+                    </div>
+
+                    <div id="roster-search-error" style="display: none; background: rgba(255, 0, 0, 0.08); border-left: 4px solid var(--brand-red); color: var(--brand-red); font-family: 'OneDotCd-Bold'; font-size: 0.9rem; padding: 8px 12px; margin-bottom: 14px; border-radius: 4px; text-align: left;"></div>
+
+                    <button id="roster-search-btn" class="btn" onclick="executeLearnerPreflightSearch()" style="width: 100%; margin: 0; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span>🔍 Check for Existing Credentials</span>
+                    </button>
                 </div>
-                
-                <a id="roster-external-link" href="#" target="_blank" rel="noopener noreferrer" style="display: none; font-family: 'OneDotCd-Bold', sans-serif; font-size: 0.88rem; color: var(--brand-blue); background: white; border: 1.5px solid var(--brand-blue); padding: 7px 14px; border-radius: 20px; text-decoration: none; align-items: center; gap: 6px; transition: all 0.2s;" onmouseover="this.style.background='var(--brand-blue)'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='var(--brand-blue)';">
-                    <span>Open in New Tab</span> ↗
-                </a>
             </div>
 
-            <!-- Modal Body / Iframe Container -->
-            <div style="flex: 1; background: #fafafa; position: relative; overflow: hidden; display: flex; flex-direction: column;">
-                
-                <!-- Placeholder Prompt -->
-                <div id="roster-placeholder" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 40px 20px; text-align: center; color: #777;">
-                    <div style="font-size: 3.5rem; margin-bottom: 14px; opacity: 0.85;">📍</div>
-                    <h4 style="margin: 0 0 8px 0; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.25rem; color: var(--crust-deep);">Choose Your Market Above</h4>
-                    <p style="margin: 0; font-family: 'OneDotCd', sans-serif; font-size: 0.95rem; max-width: 380px; line-height: 1.4; color: #666;">
-                        Select your market from the dropdown menu above to load your store's credential registration Google Form.
+            <!-- VIEW 2A: MATCH FOUND ("IS THIS YOU?") -->
+            <div id="roster-view-found" style="display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px 24px; flex: 1; overflow-y: auto; text-align: center; background: #fafafa;">
+                <div style="background: white; border: 2px solid var(--crust-med); border-top: 6px solid #0077bd; border-radius: 12px; padding: 28px 24px; max-width: 500px; width: 100%; box-shadow: 0 4px 18px rgba(0,0,0,0.06);">
+                    <div style="font-size: 2.8rem; margin-bottom: 8px;">👋</div>
+                    <h3 style="font-family: 'PizzaPress'; color: var(--dark-blue); margin: 0 0 6px 0; text-transform: uppercase; font-size: 1.35rem;">Is This You?</h3>
+                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 0.95rem; margin-bottom: 18px; line-height: 1.35;">
+                        We found active training credentials matching your search:
                     </p>
+
+                    <!-- Profile Info Card -->
+                    <div style="background: #faf2e9; border: 1.5px solid #f0decc; border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; text-align: left; font-family: 'OneDotCd'; font-size: 0.95rem;">
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #ebd9c5; padding-bottom: 6px; margin-bottom: 6px;">
+                            <span style="color: #603913; font-family: 'OneDotCd-Bold';">Name:</span>
+                            <span id="roster-found-name" style="color: var(--dark-blue); font-family: 'OneDotCd-Bold';">Pete Zah</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #ebd9c5; padding-bottom: 6px; margin-bottom: 6px;">
+                            <span style="color: #603913; font-family: 'OneDotCd-Bold';">Store / Location:</span>
+                            <span id="roster-found-store" style="color: var(--crust-dark);">Store 6386</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #ebd9c5; padding-bottom: 6px; margin-bottom: 6px;">
+                            <span style="color: #603913; font-family: 'OneDotCd-Bold';">Market:</span>
+                            <span id="roster-found-market" style="color: var(--crust-dark);">Dallas Market</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #603913; font-family: 'OneDotCd-Bold';">Email on Record:</span>
+                            <span id="roster-found-email" style="color: #0077bd; font-family: 'OneDotCd-Bold';">p***h@gmail.com</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button id="roster-resend-btn" class="btn" onclick="resendLearnerPreflightEmail()" style="width: 100%; margin: 0; background: var(--brand-blue); color: white;">
+                            ✉️ Yes, Email My Credentials!
+                        </button>
+                        <button type="button" class="btn-small" onclick="showRosterFormView(true)" style="background: transparent; color: var(--crust-deep); border: 1px solid var(--crust-med); padding: 9px; font-family: 'OneDotCd';">
+                            ❌ No, That's Not Me (Register Fresh)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2B: MARKET REGISTRATION FORM IFRAME -->
+            <div id="roster-view-form" style="display: none; flex-direction: column; flex: 1; overflow: hidden;">
+                <!-- Banner notification -->
+                <div id="roster-form-notice" style="background: rgba(0, 144, 226, 0.08); border-bottom: 1px solid var(--crust-med); padding: 8px 18px; font-family: 'OneDotCd'; font-size: 0.88rem; color: #603913; display: flex; align-items: center; justify-content: space-between;">
+                    <span>📍 No existing credentials were found. Please select your market below to complete your registration form.</span>
+                    <button type="button" onclick="showRosterSearchView()" style="background: transparent; border: none; color: var(--brand-blue); font-family: 'OneDotCd-Bold'; text-decoration: underline; cursor: pointer; padding: 0;">← Back to Search</button>
                 </div>
 
-                <!-- Loading Spinner -->
-                <div id="roster-loading-spinner" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); align-items: center; justify-content: center; flex-direction: column; gap: 12px; z-index: 10;">
-                    <div style="width: 38px; height: 38px; border: 4px solid var(--crust-med); border-top: 4px solid var(--brand-blue); border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
-                    <span style="font-family: 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; color: var(--dark-blue);">Loading Market Form...</span>
+                <!-- Market Selection Toolbar -->
+                <div style="padding: 12px 20px; background: var(--crust-light); border-bottom: 1px solid var(--crust-med); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; flex-shrink: 0;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1; max-width: 480px;">
+                        <label for="roster-market-select" style="font-family: 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; color: var(--crust-deep); white-space: nowrap;">Market:</label>
+                        <select id="roster-market-select" onchange="handleRosterMarketChange(this.value)" class="form-input" style="margin-bottom: 0; border: 2px solid var(--brand-blue); font-size: 0.95rem; padding: 8px 12px; background: white; border-radius: 8px; cursor: pointer; width: 100%;">
+                            <option value="" disabled selected>-- Select Your Market --</option>
+                            <option value="dallas">Dallas Market</option>
+                            <option value="denver">Denver Market</option>
+                            <option value="elpaso">El Paso Market</option>
+                            <option value="la">Los Angeles (LA) Market</option>
+                        </select>
+                    </div>
+                    
+                    <a id="roster-external-link" href="#" target="_blank" rel="noopener noreferrer" style="display: none; font-family: 'OneDotCd-Bold', sans-serif; font-size: 0.88rem; color: var(--brand-blue); background: white; border: 1.5px solid var(--brand-blue); padding: 7px 14px; border-radius: 20px; text-decoration: none; align-items: center; gap: 6px; transition: all 0.2s;" onmouseover="this.style.background='var(--brand-blue)'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='var(--brand-blue)';">
+                        <span>Open in New Tab</span> ↗
+                    </a>
                 </div>
 
-                <!-- Embedded Form Iframe -->
-                <iframe id="roster-form-frame" src="" style="display: none; width: 100%; height: 100%; border: none; flex-grow: 1;" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                <!-- Iframe / Placeholder Container -->
+                <div style="flex: 1; background: #fafafa; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+                    <div id="roster-placeholder" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 40px 20px; text-align: center; color: #777;">
+                        <div style="font-size: 3.5rem; margin-bottom: 14px; opacity: 0.85;">📍</div>
+                        <h4 style="margin: 0 0 8px 0; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.25rem; color: var(--crust-deep);">Choose Your Market Above</h4>
+                        <p style="margin: 0; font-family: 'OneDotCd', sans-serif; font-size: 0.95rem; max-width: 380px; line-height: 1.4; color: #666;">
+                            Select your market from the dropdown menu above to load your store's credential registration Google Form.
+                        </p>
+                    </div>
+
+                    <div id="roster-loading-spinner" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); align-items: center; justify-content: center; flex-direction: column; gap: 12px; z-index: 10;">
+                        <div style="width: 38px; height: 38px; border: 4px solid var(--crust-med); border-top: 4px solid var(--brand-blue); border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+                        <span style="font-family: 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; color: var(--dark-blue);">Loading Market Form...</span>
+                    </div>
+
+                    <iframe id="roster-form-frame" src="" style="display: none; width: 100%; height: 100%; border: none; flex-grow: 1;" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                </div>
+            </div>
+
+            <!-- VIEW 3: CREDENTIALS DELIVERED SUCCESS SCREEN -->
+            <div id="roster-view-success" style="display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px 24px; flex: 1; overflow-y: auto; text-align: center; background: #fafafa;">
+                <div style="background: white; border: 2px solid var(--crust-med); border-top: 6px solid #28a745; border-radius: 12px; padding: 32px 24px; max-width: 480px; width: 100%; box-shadow: 0 4px 18px rgba(0,0,0,0.06);">
+                    <div style="font-size: 3.2rem; margin-bottom: 10px;">🎉</div>
+                    <h3 style="font-family: 'PizzaPress'; color: var(--dark-blue); margin: 0 0 8px 0; text-transform: uppercase; font-size: 1.4rem;">Credentials Sent!</h3>
+                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1rem; margin-bottom: 20px; line-height: 1.4;">
+                        We've emailed your username and login password to:<br>
+                        <strong id="roster-success-email" style="color: var(--brand-blue); font-size: 1.05rem;">p***h@gmail.com</strong>
+                    </p>
+                    <div style="background: rgba(40, 167, 69, 0.08); border-left: 4px solid #28a745; border-radius: 6px; padding: 10px 14px; margin-bottom: 22px; text-align: left; font-family: 'OneDotCd'; font-size: 0.9rem; color: #155724;">
+                        ✓ Please check your inbox (and spam/junk folder). Then return to the login box on the dashboard to sign in!
+                    </div>
+                    <button class="btn" onclick="closeRosterModal()" style="width: 100%; margin: 0; background: var(--brand-red); color: white;">
+                        Back to Login Screen
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -1136,7 +1239,7 @@
     </div>
 
     <script>
-        // --- MARKET CREDENTIALS ROSTER MODAL LOGIC ---
+        // --- MARKET CREDENTIALS ROSTER & PRE-FLIGHT LOGIC ---
         const MARKET_ROSTER_URLS = {
             dallas: 'https://docs.google.com/forms/d/e/1FAIpQLSeRYDM4YA2cmWG9IU_ngj8ODjRypZniEbQLkzCvu8e53-3q4w/viewform?embedded=true',
             denver: 'https://docs.google.com/forms/d/e/1FAIpQLSc6-5uK9oFDbrVeMUE8dmLrlmJXJwqida4JapEgCWRFo4oTgw/viewform?embedded=true',
@@ -1153,19 +1256,14 @@
 
         const TRAINER_PIN_FORM_EMBED_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeLS8vmu11QtHzaSbcaZALhTD6ySuEsVq7qMy_HPtGSMaYmdw/viewform?embedded=true';
 
+        let currentPreflightMatch = null;
+
         window.openRosterModal = function() {
             const modal = document.getElementById('roster-modal-overlay');
             if (modal) {
                 modal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
-
-                // If market is already chosen in the login dropdown, pre-populate it
-                const loginMarket = document.getElementById('login-market');
-                const rosterSelect = document.getElementById('roster-market-select');
-                if (loginMarket && loginMarket.value && MARKET_ROSTER_URLS[loginMarket.value] && rosterSelect) {
-                    rosterSelect.value = loginMarket.value;
-                    handleRosterMarketChange(loginMarket.value);
-                }
+                showRosterSearchView();
             }
         };
 
@@ -1175,6 +1273,151 @@
                 modal.style.display = 'none';
                 document.body.style.overflow = '';
             }
+        };
+
+        window.showRosterSearchView = function() {
+            document.getElementById('roster-view-search').style.display = 'flex';
+            document.getElementById('roster-view-found').style.display = 'none';
+            document.getElementById('roster-view-form').style.display = 'none';
+            document.getElementById('roster-view-success').style.display = 'none';
+            
+            document.getElementById('roster-header-title').textContent = 'Learner Credential Verification';
+            document.getElementById('roster-header-subtitle').textContent = 'Check if your login credentials already exist before creating a new profile.';
+            document.getElementById('roster-header-icon').textContent = '🔍';
+            
+            const errDiv = document.getElementById('roster-search-error');
+            if (errDiv) errDiv.style.display = 'none';
+            const btn = document.getElementById('roster-search-btn');
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<span>🔍 Check for Existing Credentials</span>';
+            }
+        };
+
+        window.showRosterFoundView = function(data) {
+            currentPreflightMatch = data;
+            document.getElementById('roster-view-search').style.display = 'none';
+            document.getElementById('roster-view-found').style.display = 'flex';
+            document.getElementById('roster-view-form').style.display = 'none';
+            document.getElementById('roster-view-success').style.display = 'none';
+
+            document.getElementById('roster-header-title').textContent = 'Existing Credentials Found';
+            document.getElementById('roster-header-subtitle').textContent = 'Confirm your identity to receive your credentials email.';
+            document.getElementById('roster-header-icon').textContent = '👋';
+
+            document.getElementById('roster-found-name').textContent = data.fullName || (data.firstName + ' ' + data.lastName);
+            document.getElementById('roster-found-store').textContent = data.store || 'Store Location on File';
+            document.getElementById('roster-found-market').textContent = data.marketName || (data.marketKey.toUpperCase() + ' Market');
+            document.getElementById('roster-found-email').textContent = data.maskedEmail || data.email;
+
+            const resendBtn = document.getElementById('roster-resend-btn');
+            if (resendBtn) {
+                resendBtn.disabled = false;
+                resendBtn.innerHTML = '✉️ Yes, Email My Credentials!';
+            }
+        };
+
+        window.showRosterFormView = function(isNotMe) {
+            document.getElementById('roster-view-search').style.display = 'none';
+            document.getElementById('roster-view-found').style.display = 'none';
+            document.getElementById('roster-view-form').style.display = 'flex';
+            document.getElementById('roster-view-success').style.display = 'none';
+
+            document.getElementById('roster-header-title').textContent = 'Learner Credential Registration';
+            document.getElementById('roster-header-subtitle').textContent = 'Select your market below to complete your onboarding roster form.';
+            document.getElementById('roster-header-icon').textContent = '📋';
+
+            const notice = document.getElementById('roster-form-notice');
+            if (notice) {
+                notice.innerHTML = isNotMe 
+                    ? '<span>📍 Select your market below to complete your store onboarding form.</span><button type="button" onclick="showRosterSearchView()" style="background: transparent; border: none; color: var(--brand-blue); font-family: \'OneDotCd-Bold\'; text-decoration: underline; cursor: pointer; padding: 0;">← Back to Search</button>'
+                    : '<span>📍 No existing credentials were found. Please select your market below to complete your registration.</span><button type="button" onclick="showRosterSearchView()" style="background: transparent; border: none; color: var(--brand-blue); font-family: \'OneDotCd-Bold\'; text-decoration: underline; cursor: pointer; padding: 0;">← Back to Search</button>';
+            }
+
+            // Pre-populate dropdown if login dropdown has a value
+            const loginMarket = document.getElementById('login-market');
+            const rosterSelect = document.getElementById('roster-market-select');
+            if (loginMarket && loginMarket.value && MARKET_ROSTER_URLS[loginMarket.value] && rosterSelect && !rosterSelect.value) {
+                rosterSelect.value = loginMarket.value;
+                handleRosterMarketChange(loginMarket.value);
+            }
+        };
+
+        window.showRosterSuccessView = function(maskedEmail) {
+            document.getElementById('roster-view-search').style.display = 'none';
+            document.getElementById('roster-view-found').style.display = 'none';
+            document.getElementById('roster-view-form').style.display = 'none';
+            document.getElementById('roster-view-success').style.display = 'flex';
+
+            document.getElementById('roster-header-title').textContent = 'Credentials Sent';
+            document.getElementById('roster-header-subtitle').textContent = 'Check your email for your username and login password.';
+            document.getElementById('roster-header-icon').textContent = '🎉';
+
+            document.getElementById('roster-success-email').textContent = maskedEmail || 'your email on file';
+        };
+
+        window.executeLearnerPreflightSearch = function() {
+            const first = document.getElementById('roster-search-first').value.trim();
+            const last = document.getElementById('roster-search-last').value.trim();
+            const email = document.getElementById('roster-search-email').value.trim();
+            const errDiv = document.getElementById('roster-search-error');
+            const btn = document.getElementById('roster-search-btn');
+
+            if ((!first || !last) && !email) {
+                errDiv.textContent = 'Please enter both First & Last Name, or your Email address.';
+                errDiv.style.display = 'block';
+                return;
+            }
+
+            errDiv.style.display = 'none';
+            btn.disabled = true;
+            btn.innerHTML = '<div style="width: 16px; height: 16px; border: 2px solid white; border-top: 2px solid transparent; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block;"></div> Searching all markets...';
+
+            const url = `${AUTH_SCRIPT_URL}?action=checkLearnerCredentials&firstName=${encodeURIComponent(first)}&lastName=${encodeURIComponent(last)}&email=${encodeURIComponent(email)}`;
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>🔍 Check for Existing Credentials</span>';
+
+                    if (data && data.success && data.found) {
+                        showRosterFoundView(data);
+                    } else {
+                        showRosterFormView(false);
+                    }
+                })
+                .catch(err => {
+                    console.error('Error during pre-flight check:', err);
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>🔍 Check for Existing Credentials</span>';
+                    showRosterFormView(false);
+                });
+        };
+
+        window.resendLearnerPreflightEmail = function() {
+            if (!currentPreflightMatch) return;
+            const resendBtn = document.getElementById('roster-resend-btn');
+            resendBtn.disabled = true;
+            resendBtn.innerHTML = '<div style="width: 16px; height: 16px; border: 2px solid white; border-top: 2px solid transparent; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block;"></div> Sending Credentials Email...';
+
+            const url = `${AUTH_SCRIPT_URL}?action=resendLearnerWelcomeEmail&marketKey=${encodeURIComponent(currentPreflightMatch.marketKey)}&employeeId=${encodeURIComponent(currentPreflightMatch.employeeId)}&email=${encodeURIComponent(currentPreflightMatch.email)}`;
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.success) {
+                        showRosterSuccessView(currentPreflightMatch.maskedEmail || currentPreflightMatch.email);
+                    } else {
+                        alert(data.error || 'Failed to send email. Please try registering fresh.');
+                        showRosterFormView(true);
+                    }
+                })
+                .catch(err => {
+                    console.error('Error resending email:', err);
+                    alert('Failed to send email. Please complete the registration form.');
+                    showRosterFormView(true);
+                });
         };
 
         window.handleRosterBackdropClick = function(event) {
