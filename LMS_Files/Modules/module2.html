@@ -1052,9 +1052,7 @@
                 // Standard anti-scrubbing progress
                 const currentVid = moduleVideos[activeVideoIndex];
                 if (data.seconds > currentVid.maxTimeWatched) {
-                    if (data.seconds - currentVid.maxTimeWatched < 2.5) { 
-                        currentVid.maxTimeWatched = data.seconds;
-                    }
+                    currentVid.maxTimeWatched = data.seconds;
                 }
             });
 
@@ -1066,10 +1064,10 @@
                 if (isEnforcingHold) return;
                 
                 const currentVid = moduleVideos[activeVideoIndex];
-                if (data.seconds > currentVid.maxTimeWatched + 1.5) {
+                if (data.seconds > currentVid.maxTimeWatched + 2.0) {
                     isEnforcingHold = true;
                     player.setCurrentTime(currentVid.maxTimeWatched).then(() => {
-                        isEnforcingHold = false;
+                        setTimeout(() => { isEnforcingHold = false; }, 200);
                     }).catch(() => {
                         isEnforcingHold = false;
                     });

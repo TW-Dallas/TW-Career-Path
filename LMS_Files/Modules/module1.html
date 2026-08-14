@@ -151,11 +151,9 @@
         player.on('timeupdate', function(data) {
             if (isEnforcingHold) return;
             
-            // Increment maximum allowed time if playing forward naturally
+            // Increment maximum allowed time as video plays
             if (data.seconds > maxTimeWatched) {
-                if (data.seconds - maxTimeWatched < 2.5) { 
-                    maxTimeWatched = data.seconds;
-                }
+                maxTimeWatched = data.seconds;
             }
         });
 
@@ -164,10 +162,10 @@
             if (localStorage.getItem('tw_admin_mode') === 'true') return; // Executive Scrubbing Unlocked
             if (isEnforcingHold) return;
             
-            if (data.seconds > maxTimeWatched + 1.5) {
+            if (data.seconds > maxTimeWatched + 2.0) {
                 isEnforcingHold = true;
                 player.setCurrentTime(maxTimeWatched).then(() => {
-                    isEnforcingHold = false;
+                    setTimeout(() => { isEnforcingHold = false; }, 200);
                 }).catch(() => {
                     isEnforcingHold = false;
                 });
