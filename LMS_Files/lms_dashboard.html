@@ -1003,6 +1003,10 @@
                 <div id="exec-modal-error" style="color: var(--brand-red); font-family: 'OneDotCd-Bold'; font-size: 0.95rem; margin-top: 8px; display: none;">❌ Incorrect Passcode. Please try again.</div>
             </div>
 
+            <button class="btn" onclick="verifyExecPasscode()" style="width: 100%; margin-top: 0;">Unlock Full Master Access</button>
+        </div>
+    </div>
+
     <!-- TRAINER AUTHORIZATION CUSTOM MODAL -->
     <div id="trainerAuthModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 57, 100, 0.6); z-index: 10004; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
         <div class="modal-content" style="background-color: var(--crust-base); border: 3px solid var(--crust-med); border-top: 6px solid var(--brand-red); border-radius: 14px; width: 90%; max-width: 440px; padding: 26px; box-shadow: 0 12px 35px rgba(0,0,0,0.3); position: relative; font-family: 'OneDotCd', sans-serif; text-align: center;">
@@ -1029,41 +1033,12 @@
             
             <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--crust-med); font-size: 0.85rem; color: #603913;">
                 Need to create or register your Trainer PIN?<br>
-                <a href="https://forms.gle/uCcPnqn8HShrRg2d7" target="_blank" rel="noopener noreferrer" style="color: var(--brand-blue); font-family: 'OneDotCd-Bold'; text-decoration: underline;">Click here to register your 4-digit PIN ↗</a>
+                <a href="javascript:void(0)" onclick="closeTrainerAuthModal(); openTrainerPinModal();" style="color: var(--brand-blue); font-family: 'OneDotCd-Bold'; text-decoration: underline; cursor: pointer;">Click here to register your 4-digit PIN ↗</a>
             </div>
         </div>
     </div>
 
-    <!-- TRAINER PIN REGISTRATION ANNOUNCEMENT POPUP MODAL -->
-    <div id="trainerAnnouncementModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 57, 100, 0.65); z-index: 10005; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-        <div class="modal-content" style="background-color: var(--crust-base); border: 3px solid var(--crust-med); border-top: 6px solid var(--brand-blue); border-radius: 14px; width: 90%; max-width: 480px; padding: 26px; box-shadow: 0 14px 40px rgba(0,0,0,0.35); position: relative; font-family: 'OneDotCd', sans-serif; text-align: center;">
-            <span class="close-modal" onclick="dismissTrainerAnnouncement()" style="position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; color: var(--crust-dark);">&times;</span>
-            <div style="font-size: 2.6rem; margin-bottom: 4px;">📋</div>
-            <h2 style="font-family: 'PizzaPress'; color: var(--dark-blue); margin: 0 0 8px 0; text-transform: uppercase;">Trainer PIN Registration</h2>
-            
-            <div style="background: rgba(0, 144, 226, 0.08); border-left: 4px solid var(--brand-blue); border-radius: 6px; padding: 12px 14px; margin-bottom: 16px; text-align: left;">
-                <strong style="color: var(--dark-blue); font-family: 'OneDotCd-Bold'; font-size: 0.95rem; text-transform: uppercase;">Action Required for Managers & Trainers</strong>
-                <p style="margin: 4px 0 0 0; font-size: 0.9rem; color: #603913; line-height: 1.35; font-family: 'OneDotCd';">
-                    To enhance training security and monitor team progress, all store trainers and managers must create an individual 4-digit PIN to authorize trainee module unlocks.
-                </p>
-            </div>
-
-            <p style="font-size: 0.92rem; color: var(--crust-deep); line-height: 1.4; margin: 0 0 18px 0; text-align: left;">
-                • Select your Market and Store, then choose your 4-digit PIN.<br>
-                • Submissions will be reviewed and approved by Bobby or Mike.<br>
-                • <em>Note: The generic transition PIN will remain active through this weekend and will be retired on Monday.</em>
-            </p>
-
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-                <a href="https://forms.gle/uCcPnqn8HShrRg2d7" target="_blank" rel="noopener noreferrer" class="btn" style="text-decoration: none; display: block; text-align: center; margin: 0; background: var(--brand-blue); color: white;">
-                    📝 Open Trainer PIN Form ↗
-                </a>
-                <button type="button" class="btn-small" onclick="dismissTrainerAnnouncement()" style="background: transparent; color: var(--crust-deep); border: 1px solid var(--crust-med); padding: 8px;">
-                    Got It / Remind Me Later
-                </button>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <!-- 1. LEARNER CREDENTIALS ROSTER REQUEST MODAL -->
     <div id="roster-modal-overlay" onclick="handleRosterBackdropClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 57, 100, 0.75); z-index: 999999; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); padding: 16px; box-sizing: border-box;">
