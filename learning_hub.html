@@ -647,29 +647,7 @@
         // ==========================================
         const TRAINER_PIN_FORM_EMBED_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeLS8vmu11QtHzaSbcaZALhTD6ySuEsVq7qMy_HPtGSMaYmdw/viewform?embedded=true';
 
-        function checkTrainerAnnouncement() {
-            const seen = localStorage.getItem('tw_trainer_form_announced');
-            const modal = document.getElementById('trainerAnnouncementModal');
-            if (modal && seen !== 'true') {
-                modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function dismissTrainerAnnouncement() {
-            localStorage.setItem('tw_trainer_form_announced', 'true');
-            const modal = document.getElementById('trainerAnnouncementModal');
-            if (modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = '';
-            }
-        }
-
         function openTrainerPinModal() {
-            // Dismiss announcement if open
-            const announceModal = document.getElementById('trainerAnnouncementModal');
-            if (announceModal) announceModal.style.display = 'none';
-
             const modal = document.getElementById('trainer-pin-modal-overlay');
             const frame = document.getElementById('trainer-pin-form-frame');
             const spinner = document.getElementById('trainer-pin-loading-spinner');
@@ -706,49 +684,11 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeTrainerPinModal();
-                dismissTrainerAnnouncement();
             }
-        });
-
-        // Trigger announcement check on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(checkTrainerAnnouncement, 300);
         });
     </script>
 
-    <!-- TRAINER PIN ANNOUNCEMENT MODAL -->
-    <div id="trainerAnnouncementModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 57, 100, 0.75); z-index: 99999; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); padding: 15px; box-sizing: border-box;">
-        <div style="background-color: #ffffff; border: 3px solid var(--crust-med); border-top: 6px solid var(--brand-blue); border-radius: 14px; padding: 28px 24px; max-width: 540px; width: 100%; text-align: center; box-shadow: 0 16px 45px rgba(0,0,0,0.35); position: relative; animation: fadeIn 0.25s ease-out;">
-            <span onclick="dismissTrainerAnnouncement()" style="position: absolute; right: 16px; top: 12px; font-size: 26px; cursor: pointer; color: var(--crust-dark); line-height: 1; transition: all 0.2s;" onmouseover="this.style.color='var(--brand-red)'" onmouseout="this.style.color='var(--crust-dark)'">&times;</span>
-            
-            <div style="font-size: 2.8rem; margin-bottom: 6px; user-select: none;">📋</div>
-            <h2 style="font-family: 'PizzaPress', 'OneDotCd-Bold', sans-serif; color: var(--dark-blue); margin: 0 0 10px 0; text-transform: uppercase; font-size: 1.5rem; letter-spacing: 0.5px;">Trainer PIN Registration</h2>
-            
-            <div style="background: rgba(0, 144, 226, 0.08); border-left: 4px solid var(--brand-blue); border-radius: 6px; padding: 14px 16px; margin-bottom: 16px; text-align: left;">
-                <strong style="color: var(--dark-blue); font-family: 'OneDotCd-Bold'; font-size: 0.95rem; text-transform: uppercase;">Action Required for Managers & Trainers</strong>
-                <p style="margin: 4px 0 0 0; font-size: 0.92rem; color: #603913; line-height: 1.4; font-family: 'OneDotCd';">
-                    To enhance training security and monitor team progress, all store trainers and managers must create an individual 4-digit PIN to authorize trainee module unlocks.
-                </p>
-            </div>
-
-            <p style="font-size: 0.92rem; color: var(--crust-deep); line-height: 1.45; margin: 0 0 20px 0; text-align: left;">
-                • Select your Market and Store, then choose your 4-digit PIN.<br>
-                • Submissions will be reviewed and approved by Bobby or Mike.<br>
-                • <em>Note: The generic transition PIN will remain active through this weekend and will be retired on Monday.</em>
-            </p>
-
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-                <button type="button" onclick="openTrainerPinModal()" class="btn" style="text-decoration: none; display: block; text-align: center; margin: 0; background: var(--brand-blue); color: white; width: 100%; font-size: 1.05rem; padding: 12px;">
-                    📝 Open Trainer PIN Form ↗
-                </button>
-                <button type="button" onclick="dismissTrainerAnnouncement()" style="background: transparent; color: var(--crust-deep); border: 1px solid var(--crust-med); padding: 8px; border-radius: 50px; font-family: 'OneDotCd', sans-serif; font-size: 0.9rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='var(--crust-light)'" onmouseout="this.style.background='transparent'">
-                    Got It / Remind Me Later
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- TRAINER PIN FORM MODAL -->
+    <!-- TRAINER PIN FORM MODAL (MANUAL TRIGGER) -->
     <div id="trainer-pin-modal-overlay" onclick="handleTrainerPinBackdropClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 57, 100, 0.75); z-index: 999999; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); padding: 16px; box-sizing: border-box;">
         <div style="background-color: #ffffff; border: 3px solid var(--crust-med); border-top: 6px solid #ff0000; border-radius: 14px; width: 100%; max-width: 840px; height: 90vh; max-height: 860px; display: flex; flex-direction: column; box-shadow: 0 16px 45px rgba(0,0,0,0.35); position: relative; overflow: hidden; animation: fadeIn 0.25s ease-out;">
             
