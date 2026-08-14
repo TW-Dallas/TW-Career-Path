@@ -1730,6 +1730,10 @@
         .then(response => response.json())
         .then(result => {
             if (result.success) {
+                if (pendingUnlockUrl && pendingUnlockUrl.includes('module2')) localStorage.setItem('tw_mod2_unlocked', 'true');
+                if (pendingUnlockUrl && pendingUnlockUrl.includes('module3')) localStorage.setItem('tw_mod3_unlocked', 'true');
+                if (pendingUnlockUrl && (pendingUnlockUrl.includes('Stage') || pendingUnlockUrl.includes('POS'))) localStorage.setItem('tw_mod4_unlocked', 'true');
+
                 if (successEl) {
                     if (nameSpan) nameSpan.innerText = result.trainerName || "Trainer";
                     successEl.style.display = 'block';
@@ -1770,9 +1774,9 @@
         const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
 
         const unlockRules = [
-            { requiredKey: 'mod1_complete', targetCardId: 'card-mod2', targetUrl: 'Modules/module2.html', moduleName: 'Day 1 Mod 2 (Service Basics)', buttonText: 'Start Module 2' },
-            { requiredKey: 'mod2_complete', targetCardId: 'card-mod3', targetUrl: 'Modules/module3.html', moduleName: 'Day 1 Mod 3 (The Menu)', buttonText: 'Start Module 3' },
-            { requiredKey: 'mod3_complete', targetCardId: 'card-mod4', targetUrl: getModule4Url(), moduleName: 'Day 1 Mod 4 (POS Simulator)', buttonText: 'Start Module 4' }
+            { requiredKey: 'mod1_complete', unlockedKey: 'tw_mod2_unlocked', targetCardId: 'card-mod2', targetUrl: 'Modules/module2.html', moduleName: 'Day 1 Mod 2 (Service Basics)', buttonText: 'Start Module 2' },
+            { requiredKey: 'mod2_complete', unlockedKey: 'tw_mod3_unlocked', targetCardId: 'card-mod3', targetUrl: 'Modules/module3.html', moduleName: 'Day 1 Mod 3 (The Menu)', buttonText: 'Start Module 3' },
+            { requiredKey: 'mod3_complete', unlockedKey: 'tw_mod4_unlocked', targetCardId: 'card-mod4', targetUrl: getModule4Url(), moduleName: 'Day 1 Mod 4 (POS Simulator)', buttonText: 'Start Module 4' }
         ];
 
         unlockRules.forEach(rule => {
@@ -1782,7 +1786,7 @@
                     card.classList.remove('locked');
                     card.querySelector('.course-badge').style.color = "var(--dark-blue)";
                     const lockBtn = card.querySelector('.btn-small');
-                    if (isAdmin) {
+                    if (isAdmin || localStorage.getItem(rule.unlockedKey) === 'true') {
                         lockBtn.outerHTML = `<a href="${rule.targetUrl}" class="btn-small" style="background: var(--brand-blue); color: white; border: none; text-decoration: none; display: inline-block;">${rule.buttonText}</a>`;
                     } else {
                         lockBtn.outerHTML = `<button class="btn-small" onclick="requireTrainerPin('${rule.targetUrl}', '${rule.moduleName}')" style="background: var(--brand-blue); color: white; border: none;">${rule.buttonText}</button>`;

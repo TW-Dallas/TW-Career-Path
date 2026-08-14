@@ -839,11 +839,36 @@
                 overlay.classList.add('hidden');
                 overlay.style.setProperty('display', 'none', 'important');
             }
+            const videoModal = document.getElementById('video-modal');
+            if (videoModal) {
+                videoModal.style.removeProperty('display');
+            }
             document.getElementById('lookbook-modal').classList.add('hidden');
         }
 
         function finishUniformInteractive() {
             closeUniformModal();
+        }
+
+        function saveModule2VideoProgress() {
+            try {
+                const completedIndices = moduleVideos.map((v, i) => v.completed ? i : null).filter(i => i !== null);
+                localStorage.setItem('tw_mod2_completed_videos', JSON.stringify(completedIndices));
+            } catch(e) {}
+        }
+
+        function loadModule2VideoProgress() {
+            try {
+                const saved = localStorage.getItem('tw_mod2_completed_videos');
+                if (saved) {
+                    const completedIndices = JSON.parse(saved);
+                    if (Array.isArray(completedIndices)) {
+                        completedIndices.forEach(idx => {
+                            if (moduleVideos[idx]) moduleVideos[idx].completed = true;
+                        });
+                    }
+                }
+            } catch(e) {}
         }
 
         // --- OPEN MODAL AND LOAD VIDEO ---
@@ -882,15 +907,24 @@
                 return;
             }
 
-            // Standard Vimeo Video Card flow
-            document.getElementById('uniform-modal-overlay').classList.add('hidden');
+            // Standard Vimeo Video Card flow (e.g. Video 1, 2, 3, 5, 6, 7)
+            const uniformOverlay = document.getElementById('uniform-modal-overlay');
+            if (uniformOverlay) {
+                uniformOverlay.classList.add('hidden');
+                uniformOverlay.style.setProperty('display', 'none', 'important');
+            }
             document.getElementById('trash-interactive-stage-1').classList.add('hidden');
             document.getElementById('trash-interactive-stage-2').classList.add('hidden');
 
             const vimeoEl = document.getElementById('vimeo-player');
             if (vimeoEl) vimeoEl.style.pointerEvents = 'auto';
 
-            document.getElementById('video-modal').classList.remove('hidden');
+            const videoModal = document.getElementById('video-modal');
+            if (videoModal) {
+                videoModal.classList.remove('hidden');
+                videoModal.style.removeProperty('display');
+                videoModal.style.setProperty('display', 'flex', 'important');
+            }
 
             const vimeoWrapper = document.querySelector('.video-wrapper-inner');
             const modalContent = document.querySelector('.video-modal-content');
@@ -1125,11 +1159,17 @@
             const uniformModal = document.getElementById('uniform-interactive-modal');
             if (uniformModal) uniformModal.style.display = 'none';
 
-            document.getElementById('video-modal').classList.add('hidden');
+            const videoModal = document.getElementById('video-modal');
+            if (videoModal) {
+                videoModal.classList.add('hidden');
+                videoModal.style.removeProperty('display');
+                videoModal.style.setProperty('display', 'none', 'important');
+            }
             document.getElementById('lookbook-modal').classList.add('hidden');
         }
 
         function checkModuleVideosCompletion() {
+            saveModule2VideoProgress();
             const allDone = moduleVideos.every(v => v.completed);
             const nextBtn = document.getElementById('btn-next');
             const statusMsg = document.getElementById('video-status-msg');
@@ -1276,8 +1316,11 @@
             }, 1500);
         }
 
-        // Initialize video cards on DOM ready
-        document.addEventListener('DOMContentLoaded', renderVideoCards);
+        // Initialize video cards and restore saved progress on DOM ready
+        document.addEventListener('DOMContentLoaded', () => {
+            loadModule2VideoProgress();
+            renderVideoCards();
+        });
 
         // --- LIVE CLICK INSPECTOR: Click anywhere on the paused video to get exact coordinates ---
         document.getElementById('video-modal').addEventListener('click', function(e) {
