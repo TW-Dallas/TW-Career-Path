@@ -820,7 +820,7 @@
                 <!-- Keep your standard Module 1, Module 2, Module 3, Module 4, Module 5 cards here -->
                 
                 <!-- Card 1 -->
-                <div class="course-card">
+                <div class="course-card" id="card-mod1">
                     <div class="course-image" style="background-image: url('../image/photo_training.webp');">
                         <div class="course-badge">MODULE 1</div>
                     </div>
@@ -839,7 +839,7 @@
                     <div class="course-content">
                         <div class="course-title">Service Basics</div>
                         <div class="course-meta">Service Expectations & Tone</div>
-                        <button class="btn-small" onclick="requireTrainerPin('Modules/module2.html', 'Day 1 Mod 2 (Service Basics)')" style="background: var(--brand-blue); color: white; border: none;">Start Module 2</button>
+                        <button class="btn-small" style="background: #ccc; color: #888; cursor: not-allowed;" disabled>Complete Module 1 First</button>
                     </div>
                 </div>
 
@@ -851,7 +851,7 @@
                     <div class="course-content">
                         <div class="course-title">The Menu</div>
                         <div class="course-meta">Learn our selection of products</div>
-                        <button class="btn-small" onclick="requireTrainerPin('Modules/module3.html', 'Day 1 Mod 3 (The Menu)')" style="background: var(--brand-blue); color: white; border: none;">Start Module 3</button>
+                        <button class="btn-small" style="background: #ccc; color: #888; cursor: not-allowed;" disabled>Complete Module 2 First</button>
                     </div>
                 </div>
                 
@@ -863,7 +863,7 @@
                     <div class="course-content">
                         <div class="course-title">POS Simulator</div>
                         <div class="course-meta">Order Entry system practice</div>
-                        <button class="btn-small" onclick="requireTrainerPin(getModule4Url(), 'Day 1 Mod 4 (POS Simulator)')" style="background: var(--brand-blue); color: white; border: none;">Start Module 4</button>
+                        <button class="btn-small" style="background: #ccc; color: #888; cursor: not-allowed;" disabled>Complete Module 3 First</button>
                     </div>
                 </div>
 
@@ -1651,15 +1651,23 @@
 
     let pendingUnlockUrl = null;
     let pendingModuleName = null;
+    let pendingPrereqKey = null;
 
-    function requireTrainerPin(targetModuleUrl, moduleName) {
+    function requireTrainerPin(targetModuleUrl, moduleName, prereqKey, prereqName) {
         if (localStorage.getItem('tw_admin_mode') === 'true') {
             window.location.href = targetModuleUrl;
             return;
         }
 
+        // Strict prerequisite check: Prior module must be completed!
+        if (prereqKey && localStorage.getItem(prereqKey) !== 'true') {
+            alert(`⚠️ Access Denied: You must complete ${prereqName || 'the previous module'} before unlocking this section.`);
+            return;
+        }
+
         pendingUnlockUrl = targetModuleUrl;
         pendingModuleName = moduleName || "Next Training Module";
+        pendingPrereqKey = prereqKey || null;
 
         const modal = document.getElementById('trainerAuthModal');
         const titleEl = document.getElementById('trainer-modal-module-title');
@@ -1695,6 +1703,7 @@
         if (modal) modal.style.display = 'none';
         pendingUnlockUrl = null;
         pendingModuleName = null;
+        pendingPrereqKey = null;
     }
 
     function submitTrainerPin() {
@@ -1734,6 +1743,8 @@
                 if (pendingUnlockUrl && pendingUnlockUrl.includes('module3')) localStorage.setItem('tw_mod3_unlocked', 'true');
                 if (pendingUnlockUrl && (pendingUnlockUrl.includes('Stage') || pendingUnlockUrl.includes('POS'))) localStorage.setItem('tw_mod4_unlocked', 'true');
 
+                refreshCardLocks();
+
                 if (successEl) {
                     if (nameSpan) nameSpan.innerText = result.trainerName || "Trainer";
                     successEl.style.display = 'block';
@@ -1770,30 +1781,95 @@
         });
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
+    function refreshCardLocks() {
         const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
 
+        // Module 1 Status
+        const mod1Done = localStorage.getItem('mod1_complete') === 'true';
+        const card1 = document.getElementById('card-mod1');
+        if (card1) {
+            const btn1 = card1.querySelector('.btn-small');
+            if (btn1) {
+                btn1.outerHTML = `<a href="Modules/module1.html" class="btn-small" style="background: var(--brand-blue); color: white; border: none; text-decoration: none; display: inline-block;">${mod1Done ? 'Review Module 1' : 'Start Module 1'}</a>`;
+            }
+        }
+
         const unlockRules = [
-            { requiredKey: 'mod1_complete', unlockedKey: 'tw_mod2_unlocked', targetCardId: 'card-mod2', targetUrl: 'Modules/module2.html', moduleName: 'Day 1 Mod 2 (Service Basics)', buttonText: 'Start Module 2' },
-            { requiredKey: 'mod2_complete', unlockedKey: 'tw_mod3_unlocked', targetCardId: 'card-mod3', targetUrl: 'Modules/module3.html', moduleName: 'Day 1 Mod 3 (The Menu)', buttonText: 'Start Module 3' },
-            { requiredKey: 'mod3_complete', unlockedKey: 'tw_mod4_unlocked', targetCardId: 'card-mod4', targetUrl: getModule4Url(), moduleName: 'Day 1 Mod 4 (POS Simulator)', buttonText: 'Start Module 4' }
+            { 
+                prereqKey: 'mod1_complete', 
+                prereqName: 'Module 1',
+                unlockedKey: 'tw_mod2_unlocked', 
+                targetCardId: 'card-mod2', 
+                targetUrl: 'Modules/module2.html', 
+                moduleName: 'Day 1 Mod 2 (Service Basics)', 
+                startText: 'Start Module 2',
+                reviewText: 'Review Module 2',
+                doneKey: 'mod2_complete'
+            },
+            { 
+                prereqKey: 'mod2_complete', 
+                prereqName: 'Module 2',
+                unlockedKey: 'tw_mod3_unlocked', 
+                targetCardId: 'card-mod3', 
+                targetUrl: 'Modules/module3.html', 
+                moduleName: 'Day 1 Mod 3 (The Menu)', 
+                startText: 'Start Module 3',
+                reviewText: 'Review Module 3',
+                doneKey: 'mod3_complete'
+            },
+            { 
+                prereqKey: 'mod3_complete', 
+                prereqName: 'Module 3',
+                unlockedKey: 'tw_mod4_unlocked', 
+                targetCardId: 'card-mod4', 
+                targetUrl: getModule4Url(), 
+                moduleName: 'Day 1 Mod 4 (POS Simulator)', 
+                startText: 'Start Module 4',
+                reviewText: 'Continue Practice',
+                doneKey: 'mod4_complete'
+            }
         ];
 
         unlockRules.forEach(rule => {
-            if (isAdmin || localStorage.getItem(rule.requiredKey) === 'true') {
-                const card = document.getElementById(rule.targetCardId);
-                if (card) {
-                    card.classList.remove('locked');
-                    card.querySelector('.course-badge').style.color = "var(--dark-blue)";
-                    const lockBtn = card.querySelector('.btn-small');
-                    if (isAdmin || localStorage.getItem(rule.unlockedKey) === 'true') {
-                        lockBtn.outerHTML = `<a href="${rule.targetUrl}" class="btn-small" style="background: var(--brand-blue); color: white; border: none; text-decoration: none; display: inline-block;">${rule.buttonText}</a>`;
-                    } else {
-                        lockBtn.outerHTML = `<button class="btn-small" onclick="requireTrainerPin('${rule.targetUrl}', '${rule.moduleName}')" style="background: var(--brand-blue); color: white; border: none;">${rule.buttonText}</button>`;
+            const card = document.getElementById(rule.targetCardId);
+            if (!card) return;
+
+            const isPrereqDone = isAdmin || localStorage.getItem(rule.prereqKey) === 'true';
+            const isAuthorized = isAdmin || localStorage.getItem(rule.unlockedKey) === 'true';
+            const isCompleted = localStorage.getItem(rule.doneKey) === 'true';
+            const badge = card.querySelector('.course-badge');
+            const btn = card.querySelector('.btn-small');
+
+            if (!isPrereqDone) {
+                // Hard Locked: Prior prerequisite module is incomplete
+                card.classList.add('locked');
+                if (badge) badge.style.color = '#888';
+                if (btn) {
+                    btn.outerHTML = `<button class="btn-small" style="background: #ccc; color: #888; cursor: not-allowed;" disabled>Complete ${rule.prereqName} First</button>`;
+                }
+            } else {
+                // Prerequisite is complete! Unlocked card visually
+                card.classList.remove('locked');
+                if (badge) badge.style.color = 'var(--dark-blue)';
+
+                if (isAuthorized || isCompleted) {
+                    // PIN already authorized (or module previously completed, or Admin): Direct access
+                    const buttonLabel = isCompleted ? rule.reviewText : rule.startText;
+                    if (btn) {
+                        btn.outerHTML = `<a href="${rule.targetUrl}" class="btn-small" style="background: var(--brand-blue); color: white; border: none; text-decoration: none; display: inline-block;">${buttonLabel}</a>`;
+                    }
+                } else {
+                    // Prereq complete, but requires Trainer PIN to enter module
+                    if (btn) {
+                        btn.outerHTML = `<button class="btn-small" onclick="requireTrainerPin('${rule.targetUrl}', '${rule.moduleName}', '${rule.prereqKey}', '${rule.prereqName}')" style="background: var(--brand-blue); color: white; border: none;">${rule.startText}</button>`;
                     }
                 }
             }
         });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        refreshCardLocks();
     });
 
     window.togglePasswordVisibility = function() {
@@ -1934,6 +2010,7 @@
         if (stepId === 'master-lobby' || stepId === 'day1-dashboard') {
             checkBetaWelcome();
             checkTrainerAnnouncement();
+            refreshCardLocks();
         } 
     } 
 
@@ -1981,8 +2058,9 @@
         if (navWidget) navWidget.style.display = 'flex';
         if (navTagline) navTagline.style.display = 'none';
 
-        // 3. Trigger progress engine
+        // 3. Trigger progress engine & unlock refresh
         syncProgressBars();
+        refreshCardLocks();
     }
     
     function logoutUser() {
