@@ -169,7 +169,7 @@
                 <div class="uniform-hud-bar">
                     <div style="display: flex; align-items: center; gap: 12px;">
                         <span style="font-family: 'PizzaPress', sans-serif; color: var(--crust-med); font-size: 1.3rem; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.6);">👕 PERFECT IMAGE</span>
-                        <span id="uniform-phase-tag" style="background: var(--dark-blue); color: var(--crust-light); border: 1px solid var(--crust-med); padding: 4px 12px; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.85rem;">Guided Presentation</span>
+                        <span id="uniform-phase-tag" style="background: var(--dark-blue); color: var(--crust-light); border: 1px solid var(--crust-med); padding: 4px 12px; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.85rem;">🎙️ Audio & Slide Guide</span>
                     </div>
 
                     <!-- Audio Player & Scrubber / Interactive Instruction Container -->
@@ -187,7 +187,7 @@
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <button id="btn-toggle-explore" onclick="toggleFreeExploreMode()" class="btn hidden" style="padding: 5px 12px; font-size: 0.8rem; background: var(--brand-blue); border: none;">🔍 Free Explore</button>
                         <button id="btn-lookbook" onclick="openLookBookModal()" class="btn hidden" style="padding: 5px 12px; font-size: 0.8rem; background: var(--dark-blue); color: var(--crust-light); border: 1px solid var(--crust-med);">📖 Look Book</button>
-                        <span class="video-modal-close" onclick="closeUniformModal()" style="position: static; font-size: 1.8rem; cursor: pointer; margin-left: 10px; color: var(--crust-med);">&times;</span>
+                        <span class="video-modal-close" onclick="closeUniformModal()" title="Close Guide" style="position: static; font-size: 1.8rem; cursor: pointer; margin-left: 10px; color: var(--crust-med);">&times;</span>
                     </div>
                 </div>
 
@@ -815,22 +815,6 @@
         }
 
         function closeUniformModal() {
-            const allDone = hasCompletedAudio && hasOpenedFreeExplore && hasOpenedLookBook;
-            const urlParams = new URLSearchParams(window.location.search);
-            const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true';
-            const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
-
-            if (!allDone && !isAdmin) {
-                let missing = [];
-                if (!hasCompletedAudio) missing.push('Listen to full audio presentation (6:59)');
-                if (!hasOpenedFreeExplore) missing.push('Click "🔍 Free Explore" in top header');
-                if (!hasOpenedLookBook) missing.push('Open "📖 Look Book" in top header');
-
-                alert('⚠️ Please complete all required steps to unlock Card #4:\n\n• ' + missing.join('\n• '));
-                updateUniformRequirementsCheck();
-                return;
-            }
-
             if (uniformAudio) {
                 try { uniformAudio.pause(); } catch(e) {}
             }
@@ -844,6 +828,8 @@
                 videoModal.style.removeProperty('display');
             }
             document.getElementById('lookbook-modal').classList.add('hidden');
+
+            updateUniformRequirementsCheck();
         }
 
         function finishUniformInteractive() {
