@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 4: Order Entry Practice (Stage 2)</title>
-  
-<!-- LINK TO YOUR GLOBALS -->
-<link rel="icon" type="image/png" href="../image/tile_blue.png">
-<link rel="stylesheet" href="Globals/LMS_Global_Styles.css">  
-<link rel="stylesheet" href="Globals/LMS_Master_hitboxes.css">
-<script src="Globals/lms_feedback.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4: Order Entry Practice (Stage 2)</title>
+
+    <!-- LINK TO YOUR GLOBALS -->
+    <link rel="icon" type="image/png" href="../image/tile_blue.png">
+    <link rel="stylesheet" href="Globals/LMS_Global_Styles.css">
+    <link rel="stylesheet" href="Globals/LMS_Master_hitboxes.css">
+    <script src="Globals/lms_feedback.js"></script>
 
 </head>
+
 <body>
     <!-- Mobile Blocker -->
     <div id="mobile-blocker">
@@ -20,23 +22,30 @@
     </div>
 
     <!-- UNIFIED MODULE BRAND NAVBAR (POS SIMULATOR) -->
-    <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box;">
+    <header
+        style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box;">
         <div style="display: flex; align-items: center; gap: 20px;">
             <img src="../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
-            <a href="lms_dashboard.html#day1" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+            <a href="lms_dashboard.html#day1" class="back-link"
+                style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;"
+                onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
                 &#8592; Back to Day 1
             </a>
         </div>
-        
+
         <div style="display: flex; align-items: center; gap: 15px;">
-            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 4: Order Entry Practice</span>
-            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Practice Simulator</span>
+            <span
+                style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module
+                4: Order Entry Practice</span>
+            <span id="step-counter"
+                style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Practice
+                Simulator</span>
         </div>
     </header>
 
     <!-- Main Wrapper -->
     <div id="simulator-wrapper">
-        
+
         <!-- LEFT: Instructions Panel -->
         <div id="instruction-panel">
             <div id="instruction-text">
@@ -47,10 +56,11 @@
             <!-- THE TEST BUTTONS -->
             <div class="nav-strip">
                 <button class="btn" onclick="goBack()">&#8592; Back</button>
-                <button class="btn" id="finish-sim-btn" style="display: none; background-color: var(--brand-red);" onclick="endSimulation()">Finish</button>
+                <button class="btn" id="finish-sim-btn" style="display: none; background-color: var(--brand-red);"
+                    onclick="endSimulation()">Finish</button>
             </div>
         </div>
-      
+
         <!-- RIGHT: POS Screen & Hitboxes -->
         <div id="pos-container">
             <div id="hitbox-wrapper">
@@ -69,7 +79,7 @@
             const market = localStorage.getItem('tw_market') || 'Unknown Market';
             const id = localStorage.getItem('tw_id') || 'Unknown ID';
             const currentStepNum = typeof currentStep !== 'undefined' ? currentStep : 'N/A';
-            
+
             // Create an informative payload
             const payload = {
                 market: market,
@@ -82,7 +92,7 @@
             };
 
             const url = `${AUTH_SCRIPT_URL}?action=error&data=${encodeURIComponent(JSON.stringify(payload))}`;
-            
+
             // Send it in the background
             fetch(url, { method: 'GET', credentials: 'omit' })
                 .then(() => console.log("Error report sent successfully."))
@@ -566,7 +576,7 @@
                 "step": 76,
                 "image": "resources/POS_assets/Stage_2/POS_2.47.png",
                 "activeHitbox": "hb-bread-dip-3",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>🍴 ORDER ITEMS</div><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 32-Piece Garlic Bread Bites — 3 Slice Sauce | 2 Hot Buffalo Dip Cups</div>"
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>🍴 ORDER ITEMS</div><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 32-Piece Garlic Bread Bites — 3 Slice Sauce | 2 Hot Buffalo Dip Cups</div>💡 <strong>Hint:</strong> Use the quantity buttons below 'Sauce'."
             },
             {
                 "step": 77,
@@ -779,8 +789,8 @@
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Stage 2 Complete</p><p style='margin-bottom: 16px;'><strong>Sides Order Entry Finished</strong><br><br>Awesome work! You've mastered adding sides, breads, desserts, and beverages from the 'Everything Else' tab.</p><p style='margin-bottom: 24px;'>Next up in Stage 3, you will put your skills to the test with live customer phone calls, call etiquette, and real-time order entry.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click anywhere on the POS screen to proceed to Stage 3.</p>"
             }
         ];
-        
-// --- RELATIONAL TRACKING STATE ---
+
+        // --- RELATIONAL TRACKING STATE ---
         const moduleStartTime = Date.now(); // Start timer as soon as practice loads
         let wrongClicks = 0;               // Tracks practice mistakes
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
@@ -804,7 +814,7 @@
             });
 
         // Global advanceStep function capable of parsing any argument structure
-        window.advanceStep = function(target) {
+        window.advanceStep = function (target) {
             if (currentStep >= sequence.length || !sequence[currentStep]) return;
 
             let clickedId = "";
@@ -820,7 +830,7 @@
                 if (eventTarget) {
                     clickedId = eventTarget.id;
                 }
-            } 
+            }
 
             const stepData = sequence[currentStep];
             if (!stepData) return;
@@ -829,22 +839,22 @@
 
             // If the clicked ID matches any active hitbox for the current step
             if (activeIds.includes(clickedId)) {
-                errorMsg.style.display = 'none'; 
-                currentStep++; 
-                loadStep(currentStep); 
+                errorMsg.style.display = 'none';
+                currentStep++;
+                loadStep(currentStep);
             }
         };
 
         function initializeSimulator() {
             // Bind listeners to all hitboxes to guarantee execution if inline onclick is missing
             document.querySelectorAll('.hitbox').forEach(hb => {
-                hb.addEventListener('click', function(e) {
+                hb.addEventListener('click', function (e) {
                     advanceStep(this);
                 });
             });
 
             // Tracks incorrect clicks on the background image
-            posImage.addEventListener('click', function() {
+            posImage.addEventListener('click', function () {
                 if (currentStep >= sequence.length) return;
                 errorMsg.style.display = 'block';
                 wrongClicks++; // Increment wrong clicks for Stage 2
@@ -853,7 +863,7 @@
             // ---- NEW: JUMP TO STEP VIA URL QUERY PARAMETER ----
             const urlParams = new URLSearchParams(window.location.search);
             const stepParam = urlParams.get('step');
-            
+
             if (stepParam !== null) {
                 const targetStep = parseInt(stepParam, 10);
                 // Ensure the step is a valid number within your sequence array limits
@@ -877,7 +887,7 @@
             if (!market || !id) return;
 
             const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
-            
+
             // Save that Stage 2 is complete and Stage 3 is up next
             const answers = {
                 "currentStage": 3, // <--- Stage 1 is next!
@@ -887,7 +897,7 @@
             const answersStr = encodeURIComponent(JSON.stringify(answers));
 
             const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${status}`;
-            
+
             fetch(url, { method: 'GET', credentials: 'omit' });
         }
 
@@ -903,14 +913,14 @@
             }
 
             const stepData = sequence[stepIndex];
-            posImage.src = stepData.image; 
+            posImage.src = stepData.image;
             instructionText.innerHTML = stepData.instruction;
-            
+
             // Hide all hitboxes first
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.style.display = 'none';
             });
-            
+
             const activeIds = getActiveHitboxIds(stepData);
 
             if (activeIds.length > 0) {
@@ -923,7 +933,7 @@
                         if (stepIndex === 0) {
                             activeHb.classList.add('arrow-bottom');
                         } else {
-                            activeHb.classList.remove('arrow-bottom'); 
+                            activeHb.classList.remove('arrow-bottom');
                         }
 
                         // 2. HIDE ARROWS ON STEP 58 AND ABOVE (ORDER 2)
@@ -955,19 +965,19 @@
             if (currentStep > 0) {
                 currentStep--;
                 loadStep(currentStep);
-            }        
+            }
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             if (localStorage.getItem('tw_admin_mode') === 'true') {
                 const headerRight = document.querySelector('header > div:last-child');
                 if (headerRight) {
                     const select = document.createElement('select');
                     select.style.cssText = "background: #ffc107; color: #000; border: none; border-radius: 20px; padding: 0.3rem 0.8rem; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; cursor: pointer;";
-                    select.onchange = function() { window.location.href = this.value; };
-                    
+                    select.onchange = function () { window.location.href = this.value; };
+
                     const currentFile = window.location.pathname.split('/').pop() || 'POS_Simulator_Stage_2.html';
-                    
+
                     const stages = [
                         { file: 'POS_Simulator_Stage_0.html', label: '👑 Stage 0 (Tutorial)' },
                         { file: 'POS_Simulator_Stage_1.html', label: '👑 Stage 1 (Basic Order)' },
@@ -990,4 +1000,5 @@
         });
     </script>
 </body>
+
 </html>
