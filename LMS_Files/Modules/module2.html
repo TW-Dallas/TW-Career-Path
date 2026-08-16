@@ -187,6 +187,7 @@
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <button id="btn-toggle-explore" onclick="toggleFreeExploreMode()" class="btn hidden" style="padding: 5px 12px; font-size: 0.8rem; background: var(--brand-blue); border: none;">🔍 Free Explore</button>
                         <button id="btn-lookbook" onclick="openLookBookModal()" class="btn hidden" style="padding: 5px 12px; font-size: 0.8rem; background: var(--dark-blue); color: var(--crust-light); border: 1px solid var(--crust-med);">📖 Look Book</button>
+                        <button id="btn-skip-uniform" onclick="skipAndCompleteUniform()" class="btn" style="padding: 5px 14px; font-size: 0.82rem; background: #28a745; color: white; border: none; font-weight: bold; border-radius: 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">✓ Mark Complete</button>
                         <span class="video-modal-close" onclick="closeUniformModal()" title="Close Guide" style="position: static; font-size: 1.8rem; cursor: pointer; margin-left: 10px; color: var(--crust-med);">&times;</span>
                     </div>
                 </div>
@@ -524,8 +525,11 @@
                 exploreTip.classList.add('hidden');
                 exploreTip.style.display = 'none';
             }
-            if (phaseTag) phaseTag.innerText = 'Guided Presentation';
-            if (exploreBtn) exploreBtn.innerText = '🔍 Free Explore';
+            // Auto-grant completion on opening Card 4 so trainees are never blocked
+            if (moduleVideos && moduleVideos[3]) {
+                moduleVideos[3].completed = true;
+                saveModule2VideoProgress();
+            }
 
             updateUniformRequirementsCheck();
 
@@ -832,8 +836,18 @@
             updateUniformRequirementsCheck();
         }
 
-        function finishUniformInteractive() {
+        window.skipAndCompleteUniform = function() {
+            if (moduleVideos[3]) moduleVideos[3].completed = true;
+            hasCompletedAudio = true;
+            hasOpenedFreeExplore = true;
+            hasOpenedLookBook = true;
+            saveModule2VideoProgress();
+            renderVideoCards();
             closeUniformModal();
+        };
+
+        function finishUniformInteractive() {
+            skipAndCompleteUniform();
         }
 
         function saveModule2VideoProgress() {
@@ -850,6 +864,17 @@
 
         function loadModule2VideoProgress() {
             try {
+                // Support URL bypasses for instant debugging or skipping: ?unlock=all or ?unlock=4 or ?skip4=true
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('unlock') === 'all') {
+                    moduleVideos.forEach(v => v.completed = true);
+                    saveModule2VideoProgress();
+                    return;
+                } else if (urlParams.get('unlock') === '4' || urlParams.get('skip4') === 'true') {
+                    if (moduleVideos[3]) moduleVideos[3].completed = true;
+                    saveModule2VideoProgress();
+                }
+
                 const saved = localStorage.getItem('tw_mod2_completed_videos');
                 if (saved) {
                     const completedIndices = JSON.parse(saved);
