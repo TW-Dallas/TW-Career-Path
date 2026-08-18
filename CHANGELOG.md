@@ -11,7 +11,7 @@ This document tracks all new features, bug fixes, and store improvements. Every 
 * **Smarter Progress Saving:** When trainees log back in, the system instantly remembers all completed modules and pick up right where they left off.
 
 ### 🛠️ Fixes & Improvements
-* **Module 2 (Uniform Guide):** Added a quick **"✓ Mark Complete"** button and exit options so trainees never get stuck on the uniform presentation.
+* **Module 2 (Uniform Guide):** Card 4 is set to "Under Maintenance" and temporarily excused from completion requirements while video upgrades are underway. Trainees only need to complete the remaining active videos to unlock the quiz.
 * **POS Simulator Fix (Coupons & Payments):** Corrected button target alignment on the Coupons and Payments tabs so trainees can click through smoothly without false error buzzes.
 * **POS Simulator Fix (Step 97):** Trainees can now press either **Backspace** OR **Clear** when practicing side-item quantities.
 * **Module 4 Completion Screen:** Polished the end-of-simulator screen so trainees get a clear celebration and confirmation that their progress is saved to the dashboard.
