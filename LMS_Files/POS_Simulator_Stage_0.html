@@ -521,6 +521,14 @@
             const stepData = sequence[stepIndex];
             posImage.src = stepData.image; 
             instructionText.innerHTML = stepData.instruction;
+
+            // Preload next 3 steps in background for instant transitions
+            for (let i = 1; i <= 3; i++) {
+                if (sequence[stepIndex + i] && sequence[stepIndex + i].image) {
+                    const preloadImg = new Image();
+                    preloadImg.src = sequence[stepIndex + i].image;
+                }
+            }
             
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.style.display = 'none';
