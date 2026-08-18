@@ -616,17 +616,11 @@
 
                 if (introImg) {
                     const targetSlide = currentItem ? currentItem.slide : '../resources/Title_Slides/Perfect_Image_2_Title.png';
-                    if (!introImg.src.includes(targetSlide.split('/').pop())) {
-                        introImg.style.opacity = '0';
-                        setTimeout(() => {
-                            introImg.src = targetSlide;
-                            setTimeout(() => {
-                                introImg.style.opacity = '1';
-                            }, 80);
-                        }, 600);
-                    } else {
-                        introImg.style.opacity = '1';
+                    const targetFileName = targetSlide.split('/').pop();
+                    if (!introImg.src.endsWith(targetFileName)) {
+                        introImg.src = targetSlide;
                     }
+                    introImg.style.opacity = '1';
                 }
             } else if (currentItem.type === 'grid') {
                 stageIntro.classList.add('hidden');
@@ -635,7 +629,8 @@
                 if (card) card.classList.add('hidden');
 
                 if (gridImg) {
-                    if (!gridImg.src.includes(currentItem.poster.split('/').pop())) {
+                    const targetPosterName = currentItem.poster.split('/').pop();
+                    if (!gridImg.src.endsWith(targetPosterName)) {
                         gridImg.src = currentItem.poster;
                     }
                     gridImg.style.opacity = '1';
