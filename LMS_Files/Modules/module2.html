@@ -19,6 +19,22 @@
         }
 
         .hidden { display: none !important; }
+
+        .v-card.maintenance {
+            border-left: 6px solid #e67e22 !important;
+            opacity: 0.88;
+            background: #fdfbf7;
+        }
+        .v-card.maintenance .v-card-badge {
+            background: #e67e22 !important;
+            color: white !important;
+        }
+        .v-card.maintenance button.disabled {
+            background: #e2e8f0 !important;
+            color: #64748b !important;
+            border: none !important;
+            cursor: not-allowed !important;
+        }
         
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -356,10 +372,11 @@
             {
                 id: '1215101424',
                 h: 'a4480af631',
+                isUnderMaintenance: true,
                 isInteractive: true,
-                title: '4. Uniform Guidelines (Interactive)',
-                desc: 'Interactive uniform standards presentation, audio guide, and catalog.',
-                completed: false,
+                title: '4. Uniform Guidelines (Under Maintenance)',
+                desc: 'Video upgrade in progress. This topic is temporarily excused from this session.',
+                completed: true,
                 maxTimeWatched: 0,
                 thumb: '../resources/Title_Slides/Perfect_Image_2_Title.png'
             },
@@ -886,6 +903,9 @@
         function openVideoModal(index) {
             activeVideoIndex = index;
             const video = moduleVideos[index];
+            if (video && video.isUnderMaintenance) {
+                return;
+            }
 
             if (video && (video.isInteractive || index === 3)) {
                 // Pause any background Vimeo player safely
@@ -903,81 +923,75 @@
 
                 if (overlay) {
                     overlay.classList.remove('hidden');
+                    overlay.style.removeProperty('display');
                     overlay.style.setProperty('display', 'flex', 'important');
                 }
 
-                try {
-                    initUniformInteractive();
-                    if (uniformAudio) {
-                        uniformAudio.currentTime = 0;
-                        uniformAudio.play().catch(err => console.log("Audio play caught:", err));
-                    }
-                } catch(e) {
-                    console.error("Interactive init error:", e);
-                }
+                initUniformJobAid();
                 return;
             }
 
-            // Standard Vimeo Video Card flow (e.g. Video 1, 2, 3, 5, 6, 7)
-            const uniformOverlay = document.getElementById('uniform-modal-overlay');
-            if (uniformOverlay) {
-                uniformOverlay.classList.add('hidden');
-                uniformOverlay.style.setProperty('display', 'none', 'important');
-            }
-            document.getElementById('trash-interactive-stage-1').classList.add('hidden');
-            document.getElementById('trash-interactive-stage-2').classList.add('hidden');
-
-            const vimeoEl = document.getElementById('vimeo-player');
-            if (vimeoEl) vimeoEl.style.pointerEvents = 'auto';
-
             const videoModal = document.getElementById('video-modal');
+            const overlay = document.getElementById('uniform-modal-overlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                overlay.style.setProperty('display', 'none', 'important');
+            }
+
             if (videoModal) {
                 videoModal.classList.remove('hidden');
                 videoModal.style.removeProperty('display');
                 videoModal.style.setProperty('display', 'flex', 'important');
             }
 
-            const vimeoWrapper = document.querySelector('.video-wrapper-inner');
-            const modalContent = document.querySelector('.video-modal-content');
-            if (modalContent) modalContent.classList.remove('interactive-mode');
-            if (vimeoWrapper) vimeoWrapper.style.display = 'block';
+            // Reset video 2 interactive exercise triggers
+            stage1Remaining = 9;
+            stage2Remaining = 9;
+            stage1Triggered = false;
+            stage2Triggered = false;
 
-            if (uniformAudio) {
-                try { uniformAudio.pause(); } catch(e) {}
+            document.getElementById('trash-interactive-stage-1').classList.add('hidden');
+            document.getElementById('trash-interactive-stage-2').classList.add('hidden');
+            document.querySelectorAll('.trash-hotspot').forEach(el => el.classList.remove('resolved'));
+            document.getElementById('trash-count-display-1').innerText = '9';
+            document.getElementById('trash-count-display-2').innerText = '9';
+
+            const playerOptions = {
+                id: video.id,
+                responsive: true,
+                autoplay: true,
+                title: false,
+                byline: false,
+                portrait: false
+            };
+            if (video.h) {
+                playerOptions.h = video.h;
             }
 
-                if (index === 1) {
-                    stage1Remaining = 9;
-                    stage2Remaining = 9;
-                    stage1Triggered = false;
-                    stage2Triggered = false;
-                    document.querySelectorAll('.trash-hotspot').forEach(el => el.classList.remove('resolved'));
-                    document.getElementById('trash-count-display-1').innerText = '9';
-                    document.getElementById('trash-count-display-2').innerText = '9';
-                }
+            if (!player) {
+                player = new Vimeo.Player('vimeo-player', playerOptions);
+                attachVimeoEvents();
+            } else {
+                player.loadVideo(playerOptions).then(() => {
+                    player.play();
+                }).catch(error => {
+                    console.error("Failed to load Vimeo video:", error);
+                });
+            }
+        }
 
-                const playerOptions = {
-                    id: video.id,
-                    responsive: true,
-                    autoplay: true,
-                    title: false,
-                    byline: false,
-                    portrait: false
-                };
-                if (video.h) {
-                    playerOptions.h = video.h;
-                }
-
-                if (!player) {
-                    player = new Vimeo.Player('vimeo-player', playerOptions);
-                    attachVimeoEvents();
+        // --- CHECK ALL REQUIRED MODULE VIDEOS COMPLETE ---
+        function checkModuleVideosCompletion() {
+            const allRequiredDone = moduleVideos.every(v => v.completed || v.isUnderMaintenance);
+            videoWatched = allRequiredDone;
+            const btnNext = document.getElementById('btn-next');
+            if (btnNext && currentStep === 1) {
+                if (allRequiredDone) {
+                    btnNext.classList.remove('btn-disabled');
                 } else {
-                    player.loadVideo(playerOptions).then(() => {
-                        player.play();
-                    }).catch(error => {
-                        console.error("Failed to load Vimeo video:", error);
-                    });
+                    btnNext.classList.add('btn-disabled');
                 }
+            }
         }
 
         // --- DEV BYPASS SHORTCUT ---
@@ -1008,14 +1022,19 @@
             const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
 
             moduleVideos.forEach((video, index) => {
-                const isUnlocked = isAdmin || (index === 0) || moduleVideos[index - 1].completed;
+                const prevDone = index === 0 || moduleVideos[index - 1].completed || moduleVideos[index - 1].isUnderMaintenance;
+                const isUnlocked = isAdmin || prevDone;
                 const isCompleted = video.completed;
 
                 let cardStatusClass = 'locked';
                 let badgeText = '🔒 Locked';
                 let btnText = video.isInteractive ? 'Start Interactive Guide' : 'Watch Video';
 
-                if (isCompleted) {
+                if (video.isUnderMaintenance) {
+                    cardStatusClass = 'maintenance';
+                    badgeText = '🚧 Under Maintenance';
+                    btnText = 'Excused from Session';
+                } else if (isCompleted) {
                     cardStatusClass = 'completed';
                     badgeText = '✓ Completed';
                     btnText = video.isInteractive ? 'Review Interactive Guide' : 'Rewatch Video';
@@ -1023,6 +1042,8 @@
                     cardStatusClass = 'active';
                     badgeText = video.isInteractive ? '🎮 Interactive' : '▶ Ready';
                 }
+
+                const isBtnDisabled = !isUnlocked || video.isUnderMaintenance;
 
                 const cardHTML = `
                     <div class="v-card ${cardStatusClass}">
@@ -1032,9 +1053,9 @@
                         <div class="v-card-body">
                             <div class="v-card-title">${video.title}</div>
                             <div class="v-card-desc">${video.desc}</div>
-                            <button class="btn ${isUnlocked ? '' : 'disabled'}" 
-                                    onclick="openVideoModal(${index})" 
-                                    ${isUnlocked ? '' : 'disabled'}>
+                            <button class="btn ${isBtnDisabled ? 'disabled' : ''}" 
+                                    onclick="${video.isUnderMaintenance ? '' : `openVideoModal(${index})`}" 
+                                    ${isBtnDisabled ? 'disabled' : ''}>
                                 ${btnText}
                             </button>
                         </div>
