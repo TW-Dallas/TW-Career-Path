@@ -190,158 +190,91 @@
         </div> <!-- END video-modal-content -->
     </div> <!-- END video-modal -->
 
-    <!-- STANDALONE INTERACTIVE UNIFORM MODAL OVERLAY (100% INDEPENDENT FROM VIMEO VIDEO PLAYER) -->
-    <div id="uniform-modal-overlay" style="position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.9) !important; z-index: 999999 !important; display: none; align-items: center; justify-content: center; backdrop-filter: blur(6px);">
-        <div class="video-modal-content interactive-mode" style="width: 94vw !important; max-width: 1200px !important; height: 88vh !important; max-height: 820px !important; display: flex; flex-direction: column; background: #090d16 !important; position: relative;">
+    <!-- DEDICATED INTERACTIVE UNIFORM POSTER MODAL (Requirement 2 of 3 for Card 4) -->
+    <div id="uniform-poster-modal" class="lookbook-modal-overlay hidden" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.92); z-index: 999999; display: none; align-items: center; justify-content: center; backdrop-filter: blur(6px);">
+        <div style="width: 96vw; max-width: 1200px; height: 92vh; max-height: 860px; display: flex; flex-direction: column; background: #090d16; border-radius: 12px; border: 2px solid var(--crust-med); overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.7); position: relative;">
             
-            <!-- INTERACTIVE UNIFORM JOB AID CONTAINER -->
-            <div id="uniform-interactive-modal" class="uniform-modal-container" style="display: flex; width: 100%; height: 100%; flex-direction: column;">
-                <!-- Top HUD / Control Strip -->
-                <div class="uniform-hud-bar">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="font-family: 'PizzaPress', sans-serif; color: var(--crust-med); font-size: 1.3rem; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.6);">👕 PERFECT IMAGE</span>
-                        <span id="uniform-phase-tag" style="background: var(--dark-blue); color: var(--crust-light); border: 1px solid var(--crust-med); padding: 4px 12px; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.85rem;">🎙️ Audio & Slide Guide</span>
-                    </div>
-
-                    <!-- Audio Player & Scrubber / Interactive Instruction Container -->
-                    <div id="uniform-audio-hud-container" style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-grow: 1; max-width: 520px; margin: 0 15px;">
-                        <div id="uniform-audio-controls" style="display: flex; align-items: center; gap: 10px; width: 100%;">
-                            <button id="uniform-play-btn" onclick="toggleUniformAudio()" style="background: var(--brand-blue); border: none; color: var(--crust-light); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">▶</button>
-                            <input type="range" id="uniform-scrubber" min="0" max="419" value="0" step="0.5" oninput="seekUniformAudio(this.value)" style="flex-grow: 1; cursor: pointer;">
-                            <span id="uniform-time-disp" style="font-family: monospace; font-size: 0.85rem; color: var(--crust-med); min-width: 85px; text-align: right;">0:00 / 6:59</span>
-                        </div>
-                        <div id="uniform-explore-tip" class="hidden" style="display: none; align-items: center; justify-content: center; width: 100%;">
-                            <span style="color: var(--crust-light); font-family: 'OneDotCd-Bold'; font-size: 0.95rem; letter-spacing: 0.3px; background: rgba(0, 144, 226, 0.25); padding: 4px 14px; border-radius: 20px; border: 1px solid var(--brand-blue); white-space: nowrap;">💡 Click any team member's hat, shirt, apron, or shoes!</span>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <button id="btn-toggle-explore" onclick="toggleFreeExploreMode()" class="btn hidden" style="padding: 5px 12px; font-size: 0.8rem; background: var(--brand-blue); border: none;">🔍 Free Explore</button>
-                        <button id="btn-lookbook" onclick="openLookBookModal()" class="btn hidden" style="padding: 5px 12px; font-size: 0.8rem; background: var(--dark-blue); color: var(--crust-light); border: 1px solid var(--crust-med);">📖 Look Book</button>
-                        <button id="btn-skip-uniform" onclick="skipAndCompleteUniform()" class="btn" style="padding: 5px 14px; font-size: 0.82rem; background: #28a745; color: white; border: none; font-weight: bold; border-radius: 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">✓ Mark Complete</button>
-                        <span class="video-modal-close" onclick="closeUniformModal()" title="Close Guide" style="position: static; font-size: 1.8rem; cursor: pointer; margin-left: 10px; color: var(--crust-med);">&times;</span>
-                    </div>
+            <!-- Top Header Strip -->
+            <div style="padding: 10px 20px; background: var(--crust-light); border-bottom: 2px solid var(--crust-med); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 1.4rem; letter-spacing: 0.5px;">👕 TEAM MEMBER UNIFORM GUIDE</span>
+                    <span id="poster-counter-badge" style="background: var(--brand-blue); color: white; padding: 4px 14px; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem;">
+                        0 of 10 Areas Explored
+                    </span>
                 </div>
-
-                <!-- Audio Element -->
-                <audio id="uniform-audio-element" src="../resources/Image_Guides/Uniform_Audio.mp3" style="display: none;"></audio>
-
-                <!-- Main Canvas View Area -->
-                <div class="uniform-canvas-area" style="position: relative; flex-grow: 1; width: 100%; height: calc(100% - 55px); background: #020617; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                    
-                    <!-- STAGE 1: INTRO SLIDES (0:00 - 0:49) -->
-                    <div id="uniform-stage-intro" class="uniform-stage-view" style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #020617;">
-                        <img id="intro-slide-img" src="../resources/Title_Slides/Perfect_Image_2_Title.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block; opacity: 1; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 10;">
-                    </div>
-
-                    <!-- STAGE 2 & 3: 6-BOX GRID POSTERS (Apparel 0:49-3:58, Grooming 3:58-6:16) -->
-                    <div id="uniform-stage-grid" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-                        <div class="poster-aspect-lock">
-                            <img id="grid-poster-img" src="../resources/Image_Guides/Perfect_Apparel.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
-                            
-                            <!-- 6 Grid Hitboxes with In-Box Guidelines Text -->
-                            <div id="hb-top-left" class="grid-box-overlay" onclick="onGridBoxClick('top-left')">
-                                <div class="inbox-guideline-text"></div>
-                            </div>
-                            <div id="hb-top-mid" class="grid-box-overlay" onclick="onGridBoxClick('top-mid')">
-                                <div class="inbox-guideline-text"></div>
-                            </div>
-                            <div id="hb-top-right" class="grid-box-overlay" onclick="onGridBoxClick('top-right')">
-                                <div class="inbox-guideline-text"></div>
-                            </div>
-                            <div id="hb-bottom-left" class="grid-box-overlay" onclick="onGridBoxClick('bottom-left')">
-                                <div class="inbox-guideline-text"></div>
-                            </div>
-                            <div id="hb-bottom-mid" class="grid-box-overlay" onclick="onGridBoxClick('bottom-mid')">
-                                <div class="inbox-guideline-text"></div>
-                            </div>
-                            <div id="hb-bottom-right" class="grid-box-overlay" onclick="onGridBoxClick('bottom-right')">
-                                <div class="inbox-guideline-text"></div>
-                            </div>
-
-                            <!-- Active Popover Text Card (Hidden for In-Box Mode) -->
-                            <div id="active-box-card" class="box-text-card hidden">
-                                <div id="box-card-title" style="font-family: 'PizzaPress'; color: var(--crust-med); font-size: 1.1rem; margin-bottom: 4px;"></div>
-                                <div id="box-card-text" style="font-weight: normal; color: var(--crust-light);"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- STAGE 4: FREE EXPLORE POSTER (Image_Poster.png) -->
-                    <div id="uniform-stage-explore" class="uniform-stage-view hidden" style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-                        <div class="poster-aspect-lock">
-                            <img src="../resources/Image_Guides/Image_Poster.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block; z-index: 1;">
-                            
-                            <!-- Free Explore Body Item Hitboxes (Multiples supported!) -->
-                            <div id="hb-click-shirt-1" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
-                            <div id="hb-click-shirt-2" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
-                            <div id="hb-click-shoes-1" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
-                            <div id="hb-click-shoes-2" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
-                            <div id="hb-click-apron" class="grid-box-overlay" onclick="onPeopleExploreClick('aprons')"></div>
-                            <div id="hb-click-hat-1" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
-                            <div id="hb-click-hat-2" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
-                            <div id="hb-click-bracelet" class="grid-box-overlay" onclick="onPeopleExploreClick('bracelets')"></div>
-                            <div id="hb-click-nails" class="grid-box-overlay" onclick="onPeopleExploreClick('nails')"></div>
-                            <div id="hb-click-bottoms-1" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
-                            <div id="hb-click-bottoms-2" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
-                            <div id="hb-click-bottoms-3" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
-                            <div id="hb-click-jackets" class="grid-box-overlay" onclick="onPeopleExploreClick('jackets')"></div>
-                            <div id="hb-click-facial-hair" class="grid-box-overlay" onclick="onPeopleExploreClick('facial-hair')"></div>
-                            <div id="hb-click-piercings" class="grid-box-overlay" onclick="onPeopleExploreClick('piercings')"></div>
-
-                            <!-- Original Callout Area Hitboxes -->
-                            <div id="hb-shirts" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
-                            <div id="hb-aprons" class="grid-box-overlay" onclick="onPeopleExploreClick('aprons')"></div>
-                            <div id="hb-bracelets" class="grid-box-overlay" onclick="onPeopleExploreClick('bracelets')"></div>
-                            <div id="hb-shoes" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
-                            <div id="hb-hats" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
-                            <div id="hb-piercings" class="grid-box-overlay" onclick="onPeopleExploreClick('piercings')"></div>
-                            <div id="hb-nails" class="grid-box-overlay" onclick="onPeopleExploreClick('nails')"></div>
-                            <div id="hb-bottoms" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
-                            <div id="hb-jackets" class="grid-box-overlay" onclick="onPeopleExploreClick('jackets')"></div>
-                            <div id="hb-facial-hair" class="grid-box-overlay" onclick="onPeopleExploreClick('facial-hair')"></div>
-
-                            <!-- 10 In-Place Callout Text Containers (Populates on Click & STAYS PERMANENTLY) -->
-                            <div id="explore-text-shirts" class="explore-callout-text"></div>
-                            <div id="explore-text-aprons" class="explore-callout-text"></div>
-                            <div id="explore-text-bracelets" class="explore-callout-text"></div>
-                            <div id="explore-text-shoes" class="explore-callout-text"></div>
-                            <div id="explore-text-hats" class="explore-callout-text"></div>
-                            <div id="explore-text-piercings" class="explore-callout-text"></div>
-                            <div id="explore-text-nails" class="explore-callout-text"></div>
-                            <div id="explore-text-bottoms" class="explore-callout-text"></div>
-                            <div id="explore-text-jackets" class="explore-callout-text"></div>
-                            <div id="explore-text-facial-hair" class="explore-callout-text"></div>
-                            <div id="explore-text-facial-hair-sub" class="explore-callout-text"></div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- COMPLETION OVERLAY DOCK (POSITIONED BELOW POSTER CANVAS) -->
-                <div id="uniform-completion-banner" class="hidden" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--dark-blue), #003859); color: var(--crust-light); padding: 6px 18px; border-radius: 20px; border: 1.5px solid var(--crust-med); box-shadow: 0 4px 20px rgba(0,0,0,0.85); display: flex; align-items: center; gap: 12px; z-index: 2000;">
-                    <div id="uniform-banner-status-text" style="font-size: 0.88rem; font-family: 'OneDotCd-Bold'; color: var(--crust-light);">
-                        ✓ Audio Complete! Open Free Explore & Look Book to finish!
-                    </div>
-                    <button id="btn-finish-uniform" onclick="finishUniformInteractive()" class="btn disabled" disabled style="background: var(--dark-blue); color: var(--crust-med); border: 1px solid var(--crust-med); font-weight: bold; padding: 4px 14px; font-size: 0.85rem; border-radius: 18px; cursor: not-allowed; transition: all 0.3s ease;">Locked</button>
-                </div>
-
-                </div>
-
-                <!-- LOOK BOOK LIGHTBOX MODAL -->
-                <div id="lookbook-modal" class="lookbook-modal-overlay hidden">
-                    <div style="width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: white;">
-                        <span style="font-family: 'OneDotCd-Bold'; font-size: 1.2rem;">📖 Uniform Look Book & Catalog Reference</span>
-                        <button onclick="closeLookBookModal()" class="btn" style="background: var(--brand-red); color: white; padding: 4px 16px; border: none;">Close Catalog &times;</button>
-                    </div>
-                    <div class="lookbook-modal-content">
-                        <img src="../resources/Image_Guides/Look_Book.jpg" alt="Look Book Catalog" style="width: 100%; height: auto; display: block;">
-                    </div>
-                </div>
+                <button onclick="closeUniformPosterModal()" class="btn" style="background: var(--brand-red); color: white; padding: 6px 18px; border: none; cursor: pointer; border-radius: 20px; font-size: 0.95rem; font-family: 'OneDotCd-Bold';">Close & Return &times;</button>
             </div>
 
+            <!-- Action Required Banner -->
+            <div id="poster-instruction-banner" style="background: #0f172a; color: var(--crust-light); padding: 8px 20px; font-family: 'OneDotCd'; font-size: 1.05rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0; text-align: center;">
+                <span>💡 <strong>Action Required:</strong> Click on all 10 areas across the team members (hats, shirts, aprons, shoes, jewelry, piercings, nails, facial hair, bottoms, jackets) to reveal uniform standards.</span>
+            </div>
+
+            <!-- Poster Canvas View Area -->
+            <div class="uniform-canvas-area" style="position: relative; flex-grow: 1; width: 100%; height: 100%; background: #020617; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <div class="poster-aspect-lock">
+                    <img src="../resources/Image_Guides/Image_Poster.png" onerror="this.onerror=null; this.src='../resources/Image_Guides/Game_Ready1.png';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; display: block; z-index: 1;">
+                    
+                    <!-- Free Explore Body Item Hitboxes -->
+                    <div id="hb-click-shirt-1" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')" title="Click to view Shirt guidelines"></div>
+                    <div id="hb-click-shirt-2" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')" title="Click to view Shirt guidelines"></div>
+                    <div id="hb-click-shoes-1" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')" title="Click to view Shoe guidelines"></div>
+                    <div id="hb-click-shoes-2" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')" title="Click to view Shoe guidelines"></div>
+                    <div id="hb-click-apron" class="grid-box-overlay" onclick="onPeopleExploreClick('aprons')" title="Click to view Apron guidelines"></div>
+                    <div id="hb-click-hat-1" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')" title="Click to view Hat guidelines"></div>
+                    <div id="hb-click-hat-2" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')" title="Click to view Hat guidelines"></div>
+                    <div id="hb-click-bracelet" class="grid-box-overlay" onclick="onPeopleExploreClick('bracelets')" title="Click to view Jewelry guidelines"></div>
+                    <div id="hb-click-nails" class="grid-box-overlay" onclick="onPeopleExploreClick('nails')" title="Click to view Nail guidelines"></div>
+                    <div id="hb-click-bottoms-1" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')" title="Click to view Pants & Bottoms guidelines"></div>
+                    <div id="hb-click-bottoms-2" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')" title="Click to view Pants & Bottoms guidelines"></div>
+                    <div id="hb-click-bottoms-3" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')" title="Click to view Pants & Bottoms guidelines"></div>
+                    <div id="hb-click-jackets" class="grid-box-overlay" onclick="onPeopleExploreClick('jackets')" title="Click to view Jacket guidelines"></div>
+                    <div id="hb-click-facial-hair" class="grid-box-overlay" onclick="onPeopleExploreClick('facial-hair')" title="Click to view Facial Hair guidelines"></div>
+                    <div id="hb-click-piercings" class="grid-box-overlay" onclick="onPeopleExploreClick('piercings')" title="Click to view Piercing guidelines"></div>
+
+                    <!-- Callout Area Hitboxes -->
+                    <div id="hb-shirts" class="grid-box-overlay" onclick="onPeopleExploreClick('shirts')"></div>
+                    <div id="hb-aprons" class="grid-box-overlay" onclick="onPeopleExploreClick('aprons')"></div>
+                    <div id="hb-bracelets" class="grid-box-overlay" onclick="onPeopleExploreClick('bracelets')"></div>
+                    <div id="hb-shoes" class="grid-box-overlay" onclick="onPeopleExploreClick('shoes')"></div>
+                    <div id="hb-hats" class="grid-box-overlay" onclick="onPeopleExploreClick('hats')"></div>
+                    <div id="hb-piercings" class="grid-box-overlay" onclick="onPeopleExploreClick('piercings')"></div>
+                    <div id="hb-nails" class="grid-box-overlay" onclick="onPeopleExploreClick('nails')"></div>
+                    <div id="hb-bottoms" class="grid-box-overlay" onclick="onPeopleExploreClick('bottoms')"></div>
+                    <div id="hb-jackets" class="grid-box-overlay" onclick="onPeopleExploreClick('jackets')"></div>
+                    <div id="hb-facial-hair" class="grid-box-overlay" onclick="onPeopleExploreClick('facial-hair')"></div>
+
+                    <!-- 10 In-Place Callout Text Containers -->
+                    <div id="explore-text-shirts" class="explore-callout-text"></div>
+                    <div id="explore-text-aprons" class="explore-callout-text"></div>
+                    <div id="explore-text-bracelets" class="explore-callout-text"></div>
+                    <div id="explore-text-shoes" class="explore-callout-text"></div>
+                    <div id="explore-text-hats" class="explore-callout-text"></div>
+                    <div id="explore-text-piercings" class="explore-callout-text"></div>
+                    <div id="explore-text-nails" class="explore-callout-text"></div>
+                    <div id="explore-text-bottoms" class="explore-callout-text"></div>
+                    <div id="explore-text-jackets" class="explore-callout-text"></div>
+                    <div id="explore-text-facial-hair" class="explore-callout-text"></div>
+                    <div id="explore-text-facial-hair-sub" class="explore-callout-text"></div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- LOOK BOOK LIGHTBOX MODAL (Requirement 3 of 3 for Card 4) -->
+    <div id="lookbook-modal" class="lookbook-modal-overlay hidden" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.9); z-index: 999999; display: none; align-items: center; justify-content: center; backdrop-filter: blur(6px);">
+        <div style="width: 95vw; max-width: 1100px; max-height: 90vh; display: flex; flex-direction: column; background: #0f172a; border-radius: 10px; border: 2px solid var(--crust-med); padding: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; color: white;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-family: 'PizzaPress'; font-size: 1.4rem; color: var(--crust-light);">📖 Uniform Look Book & Catalog</span>
+                    <span style="background: #2e7d32; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.82rem; font-family: 'OneDotCd-Bold';">✓ Step Completed</span>
+                </div>
+                <button onclick="closeLookBookModal()" class="btn" style="background: var(--brand-red); color: white; padding: 5px 16px; border: none; cursor: pointer; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem;">Close Catalog &times;</button>
+            </div>
+            <div class="lookbook-modal-content" style="overflow-y: auto; max-height: calc(90vh - 70px); border-radius: 6px;">
+                <img src="../resources/Image_Guides/Look_Book.jpg" alt="Look Book Catalog" style="width: 100%; height: auto; display: block;">
+            </div>
+        </div>
     </div>
 
 <script>
@@ -430,391 +363,163 @@
         let stage1Triggered = false;
         let stage2Triggered = false;
 
-        // --- INTERACTIVE UNIFORM JOB AID CONTROLLER ---
-        let uniformAudio = null;
-        let isUniformCompleted = false;
-        let hasCompletedAudio = false;
-        let hasOpenedFreeExplore = false;
-        let hasOpenedLookBook = false;
+        // --- UNIFORM GUIDELINES (CARD 4) MULTI-PART TRACKING ---
+        let uniformParts = {
+            video: false,
+            posterItems: [],
+            lookbook: false
+        };
 
-        const UNIFORM_TIMELINE = [
-            // Intro Slides
-            { start: 0, end: 15, type: 'intro', slide: '../resources/Title_Slides/Perfect_Image_2_Title.png', title: 'Intro' },
-            { start: 15, end: 27, type: 'intro', slide: '../resources/Image_Guides/Game_Ready1.png', title: 'Game Day Jersey' },
-            { start: 27, end: 36, type: 'intro', slide: '../resources/Image_Guides/Game_Ready2.png', title: 'Professionalism' },
-            { start: 36, end: 49, type: 'intro', slide: '../resources/Image_Guides/Game_Ready3.png', title: 'Cleanliness & Pride' },
-
-            // Apparel Poster Grid (0:49 - 3:58)
-            { start: 49, end: 90, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-top-left', title: 'APPAREL - SHIRTS/UNDERSHIRTS', text: 'Wear a Domino\'s approved uniform or promo shirt. Undershirts: solid gray, white, or black. Roll sleeves past elbows when prepping food.' },
-            { start: 90, end: 128, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-top-mid', title: 'BOTTOMS - PANTS/SHORTS/SKIRTS', text: 'Approved options: black pants, black denim, blue denim, approved joggers. Sat properly at waist, free from rips/tears. No sweatpants or athletic shorts.' },
-            { start: 128, end: 185, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-top-right', title: 'HAIR & HAT RESTRAINTS', text: 'Approved hat or visor facing forward while working. Hair touching collar must be restrained behind shoulders.' },
-            { start: 185, end: 214, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-bottom-left', title: 'SHOES & SOCKS', text: 'Must cover entire foot with non-slip soles and tight laces. Socks required. No open toes or holes.' },
-            { start: 185, end: 214, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-bottom-mid', title: 'APRONS & ACCESSORIES', text: 'Worn full-length when preparing/cutting food. Stays inside—never worn outside or into restrooms.' },
-            { start: 214, end: 238, type: 'grid', poster: '../resources/Image_Guides/Perfect_Apparel.png', boxId: 'hb-bottom-right', title: 'OUTERWEAR & JACKETS', text: 'Keep outerwear solid black with minimal branding, or wear Domino\'s branded outerwear. Black gloves if worn.' },
-
-            // Grooming Poster Grid (3:58 - 6:16)
-            { start: 238, end: 266, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-top-left', title: 'HYGIENE', text: 'Personal cleanliness & body odor controlled. Avoid heavy lotions or perfumes on hands when prepping food.' },
-            { start: 266, end: 286, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-top-mid', title: 'FINGERNAILS', text: 'Clean and neatly trimmed. Food-grade gloves required if long, painted, or artificial nails are worn.' },
-            { start: 286, end: 295, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-top-right', title: 'HAIR RESTRAINTS', text: 'Secured under hat or restrained away from shoulders and food preparation surfaces.' },
-            { start: 295, end: 314, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-bottom-left', title: 'FACIAL HAIR', text: 'Clean & neatly trimmed up to 1" max. Beard snood/net required while prepping food if applicable.' },
-            { start: 314, end: 338, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-bottom-mid', title: 'JEWELRY', text: 'Simple studs/hoops (no dangle earrings). No watches, bracelets, or stone-set rings during food prep.' },
-            { start: 338, end: 376, type: 'grid', poster: '../resources/Image_Guides/Perfect_Grooming.png', boxId: 'hb-bottom-right', title: 'TATTOOS & MODS', text: 'Professional only (no profanity, offensive, or discriminatory tattoos). Cover body modifications.' },
-
-            // Outro Slide (6:16 - 6:59)
-            { start: 376, end: 419, type: 'outro', slide: '../resources/Title_Slides/Perfect_Image_2_Title.png', title: 'Conclusion' }
-        ];
-
-        function updateUniformRequirementsCheck() {
-            const exploreBtn = document.getElementById('btn-toggle-explore');
-            const lookbookBtn = document.getElementById('btn-lookbook');
-            const banner = document.getElementById('uniform-completion-banner');
-            const statusText = document.getElementById('uniform-banner-status-text');
-            const finishBtn = document.getElementById('btn-finish-uniform');
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true';
-            const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
-
-            if (isAdmin) {
-                hasCompletedAudio = true;
-                hasOpenedFreeExplore = true;
-                hasOpenedLookBook = true;
+        const PEOPLE_EXPLORE_MAP = {
+            'shirts': {
+                title: 'SHIRTS',
+                text: 'Wear a Domino\'s approved uniform. Undershirts: solid gray, white, or black. Roll sleeves past elbows when prepping food.',
+                targetId: 'explore-text-shirts'
+            },
+            'aprons': {
+                title: 'APRONS',
+                text: 'Wear full-length when preparing food. Never wear outside or in restrooms.',
+                targetId: 'explore-text-aprons'
+            },
+            'bracelets': {
+                title: 'BRACELETS, WATCHES, & RINGS',
+                text: 'No watches or bracelets during food prep. Plain wedding band allowed.',
+                targetId: 'explore-text-bracelets'
+            },
+            'shoes': {
+                title: 'SHOES & SOCKS',
+                text: 'Socks must be worn. Shoes must cover entire foot. No open toes or holes.',
+                targetId: 'explore-text-shoes'
+            },
+            'hats': {
+                title: 'HATS & HAIR',
+                text: 'Domino\'s approved hat required. Hair touching collar must be restrained behind shoulders.',
+                targetId: 'explore-text-hats'
+            },
+            'piercings': {
+                title: 'PIERCINGS',
+                text: 'Keep it simple! Small studs or hoops only. No dangle or large hoop earrings.',
+                targetId: 'explore-text-piercings'
+            },
+            'nails': {
+                title: 'NAILS',
+                text: 'Clean & neatly trimmed. Wear gloves if long, painted, or artificial nails are worn.',
+                targetId: 'explore-text-nails'
+            },
+            'bottoms': {
+                title: 'BOTTOMS',
+                text: 'Approved: Black pants, blue/black denim, or approved joggers. No sweatpants, leggings, or athletic shorts.',
+                targetId: 'explore-text-bottoms'
+            },
+            'jackets': {
+                title: 'JACKETS',
+                text: 'Wear solid black outerwear with minimal branding, or Domino\'s branded outerwear.',
+                targetId: 'explore-text-jackets'
+            },
+            'facial-hair': {
+                title: 'FACIAL HAIR',
+                text: 'Keep neat & trimmed up to 1" max.',
+                subText: 'Beard net required during food prep if applicable.',
+                targetId: 'explore-text-facial-hair',
+                subTargetId: 'explore-text-facial-hair-sub'
             }
+        };
 
-            if (hasCompletedAudio || isAdmin) {
-                if (banner) banner.classList.remove('hidden');
-                if (exploreBtn) {
-                    exploreBtn.classList.remove('hidden');
-                    if (!hasOpenedFreeExplore) exploreBtn.classList.add('pulse-attention');
-                    else exploreBtn.classList.remove('pulse-attention');
-                }
-                if (lookbookBtn) {
-                    lookbookBtn.classList.remove('hidden');
-                    if (!hasOpenedLookBook) lookbookBtn.classList.add('pulse-attention');
-                    else lookbookBtn.classList.remove('pulse-attention');
-                }
-            }
-
-            const allDone = hasCompletedAudio && hasOpenedFreeExplore && hasOpenedLookBook;
-
-            if (allDone) {
-                isUniformCompleted = true;
-                if (statusText) {
-                    statusText.innerHTML = '<span style="color: var(--crust-light);">✓ All 3 Steps Complete! Card Unlocked!</span>';
-                }
-                if (finishBtn) {
-                    finishBtn.innerText = 'Continue & Exit';
-                    finishBtn.disabled = false;
-                    finishBtn.classList.remove('disabled');
-                    finishBtn.style.background = 'var(--brand-blue)';
-                    finishBtn.style.color = 'var(--crust-light)';
-                    finishBtn.style.border = '1.5px solid var(--crust-med)';
-                    finishBtn.style.cursor = 'pointer';
-                }
-                if (moduleVideos && moduleVideos[activeVideoIndex]) {
-                    moduleVideos[activeVideoIndex].completed = true;
-                }
-                renderVideoCards();
-            } else if (hasCompletedAudio) {
-                let missing = [];
-                if (!hasOpenedFreeExplore) missing.push('🔍 Free Explore');
-                if (!hasOpenedLookBook) missing.push('📖 Look Book');
-                
-                if (statusText) {
-                    statusText.innerHTML = `<span style="color: var(--crust-med);">⚠️ Open ${missing.join(' & ')} above to unlock exit!</span>`;
-                }
-                if (finishBtn) {
-                    finishBtn.innerText = 'Locked';
-                    finishBtn.disabled = true;
-                    finishBtn.classList.add('disabled');
-                    finishBtn.style.background = 'var(--dark-blue)';
-                    finishBtn.style.color = 'var(--crust-med)';
-                    finishBtn.style.border = '1px solid var(--crust-med)';
-                    finishBtn.style.cursor = 'not-allowed';
-                }
-            }
+        function saveUniformPartsProgress() {
+            try {
+                localStorage.setItem('tw_mod2_uniform_parts', JSON.stringify(uniformParts));
+            } catch(e) {}
         }
 
-        let isFreeExploreActive = false;
-
-        function initUniformInteractive() {
-            // Guarantee uniform-modal-overlay is un-nested and attached directly to body
-            const overlay = document.getElementById('uniform-modal-overlay');
-            if (overlay && overlay.parentElement !== document.body) {
-                document.body.appendChild(overlay);
-            }
-
-            isFreeExploreActive = false;
-            const audioControls = document.getElementById('uniform-audio-controls');
-            const exploreTip = document.getElementById('uniform-explore-tip');
-            const phaseTag = document.getElementById('uniform-phase-tag');
-            const exploreBtn = document.getElementById('btn-toggle-explore');
-            if (audioControls) audioControls.style.display = 'flex';
-            if (exploreTip) {
-                exploreTip.classList.add('hidden');
-                exploreTip.style.display = 'none';
-            }
-            // Auto-grant completion on opening Card 4 so trainees are never blocked
-            if (moduleVideos && moduleVideos[3]) {
-                moduleVideos[3].completed = true;
-                saveModule2VideoProgress();
-            }
-
-            updateUniformRequirementsCheck();
-
-            uniformAudio = document.getElementById('uniform-audio-element');
-            if (!uniformAudio) return;
-
-            uniformAudio.onplay = () => {
-                const btn = document.getElementById('uniform-play-btn');
-                if (btn) btn.innerText = '❚❚';
-            };
-            uniformAudio.onpause = () => {
-                const btn = document.getElementById('uniform-play-btn');
-                if (btn) btn.innerText = '▶';
-            };
-
-            uniformAudio.ontimeupdate = () => {
-                updateUniformTimeDisplay();
-                processUniformTimeline(uniformAudio.currentTime);
-            };
-
-            uniformAudio.onended = () => {
-                onUniformCompleted();
-            };
-
-            // Force immediate render of Stage 1 Intro Slide (0:00)
-            updateUniformTimeDisplay();
-            processUniformTimeline(0);
-        }
-
-        function toggleUniformAudio() {
-            if (!uniformAudio) initUniformInteractive();
-            if (isFreeExploreActive) {
-                toggleFreeExploreMode();
-            }
-            if (uniformAudio.paused) {
-                uniformAudio.play();
-            } else {
-                uniformAudio.pause();
-            }
-        }
-
-        function seekUniformAudio(val) {
-            if (!uniformAudio) initUniformInteractive();
-            if (isFreeExploreActive) {
-                toggleFreeExploreMode();
-            }
-            uniformAudio.currentTime = parseFloat(val);
-            processUniformTimeline(parseFloat(val));
-        }
-
-        function updateUniformTimeDisplay() {
-            if (!uniformAudio) return;
-            const time = uniformAudio.currentTime;
-            const scrubber = document.getElementById('uniform-scrubber');
-            const timerDisp = document.getElementById('uniform-time-disp');
-
-            if (scrubber) scrubber.value = time;
-            
-            const mins = Math.floor(time / 60);
-            const secs = Math.floor(time % 60).toString().padStart(2, '0');
-            if (timerDisp) timerDisp.innerText = `${mins}:${secs} / 6:59`;
-        }
-
-        function processUniformTimeline(time) {
-            if (isFreeExploreActive) return; // Prevent background audio timeupdate from kicking out of Free Explore view
-
-            const currentItem = UNIFORM_TIMELINE.find(item => time >= item.start && time < item.end);
-            
-            const stageIntro = document.getElementById('uniform-stage-intro');
-            const stageGrid = document.getElementById('uniform-stage-grid');
-            const stageExplore = document.getElementById('uniform-stage-explore');
-            const introImg = document.getElementById('intro-slide-img');
-            const gridImg = document.getElementById('grid-poster-img');
-            const card = document.getElementById('active-box-card');
-
-            // Reset box highlights
-            document.querySelectorAll('.grid-box-overlay').forEach(el => el.classList.remove('active-highlight'));
-
-            if (!currentItem || currentItem.type === 'intro') {
-                stageIntro.classList.remove('hidden');
-                stageGrid.classList.add('hidden');
-                stageExplore.classList.add('hidden');
-                if (card) card.classList.add('hidden');
-
-                if (introImg) {
-                    const targetSlide = currentItem ? currentItem.slide : '../resources/Title_Slides/Perfect_Image_2_Title.png';
-                    const targetFileName = targetSlide.split('/').pop();
-                    if (!introImg.src.endsWith(targetFileName)) {
-                        introImg.src = targetSlide;
+        function loadUniformPartsProgress() {
+            try {
+                const saved = localStorage.getItem('tw_mod2_uniform_parts');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (parsed && typeof parsed === 'object') {
+                        uniformParts.video = !!parsed.video;
+                        uniformParts.posterItems = Array.isArray(parsed.posterItems) ? parsed.posterItems : [];
+                        uniformParts.lookbook = !!parsed.lookbook;
                     }
-                    introImg.style.opacity = '1';
                 }
-            } else if (currentItem.type === 'grid') {
-                stageIntro.classList.add('hidden');
-                stageGrid.classList.remove('hidden');
-                stageExplore.classList.add('hidden');
-                if (card) card.classList.add('hidden');
+            } catch(e) {}
+        }
 
-                if (gridImg) {
-                    const targetPosterName = currentItem.poster.split('/').pop();
-                    if (!gridImg.src.endsWith(targetPosterName)) {
-                        gridImg.src = currentItem.poster;
-                    }
-                    gridImg.style.opacity = '1';
+        function updatePosterCounterBadge() {
+            const count = uniformParts.posterItems.length;
+            const badge = document.getElementById('poster-counter-badge');
+            const banner = document.getElementById('poster-instruction-banner');
+            if (badge) {
+                if (count >= 10) {
+                    badge.style.background = '#2e7d32';
+                    badge.innerText = `✓ All 10 Areas Explored!`;
+                } else {
+                    badge.style.background = 'var(--brand-blue)';
+                    badge.innerText = `${count} of 10 Areas Explored`;
                 }
+            }
+            if (banner && count >= 10) {
+                banner.innerHTML = `<span style="color: #4ade80; font-weight: bold;">🎉 Step Complete! You have explored all 10 uniform guidelines. Click "Close & Return" to continue.</span>`;
+            }
+        }
 
-                // Progressive fill: Keep all completed box texts visible on current poster!
-                const activePoster = (time >= 238) ? '../resources/Image_Guides/Perfect_Grooming.png' : '../resources/Image_Guides/Perfect_Apparel.png';
-                
-                UNIFORM_TIMELINE.forEach(item => {
-                    if (item.type === 'grid' && item.poster === activePoster) {
-                        const targetBox = document.getElementById(item.boxId);
-                        if (targetBox) {
-                            const textContainer = targetBox.querySelector('.inbox-guideline-text');
-                            if (textContainer) {
-                                if (time >= item.start) {
-                                    textContainer.innerText = item.text;
-                                    textContainer.style.opacity = '1';
-                                } else {
-                                    textContainer.innerText = '';
-                                }
+        function openUniformPosterModal() {
+            const modal = document.getElementById('uniform-poster-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.style.display = 'flex';
+                updatePosterCounterBadge();
+
+                // Restore any previously clicked text items
+                uniformParts.posterItems.forEach(k => {
+                    const data = PEOPLE_EXPLORE_MAP[k];
+                    if (data) {
+                        const el = document.getElementById(data.targetId);
+                        if (el) {
+                            el.innerHTML = data.text.replace(/\n/g, '<br>');
+                            el.style.opacity = '1';
+                        }
+                        if (data.subTargetId && data.subText) {
+                            const subEl = document.getElementById(data.subTargetId);
+                            if (subEl) {
+                                subEl.innerHTML = data.subText.replace(/\n/g, '<br>');
+                                subEl.style.opacity = '1';
                             }
                         }
                     }
                 });
-            } else if (currentItem.type === 'outro') {
-                stageIntro.classList.remove('hidden');
-                stageGrid.classList.add('hidden');
-                stageExplore.classList.add('hidden');
-                if (card) card.classList.add('hidden');
-                if (introImg) {
-                    introImg.src = '../resources/Title_Slides/Perfect_Image_2_Title.png';
-                    introImg.style.opacity = '1';
-                }
             }
         }
 
-        function onGridBoxClick(boxKey) {
-            if (!uniformAudio) initUniformInteractive();
-            if (isFreeExploreActive) {
-                toggleFreeExploreMode();
+        function closeUniformPosterModal() {
+            const modal = document.getElementById('uniform-poster-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
             }
-            const time = uniformAudio.currentTime;
-            const currentPoster = (time >= 238) ? '../resources/Image_Guides/Perfect_Grooming.png' : '../resources/Image_Guides/Perfect_Apparel.png';
-            const targetBoxId = 'hb-' + boxKey;
-            
-            const match = UNIFORM_TIMELINE.find(item => item.poster === currentPoster && item.boxId === targetBoxId);
-            if (match) {
-                seekUniformAudio(match.start);
-                if (uniformAudio.paused) uniformAudio.play();
-            }
+            checkUniformRequirements();
         }
 
-        function onUniformCompleted() {
-            hasCompletedAudio = true;
-            updateUniformRequirementsCheck();
+        function openLookBookModal() {
+            uniformParts.lookbook = true;
+            const modal = document.getElementById('lookbook-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.style.display = 'flex';
+            }
+            checkUniformRequirements();
         }
 
-        function toggleFreeExploreMode() {
-            hasOpenedFreeExplore = true;
-            isFreeExploreActive = !isFreeExploreActive;
-
-            const stageIntro = document.getElementById('uniform-stage-intro');
-            const stageGrid = document.getElementById('uniform-stage-grid');
-            const stageExplore = document.getElementById('uniform-stage-explore');
-            const audioControls = document.getElementById('uniform-audio-controls');
-            const exploreTip = document.getElementById('uniform-explore-tip');
-            const phaseTag = document.getElementById('uniform-phase-tag');
-            const exploreBtn = document.getElementById('btn-toggle-explore');
-
-            if (isFreeExploreActive) {
-                if (uniformAudio && !uniformAudio.paused) {
-                    try { uniformAudio.pause(); } catch(e) {}
-                }
-                stageIntro.classList.add('hidden');
-                stageGrid.classList.add('hidden');
-                stageExplore.classList.remove('hidden');
-
-                if (audioControls) audioControls.style.display = 'none';
-                if (exploreTip) {
-                    exploreTip.classList.remove('hidden');
-                    exploreTip.style.display = 'flex';
-                }
-                if (phaseTag) phaseTag.innerText = 'Phase 2: Free-Explore Poster';
-                if (exploreBtn) exploreBtn.innerText = '🎙️ Guided Audio';
-            } else {
-                stageExplore.classList.add('hidden');
-                if (audioControls) audioControls.style.display = 'flex';
-                if (exploreTip) {
-                    exploreTip.classList.add('hidden');
-                    exploreTip.style.display = 'none';
-                }
-                if (phaseTag) phaseTag.innerText = 'Guided Presentation';
-                if (exploreBtn) exploreBtn.innerText = '🔍 Free Explore';
-                processUniformTimeline(uniformAudio ? uniformAudio.currentTime : 0);
+        function closeLookBookModal() {
+            const modal = document.getElementById('lookbook-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
             }
-
-            updateUniformRequirementsCheck();
+            checkUniformRequirements();
         }
 
         function onPeopleExploreClick(key) {
-            const PEOPLE_EXPLORE_MAP = {
-                'shirts': {
-                    title: 'SHIRTS',
-                    text: 'Wear a Domino\'s approved uniform. Undershirts: solid gray, white, or black. Roll sleeves past elbows when prepping food.',
-                    targetId: 'explore-text-shirts'
-                },
-                'aprons': {
-                    title: 'APRONS',
-                    text: 'Wear full-length when preparing food. Never wear outside or in restrooms.',
-                    targetId: 'explore-text-aprons'
-                },
-                'bracelets': {
-                    title: 'BRACELETS, WATCHES, & RINGS',
-                    text: 'No watches or bracelets during food prep. Plain wedding band allowed.',
-                    targetId: 'explore-text-bracelets'
-                },
-                'shoes': {
-                    title: 'SHOES & SOCKS',
-                    text: 'Socks must be worn. Shoes must cover entire foot. No open toes or holes.',
-                    targetId: 'explore-text-shoes'
-                },
-                'hats': {
-                    title: 'HATS & HAIR',
-                    text: 'Domino\'s approved hat required. Hair touching collar must be restrained behind shoulders.',
-                    targetId: 'explore-text-hats'
-                },
-                'piercings': {
-                    title: 'PIERCINGS',
-                    text: 'Keep it simple! Small studs or hoops only. No dangle or large hoop earrings.',
-                    targetId: 'explore-text-piercings'
-                },
-                'nails': {
-                    title: 'NAILS',
-                    text: 'Clean & neatly trimmed. Wear gloves if long, painted, or artificial nails are worn.',
-                    targetId: 'explore-text-nails'
-                },
-                'bottoms': {
-                    title: 'BOTTOMS',
-                    text: 'Approved: Black pants, blue/black denim, or approved joggers. No sweatpants, leggings, or athletic shorts.',
-                    targetId: 'explore-text-bottoms'
-                },
-                'jackets': {
-                    title: 'JACKETS',
-                    text: 'Wear solid black outerwear with minimal branding, or Domino\'s branded outerwear.',
-                    targetId: 'explore-text-jackets'
-                },
-                'facial-hair': {
-                    title: 'FACIAL HAIR',
-                    text: 'Keep neat & trimmed up to 1" max.',
-                    subText: 'Beard net required during food prep if applicable.',
-                    targetId: 'explore-text-facial-hair',
-                    subTargetId: 'explore-text-facial-hair-sub'
-                }
-            };
-
             const data = PEOPLE_EXPLORE_MAP[key];
             if (data) {
                 const el = document.getElementById(data.targetId);
@@ -829,49 +534,32 @@
                         subEl.style.opacity = '1';
                     }
                 }
+                if (!uniformParts.posterItems.includes(key)) {
+                    uniformParts.posterItems.push(key);
+                }
+                updatePosterCounterBadge();
+                checkUniformRequirements();
             }
         }
 
-        function openLookBookModal() {
-            hasOpenedLookBook = true;
-            document.getElementById('lookbook-modal').classList.remove('hidden');
-            updateUniformRequirementsCheck();
-        }
+        function checkUniformRequirements() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true';
+            const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
 
-        function closeLookBookModal() {
-            document.getElementById('lookbook-modal').classList.add('hidden');
-        }
+            const isVideoDone = uniformParts.video || isAdmin;
+            const isPosterDone = uniformParts.posterItems.length >= 10 || isAdmin;
+            const isLookBookDone = uniformParts.lookbook || isAdmin;
 
-        function closeUniformModal() {
-            if (uniformAudio) {
-                try { uniformAudio.pause(); } catch(e) {}
+            const allThreeDone = isVideoDone && isPosterDone && isLookBookDone;
+            if (moduleVideos && moduleVideos[3]) {
+                moduleVideos[3].completed = allThreeDone;
             }
-            const overlay = document.getElementById('uniform-modal-overlay');
-            if (overlay) {
-                overlay.classList.add('hidden');
-                overlay.style.setProperty('display', 'none', 'important');
-            }
-            const videoModal = document.getElementById('video-modal');
-            if (videoModal) {
-                videoModal.style.removeProperty('display');
-            }
-            document.getElementById('lookbook-modal').classList.add('hidden');
 
-            updateUniformRequirementsCheck();
-        }
-
-        window.skipAndCompleteUniform = function() {
-            if (moduleVideos[3]) moduleVideos[3].completed = true;
-            hasCompletedAudio = true;
-            hasOpenedFreeExplore = true;
-            hasOpenedLookBook = true;
+            saveUniformPartsProgress();
             saveModule2VideoProgress();
             renderVideoCards();
-            closeUniformModal();
-        };
-
-        function finishUniformInteractive() {
-            skipAndCompleteUniform();
+            checkModuleVideosCompletion();
         }
 
         function saveModule2VideoProgress() {
@@ -892,11 +580,19 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 if (urlParams.get('unlock') === 'all') {
                     moduleVideos.forEach(v => v.completed = true);
+                    uniformParts.video = true;
+                    uniformParts.lookbook = true;
+                    uniformParts.posterItems = ['shirts', 'aprons', 'bracelets', 'shoes', 'hats', 'piercings', 'nails', 'bottoms', 'jackets', 'facial-hair'];
                     saveModule2VideoProgress();
+                    saveUniformPartsProgress();
                     return;
                 } else if (urlParams.get('unlock') === '4' || urlParams.get('skip4') === 'true') {
                     if (moduleVideos[3]) moduleVideos[3].completed = true;
+                    uniformParts.video = true;
+                    uniformParts.lookbook = true;
+                    uniformParts.posterItems = ['shirts', 'aprons', 'bracelets', 'shoes', 'hats', 'piercings', 'nails', 'bottoms', 'jackets', 'facial-hair'];
                     saveModule2VideoProgress();
+                    saveUniformPartsProgress();
                 }
 
                 const saved = localStorage.getItem('tw_mod2_completed_videos');
@@ -919,37 +615,7 @@
                 return;
             }
 
-            if (video && video.isInteractive) {
-                // Pause any background Vimeo player safely
-                if (player) {
-                    try { player.pause(); } catch(e) {}
-                }
-                // Hide video modal & open standalone uniform modal directly
-                const videoModal = document.getElementById('video-modal');
-                const overlay = document.getElementById('uniform-modal-overlay');
-
-                if (videoModal) {
-                    videoModal.classList.add('hidden');
-                    videoModal.style.setProperty('display', 'none', 'important');
-                }
-
-                if (overlay) {
-                    overlay.classList.remove('hidden');
-                    overlay.style.removeProperty('display');
-                    overlay.style.setProperty('display', 'flex', 'important');
-                }
-
-                initUniformInteractive();
-                return;
-            }
-
             const videoModal = document.getElementById('video-modal');
-            const overlay = document.getElementById('uniform-modal-overlay');
-            if (overlay) {
-                overlay.classList.add('hidden');
-                overlay.style.setProperty('display', 'none', 'important');
-            }
-
             if (videoModal) {
                 videoModal.classList.remove('hidden');
                 videoModal.style.removeProperty('display');
@@ -997,6 +663,8 @@
             const allRequiredDone = moduleVideos.every(v => v.completed || v.isUnderMaintenance);
             videoWatched = allRequiredDone;
             const btnNext = document.getElementById('btn-next');
+            const statusMsg = document.getElementById('video-status-msg');
+
             if (btnNext && currentStep === 1) {
                 if (allRequiredDone) {
                     btnNext.classList.remove('btn-disabled');
@@ -1004,14 +672,26 @@
                     btnNext.classList.add('btn-disabled');
                 }
             }
+
+            if (allRequiredDone && statusMsg) {
+                statusMsg.innerText = "All videos and materials complete! Click Next Step to take the quiz.";
+                statusMsg.style.color = "#28a745";
+                statusMsg.style.fontWeight = "bold";
+            }
         }
 
         // --- DEV BYPASS SHORTCUT ---
         // Open Browser Console (F12) and type: unlockAll()
         window.unlockAll = function() {
             moduleVideos.forEach(v => v.completed = true);
+            uniformParts.video = true;
+            uniformParts.lookbook = true;
+            uniformParts.posterItems = ['shirts', 'aprons', 'bracelets', 'shoes', 'hats', 'piercings', 'nails', 'bottoms', 'jackets', 'facial-hair'];
+            saveModule2VideoProgress();
+            saveUniformPartsProgress();
             renderVideoCards();
-            console.log("🔓 DEV MODE: All videos unlocked!");
+            checkModuleVideosCompletion();
+            console.log("🔓 DEV MODE: All videos and materials unlocked!");
         };
 
         // --- DEV JUMP SHORTCUT: Type jumpTo(200) or jumpTo(218) in Console ---
@@ -1040,7 +720,7 @@
 
                 let cardStatusClass = 'locked';
                 let badgeText = '🔒 Locked';
-                let btnText = video.isInteractive ? 'Start Interactive Guide' : 'Watch Video';
+                let btnText = 'Watch Video';
 
                 if (video.isUnderMaintenance) {
                     cardStatusClass = 'maintenance';
@@ -1049,14 +729,77 @@
                 } else if (isCompleted) {
                     cardStatusClass = 'completed';
                     badgeText = '✓ Completed';
-                    btnText = video.isInteractive ? 'Review Interactive Guide' : 'Rewatch Video';
+                    btnText = 'Rewatch Video';
                 } else if (isUnlocked) {
                     cardStatusClass = 'active';
-                    badgeText = video.isInteractive ? '🎮 Interactive' : '▶ Ready';
+                    badgeText = '▶ Ready';
                 }
 
                 const isBtnDisabled = !isUnlocked || video.isUnderMaintenance;
 
+                // SPECIAL CARD 4: UNIFORM GUIDELINES (3-PART REQUIREMENT)
+                if (index === 3) {
+                    const isVideoDone = uniformParts.video || isAdmin;
+                    const isPosterDone = (uniformParts.posterItems.length >= 10) || isAdmin;
+                    const isLookBookDone = uniformParts.lookbook || isAdmin;
+
+                    const cardHTML = `
+                        <div class="v-card ${cardStatusClass}" style="display: flex; flex-direction: column;">
+                            <div class="v-card-thumb" style="background-image: url('${video.thumb}');">
+                                <span class="v-card-badge">${badgeText}</span>
+                            </div>
+                            <div class="v-card-body" style="display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;">
+                                <div>
+                                    <div class="v-card-title">${video.title}</div>
+                                    <div class="v-card-desc" style="margin-bottom: 8px;">Complete all 3 parts below to unlock:</div>
+                                    
+                                    <!-- 3-Part Checklist Pills -->
+                                    <div style="display: flex; flex-direction: column; gap: 4px; background: var(--crust-light); border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 8px 10px; margin-bottom: 12px; font-size: 0.85rem; font-family: 'OneDotCd-Bold';">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span>🎬 1. Watch Video:</span>
+                                            <span style="color: ${isVideoDone ? '#2e7d32' : 'var(--crust-dark)'};">${isVideoDone ? '✓ Watched' : '⏳ Incomplete'}</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span>🔍 2. Interactive Poster:</span>
+                                            <span style="color: ${isPosterDone ? '#2e7d32' : 'var(--crust-dark)'};">${isPosterDone ? '✓ 10/10 Explored' : `${uniformParts.posterItems.length}/10 Explored`}</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span>📖 3. Look Book:</span>
+                                            <span style="color: ${isLookBookDone ? '#2e7d32' : 'var(--crust-dark)'};">${isLookBookDone ? '✓ Viewed' : '⏳ Incomplete'}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; flex-direction: column; gap: 6px;">
+                                    <button class="btn ${isBtnDisabled ? 'disabled' : ''}" 
+                                            onclick="${isBtnDisabled ? '' : `openVideoModal(3)`}" 
+                                            ${isBtnDisabled ? 'disabled' : ''}
+                                            style="width: 100%; padding: 0.55rem 1rem; font-size: 0.95rem;">
+                                        ${isVideoDone ? 'Rewatch Video' : '🎬 Watch Video'}
+                                    </button>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                                        <button class="btn btn-outline ${isBtnDisabled ? 'disabled' : ''}" 
+                                                onclick="${isBtnDisabled ? '' : 'openUniformPosterModal()'}" 
+                                                ${isBtnDisabled ? 'disabled' : ''}
+                                                style="padding: 0.4rem 0.5rem; font-size: 0.85rem; border-radius: 6px; white-space: nowrap; ${isPosterDone ? 'border-color: #2e7d32; color: #2e7d32;' : ''}">
+                                            ${isPosterDone ? '✓ Poster Done' : '🔍 Open Poster'}
+                                        </button>
+                                        <button class="btn btn-outline ${isBtnDisabled ? 'disabled' : ''}" 
+                                                onclick="${isBtnDisabled ? '' : 'openLookBookModal()'}" 
+                                                ${isBtnDisabled ? 'disabled' : ''}
+                                                style="padding: 0.4rem 0.5rem; font-size: 0.85rem; border-radius: 6px; white-space: nowrap; ${isLookBookDone ? 'border-color: #2e7d32; color: #2e7d32;' : ''}">
+                                            ${isLookBookDone ? '✓ Look Book' : '📖 Look Book'}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += cardHTML;
+                    return;
+                }
+
+                // Standard Video Cards
                 const cardHTML = `
                     <div class="v-card ${cardStatusClass}">
                         <div class="v-card-thumb" style="background-image: url('${video.thumb}');">
@@ -1066,7 +809,7 @@
                             <div class="v-card-title">${video.title}</div>
                             <div class="v-card-desc">${video.desc}</div>
                             <button class="btn ${isBtnDisabled ? 'disabled' : ''}" 
-                                    onclick="${video.isUnderMaintenance ? '' : `openVideoModal(${index})`}" 
+                                    onclick="${isBtnDisabled ? '' : `openVideoModal(${index})`}" 
                                     ${isBtnDisabled ? 'disabled' : ''}>
                                 ${btnText}
                             </button>
@@ -1107,8 +850,7 @@
 
                 // --- VIDEO 2 INTERACTIVE EXERCISES ---
                 if (activeVideoIndex === 1) {
-
-                    // EXERCISE 1: Lobby Check at 3:20 (200 seconds) - 11 ITEMS
+                    // EXERCISE 1: Lobby Check at 3:20 (200 seconds)
                     if (data.seconds >= 200 && !stage1Triggered) {
                         stage1Triggered = true;
                         player.pause();
@@ -1117,7 +859,7 @@
                         document.getElementById('trash-interactive-stage-1').classList.remove('hidden');
                     }
 
-                    // EXERCISE 2: Parking Lot Check at 3:38 (218 seconds) - 13 ITEMS
+                    // EXERCISE 2: Parking Lot Check at 3:38 (218 seconds)
                     if (data.seconds >= 218 && !stage2Triggered) {
                         stage2Triggered = true;
                         player.pause();
@@ -1153,8 +895,16 @@
             });
 
             player.on('ended', function() {
-                moduleVideos[activeVideoIndex].completed = true;
-                renderVideoCards();
+                if (activeVideoIndex === 3) {
+                    uniformParts.video = true;
+                    saveUniformPartsProgress();
+                    checkUniformRequirements();
+                } else {
+                    moduleVideos[activeVideoIndex].completed = true;
+                    saveModule2VideoProgress();
+                    renderVideoCards();
+                    checkModuleVideosCompletion();
+                }
                 closeVideoModal();
             });
         }
@@ -1194,22 +944,22 @@
             if (player) {
                 try { player.pause(); } catch(e) {}
             }
-            if (uniformAudio) {
-                try { uniformAudio.pause(); } catch(e) {}
-            }
-            const modalContent = document.querySelector('.video-modal-content');
-            if (modalContent) modalContent.classList.remove('interactive-mode');
-
-            const uniformModal = document.getElementById('uniform-interactive-modal');
-            if (uniformModal) uniformModal.style.display = 'none';
-
             const videoModal = document.getElementById('video-modal');
             if (videoModal) {
                 videoModal.classList.add('hidden');
                 videoModal.style.removeProperty('display');
                 videoModal.style.setProperty('display', 'none', 'important');
             }
-            document.getElementById('lookbook-modal').classList.add('hidden');
+            const lookbookModal = document.getElementById('lookbook-modal');
+            if (lookbookModal) {
+                lookbookModal.classList.add('hidden');
+                lookbookModal.style.display = 'none';
+            }
+            const posterModal = document.getElementById('uniform-poster-modal');
+            if (posterModal) {
+                posterModal.classList.add('hidden');
+                posterModal.style.display = 'none';
+            }
         }
 
         function checkModuleVideosCompletion() {
@@ -1361,7 +1111,9 @@
 
         // Initialize video cards and restore saved progress on DOM ready
         document.addEventListener('DOMContentLoaded', () => {
+            loadUniformPartsProgress();
             loadModule2VideoProgress();
+            checkUniformRequirements();
             renderVideoCards();
         });
 
