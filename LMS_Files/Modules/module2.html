@@ -543,13 +543,9 @@
         }
 
         function checkUniformRequirements() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true';
-            const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
-
-            const isVideoDone = uniformParts.video || isAdmin;
-            const isPosterDone = uniformParts.posterItems.length >= 10 || isAdmin;
-            const isLookBookDone = uniformParts.lookbook || isAdmin;
+            const isVideoDone = uniformParts.video;
+            const isPosterDone = uniformParts.posterItems.length >= 10;
+            const isLookBookDone = uniformParts.lookbook;
 
             const allThreeDone = isVideoDone && isPosterDone && isLookBookDone;
             if (moduleVideos && moduleVideos[3]) {
@@ -600,9 +596,16 @@
                     const completedIndices = JSON.parse(saved);
                     if (Array.isArray(completedIndices)) {
                         completedIndices.forEach(idx => {
-                            if (moduleVideos[idx]) moduleVideos[idx].completed = true;
+                            if (moduleVideos[idx] && idx !== 3) {
+                                moduleVideos[idx].completed = true;
+                            }
                         });
                     }
+                }
+
+                // Card 4 completion is verified against actual uniformParts
+                if (moduleVideos && moduleVideos[3]) {
+                    moduleVideos[3].completed = (uniformParts.video && uniformParts.lookbook && uniformParts.posterItems.length >= 10);
                 }
             } catch(e) {}
         }
@@ -739,9 +742,9 @@
 
                 // SPECIAL CARD 4: UNIFORM GUIDELINES (3-PART REQUIREMENT)
                 if (index === 3) {
-                    const isVideoDone = uniformParts.video || isAdmin;
-                    const isPosterDone = (uniformParts.posterItems.length >= 10) || isAdmin;
-                    const isLookBookDone = uniformParts.lookbook || isAdmin;
+                    const isVideoDone = uniformParts.video;
+                    const isPosterDone = uniformParts.posterItems.length >= 10;
+                    const isLookBookDone = uniformParts.lookbook;
 
                     const cardHTML = `
                         <div class="v-card ${cardStatusClass}" style="display: flex; flex-direction: column;">
