@@ -262,6 +262,12 @@
             box-sizing: border-box;
         }
 
+        .flip-grid.grid-2-cols {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
         .flip-card {
             background-color: transparent;
             height: 260px;
@@ -897,7 +903,7 @@
                             Click any card to reveal details!
                         </div>
                     </div>
-                    <div class="flip-grid" style="${category.items.length > 6 ? 'max-height: 480px; overflow-y: auto;' : ''}">
+                    <div class="flip-grid ${activeCategory === 'desserts' ? 'grid-2-cols' : ''}" style="${category.items.length > 6 ? 'max-height: 480px; overflow-y: auto;' : ''}">
                 `;
 
                     category.items.forEach(item => {
