@@ -385,13 +385,10 @@
                 thumb: '../resources/Title_Slides/Perfect_Image_Title.png'
             },
             {
-                id: '1215101424',
-                h: 'a4480af631',
-                isUnderMaintenance: true,
-                isInteractive: true,
-                title: '4. Uniform Guidelines (Under Maintenance)',
-                desc: 'Video upgrade in progress. This topic is temporarily excused from this session.',
-                completed: true,
+                id: '1219580692',
+                title: '4. Uniform Guidelines',
+                desc: 'Suiting up with pride and meeting Team WOW image standards.',
+                completed: false,
                 maxTimeWatched: 0,
                 thumb: '../resources/Title_Slides/Perfect_Image_2_Title.png'
             },
@@ -922,7 +919,7 @@
                 return;
             }
 
-            if (video && (video.isInteractive || index === 3)) {
+            if (video && video.isInteractive) {
                 // Pause any background Vimeo player safely
                 if (player) {
                     try { player.pause(); } catch(e) {}
@@ -942,7 +939,7 @@
                     overlay.style.setProperty('display', 'flex', 'important');
                 }
 
-                initUniformJobAid();
+                initUniformInteractive();
                 return;
             }
 
