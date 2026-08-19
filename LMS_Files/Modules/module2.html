@@ -320,7 +320,7 @@
             {
                 id: '1219580692',
                 title: '4. Uniform Guidelines',
-                desc: 'Suiting up with pride and meeting Team WOW image standards.',
+                desc: 'Wearing the game day jersey with pride.',
                 completed: false,
                 maxTimeWatched: 0,
                 thumb: '../resources/Title_Slides/Perfect_Image_2_Title.png'
@@ -754,10 +754,11 @@
                             <div class="v-card-body" style="display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;">
                                 <div>
                                     <div class="v-card-title">${video.title}</div>
-                                    <div class="v-card-desc" style="margin-bottom: 8px;">Complete all 3 parts below to unlock:</div>
+                                    <div class="v-card-desc" style="margin-bottom: 8px;">${video.desc}</div>
                                     
                                     <!-- 3-Part Checklist Pills -->
                                     <div style="display: flex; flex-direction: column; gap: 4px; background: var(--crust-light); border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 8px 10px; margin-bottom: 12px; font-size: 0.85rem; font-family: 'OneDotCd-Bold';">
+                                        <div style="font-size: 0.76rem; color: var(--crust-burnt); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;">Complete all 3 parts to unlock:</div>
                                         <div style="display: flex; justify-content: space-between; align-items: center;">
                                             <span>🎬 1. Watch Video:</span>
                                             <span style="color: ${isVideoDone ? '#2e7d32' : 'var(--crust-dark)'};">${isVideoDone ? '✓ Watched' : '⏳ Incomplete'}</span>
