@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
     <link rel="stylesheet" href="../Globals/LMS_Master_hitboxes.css">
     <script src="../Globals/lms_feedback.js"></script>
+    <script src="../Globals/question_bank.js"></script>
     <script src="https://player.vimeo.com/api/player.js"></script>
     <style>
         .btn-disabled {
@@ -88,34 +89,7 @@
 
             <!-- STEP 2: KNOWLEDGE CHECK -->
             <div id="content-quiz" class="quiz-container hidden">
-                
-                <!-- Question 1 -->
-                <div class="question-block" id="q1-block">
-                    <p style="color: var(--brand-blue); font-family: 'OneDotCd-Bold'; margin-bottom: 0.5rem;">Question 1 of 3</p>
-                    <div class="quiz-question">According to the training, customer service is more than just doing what?</div>
-                    <button class="quiz-option" onclick="selectOption(this, 1, true)">A. Taking orders</button>
-                    <button class="quiz-option" onclick="selectOption(this, 1, false)">B. Making pizzas quickly</button>
-                    <button class="quiz-option" onclick="selectOption(this, 1, false)">C. Wearing the correct uniform</button>
-                </div>
-
-                <!-- Question 2 -->
-                <div class="question-block hidden" id="q2-block">
-                    <p style="color: var(--brand-blue); font-family: 'OneDotCd-Bold'; margin-bottom: 0.5rem;">Question 2 of 3</p>
-                    <div class="quiz-question">When handling customer concerns, we follow LEADS. What does LEADS stand for?</div>
-                    <button class="quiz-option" onclick="selectOption(this, 2, false)">A. Look, Evaluate, Assess, Deliver, Smile</button>
-                    <button class="quiz-option" onclick="selectOption(this, 2, false)">B. Listen, Engage, Answer, Direct, Serve</button>
-                    <button class="quiz-option" onclick="selectOption(this, 2, true)">C. Listen, Empathize, Apologize, Do, and Stand</button>
-                </div>
-
-                <!-- Question 3 -->
-                <div class="question-block hidden" id="q3-block">
-                    <p style="color: var(--brand-blue); font-family: 'OneDotCd-Bold'; margin-bottom: 0.5rem;">Question 3 of 3</p>
-                    <div class="quiz-question">According to the training, what will customers always remember?</div>
-                    <button class="quiz-option" onclick="selectOption(this, 3, false)">A. Exactly what was said</button>
-                    <button class="quiz-option" onclick="selectOption(this, 3, true)">B. How we made them feel</button>
-                    <button class="quiz-option" onclick="selectOption(this, 3, false)">C. How fast their pizza arrived</button>
-                </div>
-                
+                <div id="quiz-questions-wrapper"></div>
                 <p id="quiz-feedback" style="color: var(--brand-red); font-family: 'OneDotCd-Bold'; margin-top: 1rem; display: none;">Please select the correct answer to continue.</p>
             </div>
 
@@ -317,7 +291,7 @@
                 thumb: '../resources/Title_Slides/Perfect_Image_Title.png'
             },
             {
-                id: '1219580692',
+                id: '1220730023',
                 title: '4. Uniform Guidelines',
                 desc: 'Wearing the game day jersey with pride.',
                 completed: false,
@@ -984,35 +958,89 @@
             }
         }
 
-        // --- QUIZ & STEP LOGIC ---
-        function selectOption(element, questionNumber, isCorrect) {
+        // --- DYNAMIC QUIZ & STEP LOGIC ---
+        let activeQuizQuestions = [];
+
+        function initModule2Quiz() {
+            const wrapper = document.getElementById('quiz-questions-wrapper');
+            if (!wrapper) return;
+            wrapper.innerHTML = '';
+            
+            const bank = (typeof QUESTION_BANK !== 'undefined' && QUESTION_BANK.module2) ? QUESTION_BANK.module2 : [];
+            if (!bank || bank.length === 0) return;
+
+            const mandatoryQ = bank.find(q => q.mandatory);
+            const pool = bank.filter(q => !q.mandatory);
+            
+            // Shuffle remaining questions and select 3
+            const shuffledPool = [...pool].sort(() => 0.5 - Math.random());
+            const selectedPool = shuffledPool.slice(0, 3);
+            
+            // Mandatory LEADS is always included (as Q1), plus 3 rotating questions
+            activeQuizQuestions = mandatoryQ ? [mandatoryQ, ...selectedPool] : selectedPool;
+            
+            activeQuizQuestions.forEach((q, idx) => {
+                const block = document.createElement('div');
+                block.className = `question-block ${idx === 0 ? '' : 'hidden'}`;
+                block.id = `q${idx + 1}-block`;
+                
+                const header = document.createElement('p');
+                header.style.color = 'var(--brand-blue)';
+                header.style.fontFamily = "'OneDotCd-Bold'";
+                header.style.marginBottom = '0.5rem';
+                header.innerText = `Question ${idx + 1} of ${activeQuizQuestions.length}`;
+                block.appendChild(header);
+                
+                const questionTitle = document.createElement('div');
+                questionTitle.className = 'quiz-question';
+                questionTitle.innerText = q.question;
+                block.appendChild(questionTitle);
+                
+                q.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'quiz-option';
+                    btn.innerText = opt.text;
+                    btn.onclick = function() { selectOption(this, idx + 1, opt.correct, q.id); };
+                    block.appendChild(btn);
+                });
+                
+                wrapper.appendChild(block);
+            });
+        }
+
+        function selectOption(element, questionNumber, isCorrect, qId) {
             const block = document.getElementById('q' + questionNumber + '-block');
-            block.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
+            if (block) {
+                block.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
+            }
             element.classList.add('selected');
             
             const nextBtn = document.getElementById('btn-next');
             const feedback = document.getElementById('quiz-feedback');
             
-            if (!userAnswers['q' + questionNumber]) {
-                userAnswers['q' + questionNumber] = [];
+            const key = qId || ('q' + questionNumber);
+            if (!userAnswers[key]) {
+                userAnswers[key] = [];
             }
             const selectedText = element.innerText.trim();
-            if (!userAnswers['q' + questionNumber].includes(selectedText)) {
-                userAnswers['q' + questionNumber].push(selectedText);
+            if (!userAnswers[key].includes(selectedText)) {
+                userAnswers[key].push(selectedText);
             }
             if (isCorrect) {
-                feedback.style.display = 'none';
-                if (questionNumber === 3) {
+                if (feedback) feedback.style.display = 'none';
+                if (questionNumber === activeQuizQuestions.length) {
                     quizPassed = true;
-                    nextBtn.classList.remove('btn-disabled');
+                    if (nextBtn) nextBtn.classList.remove('btn-disabled');
                 } else {
                     setTimeout(() => {
-                        document.getElementById('q' + questionNumber + '-block').classList.add('hidden');
-                        document.getElementById('q' + (questionNumber + 1) + '-block').classList.remove('hidden');
+                        const currentBlock = document.getElementById('q' + questionNumber + '-block');
+                        const nextBlock = document.getElementById('q' + (questionNumber + 1) + '-block');
+                        if (currentBlock) currentBlock.classList.add('hidden');
+                        if (nextBlock) nextBlock.classList.remove('hidden');
                     }, 800);
                 }
             } else {
-                feedback.style.display = 'block';
+                if (feedback) feedback.style.display = 'block';
             }
         }
 
@@ -1112,12 +1140,13 @@
             }, 1500);
         }
 
-        // Initialize video cards and restore saved progress on DOM ready
+        // Initialize video cards, quiz questions, and restore saved progress on DOM ready
         document.addEventListener('DOMContentLoaded', () => {
             loadUniformPartsProgress();
             loadModule2VideoProgress();
             checkUniformRequirements();
             renderVideoCards();
+            initModule2Quiz();
         });
 
         // --- LIVE CLICK INSPECTOR: Click anywhere on the paused video to get exact coordinates ---

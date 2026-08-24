@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1 - Module 5: Recap & Final Sign-Off</title>
+    <link rel="icon" type="image/png" href="../../image/tile_blue.png">
+    <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
+    <link rel="stylesheet" href="../Globals/LMS_Master_hitboxes.css">
+    <script src="../Globals/lms_feedback.js"></script>
+    <script src="../Globals/question_bank.js"></script>
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <style>
+        .classroom-container-wide {
+            max-width: 960px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-top: 6px solid var(--brand-blue);
+        }
+
+        .classroom-content {
+            padding: 2.5rem 2rem;
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .classroom-footer {
+            background: var(--crust-light);
+            padding: 1rem 2rem;
+            border-top: 2px solid var(--crust-med);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* --- Step 1: Video Wrapper --- */
+        .video-wrapper {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16/9;
+            background: #111;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .production-placeholder {
+            text-align: center;
+            color: #fff;
+            padding: 2rem;
+        }
+
+        /* --- Step 2: Knowledge Check --- */
+        .quiz-container {
+            width: 100%;
+            max-width: 680px;
+            text-align: left;
+        }
+
+        .question-block {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quiz-question {
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.35rem;
+            color: var(--crust-deep);
+            margin-bottom: 1.25rem;
+            line-height: 1.35;
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.85rem;
+            background: var(--crust-base);
+            border: 2px solid var(--crust-med);
+            border-radius: 8px;
+            font-family: 'OneDotCd';
+            font-size: 1.1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--dark-blue);
+        }
+
+        .quiz-option:hover {
+            border-color: var(--brand-blue);
+            background: #eef7fc;
+            transform: translateX(4px);
+        }
+
+        .quiz-option.selected {
+            background: var(--brand-blue) !important;
+            color: white !important;
+            border-color: var(--brand-blue) !important;
+            font-weight: bold;
+        }
+
+        /* --- Step 3: Trainer Sign-Off --- */
+        .signoff-card {
+            background: var(--crust-light);
+            border: 2px solid var(--crust-med);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 540px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .pin-input {
+            width: 180px;
+            font-size: 2rem;
+            text-align: center;
+            letter-spacing: 8px;
+            padding: 0.6rem;
+            border: 2px solid var(--brand-blue);
+            border-radius: 8px;
+            font-family: 'OneDotCd-Bold';
+            margin: 1.2rem auto;
+            display: block;
+        }
+
+        .btn-disabled {
+            background: #ccc !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            color: #888 !important;
+            border: none !important;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body style="background-color: var(--crust-light);">
+
+    <!-- UNIFIED BRAND NAVBAR -->
+    <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../../New_Logo_v2.png" alt="Team WOW Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="../lms_dashboard.html#day1" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Back to Day 1
+            </a>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 5: Day 1 Recap & Sign-Off</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Step 1 of 3</span>
+        </div>
+    </header>
+
+    <div class="classroom-container-wide">
+        <div class="classroom-content">
+            
+            <!-- STEP 1: OUTRO VIDEO (OR PLACEHOLDER WHILE RECORDING) -->
+            <div id="content-video" style="width: 100%; text-align: center;">
+                <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 0.5rem;">Day 1 Post-Game Breakdown</h3>
+                <p id="video-status-msg" style="color: var(--crust-burnt); font-size: 1rem; margin-bottom: 1.5rem;">Watch Coach Bobby's Day 1 summary before taking the final quiz.</p>
+                
+                <div class="video-wrapper">
+                    <div id="vimeo-player" style="width: 100%; height: 100%; display: none;"></div>
+                    <div id="video-placeholder" class="production-placeholder">
+                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎬</div>
+                        <h4 style="font-family: 'OneDotCd-Bold'; font-size: 1.4rem; margin: 0 0 0.5rem 0; color: #fff;">Post-Game Video in Production</h4>
+                        <p style="font-family: 'OneDotCd'; color: #ccc; font-size: 1rem; max-width: 500px; margin: 0 auto 1.2rem auto;">
+                            Coach Bobby's Day 1 wrap-up video is currently being recorded. You may proceed directly to the Final Knowledge Check!
+                        </p>
+                        <span style="background: rgba(0, 144, 226, 0.25); color: #70d6ff; border: 1px solid #70d6ff; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-family: 'OneDotCd-Bold';">Ready for Knowledge Check</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: FINAL COMPREHENSIVE KNOWLEDGE CHECK -->
+            <div id="content-quiz" class="quiz-container hidden">
+                <div id="quiz-questions-wrapper"></div>
+                <p id="quiz-feedback" style="color: var(--brand-red); font-family: 'OneDotCd-Bold'; margin-top: 1rem; display: none;">Please select the correct play to continue.</p>
+            </div>
+
+            <!-- STEP 3: TRAINER PIN SIGN-OFF -->
+            <div id="content-signoff" class="signoff-card hidden">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🔐</div>
+                <h3 style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue); font-size: 1.8rem; margin: 0 0 0.5rem 0;">Trainer Authorization</h3>
+                <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin-bottom: 1.2rem; line-height: 1.4;">
+                    Great job completing all online modules and floor experiences for Day 1! Please have your <strong>Shift Runner, GM, or Trainer</strong> enter their PIN below to officially certify your Day 1 completion.
+                </p>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue); font-size: 0.95rem; text-transform: uppercase;">Trainer / Manager PIN</label>
+                    <input type="password" id="trainer-pin-input" class="pin-input" maxlength="4" placeholder="••••" autocomplete="off">
+                    <p id="pin-error-msg" style="color: var(--brand-red); font-family: 'OneDotCd-Bold'; font-size: 0.95rem; margin-top: 0.4rem; display: none;">Invalid Trainer PIN. Please try again.</p>
+                </div>
+
+                <button class="btn" id="btn-verify-pin" onclick="verifyTrainerPin()" style="padding: 0.8rem 2.5rem;">Authorize & Unlock Day 2</button>
+            </div>
+
+            <!-- STEP 4: DAY 1 COMPLETION CELEBRATION -->
+            <div id="content-complete" class="prompt-container hidden" style="text-align: center;">
+                <div class="prompt-icon" style="font-size: 4rem; margin-bottom: 1rem;">🏆</div>
+                <h2 style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 2.4rem; margin-bottom: 0.5rem;">Day 1 Officially Complete!</h2>
+                <p style="font-family: 'OneDotCd'; font-size: 1.2rem; color: var(--crust-deep); max-width: 550px; margin: 0 auto 1.5rem auto; line-height: 1.4;">
+                    Congratulations! You have completed all Day 1 training and received official trainer sign-off. Day 2 is now unlocked on your dashboard.
+                </p>
+                <button class="btn" onclick="returnToDashboard()" style="padding: 0.9rem 2.5rem; background: var(--brand-red); font-size: 1.1rem;">Return to Dashboard</button>
+            </div>
+
+        </div>
+
+        <div class="classroom-footer">
+            <button class="btn btn-outline hidden" id="btn-back" onclick="changeStep(-1)" style="padding: 0.8rem 2rem; width: auto;">Back</button>
+            <div style="flex-grow: 1;"></div>
+            <button class="btn" id="btn-next" onclick="changeStep(1)" style="padding: 0.8rem 2rem; width: auto; margin-top: 0;">Next Step</button>
+        </div>
+
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let videoWatched = true; // Set to true while video is in production
+        let quizPassed = false;
+        let trainerAuthorized = false;
+        let activeQuizQuestions = [];
+
+        const moduleStartTime = Date.now();
+        let userAnswers = {};
+
+        // Vault API script URL
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+
+        // --- MASTER QUIZ INITIALIZATION ---
+        function initFinalQuiz() {
+            const wrapper = document.getElementById('quiz-questions-wrapper');
+            if (!wrapper) return;
+            wrapper.innerHTML = '';
+
+            const bank = (typeof QUESTION_BANK !== 'undefined' && QUESTION_BANK.module5_final) ? QUESTION_BANK.module5_final : [];
+            activeQuizQuestions = bank;
+
+            activeQuizQuestions.forEach((q, idx) => {
+                const block = document.createElement('div');
+                block.className = `question-block ${idx === 0 ? '' : 'hidden'}`;
+                block.id = `q${idx + 1}-block`;
+
+                const header = document.createElement('p');
+                header.style.color = 'var(--brand-blue)';
+                header.style.fontFamily = "'OneDotCd-Bold'";
+                header.style.marginBottom = '0.5rem';
+                header.innerText = `Question ${idx + 1} of ${activeQuizQuestions.length} • ${q.topic || 'Review'}`;
+                block.appendChild(header);
+
+                const questionTitle = document.createElement('div');
+                questionTitle.className = 'quiz-question';
+                questionTitle.innerText = q.question;
+                block.appendChild(questionTitle);
+
+                q.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'quiz-option';
+                    btn.innerText = opt.text;
+                    btn.onclick = function() { selectOption(this, idx + 1, opt.correct, q.id); };
+                    block.appendChild(btn);
+                });
+
+                wrapper.appendChild(block);
+            });
+        }
+
+        function selectOption(element, questionNumber, isCorrect, qId) {
+            const block = document.getElementById('q' + questionNumber + '-block');
+            if (block) {
+                block.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
+            }
+            element.classList.add('selected');
+
+            const nextBtn = document.getElementById('btn-next');
+            const feedback = document.getElementById('quiz-feedback');
+
+            const key = qId || ('q' + questionNumber);
+            if (!userAnswers[key]) {
+                userAnswers[key] = [];
+            }
+            const selectedText = element.innerText.trim();
+            if (!userAnswers[key].includes(selectedText)) {
+                userAnswers[key].push(selectedText);
+            }
+
+            if (isCorrect) {
+                if (feedback) feedback.style.display = 'none';
+                if (questionNumber === activeQuizQuestions.length) {
+                    quizPassed = true;
+                    if (nextBtn) nextBtn.classList.remove('btn-disabled');
+                } else {
+                    setTimeout(() => {
+                        const currentBlock = document.getElementById('q' + questionNumber + '-block');
+                        const nextBlock = document.getElementById('q' + (questionNumber + 1) + '-block');
+                        if (currentBlock) currentBlock.classList.add('hidden');
+                        if (nextBlock) nextBlock.classList.remove('hidden');
+                    }, 650);
+                }
+            } else {
+                if (feedback) feedback.style.display = 'block';
+            }
+        }
+
+        // --- STEP NAVIGATION ---
+        function changeStep(direction) {
+            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+            if (direction === 1 && !isAdmin) {
+                if (currentStep === 1 && !videoWatched) return;
+                if (currentStep === 2 && !quizPassed) {
+                    const fb = document.getElementById('quiz-feedback');
+                    if (fb) fb.style.display = 'block';
+                    return;
+                }
+            }
+            currentStep += direction;
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('content-video').classList.add('hidden');
+            document.getElementById('content-quiz').classList.add('hidden');
+            document.getElementById('content-signoff').classList.add('hidden');
+            document.getElementById('content-complete').classList.add('hidden');
+
+            const btnBack = document.getElementById('btn-back');
+            const btnNext = document.getElementById('btn-next');
+
+            btnBack.classList.remove('hidden');
+            btnNext.classList.remove('hidden');
+
+            if (currentStep === 1) {
+                document.getElementById('content-video').classList.remove('hidden');
+                document.getElementById('step-counter').innerText = 'Step 1 of 3';
+                btnBack.classList.add('hidden');
+                if (!videoWatched) btnNext.classList.add('btn-disabled');
+            } 
+            else if (currentStep === 2) {
+                document.getElementById('content-quiz').classList.remove('hidden');
+                document.getElementById('step-counter').innerText = 'Step 2 of 3';
+                if (!quizPassed) btnNext.classList.add('btn-disabled');
+            } 
+            else if (currentStep === 3) {
+                document.getElementById('content-signoff').classList.remove('hidden');
+                document.getElementById('step-counter').innerText = 'Step 3 of 3';
+                btnNext.classList.add('hidden'); // Verification button triggers progression
+            }
+            else if (currentStep === 4) {
+                document.getElementById('content-complete').classList.remove('hidden');
+                document.getElementById('step-counter').innerText = 'Certified';
+                btnBack.classList.add('hidden');
+                btnNext.classList.add('hidden');
+            }
+        }
+
+        // --- TRAINER PIN VERIFICATION ---
+        function verifyTrainerPin() {
+            const pinInput = document.getElementById('trainer-pin-input');
+            const errorMsg = document.getElementById('pin-error-msg');
+            const verifyBtn = document.getElementById('btn-verify-pin');
+            const enteredPin = pinInput.value.trim();
+
+            if (!enteredPin) {
+                errorMsg.innerText = "Please enter your Trainer / Manager PIN.";
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+
+            // Instant Admin / Test Bypass PINs
+            if (isAdmin || enteredPin === '9999' || enteredPin === '1234') {
+                handleSuccessfulSignoff("Executive / Test Sign-Off");
+                return;
+            }
+
+            verifyBtn.disabled = true;
+            verifyBtn.innerText = "Verifying PIN...";
+            errorMsg.style.display = 'none';
+
+            const verifyUrl = `${AUTH_SCRIPT_URL}?action=verifyTrainerPin&market=${encodeURIComponent(market)}&pin=${encodeURIComponent(enteredPin)}&traineeId=${encodeURIComponent(id)}`;
+
+            fetch(verifyUrl, { method: 'GET', credentials: 'omit' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.success) {
+                        handleSuccessfulSignoff(data.trainerName || "Trainer Authorized");
+                    } else {
+                        errorMsg.innerText = data.error || "Invalid Trainer PIN. Please ask your GM or Trainer.";
+                        errorMsg.style.display = 'block';
+                        verifyBtn.disabled = false;
+                        verifyBtn.innerText = "Authorize & Unlock Day 2";
+                    }
+                })
+                .catch(err => {
+                    console.error("Trainer PIN check error:", err);
+                    // Fallback to local offline approval if network blip
+                    errorMsg.innerText = "Network issue verifying PIN. Please try again.";
+                    errorMsg.style.display = 'block';
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerText = "Authorize & Unlock Day 2";
+                });
+        }
+
+        function handleSuccessfulSignoff(trainerIdentifier) {
+            trainerAuthorized = true;
+            sendProgressUpdate('Day 1 Mod 5', 'Completed', JSON.stringify({
+                quizAnswers: userAnswers,
+                signedOffBy: trainerIdentifier,
+                completedAt: new Date().toISOString()
+            }));
+
+            localStorage.setItem('mod5_complete', 'true');
+            currentStep = 4;
+            updateUI();
+        }
+
+        function sendProgressUpdate(moduleName, status = "Completed", payloadAnswers = null) {
+            if (localStorage.getItem('tw_admin_mode') === 'true') {
+                console.log("[ADMIN MODE] Progress tracking bypassed for executive view.");
+                return;
+            }
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            
+            if (!market || !id) return;
+            
+            const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            const answersToEncode = payloadAnswers ? payloadAnswers : JSON.stringify(userAnswers);
+            const answersStr = encodeURIComponent(answersToEncode);
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${encodeURIComponent(status)}`;
+            
+            fetch(url, { method: 'GET', credentials: 'omit' })
+                .then(r => r.json())
+                .then(res => console.log(`Cloud sync: ${moduleName} logged!`))
+                .catch(e => console.error("Error logging progress:", e));
+        }
+
+        function returnToDashboard() {
+            window.location.href = '../lms_dashboard.html#day1';
+        }
+
+        // Initialize quiz on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initFinalQuiz();
+            updateUI();
+        });
+    </script>
+</body>
+</html>

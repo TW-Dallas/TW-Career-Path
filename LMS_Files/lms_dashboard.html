@@ -868,14 +868,14 @@
                 </div>
 
                 <!-- Card 5 (Coming Soon) -->
-                <div class="course-card locked" id="card-mod5">
+                <div class="course-card locked" id="card-mod5" style="border-top-color: #f59e0b;">
                     <div class="course-image" style="background-image: url('../image/photo_gm.webp');">
-                        <div class="course-badge" style="color: #888;">MODULE 5</div>
+                        <div class="course-badge" style="color: #d97706; font-weight: bold;">COMING SOON</div>
                     </div>
                     <div class="course-content">
-                        <div class="course-title">Recap</div>
-                        <div class="course-meta">Trainer Sign-Off (Unlock Day 2)</div>
-                        <button class="btn-small" style="background: #ccc; color: #888; cursor: not-allowed;" disabled>Coming Soon</button>
+                        <div class="course-title">Day 1 Recap & Sign-Off</div>
+                        <div class="course-meta" style="color: #666; font-size: 0.85rem; line-height: 1.3;">In Production • Not required for Day 1 completion</div>
+                        <button class="btn-small" style="background: #fef3c7; color: #b45309; border: 1px solid #fde68a; cursor: default;" disabled>Coming Soon</button>
                     </div>
                 </div>
 
@@ -1934,21 +1934,26 @@
     }
 
     function syncProgressBars() {
-        // 1. Tally up Day 1 from the Backpack
-        const day1Keys = ['mod1_complete', 'mod2_complete', 'mod3_complete', 'mod4_complete', 'mod5_complete'];
+        // 1. Tally up Day 1 from active modules (Mod 1-4 active; Mod 5 in production)
+        const day1ActiveKeys = ['mod1_complete', 'mod2_complete', 'mod3_complete', 'mod4_complete'];
         let day1Count = 0;
         
-        day1Keys.forEach(key => {
+        day1ActiveKeys.forEach(key => {
             if (localStorage.getItem(key) === 'true') day1Count++;
         });
+
+        // If mod5 is also complete, keep count full
+        if (localStorage.getItem('mod5_complete') === 'true' && day1Count < 4) {
+            day1Count = 4;
+        }
 
         let totalCompleted = day1Count; 
 
         // 2. Calculate the Percentages
-        const TOTAL_DAY1_MODULES = 5;
+        const TOTAL_DAY1_MODULES = 4; // Active modules for Day 1
         const TOTAL_COURSE_MODULES = 15; 
 
-        let day1Percent = Math.round((day1Count / TOTAL_DAY1_MODULES) * 100);
+        let day1Percent = Math.min(100, Math.round((day1Count / TOTAL_DAY1_MODULES) * 100));
         let masterPercent = Math.round((totalCompleted / TOTAL_COURSE_MODULES) * 100);
 
         // 3. Paint the Master Bar
