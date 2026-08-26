@@ -696,6 +696,32 @@
                 closeTrainerPinModal();
             }
         });
+
+        // --- DEEP-LINKING / HASH ROUTING ---
+        function handleHashRouting() {
+            const hash = window.location.hash.toLowerCase().replace('#', '').trim();
+            if (!hash) return;
+            if (hash === 'categories' || hash === 'resources') {
+                navigateTo('categories');
+            } else if (hash === 'training') {
+                openCategory('training', 'Training Center');
+            } else if (hash === 'managers' || hash === 'gm') {
+                openCategory('managers', 'Manager Resources');
+            } else if (hash === 'drivers') {
+                openCategory('drivers', 'Driver Resources');
+            } else if (hash === 'insiders' || hash === 'csr') {
+                openCategory('insiders', 'Insider Resources');
+            } else if (hash === 'newhire') {
+                openCategory('newhire', 'New Hire Onboarding');
+            } else if (hash === 'hr') {
+                openCategory('hr', 'Human Resources');
+            } else if (hash === 'lobby') {
+                navigateTo('lobby');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', handleHashRouting);
+        window.addEventListener('hashchange', handleHashRouting);
     </script>
 
     <!-- TRAINER PIN FORM MODAL (MANUAL TRIGGER) -->
