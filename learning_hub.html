@@ -720,7 +720,10 @@
             }
         }
 
+        // Run immediately upon script execution + event listeners
+        handleHashRouting();
         window.addEventListener('DOMContentLoaded', handleHashRouting);
+        window.addEventListener('load', handleHashRouting);
         window.addEventListener('hashchange', handleHashRouting);
     </script>
 
