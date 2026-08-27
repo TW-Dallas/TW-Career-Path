@@ -59,10 +59,17 @@
                     <!-- 3. BOTTOM-RIGHT SHIELD: Blocks only the "vimeo" logo link in the bottom control pill -->
                     <div style="position: absolute; bottom: 0; right: 0; width: 85px; height: 50px; z-index: 10; cursor: default;"></div>
                     
+                    <!-- STREAM LOADER & WATCHDOG -->
+                    <div id="video-stream-loader" class="video-stream-loader">
+                        <img src="../resources/Title_Slides/tow_loader.png" alt="Team WOW" class="tw-loader-logo">
+                        <p id="tw-loader-status" class="tw-loader-text">Connecting to training stream...</p>
+                        <button type="button" id="tw-stream-retry-btn" class="tw-retry-btn" onclick="retryVideoStream()">🔄 Tap to Reload Stream</button>
+                    </div>
+
                     <!-- The Vimeo Player will be loaded here -->
                     <div id="vimeo-player" style="width: 100%; height: 100%;"></div>
                 </div>
-                <p style="color: var(crust-burnt); font-size: 0.9rem;">You must watch the entire video to proceed.</p>
+                <p style="color: var(--crust-burnt); font-size: 0.9rem;">You must watch the entire video to proceed.</p>
             </div>
 
             <!-- STEP 2: KNOWLEDGE CHECK -->
@@ -128,7 +135,7 @@
         const moduleStartTime = Date.now(); // Starts the timer immediately on load
         let userAnswers = {};               // Collects options as they answer the quiz
 
-        // --- VIMEO PLAYER INITIALIZATION ---
+        // --- VIMEO PLAYER INITIALIZATION & STREAM WATCHDOG ---
         const vimeoVideoId = '1210683390'; 
 
         const options = {
@@ -138,54 +145,108 @@
             autoplay: false
         };
 
-        player = new Vimeo.Player('vimeo-player', options);
+        let streamWatchdog = null;
+
+        function hideStreamLoader() {
+            if (streamWatchdog) clearTimeout(streamWatchdog);
+            const loader = document.getElementById('video-stream-loader');
+            if (loader) {
+                loader.classList.add('loaded');
+                setTimeout(() => { loader.style.display = 'none'; }, 600);
+            }
+        }
+
+        function startStreamWatchdog() {
+            if (streamWatchdog) clearTimeout(streamWatchdog);
+            streamWatchdog = setTimeout(() => {
+                const status = document.getElementById('tw-loader-status');
+                const retryBtn = document.getElementById('tw-stream-retry-btn');
+                if (status) status.innerText = 'Connection running slow...';
+                if (retryBtn) retryBtn.style.display = 'inline-block';
+            }, 7000);
+        }
 
         let maxTimeWatched = 0;
         let isEnforcingHold = false;
 
-        player.ready().then(() => {
-            player.setVolume(1);
-        });
+        function initVimeoPlayer() {
+            startStreamWatchdog();
+            player = new Vimeo.Player('vimeo-player', options);
 
-        // Monitor playing position continuously to keep track of farthest progress
-        player.on('timeupdate', function(data) {
-            if (isEnforcingHold) return;
-            
-            // Increment maximum allowed time as video plays
-            if (data.seconds > maxTimeWatched) {
-                maxTimeWatched = data.seconds;
-            }
-        });
+            player.ready().then(() => {
+                player.setVolume(1);
+                hideStreamLoader();
+            }).catch(err => {
+                console.warn("Vimeo ready error:", err);
+            });
 
-        // Catch forward seeking attempts and snap back to furthest watched progress
-        player.on('seeked', function(data) {
-            if (localStorage.getItem('tw_admin_mode') === 'true') return; // Executive Scrubbing Unlocked
-            if (isEnforcingHold) return;
-            
-            if (data.seconds > maxTimeWatched + 2.0) {
-                isEnforcingHold = true;
-                player.setCurrentTime(maxTimeWatched).then(() => {
-                    setTimeout(() => { isEnforcingHold = false; }, 200);
-                }).catch(() => {
-                    isEnforcingHold = false;
-                });
-            }
-        });
+            player.on('play', function() {
+                hideStreamLoader();
+            });
 
-        // Set completed state on finish
-        player.on('ended', function() {
-            videoWatched = true;
-            const nextBtn = document.getElementById('btn-next');
-            if (nextBtn) {
-                nextBtn.classList.remove('btn-disabled');
+            player.on('loaded', function() {
+                hideStreamLoader();
+            });
+
+            // Monitor playing position continuously to keep track of farthest progress
+            player.on('timeupdate', function(data) {
+                if (isEnforcingHold) return;
+                if (data.seconds > maxTimeWatched) {
+                    maxTimeWatched = data.seconds;
+                }
+            });
+
+            // Catch forward seeking attempts and snap back to furthest watched progress
+            player.on('seeked', function(data) {
+                if (localStorage.getItem('tw_admin_mode') === 'true') return; // Executive Scrubbing Unlocked
+                if (isEnforcingHold) return;
+                
+                if (data.seconds > maxTimeWatched + 2.0) {
+                    isEnforcingHold = true;
+                    player.setCurrentTime(maxTimeWatched).then(() => {
+                        setTimeout(() => { isEnforcingHold = false; }, 200);
+                    }).catch(() => {
+                        isEnforcingHold = false;
+                    });
+                }
+            });
+
+            // Set completed state on finish
+            player.on('ended', function() {
+                videoWatched = true;
+                const nextBtn = document.getElementById('btn-next');
+                if (nextBtn) {
+                    nextBtn.classList.remove('btn-disabled');
+                }
+                
+                const statusText = document.querySelector('#content-video p');
+                if (statusText) {
+                    statusText.innerText = "Video Complete!";
+                    statusText.style.color = "#4CAF50";
+                }
+            });
+        }
+
+        function retryVideoStream() {
+            const status = document.getElementById('tw-loader-status');
+            const retryBtn = document.getElementById('tw-stream-retry-btn');
+            const loader = document.getElementById('video-stream-loader');
+            if (loader) {
+                loader.classList.remove('loaded');
+                loader.style.display = 'flex';
             }
-            
-            const statusText = document.querySelector('#content-video p');
-            if (statusText) {
-                statusText.innerText = "Video Complete!";
-                statusText.style.color = "#4CAF50";
+            if (status) status.innerText = 'Reconnecting to video stream...';
+            if (retryBtn) retryBtn.style.display = 'none';
+
+            const playerContainer = document.getElementById('vimeo-player');
+            if (playerContainer) {
+                playerContainer.innerHTML = '';
             }
-        });
+            initVimeoPlayer();
+        }
+
+        // Initialize on load
+        initVimeoPlayer();
 
         function selectOption(element, questionNumber, isCorrect) {
             const block = document.getElementById('q' + questionNumber + '-block');

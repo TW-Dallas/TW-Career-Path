@@ -123,9 +123,13 @@
                 <!-- 2. RESPONSIVE RIGHT SHIELD (Top-Right Buttons Cover) -->
                 <div style="position: absolute; top: 0; right: 0; width: 90px; height: 90px; z-index: 1000; cursor: default;"></div>
                 
-                <!-- 3. BOTTOM-RIGHT SHIELD -->
-                <div style="position: absolute; bottom: 0; right: 0; width: 85px; height: 50px; z-index: 1000; cursor: default;"></div>
-                
+                <!-- STREAM LOADER & WATCHDOG -->
+                <div id="video-stream-loader" class="video-stream-loader">
+                    <img src="../resources/Title_Slides/tow_loader.png" alt="Team WOW" class="tw-loader-logo">
+                    <p id="tw-loader-status" class="tw-loader-text">Connecting to training stream...</p>
+                    <button type="button" id="tw-stream-retry-btn" class="tw-retry-btn" onclick="retryModule2Stream()">🔄 Tap to Reload Stream</button>
+                </div>
+
                 <!-- Vimeo Player Target -->
                 <div id="vimeo-player" style="width: 100%; height: 100%;"></div>
 
@@ -610,6 +614,15 @@
             document.getElementById('trash-count-display-1').innerText = '9';
             document.getElementById('trash-count-display-2').innerText = '9';
 
+            const loader = document.getElementById('video-stream-loader');
+            if (loader) {
+                loader.classList.remove('loaded');
+                loader.style.display = 'flex';
+                document.getElementById('tw-loader-status').innerText = 'Connecting to training stream...';
+                document.getElementById('tw-stream-retry-btn').style.display = 'none';
+            }
+            startStreamWatchdog();
+
             const playerOptions = {
                 id: video.id,
                 responsive: true,
@@ -631,6 +644,33 @@
                 }).catch(error => {
                     console.error("Failed to load Vimeo video:", error);
                 });
+            }
+        }
+
+        let streamWatchdog = null;
+
+        function hideStreamLoader() {
+            if (streamWatchdog) clearTimeout(streamWatchdog);
+            const loader = document.getElementById('video-stream-loader');
+            if (loader) {
+                loader.classList.add('loaded');
+                setTimeout(() => { loader.style.display = 'none'; }, 600);
+            }
+        }
+
+        function startStreamWatchdog() {
+            if (streamWatchdog) clearTimeout(streamWatchdog);
+            streamWatchdog = setTimeout(() => {
+                const status = document.getElementById('tw-loader-status');
+                const retryBtn = document.getElementById('tw-stream-retry-btn');
+                if (status) status.innerText = 'Connection running slow...';
+                if (retryBtn) retryBtn.style.display = 'inline-block';
+            }, 7000);
+        }
+
+        function retryModule2Stream() {
+            if (activeVideoIndex !== -1) {
+                playVideo(activeVideoIndex);
             }
         }
 
@@ -803,6 +843,20 @@
         function attachVimeoEvents() {
             player.ready().then(() => { 
                 player.setVolume(1); 
+                hideStreamLoader();
+                Promise.all([player.getVideoWidth(), player.getVideoHeight()]).then(([w, h]) => {
+                    if (w && h) {
+                        const aspectPct = (h / w) * 100;
+                        const wrapper = document.querySelector('.video-wrapper-inner');
+                        if (wrapper) wrapper.style.paddingBottom = aspectPct + '%';
+                    }
+                }).catch(e => {});
+            }).catch(err => {
+                console.warn("Vimeo ready error:", err);
+            });
+
+            player.on('loaded', function() {
+                hideStreamLoader();
                 Promise.all([player.getVideoWidth(), player.getVideoHeight()]).then(([w, h]) => {
                     if (w && h) {
                         const aspectPct = (h / w) * 100;
@@ -812,14 +866,8 @@
                 }).catch(e => {});
             });
 
-            player.on('loaded', function() {
-                Promise.all([player.getVideoWidth(), player.getVideoHeight()]).then(([w, h]) => {
-                    if (w && h) {
-                        const aspectPct = (h / w) * 100;
-                        const wrapper = document.querySelector('.video-wrapper-inner');
-                        if (wrapper) wrapper.style.paddingBottom = aspectPct + '%';
-                    }
-                }).catch(e => {});
+            player.on('play', function() {
+                hideStreamLoader();
             });
 
             player.on('timeupdate', function(data) {

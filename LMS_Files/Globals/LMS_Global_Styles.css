@@ -1184,3 +1184,73 @@
         border: 4px solid var(--brand-blue);
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
+
+    /* --- TEAM WOW VIDEO STREAM LOADER & WATCHDOG --- */
+    .video-stream-loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, #001a33 0%, #000c1a 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 50;
+        transition: opacity 0.5s ease;
+        padding: 20px;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .video-stream-loader.loaded {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .tw-loader-logo {
+        width: 120px;
+        max-width: 35%;
+        height: auto;
+        animation: twPulse 2s ease-in-out infinite;
+        filter: drop-shadow(0 0 16px rgba(0, 144, 226, 0.7));
+        user-select: none;
+    }
+
+    @keyframes twPulse {
+        0% { transform: scale(0.95); filter: drop-shadow(0 0 8px rgba(0, 144, 226, 0.4)); opacity: 0.88; }
+        50% { transform: scale(1.05); filter: drop-shadow(0 0 24px rgba(0, 144, 226, 0.95)) drop-shadow(0 0 35px rgba(227, 24, 55, 0.5)); opacity: 1; }
+        100% { transform: scale(0.95); filter: drop-shadow(0 0 8px rgba(0, 144, 226, 0.4)); opacity: 0.88; }
+    }
+
+    .tw-loader-text {
+        margin-top: 15px;
+        color: #dbeafe;
+        font-family: 'Subhead2', sans-serif;
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .tw-retry-btn {
+        display: none;
+        margin-top: 14px;
+        background: var(--brand-red, #e31837);
+        color: #ffffff;
+        border: 2px solid rgba(255,255,255,0.4);
+        border-radius: 25px;
+        padding: 10px 22px;
+        font-family: 'Subhead2', sans-serif;
+        font-size: 0.95rem;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(227, 24, 55, 0.5);
+        transition: all 0.2s ease;
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    .tw-retry-btn:hover {
+        transform: scale(1.04);
+        background: #b7122b;
+        border-color: #ffffff;
+    }
