@@ -14,6 +14,11 @@
             font-weight: normal;
         }
         @font-face {
+            font-family: 'Subhead1';
+            src: url('fonts/Dominos Sans Subhead 1.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
             font-family: 'OneDotCd-Bold';
             src: url('fonts/Dominos Sans Bold.ttf') format('truetype');
             font-weight: bold;
@@ -174,11 +179,12 @@
         }
 
         .card-title {
-            font-family: 'OneDotCd-Bold';
-            font-size: 1.8rem;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 1.7rem;
             color: var(--dark-blue);
             margin-bottom: 0.5rem;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .card-desc {
@@ -192,7 +198,7 @@
             color: white;
             padding: 0.8rem 2rem;
             border-radius: 50px;
-            font-family: 'OneDotCd-Bold';
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
             text-decoration: none;
             transition: var(--transition);
             border: none;
@@ -223,10 +229,11 @@
         }
 
         .section-title {
-            font-family: 'OneDotCd-Bold';
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
             font-size: 2rem;
             color: var(--dark-blue);
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .resource-grid {
@@ -258,11 +265,12 @@
         }
 
         .res-title {
-            font-family: 'OneDotCd-Bold';
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
             font-size: 1.3rem;
             color: var(--crust-deep);
             margin-bottom: 0.5rem;
-            line-height: 1.2;
+            line-height: 1.25;
+            font-weight: normal;
         }
 
         .res-desc {
@@ -409,12 +417,12 @@
                 </div>
             </div>
         
-            <!-- Insiders (CSRs) -->
-            <div class="lobby-card" onclick="openCategory('insiders', 'Insider Resources')">
+            <!-- Product Guides (CSRs) -->
+            <div class="lobby-card" onclick="openCategory('insiders', 'Product Guides')">
                 <div class="card-image-area" style="background-image: url('image/photo_csr.jpg'); background-color: #eee;"></div>
                 <div class="card-content">
-                    <div class="card-title">Insiders (CSR)</div>
-                    <div class="card-desc">Scripts, Makeline Standards, Oven Tending.</div>
+                    <div class="card-title">Product Guides</div>
+                    <div class="card-desc">Build Guides, Makeline Standards, RTU Sauces.</div>
                 </div>
             </div>
 
@@ -481,6 +489,10 @@
                  link: 'resources/gm/Dough_Management_Tool.pdf' },
             { id: 4, category: 'managers', type: 'PDF', title: 'Product Consistency Changes', desc: 'Information about new product consistency changes.', 
                  link: 'resources/gm/Changes_Product%20Consistency.pdf' },
+            { id: 16, category: 'managers', type: 'PDF', title: 'OA Standards 2026', desc: '2026 Updated Operations Assessment Guidelines', 
+                 link: 'resources/training/2026_OA_Guide.pdf' },
+            { id: 17, category: 'managers', type: 'Video', title: 'Pizza Grading Tool Tutorial', desc: 'Information regarding use of the new Pizza Grading tool.', 
+                 link: 'https://www.youtube.com/embed/yeveh8NcXNw?si=z7fHrTjd6pKJ27If' },
             
             // DRIVERS
             { id: 5, category: 'drivers', type: 'PDF', title: 'Delivey Expert App FAQ', desc: 'Job Aid for the Delivery Expert App.', 
@@ -488,7 +500,7 @@
             { id: 6, category: 'drivers', type: 'Link', title: 'Drivosity Points', desc: 'See how many points you have. Speak with a manager to redeem points for prizes!', 
                  link: 'https://team-wow-hr.com/drivosity-rewards.html' },
             
-            // INSIDERS
+            // PRODUCT GUIDES (CSR)
             { id: 7, category: 'insiders', type: 'PDF', title: 'Influencer Pizza Build Job Aid', desc: 'Build information for the influencer pizzas being promoted during the Best Deal Ever 4.0 campaign.', 
                  link: 'resources/csr/BDE_Builds.pdf' },
             { id: 8, category: 'insiders', type: 'PDF', title: 'Comprehensive Product Build Guide', desc: 'Job aids for makeline products.', 
@@ -496,11 +508,13 @@
             { id: 9, category: 'insiders', type: 'Image', title: 'Toppings Codes', desc: 'English and Spanish Toppings Codes.', 
                  link: 'resources/csr/toppings.jpg' },
             { id: 10, category: 'insiders', type: 'Video', title: 'Parmesan Stuff Crust Tutorial', desc: 'Step-by-step guide covering how to make the new Parmesan Stuffed Crust pizza.', 
-                link: 'https://www.youtube.com/embed/QNENO4eDkKo?si=bS5XbuTSgf5f0id7' },
+                 link: 'https://www.youtube.com/embed/QNENO4eDkKo?si=bS5XbuTSgf5f0id7' },
             { id: 11, category: 'insiders', type: 'PDF', title: 'Pizza Procedures', desc: 'Job aids for pizza making.', 
                  link: 'resources/csr/Pizza_Procedures.pdf' },
             { id: 12, category: 'insiders', type: 'PDF', title: 'RTU Sauce Procedures', desc: 'Job aids for RTU sauce prep & use.', 
                  link: 'resources/csr/RTU_Sauce_Procedures.pdf' },
+            { id: 13, category: 'insiders', type: 'Video', title: 'Sandwich and Lava Cakes Update', desc: 'Information on the updates to sandwiches and Lava Cakes, as well as the elimination of Loaded Tots.', 
+                 link: 'https://www.youtube.com/embed/t42Cj7v7MGg' },
 
             // TRAINING
             { id: 21, category: 'training', type: 'PDF', title: 'New Hire Training Program FAQ & Visual Guide', desc: 'Printable 2-page guide covering onboarding FAQs, visual credential login aids, and QR codes for the Training Hub & Trainer PIN generator.', 
@@ -509,16 +523,6 @@
                  link: 'resources/training/New%20Hire%20Trainer%20Packet%20-%20Day%201.pdf' },
             { id: 23, category: 'training', type: 'PDF', title: 'New Hire Trainee Packet - Day 1', desc: 'Day 1 onboarding workbook, learning checkpoints, and notes for new team members.', 
                  link: 'resources/training/New%20Hire%20Trainee%20Packet%20-%20Day%201.pdf' },
-            { id: 13, category: 'training', type: 'Video', title: 'Sanwich and Lava Cakes Update', desc: 'This video contains information on the updates to sandwiches and Lava Cakes, as well as the elimination of Loaded Tots.', 
-                 link: 'https://www.youtube.com/embed/t42Cj7v7MGg' },
-            { id: 14, category: 'training', type: 'PDF', title: 'Influencer Pizza Build Job Aid', desc: 'Build information for the influencer pizzas being promoted during the Best Deal Ever 4.0 campaign.', 
-                 link: 'resources/csr/BDE_Builds.pdf' },
-            { id: 15, category: 'training', type: 'PDF', title: 'New Hire Training Packet', desc: 'Comprehensive checklist to aid in new hire training.', 
-                 link: 'resources/training/New%20Hire%20In-Store%20Training%20Packet%202025.pdf' },
-            { id: 16, category: 'training', type: 'PDF', title: 'OA Standards 2026', desc: '2026 Updated Operations Assessment Guidelines', 
-                 link: 'resources/training/2026_OA_Guide.pdf' },
-            { id: 17, category: 'training', type: 'Video', title: 'Pizza Grading Tool Tutorial', desc: 'Information regarding use of the new Pizza Grading tool.', 
-                 link: 'https://www.youtube.com/embed/yeveh8NcXNw?si=z7fHrTjd6pKJ27If' },
 
              // NEW HIRE
             { id: 18, category: 'newhire', type: 'PDF', title: 'New Hire Training Packet', desc: 'Information packet for all new hires.', 
@@ -709,8 +713,8 @@
                 openCategory('managers', 'Manager Resources');
             } else if (hash === 'drivers') {
                 openCategory('drivers', 'Driver Resources');
-            } else if (hash === 'insiders' || hash === 'csr') {
-                openCategory('insiders', 'Insider Resources');
+            } else if (hash === 'insiders' || hash === 'csr' || hash === 'products' || hash === 'product-guides') {
+                openCategory('insiders', 'Product Guides');
             } else if (hash === 'newhire') {
                 openCategory('newhire', 'New Hire Onboarding');
             } else if (hash === 'hr') {
