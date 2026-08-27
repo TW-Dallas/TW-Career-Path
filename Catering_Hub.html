@@ -1358,13 +1358,14 @@ function renderList() {
         const searchInput = document.getElementById('orderSearchInput');
         const searchQuery = searchInput ? searchInput.value.trim().toLowerCase() : "";
 
-        // --- NEW: Calculate 10-Day Range relative to local midnight ---
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
         const tenDaysFromNow = new Date();
         tenDaysFromNow.setDate(today.getDate() + 10);
         tenDaysFromNow.setHours(23, 59, 59, 999);
+
+        const sevenDaysAgo = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
 
         // Helper to parse dates locally and avoid UTC offset shifts
         const parseToLocalDate = (dateVal) => {
@@ -1396,24 +1397,53 @@ function renderList() {
         let sortedOrders = [...orders];
 
         if (searchQuery !== "") {
+            const cleanQuery = searchQuery.toLowerCase().trim();
+            const numQuery = cleanQuery.replace(/[$,]/g, '').trim();
+            const poQuery = cleanQuery.replace(/^po\s*#?\s*:?\s*/i, '').trim();
+
             sortedOrders = sortedOrders.filter(o => {
                 const schoolNameStr = (o.schoolName || "").toString().toLowerCase();
                 const coordNameStr = (o.coordinatorName || "").toString().toLowerCase();
                 const storeNumStr = (o.storeNum || "").toString().toLowerCase();
-                const localDateStr = o.date ? new Date(o.date).toLocaleDateString() : "";
+                const localDateStr = o.date ? parseToLocalDate(o.date).toLocaleDateString() : "";
+                const rawDateStr = (o.date || "").toString().toLowerCase();
                 const poStatusStr = getPoStatusText(o).toLowerCase();
-                const poNumStr = (o.poNum || "").toString().toLowerCase();           // <-- ADDED
-                const totalCostStr = (o.totalCost || "").toString().toLowerCase();   // <-- ADDED
-                
-                return (
-                    schoolNameStr.includes(searchQuery) ||
-                    coordNameStr.includes(searchQuery) ||
-                    storeNumStr.includes(searchQuery) ||
-                    localDateStr.includes(searchQuery) ||
-                    poStatusStr.includes(searchQuery) ||
-                    poNumStr.includes(searchQuery) ||                                 // <-- ADDED
-                    totalCostStr.includes(searchQuery)                                // <-- ADDED
+                const poNumStr = (o.poNum || "").toString().toLowerCase();
+
+                // Total cost matching (handle raw number, formatted currency, decimals)
+                const rawCost = (o.totalCost !== undefined && o.totalCost !== null) ? o.totalCost.toString() : "";
+                const cleanCost = rawCost.replace(/[$,]/g, '').trim();
+                const numCostVal = parseFloat(cleanCost);
+                const isCostMatch = cleanQuery !== "" && (
+                    rawCost.toLowerCase().includes(cleanQuery) ||
+                    cleanCost.includes(cleanQuery) ||
+                    (numQuery !== "" && cleanCost.includes(numQuery)) ||
+                    (!isNaN(numCostVal) && !isNaN(parseFloat(numQuery)) && numCostVal === parseFloat(numQuery))
                 );
+
+                // PO matching (handle "PO# 1234", "1234", etc.)
+                const isPoMatch = cleanQuery !== "" && (
+                    poNumStr.includes(cleanQuery) ||
+                    (poQuery !== "" && poNumStr.includes(poQuery))
+                );
+
+                return (
+                    schoolNameStr.includes(cleanQuery) ||
+                    coordNameStr.includes(cleanQuery) ||
+                    storeNumStr.includes(cleanQuery) ||
+                    localDateStr.includes(cleanQuery) ||
+                    rawDateStr.includes(cleanQuery) ||
+                    poStatusStr.includes(cleanQuery) ||
+                    isPoMatch ||
+                    isCostMatch
+                );
+            });
+        } else {
+            // Default view when not searching: Show upcoming orders and past orders from the last 7 days (1 week ago)
+            sortedOrders = sortedOrders.filter(o => {
+                if (!o.date) return true;
+                const orderDate = parseToLocalDate(o.date);
+                return orderDate >= sevenDaysAgo;
             });
         }
 

@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 4: Order Entry Practice (Stage 4)</title>
-  
-<!-- LINK TO YOUR GLOBALS -->
-<link rel="icon" type="image/png" href="../image/tile_blue.png">
-<link rel="stylesheet" href="Globals/LMS_Global_Styles.css">  
-<link rel="stylesheet" href="Globals/LMS_Master_hitboxes.css">
-<script src="Globals/lms_feedback.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4: Order Entry Practice (Stage 4)</title>
+
+    <!-- LINK TO YOUR GLOBALS -->
+    <link rel="icon" type="image/png" href="../image/tile_blue.png">
+    <link rel="stylesheet" href="Globals/LMS_Global_Styles.css">
+    <link rel="stylesheet" href="Globals/LMS_Master_hitboxes.css">
+    <script src="Globals/lms_feedback.js"></script>
     <style>
         /* Disables red arrows on Stage 4 page only */
         .hitbox::before {
@@ -17,6 +18,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Mobile Blocker -->
     <div id="mobile-blocker">
@@ -25,26 +27,33 @@
     </div>
 
     <!-- UNIFIED MODULE BRAND NAVBAR (POS SIMULATOR) -->
-    <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box;">
+    <header
+        style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box;">
         <div style="display: flex; align-items: center; gap: 20px;">
             <img src="../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
-            <a href="lms_dashboard.html#day1" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+            <a href="lms_dashboard.html#day1" class="back-link"
+                style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;"
+                onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
                 &#8592; Back to Day 1
             </a>
         </div>
-        
+
         <div style="display: flex; align-items: center; gap: 15px;">
-            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 4: Order Entry Practice (Stage 4)</span>
-            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Practice Simulator</span>
+            <span
+                style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module
+                4: Order Entry Practice (Stage 4)</span>
+            <span id="step-counter"
+                style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Practice
+                Simulator</span>
         </div>
     </header>
 
     <!-- Main Wrapper -->
     <div id="simulator-wrapper">
-        
+
         <!-- LEFT: Instructions Panel -->
         <div id="instruction-panel">
-            
+
             <!-- Hidden Audio Elements -->
             <audio id="global-audio-player"></audio>
 
@@ -53,7 +62,7 @@
                 <div class="audio-header">
                     <span class="audio-pulse-indicator"></span> Live Audio Call
                 </div>
-                
+
                 <!-- Dynamic Track Stack dynamically generated in JS -->
                 <div id="audio-track-container"></div>
 
@@ -80,10 +89,11 @@
             <!-- THE TEST BUTTONS -->
             <div class="nav-strip" style="margin-top: auto; display: flex; gap: 10px;">
                 <button class="btn" onclick="goBack()">&#8592; Back</button>
-                <button class="btn" id="finish-sim-btn" style="display: none; background-color: var(--brand-red);" onclick="endSimulation()">Finish</button>
+                <button class="btn" id="finish-sim-btn" style="display: none; background-color: var(--brand-red);"
+                    onclick="endSimulation()">Finish</button>
             </div>
         </div>
-      
+
         <!-- RIGHT: POS Screen & Hitboxes -->
         <div id="pos-container">
             <div id="hitbox-wrapper">
@@ -102,7 +112,7 @@
             const market = localStorage.getItem('tw_market') || 'Unknown Market';
             const id = localStorage.getItem('tw_id') || 'Unknown ID';
             const currentStepNum = typeof currentStep !== 'undefined' ? currentStep : 'N/A';
-            
+
             const payload = {
                 market: market,
                 userId: id,
@@ -114,7 +124,7 @@
             };
 
             const url = `${AUTH_SCRIPT_URL}?action=error&data=${encodeURIComponent(JSON.stringify(payload))}`;
-            
+
             fetch(url, { method: 'GET', credentials: 'omit' })
                 .then(() => console.log("Error report sent successfully."))
                 .catch(err => console.error("Could not send error report:", err));
@@ -137,14 +147,14 @@
 
         // --- SEQUENCE DATA (ORDER 1: HOLD PERMITTED | ORDER 2: BOSS MODE) ---
         const sequence = [
-        // STEP 0: Coach Victor Hold Example Call (Audio Step)
+            // STEP 0: Coach Victor Hold Example Call (Audio Step)
             {
                 "step": 0,
                 "image": "resources/POS_assets/Stage_4/POS_4.0.A.png",
                 "activeHitbox": "hb-anywhere",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Phone Etiquette</p><p style='margin-bottom: 16px;'><strong>Hold Call Example</strong><br><br>Listen closely to this example recording to hear how a team member professionally places a customer on hold.</p><p style='margin-bottom: 24px;'>Press 'Play' above to listen to the recording. You must listen to the full call before moving to the next step.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Once the recording is complete, click anywhere on the POS screen to continue.</p>",
                 "audio": {
-                    "file": "resources/POS_assets/Stage_4_audio/Victor_Example_Phone.m4a", 
+                    "file": "resources/POS_assets/Stage_4_audio/Victor_Example_Phone.m4a",
                     "requireAllPlayed": true,
                     "allowHold": false
                 }
@@ -161,17 +171,17 @@
             // STEP 2: Order Practice Begins
             {
                 "step": 2,
-                "image": "resources/POS_assets/Stage_0/POS_7.png",
+                "image": "resources/POS_assets/Stage_4/POS_4.0.C.png",
                 "activeHitbox": "hb-carryout",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1 Practice</p><p style='margin-bottom: 16px;'><strong>Full Order Call</strong><br><br>Now you are ready to take your first full customer order! Enter the details on the POS screen as the customer provides them.</p><p style='margin-bottom: 24px;'>Press 'Play' above to start the call. If you fall behind, use <strong>⏸️ Put on Hold</strong> or <strong>⏪ Rewind 5s</strong> to manage your call pace.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Select the 'Carry Out' button to begin the order.</p>"
             }
         ];
-        
+
         function getActiveHitboxIds(stepData) {
             if (!stepData || !stepData.activeHitbox) return [];
             return Array.isArray(stepData.activeHitbox) ? stepData.activeHitbox : [stepData.activeHitbox];
         }
-        
+
         // --- RELATIONAL TRACKING & SCORECARD STATE ---
         const moduleStartTime = Date.now();
         let wrongClicks = 0;
@@ -210,7 +220,7 @@
                 isOnHold = true;
                 holdCount++;
                 audioPlayer.pause();
-                
+
                 holdBtn.innerHTML = "▶ Resume Call";
                 holdBtn.style.backgroundColor = "#27ae60";
                 holdStatusBar.style.display = "block";
@@ -226,11 +236,11 @@
                 // RESUME FROM HOLD
                 isOnHold = false;
                 clearInterval(holdTimerInterval);
-                
+
                 holdBtn.innerHTML = "⏸️ Put on Hold";
                 holdBtn.style.backgroundColor = "#f39c12";
                 holdStatusBar.style.display = "none";
-                
+
                 audioPlayer.play().catch(e => console.log("Audio play error:", e));
             }
         }
@@ -239,7 +249,7 @@
             if (!audioPlayer.src) return;
             replayCount++;
             audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 5);
-            
+
             if (isOnHold) {
                 toggleHold(); // Auto-resume if rewinding while on hold
             } else {
@@ -276,7 +286,7 @@
             if (nextAudioKey === currentAudioKey) {
                 const requireAll = stepData.audio.requireAllPlayed === true || (stepData.audio.tracks && stepData.audio.tracks.length > 1);
                 const totalTracks = stepData.audio.tracks ? stepData.audio.tracks.length : 1;
-                
+
                 getActiveHitboxIds(stepData).forEach(id => {
                     const activeHb = document.getElementById(id);
                     if (activeHb) {
@@ -367,7 +377,7 @@
                 }
             });
 
-            audioPlayer.onended = function() {
+            audioPlayer.onended = function () {
                 completedTracks.add(index);
                 updateTrackUI(index, 'complete');
 
@@ -383,7 +393,7 @@
                     }
                 }
 
-                const currentStepData = sequence[currentStep]; 
+                const currentStepData = sequence[currentStep];
                 if (completedTracks.size === tracks.length) {
                     getActiveHitboxIds(currentStepData).forEach(id => {
                         const activeHb = document.getElementById(id);
@@ -518,7 +528,7 @@
                     loadStep(currentStep);
                 } else {
                     errorMsg.style.display = 'block';
-                    wrongClicks++; 
+                    wrongClicks++;
                 }
             } else {
                 if (userTyped.trim().toLowerCase() === expectedValue.trim().toLowerCase()) {
@@ -527,7 +537,7 @@
                     loadStep(currentStep);
                 } else {
                     errorMsg.style.display = 'block';
-                    wrongClicks++; 
+                    wrongClicks++;
                 }
             }
         }
@@ -544,7 +554,7 @@
                 instructionText.innerHTML = "<strong>Error:</strong> Could not load hitboxes. Check console.";
             });
 
-        window.advanceStep = function(target) {
+        window.advanceStep = function (target) {
             if (currentStep >= sequence.length || !sequence[currentStep]) return;
 
             let clickedId = "";
@@ -555,7 +565,7 @@
             else if (window.event) {
                 const eventTarget = window.event.currentTarget || window.event.target;
                 if (eventTarget) clickedId = eventTarget.id;
-            } 
+            }
 
             const stepData = sequence[currentStep];
             if (!stepData) return;
@@ -578,27 +588,27 @@
             const activeHitboxIds = getActiveHitboxIds(stepData);
 
             if (activeHitboxIds.includes(clickedId)) {
-                errorMsg.style.display = 'none'; 
-                currentStep++; 
-                loadStep(currentStep); 
+                errorMsg.style.display = 'none';
+                currentStep++;
+                loadStep(currentStep);
             }
         };
 
         function initializeSimulator() {
             document.querySelectorAll('.hitbox').forEach(hb => {
-                hb.addEventListener('click', function(e) {
+                hb.addEventListener('click', function (e) {
                     advanceStep(this);
                 });
             });
 
-            posImage.addEventListener('click', function() {
+            posImage.addEventListener('click', function () {
                 if (currentStep >= sequence.length) return;
                 const stepData = sequence[currentStep];
                 if (stepData && stepData.input && stepData.input.type === 'text') return;
                 errorMsg.style.display = 'block';
-                wrongClicks++; 
+                wrongClicks++;
             });
-            
+
             window.addEventListener('keydown', function (event) {
                 if (currentStep >= sequence.length) return;
                 if (event.target && event.target.tagName === 'INPUT') return;
@@ -643,7 +653,7 @@
         function calculateScorecard() {
             const timeSpentSeconds = Math.floor((Date.now() - moduleStartTime) / 1000);
             const accuracyScore = Math.max(0, 100 - (wrongClicks * 5));
-            
+
             let grade = 'A+';
             let stars = '⭐⭐⭐⭐⭐';
 
@@ -675,7 +685,7 @@
             }
             const market = localStorage.getItem('tw_market');
             const id = localStorage.getItem('tw_id');
-            
+
             if (!market || !id) return;
 
             const metrics = calculateScorecard();
@@ -693,7 +703,7 @@
 
             const answersStr = encodeURIComponent(JSON.stringify(answers));
             const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${metrics.timeSpentSeconds}&answers=${answersStr}&status=${status}`;
-            
+
             console.log("SENDING STAGE 4 EVALUATION DATA: ", url);
 
             // 1. Mark Module 4 complete for the Dashboard
@@ -714,7 +724,7 @@
             const stepData = sequence[stepIndex];
             posImage.src = stepData.image;
             instructionText.innerHTML = stepData.instruction;
-            
+
             // Preload next 3 steps in background for instant transitions
             for (let i = 1; i <= 3; i++) {
                 if (sequence[stepIndex + i] && sequence[stepIndex + i].image) {
@@ -722,9 +732,9 @@
                     preloadImg.src = sequence[stepIndex + i].image;
                 }
             }
-            
+
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
-            
+
             const activeIds = getActiveHitboxIds(stepData);
 
             if (activeIds.length > 0) {
@@ -732,12 +742,12 @@
                     const activeHb = document.getElementById(id);
                     if (activeHb) {
                         activeHb.style.display = 'block';
-                        activeHb.classList.remove('arrow-bottom'); 
+                        activeHb.classList.remove('arrow-bottom');
 
-                        if (stepIndex >= 58) { 
-                            activeHb.classList.add('hide-arrow'); 
+                        if (stepIndex >= 58) {
+                            activeHb.classList.add('hide-arrow');
                         } else {
-                            activeHb.classList.remove('hide-arrow'); 
+                            activeHb.classList.remove('hide-arrow');
                         }
 
                         handleInputForStep(stepData, activeHb);
@@ -750,7 +760,7 @@
 
             } else {
                 reportErrorToDeveloper('Missing Hitbox Configuration', `No active hitboxes specified for step ${stepIndex}`);
-            }            
+            }
 
             const finishBtn = document.getElementById('finish-sim-btn');
             if (finishBtn) {
@@ -760,8 +770,8 @@
 
         // --- END SIMULATION & SCORECARD DISPLAY ---
         function endSimulation() {
-            posImage.src = "resources/POS_assets/under_construction.png"; 
-            
+            posImage.src = "resources/POS_assets/under_construction.png";
+
             const metrics = calculateScorecard();
             const mins = Math.floor(metrics.timeSpentSeconds / 60);
             const secs = metrics.timeSpentSeconds % 60;
@@ -802,16 +812,16 @@
                 </div>
                 <p style="margin-top: 16px;">Click the button below to save your metrics and return to your Day 1 dashboard.</p>
             `;
-            
+
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
             audioPanel.style.display = 'none';
             audioPlayer.pause();
-            
-            const finishBtn = document.getElementById('finish-sim-btn');
-            finishBtn.style.display = 'inline-block'; 
-            finishBtn.innerText = "Save & Return to Day 1"; 
 
-            finishBtn.onclick = function() {
+            const finishBtn = document.getElementById('finish-sim-btn');
+            finishBtn.style.display = 'inline-block';
+            finishBtn.innerText = "Save & Return to Day 1";
+
+            finishBtn.onclick = function () {
                 finishBtn.innerText = "Saving Evaluation...";
                 finishBtn.style.pointerEvents = "none";
                 finishBtn.style.opacity = "0.5";
@@ -829,19 +839,19 @@
             if (currentStep > 0) {
                 currentStep--;
                 loadStep(currentStep);
-            }        
+            }
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             if (localStorage.getItem('tw_admin_mode') === 'true') {
                 const headerRight = document.querySelector('header > div:last-child');
                 if (headerRight) {
                     const select = document.createElement('select');
                     select.style.cssText = "background: #ffc107; color: #000; border: none; border-radius: 20px; padding: 0.3rem 0.8rem; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; cursor: pointer;";
-                    select.onchange = function() { window.location.href = this.value; };
-                    
+                    select.onchange = function () { window.location.href = this.value; };
+
                     const currentFile = window.location.pathname.split('/').pop() || 'POS_Simulator_Stage_4.html';
-                    
+
                     const stages = [
                         { file: 'POS_Simulator_Stage_0.html', label: '👑 Stage 0 (Tutorial)' },
                         { file: 'POS_Simulator_Stage_1.html', label: '👑 Stage 1 (Basic Order)' },
@@ -863,7 +873,7 @@
             }
         });
     </script>
-    
+
     <!-- PHONE DEFINITION POPUP MODAL -->
     <div id="phone-modal-overlay">
         <div class="phone-modal-card">
@@ -878,4 +888,5 @@
     </div>
 
 </body>
+
 </html>
