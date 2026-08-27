@@ -547,6 +547,7 @@
                                         <option value="quote_receipt">💬 Quote Request Receipt</option>
                                         <option value="info">📋 Onboarding / Information Request</option>
                                         <option value="carryout">🏬 Carryout-Only Redirect</option>
+                                        <option value="dispute">⚠️ Disputed Invoice / Notice of Error</option>
                                         <option value="custom">✍️ Custom Reply Template</option>
                                     </select>
                                 </div>
@@ -561,6 +562,23 @@
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- Mini Form: Dispute Specific Inputs -->
+                            <div class="form-row hidden" id="groupDisputeInputs" style="margin-top: 8px;">
+                                <div class="form-group" style="flex: 1;">
+                                    <label>Invoice # (Optional)</label>
+                                    <input type="text" id="templateInvoiceNum" placeholder="e.g., 6312" oninput="updateTemplatePreview()">
+                                </div>
+                                <div class="form-group" style="flex: 2;">
+                                    <label>Dispute Reason (Optional)</label>
+                                    <input type="text" id="templateDisputeReason" placeholder="e.g., order was billed twice..." oninput="updateTemplatePreview()">
+                                </div>
+                            </div>
+
+                            <div class="form-group hidden" id="groupDisputeTable" style="margin-top: 8px;">
+                                <label>Paste Line-Item Breakdown / Dispute Text (Optional)</label>
+                                <textarea id="templateDisputeCustomText" style="height: 70px;" placeholder="Optional: Paste specific line item breakdown, PO line error text, or notice copy here..." oninput="updateTemplatePreview()"></textarea>
                             </div>
 
                             <div class="form-group hidden" id="groupCustomText" style="margin-top: 8px;">
@@ -1832,6 +1850,8 @@ function renderList() {
         const select = document.getElementById('replyTemplateSelect');
         const groupPeopleCount = document.getElementById('groupPeopleCount');
         const groupCustomText = document.getElementById('groupCustomText'); 
+        const groupDisputeInputs = document.getElementById('groupDisputeInputs');
+        const groupDisputeTable = document.getElementById('groupDisputeTable');
         const preview = document.getElementById('templatePreviewArea');
         const btnCopy = document.getElementById('btnCopyTemplate');
     
@@ -1840,6 +1860,8 @@ function renderList() {
         if (select.value === "") {
             groupPeopleCount.classList.add('hidden');
             groupCustomText.classList.add('hidden');
+            if (groupDisputeInputs) groupDisputeInputs.classList.add('hidden');
+            if (groupDisputeTable) groupDisputeTable.classList.add('hidden');
             preview.classList.add('hidden');
             btnCopy.classList.add('hidden');
         } else {
@@ -1849,12 +1871,23 @@ function renderList() {
             if (select.value === 'info' || select.value === 'carryout') {
                 groupPeopleCount.classList.remove('hidden');
                 groupCustomText.classList.add('hidden'); 
+                if (groupDisputeInputs) groupDisputeInputs.classList.add('hidden');
+                if (groupDisputeTable) groupDisputeTable.classList.add('hidden');
             } else if (select.value === 'custom') {
                 groupCustomText.classList.remove('hidden'); 
                 groupPeopleCount.classList.add('hidden');
+                if (groupDisputeInputs) groupDisputeInputs.classList.add('hidden');
+                if (groupDisputeTable) groupDisputeTable.classList.add('hidden');
+            } else if (select.value === 'dispute') {
+                groupPeopleCount.classList.add('hidden');
+                groupCustomText.classList.add('hidden');
+                if (groupDisputeInputs) groupDisputeInputs.classList.remove('hidden');
+                if (groupDisputeTable) groupDisputeTable.classList.remove('hidden');
             } else {
                 groupPeopleCount.classList.add('hidden');
                 groupCustomText.classList.add('hidden');
+                if (groupDisputeInputs) groupDisputeInputs.classList.add('hidden');
+                if (groupDisputeTable) groupDisputeTable.classList.add('hidden');
             }
             updateTemplatePreview();
         }
@@ -2003,6 +2036,62 @@ function renderList() {
 
                     <p>I’ve attached both our school pricing and a comprehensive menu for your review.</p>
                     <p style="margin-bottom: 16px;">If you have any questions or need help planning your order, feel free to reach out. Email is the best way to reach me. I look forward to working with you!</p>
+                    <p style="margin: 0;">Best regards,</p>
+                    <div style="margin-top: 10px;">
+                        <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 410px; height: auto; display: block;">
+                    </div>
+                </div>
+            `;
+        } else if (select.value === 'dispute') {
+            const invoiceInput = document.getElementById('templateInvoiceNum');
+            const invoiceNum = invoiceInput ? invoiceInput.value.trim() : '';
+            const reasonInput = document.getElementById('templateDisputeReason');
+            const disputeReason = reasonInput ? reasonInput.value.trim() : '';
+            const customInput = document.getElementById('templateDisputeCustomText');
+            const customDetailText = customInput ? customInput.value.trim() : '';
+
+            const rawPo = document.getElementById('fieldPoNum') ? document.getElementById('fieldPoNum').value.trim() : '';
+            let poSnippet = "";
+            if (rawPo) {
+                const cleanPo = rawPo.replace(/^po\s*#?\s*:?\s*/i, '').trim();
+                poSnippet = `, under <strong>PO #${cleanPo}</strong>,`;
+            }
+
+            const districtName = (schoolObj && schoolObj.district && schoolObj.district.trim() !== "") ? schoolObj.district.trim() : "your school district";
+
+            let notificationSentence = "";
+            if (invoiceNum && disputeReason) {
+                notificationSentence = `<p>We recently received a notification from ${districtName} stating that invoice <strong>#${invoiceNum}</strong> is being disputed because ${disputeReason}.</p>`;
+            } else if (invoiceNum) {
+                notificationSentence = `<p>We recently received a Notice of Dispute from ${districtName} stating that invoice <strong>#${invoiceNum}</strong> is being disputed.</p>`;
+            } else if (disputeReason) {
+                notificationSentence = `<p>We recently received a Notice of Dispute from ${districtName} stating: <em>${disputeReason}</em>.</p>`;
+            } else {
+                notificationSentence = `<p>We recently received a Notice of Error or Disputed Amount from ${districtName} regarding this order.</p>`;
+            }
+
+            let detailBlock = "";
+            if (customDetailText) {
+                const formattedDetail = customDetailText.replace(/\n/g, '<br>');
+                detailBlock = `
+                    <div style="background-color: #faf2e9; border-left: 4px solid #005c91; padding: 12px 14px; border-radius: 4px; margin: 14px 0; font-family: monospace, Consolas, sans-serif; font-size: 12px; color: #472b10; line-height: 1.45;">
+                        ${formattedDetail}
+                    </div>
+                `;
+            }
+
+            htmlString = `
+                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #603913; line-height: 1.55;">
+                    <p style="margin-top: 0;">Hi ${greetingName},</p>
+                    <p>I am reaching out regarding a notice of dispute we received for your order placed on <strong>${fDate}</strong>${poSnippet} for <strong>${fSchool}</strong>.</p>
+                    ${notificationSentence}
+                    ${detailBlock}
+                    <p>Could you please confirm if there were any issues with the order or the delivery? We want to ensure we address any concerns you may have and resolve this discrepancy promptly.</p>
+                    <ul style="margin: 8px 0 16px 0; padding-left: 20px; list-style-type: square;">
+                        <li style="margin-bottom: 6px;">If there was a billing error or order issue, please let me know so our accounts department can issue a corrected invoice or credit.</li>
+                        <li style="margin-bottom: 6px;">If the order was received as expected and the dispute was filed in error, please notify your purchasing / accounts payable department so they can close the dispute and finalize the payment.</li>
+                    </ul>
+                    <p style="margin-bottom: 16px;">I look forward to your response so we can get this resolved for you.</p>
                     <p style="margin: 0;">Best regards,</p>
                     <div style="margin-top: 10px;">
                         <img src="https://raw.githubusercontent.com/TW-Dallas/TW-Career-Path/main/Signature.png" alt="Mike Jacobs Signature" style="max-width: 410px; height: auto; display: block;">
