@@ -572,7 +572,7 @@
                                 </div>
                                 <div class="form-group" style="flex: 2;">
                                     <label>Dispute Reason (Optional)</label>
-                                    <input type="text" id="templateDisputeReason" placeholder="e.g., order was billed twice..." oninput="updateTemplatePreview()">
+                                    <input type="text" id="templateDisputeReason" placeholder="e.g., they have not received the items, order was billed twice..." oninput="updateTemplatePreview()">
                                 </div>
                             </div>
 
@@ -2059,13 +2059,16 @@ function renderList() {
 
             const districtName = (schoolObj && schoolObj.district && schoolObj.district.trim() !== "") ? schoolObj.district.trim() : "your school district";
 
+            // Clean up user-typed prefixes like "stating that...", "stating...", "because...", "that..." for seamless grammar
+            let cleanReason = disputeReason.replace(/^(stating\s+that\s+|stating\s+|because\s+|that\s+)/i, '').trim();
+
             let notificationSentence = "";
-            if (invoiceNum && disputeReason) {
-                notificationSentence = `<p>We recently received a notification from ${districtName} stating that invoice <strong>#${invoiceNum}</strong> is being disputed because ${disputeReason}.</p>`;
+            if (invoiceNum && cleanReason) {
+                notificationSentence = `<p>We recently received a notification from ${districtName} regarding invoice <strong>#${invoiceNum}</strong> stating that ${cleanReason}.</p>`;
             } else if (invoiceNum) {
-                notificationSentence = `<p>We recently received a Notice of Dispute from ${districtName} stating that invoice <strong>#${invoiceNum}</strong> is being disputed.</p>`;
-            } else if (disputeReason) {
-                notificationSentence = `<p>We recently received a Notice of Dispute from ${districtName} stating: <em>${disputeReason}</em>.</p>`;
+                notificationSentence = `<p>We recently received a notice from ${districtName} regarding invoice <strong>#${invoiceNum}</strong>.</p>`;
+            } else if (cleanReason) {
+                notificationSentence = `<p>We recently received a notice from ${districtName} stating that ${cleanReason}.</p>`;
             } else {
                 notificationSentence = `<p>We recently received a Notice of Error or Disputed Amount from ${districtName} regarding this order.</p>`;
             }
