@@ -662,17 +662,38 @@
                     "placeholder": "Suite"
                 }
             },
-            // 44. Click Rewards Status Checker
+            // 44. Click Delivery Instructions Box
             {
                 "step": 50,
+                "image": "resources/POS_assets/Stage_4/POS_4.40.A.png",
+                "activeHitbox": "hb-delivery-instructions",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+            },
+            // 45. Type Delivery Instructions (Please Call)
+            {
+                "step": 51,
+                "image": "resources/POS_assets/Stage_4/POS_4.40.A.png",
+                "activeHitbox": "hb-delivery-instructions",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
+                "input": {
+                    "type": "text",
+                    "expectedValue": ["Please Call", "please call", "PLEASE CALL"],
+                    "placeholder": "Click in the box and type: Please Call"
+                }
+            },
+            // 46. Click Rewards Status Checker
+            {
+                "step": 52,
                 "image": "resources/POS_assets/Stage_4/POS_4.40.png",
                 "activeHitbox": "hb-rewards-checker",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 45. Select 14\" Pizza Size for Pizza 1
+            // 47. Select 14\" Pizza Size for Pizza 1
             {
-                "step": 51,
+                "step": 53,
                 "image": "resources/POS_assets/Stage_4/POS_4.41.png",
                 "activeHitbox": "hb-size-14",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
