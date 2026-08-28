@@ -515,13 +515,137 @@
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Method:</strong> Carryout<div class='pos-ticket-header' style='margin-top: 12px;'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (214) 555-0186<br><strong>Name:</strong> Kimberly<div class='pos-ticket-header' style='margin-top: 12px;'>🍴 ORDER ITEMS</div><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 14\" Hand-Tossed Pepperoni<br><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 12\" Pan Sausage, Mushrooms<br><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 16pc Parm Bites<br><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 8-Piece Hot Buffalo Wings (1 Ranch)<div class='pos-ticket-header' style='margin-top: 12px;'>💳 PAYMENT METHOD</div><strong>Method:</strong> Cash (Later)</div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_3_Full.mp3" }
             },
-            // --- ORDER 2 START (BOSS MODE) ---
-            // 30. Coach Victor & Coach Cobby / Click Carryout
+            // --- ORDER 2 START (BOSS MODE: DANIEL DELIVERY ORDER) ---
+            // 30. Coach Victor & Coach Cobby / Click Carryout to Start
             {
                 "step": 36,
                 "image": "resources/POS_assets/Stage_4/POS_4.30.png",
                 "activeHitbox": "hb-carryout",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><p style='font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 12px;'>🏆 Boss Level Order!</p><p style='margin-bottom: 14px;'>Listen carefully to the caller and enter all items accurately without prompts.</p><p style='font-size: 0.95rem;'>👉 <strong>Action:</strong> Click <strong>CARRY OUT</strong> to begin Order 2.</p>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+            },
+            // 31. Select Delivery Service Method
+            {
+                "step": 37,
+                "image": "resources/POS_assets/Stage_4/POS_4.31.png",
+                "activeHitbox": "hb-delivery-service",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+            },
+            // 32. Click Customer Address Tab
+            {
+                "step": 38,
+                "image": "resources/POS_assets/Stage_4/POS_4.32.png",
+                "activeHitbox": ["hb-cust-add", "hb-customer-address-tab"],
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+            },
+            // 33. Click Phone Number Field
+            {
+                "step": 39,
+                "image": "resources/POS_assets/Stage_4/POS_4.33.png",
+                "activeHitbox": "hb-phone-field",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+            },
+            // 34. Type Phone Digits (2145550194)
+            {
+                "step": 40,
+                "image": "resources/POS_assets/Stage_4/POS_4.34.png",
+                "activeHitbox": "hb-phone-entry",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
+                "input": {
+                    "type": "text",
+                    "expectedValue": "2145550194",
+                    "placeholder": "Enter Phone Number"
+                }
+            },
+            // 35. Click Customer Name Field
+            {
+                "step": 41,
+                "image": "resources/POS_assets/Stage_4/POS_4.36.png",
+                "activeHitbox": "hb-cust-name",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+            },
+            // 36. Type Customer Name (Daniel)
+            {
+                "step": 42,
+                "image": "resources/POS_assets/Stage_4/POS_4.36.png",
+                "activeHitbox": "hb-cust-name",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
+                "input": {
+                    "type": "text",
+                    "expectedValue": "Daniel",
+                    "placeholder": "Enter Customer Name"
+                }
+            },
+            // 37. Click Address Number Field
+            {
+                "step": 43,
+                "image": "resources/POS_assets/Stage_4/POS_4.37.png",
+                "activeHitbox": "hb-add-number",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+            },
+            // 38. Type Address Number (470)
+            {
+                "step": 44,
+                "image": "resources/POS_assets/Stage_4/POS_4.37.png",
+                "activeHitbox": "hb-add-number",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
+                "input": {
+                    "type": "text",
+                    "expectedValue": "470",
+                    "placeholder": "Street Number"
+                }
+            },
+            // 39. Select Adriatic Parkway from Street Dropdown
+            {
+                "step": 45,
+                "image": "resources/POS_assets/Stage_4/POS_4.38.png",
+                "activeHitbox": ["hb-street-dropdown", "hb-street-select", "hb-street-name"],
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+            },
+            // 40. Click Suite / Apt Box
+            {
+                "step": 46,
+                "image": "resources/POS_assets/Stage_4/POS_4.39.png",
+                "activeHitbox": "hb-add-suite",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+            },
+            // 41. Type Suite Number (1602)
+            {
+                "step": 47,
+                "image": "resources/POS_assets/Stage_4/POS_4.39.png",
+                "activeHitbox": "hb-add-suite",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
+                "input": {
+                    "type": "text",
+                    "expectedValue": "1602",
+                    "placeholder": "Suite / Apt #"
+                }
+            },
+            // 42. Click Rewards Status Checker
+            {
+                "step": 48,
+                "image": "resources/POS_assets/Stage_4/POS_4.40.png",
+                "activeHitbox": "hb-rewards-checker",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+            },
+            // 43. Select 14\" Pizza Size for Pizza 1
+            {
+                "step": 49,
+                "image": "resources/POS_assets/Stage_4/POS_4.41.png",
+                "activeHitbox": "hb-size-14",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             }
         ];
@@ -878,28 +1002,26 @@
         }
 
         function validateTextEntry(userTyped, expectedValue) {
-            const cleanExpectedDigits = expectedValue.replace(/\D/g, '');
-            const isNumericTarget = cleanExpectedDigits.length > 0 && /^\d+$/.test(cleanExpectedDigits);
+            const targets = Array.isArray(expectedValue) ? expectedValue : [expectedValue];
+            
+            const isMatch = targets.some(target => {
+                const cleanExpectedDigits = String(target).replace(/\D/g, '');
+                const isNumericTarget = cleanExpectedDigits.length > 0 && /^\d+$/.test(cleanExpectedDigits);
+                if (isNumericTarget) {
+                    const cleanUser = userTyped.replace(/\D/g, '');
+                    return cleanUser === cleanExpectedDigits;
+                } else {
+                    return userTyped.trim().toLowerCase() === String(target).trim().toLowerCase();
+                }
+            });
 
-            if (isNumericTarget) {
-                const cleanUser = userTyped.replace(/\D/g, '');
-                if (cleanUser === cleanExpectedDigits) {
-                    errorMsg.style.display = 'none';
-                    currentStep++;
-                    loadStep(currentStep);
-                } else {
-                    errorMsg.style.display = 'block';
-                    wrongClicks++;
-                }
+            if (isMatch) {
+                errorMsg.style.display = 'none';
+                currentStep++;
+                loadStep(currentStep);
             } else {
-                if (userTyped.trim().toLowerCase() === expectedValue.trim().toLowerCase()) {
-                    errorMsg.style.display = 'none';
-                    currentStep++;
-                    loadStep(currentStep);
-                } else {
-                    errorMsg.style.display = 'block';
-                    wrongClicks++;
-                }
+                errorMsg.style.display = 'block';
+                wrongClicks++;
             }
         }
 
