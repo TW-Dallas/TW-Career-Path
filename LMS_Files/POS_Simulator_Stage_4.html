@@ -876,6 +876,9 @@
                 });
 
                 handleAudioForStep(stepData);
+            } else {
+                reportErrorToDeveloper('Missing Hitbox Configuration', `No active hitboxes specified for step ${stepIndex}`);
+            }
 
             // Manage Phone Guide Arrows for Step 3
             const arrowPark = document.getElementById('arrow-phone-park');
