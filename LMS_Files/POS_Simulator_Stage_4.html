@@ -1025,12 +1025,13 @@
             const existingInput = document.querySelector('.hitbox-text-input');
             if (existingInput) existingInput.remove();
 
-            if (stepData.input && stepData.input.type === 'text') {
+            if (stepData.input && (stepData.input.type === 'text' || stepData.input.type === 'textarea')) {
                 activeHb.style.cursor = 'text';
                 activeHb.style.caretColor = 'auto';
 
-                const inputEl = document.createElement('input');
-                inputEl.type = 'text';
+                const isTextarea = stepData.input.type === 'textarea' || activeHb.id === 'hb-delivery-instructions';
+                const inputEl = document.createElement(isTextarea ? 'textarea' : 'input');
+                if (!isTextarea) inputEl.type = 'text';
                 inputEl.className = 'hitbox-text-input';
                 inputEl.placeholder = stepData.input.placeholder || '';
                 inputEl.autofocus = true;
@@ -1045,6 +1046,7 @@
                 inputEl.addEventListener('click', (e) => e.stopPropagation());
                 inputEl.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter') {
+                        if (isTextarea) e.preventDefault();
                         validateTextEntry(inputEl.value, stepData.input.expectedValue);
                     }
                 });
