@@ -16,6 +16,43 @@
         .hitbox::before {
             display: none !important;
         }
+
+        /* Interactive Phone Guide Arrows on Step 3 */
+        .phone-guide-arrow {
+            position: absolute;
+            display: none;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 100, 145, 0.95);
+            color: #fff;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 0.95rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 10px rgba(0, 100, 145, 0.6);
+            cursor: pointer;
+            z-index: 50;
+            user-select: none;
+            transition: transform 0.2s ease, opacity 0.3s ease;
+            animation: bounceIndicator 1.2s infinite ease-in-out;
+        }
+        .phone-guide-arrow:hover {
+            transform: scale(1.08);
+            background: #004d70;
+        }
+        @keyframes bounceIndicator {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-6px); }
+        }
+        #arrow-phone-park {
+            top: 27.5%;
+            left: 82.5%;
+        }
+        #arrow-phone-mute {
+            top: 71%;
+            left: 80%;
+        }
     </style>
 </head>
 
@@ -99,6 +136,10 @@
             <div id="hitbox-wrapper">
                 <img id="pos-image" src="resources/POS_assets/Stage_4/POS_4.0.A.png" alt="POS Screen">
                 <!-- HITBOXES WILL BE INJECTED HERE BY JAVASCRIPT -->
+
+                <!-- STEP 3 INTERACTIVE PHONE GUIDE ARROWS -->
+                <div id="arrow-phone-park" class="phone-guide-arrow" onclick="advanceStep('hb-phone-park')">👈 PARK</div>
+                <div id="arrow-phone-mute" class="phone-guide-arrow" onclick="advanceStep('hb-phone-mute')">👈 MUTE</div>
             </div>
         </div>
 
@@ -510,6 +551,9 @@
 
             if (type === 'park') {
                 viewedPark = true;
+                const arrowPark = document.getElementById('arrow-phone-park');
+                if (arrowPark) arrowPark.style.display = 'none';
+
                 title.innerHTML = "🅿️ PARK (Store Hold Queue)";
                 body.innerHTML = `
                     <p><strong>WHY WE USE PARK:</strong> Use this when you need to put a customer on hold to check an oven, grab a manager, or step away from the handset.</p>
@@ -521,6 +565,9 @@
                 `;
             } else if (type === 'mute') {
                 viewedMute = true;
+                const arrowMute = document.getElementById('arrow-phone-mute');
+                if (arrowMute) arrowMute.style.display = 'none';
+
                 title.innerHTML = "🎙️ MUTE (Quick Silence)";
                 body.innerHTML = `
                     <p><strong>WHY WE USE MUTE:</strong> Use this for a quick 2-second question to a teammate standing right next to you.</p>
@@ -830,8 +877,16 @@
 
                 handleAudioForStep(stepData);
 
+            // Manage Phone Guide Arrows for Step 3
+            const arrowPark = document.getElementById('arrow-phone-park');
+            const arrowMute = document.getElementById('arrow-phone-mute');
+            const hasPhoneHardwareHitboxes = stepData && Array.isArray(stepData.activeHitbox) && stepData.activeHitbox.includes('hb-phone-park');
+            if (hasPhoneHardwareHitboxes) {
+                if (arrowPark) arrowPark.style.display = viewedPark ? 'none' : 'flex';
+                if (arrowMute) arrowMute.style.display = viewedMute ? 'none' : 'flex';
             } else {
-                reportErrorToDeveloper('Missing Hitbox Configuration', `No active hitboxes specified for step ${stepIndex}`);
+                if (arrowPark) arrowPark.style.display = 'none';
+                if (arrowMute) arrowMute.style.display = 'none';
             }
 
             const finishBtn = document.getElementById('finish-sim-btn');
