@@ -136,14 +136,15 @@
             return false;
         };
 
-        // Capture asset-loading failures (filtering out empty initial src / page URL)
         window.addEventListener('error', function (event) {
             if (event.target && event.target.tagName === 'IMG') {
                 const src = event.target.src || '';
                 if (!src || src === window.location.href || src.endsWith('.html') || src.endsWith('/')) return;
                 reportErrorToDeveloper('Broken Image Asset', src);
             }
-                // --- SEQUENCE DATA (ORDER 1: HOLD PERMITTED | ORDER 2: BOSS MODE) ---
+        }, true);
+
+        // --- SEQUENCE DATA (ORDER 1: HOLD PERMITTED | ORDER 2: BOSS MODE) ---
         const sequence = [
             // STEP 0: Phone Etiquette Intro (Why it matters)
             {
