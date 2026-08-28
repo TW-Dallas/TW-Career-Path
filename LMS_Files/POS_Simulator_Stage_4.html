@@ -348,11 +348,15 @@
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_3_Full.mp3" }
             },
             // --- PIZZA 2: 12" Pan Sausage & Mushrooms ---
-            // 10. Select 12" Size
+            // 10. Select 12" Size or Pan Crust Directly
             {
                 "step": 16,
                 "image": "resources/POS_assets/Stage_4/POS_4.11.png",
-                "activeHitbox": "hb-size-12",
+                "activeHitbox": ["hb-size-12", "hb-crust-pan-6386"],
+                "nextStepMap": {
+                    "hb-size-12": 17,
+                    "hb-crust-pan-6386": 18
+                },
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Method:</strong> Carryout<div class='pos-ticket-header' style='margin-top: 12px;'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (214) 555-0186<br><strong>Name:</strong> Kimberly<div class='pos-ticket-header' style='margin-top: 12px;'>🍴 ORDER ITEMS</div><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 14\" Hand-Tossed Pepperoni</div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_3_Full.mp3" }
             },
@@ -944,7 +948,11 @@
 
             if (activeHitboxIds.includes(clickedId)) {
                 errorMsg.style.display = 'none';
-                currentStep++;
+                if (stepData.nextStepMap && stepData.nextStepMap[clickedId] !== undefined) {
+                    currentStep = stepData.nextStepMap[clickedId];
+                } else {
+                    currentStep++;
+                }
                 loadStep(currentStep);
             }
         };
