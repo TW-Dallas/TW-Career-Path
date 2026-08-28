@@ -115,13 +115,22 @@
                 <div id="audio-track-container"></div>
 
                 <!-- HOLD & REWIND CONTROLS -->
-                <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none;">
-                    <button id="audio-hold-btn" class="audio-btn hold-btn" onclick="toggleHold()">
-                        ⏸️ Put on Hold
-                    </button>
-                    <button id="audio-rewind-btn" class="audio-btn btn-outline" onclick="rewindAudio5s()">
-                        ⏪ Rewind 5s
-                    </button>
+                <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 0.85rem; font-weight: 700; color: #1e6091; display: flex; align-items: center; gap: 6px;">
+                            <span style="display: inline-block; width: 8px; height: 8px; background: #2ecc71; border-radius: 50%;"></span>
+                            CALL IN PROGRESS
+                        </span>
+                        <span id="audio-time-display" style="font-size: 0.8rem; font-family: monospace; color: #52796f;">0:00 / 0:00</span>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="audio-hold-btn" class="audio-btn hold-btn" onclick="toggleHold()" style="flex: 1; padding: 6px 10px; background: #e67e22; color: #fff; border: none; border-radius: 6px; font-weight: 700; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
+                            ⏸️ Put on Hold
+                        </button>
+                        <button id="audio-rewind-btn" class="audio-btn btn-outline" onclick="rewindAudio5s()" style="flex: 1; padding: 6px 10px; background: #34495e; color: #fff; border: none; border-radius: 6px; font-weight: 700; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
+                            ⏪ Rewind 5s
+                        </button>
+                    </div>
                 </div>
 
                 <div id="hold-status-bar" class="hold-status-bar">
@@ -585,7 +594,7 @@
             // 37. Click Address Number Field
             {
                 "step": 43,
-                "image": "resources/POS_assets/Stage_4/POS_4.37.png",
+                "image": "resources/POS_assets/Stage_4/POS_4.36.A.png",
                 "activeHitbox": "hb-add-number",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
@@ -593,7 +602,7 @@
             // 38. Type Address Number (470)
             {
                 "step": 44,
-                "image": "resources/POS_assets/Stage_4/POS_4.37.png",
+                "image": "resources/POS_assets/Stage_4/POS_4.36.A.png",
                 "activeHitbox": "hb-add-number",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
@@ -603,25 +612,46 @@
                     "placeholder": "Street Number"
                 }
             },
-            // 39. Select Adriatic Parkway from Street Dropdown
+            // 39. Click Street Name Box
             {
                 "step": 45,
+                "image": "resources/POS_assets/Stage_4/POS_4.37.png",
+                "activeHitbox": "hb-street-name",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+            },
+            // 40. Type Street Name (Adriatic)
+            {
+                "step": 46,
+                "image": "resources/POS_assets/Stage_4/POS_4.37.png",
+                "activeHitbox": "hb-street-name",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
+                "input": {
+                    "type": "text",
+                    "expectedValue": ["Adriatic", "Adriatic Pkwy", "Adriatic Parkway"],
+                    "placeholder": "Enter Street Name"
+                }
+            },
+            // 41. Select Adriatic Parkway from Dropdown
+            {
+                "step": 47,
                 "image": "resources/POS_assets/Stage_4/POS_4.38.png",
                 "activeHitbox": ["hb-street-dropdown", "hb-street-select", "hb-street-name"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 40. Click Suite / Apt Box
+            // 42. Click Suite / Apt Box
             {
-                "step": 46,
+                "step": 48,
                 "image": "resources/POS_assets/Stage_4/POS_4.39.png",
                 "activeHitbox": "hb-add-suite",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 41. Type Suite Number (1602)
+            // 43. Type Suite Number (1602)
             {
-                "step": 47,
+                "step": 49,
                 "image": "resources/POS_assets/Stage_4/POS_4.39.png",
                 "activeHitbox": "hb-add-suite",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
@@ -632,17 +662,17 @@
                     "placeholder": "Suite / Apt #"
                 }
             },
-            // 42. Click Rewards Status Checker
+            // 44. Click Rewards Status Checker
             {
-                "step": 48,
+                "step": 50,
                 "image": "resources/POS_assets/Stage_4/POS_4.40.png",
                 "activeHitbox": "hb-rewards-checker",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 43. Select 14\" Pizza Size for Pizza 1
+            // 45. Select 14\" Pizza Size for Pizza 1
             {
-                "step": 49,
+                "step": 51,
                 "image": "resources/POS_assets/Stage_4/POS_4.41.png",
                 "activeHitbox": "hb-size-14",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
@@ -730,6 +760,19 @@
                 audioPlayer.play().catch(e => console.log("Audio play error:", e));
             }
         }
+
+        audioPlayer.addEventListener('timeupdate', () => {
+            const cur = Math.floor(audioPlayer.currentTime || 0);
+            const dur = Math.floor(audioPlayer.duration || 0);
+            const curMins = Math.floor(cur / 60);
+            const curSecs = (cur % 60).toString().padStart(2, '0');
+            const durMins = Math.floor(dur / 60);
+            const durSecs = (dur % 60).toString().padStart(2, '0');
+            const timeDisplay = document.getElementById('audio-time-display');
+            if (timeDisplay) {
+                timeDisplay.innerText = `${curMins}:${curSecs} / ${durMins}:${durSecs}`;
+            }
+        });
 
         function getAudioKey(stepData) {
             if (!stepData || !stepData.audio) return null;
