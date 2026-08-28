@@ -67,7 +67,7 @@
                 <div id="audio-track-container"></div>
 
                 <!-- HOLD & REWIND CONTROLS -->
-                <div class="audio-btn-row-extra">
+                <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none;">
                     <button id="audio-hold-btn" class="audio-btn hold-btn" onclick="toggleHold()">
                         ⏸️ Put on Hold
                     </button>
@@ -274,6 +274,7 @@
         const audioPanel = document.getElementById('audio-control-panel');
         const holdBtn = document.getElementById('audio-hold-btn');
         const rewindBtn = document.getElementById('audio-rewind-btn');
+        const audioExtraRow = document.getElementById('audio-extra-row');
         const holdStatusBar = document.getElementById('hold-status-bar');
         const holdTimerText = document.getElementById('hold-timer-text');
 
@@ -348,10 +349,11 @@
                 return;
             }
 
-            // Enable or disable Hold controls based on step config
+            // Enable or disable Hold/Rewind row based on step config (hidden for demo audio, enabled for live order)
             const allowHold = stepData.audio && stepData.audio.allowHold !== false;
-            holdBtn.style.display = allowHold ? "inline-block" : "none";
-            rewindBtn.style.display = allowHold ? "inline-block" : "none";
+            if (audioExtraRow) audioExtraRow.style.display = allowHold ? "flex" : "none";
+            if (holdBtn) holdBtn.style.display = allowHold ? "inline-block" : "none";
+            if (rewindBtn) rewindBtn.style.display = allowHold ? "inline-block" : "none";
 
             if (nextAudioKey === currentAudioKey) {
                 const requireAll = stepData.audio.requireAllPlayed === true || (stepData.audio.tracks && stepData.audio.tracks.length > 1);
