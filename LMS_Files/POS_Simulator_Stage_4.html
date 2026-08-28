@@ -143,13 +143,19 @@
                 if (!src || src === window.location.href || src.endsWith('.html') || src.endsWith('/')) return;
                 reportErrorToDeveloper('Broken Image Asset', src);
             }
-        }, true);
-
-        // --- SEQUENCE DATA (ORDER 1: HOLD PERMITTED | ORDER 2: BOSS MODE) ---
+                // --- SEQUENCE DATA (ORDER 1: HOLD PERMITTED | ORDER 2: BOSS MODE) ---
         const sequence = [
-            // STEP 0: Coach Victor Hold Example Call (Audio Step)
+            // STEP 0: Phone Etiquette Intro (Why it matters)
             {
                 "step": 0,
+                "image": "resources/POS_assets/Stage_4/POS_4.0.A.png",
+                "activeHitbox": "hb-anywhere",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Phone Etiquette</p><p style='margin-bottom: 16px;'><strong>Why Phone Etiquette Matters</strong><br><br>When a customer calls our store, your voice is their very first impression of Team WOW. Great phone etiquette isn't just about taking an order—it's about making the customer feel valued, heard, and confident in our service.</p><p style='margin-bottom: 24px;'>By speaking clearly, greeting customers warmly, and handling holds professionally, you build trust and ensure an accurate, smooth order from start to finish.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Click anywhere on the POS screen to listen to a hold call example.</p>"
+            },
+
+            // STEP 1: Coach Victor Hold Example Call (Audio Step)
+            {
+                "step": 1,
                 "image": "resources/POS_assets/Stage_4/POS_4.0.A.png",
                 "activeHitbox": "hb-anywhere",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Phone Etiquette</p><p style='margin-bottom: 16px;'><strong>Hold Call Example</strong><br><br>Listen closely to this example recording to hear how a team member professionally places a customer on hold.</p><p style='margin-bottom: 24px;'>Press 'Play' above to listen to the recording. You must listen to the full call before moving to the next step.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Once the recording is complete, click anywhere on the POS screen to continue.</p>",
@@ -160,23 +166,23 @@
                 }
             },
 
-            // STEP 1: Interactive Phone Hardware (Click Park & Mute)
+            // STEP 2: Interactive Phone Hardware (Click Park & Mute)
             {
-                "step": 1,
-                "image": "resources/POS_assets/Stage_4/POS_4.0.B.png", // Clean Phone Image
+                "step": 2,
+                "image": "resources/POS_assets/Stage_4/POS_4.0.B.png",
                 "activeHitbox": ["hb-phone-park", "hb-phone-mute"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Phone Hardware</p><p style='margin-bottom: 16px;'><strong>Managing Calls Like a Pro</strong><br><br>On a busy shift, you will often need to pause a conversation to look up an order or ask a teammate a question. Using the right phone feature keeps store noise out of the customer's ear and prevents dropped calls.</p><p style='margin-bottom: 24px;'>Click both <strong>PARK</strong> and <strong>MUTE</strong> on the phone hardware screen to learn when and why to use each feature on shift.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Review both phone features to unlock the order simulator.</p>"
             },
 
-            // STEP 2: Order Practice Begins
+            // STEP 3: Order Practice Begins
             {
-                "step": 2,
+                "step": 3,
                 "image": "resources/POS_assets/Stage_4/POS_4.0.C.png",
                 "activeHitbox": "hb-carryout",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1 Practice</p><p style='margin-bottom: 16px;'><strong>Full Order Call</strong><br><br>Now you are ready to take your first full customer order! Enter the details on the POS screen as the customer provides them.</p><p style='margin-bottom: 24px;'>Press 'Play' above to start the call. If you fall behind, use <strong>⏸️ Put on Hold</strong> or <strong>⏪ Rewind 5s</strong> to manage your call pace.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Select the 'Carry Out' button to begin the order.</p>"
             },
             {
-                "step": 3,
+                "step": 4,
                 "image": "resources/POS_assets/Stage_4/POS_4.1.png",
                 "activeHitbox": "hb-carryout-service",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p>",
@@ -185,7 +191,7 @@
                 }
             },
             {
-                "step": 4,
+                "step": 5,
                 "image": "resources/POS_assets/Stage_4/POS_4.2.png",
                 "activeHitbox": "hb-cust-add",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Method:</strong> Carryout</div>",
@@ -195,7 +201,7 @@
             },
             // 1. Click Phone Box to open numpad
             {
-                "step": 5,
+                "step": 6,
                 "image": "resources/POS_assets/Stage_4/POS_4.3.png",
                 "activeHitbox": "hb-phone-field",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Method:</strong> Carryout</div>",
@@ -203,7 +209,7 @@
             },
             // 2. Type Phone Digits (Keyboard Entry)
             {
-                "step": 6,
+                "step": 7,
                 "image": "resources/POS_assets/Stage_4/POS_4.4.png",
                 "activeHitbox": "hb-phone-entry",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Method:</strong> Carryout</div>",
@@ -216,14 +222,12 @@
             },
             // 3. Click OK to confirm
             {
-                "step": 7,
+                "step": 8,
                 "image": "resources/POS_assets/Stage_4/POS_4.5.png",
                 "activeHitbox": "hb-phone-OK",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Method:</strong> Carryout<div class='pos-ticket-header' style='margin-top: 12px;'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (214) 582-1300</div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_3_Full.mp3" }
-            },
-
-
+            }
         ];
 
         function getActiveHitboxIds(stepData) {
