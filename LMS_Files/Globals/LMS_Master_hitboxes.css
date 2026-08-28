@@ -115,6 +115,7 @@
   #hb-next-toppings-screen { top: 46.4813%; left: 45.8379%; width: 7.75299%; height: 7.78421%; }
   #hb-pepperoni { top: 54.9527%; left: 45.5794%; width: 8.30588%; height: 7.95538%; }
   #hb-beef { top: 54.8086%; left: 72.6333%; width: 7.88901%; height: 8.14627%; }
+  #hb-beef-6386 { top: 63.86%; left: 45.84%; width: 8.29%; height: 8.10%; }
   #hb-mushroom { top: 63.5375%; left: 63.587%; width: 8.15217%; height: 7.9566%; }
   #hb-mushroom-6386 { top: 64.13%; left: 37.01%; width: 7.58%; height: 7.58%; }
   #hb-bacon { top: 63.86%; left: 27.8836%; width: 7.75299%; height: 7.42216%; }
@@ -125,6 +126,10 @@
   #hb-sausage-6386 { top: 63.08%; left: 54.23%; width: 8.53%; height: 8.64%; }
   #hb-onions { top: 63.6789%; left: 37.1328%; width: 7.48096%; height: 7.60319%; }
   #hb-green-peppers { top: 63.4979%; left: 46.1099%; width: 7.34494%; height: 7.60319%; }
+  #hb-green-pep-6386 { top: 55.06%; left: 72.63%; width: 8.29%; height: 8.10%; }
+  #hb-half-left { top: 17.5%; left: 26.5%; width: 18.5%; height: 27.0%; }
+  #hb-half-whole { top: 17.5%; left: 45.3%; width: 18.5%; height: 27.0%; }
+  #hb-half-right { top: 17.5%; left: 64.0%; width: 18.5%; height: 27.0%; }
   #hb-black-olives { top: 63.3169%; left: 54.951%; width: 7.61697%; height: 7.96524%; }
   #hb-olives-6386 { top: 72.5449%; left: 36.5195%; width: 8.15537%; height: 8.09735%; }
   #hb-pineapple { top: 72.1873%; left: 27.8836%; width: 7.61697%; height: 7.78421%; }
