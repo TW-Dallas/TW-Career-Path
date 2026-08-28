@@ -781,37 +781,7 @@
         margin-top: 0;
     }
 
-/* ==========================================
-    STAGE 4: PHONE HARDWARE INTERACTIVE HIGHLIGHTS
-    ========================================== */
-    /* Unviewed: Pulsing Brand Red ring */
-    #hb-phone-park, #hb-phone-mute {
-        border: 3px solid var(--brand-red) !important;
-        border-radius: 8px !important;
-        background: rgba(255, 0, 0, 0.25) !important;
-        animation: hitbox-pulse 1.5s infinite;
-        cursor: pointer !important;
-    }
 
-    /* Viewed: Steady Brand Blue state (no pulse) */
-    #hb-phone-park.viewed, #hb-phone-mute.viewed {
-        border-color: var(--brand-blue) !important;
-        background: rgba(0, 144, 226, 0.25) !important;
-        animation: none !important;
-        box-shadow: 0 0 12px rgba(0, 144, 226, 0.6) !important;
-    }
-
-    @keyframes hitbox-pulse {
-        0% {
-            box-shadow: 0 0 0 0px rgba(255, 0, 0, 0.8);
-        }
-        70% {
-            box-shadow: 0 0 0 14px rgba(255, 0, 0, 0);
-        }
-        100% {
-            box-shadow: 0 0 0 0px rgba(255, 0, 0, 0);
-        }
-    }
 
     .classroom-container-wide {
         max-width: 1100px;
