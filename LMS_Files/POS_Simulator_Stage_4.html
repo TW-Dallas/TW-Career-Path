@@ -174,6 +174,53 @@
                 "image": "resources/POS_assets/Stage_4/POS_4.0.C.png",
                 "activeHitbox": "hb-carryout",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1 Practice</p><p style='margin-bottom: 16px;'><strong>Full Order Call</strong><br><br>Now you are ready to take your first full customer order! Enter the details on the POS screen as the customer provides them.</p><p style='margin-bottom: 24px;'>Press 'Play' above to start the call. If you fall behind, use <strong>⏸️ Put on Hold</strong> or <strong>⏪ Rewind 5s</strong> to manage your call pace.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Select the 'Carry Out' button to begin the order.</p>"
+            },
+            {
+                "step": 3,
+                "image": "resources/POS_assets/Stage_4/POS_4.1.png",
+                "activeHitbox": "hb-carryout-service",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p>",
+                "audio": {
+                    "file": "resources/POS_assets/Stage_4_audio/Example_3_Full.mp3"
+                }
+            },
+            {
+                "step": 4,
+                "image": "resources/POS_assets/Stage_4/POS_4.2.png",
+                "activeHitbox": "hb-cust-add",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Method:</strong> Carryout</div>",
+                "audio": {
+                    "file": "resources/POS_assets/Stage_4_audio/Example_3_Full.mp3"
+                }
+            },
+            // 1. Click Phone Box to open numpad
+            {
+                "step": 5,
+                "image": "resources/POS_assets/Stage_4/POS_4.3.png",
+                "activeHitbox": "hb-phone-field",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Method:</strong> Carryout</div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_3_Full.mp3" }
+            },
+            // 2. Type Phone Digits (Keyboard Entry)
+            {
+                "step": 6,
+                "image": "resources/POS_assets/Stage_4/POS_4.4.png",
+                "activeHitbox": "hb-phone-entry",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Method:</strong> Carryout</div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_3_Full.mp3" },
+                "input": {
+                    "type": "text",
+                    "expectedValue": "2145821300",
+                    "placeholder": "Enter Phone Number"
+                }
+            },
+            // 3. Click OK to confirm
+            {
+                "step": 7,
+                "image": "resources/POS_assets/Stage_4/POS_4.5.png",
+                "activeHitbox": "hb-phone-OK",
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Method:</strong> Carryout<div class='pos-ticket-header' style='margin-top: 12px;'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (214) 582-1300</div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_3_Full.mp3" }
             }
         ];
 
