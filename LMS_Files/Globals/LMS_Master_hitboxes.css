@@ -437,6 +437,7 @@
   /* Phone Training */
   #hb-phone-mute { top: 71.0359%; left: 74.9464%; width: 4.00857%; height: 4.7848%; }
   #hb-phone-park { top: 27.8254%; left: 74.67%; width: 7.04955%; height: 9.5696%; }
+  #hb-ringing-phone { top: 26.42%; left: 17.10%; width: 26.23%; height: 29.92%; }
 
   /* --- LOBBY SCENE HITBOXES (3:20 = 200s, 9 ITEMS) --- */
   #hb-trash-1, #hb-lobby-trash-1 { top: 78.6246%; left: 17.7124%; width: 12.5869%; height: 16.4051%; }
