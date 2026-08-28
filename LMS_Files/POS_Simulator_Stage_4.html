@@ -397,7 +397,8 @@
             if (rewindBtn) rewindBtn.style.display = allowHold ? "inline-block" : "none";
 
             if (nextAudioKey === currentAudioKey) {
-                const requireAll = stepData.audio.requireAllPlayed === true || (stepData.audio.tracks && stepData.audio.tracks.length > 1);
+                const isAdmin = localStorage.getItem('tw_admin_mode') === 'true' || new URLSearchParams(window.location.search).get('test') === 'true';
+                const requireAll = !isAdmin && (stepData.audio.requireAllPlayed === true || (stepData.audio.tracks && stepData.audio.tracks.length > 1));
                 const totalTracks = stepData.audio.tracks ? stepData.audio.tracks.length : 1;
 
                 getActiveHitboxIds(stepData).forEach(id => {
@@ -426,12 +427,13 @@
             ];
 
             const isSequential = stepData.audio.sequential !== false && tracks.length > 1;
-            const requireAll = stepData.audio.requireAllPlayed === true || tracks.length > 1;
+            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true' || new URLSearchParams(window.location.search).get('test') === 'true';
+            const requireAll = !isAdmin && (stepData.audio.requireAllPlayed === true || tracks.length > 1);
 
             let html = `<div class="audio-track-stack">`;
 
             tracks.forEach((track, index) => {
-                const isLocked = isSequential && index > 0;
+                const isLocked = !isAdmin && isSequential && index > 0;
                 const lockClass = isLocked ? 'locked' : '';
                 const lockIcon = isLocked ? '🔒 ' : '';
 
@@ -452,7 +454,7 @@
             html += `</div>`;
             document.getElementById('audio-track-container').innerHTML = html;
 
-            if (requireAll && localStorage.getItem('tw_admin_mode') !== 'true') {
+            if (requireAll) {
                 getActiveHitboxIds(stepData).forEach(id => {
                     const activeHb = document.getElementById(id);
                     if (activeHb) activeHb.style.display = 'none';
@@ -741,7 +743,8 @@
 
                 const pressedKey = event.key.toLowerCase();
 
-                if (stepData.audio && (stepData.audio.requireAllPlayed || (stepData.audio.tracks && stepData.audio.tracks.length > 1))) {
+                const isAdmin = localStorage.getItem('tw_admin_mode') === 'true' || new URLSearchParams(window.location.search).get('test') === 'true';
+                if (!isAdmin && stepData.audio && (stepData.audio.requireAllPlayed || (stepData.audio.tracks && stepData.audio.tracks.length > 1))) {
                     const totalTracks = stepData.audio.tracks ? stepData.audio.tracks.length : 1;
                     if (completedTracks.size < totalTracks) return;
                 }
