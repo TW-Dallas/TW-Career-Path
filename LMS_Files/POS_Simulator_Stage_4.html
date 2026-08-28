@@ -715,81 +715,104 @@
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 50. Pizza 2: Select 12\" Size
+            // 50. Pizza 2: Click New Pizza (or 12" / Parm Stuffed Crust directly)
             {
                 "step": 56,
                 "image": "resources/POS_assets/Stage_4/POS_4.45.png",
-                "activeHitbox": ["hb-size-12", "hb-size-12-6386", "hb-new-pizza"],
+                "activeHitbox": ["hb-new-pizza", "hb-size-12", "hb-size-12-6386", "hb-crust-PSC", "hb-crust-parm-stuffed", "hb-parm-stuffed-6386"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
-                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
+                "nextStepMap": {
+                    "hb-new-pizza": 57,
+                    "hb-size-12": 58,
+                    "hb-size-12-6386": 58,
+                    "hb-crust-PSC": 59,
+                    "hb-crust-parm-stuffed": 59,
+                    "hb-parm-stuffed-6386": 59
+                }
             },
-            // 51. Pizza 2: Select Parmesan Stuffed Crust
+            // 51. Pizza 2: Select 12" Size OR Parm Stuffed Crust directly
             {
                 "step": 57,
+                "image": "resources/POS_assets/Stage_4/POS_4.46.A.png",
+                "activeHitbox": ["hb-size-12", "hb-size-12-6386", "hb-crust-PSC", "hb-crust-parm-stuffed", "hb-parm-stuffed-6386"],
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
+                "nextStepMap": {
+                    "hb-size-12": 58,
+                    "hb-size-12-6386": 58,
+                    "hb-crust-PSC": 59,
+                    "hb-crust-parm-stuffed": 59,
+                    "hb-parm-stuffed-6386": 59
+                }
+            },
+            // 52. Pizza 2: Select Parmesan Stuffed Crust (from 12" selected)
+            {
+                "step": 58,
                 "image": "resources/POS_assets/Stage_4/POS_4.46.png",
                 "activeHitbox": ["hb-crust-PSC", "hb-crust-parm-stuffed", "hb-parm-stuffed-6386"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 52. Pizza 2: Select Sausage
+            // 53. Pizza 2: Select Sausage
             {
-                "step": 58,
+                "step": 59,
                 "image": "resources/POS_assets/Stage_4/POS_4.47.png",
                 "activeHitbox": ["hb-sausage-6386", "hb-sausage"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 53. Pizza 2: Select Extra (Cheese)
+            // 54. Pizza 2: Select Extra (Cheese)
             {
-                "step": 59,
+                "step": 60,
                 "image": "resources/POS_assets/Stage_4/POS_4.48.png",
                 "activeHitbox": ["hb-extra", "hb-top-extra", "hb-extra-6386"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 54. Pizza 2: Select Pizza Cheese
+            // 55. Pizza 2: Select Pizza Cheese
             {
-                "step": 60,
+                "step": 61,
                 "image": "resources/POS_assets/Stage_4/POS_4.49.png",
                 "activeHitbox": ["hb-pizza-cheese", "hb-cheese", "hb-top-cheese"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 55. Pizza 2: Select Half and Half Tab
+            // 56. Pizza 2: Select Half and Half Tab
             {
-                "step": 61,
+                "step": 62,
                 "image": "resources/POS_assets/Stage_4/POS_4.50.png",
                 "activeHitbox": ["hb-half-and-half", "hb-half-half"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 56. Pizza 2: Select Right Half
+            // 57. Pizza 2: Select Right Half
             {
-                "step": 62,
+                "step": 63,
                 "image": "resources/POS_assets/Stage_4/POS_4.51.png",
                 "activeHitbox": ["hb-half-right", "hb-right-half"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 57. Pizza 2: Select Mushroom (Right Half)
+            // 58. Pizza 2: Select Mushroom (Right Half)
             {
-                "step": 63,
+                "step": 64,
                 "image": "resources/POS_assets/Stage_4/POS_4.52.png",
                 "activeHitbox": ["hb-mushroom-6386", "hb-mushroom"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 58. Switch to Everything Else Tab
+            // 59. Switch to Everything Else Tab
             {
-                "step": 64,
+                "step": 65,
                 "image": "resources/POS_assets/Stage_4/POS_4.53.png",
                 "activeHitbox": ["hb-everything-else-tab", "hb-everything-tab"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
-            // 59. Select Breads/Desserts Category
+            // 60. Select Breads/Desserts Category
             {
-                "step": 65,
+                "step": 66,
                 "image": "resources/POS_assets/Stage_4/POS_4.54.png",
                 "activeHitbox": ["hb-bread-tab-6386", "hb-bread-tab"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
