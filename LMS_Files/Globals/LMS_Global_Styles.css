@@ -99,11 +99,13 @@
       position: relative; /* REQUIRED FOR BUTTON POSITIONING */
       flex-grow: 1; 
       background: white;
-      padding: 30px;
+      padding: 24px 24px 16px 24px;
       border-right: 2px solid var(--crust-med);
       display: flex;
       flex-direction: column;
-      overflow-y: auto; 
+      height: 100%;
+      box-sizing: border-box;
+      overflow: hidden; 
   }
   
   h2 { 
@@ -113,18 +115,21 @@
       text-transform: uppercase; 
       border-bottom: 2px solid var(--brand-red); 
       padding-bottom: 5px;
+      flex-shrink: 0;
   }
 
   #instruction-text { 
       font-family: 'OneDotCd', 'Arial Narrow', sans-serif; 
-      font-size: 1.1rem; /* Dropped from 1.1rem */
+      font-size: 1.1rem; 
       line-height: 1.4; 
       margin-top: 15px; 
-      flex-grow: 1; 
-      padding-bottom: 60px; /* Keep this so buttons don't overlap */
+      flex: 1 1 auto; 
+      min-height: 0; 
+      overflow-y: auto; 
+      padding-right: 6px; 
   } 
 
-.error-msg { 
+  .error-msg { 
       display: none; /* Controlled dynamically by JavaScript */
       background-color: rgba(255, 0, 0, 0.06); /* Soft opacity of var(--brand-red) */
       border: 1px solid rgba(255, 0, 0, 0.15); /* Soft border using var(--brand-red) */
@@ -134,11 +139,23 @@
       border-radius: 8px; 
       font-family: 'OneDotCd-Bold', sans-serif;
       font-size: 1.05rem;
-      margin: 15px 0; 
+      margin: 10px 0; 
       box-sizing: border-box; 
       text-align: center;
       width: 100%;
+      flex-shrink: 0;
       animation: fadeIn 0.2s ease-out;
+  }
+
+  .nav-strip {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0; 
+      padding-top: 12px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      background: white;
+      z-index: 10;
   }
   
   /* RIGHT: POS Screen */
