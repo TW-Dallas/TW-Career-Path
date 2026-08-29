@@ -1070,10 +1070,12 @@
             }
 
             // Enable or disable Hold/Rewind row based on step config (hidden for demo audio, enabled for live order)
-            const allowHold = stepData.audio && stepData.audio.allowHold !== false;
+            const allowHold = stepData.audio && stepData.audio.allowHold !== false && !stepData.audio.tracks;
             if (audioExtraRow) audioExtraRow.style.display = allowHold ? "flex" : "none";
             if (holdBtn) holdBtn.style.display = allowHold ? "inline-block" : "none";
             if (rewindBtn) rewindBtn.style.display = allowHold ? "inline-block" : "none";
+
+            const trackContainer = document.getElementById('audio-track-container');
 
             if (nextAudioKey === currentAudioKey) {
                 const isAdmin = localStorage.getItem('tw_admin_mode') === 'true' || new URLSearchParams(window.location.search).get('test') === 'true';
@@ -1101,43 +1103,59 @@
 
             audioPanel.style.display = 'block';
 
-            const tracks = stepData.audio.tracks || [
-                { id: "track-0", label: "Live Call", file: stepData.audio.file }
-            ];
+            if (allowHold) {
+                // Live Customer Call: Hide generic play/pause track stack, start live call directly
+                if (trackContainer) {
+                    trackContainer.style.display = 'none';
+                    trackContainer.innerHTML = '';
+                }
+                currentPlayingTrackIndex = 0;
+                audioPlayer.src = stepData.audio.file;
+                audioPlayer.play().catch(e => console.log("Live call audio autoplay note:", e));
+            } else {
+                // Demo / Hardware Tutorial Clips: Show sequential play/pause track list
+                if (trackContainer) {
+                    trackContainer.style.display = 'block';
+                }
 
-            const isSequential = stepData.audio.sequential !== false && tracks.length > 1;
-            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true' || new URLSearchParams(window.location.search).get('test') === 'true';
-            const requireAll = !isAdmin && (stepData.audio.requireAllPlayed === true || tracks.length > 1);
+                const tracks = stepData.audio.tracks || [
+                    { id: "track-0", label: "Audio Track", file: stepData.audio.file }
+                ];
 
-            let html = `<div class="audio-track-stack">`;
+                const isSequential = stepData.audio.sequential !== false && tracks.length > 1;
+                const isAdmin = localStorage.getItem('tw_admin_mode') === 'true' || new URLSearchParams(window.location.search).get('test') === 'true';
+                const requireAll = !isAdmin && (stepData.audio.requireAllPlayed === true || tracks.length > 1);
 
-            tracks.forEach((track, index) => {
-                const isLocked = !isAdmin && isSequential && index > 0;
-                const lockClass = isLocked ? 'locked' : '';
-                const lockIcon = isLocked ? '🔒 ' : '';
+                let html = `<div class="audio-track-stack">`;
 
-                html += `
-                    <div id="track-row-${index}" class="audio-track-row ${lockClass}">
-                        <div class="track-label">${lockIcon}${track.label}</div>
-                        <div style="display: flex; gap: 6px; align-items: center;">
-                            <span id="badge-track-${index}" class="track-badge pending">Unheard</span>
-                            <button id="btn-track-${index}" class="audio-btn" style="padding: 4px 10px; font-size: 0.8rem;" 
-                                ${isLocked ? 'disabled' : ''} onclick="playTrack(${index})">
-                                ▶ Play
-                            </button>
+                tracks.forEach((track, index) => {
+                    const isLocked = !isAdmin && isSequential && index > 0;
+                    const lockClass = isLocked ? 'locked' : '';
+                    const lockIcon = isLocked ? '🔒 ' : '';
+
+                    html += `
+                        <div id="track-row-${index}" class="audio-track-row ${lockClass}">
+                            <div class="track-label">${lockIcon}${track.label}</div>
+                            <div style="display: flex; gap: 6px; align-items: center;">
+                                <span id="badge-track-${index}" class="track-badge pending">Unheard</span>
+                                <button id="btn-track-${index}" class="audio-btn" style="padding: 4px 10px; font-size: 0.8rem;" 
+                                    ${isLocked ? 'disabled' : ''} onclick="playTrack(${index})">
+                                    ▶ Play
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                `;
-            });
-
-            html += `</div>`;
-            document.getElementById('audio-track-container').innerHTML = html;
-
-            if (requireAll) {
-                getActiveHitboxIds(stepData).forEach(id => {
-                    const activeHb = document.getElementById(id);
-                    if (activeHb) activeHb.style.display = 'none';
+                    `;
                 });
+
+                html += `</div>`;
+                if (trackContainer) trackContainer.innerHTML = html;
+
+                if (requireAll) {
+                    getActiveHitboxIds(stepData).forEach(id => {
+                        const activeHb = document.getElementById(id);
+                        if (activeHb) activeHb.style.display = 'none';
+                    });
+                }
             }
         }
 
