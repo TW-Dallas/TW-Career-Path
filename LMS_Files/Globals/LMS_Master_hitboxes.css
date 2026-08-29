@@ -428,9 +428,12 @@
   #hb-payment-tax-exempt { top: 57.705%; left: 30.5223%; width: 8.70511%; height: 9.41347%; }
   #hb-payment-tax-total-finish { top: 70.196%; left: 47.3885%; width: 8.84113%; height: 9.23244%; }
   #hb-school-no { top: 59.0371%; left: 50.3421%; width: 9.26118%; height: 9.38557%; }
+  #hb-rewards-missing-ok { top: 83.20%; left: 38.60%; width: 9.10%; height: 9.30%; }
   
   /* Finish */
   #hb-finish-tab { top: 87.6886%; left: 84.9808%; width: 14.9643%; height: 12.1617%; }
+  #hb-accept-order { top: 72.80%; left: 29.30%; width: 9.20%; height: 9.30%; }
+  #hb-confirm-order-yes { top: 59.20%; left: 40.00%; width: 9.20%; height: 9.40%; }
   #hb-finish-checkout { top: 72.4179%; left: 29.3795%; width: 9.06096%; height: 9.41843%; }
   #hb-send-order { top: 58.8962%; left: 39.7784%; width: 9.44109%; height: 9.88937%; }
 
