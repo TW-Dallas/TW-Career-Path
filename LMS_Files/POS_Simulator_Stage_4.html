@@ -522,7 +522,7 @@
                 "image": "resources/POS_assets/Stage_4/POS_4.29.png",
                 "activeHitbox": "hb-send-order",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 1</p><div class='pos-ticket' style='margin-bottom: 16px;'><div class='pos-ticket-header'>📋 SERVICE METHOD</div><strong>Method:</strong> Carryout<div class='pos-ticket-header' style='margin-top: 12px;'>📋 CUSTOMER DETAILS</div><strong>Phone:</strong> (214) 555-0186<br><strong>Name:</strong> Kimberly<div class='pos-ticket-header' style='margin-top: 12px;'>🍴 ORDER ITEMS</div><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 14\" Hand-Tossed Pepperoni<br><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 12\" Pan Sausage, Mushrooms<br><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 16pc Parm Bites<br><span style='color: var(--med-blue); margin-right: 4px; font-weight: bold;'>•</span> 8-Piece Hot Buffalo Wings (1 Ranch)<div class='pos-ticket-header' style='margin-top: 12px;'>💳 PAYMENT METHOD</div><strong>Method:</strong> Cash (Later)</div>",
-                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_3_Full.mp3" }
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_3_Full.mp3", "requireAudioFinished": true }
             },
             // --- ORDER 2 START (BOSS MODE: DANIEL DELIVERY ORDER) ---
             // 30. Coach Victor & Coach Cobby / Click Carryout to Start
@@ -936,7 +936,7 @@
                 "image": "resources/POS_assets/Stage_4/POS_4.68.png",
                 "activeHitbox": ["hb-confirm-order-yes"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
-                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
+                "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3", "requireAudioFinished": true }
             },
             // 75. You Are A Champion! Screen
             {
@@ -1193,6 +1193,9 @@
                         const activeHb = document.getElementById(id);
                         if (activeHb) activeHb.style.display = 'block';
                     });
+                    if (currentStepData && currentStepData.audio && currentStepData.audio.requireAudioFinished) {
+                        errorMsg.style.display = 'none';
+                    }
                 }
             };
         }
@@ -1388,6 +1391,17 @@
             const activeHitboxIds = getActiveHitboxIds(stepData);
 
             if (activeHitboxIds.includes(clickedId)) {
+                // Audio completion gate for end of live phone orders
+                const isAdmin = localStorage.getItem('tw_admin_mode') === 'true' || new URLSearchParams(window.location.search).get('test') === 'true';
+                if (!isAdmin && stepData.audio && stepData.audio.requireAudioFinished) {
+                    const totalTracks = stepData.audio.tracks ? stepData.audio.tracks.length : 1;
+                    if (completedTracks.size < totalTracks && (!audioPlayer.ended || audioPlayer.currentTime === 0)) {
+                        errorMsg.innerHTML = "🎧 <strong>Call in Progress:</strong> Please finish listening to the customer call to hear how the team member concludes the order!";
+                        errorMsg.style.display = 'block';
+                        return;
+                    }
+                }
+
                 errorMsg.style.display = 'none';
                 if (stepData.nextStepMap && stepData.nextStepMap[clickedId] !== undefined) {
                     currentStep = stepData.nextStepMap[clickedId];
@@ -1547,11 +1561,13 @@
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
 
             const activeIds = getActiveHitboxIds(stepData);
+            let foundCount = 0;
 
             if (activeIds.length > 0) {
                 activeIds.forEach(id => {
                     const activeHb = document.getElementById(id);
                     if (activeHb) {
+                        foundCount++;
                         activeHb.style.display = 'block';
                         activeHb.classList.remove('arrow-bottom');
 
@@ -1562,10 +1578,12 @@
                         }
 
                         handleInputForStep(stepData, activeHb);
-                    } else {
-                        reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${id}" but it was not found in the DOM.`);
                     }
                 });
+
+                if (foundCount === 0) {
+                    reportErrorToDeveloper('Missing Hitbox Element', `Expected at least one active hitbox from [${activeIds.join(', ')}] but none were found in the DOM.`);
+                }
 
                 handleAudioForStep(stepData);
             } else {
