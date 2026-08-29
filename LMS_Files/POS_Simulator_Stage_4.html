@@ -1521,7 +1521,13 @@
         }
 
         function loadStep(stepIndex) {
-            if (stepIndex >= sequence.length) {
+            if (stepIndex >= sequence.length - 1) {
+                // Final Step: Coach Mike debrief & live scorecard
+                const finalStepData = sequence[sequence.length - 1];
+                posImage.src = finalStepData.image; // POS_4.70.png
+                document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+                audioPanel.style.display = 'none';
+                audioPlayer.pause();
                 endSimulation();
                 return;
             }
@@ -1580,13 +1586,14 @@
 
             const finishBtn = document.getElementById('finish-sim-btn');
             if (finishBtn) {
-                finishBtn.style.display = (stepIndex === sequence.length - 1) ? 'inline-block' : 'none';
+                finishBtn.style.display = 'none';
             }
         }
 
         // --- END SIMULATION & SCORECARD DISPLAY ---
         function endSimulation() {
-            posImage.src = "resources/POS_assets/under_construction.png";
+            // Keep POS_4.70.png (Coach Mike) visible as the final background
+            posImage.src = "resources/POS_assets/Stage_4/POS_4.70.png";
 
             const metrics = calculateScorecard();
             const mins = Math.floor(metrics.timeSpentSeconds / 60);
@@ -1594,9 +1601,9 @@
             const formattedTime = `${mins}m ${secs}s`;
 
             instructionText.innerHTML = `
-                <p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase;'>Stage 4 Complete</p>
-                <h3 style="margin-top: 0; color: var(--brand-blue);">Order Entry Practice Finished!</h3>
-                <p>Great job! You have completed the final stage of the Order Entry simulator.</p>
+                <p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase;'>Stage 4 Mastered</p>
+                <h3 style="margin-top: 0; color: #27ae60;">🎉 Order Entry Certified!</h3>
+                <p>Outstanding job tackling the live order rush in Stage 4!</p>
                 
                 <div class="scorecard-card">
                     <div class="scorecard-header">
@@ -1634,21 +1641,23 @@
             audioPlayer.pause();
 
             const finishBtn = document.getElementById('finish-sim-btn');
-            finishBtn.style.display = 'inline-block';
-            finishBtn.innerText = "Save & Return to Day 1";
+            if (finishBtn) {
+                finishBtn.style.display = 'inline-block';
+                finishBtn.innerText = "Save & Return to Day 1";
 
-            finishBtn.onclick = function () {
-                finishBtn.innerText = "Saving Evaluation...";
-                finishBtn.style.pointerEvents = "none";
-                finishBtn.style.opacity = "0.5";
+                finishBtn.onclick = function () {
+                    finishBtn.innerText = "Saving Evaluation...";
+                    finishBtn.style.pointerEvents = "none";
+                    finishBtn.style.opacity = "0.5";
 
-                sendProgressUpdate('Day 1 Mod 4', 'Completed');
-                localStorage.setItem('mod4_complete', 'true');
+                    sendProgressUpdate('Day 1 Mod 4', 'Completed');
+                    localStorage.setItem('mod4_complete', 'true');
 
-                setTimeout(() => {
-                    window.location.href = 'lms_dashboard.html#day1';
-                }, 1500);
-            };
+                    setTimeout(() => {
+                        window.location.href = 'lms_dashboard.html#day1';
+                    }, 1500);
+                };
+            }
         }
 
         function goBack() {
