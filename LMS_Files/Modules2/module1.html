@@ -508,7 +508,10 @@
         }
 
         function onCoachEnded() {
-            document.getElementById('coach-play-btn').innerText = "▶";
+            const btn = document.getElementById('coach-play-btn');
+            if (btn) btn.innerText = "▶";
+            step1Passed = true;
+            document.getElementById('btn-next').classList.remove('btn-disabled');
         }
 
         function toggleExAudio(key) {
@@ -532,30 +535,21 @@
         }
 
         function handleStep1Confirm(btn) {
-            btn.classList.add('correct');
-            const feedback = document.getElementById('step1-feedback');
-            feedback.innerHTML = "🎯 <strong>Pre-Game Huddle Complete!</strong> Click 'Next Step' below to scout Film #1!";
-            feedback.style.display = 'block';
             step1Passed = true;
             document.getElementById('btn-next').classList.remove('btn-disabled');
+            changeStep(1);
         }
 
         function handleStep2Confirm(btn) {
-            btn.classList.add('correct');
-            const feedback = document.getElementById('step2-feedback');
-            feedback.innerHTML = "🎯 <strong>Film #1 Notes Recorded!</strong> Click 'Next Step' below to scout Film #2!";
-            feedback.style.display = 'block';
             step2Passed = true;
             document.getElementById('btn-next').classList.remove('btn-disabled');
+            changeStep(1);
         }
 
         function handleStep3Confirm(btn) {
-            btn.classList.add('correct');
-            const feedback = document.getElementById('step3-feedback');
-            feedback.innerHTML = "🎯 <strong>Film #2 Notes Recorded!</strong> Click 'Next Step' below to enter the Live Call Arena!";
-            feedback.style.display = 'block';
             step3Passed = true;
             document.getElementById('btn-next').classList.remove('btn-disabled');
+            changeStep(1);
         }
 
         // ========================================================
