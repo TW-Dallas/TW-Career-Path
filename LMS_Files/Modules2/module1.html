@@ -123,14 +123,15 @@
                                     <div id="call1-progress-bar" style="height: 100%; width: 0%; background: var(--brand-blue); transition: width 0.1s linear;"></div>
                                 </div>
                             </div>
-                            <span id="call1-time" style="font-family: 'OneDotCd'; font-size: 0.75rem; color: #64748b;">0:00 / 0:15</span>
-                            <audio id="audio-call1" src="../resources/Day2_audio/Customer_Concern_Credit.mp3" ontimeupdate="onCall1TimeUpdate()" onended="onCall1Ended()"></audio>
+                            <span id="call1-time" style="font-family: 'OneDotCd'; font-size: 0.75rem; color: #64748b;">0:00 / 2:47</span>
+                            <audio id="audio-call1" src="../resources/Day2_audio/Customer_Concern_Credit_V2.mp3" ontimeupdate="onCall1TimeUpdate()" onended="onCall1Ended()"></audio>
                         </div>
 
                         <!-- Transcript -->
                         <div style="background: #fff; border: 1px solid var(--crust-med); border-radius: 6px; padding: 0.65rem; font-family: 'OneDotCd'; font-size: 0.85rem; line-height: 1.3; color: var(--crust-deep);">
-                            <p style="margin: 0 0 0.35rem 0;"><strong>Customer:</strong> <em>"Yes, I have to speak to a manager... I picked up my pizza and got the wrong order."</em></p>
-                            <p id="call1-highlight-line" style="margin: 0; color: #64748b;"><strong>Team Member:</strong> <em>"Oh no! Okay, yeah, I'm sure I can help you with this..."</em></p>
+                            <p style="margin: 0 0 0.35rem 0;"><strong>Angel:</strong> <em>"Domino's Pizza, this is Angel, how can I help you today?"</em></p>
+                            <p style="margin: 0 0 0.35rem 0;"><strong>Jonathan:</strong> <em>"Yes, I need to speak to a manager... I picked up my pizza and got the wrong order."</em></p>
+                            <p id="call1-highlight-line" style="margin: 0; color: #64748b;"><strong>Angel:</strong> <em>"Oh no! Okay, yeah, I can definitely help you with this..."</em></p>
                         </div>
                     </div>
 
@@ -386,15 +387,18 @@
                 const percent = (audio1.currentTime / audio1.duration) * 100;
                 document.getElementById('call1-progress-bar').style.width = percent + '%';
                 
-                const curS = Math.floor(audio1.currentTime);
-                document.getElementById('call1-time').innerText = `0:${curS.toString().padStart(2, '0')} / 0:15`;
+                const curM = Math.floor(audio1.currentTime / 60);
+                const curS = Math.floor(audio1.currentTime % 60).toString().padStart(2, '0');
+                const durM = Math.floor(audio1.duration / 60);
+                const durS = Math.floor(audio1.duration % 60).toString().padStart(2, '0');
+                document.getElementById('call1-time').innerText = `${curM}:${curS} / ${durM}:${durS}`;
 
-                if (audio1.currentTime >= 6) {
+                if (audio1.currentTime >= 12.0) {
                     document.getElementById('call1-highlight-line').style.color = "var(--brand-blue)";
                     document.getElementById('call1-highlight-line').style.fontWeight = "bold";
                 }
 
-                if (audio1.currentTime >= 14 && !call1AutoPaused) {
+                if (audio1.currentTime >= 16.6 && !call1AutoPaused) {
                     audio1.pause();
                     call1AutoPaused = true;
                     document.getElementById('call1-play-btn').innerText = "▶";
@@ -407,6 +411,9 @@
 
         function onCall1Ended() {
             document.getElementById('call1-play-btn').innerText = "▶";
+            document.getElementById('call1-status-pill').innerText = "Complete ✓";
+            document.getElementById('call1-status-pill').style.background = "#dcfce7";
+            document.getElementById('call1-status-pill').style.color = "#15803d";
         }
 
         function handleCall1Choice(btn, isCorrect) {
@@ -423,14 +430,14 @@
             if (isCorrect) {
                 btn.classList.add('correct');
                 feedback.style.color = "#2e7d32";
-                feedback.innerHTML = "🌟 <strong>Spot on!</strong> Genuine empathy ('Oh no!') and immediate ownership ('I can help you') lowered the tension.";
+                feedback.innerHTML = "🌟 <strong>Spot on!</strong> Angel validated the disappointment with genuine empathy (<em>'Oh no!'</em>) and took immediate personal ownership (<em>'I can definitely help you with this'</em>).";
                 feedback.style.display = 'block';
                 step2Passed = true;
                 nextBtn.classList.remove('btn-disabled');
             } else {
                 btn.classList.add('wrong');
                 feedback.style.color = "var(--brand-red)";
-                feedback.innerHTML = "Not quite! Look at how the team member reacted with empathy before jumping into system remedies.";
+                feedback.innerHTML = "Not quite! Look at how Angel reacted with empathy and direct willingness to help before offering specific system remedies.";
                 feedback.style.display = 'block';
             }
         }
