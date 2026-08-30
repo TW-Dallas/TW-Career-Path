@@ -127,11 +127,9 @@
                             <audio id="audio-call1" src="../resources/Day2_audio/Customer_Concern_Credit_V2.mp3" ontimeupdate="onCall1TimeUpdate()" onended="onCall1Ended()"></audio>
                         </div>
 
-                        <!-- Transcript -->
-                        <div style="background: #fff; border: 1px solid var(--crust-med); border-radius: 6px; padding: 0.65rem; font-family: 'OneDotCd'; font-size: 0.85rem; line-height: 1.3; color: var(--crust-deep);">
-                            <p style="margin: 0 0 0.35rem 0;"><strong>Angel:</strong> <em>"Domino's Pizza, this is Angel, how can I help you today?"</em></p>
-                            <p style="margin: 0 0 0.35rem 0;"><strong>Jonathan:</strong> <em>"Yes, I need to speak to a manager... I picked up my pizza and got the wrong order."</em></p>
-                            <p id="call1-highlight-line" style="margin: 0; color: #64748b;"><strong>Angel:</strong> <em>"Oh no! Okay, yeah, I can definitely help you with this..."</em></p>
+                        <!-- Scrollable Live Transcript -->
+                        <div id="call1-transcript-box" style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 6px; padding: 0.65rem 0.85rem; height: 160px; overflow-y: auto; scroll-behavior: smooth; font-family: 'OneDotCd'; font-size: 0.88rem; line-height: 1.35; color: #64748b; text-align: left;">
+                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
 
@@ -192,11 +190,9 @@
                             <audio id="audio-call2" src="../resources/Day2_audio/Customer_Concern_Credit_2_V2.mp3" ontimeupdate="onCall2TimeUpdate()" onended="onCall2Ended()"></audio>
                         </div>
 
-                        <!-- Transcript -->
-                        <div style="background: #fff; border: 1px solid var(--crust-med); border-radius: 6px; padding: 0.65rem; font-family: 'OneDotCd'; font-size: 0.85rem; line-height: 1.3; color: var(--crust-deep);">
-                            <p style="margin: 0 0 0.35rem 0;"><strong>Liz:</strong> <em>"Domino's Pizza, this is Liz, what can I get started for you today?"</em></p>
-                            <p style="margin: 0 0 0.35rem 0;"><strong>Aiden:</strong> <em>"Hi there, good evening Liz, this is Aiden. I placed a delivery order and I kind of didn't get what I ordered."</em></p>
-                            <p id="call2-resume-line" style="margin: 0; color: #94a3b8; font-style: italic;">[Audio pauses: Choose what Liz says next...]</p>
+                        <!-- Scrollable Live Transcript -->
+                        <div id="call2-transcript-box" style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 6px; padding: 0.65rem 0.85rem; height: 160px; overflow-y: auto; scroll-behavior: smooth; font-family: 'OneDotCd'; font-size: 0.88rem; line-height: 1.35; color: #64748b; text-align: left;">
+                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
 
@@ -363,6 +359,118 @@
         }
 
         // ========================================================
+        // TRANSCRIPT DATA & LIVE SYNC ENGINE
+        // ========================================================
+        const CALL1_TRANSCRIPT = [
+            { start: 0.0, end: 2.7, speaker: "Angel", text: "Domino's Pizza, this is Angel, how can I help you today?" },
+            { start: 2.7, end: 12.4, speaker: "Jonathan", text: "Yes, I need to speak to a manager... I had an issue with my order. I just came to pick up my pizza about 12 minutes ago, and it looks like I got the wrong order." },
+            { start: 12.4, end: 20.0, speaker: "Angel", text: "Oh no! Okay, yeah, I can definitely help you with this. Can I start by getting your phone number so I can pull up the order?" },
+            { start: 20.0, end: 25.3, speaker: "Jonathan", text: "Yes, it's 469-881-2700." },
+            { start: 25.3, end: 28.7, speaker: "Angel", text: "All right, under Jonathan?" },
+            { start: 28.8, end: 36.8, speaker: "Angel", text: "Okay, let's see... I see right here you ordered a Large ExtravaganZZa. Is that correct?" },
+            { start: 36.8, end: 51.8, speaker: "Jonathan", text: "That's what I ordered, but somehow I got a large cheese pizza, and I'm not really happy about it. Tonight is my night to figure out dinner. I needed something quick, but now I'm running late to pick up my little ones, and I've got the wrong pizza." },
+            { start: 51.8, end: 62.0, speaker: "Angel", text: "I completely understand the frustration, Jonathan. I am very, very sorry that you received the wrong order, and I can for sure make that right for you." },
+            { start: 62.8, end: 71.1, speaker: "Angel", text: "So just to make sure I have everything right, you ordered a Large ExtravaganZZa, but received a large cheese?" },
+            { start: 71.1, end: 81.2, speaker: "Jonathan", text: "Correct, and I definitely need a replacement, but I'm running behind. I don't know if I can come back after I pick up my kids because I'm already late for another engagement tonight." },
+            { start: 81.2, end: 93.6, speaker: "Angel", text: "I see right here that you've ordered delivery from us before, and you're within our delivery area. I'd be happy to remake that pizza right now, and I will send it out to your house for delivery for free." },
+            { start: 93.6, end: 104.1, speaker: "Jonathan", text: "Oh man, that would be a lifesaver. The kids are hungry, and my wife is already asking what I'm bringing home. That would be great. Do I need to bring this other pizza back later?" },
+            { start: 104.1, end: 115.0, speaker: "Angel", text: "No, no, no. You can completely keep that on us. Like I said, that was 100% our mistake. You keep that. Maybe the kids can have some extra pizza." },
+            { start: 115.0, end: 127.6, speaker: "Jonathan", text: "Oh okay, they'll love that. We order from you guys all the time, and you usually do a great job. I definitely should have checked before I left, but thank you for helping me out. You guys delivering it makes a huge difference." },
+            { start: 128.4, end: 135.2, speaker: "Angel", text: "Yes sir, just to verify the address. This is going to 8120 Lakeview Parkway, correct?" },
+            { start: 135.9, end: 142.8, speaker: "Jonathan", text: "Yes, and if you can just have the driver leave it on the porch in case I'm still running a few minutes behind, that would be phenomenal." },
+            { start: 143.3, end: 154.7, speaker: "Angel", text: "For sure. And as another token of appreciation since you mentioned you have kiddos, I'm going to go ahead and throw in an order of our Marbled Cookie Brownies for free." },
+            { start: 155.4, end: 161.2, speaker: "Jonathan", text: "Oh, I haven't had the brownies before. I'm sure they'll love them. Thank you Angel, you did a great job." },
+            { start: 161.9, end: 167.2, speaker: "Angel", text: "I appreciate it, Jonathan. Again, I hope this makes up for our mishap. Have a great night." }
+        ];
+
+        const CALL2_TRANSCRIPT = [
+            { start: 0.0, end: 3.9, speaker: "Liz", text: "Domino's Pizza, this is Liz, what can I get started for you today?" },
+            { start: 3.9, end: 11.0, speaker: "Aiden", text: "Hi there, good evening Liz, this is Aiden. I placed a delivery order and I kind of didn't get what I ordered." },
+            { start: 11.0, end: 16.6, speaker: "Liz", text: "Oh no, I'm so sorry about that. Was that a delivery order placed for today?" },
+            { start: 16.6, end: 19.8, speaker: "Aiden", text: "Yes, I just got it about five minutes ago." },
+            { start: 19.8, end: 29.2, speaker: "Liz", text: "Gotcha. Well, I'd be more than happy to get that taken care of for you. I just need a little bit of information so I can track your order. Can I get your phone number please?" },
+            { start: 30.2, end: 35.6, speaker: "Aiden", text: "Yeah, it's 214-873-1900." },
+            { start: 36.3, end: 41.0, speaker: "Liz", text: "Perfect, thank you. And if you don't mind me asking, what was missing or incorrect?" },
+            { start: 41.8, end: 47.8, speaker: "Aiden", text: "I was supposed to have a large pizza with jalapenos, but I received one with sausage and bell peppers." },
+            { start: 48.6, end: 61.3, speaker: "Liz", text: "Oh goodness, I apologize about that. That would frustrate me too. I can see right here that's exactly what you ordered: Large pizza with jalapenos. I can do one of two things for you." },
+            { start: 61.8, end: 76.1, speaker: "Liz", text: "We're running a delivery time of about 25 to 35 minutes right now, and I'd be more than happy to get that made hot and fresh and sent right back out to you. Or if it's more convenient, I can issue a store credit for the next time you order." },
+            { start: 77.0, end: 80.6, speaker: "Aiden", text: "Yeah, it's already kind of getting late, so I'll take the credit." },
+            { start: 81.2, end: 92.8, speaker: "Liz", text: "Okay, not a problem at all. Your order total was $24.37. What I'm going to do is bump that up to an even $35 credit on your account." },
+            { start: 93.4, end: 99.9, speaker: "Liz", text: "Not only will that cover your pizza next time, but it'll give you the chance to try one of our desserts or add on some wings." },
+            { start: 100.6, end: 103.4, speaker: "Aiden", text: "Oh, yes ma'am. I really appreciate that." },
+            { start: 104.1, end: 115.8, speaker: "Liz", text: "No worries at all. Next time you order, just use that same phone number, the one ending in 1900, and let us know you have a credit. We'll apply it directly to your total." },
+            { start: 116.3, end: 117.8, speaker: "Aiden", text: "Awesome. Thank you Liz." },
+            { start: 118.6, end: 125.8, speaker: "Liz", text: "Thank you, Aiden. We look forward to serving you next time. Have a great night." }
+        ];
+
+        let c1ActiveIdx = -1;
+        let c2ActiveIdx = -1;
+
+        function renderTranscripts() {
+            const box1 = document.getElementById('call1-transcript-box');
+            if (box1) {
+                box1.innerHTML = CALL1_TRANSCRIPT.map((item, idx) => `
+                    <p id="c1-line-${idx}" style="margin: 0 0 0.45rem 0; padding: 2px 4px; border-radius: 4px; transition: all 0.2s ease;">
+                        <strong>${item.speaker}:</strong> <em>"${item.text}"</em>
+                    </p>
+                `).join('');
+            }
+
+            const box2 = document.getElementById('call2-transcript-box');
+            if (box2) {
+                box2.innerHTML = CALL2_TRANSCRIPT.map((item, idx) => `
+                    <p id="c2-line-${idx}" style="margin: 0 0 0.45rem 0; padding: 2px 4px; border-radius: 4px; transition: all 0.2s ease;">
+                        <strong>${item.speaker}:</strong> <em>"${item.text}"</em>
+                    </p>
+                `).join('');
+            }
+        }
+
+        function syncCall1Transcript(time) {
+            const idx = CALL1_TRANSCRIPT.findIndex(l => time >= l.start && time < l.end);
+            if (idx !== -1 && idx !== c1ActiveIdx) {
+                if (c1ActiveIdx !== -1) {
+                    const prev = document.getElementById(`c1-line-${c1ActiveIdx}`);
+                    if (prev) {
+                        prev.style.color = "#64748b";
+                        prev.style.fontWeight = "normal";
+                        prev.style.background = "transparent";
+                    }
+                }
+                const cur = document.getElementById(`c1-line-${idx}`);
+                if (cur) {
+                    cur.style.color = "var(--dark-blue)";
+                    cur.style.fontWeight = "bold";
+                    cur.style.background = "rgba(0, 144, 226, 0.08)";
+                    cur.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                }
+                c1ActiveIdx = idx;
+            }
+        }
+
+        function syncCall2Transcript(time) {
+            const idx = CALL2_TRANSCRIPT.findIndex(l => time >= l.start && time < l.end);
+            if (idx !== -1 && idx !== c2ActiveIdx) {
+                if (c2ActiveIdx !== -1) {
+                    const prev = document.getElementById(`c2-line-${c2ActiveIdx}`);
+                    if (prev) {
+                        prev.style.color = "#64748b";
+                        prev.style.fontWeight = "normal";
+                        prev.style.background = "transparent";
+                    }
+                }
+                const cur = document.getElementById(`c2-line-${idx}`);
+                if (cur) {
+                    cur.style.color = "var(--dark-blue)";
+                    cur.style.fontWeight = "bold";
+                    cur.style.background = "rgba(0, 144, 226, 0.08)";
+                    cur.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                }
+                c2ActiveIdx = idx;
+            }
+        }
+
+        // ========================================================
         // STEP 2: SCENARIO 1 AUDIO (DECONSTRUCT THE PLAY)
         // ========================================================
         const audio1 = document.getElementById('audio-call1');
@@ -395,10 +503,7 @@
                 const durS = Math.floor(audio1.duration % 60).toString().padStart(2, '0');
                 document.getElementById('call1-time').innerText = `${curM}:${curS} / ${durM}:${durS}`;
 
-                if (audio1.currentTime >= 12.0) {
-                    document.getElementById('call1-highlight-line').style.color = "var(--brand-blue)";
-                    document.getElementById('call1-highlight-line').style.fontWeight = "bold";
-                }
+                syncCall1Transcript(audio1.currentTime);
 
                 if (audio1.currentTime >= 16.6 && !call1AutoPaused) {
                     audio1.pause();
@@ -415,8 +520,8 @@
             call1AudioCompleted = true;
             document.getElementById('call1-play-btn').innerText = "▶";
             document.getElementById('call1-status-pill').innerText = "Call Complete ✓";
-            document.getElementById('call1-status-pill').style.background = "#dcfce7";
-            document.getElementById('call1-status-pill').style.color = "#15803d";
+            document.getElementById('call1-status-pill').style.background = "rgba(0, 144, 226, 0.15)";
+            document.getElementById('call1-status-pill').style.color = "var(--dark-blue)";
 
             if (call1QuestionAnswered) {
                 step2Passed = true;
@@ -492,6 +597,8 @@
                 const durS = Math.floor(audio2.duration % 60).toString().padStart(2, '0');
                 document.getElementById('call2-time').innerText = `${curM}:${curS} / ${durM}:${durS}`;
 
+                syncCall2Transcript(audio2.currentTime);
+
                 if (audio2.currentTime >= 11.0 && !call2PausedAtShot) {
                     audio2.pause();
                     call2PausedAtShot = true;
@@ -532,9 +639,6 @@
                 feedback.style.color = "var(--dark-blue)";
                 feedback.innerHTML = "🏆 <strong>Exact winning play!</strong> Immediate ownership and sincere apology.<br><span style='font-family: OneDotCd; font-size: 0.88rem; color: #64748b;'>Resuming recording in 3 seconds to hear Liz speak your response...</span>";
                 feedback.style.display = 'block';
-
-                document.getElementById('call2-resume-line').innerHTML = '<strong>Liz:</strong> <span style="color: var(--dark-blue); font-weight: bold;">"Oh no, I\'m so sorry about that. Was that a delivery order placed for today?"</span>';
-                document.getElementById('call2-resume-line').style.fontStyle = "normal";
                 call2QuestionAnswered = true;
 
                 if (!call2AudioCompleted) {
@@ -652,6 +756,9 @@
             step3Passed = true;
             document.getElementById('btn-next').classList.remove('btn-disabled');
         }
+
+        // Initialize dynamic live transcripts
+        renderTranscripts();
     </script>
 </body>
 </html>
