@@ -188,25 +188,17 @@
                         </div>
                     </div>
 
-                    <!-- Right: Call the Shot Decision Block -->
+                    <!-- Right: Dynamic Multi-Decision Call the Shot Engine -->
                     <div style="text-align: left;">
-                        <p style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.05rem; margin: 0 0 0.25rem 0;">
-                            🎧 Call the Shot: What should Liz say next?
+                        <p id="call2-cp-badge" style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.05rem; margin: 0 0 0.25rem 0;">
+                            🎧 Call the Shot 1 of 3: Opening Recovery
                         </p>
-                        <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.3; margin: 0 0 0.65rem 0;">
-                            Aiden's delivery order arrived incorrect. What is the most effective immediate response?
+                        <p id="call2-cp-prompt" style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.65rem 0;">
+                            Aiden calls explaining she received the wrong pizza. What is the most effective immediate response for Liz to say next?
                         </p>
 
                         <div id="call2-options" style="display: flex; flex-direction: column; gap: 6px;">
-                            <button type="button" class="quiz-option" style="padding: 0.65rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall2Choice(this, false, 'skeptical')">
-                                A. "What did the driver give you? Are you sure you checked the whole box?"
-                            </button>
-                            <button type="button" class="quiz-option" style="padding: 0.65rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall2Choice(this, false, 'pass_buck')">
-                                B. "Hold on, let me put you on hold while I ask someone in back."
-                            </button>
-                            <button type="button" class="quiz-option" style="padding: 0.65rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall2Choice(this, true, 'pro_move')">
-                                C. "Oh no, I'm so sorry about that. Was that a delivery order placed for today?"
-                            </button>
+                            <!-- Populated dynamically via JS -->
                         </div>
 
                         <p id="call2-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 0; display: none;"></p>
@@ -645,9 +637,57 @@
         // STEP 3: SCENARIO 2 AUDIO (CALL THE SHOT)
         // ========================================================
         const audio2 = document.getElementById('audio-call2');
-        let call2PausedAtShot = false;
-        let call2QuestionAnswered = false;
+        let call2CpIndex = 0;
+        let call2CpCompleted = [false, false, false];
         let call2AudioCompleted = false;
+
+        const CALL2_CHECKPOINTS = [
+            {
+                time: 11.0,
+                badge: "🎧 Call the Shot 1 of 3: Opening Recovery (Listen & Empathize)",
+                prompt: "Aiden calls explaining she received the wrong pizza. What is the most effective immediate response for Liz to say next?",
+                options: [
+                    { text: "A. \"What did the driver give you? Are you sure you checked the whole box?\"", correct: false, feedback: "Questioning the customer immediately creates defensive friction." },
+                    { text: "B. \"Hold on, let me put you on hold while I ask someone in back.\"", correct: false, feedback: "Putting an upset customer on hold immediately hurts the interaction." },
+                    { text: "C. \"Oh no, I'm so sorry about that. Was that a delivery order placed for today?\"", correct: true, feedback: "🏆 <strong>Exact winning play!</strong> Liz takes immediate personal ownership with an empathetic apology." }
+                ]
+            },
+            {
+                time: 61.3,
+                badge: "🎧 Call the Shot 2 of 3: Offering Solutions (Do What It Takes)",
+                prompt: "Liz verified that Aiden ordered a Large Jalapeño pizza but received sausage and peppers. What recovery options should Liz present?",
+                options: [
+                    { text: "A. \"Well, you can bring it back up to the store and we will swap it out.\"", correct: false, feedback: "Forcing a delivery customer to drive to the store is not 5-star service." },
+                    { text: "B. \"We're running a delivery time of about 25 to 35 minutes right now, and I'd be more than happy to get that made hot and fresh and sent right back out to you. Or if it's more convenient, I can issue a store credit for the next time you order.\"", correct: true, feedback: "🌟 <strong>Spot on!</strong> Giving the customer the choice between an immediate fresh delivery remake or a store credit puts them in control." },
+                    { text: "C. \"I can give you a coupon code for $5 off your next online order.\"", correct: false, feedback: "Coupons do not make up for an incorrect meal delivered tonight." }
+                ]
+            },
+            {
+                time: 87.0,
+                badge: "🎧 Call the Shot 3 of 3: The WOW Recovery (Stand by Our Promise)",
+                prompt: "Aiden chooses the store credit because it's getting late. Her order total was $24.37. How should Liz finalize the credit to build lifelong loyalty?",
+                options: [
+                    { text: "A. \"Okay, I wrote down $24.37 under your name in our store book.\"", correct: false, feedback: "A bare-minimum credit does nothing to turn a mistake into a memorable positive experience." },
+                    { text: "B. \"What I'm going to do is bump that up to an even $35 credit on your account. Not only will that cover your pizza next time, but it'll give you the chance to try one of our desserts or add on some wings.\"", correct: true, feedback: "🎉 <strong>The WOW Move!</strong> Bumping the credit to $35 completely covers the remake plus treats next time, turning a mistake into lifelong customer loyalty!" },
+                    { text: "C. \"I will credit $20.00 since the delivery driver tip cannot be credited.\"", correct: false, feedback: "Shortchanging the customer will guarantee they never order again." }
+                ]
+            }
+        ];
+
+        function renderCall2Checkpoint(idx) {
+            const cp = CALL2_CHECKPOINTS[idx];
+            if (!cp) return;
+            document.getElementById('call2-cp-badge').innerText = cp.badge;
+            document.getElementById('call2-cp-prompt').innerHTML = cp.prompt;
+            const optBox = document.getElementById('call2-options');
+            optBox.innerHTML = cp.options.map((opt, oIdx) => `
+                <button type="button" class="quiz-option" style="padding: 0.65rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall2CheckpointChoice(this, ${idx}, ${oIdx})">
+                    ${opt.text}
+                </button>
+            `).join('');
+            const feedback = document.getElementById('call2-feedback');
+            feedback.style.display = 'none';
+        }
 
         function toggleCall2Audio() {
             const btn = document.getElementById('call2-play-btn');
@@ -676,13 +716,17 @@
 
                 syncCall2Transcript(audio2.currentTime);
 
-                if (audio2.currentTime >= 11.0 && !call2PausedAtShot) {
-                    audio2.pause();
-                    call2PausedAtShot = true;
-                    document.getElementById('call2-play-btn').innerText = "▶";
-                    document.getElementById('call2-status-pill').innerText = "Decision Point ⏸";
-                    document.getElementById('call2-status-pill').style.background = "#fef3c7";
-                    document.getElementById('call2-status-pill').style.color = "#b45309";
+                for (let i = 0; i < CALL2_CHECKPOINTS.length; i++) {
+                    if (audio2.currentTime >= CALL2_CHECKPOINTS[i].time && !call2CpCompleted[i]) {
+                        audio2.pause();
+                        call2CpIndex = i;
+                        renderCall2Checkpoint(i);
+                        document.getElementById('call2-play-btn').innerText = "▶";
+                        document.getElementById('call2-status-pill').innerText = `Decision ${i + 1}/3 ⏸`;
+                        document.getElementById('call2-status-pill').style.background = "#fef3c7";
+                        document.getElementById('call2-status-pill').style.color = "#b45309";
+                        break;
+                    }
                 }
             }
         }
@@ -694,13 +738,16 @@
             document.getElementById('call2-status-pill').style.background = "rgba(0, 144, 226, 0.15)";
             document.getElementById('call2-status-pill').style.color = "var(--dark-blue)";
 
-            if (call2QuestionAnswered) {
+            const allPassed = call2CpCompleted.every(Boolean);
+            if (allPassed) {
                 step3Passed = true;
                 document.getElementById('btn-next').classList.remove('btn-disabled');
             }
         }
 
-        function handleCall2Choice(btn, isCorrect, type) {
+        function handleCall2CheckpointChoice(btn, cpIdx, optIdx) {
+            const cp = CALL2_CHECKPOINTS[cpIdx];
+            const opt = cp.options[optIdx];
             const block = document.getElementById('call2-options');
             block.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected', 'correct', 'wrong'));
             btn.classList.add('selected');
@@ -708,15 +755,17 @@
             const feedback = document.getElementById('call2-feedback');
             const nextBtn = document.getElementById('btn-next');
 
-            if (!userAnswers['m1_call2']) userAnswers['m1_call2'] = [];
-            userAnswers['m1_call2'].push(btn.innerText.trim());
+            if (!userAnswers[`m1_call2_decision${cpIdx + 1}`]) userAnswers[`m1_call2_decision${cpIdx + 1}`] = [];
+            userAnswers[`m1_call2_decision${cpIdx + 1}`].push(btn.innerText.trim());
 
-            if (isCorrect) {
+            if (opt.correct) {
                 btn.classList.add('correct');
                 feedback.style.color = "var(--dark-blue)";
-                feedback.innerHTML = "🏆 <strong>Exact winning play!</strong> Immediate ownership and sincere apology.<br><span style='font-family: OneDotCd; font-size: 0.88rem; color: #64748b;'>Resuming recording in 3 seconds to hear Liz speak your response...</span>";
+                const isLast = (cpIdx === CALL2_CHECKPOINTS.length - 1);
+                const nextTxt = isLast ? "Resuming in 3 seconds to hear the call wrap-up..." : "Resuming recording in 3 seconds to hear Liz speak your response...";
+                feedback.innerHTML = `${opt.feedback}<br><span style='font-family: OneDotCd; font-size: 0.88rem; color: #64748b;'>${nextTxt}</span>`;
                 feedback.style.display = 'block';
-                call2QuestionAnswered = true;
+                call2CpCompleted[cpIdx] = true;
 
                 if (!call2AudioCompleted) {
                     setTimeout(() => {
@@ -724,13 +773,15 @@
                         document.getElementById('call2-play-btn').innerText = "⏸";
                     }, 3000);
                 } else {
-                    step3Passed = true;
-                    nextBtn.classList.remove('btn-disabled');
+                    if (call2CpCompleted.every(Boolean)) {
+                        step3Passed = true;
+                        nextBtn.classList.remove('btn-disabled');
+                    }
                 }
             } else {
                 btn.classList.add('wrong');
                 feedback.style.color = "var(--brand-red)";
-                feedback.innerHTML = "⚠️ <strong>Not quite!</strong> Take immediate ownership with an empathetic apology rather than questioning the customer.";
+                feedback.innerHTML = `⚠️ ${opt.feedback}`;
                 feedback.style.display = 'block';
             }
         }
@@ -834,9 +885,10 @@
             document.getElementById('btn-next').classList.remove('btn-disabled');
         }
 
-        // Initialize dynamic live transcripts and first checkpoint
+        // Initialize dynamic live transcripts and first checkpoints
         renderTranscripts();
         renderCall1Checkpoint(0);
+        renderCall2Checkpoint(0);
     </script>
 </body>
 </html>
