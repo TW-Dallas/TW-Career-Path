@@ -1468,3 +1468,46 @@
         border-color: #cbd5e1 !important;
         opacity: 0.65;
     }
+
+    /* --- GLOBAL QUIZ OPTION BRAND STYLING --- */
+    .quiz-option {
+        display: block;
+        width: 100%;
+        padding: 0.85rem 1rem;
+        margin-bottom: 0.65rem;
+        background: var(--crust-base, #fefaf6);
+        border: 2px solid var(--crust-med, #f0decc);
+        border-radius: 8px;
+        font-family: 'OneDotCd', sans-serif;
+        font-size: 1rem;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+        color: var(--crust-deep, #603913);
+    }
+
+    .quiz-option:hover {
+        border-color: var(--brand-blue);
+        background: #fff;
+        transform: translateX(4px);
+    }
+
+    .quiz-option.selected {
+        border-color: var(--brand-blue);
+        background: rgba(0, 144, 226, 0.08);
+        font-family: 'OneDotCd-Bold', sans-serif;
+    }
+
+    .quiz-option.correct {
+        border-color: var(--brand-blue) !important;
+        background: rgba(0, 144, 226, 0.12) !important;
+        color: var(--dark-blue) !important;
+        font-family: 'OneDotCd-Bold', sans-serif;
+    }
+
+    .quiz-option.wrong {
+        border-color: var(--brand-red) !important;
+        background: rgba(227, 24, 55, 0.08) !important;
+        color: var(--brand-red) !important;
+    }

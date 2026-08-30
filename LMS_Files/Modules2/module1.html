@@ -345,7 +345,7 @@
 
             if (isCorrect) {
                 btn.classList.add('correct');
-                feedback.style.color = "#2e7d32";
+                feedback.style.color = "var(--dark-blue)";
                 feedback.innerHTML = "🎯 <strong>Boom! Q-TIP in action.</strong> Validated frustration without defensiveness, and focused on the fastest fix.";
                 feedback.style.display = 'block';
                 step1Passed = true;
@@ -437,8 +437,8 @@
 
             if (isCorrect) {
                 btn.classList.add('correct');
-                feedback.style.color = "#2e7d32";
-                feedback.innerHTML = "🌟 <strong>Spot on!</strong> Angel connected with genuine empathy (<em>'Oh no!'</em>) and personal ownership (<em>'I can definitely help you with this'</em>). Resuming call to hear the full resolution...";
+                feedback.style.color = "var(--dark-blue)";
+                feedback.innerHTML = "🎯 <strong>Spot on!</strong> Angel connected with genuine empathy (<em>'Oh no!'</em>) and personal ownership (<em>'I can definitely help you with this'</em>).<br><span style='font-family: OneDotCd; font-size: 0.88rem; color: #64748b;'>Resuming recording in 3 seconds to hear the resolution...</span>";
                 feedback.style.display = 'block';
                 call1QuestionAnswered = true;
 
@@ -446,7 +446,7 @@
                     setTimeout(() => {
                         audio1.play();
                         document.getElementById('call1-play-btn').innerText = "⏸";
-                    }, 500);
+                    }, 3000);
                 } else {
                     step2Passed = true;
                     nextBtn.classList.remove('btn-disabled');
@@ -454,7 +454,7 @@
             } else {
                 btn.classList.add('wrong');
                 feedback.style.color = "var(--brand-red)";
-                feedback.innerHTML = "Not quite! Look at how Angel reacted with empathy and direct willingness to help before offering specific system remedies.";
+                feedback.innerHTML = "⚠️ <strong>Not quite!</strong> Look at how Angel reacted with empathy and direct willingness to help before offering specific system remedies.";
                 feedback.style.display = 'block';
             }
         }
@@ -507,8 +507,8 @@
             call2AudioCompleted = true;
             document.getElementById('call2-play-btn').innerText = "▶";
             document.getElementById('call2-status-pill').innerText = "Call Complete ✓";
-            document.getElementById('call2-status-pill').style.background = "#dcfce7";
-            document.getElementById('call2-status-pill').style.color = "#15803d";
+            document.getElementById('call2-status-pill').style.background = "rgba(0, 144, 226, 0.15)";
+            document.getElementById('call2-status-pill').style.color = "var(--dark-blue)";
 
             if (call2QuestionAnswered) {
                 step3Passed = true;
@@ -529,11 +529,11 @@
 
             if (isCorrect) {
                 btn.classList.add('correct');
-                feedback.style.color = "#2e7d32";
-                feedback.innerHTML = "🏆 <strong>Exact winning play!</strong> Resuming recording to hear Liz speak your response...";
+                feedback.style.color = "var(--dark-blue)";
+                feedback.innerHTML = "🏆 <strong>Exact winning play!</strong> Immediate ownership and sincere apology.<br><span style='font-family: OneDotCd; font-size: 0.88rem; color: #64748b;'>Resuming recording in 3 seconds to hear Liz speak your response...</span>";
                 feedback.style.display = 'block';
 
-                document.getElementById('call2-resume-line').innerHTML = '<strong>Liz:</strong> <span style="color: #2e7d32; font-weight: bold;">"Oh no, I\'m so sorry about that. Was that a delivery order placed for today?"</span>';
+                document.getElementById('call2-resume-line').innerHTML = '<strong>Liz:</strong> <span style="color: var(--dark-blue); font-weight: bold;">"Oh no, I\'m so sorry about that. Was that a delivery order placed for today?"</span>';
                 document.getElementById('call2-resume-line').style.fontStyle = "normal";
                 call2QuestionAnswered = true;
 
@@ -541,7 +541,7 @@
                     setTimeout(() => {
                         audio2.play();
                         document.getElementById('call2-play-btn').innerText = "⏸";
-                    }, 500);
+                    }, 3000);
                 } else {
                     step3Passed = true;
                     nextBtn.classList.remove('btn-disabled');
@@ -549,7 +549,7 @@
             } else {
                 btn.classList.add('wrong');
                 feedback.style.color = "var(--brand-red)";
-                feedback.innerHTML = "Not quite! Take immediate ownership with an empathetic apology rather than questioning the customer.";
+                feedback.innerHTML = "⚠️ <strong>Not quite!</strong> Take immediate ownership with an empathetic apology rather than questioning the customer.";
                 feedback.style.display = 'block';
             }
         }
