@@ -168,7 +168,7 @@
             <div id="step3-container" class="hidden" style="width: 100%;">
                 <div style="text-align: center; margin-bottom: 1.25rem;">
                     <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎧 Scenario 2: Call the Shot</h3>
-                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Predict the winning response, lock in your choice, and hear Bobby run the play.</p>
+                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Predict the winning response, lock in your choice, and hear Liz run the play.</p>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 310px 1fr; gap: 1.25rem; align-items: start;">
@@ -188,22 +188,22 @@
                                     <div id="call2-progress-bar" style="height: 100%; width: 0%; background: var(--brand-blue); transition: width 0.1s linear;"></div>
                                 </div>
                             </div>
-                            <span id="call2-time" style="font-family: 'OneDotCd'; font-size: 0.75rem; color: #64748b;">0:00 / 0:11</span>
-                            <audio id="audio-call2" src="../resources/Day2_audio/Customer_Concern_Credit_2.mp3" ontimeupdate="onCall2TimeUpdate()" onended="onCall2Ended()"></audio>
+                            <span id="call2-time" style="font-family: 'OneDotCd'; font-size: 0.75rem; color: #64748b;">0:00 / 2:06</span>
+                            <audio id="audio-call2" src="../resources/Day2_audio/Customer_Concern_Credit_2_V2.mp3" ontimeupdate="onCall2TimeUpdate()" onended="onCall2Ended()"></audio>
                         </div>
 
                         <!-- Transcript -->
                         <div style="background: #fff; border: 1px solid var(--crust-med); border-radius: 6px; padding: 0.65rem; font-family: 'OneDotCd'; font-size: 0.85rem; line-height: 1.3; color: var(--crust-deep);">
-                            <p style="margin: 0 0 0.35rem 0;"><strong>Bobby:</strong> <em>"Domino's Pizza, this is Bobby..."</em></p>
-                            <p style="margin: 0 0 0.35rem 0;"><strong>Aiden:</strong> <em>"Hi, I placed a delivery order and didn't get what I ordered."</em></p>
-                            <p id="call2-resume-line" style="margin: 0; color: #94a3b8; font-style: italic;">[Audio pauses: Choose what Bobby says next...]</p>
+                            <p style="margin: 0 0 0.35rem 0;"><strong>Liz:</strong> <em>"Domino's Pizza, this is Liz, what can I get started for you today?"</em></p>
+                            <p style="margin: 0 0 0.35rem 0;"><strong>Aiden:</strong> <em>"Hi there, good evening Liz, this is Aiden. I placed a delivery order and I kind of didn't get what I ordered."</em></p>
+                            <p id="call2-resume-line" style="margin: 0; color: #94a3b8; font-style: italic;">[Audio pauses: Choose what Liz says next...]</p>
                         </div>
                     </div>
 
                     <!-- Right: Call the Shot Decision Block -->
                     <div style="text-align: left;">
                         <p style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.05rem; margin: 0 0 0.25rem 0;">
-                            🎧 Call the Shot: What should Bobby say next?
+                            🎧 Call the Shot: What should Liz say next?
                         </p>
                         <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.3; margin: 0 0 0.65rem 0;">
                             Aiden's delivery order arrived incorrect. What is the most effective immediate response?
@@ -217,7 +217,7 @@
                                 B. "Hold on, let me put you on hold while I ask someone in back."
                             </button>
                             <button type="button" class="quiz-option" style="padding: 0.65rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall2Choice(this, true, 'pro_move')">
-                                C. "Oh man, I apologize about that! You had an order placed for today?"
+                                C. "Oh no, I'm so sorry about that. Was that a delivery order placed for today?"
                             </button>
                         </div>
 
@@ -467,10 +467,13 @@
                 const percent = (audio2.currentTime / audio2.duration) * 100;
                 document.getElementById('call2-progress-bar').style.width = percent + '%';
                 
-                const curS = Math.floor(audio2.currentTime);
-                document.getElementById('call2-time').innerText = `0:${curS.toString().padStart(2, '0')} / 0:11`;
+                const curM = Math.floor(audio2.currentTime / 60);
+                const curS = Math.floor(audio2.currentTime % 60).toString().padStart(2, '0');
+                const durM = Math.floor(audio2.duration / 60);
+                const durS = Math.floor(audio2.duration % 60).toString().padStart(2, '0');
+                document.getElementById('call2-time').innerText = `${curM}:${curS} / ${durM}:${durS}`;
 
-                if (audio2.currentTime >= 6.0 && !call2PausedAtShot) {
+                if (audio2.currentTime >= 11.0 && !call2PausedAtShot) {
                     audio2.pause();
                     call2PausedAtShot = true;
                     document.getElementById('call2-play-btn').innerText = "▶";
@@ -502,10 +505,10 @@
             if (isCorrect) {
                 btn.classList.add('correct');
                 feedback.style.color = "#2e7d32";
-                feedback.innerHTML = "🏆 <strong>Exact winning play!</strong> Resuming recording to hear Bobby speak your response...";
+                feedback.innerHTML = "🏆 <strong>Exact winning play!</strong> Resuming recording to hear Liz speak your response...";
                 feedback.style.display = 'block';
 
-                document.getElementById('call2-resume-line').innerHTML = '<strong>Bobby:</strong> <span style="color: #2e7d32; font-weight: bold;">"Oh man, I apologize about that! You had an order placed for today?"</span>';
+                document.getElementById('call2-resume-line').innerHTML = '<strong>Liz:</strong> <span style="color: #2e7d32; font-weight: bold;">"Oh no, I\'m so sorry about that. Was that a delivery order placed for today?"</span>';
                 document.getElementById('call2-resume-line').style.fontStyle = "normal";
 
                 setTimeout(() => {
