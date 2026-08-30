@@ -133,25 +133,17 @@
                         </div>
                     </div>
 
-                    <!-- Right: Checkpoint Question -->
+                    <!-- Right: Dynamic Multi-Checkpoint Engine -->
                     <div style="text-align: left;">
-                        <p style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.05rem; margin: 0 0 0.25rem 0;">
-                            🎯 Checkpoint: LEADS in Action
+                        <p id="call1-cp-badge" style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.05rem; margin: 0 0 0.25rem 0;">
+                            🎯 Checkpoint 1 of 4: Initial Ownership
                         </p>
-                        <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.3; margin: 0 0 0.65rem 0;">
-                            When the customer asked for a manager, the team member responded with genuine empathy (<em>"Oh no!"</em>) and personal ownership (<em>"I can help you"</em>). What was demonstrated?
+                        <p id="call1-cp-prompt" style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.65rem 0;">
+                            When Jonathan asks for a manager, Angel responds: <em>"Oh no! Okay, yeah, I can definitely help you with this."</em> What LEADS principle did Angel demonstrate?
                         </p>
 
                         <div id="call1-options" style="display: flex; flex-direction: column; gap: 6px;">
-                            <button type="button" class="quiz-option" style="padding: 0.65rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall1Choice(this, false)">
-                                A. <strong>Decide</strong> — Issued an immediate refund on the register
-                            </button>
-                            <button type="button" class="quiz-option" style="padding: 0.65rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall1Choice(this, true)">
-                                B. <strong>Listen & Empathize</strong> — Connected with empathy and took immediate personal ownership to solve the issue
-                            </button>
-                            <button type="button" class="quiz-option" style="padding: 0.65rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall1Choice(this, false)">
-                                C. <strong>Stand</strong> — Put the customer on hold for 10 minutes
-                            </button>
+                            <!-- Populated dynamically via JS -->
                         </div>
 
                         <p id="call1-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 0; display: none;"></p>
@@ -490,9 +482,67 @@
         // STEP 2: SCENARIO 1 AUDIO (DECONSTRUCT THE PLAY)
         // ========================================================
         const audio1 = document.getElementById('audio-call1');
-        let call1AutoPaused = false;
-        let call1QuestionAnswered = false;
+        let call1CpIndex = 0;
+        let call1CpCompleted = [false, false, false, false];
         let call1AudioCompleted = false;
+
+        const CALL1_CHECKPOINTS = [
+            {
+                time: 16.6,
+                badge: "🎯 Checkpoint 1 of 4: Initial Ownership",
+                prompt: "When Jonathan asks to speak to a manager about his wrong order, Angel responds: <em>\"Oh no! Okay, yeah, I can definitely help you with this.\"</em> What LEADS principle did Angel demonstrate?",
+                options: [
+                    { text: "A. <strong>Decide</strong> — Issued an immediate refund on the register", correct: false, feedback: "Not quite! Angel connected with empathy and took personal ownership before jumping to transaction steps." },
+                    { text: "B. <strong>Listen & Empathize</strong> — Took immediate personal ownership with genuine empathy instead of passing the customer off", correct: true, feedback: "🎯 <strong>Spot on!</strong> Angel validated the situation with genuine empathy (<em>'Oh no!'</em>) and took personal ownership (<em>'I can definitely help you'</em>) rather than passing the buck to a manager." },
+                    { text: "C. <strong>Stand</strong> — Put the customer on hold for 10 minutes", correct: false, feedback: "Incorrect! Leaving an upset customer on hold increases frustration." }
+                ]
+            },
+            {
+                time: 62.0,
+                badge: "🎯 Checkpoint 2 of 4: Sincere Apology & Validation",
+                prompt: "Jonathan explains he is running late to pick up his kids and is frustrated. Angel replies: <em>\"I completely understand the frustration, Jonathan. I am very, very sorry that you received the wrong order, and I can for sure make that right for you.\"</em> Why is this response so powerful?",
+                options: [
+                    { text: "A. He explained that the store was understaffed so it wasn't his fault", correct: false, feedback: "Defensive Trap! Explaining store excuses makes the customer feel dismissed rather than heard." },
+                    { text: "B. <strong>Personal Validation & Sincere Apology</strong> — Used the customer's name, validated his frustration, and gave a 100% no-excuse apology", correct: true, feedback: "🌟 <strong>Boom!</strong> Sincere apologies never contain 'but' or excuses. Angel took complete ownership and assured Jonathan he would make it right." },
+                    { text: "C. He reminded the customer that mistakes happen on busy nights", correct: false, feedback: "Incorrect! Dismissing a customer's frustration as 'normal' damages trust." }
+                ]
+            },
+            {
+                time: 93.6,
+                badge: "🎯 Checkpoint 3 of 4: Solving the Customer's Real Problem",
+                prompt: "Jonathan explains he can't drive back to the store because he's running late with his kids. Angel offers: <em>\"I see you're in our delivery area... I'd be happy to remake that pizza right now and send it out to your house for delivery for free.\"</em> What makes this a 5-star recovery decision?",
+                options: [
+                    { text: "A. <strong>Solved the Real Root Issue</strong> — Addressed the customer's actual time constraint rather than forcing a standard carryout remake", correct: true, feedback: "🏆 <strong>5-Star Move!</strong> Angel didn't just remake a pizza; he solved Jonathan's evening by bringing dinner straight to his doorstep for free." },
+                    { text: "B. It was the cheapest option for the store", correct: false, feedback: "Incorrect! Delivery incurs labor and mileage, but it permanently secures customer loyalty." },
+                    { text: "C. It got the customer off the phone quickly", correct: false, feedback: "Not quite! Recovery is about building lasting trust, not rushing the customer." }
+                ]
+            },
+            {
+                time: 155.0,
+                badge: "🎯 Checkpoint 4 of 4: Surprise & Delight",
+                prompt: "Angel tells Jonathan to keep the mistake cheese pizza for the kids, and adds a free order of Marbled Cookie Brownies. What is the business goal of 'Surprise & Delight'?",
+                options: [
+                    { text: "A. To get rid of extra brownie inventory before closing", correct: false, feedback: "Incorrect! Brownies are inventory, but this is intentional customer recovery." },
+                    { text: "B. <strong>Turn Mistake into Lifelong Loyalty</strong> — Exceeding expectations turns a frustrating mistake into a memorable, positive store relationship", correct: true, feedback: "🎉 <strong>The WOW Way!</strong> Going above and beyond transforms a disappointed customer into a dedicated brand advocate for life." },
+                    { text: "C. To encourage customers to call in complaints", correct: false, feedback: "Incorrect! Genuine recovery rewards customer patience, not complaints." }
+                ]
+            }
+        ];
+
+        function renderCall1Checkpoint(idx) {
+            const cp = CALL1_CHECKPOINTS[idx];
+            if (!cp) return;
+            document.getElementById('call1-cp-badge').innerText = cp.badge;
+            document.getElementById('call1-cp-prompt').innerHTML = cp.prompt;
+            const optBox = document.getElementById('call1-options');
+            optBox.innerHTML = cp.options.map((opt, oIdx) => `
+                <button type="button" class="quiz-option" style="padding: 0.65rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall1CheckpointChoice(this, ${idx}, ${oIdx})">
+                    ${opt.text}
+                </button>
+            `).join('');
+            const feedback = document.getElementById('call1-feedback');
+            feedback.style.display = 'none';
+        }
 
         function toggleCall1Audio() {
             const btn = document.getElementById('call1-play-btn');
@@ -521,13 +571,17 @@
 
                 syncCall1Transcript(audio1.currentTime);
 
-                if (audio1.currentTime >= 16.6 && !call1AutoPaused) {
-                    audio1.pause();
-                    call1AutoPaused = true;
-                    document.getElementById('call1-play-btn').innerText = "▶";
-                    document.getElementById('call1-status-pill').innerText = "Checkpoint ⏸";
-                    document.getElementById('call1-status-pill').style.background = "#fef3c7";
-                    document.getElementById('call1-status-pill').style.color = "#b45309";
+                for (let i = 0; i < CALL1_CHECKPOINTS.length; i++) {
+                    if (audio1.currentTime >= CALL1_CHECKPOINTS[i].time && !call1CpCompleted[i]) {
+                        audio1.pause();
+                        call1CpIndex = i;
+                        renderCall1Checkpoint(i);
+                        document.getElementById('call1-play-btn').innerText = "▶";
+                        document.getElementById('call1-status-pill').innerText = `Checkpoint ${i + 1}/4 ⏸`;
+                        document.getElementById('call1-status-pill').style.background = "#fef3c7";
+                        document.getElementById('call1-status-pill').style.color = "#b45309";
+                        break;
+                    }
                 }
             }
         }
@@ -539,13 +593,16 @@
             document.getElementById('call1-status-pill').style.background = "rgba(0, 144, 226, 0.15)";
             document.getElementById('call1-status-pill').style.color = "var(--dark-blue)";
 
-            if (call1QuestionAnswered) {
+            const allPassed = call1CpCompleted.every(Boolean);
+            if (allPassed) {
                 step2Passed = true;
                 document.getElementById('btn-next').classList.remove('btn-disabled');
             }
         }
 
-        function handleCall1Choice(btn, isCorrect) {
+        function handleCall1CheckpointChoice(btn, cpIdx, optIdx) {
+            const cp = CALL1_CHECKPOINTS[cpIdx];
+            const opt = cp.options[optIdx];
             const block = document.getElementById('call1-options');
             block.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected', 'correct', 'wrong'));
             btn.classList.add('selected');
@@ -553,15 +610,17 @@
             const feedback = document.getElementById('call1-feedback');
             const nextBtn = document.getElementById('btn-next');
 
-            if (!userAnswers['m1_call1']) userAnswers['m1_call1'] = [];
-            userAnswers['m1_call1'].push(btn.innerText.trim());
+            if (!userAnswers[`m1_call1_cp${cpIdx + 1}`]) userAnswers[`m1_call1_cp${cpIdx + 1}`] = [];
+            userAnswers[`m1_call1_cp${cpIdx + 1}`].push(btn.innerText.trim());
 
-            if (isCorrect) {
+            if (opt.correct) {
                 btn.classList.add('correct');
                 feedback.style.color = "var(--dark-blue)";
-                feedback.innerHTML = "🎯 <strong>Spot on!</strong> Angel connected with genuine empathy (<em>'Oh no!'</em>) and personal ownership (<em>'I can definitely help you with this'</em>).<br><span style='font-family: OneDotCd; font-size: 0.88rem; color: #64748b;'>Resuming recording in 3 seconds to hear the resolution...</span>";
+                const isLast = (cpIdx === CALL1_CHECKPOINTS.length - 1);
+                const nextTxt = isLast ? "Resuming in 3 seconds to hear the call wrap-up..." : `Resuming recording in 3 seconds to hear the next play...`;
+                feedback.innerHTML = `${opt.feedback}<br><span style='font-family: OneDotCd; font-size: 0.88rem; color: #64748b;'>${nextTxt}</span>`;
                 feedback.style.display = 'block';
-                call1QuestionAnswered = true;
+                call1CpCompleted[cpIdx] = true;
 
                 if (!call1AudioCompleted) {
                     setTimeout(() => {
@@ -569,13 +628,15 @@
                         document.getElementById('call1-play-btn').innerText = "⏸";
                     }, 3000);
                 } else {
-                    step2Passed = true;
-                    nextBtn.classList.remove('btn-disabled');
+                    if (call1CpCompleted.every(Boolean)) {
+                        step2Passed = true;
+                        nextBtn.classList.remove('btn-disabled');
+                    }
                 }
             } else {
                 btn.classList.add('wrong');
                 feedback.style.color = "var(--brand-red)";
-                feedback.innerHTML = "⚠️ <strong>Not quite!</strong> Look at how Angel reacted with empathy and direct willingness to help before offering specific system remedies.";
+                feedback.innerHTML = `⚠️ ${opt.feedback}`;
                 feedback.style.display = 'block';
             }
         }
@@ -773,8 +834,9 @@
             document.getElementById('btn-next').classList.remove('btn-disabled');
         }
 
-        // Initialize dynamic live transcripts
+        // Initialize dynamic live transcripts and first checkpoint
         renderTranscripts();
+        renderCall1Checkpoint(0);
     </script>
 </body>
 </html>
