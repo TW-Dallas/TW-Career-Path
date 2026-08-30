@@ -507,7 +507,7 @@
         color: var(--crust-base);
         padding: 0.8rem 2rem;
         border-radius: 50px;
-        font-family: 'OneDotCd-Bold';
+        font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
         text-decoration: none;
         transition: var(--transition);
         border: none;
@@ -525,6 +525,7 @@
         background: transparent;
         color: var(--brand-blue);
         border: 2px solid var(--brand-blue);
+        font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
     }
     
     .btn-outline:hover {
