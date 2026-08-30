@@ -31,121 +31,57 @@
         <div class="classroom-content" style="padding: 1.75rem 2rem 1.5rem 2rem; min-height: auto; justify-content: flex-start;">
             
             <!-- ======================================================== -->
-            <!-- STEP 1: THE Q-TIP GAME PLAN & FILM STUDY                 -->
+            <!-- STEP 1: COACH MIKE'S PRE-GAME HUDDLE (THE Q-TIP MINDSET) -->
             <!-- ======================================================== -->
             <div id="step1-container" style="width: 100%;">
-                <div style="text-align: center; margin-bottom: 1rem;">
-                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🔄 Mindset Drill: Call the Winning Play</h3>
-                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Master the Q-TIP game plan and scout the game tape to train your ear on winning LEADS plays.</p>
+                <div style="text-align: center; margin-bottom: 1.25rem;">
+                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.95rem; margin: 0 0 0.35rem 0;">🏈 Coach Mike's Pre-Game Huddle</h3>
+                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.1rem; margin: 0;">Master the winning mindset before stepping onto the store floor.</p>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 310px 1fr; gap: 1.25rem; align-items: start;">
+                <div style="display: grid; grid-template-columns: 340px 1fr; gap: 1.5rem; align-items: stretch;">
                     
-                    <!-- Left: Coach Mike Q-TIP Card & Audio -->
-                    <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem; text-align: left; display: flex; flex-direction: column; gap: 10px;">
-                        
-                        <!-- Coach Mike Image -->
-                        <div style="text-align: center; background: #fff; border: 1.5px solid var(--brand-blue); border-radius: 8px; padding: 6px; overflow: hidden;">
-                            <img src="../resources/Image_Guides/Mike_QTIP.png" alt="Coach Mike - Q-TIP" style="width: 100%; max-height: 165px; object-fit: contain; display: block; margin: 0 auto;">
-                        </div>
-
-                        <!-- Coach Mike Audio Bar -->
-                        <div class="audio-player-pill" style="margin-bottom: 0;">
-                            <button type="button" class="audio-play-btn" id="coach-play-btn" onclick="toggleCoachAudio()" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
-                            <div class="audio-info" style="flex-grow: 1;">
-                                <span class="audio-title" style="font-size: 0.82rem;">Coach Mike: The Q-TIP Game Plan</span>
-                                <span class="audio-time" id="coach-audio-time" style="font-size: 0.75rem;">0:00 / 1:38</span>
-                            </div>
-                            <audio id="audio-coach" src="../resources/Day2_audio/Concerns_Intro.mp3" ontimeupdate="onCoachTimeUpdate()" onended="onCoachEnded()"></audio>
-                        </div>
-
-                        <!-- Core Takeaway Card -->
-                        <div style="background: #fff; border: 1px solid var(--crust-med); border-radius: 6px; padding: 0.65rem 0.85rem;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.35rem;">
-                                <span style="font-size: 1.2rem;">📋</span>
-                                <strong style="font-family: 'PizzaPress'; font-size: 1.05rem; color: var(--brand-blue);">The Q-TIP Playbook</strong>
-                            </div>
-                            <p style="font-family: 'OneDotCd-Bold'; font-size: 0.88rem; color: var(--brand-red); margin: 0 0 0.35rem 0;">
-                                Quit Taking It Personally!
-                            </p>
-                            <p style="font-family: 'OneDotCd'; font-size: 0.85rem; line-height: 1.3; color: var(--crust-deep); margin: 0;">
-                                <strong>Hungry + Angry = Hangry!</strong> Someone else's inability to communicate during stress is <em>their foul</em>—don't let it put you on the bench!
-                            </p>
-                        </div>
-
+                    <!-- Left: Large High-Res Coach Mike Artwork -->
+                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 12px; padding: 0.85rem; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.04);">
+                        <img src="../resources/Image_Guides/Mike_QTIP.png" alt="Coach Mike - Q-TIP Playbook" style="width: 100%; max-height: 380px; object-fit: contain; display: block; border-radius: 6px;">
                     </div>
 
-                    <!-- Right: Ear-Training Comparison Studio -->
-                    <div style="text-align: left; display: flex; flex-direction: column; gap: 10px;">
+                    <!-- Right: Coach Audio, Playbook Breakdown & Action -->
+                    <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 12px; padding: 1.35rem 1.5rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
                         
-                        <!-- Header & Instruction -->
-                        <div style="background: rgba(0, 144, 226, 0.08); border-left: 4px solid var(--brand-blue); padding: 0.5rem 0.85rem; border-radius: 0 6px 6px 0;">
-                            <h4 style="font-family: 'PizzaPress'; font-size: 1.1rem; color: var(--brand-blue); margin: 0 0 0.2rem 0;">🎧 Film Study: The Winning Play vs. The Defensive Fumble</h4>
-                            <p style="font-family: 'OneDotCd'; font-size: 0.9rem; color: var(--crust-deep); margin: 0;">
-                                Scout both game tapes below. Notice how tone and excuse-free ownership completely turn the momentum around.
-                            </p>
+                        <div>
+                            <!-- Coach Mike Audio Bar -->
+                            <div class="audio-player-pill" style="margin-bottom: 1rem; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.5rem 1rem;">
+                                <button type="button" class="audio-play-btn" id="coach-play-btn" onclick="toggleCoachAudio()" style="width: 32px; height: 32px; font-size: 0.95rem;">▶</button>
+                                <div class="audio-info" style="flex-grow: 1;">
+                                    <span class="audio-title" style="font-size: 0.95rem;">Coach Mike: The Q-TIP Game Plan</span>
+                                    <span class="audio-time" id="coach-audio-time" style="font-size: 0.85rem;">0:00 / 1:38</span>
+                                </div>
+                                <audio id="audio-coach" src="../resources/Day2_audio/Concerns_Intro.mp3" ontimeupdate="onCoachTimeUpdate()" onended="onCoachEnded()"></audio>
+                            </div>
+
+                            <!-- Core Mindset Points -->
+                            <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.4rem;">
+                                    <span style="font-size: 1.4rem;">📋</span>
+                                    <h4 style="font-family: 'PizzaPress'; font-size: 1.2rem; color: var(--brand-blue); margin: 0;">The Q-TIP Playbook</h4>
+                                </div>
+                                <p style="font-family: 'OneDotCd-Bold'; font-size: 1.05rem; color: var(--brand-red); margin: 0 0 0.5rem 0;">
+                                    Quit Taking It Personally!
+                                </p>
+                                <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
+                                    <strong>Hungry + Angry = Hangry!</strong> When a customer calls with a problem, their frustration isn't about you—it’s about their missing dinner.
+                                </p>
+                                <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--brand-blue); margin: 0;">
+                                    <em>"Someone else's inability to communicate during times of stress is their foul—don't let it put you on the bench, too!"</em>
+                                </p>
+                            </div>
                         </div>
 
-                        <!-- 2 Comparison Rows -->
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                            
-                            <!-- Set 1: Greeting & Empathy -->
-                            <div style="background: var(--crust-base); border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 0.75rem;">
-                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--brand-blue); display: block; margin-bottom: 0.4rem;">
-                                    SET 1: Greeting & Ownership (Mushroom Pizza)
-                                </span>
-                                
-                                <!-- Good Clip -->
-                                <div style="display: flex; align-items: center; gap: 6px; background: #fff; border: 1.5px solid var(--brand-blue); padding: 4px 8px; border-radius: 20px; margin-bottom: 6px;">
-                                    <button type="button" class="audio-play-btn" id="ex1-good-btn" onclick="toggleExAudio('ex1-good')" style="width: 24px; height: 24px; font-size: 0.75rem;">▶</button>
-                                    <span style="font-family: 'OneDotCd-Bold'; font-size: 0.8rem; color: var(--dark-blue); flex-grow: 1;">Winning Play (0:35)</span>
-                                    <audio id="audio-ex1-good" src="../resources/Day2_audio/Example1_Good.mp3" ontimeupdate="onExTimeUpdate('ex1-good')" onended="onExEnded('ex1-good')"></audio>
-                                </div>
-
-                                <!-- Bad Clip -->
-                                <div style="display: flex; align-items: center; gap: 6px; background: #fff; border: 1.5px solid var(--brand-red); padding: 4px 8px; border-radius: 20px;">
-                                    <button type="button" class="audio-play-btn" id="ex1-bad-btn" onclick="toggleExAudio('ex1-bad')" style="width: 24px; height: 24px; font-size: 0.75rem; background: var(--brand-red);">▶</button>
-                                    <span style="font-family: 'OneDotCd-Bold'; font-size: 0.8rem; color: var(--brand-red); flex-grow: 1;">Defensive Fumble (0:26)</span>
-                                    <audio id="audio-ex1-bad" src="../resources/Day2_audio/Example1_Bad.mp3" ontimeupdate="onExTimeUpdate('ex1-bad')" onended="onExEnded('ex1-bad')"></audio>
-                                </div>
-                            </div>
-
-                            <!-- Set 2: The Solution & Store Credit -->
-                            <div style="background: var(--crust-base); border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 0.75rem;">
-                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--brand-blue); display: block; margin-bottom: 0.4rem;">
-                                    SET 2: Solution & The Game Plan (Late Delivery)
-                                </span>
-
-                                <!-- Bad Clip -->
-                                <div style="display: flex; align-items: center; gap: 6px; background: #fff; border: 1.5px solid var(--brand-red); padding: 4px 8px; border-radius: 20px; margin-bottom: 6px;">
-                                    <button type="button" class="audio-play-btn" id="ex2-bad-btn" onclick="toggleExAudio('ex2-bad')" style="width: 24px; height: 24px; font-size: 0.75rem; background: var(--brand-red);">▶</button>
-                                    <span style="font-family: 'OneDotCd-Bold'; font-size: 0.8rem; color: var(--brand-red); flex-grow: 1;">Defensive Fumble (0:46)</span>
-                                    <audio id="audio-ex2-bad" src="../resources/Day2_audio/Example2_Bad.mp3" ontimeupdate="onExTimeUpdate('ex2-bad')" onended="onExEnded('ex2-bad')"></audio>
-                                </div>
-
-                                <!-- Good Clip -->
-                                <div style="display: flex; align-items: center; gap: 6px; background: #fff; border: 1.5px solid var(--brand-blue); padding: 4px 8px; border-radius: 20px;">
-                                    <button type="button" class="audio-play-btn" id="ex2-good-btn" onclick="toggleExAudio('ex2-good')" style="width: 24px; height: 24px; font-size: 0.75rem;">▶</button>
-                                    <span style="font-family: 'OneDotCd-Bold'; font-size: 0.8rem; color: var(--dark-blue); flex-grow: 1;">Winning Play (1:06)</span>
-                                    <audio id="audio-ex2-good" src="../resources/Day2_audio/Example2_Good.mp3" ontimeupdate="onExTimeUpdate('ex2-good')" onended="onExEnded('ex2-good')"></audio>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Physical Playbook Note Prompt -->
-                        <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 0.75rem 1rem;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.35rem;">
-                                <span style="font-size: 1.15rem;">📓</span>
-                                <strong style="font-family: 'OneDotCd-Bold'; font-size: 0.95rem; color: var(--brand-blue);">Physical Playbook Film Study Notes</strong>
-                            </div>
-                            <p style="font-family: 'OneDotCd'; font-size: 0.88rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.5rem 0;">
-                                Open your physical playbook to the <strong>Customer Recovery</strong> page. Write down:
-                                <br>1. What specific phrases in the Winning Plays immediately took control and lowered tension?
-                                <br>2. Why does making store excuses (short-staffed, busy rush) count as a foul that loses customer trust?
-                            </p>
-                            <button type="button" class="quiz-option" id="step1-confirm-btn" onclick="handleStep1Confirm(this)" style="padding: 0.65rem 0.85rem; font-size: 0.95rem; text-align: center; margin-bottom: 0;">
-                                ✍️ I have scouted the game tape & recorded my playbook notes
+                        <!-- Action Confirmation -->
+                        <div>
+                            <button type="button" class="quiz-option" id="step1-confirm-btn" onclick="handleStep1Confirm(this)" style="padding: 0.85rem 1.25rem; font-size: 1.05rem; text-align: center; margin-bottom: 0;">
+                                🎧 Ready Coach! Let's Scout the Tape ➔
                             </button>
                             <p id="step1-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.45rem; margin-bottom: 0; color: var(--dark-blue); display: none;"></p>
                         </div>
@@ -156,9 +92,187 @@
             </div>
 
             <!-- ======================================================== -->
-            <!-- STEP 2: SCENARIO 1 — DECONSTRUCT THE PLAY (CALL 1)       -->
+            <!-- STEP 2: FILM STUDY #1 — THE INITIAL GREETING             -->
             <!-- ======================================================== -->
             <div id="step2-container" class="hidden" style="width: 100%;">
+                <div style="text-align: center; margin-bottom: 1.25rem;">
+                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎬 Film Study 1 of 2: The Initial Greeting</h3>
+                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Mushroom Pizza Mix-Up — Tone, Empathy, & Immediate Ownership</p>
+                </div>
+
+                <!-- 2 Side-by-Side Comparison Cards -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
+                    
+                    <!-- Good Clip Card -->
+                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1.15rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-size: 1.2rem;">🟢</span>
+                                    <strong style="font-family: 'PizzaPress'; font-size: 1.15rem; color: var(--dark-blue);">The Winning Play</strong>
+                                </div>
+                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: #64748b;">0:35</span>
+                            </div>
+
+                            <!-- Audio Player -->
+                            <div style="display: flex; align-items: center; gap: 8px; background: var(--crust-base); border: 1.5px solid var(--brand-blue); padding: 0.4rem 0.85rem; border-radius: 20px; margin-bottom: 0.75rem;">
+                                <button type="button" class="audio-play-btn" id="ex1-good-btn" onclick="toggleExAudio('ex1-good')" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
+                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.88rem; color: var(--dark-blue); flex-grow: 1;">Play Winning Tape</span>
+                                <audio id="audio-ex1-good" src="../resources/Day2_audio/Example1_Good.mp3" onended="onExEnded('ex1-good')"></audio>
+                            </div>
+
+                            <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
+                                <em>"Oh no, I am so sorry about that. Can you please provide me with some additional details so we can make it right?... I completely understand your frustration. That would upset me too. I'll get a replacement in the oven for you right away."</em>
+                            </p>
+                        </div>
+
+                        <div style="background: rgba(0, 144, 226, 0.08); border-radius: 6px; padding: 0.5rem 0.75rem;">
+                            <strong style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--dark-blue);">✓ Key Coaching Takeaway:</strong>
+                            <p style="font-family: 'OneDotCd'; font-size: 0.85rem; color: var(--crust-deep); margin: 0;">Validates frustration immediately, uses sincere empathy, and moves straight into action.</p>
+                        </div>
+                    </div>
+
+                    <!-- Bad Clip Card -->
+                    <div style="background: #fff; border: 2px solid var(--brand-red); border-radius: 10px; padding: 1.15rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-size: 1.2rem;">🔴</span>
+                                    <strong style="font-family: 'PizzaPress'; font-size: 1.15rem; color: var(--brand-red);">The Defensive Fumble</strong>
+                                </div>
+                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: #64748b;">0:26</span>
+                            </div>
+
+                            <!-- Audio Player -->
+                            <div style="display: flex; align-items: center; gap: 8px; background: var(--crust-base); border: 1.5px solid var(--brand-red); padding: 0.4rem 0.85rem; border-radius: 20px; margin-bottom: 0.75rem;">
+                                <button type="button" class="audio-play-btn" id="ex1-bad-btn" onclick="toggleExAudio('ex1-bad')" style="width: 28px; height: 28px; font-size: 0.85rem; background: var(--brand-red);">▶</button>
+                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.88rem; color: var(--brand-red); flex-grow: 1;">Play Fumble Tape</span>
+                                <audio id="audio-ex1-bad" src="../resources/Day2_audio/Example1_Bad.mp3" onended="onExEnded('ex1-bad')"></audio>
+                            </div>
+
+                            <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
+                                <em>"Domino's, what can I get you?... Uh, okay then. What are you claiming was wrong?... No, I made that myself. I know I made it right. I can't do anything for you."</em>
+                            </p>
+                        </div>
+
+                        <div style="background: rgba(227, 24, 55, 0.08); border-radius: 6px; padding: 0.5rem 0.75rem;">
+                            <strong style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--brand-red);">✗ Personal Foul:</strong>
+                            <p style="font-family: 'OneDotCd'; font-size: 0.85rem; color: var(--crust-deep); margin: 0;">Takes the complaint personally, argues with the customer, and creates instant hostility.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Physical Playbook Note Prompt -->
+                <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem 1.25rem; text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.35rem;">
+                        <span style="font-size: 1.2rem;">📓</span>
+                        <strong style="font-family: 'OneDotCd-Bold'; font-size: 1rem; color: var(--brand-blue);">Physical Playbook Film Study Notes</strong>
+                    </div>
+                    <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.65rem 0;">
+                        Open your physical playbook to the <strong>Customer Recovery</strong> page. Write down:
+                        <br><strong>Prompt:</strong> <em>What specific phrases in the Winning Play immediately lowered tension before offering a replacement?</em>
+                    </p>
+                    <button type="button" class="quiz-option" id="step2-confirm-btn" onclick="handleStep2Confirm(this)" style="padding: 0.75rem 1rem; font-size: 1rem; text-align: center; margin-bottom: 0;">
+                        ✍️ I have recorded my notes ➔ Scout Film #2
+                    </button>
+                    <p id="step2-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.45rem; margin-bottom: 0; color: var(--dark-blue); display: none;"></p>
+                </div>
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- STEP 3: FILM STUDY #2 — SOLUTIONS & PROACTIVE CREDIT     -->
+            <!-- ======================================================== -->
+            <div id="step3-container" class="hidden" style="width: 100%;">
+                <div style="text-align: center; margin-bottom: 1.25rem;">
+                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎬 Film Study 2 of 2: Solutions & Proactive Credit</h3>
+                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Late Delivery on a School Night — Excuses vs. Do What It Takes</p>
+                </div>
+
+                <!-- 2 Side-by-Side Comparison Cards -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
+                    
+                    <!-- Bad Clip Card -->
+                    <div style="background: #fff; border: 2px solid var(--brand-red); border-radius: 10px; padding: 1.15rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-size: 1.2rem;">🔴</span>
+                                    <strong style="font-family: 'PizzaPress'; font-size: 1.15rem; color: var(--brand-red);">The Defensive Fumble</strong>
+                                </div>
+                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: #64748b;">0:46</span>
+                            </div>
+
+                            <!-- Audio Player -->
+                            <div style="display: flex; align-items: center; gap: 8px; background: var(--crust-base); border: 1.5px solid var(--brand-red); padding: 0.4rem 0.85rem; border-radius: 20px; margin-bottom: 0.75rem;">
+                                <button type="button" class="audio-play-btn" id="ex2-bad-btn" onclick="toggleExAudio('ex2-bad')" style="width: 28px; height: 28px; font-size: 0.85rem; background: var(--brand-red);">▶</button>
+                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.88rem; color: var(--brand-red); flex-grow: 1;">Play Fumble Tape</span>
+                                <audio id="audio-ex2-bad" src="../resources/Day2_audio/Example2_Bad.mp3" onended="onExEnded('ex2-bad')"></audio>
+                            </div>
+
+                            <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
+                                <em>"Well, it's Friday night and two of our drivers called out, so there wasn't really anything we could do about it. If you want a fresh one, you'll have to drive up here and pick it up yourself, otherwise you'll just have to reheat it."</em>
+                            </p>
+                        </div>
+
+                        <div style="background: rgba(227, 24, 55, 0.08); border-radius: 6px; padding: 0.5rem 0.75rem;">
+                            <strong style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--brand-red);">✗ Personal Foul:</strong>
+                            <p style="font-family: 'OneDotCd'; font-size: 0.85rem; color: var(--crust-deep); margin: 0;">Blaming staffing and rush conditions makes the customer feel dismissed and abandoned.</p>
+                        </div>
+                    </div>
+
+                    <!-- Good Clip Card -->
+                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1.15rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-size: 1.2rem;">🟢</span>
+                                    <strong style="font-family: 'PizzaPress'; font-size: 1.15rem; color: var(--dark-blue);">The Winning Play</strong>
+                                </div>
+                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: #64748b;">1:06</span>
+                            </div>
+
+                            <!-- Audio Player -->
+                            <div style="display: flex; align-items: center; gap: 8px; background: var(--crust-base); border: 1.5px solid var(--brand-blue); padding: 0.4rem 0.85rem; border-radius: 20px; margin-bottom: 0.75rem;">
+                                <button type="button" class="audio-play-btn" id="ex2-good-btn" onclick="toggleExAudio('ex2-good')" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
+                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.88rem; color: var(--dark-blue); flex-grow: 1;">Play Winning Tape</span>
+                                <audio id="audio-ex2-good" src="../resources/Day2_audio/Example2_Good.mp3" onended="onExEnded('ex2-good')"></audio>
+                            </div>
+
+                            <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
+                                <em>"Oh no, I am so sorry about that! I completely understand how frustrating that is, especially on a school night with hungry kids... Since it's getting late, I am going to credit your entire order back to your phone number—and I'm adding an extra $10 credit on top so dinner is on us next time."</em>
+                            </p>
+                        </div>
+
+                        <div style="background: rgba(0, 144, 226, 0.08); border-radius: 6px; padding: 0.5rem 0.75rem;">
+                            <strong style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--dark-blue);">✓ Key Coaching Takeaway:</strong>
+                            <p style="font-family: 'OneDotCd'; font-size: 0.85rem; color: var(--crust-deep); margin: 0;">Solves the customer's actual time problem, over-delivers on store credit, and secures lifelong brand loyalty.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Physical Playbook Note Prompt -->
+                <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem 1.25rem; text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.35rem;">
+                        <span style="font-size: 1.2rem;">📓</span>
+                        <strong style="font-family: 'OneDotCd-Bold'; font-size: 1rem; color: var(--brand-blue);">Physical Playbook Film Study Notes</strong>
+                    </div>
+                    <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.65rem 0;">
+                        Open your physical playbook to the <strong>Customer Recovery</strong> page. Write down:
+                        <br><strong>Prompt:</strong> <em>Why does making store excuses destroy customer trust, and how does a proactive credit protect customer retention?</em>
+                    </p>
+                    <button type="button" class="quiz-option" id="step3-confirm-btn" onclick="handleStep3Confirm(this)" style="padding: 0.75rem 1rem; font-size: 1rem; text-align: center; margin-bottom: 0;">
+                        ✍️ I have recorded my notes ➔ Enter the Live Call Arena
+                    </button>
+                    <p id="step3-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.45rem; margin-bottom: 0; color: var(--dark-blue); display: none;"></p>
+                </div>
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- STEP 4: SCENARIO 1 — DECONSTRUCT THE PLAY (CALL 1)       -->
+            <!-- ======================================================== -->
+            <div id="step4-container" class="hidden" style="width: 100%;">
                 <div style="text-align: center; margin-bottom: 1.25rem;">
                     <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎯 Scenario 1: Deconstruct the Play</h3>
                     <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Listen to this live call and identify the LEADS principles in action.</p>
@@ -211,9 +325,9 @@
             </div>
 
             <!-- ======================================================== -->
-            <!-- STEP 3: SCENARIO 2 — CALL THE SHOT (CALL 2)              -->
+            <!-- STEP 5: SCENARIO 2 — CALL THE SHOT (CALL 2)              -->
             <!-- ======================================================== -->
-            <div id="step3-container" class="hidden" style="width: 100%;">
+            <div id="step5-container" class="hidden" style="width: 100%;">
                 <div style="text-align: center; margin-bottom: 1.25rem;">
                     <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎧 Scenario 2: Call the Shot</h3>
                     <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Predict the winning response, lock in your choice, and hear Liz run the play.</p>
@@ -266,9 +380,9 @@
             </div>
 
             <!-- ======================================================== -->
-            <!-- STEP 4: DECISION GUIDE & COMPLETION                      -->
+            <!-- STEP 6: DECISION GUIDE & COMPLETION                      -->
             <!-- ======================================================== -->
-            <div id="step4-container" class="hidden" style="width: 100%; text-align: center;">
+            <div id="step6-container" class="hidden" style="width: 100%; text-align: center;">
                 <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.8rem; margin: 0 0 0.35rem 0;">Store Decision Guide</h3>
                 <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1rem; margin: 0 0 1rem 0;">Remake vs. Store Credit — Calling the right play every time.</p>
 
@@ -301,6 +415,13 @@
                     </div>
                 </div>
 
+                <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 1rem; margin-bottom: 1.25rem; text-align: left;">
+                    <h4 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.15rem; margin: 0 0 0.35rem 0;">🏆 The Golden Rule of Recovery</h4>
+                    <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--crust-deep); margin: 0;">
+                        Never make the customer feel like an inconvenience. When a mistake happens, taking complete ownership and executing the <strong>LEADS</strong> playbook turns an upset customer into a dedicated brand advocate for life!
+                    </p>
+                </div>
+
                 <!-- Sign off alert -->
                 <div style="background: #f0fdf4; border: 1.5px solid #2e7d32; border-radius: 8px; padding: 0.75rem 1rem; max-width: 620px; margin: 0 auto;">
                     <p style="margin: 0; font-family: 'OneDotCd-Bold'; font-size: 1rem; color: #166534;">
@@ -322,21 +443,21 @@
 
     <script>
         let currentStep = 1;
-        const totalSteps = 4;
+        const totalSteps = 6;
 
         // Step completion flags
         let step1Passed = false;
         let step2Passed = false;
         let step3Passed = false;
+        let step4Passed = false;
+        let step5Passed = false;
 
         // Tracking state
         const moduleStartTime = Date.now();
         let userAnswers = {};
 
         // ========================================================
-        // COACH MIKE AUDIO (STEP 1)
-        // ========================================================
-        // AUDIO HELPERS & STEP 1 EAR-TRAINING STUDIO
+        // AUDIO HELPERS & STEP 1-3 CONTROLS
         // ========================================================
         const audioCoach = document.getElementById('audio-coach');
 
@@ -405,10 +526,6 @@
             }
         }
 
-        function onExTimeUpdate(key) {
-            // Optional time tracking
-        }
-
         function onExEnded(key) {
             const btn = document.getElementById(`${key}-btn`);
             if (btn) btn.innerText = "▶";
@@ -417,9 +534,27 @@
         function handleStep1Confirm(btn) {
             btn.classList.add('correct');
             const feedback = document.getElementById('step1-feedback');
-            feedback.innerHTML = "🎯 <strong>Playbook Notes Ready!</strong> Great ear training. Click 'Next Step' below to enter the live call arena!";
+            feedback.innerHTML = "🎯 <strong>Pre-Game Huddle Complete!</strong> Click 'Next Step' below to scout Film #1!";
             feedback.style.display = 'block';
             step1Passed = true;
+            document.getElementById('btn-next').classList.remove('btn-disabled');
+        }
+
+        function handleStep2Confirm(btn) {
+            btn.classList.add('correct');
+            const feedback = document.getElementById('step2-feedback');
+            feedback.innerHTML = "🎯 <strong>Film #1 Notes Recorded!</strong> Click 'Next Step' below to scout Film #2!";
+            feedback.style.display = 'block';
+            step2Passed = true;
+            document.getElementById('btn-next').classList.remove('btn-disabled');
+        }
+
+        function handleStep3Confirm(btn) {
+            btn.classList.add('correct');
+            const feedback = document.getElementById('step3-feedback');
+            feedback.innerHTML = "🎯 <strong>Film #2 Notes Recorded!</strong> Click 'Next Step' below to enter the Live Call Arena!";
+            feedback.style.display = 'block';
+            step3Passed = true;
             document.getElementById('btn-next').classList.remove('btn-disabled');
         }
 
@@ -668,7 +803,7 @@
 
             const allPassed = call1CpCompleted.every(Boolean);
             if (allPassed) {
-                step2Passed = true;
+                step4Passed = true;
                 document.getElementById('btn-next').classList.remove('btn-disabled');
             }
         }
@@ -702,7 +837,7 @@
                     }, 3000);
                 } else {
                     if (call1CpCompleted.every(Boolean)) {
-                        step2Passed = true;
+                        step4Passed = true;
                         nextBtn.classList.remove('btn-disabled');
                     }
                 }
@@ -715,7 +850,7 @@
         }
 
         // ========================================================
-        // STEP 3: SCENARIO 2 AUDIO (CALL THE SHOT)
+        // STEP 5: SCENARIO 2 AUDIO (CALL THE SHOT)
         // ========================================================
         const audio2 = document.getElementById('audio-call2');
         let call2CpIndex = 0;
@@ -821,7 +956,7 @@
 
             const allPassed = call2CpCompleted.every(Boolean);
             if (allPassed) {
-                step3Passed = true;
+                step5Passed = true;
                 document.getElementById('btn-next').classList.remove('btn-disabled');
             }
         }
@@ -855,7 +990,7 @@
                     }, 3000);
                 } else {
                     if (call2CpCompleted.every(Boolean)) {
-                        step3Passed = true;
+                        step5Passed = true;
                         nextBtn.classList.remove('btn-disabled');
                     }
                 }
@@ -878,6 +1013,8 @@
                 if (currentStep === 1 && !step1Passed) return;
                 if (currentStep === 2 && !step2Passed) return;
                 if (currentStep === 3 && !step3Passed) return;
+                if (currentStep === 4 && !step4Passed) return;
+                if (currentStep === 5 && !step5Passed) return;
             }
 
             currentStep += direction;
@@ -891,6 +1028,8 @@
             document.getElementById('step2-container').classList.add('hidden');
             document.getElementById('step3-container').classList.add('hidden');
             document.getElementById('step4-container').classList.add('hidden');
+            document.getElementById('step5-container').classList.add('hidden');
+            document.getElementById('step6-container').classList.add('hidden');
 
             const btnBack = document.getElementById('btn-back');
             const btnNext = document.getElementById('btn-next');
@@ -917,6 +1056,14 @@
             }
             else if (currentStep === 4) {
                 document.getElementById('step4-container').classList.remove('hidden');
+                if (!step4Passed && !isAdmin) btnNext.classList.add('btn-disabled');
+            }
+            else if (currentStep === 5) {
+                document.getElementById('step5-container').classList.remove('hidden');
+                if (!step5Passed && !isAdmin) btnNext.classList.add('btn-disabled');
+            }
+            else if (currentStep === 6) {
+                document.getElementById('step6-container').classList.remove('hidden');
                 btnNext.classList.add('hidden');
                 btnFinish.classList.remove('hidden');
                 localStorage.setItem('day2_mod1_complete', 'true');
@@ -961,6 +1108,8 @@
             step1Passed = true;
             step2Passed = true;
             step3Passed = true;
+            step4Passed = true;
+            step5Passed = true;
             document.getElementById('btn-next').classList.remove('btn-disabled');
         }
 
