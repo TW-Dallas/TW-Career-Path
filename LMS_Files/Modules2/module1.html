@@ -78,12 +78,11 @@
                             </div>
                         </div>
 
-                        <!-- Action Confirmation -->
-                        <div>
-                            <button type="button" class="quiz-option" id="step1-confirm-btn" onclick="handleStep1Confirm(this)" style="padding: 0.85rem 1.25rem; font-size: 1.05rem; text-align: center; margin-bottom: 0;">
-                                🎧 Ready Coach! Let's Scout the Tape ➔
-                            </button>
-                            <p id="step1-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.45rem; margin-bottom: 0; color: var(--dark-blue); display: none;"></p>
+                        <!-- Takeaway Note -->
+                        <div style="background: rgba(0, 144, 226, 0.08); border-radius: 8px; padding: 0.75rem 1rem; border-left: 4px solid var(--brand-blue);">
+                            <p style="font-family: 'OneDotCd-Bold'; font-size: 0.95rem; color: var(--dark-blue); margin: 0;">
+                                🎧 Listen to Coach Mike's game plan above, then click <strong>Next Step</strong> below to scout the film!
+                            </p>
                         </div>
 
                     </div>
@@ -169,14 +168,10 @@
                         <span style="font-size: 1.2rem;">📓</span>
                         <strong style="font-family: 'OneDotCd-Bold'; font-size: 1rem; color: var(--brand-blue);">Physical Playbook Film Study Notes</strong>
                     </div>
-                    <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.65rem 0;">
+                    <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35; margin: 0;">
                         Open your physical playbook to the <strong>Customer Recovery</strong> page. Write down:
                         <br><strong>Prompt:</strong> <em>What specific phrases in the Winning Play immediately lowered tension before offering a replacement?</em>
                     </p>
-                    <button type="button" class="quiz-option" id="step2-confirm-btn" onclick="handleStep2Confirm(this)" style="padding: 0.75rem 1rem; font-size: 1rem; text-align: center; margin-bottom: 0;">
-                        ✍️ I have recorded my notes ➔ Scout Film #2
-                    </button>
-                    <p id="step2-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.45rem; margin-bottom: 0; color: var(--dark-blue); display: none;"></p>
                 </div>
             </div>
 
@@ -258,14 +253,10 @@
                         <span style="font-size: 1.2rem;">📓</span>
                         <strong style="font-family: 'OneDotCd-Bold'; font-size: 1rem; color: var(--brand-blue);">Physical Playbook Film Study Notes</strong>
                     </div>
-                    <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.65rem 0;">
+                    <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35; margin: 0;">
                         Open your physical playbook to the <strong>Customer Recovery</strong> page. Write down:
                         <br><strong>Prompt:</strong> <em>Why does making store excuses destroy customer trust, and how does a proactive credit protect customer retention?</em>
                     </p>
-                    <button type="button" class="quiz-option" id="step3-confirm-btn" onclick="handleStep3Confirm(this)" style="padding: 0.75rem 1rem; font-size: 1rem; text-align: center; margin-bottom: 0;">
-                        ✍️ I have recorded my notes ➔ Enter the Live Call Arena
-                    </button>
-                    <p id="step3-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.45rem; margin-bottom: 0; color: var(--dark-blue); display: none;"></p>
                 </div>
             </div>
 
@@ -491,6 +482,8 @@
                 pauseAllAudio();
                 audioCoach.play();
                 btn.innerText = "⏸";
+                step1Passed = true;
+                document.getElementById('btn-next').classList.remove('btn-disabled');
             } else {
                 audioCoach.pause();
                 btn.innerText = "▶";
@@ -523,6 +516,13 @@
                 pauseAllAudio();
                 audio.play();
                 btn.innerText = "⏸";
+                if (key.startsWith('ex1')) {
+                    step2Passed = true;
+                    document.getElementById('btn-next').classList.remove('btn-disabled');
+                } else if (key.startsWith('ex2')) {
+                    step3Passed = true;
+                    document.getElementById('btn-next').classList.remove('btn-disabled');
+                }
             } else {
                 audio.pause();
                 btn.innerText = "▶";
@@ -532,24 +532,13 @@
         function onExEnded(key) {
             const btn = document.getElementById(`${key}-btn`);
             if (btn) btn.innerText = "▶";
-        }
-
-        function handleStep1Confirm(btn) {
-            step1Passed = true;
-            document.getElementById('btn-next').classList.remove('btn-disabled');
-            changeStep(1);
-        }
-
-        function handleStep2Confirm(btn) {
-            step2Passed = true;
-            document.getElementById('btn-next').classList.remove('btn-disabled');
-            changeStep(1);
-        }
-
-        function handleStep3Confirm(btn) {
-            step3Passed = true;
-            document.getElementById('btn-next').classList.remove('btn-disabled');
-            changeStep(1);
+            if (key.startsWith('ex1')) {
+                step2Passed = true;
+                document.getElementById('btn-next').classList.remove('btn-disabled');
+            } else if (key.startsWith('ex2')) {
+                step3Passed = true;
+                document.getElementById('btn-next').classList.remove('btn-disabled');
+            }
         }
 
         // ========================================================
