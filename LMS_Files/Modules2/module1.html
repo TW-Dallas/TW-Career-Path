@@ -367,6 +367,8 @@
         // ========================================================
         const audio1 = document.getElementById('audio-call1');
         let call1AutoPaused = false;
+        let call1QuestionAnswered = false;
+        let call1AudioCompleted = false;
 
         function toggleCall1Audio() {
             const btn = document.getElementById('call1-play-btn');
@@ -410,10 +412,16 @@
         }
 
         function onCall1Ended() {
+            call1AudioCompleted = true;
             document.getElementById('call1-play-btn').innerText = "▶";
-            document.getElementById('call1-status-pill').innerText = "Complete ✓";
+            document.getElementById('call1-status-pill').innerText = "Call Complete ✓";
             document.getElementById('call1-status-pill').style.background = "#dcfce7";
             document.getElementById('call1-status-pill').style.color = "#15803d";
+
+            if (call1QuestionAnswered) {
+                step2Passed = true;
+                document.getElementById('btn-next').classList.remove('btn-disabled');
+            }
         }
 
         function handleCall1Choice(btn, isCorrect) {
@@ -430,10 +438,19 @@
             if (isCorrect) {
                 btn.classList.add('correct');
                 feedback.style.color = "#2e7d32";
-                feedback.innerHTML = "🌟 <strong>Spot on!</strong> Angel validated the disappointment with genuine empathy (<em>'Oh no!'</em>) and took immediate personal ownership (<em>'I can definitely help you with this'</em>).";
+                feedback.innerHTML = "🌟 <strong>Spot on!</strong> Angel connected with genuine empathy (<em>'Oh no!'</em>) and personal ownership (<em>'I can definitely help you with this'</em>). Resuming call to hear the full resolution...";
                 feedback.style.display = 'block';
-                step2Passed = true;
-                nextBtn.classList.remove('btn-disabled');
+                call1QuestionAnswered = true;
+
+                if (!call1AudioCompleted) {
+                    setTimeout(() => {
+                        audio1.play();
+                        document.getElementById('call1-play-btn').innerText = "⏸";
+                    }, 500);
+                } else {
+                    step2Passed = true;
+                    nextBtn.classList.remove('btn-disabled');
+                }
             } else {
                 btn.classList.add('wrong');
                 feedback.style.color = "var(--brand-red)";
@@ -447,6 +464,8 @@
         // ========================================================
         const audio2 = document.getElementById('audio-call2');
         let call2PausedAtShot = false;
+        let call2QuestionAnswered = false;
+        let call2AudioCompleted = false;
 
         function toggleCall2Audio() {
             const btn = document.getElementById('call2-play-btn');
@@ -485,10 +504,16 @@
         }
 
         function onCall2Ended() {
+            call2AudioCompleted = true;
             document.getElementById('call2-play-btn').innerText = "▶";
-            document.getElementById('call2-status-pill').innerText = "Complete ✓";
+            document.getElementById('call2-status-pill').innerText = "Call Complete ✓";
             document.getElementById('call2-status-pill').style.background = "#dcfce7";
             document.getElementById('call2-status-pill').style.color = "#15803d";
+
+            if (call2QuestionAnswered) {
+                step3Passed = true;
+                document.getElementById('btn-next').classList.remove('btn-disabled');
+            }
         }
 
         function handleCall2Choice(btn, isCorrect, type) {
@@ -510,14 +535,17 @@
 
                 document.getElementById('call2-resume-line').innerHTML = '<strong>Liz:</strong> <span style="color: #2e7d32; font-weight: bold;">"Oh no, I\'m so sorry about that. Was that a delivery order placed for today?"</span>';
                 document.getElementById('call2-resume-line').style.fontStyle = "normal";
+                call2QuestionAnswered = true;
 
-                setTimeout(() => {
-                    audio2.play();
-                    document.getElementById('call2-play-btn').innerText = "⏸";
-                }, 500);
-
-                step3Passed = true;
-                nextBtn.classList.remove('btn-disabled');
+                if (!call2AudioCompleted) {
+                    setTimeout(() => {
+                        audio2.play();
+                        document.getElementById('call2-play-btn').innerText = "⏸";
+                    }, 500);
+                } else {
+                    step3Passed = true;
+                    nextBtn.classList.remove('btn-disabled');
+                }
             } else {
                 btn.classList.add('wrong');
                 feedback.style.color = "var(--brand-red)";
