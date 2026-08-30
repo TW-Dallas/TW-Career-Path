@@ -427,7 +427,12 @@
         }
 
         function syncCall1Transcript(time) {
-            const idx = CALL1_TRANSCRIPT.findIndex(l => time >= l.start && time < l.end);
+            let idx = -1;
+            for (let i = 0; i < CALL1_TRANSCRIPT.length; i++) {
+                if (time >= CALL1_TRANSCRIPT[i].start) {
+                    idx = i;
+                }
+            }
             if (idx !== -1 && idx !== c1ActiveIdx) {
                 if (c1ActiveIdx !== -1) {
                     const prev = document.getElementById(`c1-line-${c1ActiveIdx}`);
@@ -438,18 +443,26 @@
                     }
                 }
                 const cur = document.getElementById(`c1-line-${idx}`);
-                if (cur) {
+                const box = document.getElementById('call1-transcript-box');
+                if (cur && box) {
                     cur.style.color = "var(--dark-blue)";
                     cur.style.fontWeight = "bold";
                     cur.style.background = "rgba(0, 144, 226, 0.08)";
-                    cur.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                    
+                    const targetTop = cur.offsetTop - box.offsetTop - 15;
+                    box.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
                 }
                 c1ActiveIdx = idx;
             }
         }
 
         function syncCall2Transcript(time) {
-            const idx = CALL2_TRANSCRIPT.findIndex(l => time >= l.start && time < l.end);
+            let idx = -1;
+            for (let i = 0; i < CALL2_TRANSCRIPT.length; i++) {
+                if (time >= CALL2_TRANSCRIPT[i].start) {
+                    idx = i;
+                }
+            }
             if (idx !== -1 && idx !== c2ActiveIdx) {
                 if (c2ActiveIdx !== -1) {
                     const prev = document.getElementById(`c2-line-${c2ActiveIdx}`);
@@ -460,11 +473,14 @@
                     }
                 }
                 const cur = document.getElementById(`c2-line-${idx}`);
-                if (cur) {
+                const box = document.getElementById('call2-transcript-box');
+                if (cur && box) {
                     cur.style.color = "var(--dark-blue)";
                     cur.style.fontWeight = "bold";
                     cur.style.background = "rgba(0, 144, 226, 0.08)";
-                    cur.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                    
+                    const targetTop = cur.offsetTop - box.offsetTop - 15;
+                    box.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
                 }
                 c2ActiveIdx = idx;
             }
