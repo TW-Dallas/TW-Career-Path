@@ -18,6 +18,21 @@
       font-weight: normal;
   }
   @font-face {
+      font-family: 'Header2';
+      src: url('../fonts/Dominos Sans Header 2.ttf') format('truetype');
+      font-weight: normal;
+  }
+  @font-face {
+      font-family: 'Subhead1';
+      src: url('../fonts/Dominos Sans Subhead 1.ttf') format('truetype');
+      font-weight: normal;
+  }
+  @font-face {
+      font-family: 'Subhead2';
+      src: url('../fonts/Dominos Sans Subhead 2.ttf') format('truetype');
+      font-weight: normal;
+  }
+  @font-face {
       font-family: 'OneDotCd-Bold';
       src: url('../fonts/Dominos Sans Bold.ttf') format('truetype');
       font-weight: bold;
@@ -28,8 +43,13 @@
       font-weight: normal;
   }
   @font-face {
-      font-family: 'Subhead2';
-      src: url('../fonts/Dominos Sans Subhead 2.ttf') format('truetype');
+      font-family: 'Compact';
+      src: url('../fonts/Dominos Sans Body Compact.ttf') format('truetype');
+      font-weight: normal;
+  }
+  @font-face {
+      font-family: 'Condensed';
+      src: url('../fonts/Dominos Sans Body Condensed.ttf') format('truetype');
       font-weight: normal;
   }
   
@@ -245,12 +265,14 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     color: var(--brand-blue);
     padding: 4px 10px;
     border-radius: 4px;
-    font-size: 0.9rem;
-    font-family: 'OneDotCd-Bold';
+    font-size: 0.85rem;
+    font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -262,17 +284,20 @@
 }
 
 .course-title {
-    font-family: 'OneDotCd-Bold';
-    font-size: 1.8rem; /* Match Lobby Card title size */
+    font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+    font-size: 1.7rem; /* Match Lobby Card title size */
     color: var(--dark-blue);
     margin-bottom: 0.5rem;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .course-meta {
+    font-family: 'Compact', 'OneDotCd', sans-serif;
     font-size: 1rem;
     color: #666;
     margin-bottom: 1.5rem;
+    line-height: 1.4;
 }
 
 .btn-small {
@@ -281,7 +306,7 @@
     color: white;
     padding: 0.8rem 2rem;
     border-radius: 50px;
-    font-family: 'OneDotCd-Bold';
+    font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
     text-decoration: none;
     transition: var(--transition);
     border: none;
