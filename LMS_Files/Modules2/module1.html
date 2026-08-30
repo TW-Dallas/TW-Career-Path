@@ -26,241 +26,231 @@
         </div>
     </header>
 
-    <div class="classroom-container-wide">
+    <div class="classroom-container-wide" style="max-width: 960px; margin: 1rem auto;">
         
-        <div class="classroom-content">
+        <div class="classroom-content" style="padding: 1.25rem 1.5rem; min-height: 440px;">
             
             <!-- ======================================================== -->
             <!-- STEP 1: THE Q-TIP ARMOR & MINDSET FLIP                   -->
             <!-- ======================================================== -->
-            <div id="step1-container" style="width: 100%; max-width: 780px; text-align: left;">
-                <div style="text-align: center; margin-bottom: 1.5rem;">
-                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.1rem; margin: 0 0 0.35rem 0;">The Q-TIP Armor</h3>
-                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.1rem; margin: 0;">Mastering your mindset before answering calls or greeting guests.</p>
-                </div>
-
-                <!-- Concept Card -->
-                <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.75rem;">
-                        <span style="font-size: 2rem;">🛡️</span>
-                        <div>
-                            <h4 style="font-family: 'PizzaPress'; font-size: 1.4rem; color: var(--brand-blue); margin: 0;">Q-TIP: Quit Taking It Personally</h4>
-                            <span style="font-family: 'OneDotCd-Bold'; color: var(--brand-red); font-size: 0.95rem;">Coach Mike's Gold Standard Mindset</span>
+            <div id="step1-container" style="width: 100%;">
+                <div style="display: grid; grid-template-columns: 280px 1fr; gap: 1.25rem; align-items: start;">
+                    
+                    <!-- Left: Q-TIP Shield Concept Card -->
+                    <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1.15rem; text-align: left;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.5rem;">
+                            <span style="font-size: 1.75rem;">🛡️</span>
+                            <div>
+                                <h4 style="font-family: 'PizzaPress'; font-size: 1.25rem; color: var(--brand-blue); margin: 0;">Q-TIP Shield</h4>
+                                <span style="font-family: 'OneDotCd-Bold'; color: var(--brand-red); font-size: 0.85rem;">Quit Taking It Personally</span>
+                            </div>
                         </div>
-                    </div>
-                    <p style="font-family: 'OneDotCd'; font-size: 1.05rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.75rem 0;">
-                        When a customer calls or comes up to the counter angry, <strong>they aren't mad at you as a person</strong>—they are hungry, tired, and disappointed that their dinner went wrong.
-                    </p>
-                    <ul style="margin: 0; padding-left: 1.25rem; font-family: 'OneDotCd'; font-size: 1rem; color: var(--crust-deep); line-height: 1.35;">
-                        <li style="margin-bottom: 0.35rem;"><strong>The Defensive Trap:</strong> Saying <em>"I didn't make your pizza"</em> or <em>"We're short-staffed"</em> only makes the customer angrier.</li>
-                        <li><strong>The Q-TIP Solution:</strong> Put on your emotional armor, stay calm, and focus 100% of your energy on being the problem solver.</li>
-                    </ul>
-                </div>
-
-                <!-- Mindset Drill Question -->
-                <div style="background: #fff; border: 2px solid var(--crust-med); border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                    <p style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.15rem; margin: 0 0 0.5rem 0;">
-                        🔄 Mindset Drill: Call the Play
-                    </p>
-                    <p style="font-family: 'OneDotCd'; font-size: 1.05rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 1rem 0;">
-                        <em>"A customer walks up to the counter furious: 'I’ve been waiting 25 minutes for one pizza and nobody called my name! You guys ruined my lunch break!' How do you respond using Q-TIP?"</em>
-                    </p>
-
-                    <div id="mindset-options">
-                        <button type="button" class="quiz-option" onclick="handleMindsetChoice(this, false, 'defensive')">
-                            A. "Well, our makeline screen shows it just came out of the oven. We're doing the best we can with only two people inside."
-                        </button>
-                        <button type="button" class="quiz-option" onclick="handleMindsetChoice(this, false, 'dismissive')">
-                            B. "Did you check the heat rack? It's probably sitting right there."
-                        </button>
-                        <button type="button" class="quiz-option" onclick="handleMindsetChoice(this, true, 'hero')">
-                            C. "I completely understand your frustration—a tight lunch break with no pizza is the absolute worst! Let me grab your box right now and check you out so you can get on your way."
-                        </button>
+                        <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.35; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
+                            When guests are angry, <strong>they aren't mad at you</strong>—they are hungry and disappointed their meal went wrong.
+                        </p>
+                        <ul style="margin: 0; padding-left: 1.15rem; font-family: 'OneDotCd'; font-size: 0.9rem; color: var(--crust-deep); line-height: 1.3;">
+                            <li style="margin-bottom: 0.35rem;"><strong>Trap:</strong> Explaining problems (<em>"We're short staffed"</em>) escalates anger.</li>
+                            <li><strong>Hero:</strong> Put on emotional armor and focus 100% on the immediate fix.</li>
+                        </ul>
                     </div>
 
-                    <p id="mindset-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 1rem; margin-top: 0.85rem; display: none;"></p>
+                    <!-- Right: Mindset Drill -->
+                    <div style="text-align: left;">
+                        <p style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.05rem; margin: 0 0 0.25rem 0;">
+                            🔄 Mindset Drill: Call the Play
+                        </p>
+                        <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.3; margin: 0 0 0.65rem 0;">
+                            <em>"A customer is furious after waiting 25 minutes for a carryout pizza on lunch break. How do you respond using Q-TIP?"</em>
+                        </p>
+
+                        <div id="mindset-options" style="display: flex; flex-direction: column; gap: 6px;">
+                            <button type="button" class="quiz-option" style="padding: 0.6rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleMindsetChoice(this, false, 'defensive')">
+                                A. "Well, the makeline screen shows it just came out. We're doing our best with only two people inside."
+                            </button>
+                            <button type="button" class="quiz-option" style="padding: 0.6rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleMindsetChoice(this, false, 'dismissive')">
+                                B. "Did you check the heat rack? It's probably sitting right there."
+                            </button>
+                            <button type="button" class="quiz-option" style="padding: 0.6rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleMindsetChoice(this, true, 'hero')">
+                                C. "I completely understand—a tight lunch break with no pizza is the absolute worst! Let me grab your box right now."
+                            </button>
+                        </div>
+
+                        <p id="mindset-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 0; display: none;"></p>
+                    </div>
+
                 </div>
             </div>
 
             <!-- ======================================================== -->
             <!-- STEP 2: SCENARIO 1 — DECONSTRUCT THE PLAY (CALL 1)       -->
             <!-- ======================================================== -->
-            <div id="step2-container" class="hidden" style="width: 100%; max-width: 780px; text-align: left;">
-                <div style="text-align: center; margin-bottom: 1.25rem;">
-                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.1rem; margin: 0 0 0.35rem 0;">Scenario 1: Deconstruct the Play</h3>
-                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Listen to this live call and identify the LEADS principles in action.</p>
-                </div>
-
-                <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.25rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <div>
-                            <h4 style="font-family: 'PizzaPress'; font-size: 1.35rem; color: var(--brand-blue); margin: 0;">Call #1: Carryout Mix-up & Manager Request</h4>
-                            <span style="font-family: 'OneDotCd'; color: #64748b; font-size: 0.9rem;">Customer received the wrong order and asks for a manager.</span>
+            <div id="step2-container" class="hidden" style="width: 100%;">
+                <div style="display: grid; grid-template-columns: 310px 1fr; gap: 1.25rem; align-items: start;">
+                    
+                    <!-- Left: Audio & Transcript -->
+                    <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem; text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h4 style="font-family: 'PizzaPress'; font-size: 1.15rem; color: var(--brand-blue); margin: 0;">Call #1: Mix-Up</h4>
+                            <span id="call1-status-pill" style="background: #e2e8f0; color: #475569; padding: 2px 8px; border-radius: 12px; font-family: 'OneDotCd-Bold'; font-size: 0.75rem;">Ready</span>
                         </div>
-                        <span id="call1-status-pill" style="background: #e2e8f0; color: #475569; padding: 4px 12px; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.85rem;">Ready</span>
-                    </div>
 
-                    <!-- Audio Player -->
-                    <div style="display: flex; align-items: center; gap: 12px; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.65rem 1.25rem; border-radius: 30px; margin-bottom: 1rem;">
-                        <button type="button" class="audio-play-btn" id="call1-play-btn" onclick="toggleCall1Audio()">▶</button>
-                        <div style="flex-grow: 1;">
-                            <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; position: relative;">
-                                <div id="call1-progress-bar" style="height: 100%; width: 0%; background: var(--brand-blue); transition: width 0.1s linear;"></div>
+                        <!-- Compact Audio Bar -->
+                        <div style="display: flex; align-items: center; gap: 8px; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.35rem 0.75rem; border-radius: 20px; margin-bottom: 0.65rem;">
+                            <button type="button" class="audio-play-btn" id="call1-play-btn" onclick="toggleCall1Audio()" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
+                            <div style="flex-grow: 1;">
+                                <div style="height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
+                                    <div id="call1-progress-bar" style="height: 100%; width: 0%; background: var(--brand-blue); transition: width 0.1s linear;"></div>
+                                </div>
                             </div>
+                            <span id="call1-time" style="font-family: 'OneDotCd'; font-size: 0.75rem; color: #64748b;">0:00 / 0:15</span>
+                            <audio id="audio-call1" src="../resources/Day2_audio/Customer_Concern_Credit.mp3" ontimeupdate="onCall1TimeUpdate()" onended="onCall1Ended()"></audio>
                         </div>
-                        <span id="call1-time" style="font-family: 'OneDotCd'; font-size: 0.85rem; color: #64748b; min-width: 65px; text-align: right;">0:00 / 0:15</span>
-                        <audio id="audio-call1" src="../resources/Day2_audio/Customer_Concern_Credit.mp3" ontimeupdate="onCall1TimeUpdate()" onended="onCall1Ended()"></audio>
+
+                        <!-- Transcript -->
+                        <div style="background: #fff; border: 1px solid var(--crust-med); border-radius: 6px; padding: 0.65rem; font-family: 'OneDotCd'; font-size: 0.85rem; line-height: 1.3; color: var(--crust-deep);">
+                            <p style="margin: 0 0 0.35rem 0;"><strong>Customer:</strong> <em>"Yes, I have to speak to a manager... I picked up my pizza and got the wrong order."</em></p>
+                            <p id="call1-highlight-line" style="margin: 0; color: #64748b;"><strong>Team Member:</strong> <em>"Oh no! Okay, yeah, I'm sure I can help you with this..."</em></p>
+                        </div>
                     </div>
 
-                    <!-- Live Dialogue Transcript Highlight -->
-                    <div style="background: #fff; border: 1px solid var(--crust-med); border-radius: 8px; padding: 1rem; font-family: 'OneDotCd'; font-size: 1rem; line-height: 1.4; color: var(--crust-deep);">
-                        <p style="margin: 0 0 0.35rem 0;"><strong>Customer:</strong> <em>"Yes, I have to speak to a manager. I had an issue with my order... I just came to pick up my pizza 12 minutes ago and I got the wrong order it looks like."</em></p>
-                        <p id="call1-highlight-line" style="margin: 0; color: #64748b; transition: color 0.3s ease;"><strong>Team Member:</strong> <em>"Oh no! Okay, yeah, I'm sure I can help you with this..."</em></p>
+                    <!-- Right: Checkpoint Question -->
+                    <div style="text-align: left;">
+                        <p style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.05rem; margin: 0 0 0.25rem 0;">
+                            🎯 Checkpoint: LEADS in Action
+                        </p>
+                        <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.3; margin: 0 0 0.65rem 0;">
+                            When the customer asked for a manager, the team member responded with genuine empathy (<em>"Oh no!"</em>) and personal ownership (<em>"I can help you"</em>). What was demonstrated?
+                        </p>
+
+                        <div id="call1-options" style="display: flex; flex-direction: column; gap: 6px;">
+                            <button type="button" class="quiz-option" style="padding: 0.6rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall1Choice(this, false)">
+                                A. <strong>Decide</strong> — Issued an immediate refund on the register
+                            </button>
+                            <button type="button" class="quiz-option" style="padding: 0.6rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall1Choice(this, true)">
+                                B. <strong>Listen & Empathize</strong> — Connected with empathy and took immediate personal ownership to solve the issue
+                            </button>
+                            <button type="button" class="quiz-option" style="padding: 0.6rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall1Choice(this, false)">
+                                C. <strong>Stand</strong> — Put the customer on hold for 10 minutes
+                            </button>
+                        </div>
+
+                        <p id="call1-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 0; display: none;"></p>
                     </div>
-                </div>
 
-                <!-- Checkpoint Prompt (Revealed on Pause) -->
-                <div id="call1-checkpoint" class="hidden" style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 12px; padding: 1.25rem 1.5rem; animation: fadeIn 0.3s ease;">
-                    <p style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.15rem; margin: 0 0 0.5rem 0;">
-                        🎯 Checkpoint: What did the Team Member demonstrate?
-                    </p>
-                    <p style="font-family: 'OneDotCd'; font-size: 1.05rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 1rem 0;">
-                        When the customer explained their pizza was wrong, the team member responded with genuine concern (<em>"Oh no!"</em>) and reassurance (<em>"I'm sure I can help you with this"</em>). Which LEADS step was this?
-                    </p>
-
-                    <button type="button" class="quiz-option" onclick="handleCall1Choice(this, false)">
-                        A. <strong>Decide</strong> — Issued an immediate refund on the register
-                    </button>
-                    <button type="button" class="quiz-option" onclick="handleCall1Choice(this, true)">
-                        B. <strong>Listen & Empathize</strong> — Connected with genuine empathy and took immediate personal ownership to help
-                    </button>
-                    <button type="button" class="quiz-option" onclick="handleCall1Choice(this, false)">
-                        C. <strong>Stand</strong> — Put the customer on hold for 10 minutes
-                    </button>
-
-                    <p id="call1-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 1rem; margin-top: 0.85rem; display: none;"></p>
                 </div>
             </div>
 
             <!-- ======================================================== -->
             <!-- STEP 3: SCENARIO 2 — CALL THE SHOT (CALL 2)              -->
             <!-- ======================================================== -->
-            <div id="step3-container" class="hidden" style="width: 100%; max-width: 780px; text-align: left;">
-                <div style="text-align: center; margin-bottom: 1.25rem;">
-                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.1rem; margin: 0 0 0.35rem 0;">Scenario 2: Call the Shot</h3>
-                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Predict the winning response, lock in your choice, and hear Bobby run the play.</p>
-                </div>
-
-                <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.25rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <div>
-                            <h4 style="font-family: 'PizzaPress'; font-size: 1.35rem; color: var(--brand-blue); margin: 0;">Call #2: Delivery Order Discrepancy</h4>
-                            <span style="font-family: 'OneDotCd'; color: #64748b; font-size: 0.9rem;">Customer Aiden calls after his delivery arrives with missing/wrong items.</span>
+            <div id="step3-container" class="hidden" style="width: 100%;">
+                <div style="display: grid; grid-template-columns: 310px 1fr; gap: 1.25rem; align-items: start;">
+                    
+                    <!-- Left: Audio & Transcript -->
+                    <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem; text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h4 style="font-family: 'PizzaPress'; font-size: 1.15rem; color: var(--brand-blue); margin: 0;">Call #2: Delivery Discrepancy</h4>
+                            <span id="call2-status-pill" style="background: #e2e8f0; color: #475569; padding: 2px 8px; border-radius: 12px; font-family: 'OneDotCd-Bold'; font-size: 0.75rem;">Click Play</span>
                         </div>
-                        <span id="call2-status-pill" style="background: #e2e8f0; color: #475569; padding: 4px 12px; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.85rem;">Click Play to Start</span>
-                    </div>
 
-                    <!-- Audio Player -->
-                    <div style="display: flex; align-items: center; gap: 12px; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.65rem 1.25rem; border-radius: 30px; margin-bottom: 1rem;">
-                        <button type="button" class="audio-play-btn" id="call2-play-btn" onclick="toggleCall2Audio()">▶</button>
-                        <div style="flex-grow: 1;">
-                            <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; position: relative;">
-                                <div id="call2-progress-bar" style="height: 100%; width: 0%; background: var(--brand-blue); transition: width 0.1s linear;"></div>
+                        <!-- Compact Audio Bar -->
+                        <div style="display: flex; align-items: center; gap: 8px; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.35rem 0.75rem; border-radius: 20px; margin-bottom: 0.65rem;">
+                            <button type="button" class="audio-play-btn" id="call2-play-btn" onclick="toggleCall2Audio()" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
+                            <div style="flex-grow: 1;">
+                                <div style="height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
+                                    <div id="call2-progress-bar" style="height: 100%; width: 0%; background: var(--brand-blue); transition: width 0.1s linear;"></div>
+                                </div>
                             </div>
+                            <span id="call2-time" style="font-family: 'OneDotCd'; font-size: 0.75rem; color: #64748b;">0:00 / 0:11</span>
+                            <audio id="audio-call2" src="../resources/Day2_audio/Customer_Concern_Credit_2.mp3" ontimeupdate="onCall2TimeUpdate()" onended="onCall2Ended()"></audio>
                         </div>
-                        <span id="call2-time" style="font-family: 'OneDotCd'; font-size: 0.85rem; color: #64748b; min-width: 65px; text-align: right;">0:00 / 0:11</span>
-                        <audio id="audio-call2" src="../resources/Day2_audio/Customer_Concern_Credit_2.mp3" ontimeupdate="onCall2TimeUpdate()" onended="onCall2Ended()"></audio>
+
+                        <!-- Transcript -->
+                        <div style="background: #fff; border: 1px solid var(--crust-med); border-radius: 6px; padding: 0.65rem; font-family: 'OneDotCd'; font-size: 0.85rem; line-height: 1.3; color: var(--crust-deep);">
+                            <p style="margin: 0 0 0.35rem 0;"><strong>Bobby:</strong> <em>"Domino's Pizza, this is Bobby..."</em></p>
+                            <p style="margin: 0 0 0.35rem 0;"><strong>Aiden:</strong> <em>"Hi, I placed a delivery order and didn't get what I ordered."</em></p>
+                            <p id="call2-resume-line" style="margin: 0; color: #94a3b8; font-style: italic;">[Audio pauses: Choose what Bobby says next...]</p>
+                        </div>
                     </div>
 
-                    <!-- Live Transcript Box -->
-                    <div style="background: #fff; border: 1px solid var(--crust-med); border-radius: 8px; padding: 1rem; font-family: 'OneDotCd'; font-size: 1rem; line-height: 1.4; color: var(--crust-deep);">
-                        <p style="margin: 0 0 0.35rem 0;"><strong>Bobby:</strong> <em>"Domino's Pizza, this is Bobby, what can I get started for you today?"</em></p>
-                        <p style="margin: 0 0 0.35rem 0;"><strong>Aiden:</strong> <em>"Hi there, good evening Bobby. This is Aiden. I placed a delivery order and I kind of didn't get what I ordered."</em></p>
-                        <p id="call2-resume-line" style="margin: 0; color: #94a3b8; font-style: italic;">[Audio pauses here: Choose what Bobby should say next...]</p>
+                    <!-- Right: Call the Shot Decision Block -->
+                    <div style="text-align: left;">
+                        <p style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.05rem; margin: 0 0 0.25rem 0;">
+                            🎧 Call the Shot: What should Bobby say next?
+                        </p>
+                        <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.3; margin: 0 0 0.65rem 0;">
+                            Aiden's delivery order arrived incorrect. What is the most effective immediate response?
+                        </p>
+
+                        <div id="call2-options" style="display: flex; flex-direction: column; gap: 6px;">
+                            <button type="button" class="quiz-option" style="padding: 0.6rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall2Choice(this, false, 'skeptical')">
+                                A. "What did the driver give you? Are you sure you checked the whole box?"
+                            </button>
+                            <button type="button" class="quiz-option" style="padding: 0.6rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall2Choice(this, false, 'pass_buck')">
+                                B. "Hold on, let me put you on hold while I ask someone in back."
+                            </button>
+                            <button type="button" class="quiz-option" style="padding: 0.6rem 0.85rem; font-size: 0.95rem; margin-bottom: 0;" onclick="handleCall2Choice(this, true, 'pro_move')">
+                                C. "Oh man, I apologize about that! You had an order placed for today?"
+                            </button>
+                        </div>
+
+                        <p id="call2-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 0; display: none;"></p>
                     </div>
-                </div>
 
-                <!-- Call the Shot Decision Block -->
-                <div id="call2-decision-block" class="hidden" style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 12px; padding: 1.25rem 1.5rem; animation: fadeIn 0.3s ease;">
-                    <p style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.15rem; margin: 0 0 0.5rem 0;">
-                        🎧 Call the Shot: What should Bobby say next?
-                    </p>
-                    <p style="font-family: 'OneDotCd'; font-size: 1.05rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 1rem 0;">
-                        Aiden just told you his delivery order arrived wrong. What is the most effective immediate response?
-                    </p>
-
-                    <button type="button" class="quiz-option" onclick="handleCall2Choice(this, false, 'skeptical')">
-                        A. "What did the driver give you? Are you sure you checked the whole bag?"
-                    </button>
-                    <button type="button" class="quiz-option" onclick="handleCall2Choice(this, false, 'pass_buck')">
-                        B. "Hold on, let me put you on hold while I ask someone in the kitchen."
-                    </button>
-                    <button type="button" class="quiz-option" onclick="handleCall2Choice(this, true, 'pro_move')">
-                        C. "Oh man, I apologize about that! You had an order placed for today?"
-                    </button>
-
-                    <p id="call2-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 1rem; margin-top: 0.85rem; display: none;"></p>
                 </div>
             </div>
 
             <!-- ======================================================== -->
-            <!-- STEP 4: DECISION GUIDE & TRAINER SIGN-OFF                 -->
+            <!-- STEP 4: DECISION GUIDE & COMPLETION                      -->
             <!-- ======================================================== -->
-            <div id="step4-container" class="hidden" style="width: 100%; max-width: 780px; text-align: left;">
-                <div style="text-align: center; margin-bottom: 1.25rem;">
-                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.1rem; margin: 0 0 0.35rem 0;">Store Decision Guide</h3>
-                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Remake vs. Store Credit — Calling the right play every time.</p>
-                </div>
+            <div id="step4-container" class="hidden" style="width: 100%; text-align: center;">
+                <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.8rem; margin: 0 0 0.35rem 0;">Store Decision Guide</h3>
+                <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1rem; margin: 0 0 1rem 0;">Remake vs. Store Credit — Calling the right play every time.</p>
 
-                <!-- Decision Cards Grid -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem;">
-                    <!-- REMAKE CARD -->
-                    <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 12px; padding: 1.25rem;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.5rem;">
-                            <span style="font-size: 1.5rem;">🍕⚡</span>
-                            <h4 style="font-family: 'PizzaPress'; font-size: 1.3rem; color: var(--brand-blue); margin: 0;">When to REMAKE</h4>
+                <!-- Decision Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; text-align: left;">
+                    <!-- REMAKE -->
+                    <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.35rem;">
+                            <span style="font-size: 1.4rem;">🍕⚡</span>
+                            <h4 style="font-family: 'PizzaPress'; font-size: 1.2rem; color: var(--brand-blue); margin: 0;">When to REMAKE</h4>
                         </div>
-                        <ul style="margin: 0; padding-left: 1.15rem; font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35;">
-                            <li style="margin-bottom: 0.35rem;">Customer wants dinner <strong>tonight</strong> and has time for a fresh remake.</li>
-                            <li style="margin-bottom: 0.35rem;">Mark as a <strong>Priority Remake</strong> in the makeline queue.</li>
-                            <li>For deliveries: Rush a driver out immediately with hot food and any forgotten sauces/drinks.</li>
+                        <ul style="margin: 0; padding-left: 1.15rem; font-family: 'OneDotCd'; font-size: 0.9rem; color: var(--crust-deep); line-height: 1.35;">
+                            <li style="margin-bottom: 0.3rem;">Guest wants dinner <strong>tonight</strong> and has time to wait.</li>
+                            <li style="margin-bottom: 0.3rem;">Mark as a <strong>Priority Remake</strong> on the makeline.</li>
+                            <li>For deliveries: Rush a driver immediately with fresh hot items.</li>
                         </ul>
                     </div>
 
-                    <!-- STORE CREDIT CARD -->
-                    <div style="background: var(--crust-base); border: 2px solid #2e7d32; border-radius: 12px; padding: 1.25rem;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.5rem;">
-                            <span style="font-size: 1.5rem;">💳✨</span>
-                            <h4 style="font-family: 'PizzaPress'; font-size: 1.3rem; color: #2e7d32; margin: 0;">When to CREDIT</h4>
+                    <!-- CREDIT -->
+                    <div style="background: var(--crust-base); border: 2px solid #2e7d32; border-radius: 10px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.35rem;">
+                            <span style="font-size: 1.4rem;">💳✨</span>
+                            <h4 style="font-family: 'PizzaPress'; font-size: 1.2rem; color: #2e7d32; margin: 0;">When to CREDIT</h4>
                         </div>
-                        <ul style="margin: 0; padding-left: 1.15rem; font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35;">
-                            <li style="margin-bottom: 0.35rem;">Customer already ate, or doesn't have time to wait for a remake.</li>
-                            <li style="margin-bottom: 0.35rem;">Apply a store credit directly to their phone number profile in the POS.</li>
-                            <li>Always confirm the credit amount and thank them sincerely for letting us know!</li>
+                        <ul style="margin: 0; padding-left: 1.15rem; font-family: 'OneDotCd'; font-size: 0.9rem; color: var(--crust-deep); line-height: 1.35;">
+                            <li style="margin-bottom: 0.3rem;">Guest already ate or doesn't have time for a remake.</li>
+                            <li style="margin-bottom: 0.3rem;">Apply store credit directly to their phone profile in the POS.</li>
+                            <li>Always confirm the credit amount and thank them sincerely!</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Final Prompt Box -->
-                <div style="background: #fff; border: 2px solid var(--brand-red); border-radius: 12px; padding: 1.5rem; text-align: center; box-shadow: 0 4px 14px rgba(227,24,55,0.08);">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🤝</div>
-                    <h4 style="font-family: 'PizzaPress'; font-size: 1.6rem; color: var(--brand-red); margin: 0 0 0.5rem 0;">Online Module 1 Complete!</h4>
-                    <p style="font-family: 'OneDotCd'; font-size: 1.15rem; color: var(--crust-deep); max-width: 580px; margin: 0 auto 1rem auto; line-height: 1.4;">
-                        You know the LEADS playbook, the Q-TIP shield, and how to de-escalate like a pro. Grab your trainer to run a quick live de-escalation practice order!
-                    </p>
-                    <p style="color: #2e7d32; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; margin: 0;">
-                        ✅ Progress saved. Ready to return to the Day 2 dashboard.
+                <!-- Sign off alert -->
+                <div style="background: #f0fdf4; border: 1.5px solid #2e7d32; border-radius: 8px; padding: 0.75rem 1rem; max-width: 620px; margin: 0 auto;">
+                    <p style="margin: 0; font-family: 'OneDotCd-Bold'; font-size: 1rem; color: #166534;">
+                        🎉 Module Complete! Grab your trainer for a quick live de-escalation practice order.
                     </p>
                 </div>
             </div>
 
         </div>
 
-        <div class="classroom-footer">
-            <button class="btn btn-outline hidden" id="btn-back" onclick="changeStep(-1)" style="padding: 0.8rem 2rem; width: auto;">Back</button>
+        <div class="classroom-footer" style="padding: 0.75rem 1.5rem;">
+            <button class="btn btn-outline hidden" id="btn-back" onclick="changeStep(-1)" style="padding: 0.6rem 1.5rem; font-size: 0.95rem; width: auto;">Back</button>
             <div style="flex-grow: 1;"></div>
-            <button class="btn btn-disabled" id="btn-next" onclick="changeStep(1)" style="padding: 0.8rem 2rem; width: auto; margin-top: 0;">Next Step</button>
-            <button class="btn hidden" id="btn-finish" onclick="finishAndReturn()" style="padding: 0.8rem 2rem; width: auto; margin-top: 0; background: var(--brand-red); color: white;">Return to Dashboard</button>
+            <button class="btn btn-disabled" id="btn-next" onclick="changeStep(1)" style="padding: 0.6rem 1.5rem; font-size: 0.95rem; width: auto; margin-top: 0;">Next Step</button>
+            <button class="btn hidden" id="btn-finish" onclick="finishAndReturn()" style="padding: 0.6rem 1.5rem; font-size: 0.95rem; width: auto; margin-top: 0; background: var(--brand-red); color: white;">Return to Dashboard</button>
         </div>
 
     </div>
@@ -295,7 +285,7 @@
             if (isCorrect) {
                 btn.classList.add('correct');
                 feedback.style.color = "#2e7d32";
-                feedback.innerHTML = "🎯 <strong>Boom! Q-TIP in action.</strong> You validated their frustration without getting defensive, and immediately focused on the fastest fix.";
+                feedback.innerHTML = "🎯 <strong>Boom! Q-TIP in action.</strong> Validated frustration without defensiveness, and focused on the fastest fix.";
                 feedback.style.display = 'block';
                 step1Passed = true;
                 nextBtn.classList.remove('btn-disabled');
@@ -303,9 +293,9 @@
                 btn.classList.add('wrong');
                 feedback.style.color = "var(--brand-red)";
                 if (type === 'defensive') {
-                    feedback.innerHTML = "⚠️ <strong>Defensive Trap!</strong> Explaining kitchen problems or short staffing makes the customer feel dismissed and escalates their anger.";
+                    feedback.innerHTML = "⚠️ <strong>Defensive Trap!</strong> Explaining short staffing makes the customer feel dismissed.";
                 } else {
-                    feedback.innerHTML = "⚠️ <strong>Too Dismissive!</strong> Asking if they checked the rack puts the blame back on them. Always lead with empathy and personal ownership.";
+                    feedback.innerHTML = "⚠️ <strong>Too Dismissive!</strong> Asking if they checked the rack puts the blame back on them.";
                 }
                 feedback.style.display = 'block';
             }
@@ -322,7 +312,7 @@
             if (audio1.paused) {
                 audio1.play();
                 btn.innerText = "⏸";
-                document.getElementById('call1-status-pill').innerText = "Listening...";
+                document.getElementById('call1-status-pill').innerText = "Playing...";
                 document.getElementById('call1-status-pill').style.background = "rgba(0, 144, 226, 0.15)";
                 document.getElementById('call1-status-pill').style.color = "var(--brand-blue)";
             } else {
@@ -339,13 +329,11 @@
                 const curS = Math.floor(audio1.currentTime);
                 document.getElementById('call1-time').innerText = `0:${curS.toString().padStart(2, '0')} / 0:15`;
 
-                // Highlight dialogue as it plays
                 if (audio1.currentTime >= 6) {
                     document.getElementById('call1-highlight-line').style.color = "var(--brand-blue)";
                     document.getElementById('call1-highlight-line').style.fontWeight = "bold";
                 }
 
-                // Auto-pause at end of dialogue to trigger checkpoint
                 if (audio1.currentTime >= 14 && !call1AutoPaused) {
                     audio1.pause();
                     call1AutoPaused = true;
@@ -353,18 +341,16 @@
                     document.getElementById('call1-status-pill').innerText = "Checkpoint ⏸";
                     document.getElementById('call1-status-pill').style.background = "#fef3c7";
                     document.getElementById('call1-status-pill').style.color = "#b45309";
-                    document.getElementById('call1-checkpoint').classList.remove('hidden');
                 }
             }
         }
 
         function onCall1Ended() {
             document.getElementById('call1-play-btn').innerText = "▶";
-            document.getElementById('call1-checkpoint').classList.remove('hidden');
         }
 
         function handleCall1Choice(btn, isCorrect) {
-            const block = document.getElementById('call1-checkpoint');
+            const block = document.getElementById('call1-options');
             block.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected', 'correct', 'wrong'));
             btn.classList.add('selected');
 
@@ -377,14 +363,14 @@
             if (isCorrect) {
                 btn.classList.add('correct');
                 feedback.style.color = "#2e7d32";
-                feedback.innerHTML = "🌟 <strong>Spot on!</strong> By validating the disappointment with genuine concern ('Oh no!') and reassuring the customer ('I can help you with this'), they immediately lowered the tension.";
+                feedback.innerHTML = "🌟 <strong>Spot on!</strong> Genuine empathy ('Oh no!') and immediate ownership ('I can help you') lowered the tension.";
                 feedback.style.display = 'block';
                 step2Passed = true;
                 nextBtn.classList.remove('btn-disabled');
             } else {
                 btn.classList.add('wrong');
                 feedback.style.color = "var(--brand-red)";
-                feedback.innerHTML = "Not quite! Look at how the team member reacted with empathy and direct willingness to help before offering specific system remedies.";
+                feedback.innerHTML = "Not quite! Look at how the team member reacted with empathy before jumping into system remedies.";
                 feedback.style.display = 'block';
             }
         }
@@ -394,14 +380,13 @@
         // ========================================================
         const audio2 = document.getElementById('audio-call2');
         let call2PausedAtShot = false;
-        let call2ShotUnlocked = false;
 
         function toggleCall2Audio() {
             const btn = document.getElementById('call2-play-btn');
             if (audio2.paused) {
                 audio2.play();
                 btn.innerText = "⏸";
-                document.getElementById('call2-status-pill').innerText = "Listening...";
+                document.getElementById('call2-status-pill').innerText = "Playing...";
                 document.getElementById('call2-status-pill').style.background = "rgba(0, 144, 226, 0.15)";
                 document.getElementById('call2-status-pill').style.color = "var(--brand-blue)";
             } else {
@@ -418,7 +403,6 @@
                 const curS = Math.floor(audio2.currentTime);
                 document.getElementById('call2-time').innerText = `0:${curS.toString().padStart(2, '0')} / 0:11`;
 
-                // Auto-pause at 6.0s (right after Aiden finishes saying: "...kind of didn't get what I ordered")
                 if (audio2.currentTime >= 6.0 && !call2PausedAtShot) {
                     audio2.pause();
                     call2PausedAtShot = true;
@@ -426,20 +410,19 @@
                     document.getElementById('call2-status-pill').innerText = "Decision Point ⏸";
                     document.getElementById('call2-status-pill').style.background = "#fef3c7";
                     document.getElementById('call2-status-pill').style.color = "#b45309";
-                    document.getElementById('call2-decision-block').classList.remove('hidden');
                 }
             }
         }
 
         function onCall2Ended() {
             document.getElementById('call2-play-btn').innerText = "▶";
-            document.getElementById('call2-status-pill').innerText = "Call Complete ✓";
+            document.getElementById('call2-status-pill').innerText = "Complete ✓";
             document.getElementById('call2-status-pill').style.background = "#dcfce7";
             document.getElementById('call2-status-pill').style.color = "#15803d";
         }
 
         function handleCall2Choice(btn, isCorrect, type) {
-            const block = document.getElementById('call2-decision-block');
+            const block = document.getElementById('call2-options');
             block.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected', 'correct', 'wrong'));
             btn.classList.add('selected');
 
@@ -452,24 +435,23 @@
             if (isCorrect) {
                 btn.classList.add('correct');
                 feedback.style.color = "#2e7d32";
-                feedback.innerHTML = "🏆 <strong>You called the exact winning play!</strong> Resuming recording so you can hear Bobby speak your exact response...";
+                feedback.innerHTML = "🏆 <strong>Exact winning play!</strong> Resuming recording to hear Bobby speak your response...";
                 feedback.style.display = 'block';
 
                 document.getElementById('call2-resume-line').innerHTML = '<strong>Bobby:</strong> <span style="color: #2e7d32; font-weight: bold;">"Oh man, I apologize about that! You had an order placed for today?"</span>';
                 document.getElementById('call2-resume-line').style.fontStyle = "normal";
 
-                // Resume audio playback so they hear Bobby speak it!
                 setTimeout(() => {
                     audio2.play();
                     document.getElementById('call2-play-btn').innerText = "⏸";
-                }, 600);
+                }, 500);
 
                 step3Passed = true;
                 nextBtn.classList.remove('btn-disabled');
             } else {
                 btn.classList.add('wrong');
                 feedback.style.color = "var(--brand-red)";
-                feedback.innerHTML = "Not quite! Don't challenge the customer's claim or pass the buck. Take immediate ownership with an empathetic apology.";
+                feedback.innerHTML = "Not quite! Take immediate ownership with an empathetic apology rather than questioning the customer.";
                 feedback.style.display = 'block';
             }
         }
@@ -478,7 +460,6 @@
         // STEP NAVIGATION
         // ========================================================
         function changeStep(direction) {
-            // Stop all audio on step change
             if (audio1) audio1.pause();
             if (audio2) audio2.pause();
 
