@@ -476,14 +476,19 @@
             }
         }
 
+        // Audio completion trackers
+        let coachAudioFinished = false;
+        let step2GoodFinished = false;
+        let step2BadFinished = false;
+        let step3GoodFinished = false;
+        let step3BadFinished = false;
+
         function toggleCoachAudio() {
             const btn = document.getElementById('coach-play-btn');
             if (audioCoach.paused) {
                 pauseAllAudio();
                 audioCoach.play();
                 btn.innerText = "⏸";
-                step1Passed = true;
-                document.getElementById('btn-next').classList.remove('btn-disabled');
             } else {
                 audioCoach.pause();
                 btn.innerText = "▶";
@@ -497,12 +502,18 @@
                 const durM = Math.floor(audioCoach.duration / 60);
                 const durS = Math.floor(audioCoach.duration % 60).toString().padStart(2, '0');
                 document.getElementById('coach-audio-time').innerText = `${curM}:${curS} / ${durM}:${durS}`;
+
+                // Unlock once 90% of intro is completed
+                if (audioCoach.currentTime / audioCoach.duration >= 0.9 && !coachAudioFinished) {
+                    onCoachEnded();
+                }
             }
         }
 
         function onCoachEnded() {
             const btn = document.getElementById('coach-play-btn');
             if (btn) btn.innerText = "▶";
+            coachAudioFinished = true;
             step1Passed = true;
             document.getElementById('btn-next').classList.remove('btn-disabled');
         }
@@ -516,13 +527,6 @@
                 pauseAllAudio();
                 audio.play();
                 btn.innerText = "⏸";
-                if (key.startsWith('ex1')) {
-                    step2Passed = true;
-                    document.getElementById('btn-next').classList.remove('btn-disabled');
-                } else if (key.startsWith('ex2')) {
-                    step3Passed = true;
-                    document.getElementById('btn-next').classList.remove('btn-disabled');
-                }
             } else {
                 audio.pause();
                 btn.innerText = "▶";
@@ -532,12 +536,19 @@
         function onExEnded(key) {
             const btn = document.getElementById(`${key}-btn`);
             if (btn) btn.innerText = "▶";
-            if (key.startsWith('ex1')) {
+
+            if (key === 'ex1-good') step2GoodFinished = true;
+            if (key === 'ex1-bad') step2BadFinished = true;
+            if (step2GoodFinished && step2BadFinished) {
                 step2Passed = true;
-                document.getElementById('btn-next').classList.remove('btn-disabled');
-            } else if (key.startsWith('ex2')) {
+                if (currentStep === 2) document.getElementById('btn-next').classList.remove('btn-disabled');
+            }
+
+            if (key === 'ex2-good') step3GoodFinished = true;
+            if (key === 'ex2-bad') step3BadFinished = true;
+            if (step3GoodFinished && step3BadFinished) {
                 step3Passed = true;
-                document.getElementById('btn-next').classList.remove('btn-disabled');
+                if (currentStep === 3) document.getElementById('btn-next').classList.remove('btn-disabled');
             }
         }
 
