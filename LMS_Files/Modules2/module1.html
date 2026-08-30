@@ -502,11 +502,6 @@
                 const durM = Math.floor(audioCoach.duration / 60);
                 const durS = Math.floor(audioCoach.duration % 60).toString().padStart(2, '0');
                 document.getElementById('coach-audio-time').innerText = `${curM}:${curS} / ${durM}:${durS}`;
-
-                // Unlock once 90% of intro is completed
-                if (audioCoach.currentTime / audioCoach.duration >= 0.9 && !coachAudioFinished) {
-                    onCoachEnded();
-                }
             }
         }
 
