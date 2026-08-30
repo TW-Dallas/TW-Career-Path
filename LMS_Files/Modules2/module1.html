@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
     <script src="../Globals/lms_feedback.js"></script>
     <script src="../Globals/question_bank.js"></script>
+    <style>
+        @font-face { font-family: 'PizzaPress'; src: url('../../fonts/Dominos Sans Header 1.ttf') format('truetype'); }
+        @font-face { font-family: 'Header2'; src: url('../../fonts/Dominos Sans Header 2.ttf') format('truetype'); }
+        @font-face { font-family: 'Subhead1'; src: url('../../fonts/Dominos Sans Subhead 1.ttf') format('truetype'); }
+        @font-face { font-family: 'Subhead2'; src: url('../../fonts/Dominos Sans Subhead 2.ttf') format('truetype'); }
+        @font-face { font-family: 'OneDotCd-Bold'; src: url('../../fonts/Dominos Sans Bold.ttf') format('truetype'); font-weight: bold; }
+        @font-face { font-family: 'OneDotCd'; src: url('../../fonts/Dominos Sans Body.ttf') format('truetype'); }
+        @font-face { font-family: 'Compact'; src: url('../../fonts/Dominos Sans Body Compact.ttf') format('truetype'); }
+        @font-face { font-family: 'Condensed'; src: url('../../fonts/Dominos Sans Body Condensed.ttf') format('truetype'); }
+    </style>
 </head>
 <body style="background-color: var(--crust-light);">
 
@@ -15,14 +25,14 @@
     <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         <div style="display: flex; align-items: center; gap: 20px;">
             <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
-            <a href="../lms_dashboard.html#day2" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+            <a href="../lms_dashboard.html#day2" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
                 &#8592; Back to Day 2
             </a>
         </div>
         
         <div style="display: flex; align-items: center; gap: 15px;">
-            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 1: Customer Recovery & Q-TIP</span>
-            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Step 1 of 6</span>
+            <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 1: Customer Recovery & Q-TIP</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Step 1 of 6</span>
         </div>
     </header>
 
@@ -35,8 +45,8 @@
             <!-- ======================================================== -->
             <div id="step1-container" style="width: 100%;">
                 <div style="text-align: center; margin-bottom: 1.25rem;">
-                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.95rem; margin: 0 0 0.35rem 0;">🏈 Coach Mike's Pre-Game Huddle</h3>
-                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.1rem; margin: 0;">Master the winning mindset before stepping onto the store floor.</p>
+                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.95rem; margin: 0 0 0.35rem 0;">🏈 Coach Mike's Pre-Game Huddle</h3>
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 1.1rem; margin: 0;">Master the winning mindset before stepping onto the store floor.</p>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 340px 1fr; gap: 1.5rem; align-items: stretch;">
@@ -54,8 +64,8 @@
                             <div class="audio-player-pill" style="margin-bottom: 1rem; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.5rem 1rem;">
                                 <button type="button" class="audio-play-btn" id="coach-play-btn" onclick="toggleCoachAudio()" style="width: 32px; height: 32px; font-size: 0.95rem;">▶</button>
                                 <div class="audio-info" style="flex-grow: 1;">
-                                    <span class="audio-title" style="font-size: 0.95rem;">Coach Mike: The Q-TIP Game Plan</span>
-                                    <span class="audio-time" id="coach-audio-time" style="font-size: 0.85rem;">0:00 / 1:38</span>
+                                    <span class="audio-title" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.95rem;">Coach Mike: The Q-TIP Game Plan</span>
+                                    <span class="audio-time" id="coach-audio-time" style="font-family: 'Condensed', sans-serif; font-size: 0.88rem;">0:00 / 1:38</span>
                                 </div>
                                 <audio id="audio-coach" src="../resources/Day2_audio/Concerns_Intro.mp3" ontimeupdate="onCoachTimeUpdate()" onended="onCoachEnded()"></audio>
                             </div>
@@ -64,15 +74,15 @@
                             <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
                                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.4rem;">
                                     <span style="font-size: 1.4rem;">📋</span>
-                                    <h4 style="font-family: 'PizzaPress'; font-size: 1.2rem; color: var(--brand-blue); margin: 0;">The Q-TIP Playbook</h4>
+                                    <h4 style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.25rem; color: var(--brand-blue); margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">The Q-TIP Playbook</h4>
                                 </div>
-                                <p style="font-family: 'OneDotCd-Bold'; font-size: 1.05rem; color: var(--brand-red); margin: 0 0 0.5rem 0;">
+                                <p style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; color: var(--brand-red); margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 0.3px;">
                                     Quit Taking It Personally!
                                 </p>
-                                <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
+                                <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
                                     <strong>Hungry + Angry = Hangry!</strong> When a customer calls with a problem, their frustration isn't about you—it’s about their missing dinner.
                                 </p>
-                                <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--brand-blue); margin: 0;">
+                                <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; line-height: 1.4; color: var(--brand-blue); margin: 0;">
                                     <em>"Someone else's inability to communicate during times of stress is their foul—don't let it put you on the bench, too!"</em>
                                 </p>
                             </div>
@@ -80,7 +90,7 @@
 
                         <!-- Takeaway Note -->
                         <div style="background: rgba(0, 144, 226, 0.08); border-radius: 8px; padding: 0.75rem 1rem; border-left: 4px solid var(--brand-blue);">
-                            <p style="font-family: 'OneDotCd-Bold'; font-size: 0.95rem; color: var(--dark-blue); margin: 0;">
+                            <p style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; color: var(--dark-blue); margin: 0;">
                                 🎧 Listen to Coach Mike's game plan above, then click <strong>Next Step</strong> below to scout the film!
                             </p>
                         </div>
@@ -95,8 +105,8 @@
             <!-- ======================================================== -->
             <div id="step2-container" class="hidden" style="width: 100%;">
                 <div style="text-align: center; margin-bottom: 1.25rem;">
-                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎬 Film Study 1 of 2: The Initial Greeting</h3>
-                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Mushroom Pizza Mix-Up — Tone, Empathy, & Immediate Ownership</p>
+                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎬 Film Study 1 of 2: The Initial Greeting</h3>
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Mushroom Pizza Mix-Up — Tone, Empathy, & Immediate Ownership</p>
                 </div>
 
                 <!-- 2 Side-by-Side Comparison Cards -->
@@ -108,26 +118,26 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
                                 <div style="display: flex; align-items: center; gap: 6px;">
                                     <span style="font-size: 1.2rem;">🟢</span>
-                                    <strong style="font-family: 'PizzaPress'; font-size: 1.15rem; color: var(--dark-blue);">The Winning Play</strong>
+                                    <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">The Winning Play</strong>
                                 </div>
-                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: #64748b;">0:35</span>
+                                <span style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;">0:35</span>
                             </div>
 
                             <!-- Audio Player -->
                             <div style="display: flex; align-items: center; gap: 8px; background: var(--crust-base); border: 1.5px solid var(--brand-blue); padding: 0.4rem 0.85rem; border-radius: 20px; margin-bottom: 0.75rem;">
                                 <button type="button" class="audio-play-btn" id="ex1-good-btn" onclick="toggleExAudio('ex1-good')" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
-                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.88rem; color: var(--dark-blue); flex-grow: 1;">Play Winning Tape</span>
+                                <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--dark-blue); flex-grow: 1;">Play Winning Tape</span>
                                 <audio id="audio-ex1-good" src="../resources/Day2_audio/Example1_Good.mp3" onended="onExEnded('ex1-good')"></audio>
                             </div>
 
-                            <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
+                            <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
                                 <em>"Oh no, I am so sorry about that. Can you please provide me with some additional details so we can make it right?... I completely understand your frustration. That would upset me too. I'll get a replacement in the oven for you right away."</em>
                             </p>
                         </div>
 
                         <div style="background: rgba(0, 144, 226, 0.08); border-radius: 6px; padding: 0.5rem 0.75rem;">
-                            <strong style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--dark-blue);">✓ Key Coaching Takeaway:</strong>
-                            <p style="font-family: 'OneDotCd'; font-size: 0.85rem; color: var(--crust-deep); margin: 0;">Validates frustration immediately, uses sincere empathy, and moves straight into action.</p>
+                            <strong style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.88rem; color: var(--dark-blue); text-transform: uppercase;">✓ Key Coaching Takeaway:</strong>
+                            <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep); margin: 0;">Validates frustration immediately, uses sincere empathy, and moves straight into action.</p>
                         </div>
                     </div>
 
@@ -137,26 +147,26 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
                                 <div style="display: flex; align-items: center; gap: 6px;">
                                     <span style="font-size: 1.2rem;">🔴</span>
-                                    <strong style="font-family: 'PizzaPress'; font-size: 1.15rem; color: var(--brand-red);">The Defensive Fumble</strong>
+                                    <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; color: var(--brand-red); text-transform: uppercase; letter-spacing: 0.5px;">The Defensive Fumble</strong>
                                 </div>
-                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: #64748b;">0:26</span>
+                                <span style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;">0:26</span>
                             </div>
 
                             <!-- Audio Player -->
                             <div style="display: flex; align-items: center; gap: 8px; background: var(--crust-base); border: 1.5px solid var(--brand-red); padding: 0.4rem 0.85rem; border-radius: 20px; margin-bottom: 0.75rem;">
                                 <button type="button" class="audio-play-btn" id="ex1-bad-btn" onclick="toggleExAudio('ex1-bad')" style="width: 28px; height: 28px; font-size: 0.85rem; background: var(--brand-red);">▶</button>
-                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.88rem; color: var(--brand-red); flex-grow: 1;">Play Fumble Tape</span>
+                                <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--brand-red); flex-grow: 1;">Play Fumble Tape</span>
                                 <audio id="audio-ex1-bad" src="../resources/Day2_audio/Example1_Bad.mp3" onended="onExEnded('ex1-bad')"></audio>
                             </div>
 
-                            <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
+                            <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
                                 <em>"Domino's, what can I get you?... Uh, okay then. What are you claiming was wrong?... No, I made that myself. I know I made it right. I can't do anything for you."</em>
                             </p>
                         </div>
 
                         <div style="background: rgba(227, 24, 55, 0.08); border-radius: 6px; padding: 0.5rem 0.75rem;">
-                            <strong style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--brand-red);">✗ Personal Foul:</strong>
-                            <p style="font-family: 'OneDotCd'; font-size: 0.85rem; color: var(--crust-deep); margin: 0;">Takes the complaint personally, argues with the customer, and creates instant hostility.</p>
+                            <strong style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.88rem; color: var(--brand-red); text-transform: uppercase;">✗ Personal Foul:</strong>
+                            <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep); margin: 0;">Takes the complaint personally, argues with the customer, and creates instant hostility.</p>
                         </div>
                     </div>
 
@@ -166,9 +176,9 @@
                 <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem 1.25rem; text-align: left;">
                     <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.35rem;">
                         <span style="font-size: 1.2rem;">📓</span>
-                        <strong style="font-family: 'OneDotCd-Bold'; font-size: 1rem; color: var(--brand-blue);">Physical Playbook Film Study Notes</strong>
+                        <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; color: var(--brand-blue); text-transform: uppercase;">Physical Playbook Film Study Notes</strong>
                     </div>
-                    <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35; margin: 0;">
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; color: var(--crust-deep); line-height: 1.35; margin: 0;">
                         Open your physical playbook to the <strong>Customer Recovery</strong> page. Write down:
                         <br><strong>Prompt:</strong> <em>What specific phrases in the Winning Play immediately lowered tension before offering a replacement?</em>
                     </p>
@@ -180,8 +190,8 @@
             <!-- ======================================================== -->
             <div id="step3-container" class="hidden" style="width: 100%;">
                 <div style="text-align: center; margin-bottom: 1.25rem;">
-                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎬 Film Study 2 of 2: Solutions & Proactive Credit</h3>
-                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Late Delivery on a School Night — Excuses vs. Do What It Takes</p>
+                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎬 Film Study 2 of 2: Solutions & Proactive Credit</h3>
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Late Delivery on a School Night — Excuses vs. Do What It Takes</p>
                 </div>
 
                 <!-- 2 Side-by-Side Comparison Cards -->
@@ -193,26 +203,26 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
                                 <div style="display: flex; align-items: center; gap: 6px;">
                                     <span style="font-size: 1.2rem;">🔴</span>
-                                    <strong style="font-family: 'PizzaPress'; font-size: 1.15rem; color: var(--brand-red);">The Defensive Fumble</strong>
+                                    <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; color: var(--brand-red); text-transform: uppercase; letter-spacing: 0.5px;">The Defensive Fumble</strong>
                                 </div>
-                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: #64748b;">0:46</span>
+                                <span style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;">0:46</span>
                             </div>
 
                             <!-- Audio Player -->
                             <div style="display: flex; align-items: center; gap: 8px; background: var(--crust-base); border: 1.5px solid var(--brand-red); padding: 0.4rem 0.85rem; border-radius: 20px; margin-bottom: 0.75rem;">
                                 <button type="button" class="audio-play-btn" id="ex2-bad-btn" onclick="toggleExAudio('ex2-bad')" style="width: 28px; height: 28px; font-size: 0.85rem; background: var(--brand-red);">▶</button>
-                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.88rem; color: var(--brand-red); flex-grow: 1;">Play Fumble Tape</span>
+                                <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--brand-red); flex-grow: 1;">Play Fumble Tape</span>
                                 <audio id="audio-ex2-bad" src="../resources/Day2_audio/Example2_Bad.mp3" onended="onExEnded('ex2-bad')"></audio>
                             </div>
 
-                            <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
+                            <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
                                 <em>"Well, it's Friday night and two of our drivers called out, so there wasn't really anything we could do about it. If you want a fresh one, you'll have to drive up here and pick it up yourself, otherwise you'll just have to reheat it."</em>
                             </p>
                         </div>
 
                         <div style="background: rgba(227, 24, 55, 0.08); border-radius: 6px; padding: 0.5rem 0.75rem;">
-                            <strong style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--brand-red);">✗ Personal Foul:</strong>
-                            <p style="font-family: 'OneDotCd'; font-size: 0.85rem; color: var(--crust-deep); margin: 0;">Blaming staffing and rush conditions makes the customer feel dismissed and abandoned.</p>
+                            <strong style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.88rem; color: var(--brand-red); text-transform: uppercase;">✗ Personal Foul:</strong>
+                            <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep); margin: 0;">Blaming staffing and rush conditions makes the customer feel dismissed and abandoned.</p>
                         </div>
                     </div>
 
@@ -222,26 +232,26 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
                                 <div style="display: flex; align-items: center; gap: 6px;">
                                     <span style="font-size: 1.2rem;">🟢</span>
-                                    <strong style="font-family: 'PizzaPress'; font-size: 1.15rem; color: var(--dark-blue);">The Winning Play</strong>
+                                    <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">The Winning Play</strong>
                                 </div>
-                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: #64748b;">1:06</span>
+                                <span style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;">1:06</span>
                             </div>
 
                             <!-- Audio Player -->
                             <div style="display: flex; align-items: center; gap: 8px; background: var(--crust-base); border: 1.5px solid var(--brand-blue); padding: 0.4rem 0.85rem; border-radius: 20px; margin-bottom: 0.75rem;">
                                 <button type="button" class="audio-play-btn" id="ex2-good-btn" onclick="toggleExAudio('ex2-good')" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
-                                <span style="font-family: 'OneDotCd-Bold'; font-size: 0.88rem; color: var(--dark-blue); flex-grow: 1;">Play Winning Tape</span>
+                                <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--dark-blue); flex-grow: 1;">Play Winning Tape</span>
                                 <audio id="audio-ex2-good" src="../resources/Day2_audio/Example2_Good.mp3" onended="onExEnded('ex2-good')"></audio>
                             </div>
 
-                            <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
+                            <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
                                 <em>"Oh no, I am so sorry about that! I completely understand how frustrating that is, especially on a school night with hungry kids... Since it's getting late, I am going to credit your entire order back to your phone number—and I'm adding an extra $10 credit on top so dinner is on us next time."</em>
                             </p>
                         </div>
 
                         <div style="background: rgba(0, 144, 226, 0.08); border-radius: 6px; padding: 0.5rem 0.75rem;">
-                            <strong style="font-family: 'OneDotCd-Bold'; font-size: 0.85rem; color: var(--dark-blue);">✓ Key Coaching Takeaway:</strong>
-                            <p style="font-family: 'OneDotCd'; font-size: 0.85rem; color: var(--crust-deep); margin: 0;">Solves the customer's actual time problem, over-delivers on store credit, and secures lifelong brand loyalty.</p>
+                            <strong style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.88rem; color: var(--dark-blue); text-transform: uppercase;">✓ Key Coaching Takeaway:</strong>
+                            <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep); margin: 0;">Solves the customer's actual time problem, over-delivers on store credit, and secures lifelong brand loyalty.</p>
                         </div>
                     </div>
 
@@ -251,9 +261,9 @@
                 <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem 1.25rem; text-align: left;">
                     <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.35rem;">
                         <span style="font-size: 1.2rem;">📓</span>
-                        <strong style="font-family: 'OneDotCd-Bold'; font-size: 1rem; color: var(--brand-blue);">Physical Playbook Film Study Notes</strong>
+                        <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; color: var(--brand-blue); text-transform: uppercase;">Physical Playbook Film Study Notes</strong>
                     </div>
-                    <p style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35; margin: 0;">
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; color: var(--crust-deep); line-height: 1.35; margin: 0;">
                         Open your physical playbook to the <strong>Customer Recovery</strong> page. Write down:
                         <br><strong>Prompt:</strong> <em>Why does making store excuses destroy customer trust, and how does a proactive credit protect customer retention?</em>
                     </p>
@@ -261,102 +271,118 @@
             </div>
 
             <!-- ======================================================== -->
-            <!-- STEP 4: SCENARIO 1 — DECONSTRUCT THE PLAY (CALL 1)       -->
+            <!-- STEP 4: SCENARIO 1 AUDIO (DECONSTRUCTING ANGEL & JONATHAN)-->
             <!-- ======================================================== -->
             <div id="step4-container" class="hidden" style="width: 100%;">
                 <div style="text-align: center; margin-bottom: 1.25rem;">
-                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎯 Scenario 1: Deconstruct the Play</h3>
-                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Listen to this live call and identify the LEADS principles in action.</p>
+                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎧 Live Scenario 1: Angel & Jonathan</h3>
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Deconstructing a Live Carryout Recovery Call (2:47)</p>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 310px 1fr; gap: 1.25rem; align-items: start;">
+                <!-- Call 1 Player Card -->
+                <div class="audio-player-pill" style="margin-bottom: 1rem; background: #fff; border: 2px solid var(--brand-blue); padding: 0.75rem 1.25rem;">
+                    <button type="button" class="audio-play-btn" id="call1-play-btn" onclick="toggleCall1Audio()" style="width: 38px; height: 38px; font-size: 1.1rem;">▶</button>
                     
-                    <!-- Left: Audio & Transcript -->
-                    <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem; text-align: left;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                            <h4 style="font-family: 'PizzaPress'; font-size: 1.15rem; color: var(--brand-blue); margin: 0;">Call #1: Carryout Mix-Up</h4>
-                            <span id="call1-status-pill" style="background: #e2e8f0; color: #475569; padding: 2px 8px; border-radius: 12px; font-family: 'OneDotCd-Bold'; font-size: 0.75rem;">Ready</span>
+                    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1rem; color: var(--dark-blue); text-transform: uppercase;">Carryout Mix-Up: Angel & Jonathan</span>
+                            <span id="call1-status-pill" style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.82rem; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 12px;">Ready</span>
                         </div>
-
-                        <!-- Compact Audio Bar -->
-                        <div style="display: flex; align-items: center; gap: 8px; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.35rem 0.75rem; border-radius: 20px; margin-bottom: 0.65rem;">
-                            <button type="button" class="audio-play-btn" id="call1-play-btn" onclick="toggleCall1Audio()" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
-                            <div style="flex-grow: 1;">
-                                <div style="height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                                    <div id="call1-progress-bar" style="height: 100%; width: 0%; background: var(--brand-blue); transition: width 0.1s linear;"></div>
-                                </div>
-                            </div>
-                            <span id="call1-time" style="font-family: 'OneDotCd'; font-size: 0.75rem; color: #64748b;">0:00 / 2:47</span>
-                            <audio id="audio-call1" src="../resources/Day2_audio/Customer_Concern_Credit_V2.mp3" ontimeupdate="onCall1TimeUpdate()" onended="onCall1Ended()"></audio>
+                        <div class="audio-progress-container" style="background: var(--crust-med); height: 6px; border-radius: 3px; overflow: hidden; cursor: pointer;">
+                            <div class="audio-progress-bar" id="call1-progress-bar" style="background: var(--brand-blue); height: 100%; width: 0%; transition: width 0.1s linear;"></div>
                         </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span class="audio-time" id="call1-time" style="font-family: 'Condensed', sans-serif; font-size: 0.85rem; color: #64748b;">0:00 / 2:47</span>
+                            <span style="font-family: 'Compact', sans-serif; font-size: 0.82rem; color: #64748b;">4 Checkpoints</span>
+                        </div>
+                    </div>
 
-                        <!-- Scrollable Live Transcript -->
-                        <div id="call1-transcript-box" style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 6px; padding: 0.65rem 0.85rem; height: 160px; overflow-y: auto; scroll-behavior: smooth; font-family: 'OneDotCd'; font-size: 0.88rem; line-height: 1.35; color: #64748b; text-align: left;">
+                    <audio id="audio-call1" src="../resources/Day2_audio/Customer_Concern_Credit_V2.mp3" ontimeupdate="onCall1TimeUpdate()" onended="onCall1Ended()"></audio>
+                </div>
+
+                <!-- 2-Column Live Deconstruction Workspace -->
+                <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.25rem; align-items: start;">
+                    
+                    <!-- Left: Synchronized Transcript Feed -->
+                    <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 10px; padding: 0.85rem 1rem; text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--crust-med); padding-bottom: 0.4rem; margin-bottom: 0.5rem;">
+                            <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; color: var(--dark-blue); text-transform: uppercase;">Live Transcript</strong>
+                            <span style="font-family: 'Compact', sans-serif; font-size: 0.8rem; color: #64748b;">Auto-Scrolls with Audio</span>
+                        </div>
+                        <div id="call1-transcript-box" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px;">
                             <!-- Populated dynamically via JS -->
                         </div>
                     </div>
 
-                    <!-- Right: Dynamic Multi-Checkpoint Engine -->
+                    <!-- Right: Dynamic Checkpoint Question Engine -->
                     <div style="text-align: left;">
-                        <p id="call1-cp-badge" style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.05rem; margin: 0 0 0.25rem 0;">
-                            🎯 Checkpoint 1 of 4: Initial Ownership
+                        <p id="call1-cp-badge" style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; color: var(--brand-blue); font-size: 1.05rem; margin: 0 0 0.25rem 0; text-transform: uppercase;">
+                            🎧 Checkpoint 1 of 4: Initial Contact
                         </p>
-                        <p id="call1-cp-prompt" style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.65rem 0;">
-                            When Jonathan asks for a manager, Angel responds: <em>"Oh no! Okay, yeah, I can definitely help you with this."</em> What LEADS principle did Angel demonstrate?
+                        <p id="call1-cp-prompt" style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.65rem 0;">
+                            Angel answered Jonathan's complaint with immediate empathy. Which step of LEADS did Angel demonstrate first?
                         </p>
 
                         <div id="call1-options" style="display: flex; flex-direction: column; gap: 6px;">
                             <!-- Populated dynamically via JS -->
                         </div>
 
-                        <p id="call1-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 0; display: none;"></p>
+                        <p id="call1-feedback" style="font-family: 'Compact', 'OneDotCd-Bold', sans-serif; font-size: 0.92rem; margin-top: 0.5rem; margin-bottom: 0; display: none;"></p>
                     </div>
 
                 </div>
             </div>
 
             <!-- ======================================================== -->
-            <!-- STEP 5: SCENARIO 2 — CALL THE SHOT (CALL 2)              -->
+            <!-- STEP 5: SCENARIO 2 AUDIO (CALL THE SHOT — LIZ & AIDEN)   -->
             <!-- ======================================================== -->
             <div id="step5-container" class="hidden" style="width: 100%;">
                 <div style="text-align: center; margin-bottom: 1.25rem;">
-                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎧 Scenario 2: Call the Shot</h3>
-                    <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Predict the winning response, lock in your choice, and hear Liz run the play.</p>
+                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.25rem 0;">🎮 Live Scenario 2: Liz & Aiden</h3>
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Call the Shot Simulator: Choose Liz's Winning Responses in Real Time (2:06)</p>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 310px 1fr; gap: 1.25rem; align-items: start;">
+                <!-- Call 2 Player Card -->
+                <div class="audio-player-pill" style="margin-bottom: 1rem; background: #fff; border: 2px solid var(--brand-blue); padding: 0.75rem 1.25rem;">
+                    <button type="button" class="audio-play-btn" id="call2-play-btn" onclick="toggleCall2Audio()" style="width: 38px; height: 38px; font-size: 1.1rem;">▶</button>
                     
-                    <!-- Left: Audio & Transcript -->
-                    <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem; text-align: left;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                            <h4 style="font-family: 'PizzaPress'; font-size: 1.15rem; color: var(--brand-blue); margin: 0;">Call #2: Delivery Discrepancy</h4>
-                            <span id="call2-status-pill" style="background: #e2e8f0; color: #475569; padding: 2px 8px; border-radius: 12px; font-family: 'OneDotCd-Bold'; font-size: 0.75rem;">Click Play</span>
+                    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1rem; color: var(--dark-blue); text-transform: uppercase;">Delivery Mix-Up: Liz & Aiden</span>
+                            <span id="call2-status-pill" style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.82rem; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 12px;">Ready</span>
                         </div>
-
-                        <!-- Compact Audio Bar -->
-                        <div style="display: flex; align-items: center; gap: 8px; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.35rem 0.75rem; border-radius: 20px; margin-bottom: 0.65rem;">
-                            <button type="button" class="audio-play-btn" id="call2-play-btn" onclick="toggleCall2Audio()" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
-                            <div style="flex-grow: 1;">
-                                <div style="height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                                    <div id="call2-progress-bar" style="height: 100%; width: 0%; background: var(--brand-blue); transition: width 0.1s linear;"></div>
-                                </div>
-                            </div>
-                            <span id="call2-time" style="font-family: 'OneDotCd'; font-size: 0.75rem; color: #64748b;">0:00 / 2:06</span>
-                            <audio id="audio-call2" src="../resources/Day2_audio/Customer_Concern_Credit_2_V2.mp3" ontimeupdate="onCall2TimeUpdate()" onended="onCall2Ended()"></audio>
+                        <div class="audio-progress-container" style="background: var(--crust-med); height: 6px; border-radius: 3px; overflow: hidden; cursor: pointer;">
+                            <div class="audio-progress-bar" id="call2-progress-bar" style="background: var(--brand-blue); height: 100%; width: 0%; transition: width 0.1s linear;"></div>
                         </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span class="audio-time" id="call2-time" style="font-family: 'Condensed', sans-serif; font-size: 0.85rem; color: #64748b;">0:00 / 2:06</span>
+                            <span style="font-family: 'Compact', sans-serif; font-size: 0.82rem; color: #64748b;">3 Decisions</span>
+                        </div>
+                    </div>
 
-                        <!-- Scrollable Live Transcript -->
-                        <div id="call2-transcript-box" style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 6px; padding: 0.65rem 0.85rem; height: 160px; overflow-y: auto; scroll-behavior: smooth; font-family: 'OneDotCd'; font-size: 0.88rem; line-height: 1.35; color: #64748b; text-align: left;">
+                    <audio id="audio-call2" src="../resources/Day2_audio/Customer_Concern_Credit_2_V2.mp3" ontimeupdate="onCall2TimeUpdate()" onended="onCall2Ended()"></audio>
+                </div>
+
+                <!-- 2-Column Live Call the Shot Engine -->
+                <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.25rem; align-items: start;">
+                    
+                    <!-- Left: Synchronized Transcript Feed -->
+                    <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 10px; padding: 0.85rem 1rem; text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--crust-med); padding-bottom: 0.4rem; margin-bottom: 0.5rem;">
+                            <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; color: var(--dark-blue); text-transform: uppercase;">Live Transcript</strong>
+                            <span style="font-family: 'Compact', sans-serif; font-size: 0.8rem; color: #64748b;">Auto-Scrolls with Audio</span>
+                        </div>
+                        <div id="call2-transcript-box" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px;">
                             <!-- Populated dynamically via JS -->
                         </div>
                     </div>
 
                     <!-- Right: Dynamic Multi-Decision Call the Shot Engine -->
                     <div style="text-align: left;">
-                        <p id="call2-cp-badge" style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.05rem; margin: 0 0 0.25rem 0;">
+                        <p id="call2-cp-badge" style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; color: var(--brand-blue); font-size: 1.05rem; margin: 0 0 0.25rem 0; text-transform: uppercase;">
                             🎧 Call the Shot 1 of 3: Opening Recovery
                         </p>
-                        <p id="call2-cp-prompt" style="font-family: 'OneDotCd'; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.65rem 0;">
+                        <p id="call2-cp-prompt" style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.65rem 0;">
                             Aiden calls explaining she received the wrong pizza. What is the most effective immediate response for Liz to say next?
                         </p>
 
@@ -364,7 +390,7 @@
                             <!-- Populated dynamically via JS -->
                         </div>
 
-                        <p id="call2-feedback" style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 0; display: none;"></p>
+                        <p id="call2-feedback" style="font-family: 'Compact', 'OneDotCd-Bold', sans-serif; font-size: 0.92rem; margin-top: 0.5rem; margin-bottom: 0; display: none;"></p>
                     </div>
 
                 </div>
@@ -374,8 +400,8 @@
             <!-- STEP 6: DECISION GUIDE & COMPLETION                      -->
             <!-- ======================================================== -->
             <div id="step6-container" class="hidden" style="width: 100%; text-align: center;">
-                <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.8rem; margin: 0 0 0.35rem 0;">Store Decision Guide</h3>
-                <p style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 1rem; margin: 0 0 1rem 0;">Remake vs. Store Credit — Calling the right play every time.</p>
+                <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.35rem 0;">Store Decision Guide</h3>
+                <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 1.05rem; margin: 0 0 1rem 0;">Remake vs. Store Credit — Calling the right play every time.</p>
 
                 <!-- Decision Grid -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; text-align: left;">
@@ -383,9 +409,9 @@
                     <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem;">
                         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.35rem;">
                             <span style="font-size: 1.4rem;">🍕⚡</span>
-                            <h4 style="font-family: 'PizzaPress'; font-size: 1.2rem; color: var(--brand-blue); margin: 0;">When to REMAKE</h4>
+                            <h4 style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.25rem; color: var(--brand-blue); margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">When to REMAKE</h4>
                         </div>
-                        <ul style="margin: 0; padding-left: 1.15rem; font-family: 'OneDotCd'; font-size: 0.9rem; color: var(--crust-deep); line-height: 1.35;">
+                        <ul style="margin: 0; padding-left: 1.15rem; font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35;">
                             <li style="margin-bottom: 0.3rem;">Guest wants dinner <strong>tonight</strong> and has time to wait.</li>
                             <li style="margin-bottom: 0.3rem;">Mark as a <strong>Priority Remake</strong> on the makeline.</li>
                             <li>For deliveries: Rush a driver immediately with fresh hot items.</li>
@@ -396,9 +422,9 @@
                     <div style="background: var(--crust-base); border: 2px solid #2e7d32; border-radius: 10px; padding: 1rem;">
                         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.35rem;">
                             <span style="font-size: 1.4rem;">💳✨</span>
-                            <h4 style="font-family: 'PizzaPress'; font-size: 1.2rem; color: #2e7d32; margin: 0;">When to CREDIT</h4>
+                            <h4 style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.25rem; color: #2e7d32; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">When to CREDIT</h4>
                         </div>
-                        <ul style="margin: 0; padding-left: 1.15rem; font-family: 'OneDotCd'; font-size: 0.9rem; color: var(--crust-deep); line-height: 1.35;">
+                        <ul style="margin: 0; padding-left: 1.15rem; font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.95rem; color: var(--crust-deep); line-height: 1.35;">
                             <li style="margin-bottom: 0.3rem;">Guest already ate or doesn't have time for a remake.</li>
                             <li style="margin-bottom: 0.3rem;">Apply store credit directly to their phone profile in the POS.</li>
                             <li>Always confirm the credit amount and thank them sincerely!</li>
@@ -407,15 +433,15 @@
                 </div>
 
                 <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 1rem; margin-bottom: 1.25rem; text-align: left;">
-                    <h4 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 1.15rem; margin: 0 0 0.35rem 0;">🏆 The Golden Rule of Recovery</h4>
-                    <p style="font-family: 'OneDotCd'; font-size: 0.95rem; line-height: 1.4; color: var(--crust-deep); margin: 0;">
+                    <h4 style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; color: var(--brand-blue); font-size: 1.2rem; margin: 0 0 0.35rem 0; text-transform: uppercase; letter-spacing: 0.5px;">🏆 The Golden Rule of Recovery</h4>
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; line-height: 1.4; color: var(--crust-deep); margin: 0;">
                         Never make the customer feel like an inconvenience. When a mistake happens, taking complete ownership and executing the <strong>LEADS</strong> playbook turns an upset customer into a dedicated brand advocate for life!
                     </p>
                 </div>
 
                 <!-- Sign off alert -->
                 <div style="background: #f0fdf4; border: 1.5px solid #2e7d32; border-radius: 8px; padding: 0.75rem 1rem; max-width: 620px; margin: 0 auto;">
-                    <p style="margin: 0; font-family: 'OneDotCd-Bold'; font-size: 1rem; color: #166534;">
+                    <p style="margin: 0; font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 1rem; color: #166534;">
                         🎉 Module Complete! Grab your trainer for a quick live de-escalation practice order.
                     </p>
                 </div>
@@ -424,10 +450,10 @@
         </div>
 
         <div class="classroom-footer" style="padding: 0.75rem 1.5rem;">
-            <button class="btn btn-outline hidden" id="btn-back" onclick="changeStep(-1)" style="padding: 0.6rem 1.5rem; font-size: 0.95rem; width: auto;">Back</button>
+            <button class="btn btn-outline hidden" id="btn-back" onclick="changeStep(-1)" style="padding: 0.6rem 1.5rem; font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1rem; width: auto;">Back</button>
             <div style="flex-grow: 1;"></div>
-            <button class="btn btn-disabled" id="btn-next" onclick="changeStep(1)" style="padding: 0.6rem 1.5rem; font-size: 0.95rem; width: auto; margin-top: 0;">Next Step</button>
-            <button class="btn hidden" id="btn-finish" onclick="finishAndReturn()" style="padding: 0.6rem 1.5rem; font-size: 0.95rem; width: auto; margin-top: 0; background: var(--brand-red); color: white;">Return to Dashboard</button>
+            <button class="btn btn-disabled" id="btn-next" onclick="changeStep(1)" style="padding: 0.6rem 1.5rem; font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1rem; width: auto; margin-top: 0;">Next Step</button>
+            <button class="btn hidden" id="btn-finish" onclick="finishAndReturn()" style="padding: 0.6rem 1.5rem; font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1rem; width: auto; margin-top: 0; background: var(--brand-red); color: white;">Return to Dashboard</button>
         </div>
 
     </div>
