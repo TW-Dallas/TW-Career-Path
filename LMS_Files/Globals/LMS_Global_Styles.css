@@ -65,6 +65,10 @@
       color: var(--crust-deep);
   }
 
+  .hidden { 
+      display: none !important; 
+  }
+
   /* --- MOBILE BLOCKER --- */
   #mobile-blocker {
       display: none;
