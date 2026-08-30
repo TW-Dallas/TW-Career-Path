@@ -222,5 +222,148 @@ const QUESTION_BANK = {
                 { text: 'C. Slowing down order entry time at the register', correct: false }
             ]
         }
+    ],
+
+    day2_module0_recap: [
+        {
+            id: 'd2m0_mission',
+            topic: 'Mission',
+            mandatory: true,
+            question: 'What is the core mission that drives every decision across all positions at Team WOW?',
+            options: [
+                { text: 'A. Dedicated to delivering the best customer experience possible', correct: true },
+                { text: 'B. Maximizing sales volume above all else', correct: false },
+                { text: 'C. Making every single pizza in under 30 seconds', correct: false }
+            ]
+        },
+        {
+            id: 'd2m0_leads_def',
+            topic: 'LEADS Playbook',
+            mandatory: true,
+            question: 'When customer concerns or order mix-ups happen, what does LEADS stand for?',
+            options: [
+                { text: 'A. Listen, Empathize, Apologize, Do what it takes, Stand by your promise', correct: true },
+                { text: 'B. Look, Evaluate, Assess, Deliver, Smile', correct: false },
+                { text: 'C. Listen, Explain internal mistakes, Argue, Discount, Send out', correct: false }
+            ]
+        },
+        {
+            id: 'd2m0_phone_greeting',
+            topic: 'Phones',
+            question: 'What is the Team WOW standard for answering the store phone?',
+            options: [
+                { text: 'A. Answer by the 2nd ring with energy, state the store location, your name, and ask how you can help', correct: true },
+                { text: 'B. Answer within 4 rings and immediately place the caller on hold', correct: false },
+                { text: 'C. Let it ring until a makeline insider is completely free', correct: false }
+            ]
+        },
+        {
+            id: 'd2m0_phone_hold',
+            topic: 'Phones / Courtesy',
+            question: 'What should you do before placing a phone customer on hold?',
+            options: [
+                { text: 'A. Always ask for permission first ("May I place you on a brief hold?") and wait for their reply', correct: true },
+                { text: 'B. Press the Park or Mute button immediately so the customer doesn’t hear store noise', correct: false },
+                { text: 'C. Tell them to call back during a slower time of day', correct: false }
+            ]
+        },
+        {
+            id: 'd2m0_uniform_image',
+            topic: 'Image & Pride',
+            question: 'Why do we treat our uniform as our "Game-Day Jersey"?',
+            options: [
+                { text: 'A. A clean, sharp uniform builds customer trust before we say a word and shows we are prepared and professional', correct: true },
+                { text: 'B. It is only important when district managers or corporate auditors visit', correct: false },
+                { text: 'C. It allows employees to wear casual athletic wear during morning prep', correct: false }
+            ]
+        },
+        {
+            id: 'd2m0_footwear_safety',
+            topic: 'Safety & Shoes',
+            question: 'Why are closed-toe, slip-resistant shoes required on every single shift?',
+            options: [
+                { text: 'A. To protect against slips and falls on kitchen tile and protect feet from falling objects', correct: true },
+                { text: 'B. Because regular sneakers are not the right color for Domino’s branding', correct: false },
+                { text: 'C. Only delivery drivers need slip-resistant shoes, not inside CSRs', correct: false }
+            ]
+        },
+        {
+            id: 'd2m0_urgency_purpose',
+            topic: 'Sense of Urgency',
+            question: 'How does Coach Bobby define a true "Sense of Urgency"?',
+            options: [
+                { text: 'A. Moving with purpose: fast, controlled, accurate, and anticipating the next play', correct: true },
+                { text: 'B. Running frantically through the store shouting when the screen turns red', correct: false },
+                { text: 'C. Skipping sauce and cheese calibration to clear the order screen faster', correct: false }
+            ]
+        },
+        {
+            id: 'd2m0_pos_flow',
+            topic: 'POS Order Sequence',
+            question: 'When entering an order into the POS simulator or front register, what is the proper sequence?',
+            options: [
+                { text: 'A. Customer Phone/Info ➔ Order Type (Carryout/Delivery) ➔ Items & Toppings ➔ Upsell ➔ Quoting Wait Time & Payment', correct: true },
+                { text: 'B. Collect Payment ➔ Ask for Name ➔ Select Pizza Size ➔ Ask for Address', correct: false },
+                { text: 'C. Enter Pizza Toppings ➔ Quote Price ➔ Ask if they want Carryout or Delivery', correct: false }
+            ]
+        },
+        {
+            id: 'd2m0_lifeline_script',
+            topic: 'The Lifeline',
+            question: 'If a customer asks a complex question you don’t know the answer to (like a severe allergy), what should you do?',
+            options: [
+                { text: 'A. Confidently use your lifeline: "That is a great question! I’m new and still learning, so let me grab my manager to make sure you get the exact right answer."', correct: true },
+                { text: 'B. Make an educated guess so you don’t look inexperienced', correct: false },
+                { text: 'C. Tell the customer we don’t handle those types of questions', correct: false }
+            ]
+        },
+        {
+            id: 'd2m0_upselling',
+            topic: 'Menu Upselling',
+            question: 'Why do we consistently offer sides, dipping sauces, drinks, and desserts during order entry?',
+            options: [
+                { text: 'A. It completes the customer’s meal experience and ensures they don’t get home missing dipping cups or drinks', correct: true },
+                { text: 'B. It is only done when a manager is actively listening on the headset', correct: false },
+                { text: 'C. Because customers are required to order at least two items per ticket', correct: false }
+            ]
+        },
+        {
+            id: 'd2m0_operations_service',
+            topic: 'Operations as Service',
+            question: 'Why is great operations (speed, accuracy, quality) considered the core of customer service?',
+            options: [
+                { text: 'A. Because a friendly smile cannot fix a pizza that is late, cold, or made with the wrong toppings—every station is connected', correct: true },
+                { text: 'B. Because front counter CSRs are the only employees who impact the customer experience', correct: false },
+                { text: 'C. Because speed of delivery is the only thing customers care about', correct: false }
+            ]
+        },
+        {
+            id: 'd2m0_store_cleanliness',
+            topic: 'Store Image',
+            question: 'When does a customer first begin evaluating whether they trust our store with their food?',
+            options: [
+                { text: 'A. The moment they pull into our parking lot and see our clean lobby, spotless counter, and professional team', correct: true },
+                { text: 'B. Only after they open the pizza box at home and take their first bite', correct: false },
+                { text: 'C. Only if their order takes longer than 30 minutes to prepare', correct: false }
+            ]
+        }
     ]
 };
+
+/**
+ * Generator for Day 2 Morning Warm-Up Quiz
+ * Returns 2 mandatory questions + 5 randomly drawn questions (7 total)
+ */
+function getDay2RecapQuestions(totalCount = 7) {
+    const pool = QUESTION_BANK.day2_module0_recap || [];
+    const mandatory = pool.filter(q => q.mandatory);
+    const optional = pool.filter(q => !q.mandatory);
+
+    // Shuffle optional questions
+    const shuffledOptional = [...optional].sort(() => 0.5 - Math.random());
+    const needed = Math.max(0, totalCount - mandatory.length);
+    const selected = [...mandatory, ...shuffledOptional.slice(0, needed)];
+
+    // Shuffle selected order
+    return selected.sort(() => 0.5 - Math.random());
+}

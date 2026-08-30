@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2 - Module 0: Morning Kickoff & Tape Review</title>
+    <link rel="icon" type="image/png" href="../../image/tile_blue.png">
+    <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
+    <script src="../Globals/lms_feedback.js"></script>
+    <script src="../Globals/question_bank.js"></script>
+    <style>
+        .classroom-container-wide {
+            max-width: 960px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-top: 6px solid var(--brand-blue);
+        }
+
+        .classroom-content {
+            padding: 2.5rem 2rem;
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .classroom-footer {
+            background: var(--crust-light);
+            padding: 1rem 2rem;
+            border-top: 2px solid var(--crust-med);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-disabled {
+            background: #ccc !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            color: #888 !important;
+            border: none !important;
+        }
+
+        .hidden { display: none !important; }
+
+        /* --- Step 1: Voice Memo Playbook Carousel --- */
+        .playbook-deck {
+            width: 100%;
+            max-width: 820px;
+            background: var(--crust-base);
+            border: 2px solid var(--brand-blue);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .playbook-header {
+            background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue));
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .playbook-card {
+            display: none;
+            padding: 2rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .playbook-card.active {
+            display: block;
+        }
+
+        .card-split {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .card-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-image-box {
+            width: 100%;
+            height: 200px;
+            background: #e2e8f0;
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-details h4 {
+            font-family: 'PizzaPress';
+            font-size: 1.65rem;
+            color: var(--brand-blue);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .card-details p, .card-details li {
+            font-family: 'OneDotCd';
+            font-size: 1.15rem;
+            color: var(--crust-deep);
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Audio Player Pill Bar --- */
+        .audio-player-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff;
+            border: 2px solid var(--brand-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 1.25rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .audio-play-btn {
+            background: var(--brand-blue);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .audio-play-btn:hover {
+            transform: scale(1.08);
+            background: var(--brand-red);
+        }
+
+        .audio-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            text-align: left;
+        }
+
+        .audio-title {
+            font-family: 'OneDotCd-Bold';
+            font-size: 0.95rem;
+            color: var(--brand-blue);
+        }
+
+        .audio-time {
+            font-family: 'OneDotCd';
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .playbook-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            padding: 1rem 2rem;
+            border-top: 1px solid var(--crust-med);
+        }
+
+        /* --- Step 2: Knowledge Check --- */
+        .quiz-container {
+            width: 100%;
+            max-width: 680px;
+            text-align: left;
+        }
+
+        .question-block {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quiz-question {
+            font-family: 'OneDotCd-Bold';
+            font-size: 1.35rem;
+            color: var(--crust-deep);
+            margin-bottom: 1.25rem;
+            line-height: 1.35;
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.85rem;
+            background: var(--crust-base);
+            border: 2px solid var(--crust-med);
+            border-radius: 8px;
+            font-family: 'OneDotCd';
+            font-size: 1.1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--brand-blue);
+            background: #fff;
+            transform: translateX(4px);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--brand-blue);
+            background: rgba(0, 100, 145, 0.08);
+            font-family: 'OneDotCd-Bold';
+        }
+
+        .quiz-option.correct {
+            border-color: #2e7d32 !important;
+            background: rgba(46, 125, 50, 0.12) !important;
+            color: #1b5e20 !important;
+        }
+
+        .quiz-option.wrong {
+            border-color: var(--brand-red) !important;
+            background: rgba(227, 24, 55, 0.08) !important;
+            color: var(--brand-red) !important;
+        }
+    </style>
+</head>
+<body style="background-color: var(--crust-light);">
+
+    <!-- UNIFIED MODULE BRAND NAVBAR -->
+    <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="../lms_dashboard.html#day2" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'OneDotCd-Bold'; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Back to Day 2
+            </a>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 0: Morning Kickoff & Tape Review</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Step 1 of 3</span>
+        </div>
+    </header>
+
+    <div class="classroom-container-wide">
+        
+        <div class="classroom-content">
+            
+            <!-- STEP 1: INTERACTIVE PLAYBOOK TAPE REVIEW -->
+            <div id="content-review" style="width: 100%; text-align: center;">
+                <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 0.4rem;">Day 1 Tape Review</h3>
+                <p style="color: var(--crust-deep); font-size: 1.1rem; margin-bottom: 1.25rem; font-family: 'OneDotCd';">Review the 4 core plays from Day 1 and listen to Coach Bobby's breakdown before taking your morning quiz.</p>
+                
+                <div class="playbook-deck">
+                    <div class="playbook-header">
+                        <span style="font-family: 'OneDotCd-Bold'; font-size: 1.05rem; letter-spacing: 0.5px; text-transform: uppercase;">
+                            📽️ Film Room Playbook Deck
+                        </span>
+                        <span id="card-indicator" style="background: rgba(255,255,255,0.2); padding: 3px 12px; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem;">
+                            Play 1 of 4
+                        </span>
+                    </div>
+
+                    <!-- CARD 1: MISSION -->
+                    <div class="playbook-card active" id="card-1">
+                        <div class="audio-player-pill">
+                            <button type="button" class="audio-play-btn" id="audio-btn-1" onclick="toggleAudio(1)">▶</button>
+                            <div class="audio-info">
+                                <span class="audio-title">Coach Bobby's Film Note: The Mission</span>
+                                <span class="audio-time" id="audio-time-1">0:00 / 0:25</span>
+                            </div>
+                            <audio id="audio-1" src="../resources/audio/recap_play1.mp3" onended="onAudioEnded(1)" ontimeupdate="updateAudioProgress(1)"></audio>
+                        </div>
+
+                        <div class="card-split">
+                            <div class="card-image-box">
+                                <img src="../resources/recap_mission.png" alt="Mission Graphic" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div style="display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #64748b;">
+                                    <span style="font-size: 2.5rem; margin-bottom: 4px;">🏆</span>
+                                    <span style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem;">Play #1 Image</span>
+                                </div>
+                            </div>
+                            <div class="card-details">
+                                <h4>Play #1: The Team WOW Mission</h4>
+                                <p>We are <strong>dedicated to delivering the best customer experience possible.</strong></p>
+                                <p>Every position across our store—from answering the phone, to folding boxes, to building pizzas—is guided by creating loyal, happy customers who return every week.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 2: IMAGE & URGENCY -->
+                    <div class="playbook-card" id="card-2">
+                        <div class="audio-player-pill">
+                            <button type="button" class="audio-play-btn" id="audio-btn-2" onclick="toggleAudio(2)">▶</button>
+                            <div class="audio-info">
+                                <span class="audio-title">Coach Bobby's Film Note: Jersey & Sense of Urgency</span>
+                                <span class="audio-time" id="audio-time-2">0:00 / 0:30</span>
+                            </div>
+                            <audio id="audio-2" src="../resources/audio/recap_play2.mp3" onended="onAudioEnded(2)" ontimeupdate="updateAudioProgress(2)"></audio>
+                        </div>
+
+                        <div class="card-split">
+                            <div class="card-image-box">
+                                <img src="../resources/recap_jersey.png" alt="Uniform & Urgency Graphic" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div style="display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #64748b;">
+                                    <span style="font-size: 2.5rem; margin-bottom: 4px;">👕⏱️</span>
+                                    <span style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem;">Play #2 Image</span>
+                                </div>
+                            </div>
+                            <div class="card-details">
+                                <h4>Play #2: Game-Day Jersey & Sense of Urgency</h4>
+                                <ul>
+                                    <li><strong>Game-Day Jersey:</strong> A clean, tucked-in shirt, hat facing forward, clean apron, and slip-resistant shoes build trust before you speak.</li>
+                                    <li><strong>Sense of Urgency:</strong> <em>"Hungry people aren’t famous for their patience!"</em> Great hustle isn't panic—it's moving with purpose: fast, controlled, accurate, and anticipating the next play.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 3: LEADS -->
+                    <div class="playbook-card" id="card-3">
+                        <div class="audio-player-pill">
+                            <button type="button" class="audio-play-btn" id="audio-btn-3" onclick="toggleAudio(3)">▶</button>
+                            <div class="audio-info">
+                                <span class="audio-title">Coach Bobby's Film Note: The LEADS Playbook</span>
+                                <span class="audio-time" id="audio-time-3">0:00 / 0:35</span>
+                            </div>
+                            <audio id="audio-3" src="../resources/audio/recap_play3.mp3" onended="onAudioEnded(3)" ontimeupdate="updateAudioProgress(3)"></audio>
+                        </div>
+
+                        <div class="card-split">
+                            <div class="card-image-box">
+                                <img src="../resources/recap_leads.png" alt="LEADS Playbook Graphic" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div style="display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #64748b;">
+                                    <span style="font-size: 2.5rem; margin-bottom: 4px;">📋🛡️</span>
+                                    <span style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem;">Play #3 Image</span>
+                                </div>
+                            </div>
+                            <div class="card-details">
+                                <h4>Play #3: The LEADS Playbook</h4>
+                                <p>When mistakes happen, we don't get defensive. We run <strong>LEADS</strong>:</p>
+                                <ul>
+                                    <li><strong>L</strong>isten to understand without interrupting.</li>
+                                    <li><strong>E</strong>mpathize with how the customer feels.</li>
+                                    <li><strong>A</strong>pologize with sincere ownership.</li>
+                                    <li><strong>D</strong>o what it takes with an immediate solution.</li>
+                                    <li><strong>S</strong>tand by your promise through personal follow-through.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 4: POS & OPERATIONS -->
+                    <div class="playbook-card" id="card-4">
+                        <div class="audio-player-pill">
+                            <button type="button" class="audio-play-btn" id="audio-btn-4" onclick="toggleAudio(4)">▶</button>
+                            <div class="audio-info">
+                                <span class="audio-title">Coach Bobby's Film Note: Operations & POS Flow</span>
+                                <span class="audio-time" id="audio-time-4">0:00 / 0:25</span>
+                            </div>
+                            <audio id="audio-4" src="../resources/audio/recap_play4.mp3" onended="onAudioEnded(4)" ontimeupdate="updateAudioProgress(4)"></audio>
+                        </div>
+
+                        <div class="card-split">
+                            <div class="card-image-box">
+                                <img src="../resources/recap_pos.png" alt="POS & Operations Graphic" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div style="display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #64748b;">
+                                    <span style="font-size: 2.5rem; margin-bottom: 4px;">💻🍕</span>
+                                    <span style="font-family: 'OneDotCd-Bold'; font-size: 0.9rem;">Play #4 Image</span>
+                                </div>
+                            </div>
+                            <div class="card-details">
+                                <h4>Play #4: Menu Knowledge & POS Flow</h4>
+                                <ul>
+                                    <li><strong>The 2-Ring Standard:</strong> Answer with energy by the 2nd ring and always ask permission before placing a caller on hold.</li>
+                                    <li><strong>Order Sequence:</strong> Phone Lookup ➔ Carryout/Delivery ➔ Items & Crusts ➔ Upsell Sides & Drinks ➔ Wait Time & Payment.</li>
+                                    <li><strong>The Golden Rule:</strong> <em>Great operations ARE customer service!</em> Every role is connected.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="playbook-nav">
+                        <button type="button" class="btn btn-outline" id="btn-card-prev" onclick="changeCard(-1)" style="padding: 0.5rem 1.25rem; font-size: 0.95rem;" disabled>← Previous Play</button>
+                        <button type="button" class="btn" id="btn-card-next" onclick="changeCard(1)" style="padding: 0.5rem 1.25rem; font-size: 0.95rem; background: var(--brand-blue); color: white;">Next Play →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: RANDOMIZED 7-QUESTION WARM-UP QUIZ -->
+            <div id="content-quiz" class="quiz-container hidden">
+                <div id="quiz-dynamic-target">
+                    <!-- Populated dynamically via question_bank.js -->
+                </div>
+                <p id="quiz-feedback" style="color: var(--brand-red); font-family: 'OneDotCd-Bold'; margin-top: 1rem; display: none;">Please select the correct answer to continue.</p>
+            </div>
+
+            <!-- STEP 3: PROMPT (Unlock Day 2 Mod 1) -->
+            <div id="content-prompt" class="prompt-container hidden" style="text-align: center;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">🔥</div>
+                <h2 style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 2rem; margin-bottom: 1rem;">Morning Warm-Up Complete!</h2>
+                <p style="font-family: 'OneDotCd'; font-size: 1.25rem; color: var(--crust-deep); max-width: 600px; margin: 0 auto 1.5rem auto;">
+                    Great job knocking out the tape review and warm-up quiz. You are officially ready to tackle Day 2!
+                </p>
+                <p style="color: #2e7d32; font-family: 'OneDotCd-Bold'; font-size: 1.1rem;">
+                    ✅ Module 1: The Art of Customer Recovery (LEADS & Q-TIP) is now unlocked.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="classroom-footer">
+            <button class="btn btn-outline hidden" id="btn-back" onclick="changeStep(-1)" style="padding: 0.8rem 2rem; width: auto;">Back</button>
+            <div style="flex-grow: 1;"></div>
+            <button class="btn btn-disabled" id="btn-next" onclick="changeStep(1)" style="padding: 0.8rem 2rem; width: auto; margin-top: 0;">Next Step</button>
+            <button class="btn hidden" id="btn-finish" onclick="finishAndReturn()" style="padding: 0.8rem 2rem; width: auto; margin-top: 0; background: var(--brand-red); color: white;">Return to Dashboard</button>
+        </div>
+
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let reviewCompleted = false;
+        let activeCard = 1;
+        const totalCards = 4;
+
+        // Audio Handling
+        function toggleAudio(cardNum) {
+            const audio = document.getElementById(`audio-${cardNum}`);
+            const btn = document.getElementById(`audio-btn-${cardNum}`);
+
+            // Stop other audios
+            for (let i = 1; i <= totalCards; i++) {
+                if (i !== cardNum) {
+                    const otherAudio = document.getElementById(`audio-${i}`);
+                    const otherBtn = document.getElementById(`audio-btn-${i}`);
+                    if (otherAudio) {
+                        otherAudio.pause();
+                        otherAudio.currentTime = 0;
+                    }
+                    if (otherBtn) otherBtn.innerText = "▶";
+                }
+            }
+
+            if (audio.paused) {
+                audio.play().then(() => {
+                    btn.innerText = "⏸";
+                }).catch(err => {
+                    console.log("Audio placeholder ready for file upload:", err);
+                    btn.innerText = "⏸";
+                });
+            } else {
+                audio.pause();
+                btn.innerText = "▶";
+            }
+        }
+
+        function onAudioEnded(cardNum) {
+            const btn = document.getElementById(`audio-btn-${cardNum}`);
+            if (btn) btn.innerText = "▶";
+        }
+
+        function updateAudioProgress(cardNum) {
+            const audio = document.getElementById(`audio-${cardNum}`);
+            const timeDisplay = document.getElementById(`audio-time-${cardNum}`);
+            if (audio && timeDisplay && audio.duration) {
+                const curM = Math.floor(audio.currentTime / 60);
+                const curS = Math.floor(audio.currentTime % 60).toString().padStart(2, '0');
+                const durM = Math.floor(audio.duration / 60);
+                const durS = Math.floor(audio.duration % 60).toString().padStart(2, '0');
+                timeDisplay.innerText = `${curM}:${curS} / ${durM}:${durS}`;
+            }
+        }
+
+        function pauseAllAudio() {
+            for (let i = 1; i <= totalCards; i++) {
+                const audio = document.getElementById(`audio-${i}`);
+                const btn = document.getElementById(`audio-btn-${i}`);
+                if (audio) audio.pause();
+                if (btn) btn.innerText = "▶";
+            }
+        }
+
+        // Playbook Deck Carousel
+        function changeCard(direction) {
+            pauseAllAudio();
+            document.getElementById(`card-${activeCard}`).classList.remove('active');
+            activeCard += direction;
+            document.getElementById(`card-${activeCard}`).classList.add('active');
+
+            document.getElementById('card-indicator').innerText = `Play ${activeCard} of ${totalCards}`;
+            document.getElementById('btn-card-prev').disabled = (activeCard === 1);
+
+            const nextBtn = document.getElementById('btn-card-next');
+            if (activeCard === totalCards) {
+                nextBtn.innerText = "Review Complete! ✓";
+                nextBtn.style.background = "#2e7d32";
+                reviewCompleted = true;
+                document.getElementById('btn-next').classList.remove('btn-disabled');
+            } else {
+                nextBtn.innerText = "Next Play →";
+                nextBtn.style.background = "var(--brand-blue)";
+            }
+        }
+
+        // Dynamic Quiz from question_bank.js
+        let activeQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        const moduleStartTime = Date.now();
+
+        function initQuiz() {
+            activeQuestions = getDay2RecapQuestions(7);
+            currentQuestionIndex = 0;
+            renderCurrentQuestion();
+        }
+
+        function renderCurrentQuestion() {
+            const container = document.getElementById('quiz-dynamic-target');
+            if (!container) return;
+
+            const q = activeQuestions[currentQuestionIndex];
+            const qNum = currentQuestionIndex + 1;
+            const totalQ = activeQuestions.length;
+
+            const shuffledOptions = [...q.options].sort(() => 0.5 - Math.random());
+
+            let html = `
+                <div class="question-block">
+                    <p style="color: var(--brand-blue); font-family: 'OneDotCd-Bold'; margin-bottom: 0.5rem;">Question ${qNum} of ${totalQ} (${q.topic})</p>
+                    <div class="quiz-question">${q.question}</div>
+            `;
+
+            shuffledOptions.forEach(opt => {
+                html += `
+                    <button type="button" class="quiz-option" onclick="handleQuizAnswer(this, ${opt.correct}, '${q.id}')">
+                        ${opt.text}
+                    </button>
+                `;
+            });
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function handleQuizAnswer(btn, isCorrect, qId) {
+            const container = document.getElementById('quiz-dynamic-target');
+            container.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
+            btn.classList.add('selected');
+
+            const feedback = document.getElementById('quiz-feedback');
+            const nextBtn = document.getElementById('btn-next');
+
+            if (!userAnswers[qId]) userAnswers[qId] = [];
+            userAnswers[qId].push(btn.innerText.trim());
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+                feedback.style.display = 'none';
+
+                if (currentQuestionIndex < activeQuestions.length - 1) {
+                    setTimeout(() => {
+                        currentQuestionIndex++;
+                        renderCurrentQuestion();
+                    }, 650);
+                } else {
+                    setTimeout(() => {
+                        nextBtn.classList.remove('btn-disabled');
+                        feedback.style.display = 'none';
+                    }, 400);
+                }
+            } else {
+                btn.classList.add('wrong');
+                feedback.innerText = "Not quite! Review the play and try again.";
+                feedback.style.display = 'block';
+            }
+        }
+
+        function changeStep(direction) {
+            pauseAllAudio();
+            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+            if (direction === 1 && !isAdmin) {
+                if (currentStep === 1 && !reviewCompleted) return;
+                if (currentStep === 2 && currentQuestionIndex < activeQuestions.length - 1) return;
+            }
+            currentStep += direction;
+            updateUI();
+        }
+
+        function updateUI() {
+            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+            document.getElementById('content-review').classList.add('hidden');
+            document.getElementById('content-quiz').classList.add('hidden');
+            document.getElementById('content-prompt').classList.add('hidden');
+
+            const btnBack = document.getElementById('btn-back');
+            const btnNext = document.getElementById('btn-next');
+            const btnFinish = document.getElementById('btn-finish');
+
+            btnBack.classList.remove('hidden');
+            btnNext.classList.remove('hidden');
+            btnFinish.classList.add('hidden');
+
+            document.getElementById('step-counter').innerText = `Step ${currentStep} of 3`;
+
+            if (currentStep === 1) {
+                document.getElementById('content-review').classList.remove('hidden');
+                btnBack.classList.add('hidden');
+                if (!reviewCompleted && !isAdmin) btnNext.classList.add('btn-disabled');
+            } 
+            else if (currentStep === 2) {
+                document.getElementById('content-quiz').classList.remove('hidden');
+                initQuiz();
+                btnNext.classList.add('btn-disabled');
+            } 
+            else if (currentStep === 3) {
+                document.getElementById('content-prompt').classList.remove('hidden');
+                btnNext.classList.add('hidden');
+                btnFinish.classList.remove('hidden');
+                localStorage.setItem('day2_mod0_complete', 'true');
+            }
+        }
+
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
+
+        function sendProgressUpdate(moduleName) {
+            if (localStorage.getItem('tw_admin_mode') === 'true') return;
+            const market = localStorage.getItem('tw_market');
+            const id = localStorage.getItem('tw_id');
+            if (!market || !id) return;
+
+            const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            const answersStr = encodeURIComponent(JSON.stringify(userAnswers));
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=Completed`;
+
+            fetch(url, { method: 'GET', credentials: 'omit' }).catch(console.error);
+        }
+
+        function finishAndReturn() {
+            const btn = document.getElementById('btn-finish');
+            if (btn) {
+                btn.innerText = "Saving Progress...";
+                btn.style.pointerEvents = "none";
+            }
+
+            sendProgressUpdate('Day 2 Mod 0');
+            localStorage.setItem('day2_mod0_complete', 'true');
+
+            setTimeout(() => {
+                window.location.href = '../lms_dashboard.html#day2';
+            }, 1200);
+        }
+
+        // Initialize on load
+        if (localStorage.getItem('tw_admin_mode') === 'true') {
+            reviewCompleted = true;
+            document.getElementById('btn-next').classList.remove('btn-disabled');
+        }
+    </script>
+</body>
+</html>
