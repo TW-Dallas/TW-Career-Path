@@ -73,12 +73,30 @@
   #mobile-blocker {
       display: none;
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: linear-gradient(145deg, var(--dark-blue) 0%, #002e4d 100%);
-      color: var(--crust-base);
+      background: linear-gradient(145deg, #005c91 0%, #002e4d 100%);
+      color: #fefaf6;
       text-align: center; padding: 24px; z-index: 99999999;
       box-sizing: border-box;
       align-items: center; justify-content: center;
       font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
+  }
+  #mobile-blocker h2 {
+      font-family: 'PizzaPress', 'OneDotCd-Bold', sans-serif;
+      color: #ffffff !important;
+      font-size: 2rem;
+      margin: 0 0 14px 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 3px solid #e31837;
+      padding-bottom: 8px;
+      display: inline-block;
+  }
+  #mobile-blocker p {
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: #fefaf6 !important;
+      max-width: 480px;
+      margin: 0 auto;
   }
   @media (max-width: 850px) {
       #mobile-blocker { display: flex !important; flex-direction: column; justify-content: center; align-items: center; }
