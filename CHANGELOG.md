@@ -50,7 +50,8 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Day 2 Module 3 (Delivery Safety & Makeline Basics):** Building out the specialized driver and CSR tracks for Day 2!
 
 ### 💡 Store Pro-Tip of the Week
-* **The Q-TIP Rule for Shift Runners:** When a hungry customer calls with a problem, remember **Q-TIP: Quit Taking It Personally!** Their frustration isn't about you—it's about their missing dinner. Staying calm, taking immediate ownership with empathy, and making it right with a priority remake or generous credit turns an upset customer into a loyal regular for life.
+* **Reporting Typos & Issues On the Fly:** If you or a trainee ever spot a typo, glitch, or question you'd like adjusted while training, click the blue **Feedback** button in the bottom-right corner of that exact screen! Submitting directly from the page automatically tags the module and step so our team can review and update it immediately.
+* **Quick Refresh for Store Computers (`Ctrl + F5`):** If a store computer or training workstation ever seems to show an older screen or cached version after an update, press **`Ctrl + F5`** (or **`Ctrl + Shift + R`**) on the keyboard to perform an instant hard refresh and pull down the latest cloud version.
 * **Quick Fix for Store Computers:** If a computer in your store ever shows an old screen or seems stuck after an update, press **`Ctrl + F5`** (or **`Ctrl + Shift + R`**) on the keyboard to instantly refresh and grab the latest version!
 
 ---
