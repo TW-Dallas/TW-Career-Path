@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2 - Module 2: Cleaning, Chemical Safety & Sanitation</title>
+    <link rel="icon" type="image/png" href="../../image/tile_blue.png">
+    <link rel="stylesheet" href="../Globals/LMS_Global_Styles.css">
+    <script src="../Globals/lms_feedback.js"></script>
+    <style>
+        /* --- DOMINO'S MASTER TYPOGRAPHY SUITE --- */
+        @font-face {
+            font-family: 'PizzaPress';
+            src: url('../../fonts/Dominos Sans Header 1.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'Header2';
+            src: url('../../fonts/Dominos Sans Header 2.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'Subhead1';
+            src: url('../../fonts/Dominos Sans Subhead 1.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'Subhead2';
+            src: url('../../fonts/Dominos Sans Subhead 2.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'OneDotCd-Bold';
+            src: url('../../fonts/Dominos Sans Bold.ttf') format('truetype');
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: 'OneDotCd';
+            src: url('../../fonts/Dominos Sans Body.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'Compact';
+            src: url('../../fonts/Dominos Sans Body Compact.ttf') format('truetype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'Condensed';
+            src: url('../../fonts/Dominos Sans Body Condensed.ttf') format('truetype');
+            font-weight: normal;
+        }
+
+        /* --- STEP CONTAINER ARCHITECTURE --- */
+        .mod-step {
+            display: none;
+            animation: fadeIn 0.35s ease-out;
+        }
+        .mod-step.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- COACH AUDIO BAR --- */
+        .coach-bar {
+            background: linear-gradient(135deg, #ffffff, var(--crust-light));
+            border: 2px solid var(--crust-med);
+            border-left: 6px solid var(--brand-blue);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .coach-pill {
+            background: var(--dark-blue);
+            color: #ffffff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .play-btn {
+            background: var(--brand-blue);
+            color: #ffffff;
+            border: none;
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+        .play-btn:hover {
+            background: var(--dark-blue);
+            transform: scale(1.03);
+        }
+
+        /* --- CONTENT CARDS --- */
+        .info-card {
+            background: #ffffff;
+            border: 2px solid var(--crust-med);
+            border-radius: 12px;
+            padding: 1.4rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header-bar {
+            font-family: 'Subhead1', sans-serif;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--dark-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--crust-light);
+            padding-bottom: 0.5rem;
+        }
+
+        /* --- SINK 3-COLUMN DISPLAY --- */
+        .sink-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sink-col {
+            background: #ffffff;
+            border: 2px solid var(--crust-med);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        .sink-col.wash { border-top: 6px solid var(--brand-blue); }
+        .sink-col.rinse { border-top: 6px solid #60a5fa; }
+        .sink-col.sanitize { border-top: 6px solid var(--brand-red); }
+
+        .temp-badge {
+            display: inline-block;
+            background: var(--crust-light);
+            border: 1px solid var(--crust-dark);
+            color: var(--crust-burnt);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'Condensed', sans-serif;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        /* --- TEST STRIP SIMULATOR --- */
+        .ppm-lab {
+            background: #1e293b;
+            color: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .test-strip-beaker {
+            background: rgba(0, 144, 226, 0.2);
+            border: 3px solid #38bdf8;
+            border-radius: 12px;
+            height: 140px;
+            width: 220px;
+            margin: 1rem auto;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .virtual-strip {
+            width: 24px;
+            height: 110px;
+            background: #fef08a;
+            border: 1px solid #ca8a04;
+            border-radius: 4px;
+            transition: all 0.5s ease;
+            position: relative;
+        }
+        .virtual-strip.submerged {
+            transform: translateY(20px);
+        }
+        .virtual-strip-pad {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: #e2e8f0;
+            border-radius: 0 0 3px 3px;
+            transition: background 0.8s ease;
+        }
+        .virtual-strip-pad.testing {
+            animation: pulseColor 10s forwards;
+        }
+        @keyframes pulseColor {
+            0% { background: #e2e8f0; }
+            50% { background: #86efac; }
+            100% { background: #15803d; } /* 200 PPM Forest Green */
+        }
+
+        /* --- SCENARIO PICKER CARDS --- */
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .scenario-card {
+            background: #ffffff;
+            border: 2px solid var(--crust-med);
+            border-radius: 10px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .scenario-card:hover {
+            border-color: var(--brand-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+        }
+        .scenario-card.selected-correct {
+            border-color: #16a34a;
+            background: #f0fdf4;
+        }
+        .scenario-card.selected-incorrect {
+            border-color: #dc2626;
+            background: #fef2f2;
+        }
+
+        /* --- CHECKLIST / CHORE BOARD --- */
+        .chore-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--crust-light);
+            font-family: 'Compact', sans-serif;
+            font-size: 1.05rem;
+        }
+        .chore-row:nth-child(even) {
+            background: var(--crust-light);
+        }
+
+        /* --- QUIZ STYLING --- */
+        .quiz-opt {
+            background: #ffffff;
+            border: 2px solid var(--crust-med);
+            border-radius: 8px;
+            padding: 0.9rem 1.2rem;
+            margin-bottom: 0.75rem;
+            font-family: 'Compact', sans-serif;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .quiz-opt:hover {
+            border-color: var(--brand-blue);
+            background: var(--crust-light);
+        }
+        .quiz-opt.correct {
+            border-color: #16a34a;
+            background: #dcfce7;
+            color: #15803d;
+            font-weight: bold;
+        }
+        .quiz-opt.incorrect {
+            border-color: #dc2626;
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+    </style>
+</head>
+<body style="background-color: var(--crust-light); margin: 0; padding-bottom: 80px;">
+
+    <!-- UNIFIED TOP NAVBAR -->
+    <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="../../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
+            <a href="../lms_dashboard.html#day2" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px; letter-spacing: 0.5px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                &#8592; Back to Day 2
+            </a>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 2: Sanitation, Sinks & Safety</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Step 1 of 6</span>
+        </div>
+    </header>
+
+    <div class="classroom-container-wide" style="max-width: 960px; margin: 1.5rem auto; padding: 0 1rem;">
+        
+        <!-- ========================================================================= -->
+        <!-- STEP 1: HANDWASHING NON-NEGOTIABLES & 5-STEP PROCESS -->
+        <!-- ========================================================================= -->
+        <div id="step-1" class="mod-step active">
+            <h2 style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2rem; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; border-bottom: 3px solid var(--brand-red); padding-bottom: 6px;">
+                🧼 Handwashing: Our #1 Defense
+            </h2>
+            <p style="font-family: 'Compact', sans-serif; font-size: 1.15rem; color: var(--crust-deep); margin-bottom: 1.25rem; line-height: 1.4;">
+                Customers trust us with their health and safety. Handwashing is the absolute foundation of food safety in every Team WOW store.
+            </p>
+
+            <!-- Coach Bobby Audio Bar -->
+            <div class="coach-bar">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="coach-pill">🎙️ Coach Bobby</div>
+                    <div>
+                        <div style="font-family: 'Subhead1', sans-serif; font-size: 1.05rem; color: var(--dark-blue); text-transform: uppercase;">The 5-Step Handwash Standard</div>
+                        <div style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;" id="audio-time-s1">0:00 / 0:34</div>
+                    </div>
+                </div>
+                <button class="play-btn" id="btn-play-s1" onclick="toggleAudio('audio-bobby-hw')">
+                    ▶ Play Coaching Tape
+                </button>
+            </div>
+            <audio id="audio-bobby-hw" src="../resources/Day2_audio/Bobby_day_2_handwashing_2.mp3" preload="auto"></audio>
+
+            <!-- The 5 Steps Visual Ladder -->
+            <div class="info-card">
+                <div class="card-header-bar">📋 The Official 5-Step Handwashing Process</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; text-align: center;">
+                    <div style="background: var(--crust-light); border: 1px solid var(--crust-med); border-radius: 8px; padding: 1rem 0.5rem;">
+                        <div style="font-family: 'Subhead1', sans-serif; font-size: 1.2rem; color: var(--brand-blue);">STEP 1</div>
+                        <div style="font-size: 2rem; margin: 4px 0;">💧</div>
+                        <div style="font-family: 'Subhead2', sans-serif; font-size: 1.1rem; color: var(--dark-blue);">WET</div>
+                        <div style="font-family: 'Compact', sans-serif; font-size: 0.85rem; color: #64748b;">Clean running warm water</div>
+                    </div>
+                    <div style="background: var(--crust-light); border: 2px solid var(--brand-blue); border-radius: 8px; padding: 1rem 0.5rem;">
+                        <div style="font-family: 'Subhead1', sans-serif; font-size: 1.2rem; color: var(--brand-blue);">STEP 2</div>
+                        <div style="font-size: 2rem; margin: 4px 0;">🧼</div>
+                        <div style="font-family: 'Subhead2', sans-serif; font-size: 1.1rem; color: var(--brand-blue);">SOAP & SCRUB</div>
+                        <div style="font-family: 'Compact', sans-serif; font-size: 0.85rem; color: var(--dark-blue); font-weight: bold;">20 Seconds Minimum!</div>
+                    </div>
+                    <div style="background: var(--crust-light); border: 1px solid var(--crust-med); border-radius: 8px; padding: 1rem 0.5rem;">
+                        <div style="font-family: 'Subhead1', sans-serif; font-size: 1.2rem; color: var(--brand-blue);">STEP 3</div>
+                        <div style="font-size: 2rem; margin: 4px 0;">🚿</div>
+                        <div style="font-family: 'Subhead2', sans-serif; font-size: 1.1rem; color: var(--dark-blue);">RINSE</div>
+                        <div style="font-family: 'Compact', sans-serif; font-size: 0.85rem; color: #64748b;">Rinse all soap lather away</div>
+                    </div>
+                    <div style="background: var(--crust-light); border: 1px solid var(--crust-med); border-radius: 8px; padding: 1rem 0.5rem;">
+                        <div style="font-family: 'Subhead1', sans-serif; font-size: 1.2rem; color: var(--brand-blue);">STEP 4</div>
+                        <div style="font-size: 2rem; margin: 4px 0;">🧻</div>
+                        <div style="font-family: 'Subhead2', sans-serif; font-size: 1.1rem; color: var(--dark-blue);">DRY</div>
+                        <div style="font-family: 'Compact', sans-serif; font-size: 0.85rem; color: #64748b;">Single-use clean paper towel</div>
+                    </div>
+                    <div style="background: var(--crust-light); border: 1px solid var(--crust-med); border-radius: 8px; padding: 1rem 0.5rem;">
+                        <div style="font-family: 'Subhead1', sans-serif; font-size: 1.2rem; color: var(--brand-blue);">STEP 5</div>
+                        <div style="font-size: 2rem; margin: 4px 0;">🛑</div>
+                        <div style="font-family: 'Subhead2', sans-serif; font-size: 1.1rem; color: var(--dark-blue);">TURN OFF</div>
+                        <div style="font-family: 'Compact', sans-serif; font-size: 0.85rem; color: #64748b;">Use paper towel on faucet & door</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OA Critical Callout -->
+            <div style="background: #eff6ff; border: 2px solid #3b82f6; border-left: 6px solid var(--brand-blue); border-radius: 10px; padding: 1.2rem; margin-bottom: 1.5rem;">
+                <div style="font-family: 'Subhead1', sans-serif; font-size: 1.1rem; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 4px;">
+                    🛡️ Domino's OA Critical Standard: Hand Sanitizer vs. Soap
+                </div>
+                <div style="font-family: 'Compact', sans-serif; font-size: 1.05rem; color: #1e3a8a; line-height: 1.4;">
+                    <strong>Hand sanitizer is NEVER a replacement for handwashing!</strong> You must always wash with warm water and soap for 20 seconds. Hand sanitizer is only an optional secondary step.
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- STEP 2: GLOVE PROTOCOL & READY-TO-EAT (RTE) / POST-BAKE -->
+        <!-- ========================================================================= -->
+        <div id="step-2" class="mod-step">
+            <h2 style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2rem; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; border-bottom: 3px solid var(--brand-red); padding-bottom: 6px;">
+                🧤 Glove Standards & Ready-to-Eat Foods
+            </h2>
+            <p style="font-family: 'Compact', sans-serif; font-size: 1.15rem; color: var(--crust-deep); margin-bottom: 1.25rem; line-height: 1.4;">
+                Gloves are a protective barrier, not a magic shield. Master the Golden Rule and learn when food-grade gloves are strictly required.
+            </p>
+
+            <!-- Coach Bobby Audio Bar -->
+            <div class="coach-bar">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="coach-pill">🎙️ Coach Bobby</div>
+                    <div>
+                        <div style="font-family: 'Subhead1', sans-serif; font-size: 1.05rem; color: var(--dark-blue); text-transform: uppercase;">Gloves & The Golden Rule</div>
+                        <div style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;" id="audio-time-s2">0:00 / 0:37</div>
+                    </div>
+                </div>
+                <button class="play-btn" id="btn-play-s2" onclick="toggleAudio('audio-bobby-gloves')">
+                    ▶ Play Coaching Tape
+                </button>
+            </div>
+            <audio id="audio-bobby-gloves" src="../resources/Day2_audio/Bobby_day_2_wearing_gloves_1.mp3" preload="auto"></audio>
+
+            <!-- OA Rules Box -->
+            <div class="info-card">
+                <div class="card-header-bar">🏆 Domino's OA Glove & Hygiene Non-Negotiables</div>
+                <div style="display: flex; flex-direction: column; gap: 12px; font-family: 'Compact', sans-serif; font-size: 1.05rem; line-height: 1.4; color: var(--crust-burnt);">
+                    <div style="display: flex; align-items: flex-start; gap: 10px;">
+                        <span style="color: var(--brand-red); font-size: 1.2rem;">🚫</span>
+                        <div><strong>NO Bare Hand Contact with Ready-To-Eat (RTE) Prep Foods:</strong> When portioning prepped chicken, steak, salads, or packaging ingredients into approved bags, food-grade gloves are 100% required.</div>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 10px;">
+                        <span style="color: var(--brand-red); font-size: 1.2rem;">🚫</span>
+                        <div><strong>NO Bare Hand Contact with Post-Bake Food:</strong> At the cut table and dispatch, only clean food-grade gloves or sanitized clean utensils may touch cooked pizzas, wings, bread, and desserts.</div>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 10px;">
+                        <span style="color: var(--brand-blue); font-size: 1.2rem;">💅</span>
+                        <div><strong>Nail Policy:</strong> Painted or artificial nails are strictly forbidden while handling food unless approved food-grade gloves are worn properly at all times.</div>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 10px;">
+                        <span style="color: #16a34a; font-size: 1.2rem;">⭐</span>
+                        <div><strong>The Golden Rule:</strong> Always thoroughly wash and dry your hands <em>before</em> putting on a fresh pair of gloves. Never put clean gloves on dirty or unwashed hands!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- STEP 3: 3-COMPARTMENT SINK & TEST STRIP LAB -->
+        <!-- ========================================================================= -->
+        <div id="step-3" class="mod-step">
+            <h2 style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2rem; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; border-bottom: 3px solid var(--brand-red); padding-bottom: 6px;">
+                🚰 3-Compartment Sink & Sanitizer PPM Lab
+            </h2>
+            <p style="font-family: 'Compact', sans-serif; font-size: 1.15rem; color: var(--crust-deep); margin-bottom: 1.25rem; line-height: 1.4;">
+                Every temperature and concentration at the dish pit is tested on OA inspections. Learn the 3 sinks and test your chemical concentration.
+            </p>
+
+            <!-- SINK 3-COLUMN DISPLAY -->
+            <div class="sink-grid">
+                <!-- SINK 1: WASH -->
+                <div class="sink-col wash">
+                    <div style="font-family: 'Subhead1', sans-serif; font-size: 1.3rem; color: var(--brand-blue); text-transform: uppercase;">1. WASH</div>
+                    <div class="temp-badge">110°F – 120°F</div>
+                    <div style="font-family: 'Compact', sans-serif; font-size: 0.95rem; color: #475569; margin: 0.5rem 0;">
+                        Hot soapy water with Pot & Pan Detergent.
+                    </div>
+                    <div style="background: #eff6ff; border-radius: 6px; padding: 6px; font-family: 'Subhead2', sans-serif; font-size: 0.9rem; color: var(--dark-blue);">
+                        ⏱️ Wash 30 Seconds
+                    </div>
+                </div>
+
+                <!-- SINK 2: RINSE -->
+                <div class="sink-col rinse">
+                    <div style="font-family: 'Subhead1', sans-serif; font-size: 1.3rem; color: #0284c7; text-transform: uppercase;">2. RINSE</div>
+                    <div class="temp-badge">110°F – 120°F</div>
+                    <div style="font-family: 'Compact', sans-serif; font-size: 0.95rem; color: #475569; margin: 0.5rem 0;">
+                        Clean warm water to remove all soap film.
+                    </div>
+                    <div style="background: #f0f9ff; border-radius: 6px; padding: 6px; font-family: 'Subhead2', sans-serif; font-size: 0.9rem; color: #0369a1;">
+                        ⏱️ Rinse 30 Seconds
+                    </div>
+                </div>
+
+                <!-- SINK 3: SANITIZE -->
+                <div class="sink-col sanitize">
+                    <div style="font-family: 'Subhead1', sans-serif; font-size: 1.3rem; color: var(--brand-red); text-transform: uppercase;">3. SANITIZE</div>
+                    <div class="temp-badge" style="border-color: var(--brand-red); color: var(--dark-red);">75°F (Room Temp)</div>
+                    <div style="font-family: 'Compact', sans-serif; font-size: 0.95rem; color: #475569; margin: 0.5rem 0;">
+                        Quat Sanitizer at <strong>200 PPM</strong> target.
+                    </div>
+                    <div style="background: #fef2f2; border-radius: 6px; padding: 6px; font-family: 'Subhead2', sans-serif; font-size: 0.9rem; color: var(--dark-red);">
+                        ⏱️ 60s Contact • Air Dry Only
+                    </div>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE PPM TEST STRIP SIMULATOR -->
+            <div class="ppm-lab">
+                <div style="font-family: 'Subhead1', sans-serif; font-size: 1.3rem; text-transform: uppercase; color: #38bdf8; margin-bottom: 4px;">
+                    🧪 Interactive Sanitizer Test Strip Lab
+                </div>
+                <p style="font-family: 'Compact', sans-serif; font-size: 1rem; color: #cbd5e1; margin-bottom: 1rem;">
+                    Hold the test strip still in the solution for <strong>10 seconds</strong> (do NOT swish or stir). Click below to test the sink!
+                </p>
+
+                <div class="test-strip-beaker" id="beaker">
+                    <div class="virtual-strip" id="virtual-strip">
+                        <div class="virtual-strip-pad" id="strip-pad"></div>
+                    </div>
+                </div>
+
+                <div id="test-timer" style="font-family: 'Condensed', sans-serif; font-size: 1.3rem; color: #fbbf24; margin-bottom: 0.8rem;">
+                    Ready to Test
+                </div>
+
+                <button class="play-btn" id="btn-run-ppm" onclick="runPpmTest()" style="margin: 0 auto;">
+                    💧 Dip Test Strip (10s Test)
+                </button>
+
+                <div id="ppm-result-box" style="display: none; margin-top: 1.2rem; background: #0f172a; border: 2px solid #22c55e; border-radius: 8px; padding: 1rem; text-align: center; animation: fadeIn 0.4s ease;">
+                    <div style="font-family: 'Subhead1', sans-serif; font-size: 1.2rem; color: #4ade80; text-transform: uppercase;">
+                        ✅ 200 PPM — Target Concentration Passed!
+                    </div>
+                    <div style="font-family: 'Compact', sans-serif; font-size: 0.95rem; color: #e2e8f0; margin-top: 4px;">
+                        Remember: Re-test all 3-compartment sinks and red sani-buckets every <strong>2 to 4 hours</strong> as solution loses potency.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- STEP 4: CHEMICAL SAFETY & SDS STANDARDS -->
+        <!-- ========================================================================= -->
+        <div id="step-4" class="mod-step">
+            <h2 style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2rem; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; border-bottom: 3px solid var(--brand-red); padding-bottom: 6px;">
+                ⚠️ Chemical Safety, EcoLab & SDS
+            </h2>
+            <p style="font-family: 'Compact', sans-serif; font-size: 1.15rem; color: var(--crust-deep); margin-bottom: 1.25rem; line-height: 1.4;">
+                Professional-grade cleaners require strict safety adherence. Know your bottles, emergency eyewash stations, and the #1 safety law.
+            </p>
+
+            <!-- The 3 Core Chemical Laws -->
+            <div class="info-card" style="border-top: 6px solid var(--brand-red);">
+                <div class="card-header-bar" style="color: var(--dark-red);">🚨 The #1 Chemical Safety Rule: NEVER MIX CHEMICALS</div>
+                <p style="font-family: 'Compact', sans-serif; font-size: 1.1rem; color: var(--crust-burnt); line-height: 1.4; margin: 0 0 1rem 0;">
+                    Mixing bleach with ammonia, vinegar, or other cleaners produces <strong>deadly toxic chloramine gas</strong>. Never combine cleaning chemicals in buckets, sinks, or spray bottles.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                    <div style="background: var(--crust-light); padding: 0.8rem; border-radius: 8px; border-left: 4px solid var(--brand-red);">
+                        <div style="font-family: 'Subhead2', sans-serif; font-size: 1rem; color: var(--dark-red);">1. Color-Coded Labels</div>
+                        <div style="font-family: 'Compact', sans-serif; font-size: 0.9rem; color: #64748b;">Only use labeled bottles for their designated chemical.</div>
+                    </div>
+                    <div style="background: var(--crust-light); padding: 0.8rem; border-radius: 8px; border-left: 4px solid var(--brand-blue);">
+                        <div style="font-family: 'Subhead2', sans-serif; font-size: 1rem; color: var(--dark-blue);">2. Eye Wash Station</div>
+                        <div style="font-family: 'Compact', sans-serif; font-size: 0.9rem; color: #64748b;">Flush eyes continuously for 15 minutes if splashed.</div>
+                    </div>
+                    <div style="background: var(--crust-light); padding: 0.8rem; border-radius: 8px; border-left: 4px solid #16a34a;">
+                        <div style="font-family: 'Subhead2', sans-serif; font-size: 1rem; color: #15803d;">3. SDS Binder Location</div>
+                        <div style="font-family: 'Compact', sans-serif; font-size: 0.9rem; color: #64748b;">Safety Data Sheets are kept at the manager station.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hand vs Surface Sanitizer Warning -->
+            <div style="background: #fffbeb; border: 2px solid #f59e0b; border-radius: 10px; padding: 1.2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 15px;">
+                <div style="font-size: 2.5rem;">⚠️</div>
+                <div>
+                    <div style="font-family: 'Subhead1', sans-serif; font-size: 1.1rem; color: #b45309; text-transform: uppercase;">
+                        Do Not Use Surface Sanitizer on Hands
+                    </div>
+                    <div style="font-family: 'Compact', sans-serif; font-size: 1rem; color: #78350f; line-height: 1.3;">
+                        Quaternary ammonium sanitizer from the 3-compartment sink or spray bottles is strictly for food-contact equipment and counters—never for washing or sanitizing hands.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- STEP 5: STORE CHORE BOARD & SHIFT ROUTINES -->
+        <!-- ========================================================================= -->
+        <div id="step-5" class="mod-step">
+            <h2 style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2rem; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; border-bottom: 3px solid var(--brand-red); padding-bottom: 6px;">
+                📋 The Chore Board: "If It Isn't Documented, It Didn't Happen"
+            </h2>
+            <p style="font-family: 'Compact', sans-serif; font-size: 1.15rem; color: var(--crust-deep); margin-bottom: 1.25rem; line-height: 1.4;">
+                A great shift doesn't happen by accident. Learn how Team WOW uses the daily chore board to maintain 5-star OA store cleanliness.
+            </p>
+
+            <!-- Coach Bobby Audio Bar -->
+            <div class="coach-bar">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="coach-pill">🎙️ Coach Bobby</div>
+                    <div>
+                        <div style="font-family: 'Subhead1', sans-serif; font-size: 1.05rem; color: var(--dark-blue); text-transform: uppercase;">The Chore Board & Accountability</div>
+                        <div style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;" id="audio-time-s5">0:00 / 0:34</div>
+                    </div>
+                </div>
+                <button class="play-btn" id="btn-play-s5" onclick="toggleAudio('audio-bobby-chore')">
+                    ▶ Play Coaching Tape
+                </button>
+            </div>
+            <audio id="audio-bobby-chore" src="../resources/Day2_audio/Bobby_day_2_Chore_Board.mp3" preload="auto"></audio>
+
+            <!-- Chore Board Interactive Graphic -->
+            <div class="info-card" style="text-align: center;">
+                <div class="card-header-bar">📌 Team WOW Daily Station Responsibilities</div>
+                <img src="../resources/Image_Guides/team_wow_chore_board.png" alt="Team Wow Chore Board" style="max-width: 100%; height: auto; border: 2px solid var(--crust-med); border-radius: 8px; margin-bottom: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; text-align: left;">
+                    <div style="background: var(--crust-light); padding: 0.8rem; border-radius: 8px;">
+                        <div style="font-family: 'Subhead2', sans-serif; color: var(--brand-blue);">1. Task Assignment</div>
+                        <div style="font-family: 'Compact', sans-serif; font-size: 0.9rem; color: #475569;">Check your assigned station (Makeline, Dish Pit, Lobby, Cut Table).</div>
+                    </div>
+                    <div style="background: var(--crust-light); padding: 0.8rem; border-radius: 8px;">
+                        <div style="font-family: 'Subhead2', sans-serif; color: var(--brand-blue);">2. Complete & Initial</div>
+                        <div style="font-family: 'Compact', sans-serif; font-size: 0.9rem; color: #475569;">Always write your initials next to completed duties.</div>
+                    </div>
+                    <div style="background: var(--crust-light); padding: 0.8rem; border-radius: 8px;">
+                        <div style="font-family: 'Subhead2', sans-serif; color: var(--brand-blue);">3. Shift Handoff</div>
+                        <div style="font-family: 'Compact', sans-serif; font-size: 0.9rem; color: #475569;">Restock and clean your station before passing it to the next shift runner.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- STEP 6: COACH BOBBY'S RALLY & SANITATION MASTERY QUIZ -->
+        <!-- ========================================================================= -->
+        <div id="step-6" class="mod-step">
+            <h2 style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2rem; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; border-bottom: 3px solid var(--brand-red); padding-bottom: 6px;">
+                🏆 Sanitation Mastery Check
+            </h2>
+            <p style="font-family: 'Compact', sans-serif; font-size: 1.15rem; color: var(--crust-deep); margin-bottom: 1.25rem; line-height: 1.4;">
+                Listen to Coach Bobby's rally, then lock in your 100% score to unlock Experience 1 (In-Person Cleaning Tour).
+            </p>
+
+            <!-- Coach Bobby Audio Bar -->
+            <div class="coach-bar">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="coach-pill">🎙️ Coach Bobby</div>
+                    <div>
+                        <div style="font-family: 'Subhead1', sans-serif; font-size: 1.05rem; color: var(--dark-blue); text-transform: uppercase;">The Team WOW Way — Rally</div>
+                        <div style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;" id="audio-time-s6">0:00 / 0:25</div>
+                    </div>
+                </div>
+                <button class="play-btn" id="btn-play-s6" onclick="toggleAudio('audio-bobby-rally')">
+                    ▶ Play Coaching Tape
+                </button>
+            </div>
+            <audio id="audio-bobby-rally" src="../resources/Day2_audio/Bobby_day_2_Team_Wow_Way.mp3" preload="auto"></audio>
+
+            <!-- Quiz Container -->
+            <div class="info-card" id="quiz-container">
+                <div class="card-header-bar">📝 Day 2 Module 2 Knowledge Check</div>
+                <div id="quiz-question-box">
+                    <div id="quiz-q-text" style="font-family: 'Subhead1', sans-serif; font-size: 1.2rem; color: var(--dark-blue); margin-bottom: 1rem;">
+                        <!-- Injected via JS -->
+                    </div>
+                    <div id="quiz-options-list">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <div id="quiz-summary-box" style="display: none; text-align: center; padding: 2rem 1rem;">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎉</div>
+                    <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2rem; margin: 0 0 0.5rem 0;">MODULE 2 COMPLETE!</h3>
+                    <p style="font-family: 'Compact', sans-serif; font-size: 1.15rem; color: var(--crust-deep); margin-bottom: 1.5rem;">
+                        You have mastered Domino's sanitation, 3-compartment sink setup, and chemical safety rules. You are now authorized for <strong>Experience 1: Hands-on Cleaning Tour with your Trainer</strong>!
+                    </p>
+                    <a href="../lms_dashboard.html#day2" class="btn" style="text-decoration: none;">
+                        Return to Day 2 Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- UNIFIED CLASSROOM FOOTER -->
+    <!-- ========================================================================= -->
+    <div class="classroom-footer" style="padding: 0.85rem 2rem; position: fixed; bottom: 0; left: 0; right: 0; z-index: 99; background: #ffffff; border-top: 2px solid var(--crust-med); box-shadow: 0 -4px 12px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center;">
+        <button class="btn btn-outline" id="btn-prev" onclick="changeStep(-1)" style="visibility: hidden;">
+            &#8592; Previous
+        </button>
+        <span id="footer-checkpoint" style="font-family: 'Subhead2', sans-serif; font-size: 0.95rem; color: var(--crust-deep); text-transform: uppercase; letter-spacing: 0.5px;">
+            Checkpoint 1 of 6: Handwashing Standard
+        </span>
+        <button class="btn" id="btn-next" onclick="changeStep(1)">
+            Next Step &#8594;
+        </button>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 6;
+
+        const checkpoints = [
+            "Checkpoint 1 of 6: Handwashing Standard",
+            "Checkpoint 2 of 6: Glove Protocol & RTE Food",
+            "Checkpoint 3 of 6: 3-Compartment Sink & PPM",
+            "Checkpoint 4 of 6: Chemical Safety & SDS",
+            "Checkpoint 5 of 6: The Chore Board",
+            "Checkpoint 6 of 6: Sanitation Mastery Check"
+        ];
+
+        function changeStep(delta) {
+            // Stop any currently playing audio
+            document.querySelectorAll('audio').forEach(a => { a.pause(); });
+            document.querySelectorAll('.play-btn').forEach(b => {
+                if (b.innerText.includes('Pause')) b.innerHTML = '▶ Play Coaching Tape';
+            });
+
+            const next = currentStep + delta;
+            if (next < 1 || next > totalSteps) return;
+
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            currentStep = next;
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+
+            // Update header & footer indicators
+            document.getElementById('step-counter').innerText = `Step ${currentStep} of ${totalSteps}`;
+            document.getElementById('footer-checkpoint').innerText = checkpoints[currentStep - 1];
+
+            document.getElementById('btn-prev').style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+            document.getElementById('btn-next').style.display = currentStep === totalSteps ? 'none' : 'inline-block';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* --- AUDIO CONTROLLER --- */
+        function toggleAudio(id) {
+            const audio = document.getElementById(id);
+            if (!audio) return;
+            const btn = audio.previousElementSibling?.querySelector('.play-btn') || document.querySelector(`[onclick*="${id}"]`);
+
+            if (audio.paused) {
+                document.querySelectorAll('audio').forEach(a => { if (a !== audio) a.pause(); });
+                document.querySelectorAll('.play-btn').forEach(b => {
+                    if (b !== btn) b.innerHTML = '▶ Play Coaching Tape';
+                });
+                audio.play();
+                if (btn) btn.innerHTML = '⏸ Pause Coaching Tape';
+            } else {
+                audio.pause();
+                if (btn) btn.innerHTML = '▶ Play Coaching Tape';
+            }
+
+            audio.ontimeupdate = () => {
+                const cur = formatTime(audio.currentTime);
+                const dur = formatTime(audio.duration || 0);
+                const timeEl = audio.previousElementSibling?.querySelector('[id^="audio-time-"]');
+                if (timeEl) timeEl.innerText = `${cur} / ${dur}`;
+            };
+
+            audio.onended = () => {
+                if (btn) btn.innerHTML = '▶ Replay Coaching Tape';
+            };
+        }
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        /* --- PPM TEST STRIP SIMULATOR --- */
+        let ppmTesting = false;
+        function runPpmTest() {
+            if (ppmTesting) return;
+            ppmTesting = true;
+
+            const strip = document.getElementById('virtual-strip');
+            const pad = document.getElementById('strip-pad');
+            const timerEl = document.getElementById('test-timer');
+            const btn = document.getElementById('btn-run-ppm');
+            const resultBox = document.getElementById('ppm-result-box');
+
+            btn.disabled = true;
+            btn.style.opacity = '0.6';
+            resultBox.style.display = 'none';
+
+            strip.classList.add('submerged');
+            pad.classList.add('testing');
+
+            let countdown = 10;
+            timerEl.innerText = `Holding still in solution: ${countdown}s (Do NOT swish!)`;
+
+            const interval = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    timerEl.innerText = `Holding still in solution: ${countdown}s (Do NOT swish!)`;
+                } else {
+                    clearInterval(interval);
+                    timerEl.innerText = `Test Complete — 10 Seconds Immersed`;
+                    strip.classList.remove('submerged');
+                    resultBox.style.display = 'block';
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                    btn.innerText = '🔄 Test Again';
+                    ppmTesting = false;
+                }
+            }, 1000);
+        }
+
+        /* --- SANITATION MASTERY QUIZ --- */
+        const quizQuestions = [
+            {
+                q: "What is the minimum amount of time team members must scrub their hands with soap and warm water?",
+                options: [
+                    "5 seconds with hot water",
+                    "20 seconds with soap covering all hand and wrist surfaces",
+                    "60 seconds only if handling money",
+                    "Hand sanitizer replaces soap scrubbing"
+                ],
+                correct: 1
+            },
+            {
+                q: "Under Domino's OA standards, can hand sanitizer be used in place of handwashing with soap and water?",
+                options: [
+                    "Yes, whenever the makeline is busy",
+                    "Yes, if wearing food-grade gloves",
+                    "No, hand sanitizer is never a replacement for proper handwashing",
+                    "Yes, during morning opening prep only"
+                ],
+                correct: 2
+            },
+            {
+                q: "When must food-grade gloves be worn under Domino's food safety standards?",
+                options: [
+                    "Only when taking trash outside",
+                    "Whenever portioning Ready-To-Eat (RTE) prep foods and touching post-bake items at the cut table",
+                    "Gloves are completely optional if you wash your hands every hour",
+                    "Only when drivers return from a delivery run"
+                ],
+                correct: 1
+            },
+            {
+                q: "What are the required temperatures for the 3-compartment sink setup?",
+                options: [
+                    "Wash: 75°F, Rinse: 75°F, Sanitize: 140°F",
+                    "Wash: 110°F–120°F (Hot Soapy), Rinse: 110°F–120°F (Clean Warm), Sanitize: 75°F (Room Temp)",
+                    "All three sinks must be boiling water at 212°F",
+                    "Wash: Cold water, Rinse: Cold water, Sanitize: Hot water"
+                ],
+                correct: 1
+            },
+            {
+                q: "How should a sanitizer test strip be immersed when testing the 3-compartment sink or red sani-buckets?",
+                options: [
+                    "Swished vigorously in circles for 30 seconds",
+                    "Held completely still in one place for 10 seconds without stirring",
+                    "Dipped for 1 second and shaken dry in the air",
+                    "Placed in direct hot boiling water"
+                ],
+                correct: 1
+            },
+            {
+                q: "What is the #1 safety rule regarding store cleaning chemicals?",
+                options: [
+                    "Mix bleach and ammonia to create extra strong degreaser",
+                    "Never mix chemicals together, as combining them creates lethal toxic fumes",
+                    "Store chemicals next to pizza dough for easy access",
+                    "Use surface sanitizer as hand soap when the dispenser is empty"
+                ],
+                correct: 1
+            }
+        ];
+
+        let curQIdx = 0;
+        function renderQuiz() {
+            if (curQIdx >= quizQuestions.length) {
+                document.getElementById('quiz-question-box').style.display = 'none';
+                document.getElementById('quiz-summary-box').style.display = 'block';
+                return;
+            }
+            const q = quizQuestions[curQIdx];
+            document.getElementById('quiz-q-text').innerText = `Question ${curQIdx + 1} of ${quizQuestions.length}: ${q.q}`;
+            const optsContainer = document.getElementById('quiz-options-list');
+            optsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-opt';
+                btn.innerHTML = `<span style="font-weight: bold; color: var(--brand-blue);">${String.fromCharCode(65 + idx)}.</span> <span>${opt}</span>`;
+                btn.onclick = () => selectQuizOpt(btn, idx, q.correct);
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        function selectQuizOpt(btn, selected, correct) {
+            const allOpts = document.querySelectorAll('.quiz-opt');
+            allOpts.forEach(o => o.disabled = true);
+
+            if (selected === correct) {
+                btn.classList.add('correct');
+                setTimeout(() => {
+                    curQIdx++;
+                    renderQuiz();
+                }, 1200);
+            } else {
+                btn.classList.add('incorrect');
+                allOpts[correct].classList.add('correct');
+                setTimeout(() => {
+                    curQIdx++;
+                    renderQuiz();
+                }, 2000);
+            }
+        }
+
+        // Initialize quiz on load
+        renderQuiz();
+    </script>
+</body>
+</html>
