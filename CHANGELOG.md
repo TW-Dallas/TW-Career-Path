@@ -8,6 +8,13 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 *Scheduled: Thursday @ 9:00 AM CST/CDT (Compiled @ 5:00 AM CST/CDT)*
 
 ### 🍕 Fresh Out of the Oven (New Features & Content)
+* **Day 2 Module 2: Cleaning, Chemical Safety & Sanitation:** Rolled out the comprehensive 6-step sanitation module directly aligned with official Domino's Operations Assessment (OA) standards:
+  * **The 5-Step Handwashing Process:** Features Coach Bobby's audio coaching, visual step ladder (Wet, Soap & Scrub 20s, Rinse, Dry, Paper Towel Faucet Shutoff), and strict OA guidelines (*Hand sanitizer is NEVER a replacement for handwashing*).
+  * **Glove Standards & Ready-To-Eat (RTE) Food Boundaries:** Strict rules on no-bare-hand contact for prepped bagging ingredients and cut-table post-bake items, artificial/painted nail policies, and The Golden Rule (*Hands washed and dried before donning clean gloves*).
+  * **3-Compartment Sink & Interactive PPM Test Strip Lab:** Audio breakdown with Coach Mike, exact water temperatures (**110°F–120°F Wash/Rinse** vs **75°F Sanitize**), 60-second contact time, air-dry only policy, and a **10-second interactive virtual test strip simulator** matching the 200 PPM target.
+  * **Chemical Safety & SDS Protocols:** Features Coach Mike's audio on the **#1 Chemical Law** (*NEVER mix chemicals / toxic chloramine gas prevention*), 15-minute emergency eyewash station flush, and manager SDS binder locations.
+  * **The Store Chore Board:** Coach Bobby's accountability breakdown (*"If it isn't documented and initialed, it didn't happen"*) with the official Team WOW daily station chore chart.
+  * **Sanitation Mastery Knowledge Check:** 6-question randomized OA mastery check authorizing trainees for in-person **Experience 1 (Hands-on Cleaning Tour)**.
 * **Day 2 Module 1: The Art of Customer Recovery & The Q-TIP Game Plan:** Rolled out the first interactive module of Day 2 training! Features:
   * **Coach Mike's Pre-Game Huddle:** High-definition Coach Mike audio & visual playbook teaching the essential **Q-TIP** mindset (*Quit Taking It Personally!*) and the "Hungry + Angry = Hangry" customer recovery formula.
   * **Interactive Film Studies (Scouting the Tape):** Trainees listen to real Winning Plays vs. Defensive Fumbles side-by-side (handling wrong toppings and late deliveries), breaking down what works and taking physical notes in their workbook.
@@ -23,7 +30,9 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Module 5 Clarification & Day 1 Progress:** Clarified Card 5 production status on the Day 1 dashboard so trainees receive a clean 100% completion badge upon finishing active Modules 1–4.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
-* **Master Typography Harmonization:** Standardized all headers, badges, and reading copy across modules to strictly follow the official Domino's Master Typography hierarchy (Dominos Sans Header 1, Header 2, Subhead 1, Subhead 2, Compact, and Condensed).
+* **Master Days Lobby Status Clarity (Day 2 & Day 3):** Updated the Day 2 and Day 3 cards in the master lobby with amber **`COMING SOON • In Production`** badges and disabled buttons to eliminate confusion for trainees completing Day 1.
+* **Audio Completion Gating & Button Disabled Hardening:** Hardened disabled buttons across all modules with `pointer-events: none` and bound native HTML `disabled` properties so trainees must complete 100% of required audio before advancing.
+* **Master Typography Harmonization & Navigation Polish:** Standardized all headers, badges, and top-navigation `← Back` links across modules and dashboards to strictly follow the official Domino's Master Typography hierarchy (Dominos Sans Header 1, Header 2, Subhead 1, Subhead 2, Compact, and Condensed).
 * **Strict Store Device Lockout Policy:** Enhanced the system-wide mobile detection to enforce that training is completed strictly on approved in-store computers and store tablets, preventing unauthorized training attempts on personal cell phones.
 * **Streamlined Single-Button Module Navigation:** Replaced dual-click prompts with single unified bottom-footer navigation that automatically unlocks as trainees complete 100% of required coaching audio.
 * **Team WOW Animated Stream Loader & Auto-Retry Watchdog:** Replaced blank black video boxes with a custom animated Team WOW breathing-glow loader and a 7-second connection watchdog with a 1-tap retry button to automatically recover from slow store Wi-Fi or packet loss.
@@ -38,7 +47,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Weekly New Hire Training Adoption Reporting:** Developing executive reporting to track and compare weekly new hires per market (from the Staffing Tracker) against active Wow Way training participation and completions to measure onboarding compliance.
 * **Virtual MIT Classes Link (All Stores):** Adding a direct signup and schedule link on the main Career Path page for virtual MIT classes accessible across all store locations.
 * **Final Day 1 Summary Video & Master Certification Quiz (Module 5):** Finalizing Coach Bobby's Day 1 post-game wrap-up video and the comprehensive final Day 1 sign-off quiz.
-* **Day 2 Module 2 & 3 (Delivery Safety & Makeline Basics):** Building out the next interactive modules for Day 2!
+* **Day 2 Module 3 (Delivery Safety & Makeline Basics):** Building out the specialized driver and CSR tracks for Day 2!
 
 ### 💡 Store Pro-Tip of the Week
 * **The Q-TIP Rule for Shift Runners:** When a hungry customer calls with a problem, remember **Q-TIP: Quit Taking It Personally!** Their frustration isn't about you—it's about their missing dinner. Staying calm, taking immediate ownership with empathy, and making it right with a priority remake or generous credit turns an upset customer into a loyal regular for life.
