@@ -536,7 +536,11 @@
             if (btn) btn.innerText = "▶";
             coachAudioFinished = true;
             step1Passed = true;
-            document.getElementById('btn-next').classList.remove('btn-disabled');
+            const nextBtn = document.getElementById('btn-next');
+            if (nextBtn) {
+                nextBtn.classList.remove('btn-disabled');
+                nextBtn.disabled = false;
+            }
         }
 
         function toggleExAudio(key) {
@@ -562,14 +566,26 @@
             if (key === 'ex1-bad') step2BadFinished = true;
             if (step2GoodFinished && step2BadFinished) {
                 step2Passed = true;
-                if (currentStep === 2) document.getElementById('btn-next').classList.remove('btn-disabled');
+                if (currentStep === 2) {
+                    const nextBtn = document.getElementById('btn-next');
+                    if (nextBtn) {
+                        nextBtn.classList.remove('btn-disabled');
+                        nextBtn.disabled = false;
+                    }
+                }
             }
 
             if (key === 'ex2-good') step3GoodFinished = true;
             if (key === 'ex2-bad') step3BadFinished = true;
             if (step3GoodFinished && step3BadFinished) {
                 step3Passed = true;
-                if (currentStep === 3) document.getElementById('btn-next').classList.remove('btn-disabled');
+                if (currentStep === 3) {
+                    const nextBtn = document.getElementById('btn-next');
+                    if (nextBtn) {
+                        nextBtn.classList.remove('btn-disabled');
+                        nextBtn.disabled = false;
+                    }
+                }
             }
         }
 
@@ -1023,8 +1039,7 @@
         function changeStep(direction) {
             pauseAllAudio();
 
-            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
-            if (direction === 1 && !isAdmin) {
+            if (direction === 1) {
                 if (currentStep === 1 && !step1Passed) return;
                 if (currentStep === 2 && !step2Passed) return;
                 if (currentStep === 3 && !step3Passed) return;
@@ -1037,8 +1052,6 @@
         }
 
         function updateUI() {
-            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
-
             document.getElementById('step1-container').classList.add('hidden');
             document.getElementById('step2-container').classList.add('hidden');
             document.getElementById('step3-container').classList.add('hidden');
@@ -1059,23 +1072,33 @@
             if (currentStep === 1) {
                 document.getElementById('step1-container').classList.remove('hidden');
                 btnBack.classList.add('hidden');
-                if (!step1Passed && !isAdmin) btnNext.classList.add('btn-disabled');
+                btnNext.disabled = !step1Passed;
+                if (!step1Passed) btnNext.classList.add('btn-disabled');
+                else btnNext.classList.remove('btn-disabled');
             } 
             else if (currentStep === 2) {
                 document.getElementById('step2-container').classList.remove('hidden');
-                if (!step2Passed && !isAdmin) btnNext.classList.add('btn-disabled');
+                btnNext.disabled = !step2Passed;
+                if (!step2Passed) btnNext.classList.add('btn-disabled');
+                else btnNext.classList.remove('btn-disabled');
             } 
             else if (currentStep === 3) {
                 document.getElementById('step3-container').classList.remove('hidden');
-                if (!step3Passed && !isAdmin) btnNext.classList.add('btn-disabled');
+                btnNext.disabled = !step3Passed;
+                if (!step3Passed) btnNext.classList.add('btn-disabled');
+                else btnNext.classList.remove('btn-disabled');
             }
             else if (currentStep === 4) {
                 document.getElementById('step4-container').classList.remove('hidden');
-                if (!step4Passed && !isAdmin) btnNext.classList.add('btn-disabled');
+                btnNext.disabled = !step4Passed;
+                if (!step4Passed) btnNext.classList.add('btn-disabled');
+                else btnNext.classList.remove('btn-disabled');
             }
             else if (currentStep === 5) {
                 document.getElementById('step5-container').classList.remove('hidden');
-                if (!step5Passed && !isAdmin) btnNext.classList.add('btn-disabled');
+                btnNext.disabled = !step5Passed;
+                if (!step5Passed) btnNext.classList.add('btn-disabled');
+                else btnNext.classList.remove('btn-disabled');
             }
             else if (currentStep === 6) {
                 document.getElementById('step6-container').classList.remove('hidden');
