@@ -269,17 +269,9 @@
         // --- MODULE VIDEOS CONFIGURATION ---
         const moduleVideos = [
             {
-                id: '1219789245',
-                title: '1. Customer Service and LEADS',
-                desc: 'Mastering the game plan for world-class service & the LEADS playbook.',
-                completed: false,
-                maxTimeWatched: 0,
-                thumb: '../resources/Title_Slides/Service_Title.png'
-            },
-            {
                 id: '1215101422',
                 h: 'f7739fa5df', 
-                title: '2. Store Image',
+                title: '1. Store Image',
                 desc: 'Maintaining the field for the win.',
                 completed: false,
                 maxTimeWatched: 0,
@@ -288,7 +280,7 @@
             {
                 id: '1215101559',
                 h: '562113022c', 
-                title: '3. Perfect Image',
+                title: '2. Perfect Image',
                 desc: 'Suiting up for success.',
                 completed: false,
                 maxTimeWatched: 0,
@@ -296,7 +288,7 @@
             },
             {
                 id: '1220730023',
-                title: '4. Uniform Guidelines',
+                title: '3. Uniform Guidelines',
                 desc: 'Wearing the game day jersey with pride.',
                 completed: false,
                 maxTimeWatched: 0,
@@ -305,7 +297,7 @@
             {
                 id: '1215101421',
                 h: 'fc5965dadb', 
-                title: '5. Hustle Mentality',
+                title: '4. Hustle Mentality',
                 desc: 'Take pride in the huddle & the hustle.',
                 completed: false,
                 maxTimeWatched: 0,
@@ -314,7 +306,7 @@
             {
                 id: '1215119848',
                 h: 'b397fb626d', 
-                title: '6. Talking Tone',
+                title: '5. Talking Tone',
                 desc: 'Using the equipment that isn\'t tangible.',
                 completed: false,
                 maxTimeWatched: 0,
@@ -323,11 +315,19 @@
             {
                 id: '1215101650',
                 h: '39fb26a631', 
-                title: '7. Play Hard, Play Well',
+                title: '6. Play Hard, Play Well',
                 desc: 'Running the plays with skill & efficiency.',
                 completed: false,
                 maxTimeWatched: 0,
                 thumb: '../resources/Title_Slides/Operations_Title.png'
+            },
+            {
+                id: '1219789245',
+                title: '7. Customer Service and LEADS',
+                desc: 'Mastering the game plan for world-class service & the LEADS playbook.',
+                completed: false,
+                maxTimeWatched: 0,
+                thumb: '../resources/Title_Slides/Service_Title.png'
             }
         ];
 
@@ -525,8 +525,9 @@
             const isLookBookDone = uniformParts.lookbook;
 
             const allThreeDone = isVideoDone && isPosterDone && isLookBookDone;
-            if (moduleVideos && moduleVideos[3]) {
-                moduleVideos[3].completed = allThreeDone;
+            const uVid = moduleVideos.find(v => v.id === '1220730023');
+            if (uVid) {
+                uVid.completed = allThreeDone;
             }
 
             saveUniformPartsProgress();
@@ -549,6 +550,7 @@
 
         function loadModule2VideoProgress() {
             try {
+                const uVid = moduleVideos.find(v => v.id === '1220730023');
                 // Support URL bypasses for instant debugging or skipping: ?unlock=all or ?unlock=4 or ?skip4=true
                 const urlParams = new URLSearchParams(window.location.search);
                 if (urlParams.get('unlock') === 'all') {
@@ -559,8 +561,8 @@
                     saveModule2VideoProgress();
                     saveUniformPartsProgress();
                     return;
-                } else if (urlParams.get('unlock') === '4' || urlParams.get('skip4') === 'true') {
-                    if (moduleVideos[3]) moduleVideos[3].completed = true;
+                } else if (urlParams.get('unlock') === '4' || urlParams.get('unlock') === '3' || urlParams.get('skip4') === 'true') {
+                    if (uVid) uVid.completed = true;
                     uniformParts.video = true;
                     uniformParts.lookbook = true;
                     uniformParts.posterItems = ['shirts', 'aprons', 'bracelets', 'shoes', 'hats', 'piercings', 'nails', 'bottoms', 'jackets', 'facial-hair'];
@@ -573,16 +575,16 @@
                     const completedIndices = JSON.parse(saved);
                     if (Array.isArray(completedIndices)) {
                         completedIndices.forEach(idx => {
-                            if (moduleVideos[idx] && idx !== 3) {
+                            if (moduleVideos[idx] && moduleVideos[idx].id !== '1220730023') {
                                 moduleVideos[idx].completed = true;
                             }
                         });
                     }
                 }
 
-                // Card 4 completion is verified against actual uniformParts
-                if (moduleVideos && moduleVideos[3]) {
-                    moduleVideos[3].completed = (uniformParts.video && uniformParts.lookbook && uniformParts.posterItems.length >= 10);
+                // Card 3 completion is verified against actual uniformParts
+                if (uVid) {
+                    uVid.completed = (uniformParts.video && uniformParts.lookbook && uniformParts.posterItems.length >= 10);
                 }
             } catch(e) {}
         }
@@ -753,8 +755,8 @@
 
                 const isBtnDisabled = !isUnlocked || video.isUnderMaintenance;
 
-                // SPECIAL CARD 4: UNIFORM GUIDELINES (3-PART REQUIREMENT)
-                if (index === 3) {
+                // SPECIAL CARD: UNIFORM GUIDELINES (3-PART REQUIREMENT)
+                if (video.id === '1220730023') {
                     const isVideoDone = uniformParts.video;
                     const isPosterDone = uniformParts.posterItems.length >= 10;
                     const isLookBookDone = uniformParts.lookbook;
@@ -789,7 +791,7 @@
 
                                 <div style="display: flex; flex-direction: column; gap: 6px;">
                                     <button class="btn ${isBtnDisabled ? 'disabled' : ''}" 
-                                            onclick="${isBtnDisabled ? '' : `openVideoModal(3)`}" 
+                                            onclick="${isBtnDisabled ? '' : `openVideoModal(${index})`}" 
                                             ${isBtnDisabled ? 'disabled' : ''}
                                             style="width: 100%; padding: 0.55rem 1rem; font-size: 0.95rem;">
                                         ${isVideoDone ? 'Rewatch Video' : '🎬 Watch Video'}
@@ -873,8 +875,10 @@
             player.on('timeupdate', function(data) {
                 if (isEnforcingHold) return;
 
-                // --- VIDEO 2 INTERACTIVE EXERCISES ---
-                if (activeVideoIndex === 1) {
+                const currentVid = moduleVideos[activeVideoIndex];
+
+                // --- STORE IMAGE (ID: 1215101422) INTERACTIVE EXERCISES ---
+                if (currentVid && currentVid.id === '1215101422') {
                     // EXERCISE 1: Lobby Check at 3:20 (200 seconds)
                     if (data.seconds >= 200 && !stage1Triggered) {
                         stage1Triggered = true;
