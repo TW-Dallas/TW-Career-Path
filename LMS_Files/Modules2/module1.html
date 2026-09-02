@@ -36,9 +36,9 @@
         </div>
     </header>
 
-    <div class="classroom-container-wide" style="max-width: 960px; margin: 0.4rem auto;">
+    <div class="classroom-container-wide" style="max-width: 960px; margin: 0.4rem auto; overflow: hidden;">
         
-        <div class="classroom-content" style="padding: 0.85rem 1.5rem 0.65rem 1.5rem; min-height: auto; justify-content: flex-start;">
+        <div class="classroom-content" style="padding: 0.75rem 1.25rem 0.75rem 1.25rem; min-height: auto; justify-content: flex-start;">
             
             <!-- ======================================================== -->
             <!-- STEP 1: COACH MIKE'S PRE-GAME HUDDLE (THE Q-TIP MINDSET) -->
@@ -291,12 +291,12 @@
                 </div>
 
                 <!-- 2-Column Workspace (Left: Audio + Transcript | Right: Checkpoint Question Engine) -->
-                <div style="display: grid; grid-template-columns: 1.05fr 1fr; gap: 1rem; align-items: stretch;">
+                <div style="display: grid; grid-template-columns: 1.05fr 1fr; gap: 1rem; align-items: stretch; margin-bottom: 0.25rem;">
                     
                     <!-- Left: Audio Player + Synchronized Transcript Feed -->
-                    <div style="display: flex; flex-direction: column; gap: 0.45rem; height: 100%;">
+                    <div style="display: flex; flex-direction: column; gap: 0.45rem; box-sizing: border-box;">
                         <!-- Call 1 Player Card (Sized to match transcript) -->
-                        <div class="audio-player-pill" style="margin-bottom: 0; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.35rem 0.65rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.03); flex-shrink: 0;">
+                        <div class="audio-player-pill" style="margin-bottom: 0; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.35rem 0.65rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.03); flex-shrink: 0; box-sizing: border-box;">
                             <button type="button" class="audio-play-btn" id="call1-play-btn" onclick="toggleCall1Audio()" style="width: 30px; height: 30px; font-size: 0.88rem;">▶</button>
                             
                             <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;">
@@ -317,7 +317,7 @@
                         </div>
 
                         <!-- Transcript Box (Fills full height of container) -->
-                        <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 0.5rem 0.75rem; text-align: left; flex-grow: 1; display: flex; flex-direction: column; min-height: 0;">
+                        <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 0.5rem 0.75rem; text-align: left; flex-grow: 1; display: flex; flex-direction: column; min-height: 0; box-sizing: border-box;">
                             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--crust-med); padding-bottom: 0.25rem; margin-bottom: 0.35rem; flex-shrink: 0;">
                                 <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--dark-blue); text-transform: uppercase;">Live Transcript</strong>
                                 <span style="font-family: 'Compact', sans-serif; font-size: 0.78rem; color: #64748b;">Auto-Scrolls with Audio</span>
@@ -329,7 +329,7 @@
                     </div>
 
                     <!-- Right: Dynamic Checkpoint Question Engine (Even with top of audio player) -->
-                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 8px; padding: 0.65rem 0.85rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 6px rgba(0,0,0,0.03); height: 100%;">
+                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 8px; padding: 0.65rem 0.85rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 6px rgba(0,0,0,0.03); box-sizing: border-box;">
                         <div>
                             <p id="call1-cp-badge" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; color: var(--brand-blue); font-size: 1.15rem; margin: 0 0 0.25rem 0; text-transform: uppercase; letter-spacing: 0.5px;">
                                 🎯 LEADS Checkpoint 1 of 4: Listen & Empathize
@@ -370,12 +370,12 @@
                 </div>
 
                 <!-- 2-Column Workspace (Left: Audio + Transcript | Right: Decision Question Engine) -->
-                <div style="display: grid; grid-template-columns: 1.05fr 1fr; gap: 1rem; align-items: stretch;">
+                <div style="display: grid; grid-template-columns: 1.05fr 1fr; gap: 1rem; align-items: stretch; margin-bottom: 0.25rem;">
                     
                     <!-- Left: Audio Player + Synchronized Transcript Feed -->
-                    <div style="display: flex; flex-direction: column; gap: 0.45rem; height: 100%;">
+                    <div style="display: flex; flex-direction: column; gap: 0.45rem; height: 100%; box-sizing: border-box;">
                         <!-- Call 2 Player Card (Sized to match transcript) -->
-                        <div class="audio-player-pill" style="margin-bottom: 0; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.35rem 0.65rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.03); flex-shrink: 0;">
+                        <div class="audio-player-pill" style="margin-bottom: 0; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.35rem 0.65rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.03); flex-shrink: 0; box-sizing: border-box;">
                             <button type="button" class="audio-play-btn" id="call2-play-btn" onclick="toggleCall2Audio()" style="width: 30px; height: 30px; font-size: 0.88rem;">▶</button>
                             
                             <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;">
@@ -396,7 +396,7 @@
                         </div>
 
                         <!-- Transcript Box (Fills full height of container) -->
-                        <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 0.5rem 0.75rem; text-align: left; flex-grow: 1; display: flex; flex-direction: column; min-height: 0;">
+                        <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 0.5rem 0.75rem; text-align: left; flex-grow: 1; display: flex; flex-direction: column; min-height: 0; box-sizing: border-box;">
                             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--crust-med); padding-bottom: 0.25rem; margin-bottom: 0.35rem; flex-shrink: 0;">
                                 <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--dark-blue); text-transform: uppercase;">Live Transcript</strong>
                                 <span style="font-family: 'Compact', sans-serif; font-size: 0.78rem; color: #64748b;">Auto-Scrolls with Audio</span>
@@ -408,7 +408,7 @@
                     </div>
 
                     <!-- Right: Dynamic Multi-Decision Call the Shot Engine (Even with top of audio player) -->
-                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 8px; padding: 0.65rem 0.85rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 6px rgba(0,0,0,0.03); height: 100%;">
+                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 8px; padding: 0.65rem 0.85rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 6px rgba(0,0,0,0.03); box-sizing: border-box;">
                         <div>
                             <p id="call2-cp-badge" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; color: var(--brand-blue); font-size: 1.15rem; margin: 0 0 0.25rem 0; text-transform: uppercase; letter-spacing: 0.5px;">
                                 🎮 Call the Shot 1 of 3: Opening Recovery
