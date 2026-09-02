@@ -899,8 +899,7 @@
                 }
 
                 // Standard anti-scrubbing progress
-                const currentVid = moduleVideos[activeVideoIndex];
-                if (data.seconds > currentVid.maxTimeWatched) {
+                if (currentVid && data.seconds > currentVid.maxTimeWatched) {
                     currentVid.maxTimeWatched = data.seconds;
                 }
             });
