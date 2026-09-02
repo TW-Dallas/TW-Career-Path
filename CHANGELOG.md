@@ -15,7 +15,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Full Practice Orders in the POS Simulator (Live Order Practice):** Connected Stage 4 seamlessly into the Order Entry training flow, allowing new hires to practice realistic, full-speed live phone orders with customer audio, hold/rewind controls, complex toppings, sides, and shift evaluation scorecards.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
-* **Universal Headphone Audio Leveling (-16.0 LUFS):** Batch-calibrated and normalized all LMS audio and coaching tracks to standard broadcast levels, eliminating sudden volume spikes and making store headset listening comfortable and uniform.
+* **Balanced Headset Audio Across All Lessons:** Leveled the volume across every video and audio clip so trainees won't have to constantly fiddle with their headset volume or get blasted by sudden loud calls.
 * **Responsive Classroom Split-Screen Layouts:** Upgraded live transcript boxes to dynamic auto-expanding flex containers, ensuring seamless side-by-side reading with zero card border bleeds across store computers.
 * **Master Days Lobby Status Clarity (Day 2 & Day 3):** Updated the Day 2 and Day 3 cards in the master lobby with amber **`COMING SOON • In Production`** badges and disabled buttons to eliminate confusion for trainees completing Day 1.
 * **Audio Completion Gating & Button Disabled Hardening:** Hardened disabled buttons across all modules with `pointer-events: none` and bound native HTML `disabled` properties so trainees must complete 100% of required audio before advancing.
