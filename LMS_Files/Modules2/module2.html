@@ -729,6 +729,19 @@
             "Checkpoint 6 of 6: Sanitation Mastery Check"
         ];
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true' || urlParams.get('unlock') === 'all';
+        const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
+
+        window.unlockAll = function() {
+            const btnNext = document.getElementById('btn-next');
+            if (btnNext) {
+                btnNext.classList.remove('btn-disabled');
+                btnNext.disabled = false;
+            }
+            console.log("🔓 DEV MODE: Day 2 Module 2 unlocked!");
+        };
+
         function changeStep(delta) {
             // Stop any currently playing audio
             document.querySelectorAll('audio').forEach(a => { a.pause(); });

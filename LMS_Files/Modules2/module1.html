@@ -1159,15 +1159,16 @@
             }, 1200);
         }
 
-        // Executive bypass
-        if (localStorage.getItem('tw_admin_mode') === 'true') {
+        // Executive bypass & initialization
+        if (isAdmin) {
             step1Passed = true;
             step2Passed = true;
             step3Passed = true;
             step4Passed = true;
             step5Passed = true;
-            document.getElementById('btn-next').classList.remove('btn-disabled');
         }
+
+        updateUI();
 
         // Initialize dynamic live transcripts and first checkpoints
         renderTranscripts();

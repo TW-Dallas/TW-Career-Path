@@ -249,10 +249,25 @@
     </div>
 
     <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true' || urlParams.get('unlock') === 'all';
+        const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
+
         let currentStep = 1;
-        let reviewCompleted = false;
+        let reviewCompleted = isAdmin;
         let activeCard = 1;
         const totalCards = 4;
+
+        window.unlockAll = function() {
+            reviewCompleted = true;
+            quizPassed = true;
+            const btnNext = document.getElementById('btn-next');
+            if (btnNext) {
+                btnNext.classList.remove('btn-disabled');
+                btnNext.disabled = false;
+            }
+            console.log("🔓 DEV MODE: Day 2 Module 0 unlocked!");
+        };
 
         // Audio Handling
         function toggleAudio(cardNum) {
@@ -420,17 +435,18 @@
 
         function changeStep(direction) {
             pauseAllAudio();
-            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
             if (direction === 1 && !isAdmin) {
                 if (currentStep === 1 && !reviewCompleted) return;
-                if (currentStep === 2 && currentQuestionIndex < activeQuestions.length - 1) return;
+                if (currentStep === 2 && !quizPassed) {
+                    document.getElementById('quiz-feedback').style.display = 'block';
+                    return;
+                }
             }
             currentStep += direction;
             updateUI();
         }
 
         function updateUI() {
-            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
             document.getElementById('content-review').classList.add('hidden');
             document.getElementById('content-quiz').classList.add('hidden');
             document.getElementById('content-prompt').classList.add('hidden');
@@ -438,7 +454,7 @@
             const btnBack = document.getElementById('btn-back');
             const btnNext = document.getElementById('btn-next');
             const btnFinish = document.getElementById('btn-finish');
-
+            
             btnBack.classList.remove('hidden');
             btnNext.classList.remove('hidden');
             btnFinish.classList.add('hidden');
@@ -448,12 +464,24 @@
             if (currentStep === 1) {
                 document.getElementById('content-review').classList.remove('hidden');
                 btnBack.classList.add('hidden');
-                if (!reviewCompleted && !isAdmin) btnNext.classList.add('btn-disabled');
+                if (!reviewCompleted && !isAdmin) {
+                    btnNext.classList.add('btn-disabled');
+                    btnNext.disabled = true;
+                } else {
+                    btnNext.classList.remove('btn-disabled');
+                    btnNext.disabled = false;
+                }
             } 
             else if (currentStep === 2) {
                 document.getElementById('content-quiz').classList.remove('hidden');
                 initQuiz();
-                btnNext.classList.add('btn-disabled');
+                if (!quizPassed && !isAdmin) {
+                    btnNext.classList.add('btn-disabled');
+                    btnNext.disabled = true;
+                } else {
+                    btnNext.classList.remove('btn-disabled');
+                    btnNext.disabled = false;
+                }
             } 
             else if (currentStep === 3) {
                 document.getElementById('content-prompt').classList.remove('hidden');
@@ -494,9 +522,14 @@
         }
 
         // Initialize on load
-        if (localStorage.getItem('tw_admin_mode') === 'true') {
+        if (isAdmin) {
             reviewCompleted = true;
-            document.getElementById('btn-next').classList.remove('btn-disabled');
+            quizPassed = true;
+            const btnNext = document.getElementById('btn-next');
+            if (btnNext) {
+                btnNext.classList.remove('btn-disabled');
+                btnNext.disabled = false;
+            }
         }
     </script>
 </body>
