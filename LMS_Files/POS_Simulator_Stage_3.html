@@ -1314,22 +1314,20 @@
         }
 
         function endSimulation() {
-            // Immediately mark Module 4 as complete and record progress
-            localStorage.setItem('mod4_complete', 'true');
-            localStorage.removeItem('mod4_saved_stage');
-            sendProgressUpdate('Day 1 Mod 4', 'Completed');
+            // Save stage progression
+            localStorage.setItem('mod4_saved_stage', '4');
 
             posImage.src = "resources/POS_assets/Stage_3/POS_F.png"; 
             instructionText.innerHTML = `
                 <div style="padding: 4px 0;">
-                    <h3 style="color: var(--brand-blue); font-family: 'PizzaPress', sans-serif; font-size: 1.5rem; margin-top: 0; margin-bottom: 8px;">🎉 Module 4 Practice Complete!</h3>
+                    <h3 style="color: var(--brand-blue); font-family: 'PizzaPress', sans-serif; font-size: 1.5rem; margin-top: 0; margin-bottom: 8px;">🎉 Phone Training Complete!</h3>
                     <p style="font-size: 1rem; color: var(--crust-burnt); line-height: 1.4; margin-bottom: 16px;">
-                        <strong>Great job!</strong><br><br>
-                        You have successfully completed all Order Entry & Phone Simulator training stages. Your Module 4 completion has been saved!
+                        <strong>Outstanding job!</strong><br><br>
+                        You've completed phone order practice in Stage 3. Now let's put everything together in <strong>Stage 4: Evaluation & Full Live Practice</strong>!
                     </p>
-                    <div style="background: rgba(40, 167, 69, 0.08); border-left: 4px solid var(--brand-green); padding: 12px; border-radius: 6px; text-align: left; margin-bottom: 20px;">
-                        <strong style="color: var(--brand-green); font-family: 'OneDotCd-Bold';">✓ Credit Recorded</strong>
-                        <p style="margin: 4px 0 0 0; font-size: 0.92rem; color: #555;">Click the button below to return to your Day 1 Dashboard.</p>
+                    <div style="background: rgba(0, 144, 226, 0.08); border-left: 4px solid var(--brand-blue); padding: 12px; border-radius: 6px; text-align: left; margin-bottom: 20px;">
+                        <strong style="color: var(--dark-blue); font-family: 'OneDotCd-Bold';">Ready for Stage 4?</strong>
+                        <p style="margin: 4px 0 0 0; font-size: 0.92rem; color: #555;">Test your speed, accuracy, and phone etiquette with full-speed practice orders.</p>
                     </div>
                 </div>
             `;
@@ -1344,16 +1342,16 @@
                 finishBtn.style.width = '100%';
                 finishBtn.style.padding = '12px 20px';
                 finishBtn.style.fontSize = '1.05rem';
-                finishBtn.innerText = "✓ Return to Day 1 Dashboard"; 
+                finishBtn.innerText = "🚀 Continue to Stage 4 →"; 
 
                 finishBtn.onclick = function() {
-                    finishBtn.innerText = "Returning...";
+                    finishBtn.innerText = "Loading Stage 4...";
                     finishBtn.style.pointerEvents = "none";
                     finishBtn.style.opacity = "0.6";
 
                     setTimeout(() => {
-                        window.location.href = 'lms_dashboard.html#day1';
-                    }, 500);
+                        window.location.href = 'POS_Simulator_Stage_4.html';
+                    }, 400);
                 };
             }
         }

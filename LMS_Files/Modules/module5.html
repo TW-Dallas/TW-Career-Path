@@ -169,21 +169,13 @@
     <div class="classroom-container-wide">
         <div class="classroom-content">
             
-            <!-- STEP 1: OUTRO VIDEO (OR PLACEHOLDER WHILE RECORDING) -->
+            <!-- STEP 1: OUTRO VIDEO -->
             <div id="content-video" style="width: 100%; text-align: center;">
                 <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 0.5rem;">Day 1 Post-Game Breakdown</h3>
                 <p id="video-status-msg" style="color: var(--crust-burnt); font-size: 1rem; margin-bottom: 1.5rem;">Watch Coach Bobby's Day 1 summary before taking the final quiz.</p>
                 
                 <div class="video-wrapper">
-                    <div id="vimeo-player" style="width: 100%; height: 100%; display: none;"></div>
-                    <div id="video-placeholder" class="production-placeholder">
-                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎬</div>
-                        <h4 style="font-family: 'OneDotCd-Bold'; font-size: 1.4rem; margin: 0 0 0.5rem 0; color: #fff;">Post-Game Video in Production</h4>
-                        <p style="font-family: 'OneDotCd'; color: #ccc; font-size: 1rem; max-width: 500px; margin: 0 auto 1.2rem auto;">
-                            Coach Bobby's Day 1 wrap-up video is currently being recorded. You may proceed directly to the Final Knowledge Check!
-                        </p>
-                        <span style="background: rgba(0, 144, 226, 0.25); color: #70d6ff; border: 1px solid #70d6ff; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-family: 'OneDotCd-Bold';">Ready for Knowledge Check</span>
-                    </div>
+                    <iframe id="vimeo-iframe" title="Day 1 Post-Game Breakdown" src="https://player.vimeo.com/video/1223337666?h=a9d779ca1d" style="width: 100%; height: 100%; border: 0;" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
                 </div>
             </div>
 
@@ -232,10 +224,12 @@
 
     <script>
         let currentStep = 1;
-        let videoWatched = true; // Set to true while video is in production
+        const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+        let videoWatched = isAdmin;
         let quizPassed = false;
         let trainerAuthorized = false;
         let activeQuizQuestions = [];
+        let vimeoPlayer = null;
 
         const moduleStartTime = Date.now();
         let userAnswers = {};
@@ -454,13 +448,38 @@
                 .catch(e => console.error("Error logging progress:", e));
         }
 
+        function initVimeoPlayer() {
+            const iframe = document.getElementById('vimeo-iframe');
+            if (iframe && typeof Vimeo !== 'undefined') {
+                try {
+                    vimeoPlayer = new Vimeo.Player(iframe);
+                    vimeoPlayer.on('ended', () => {
+                        videoWatched = true;
+                        const nextBtn = document.getElementById('btn-next');
+                        if (nextBtn) nextBtn.classList.remove('btn-disabled');
+                    });
+                    vimeoPlayer.on('timeupdate', (data) => {
+                        if (data.percent >= 0.92) {
+                            videoWatched = true;
+                            const nextBtn = document.getElementById('btn-next');
+                            if (nextBtn) nextBtn.classList.remove('btn-disabled');
+                        }
+                    });
+                } catch (e) {
+                    console.warn("Vimeo Player init:", e);
+                    videoWatched = true;
+                }
+            }
+        }
+
         function returnToDashboard() {
             window.location.href = '../lms_dashboard.html#day1';
         }
 
-        // Initialize quiz on load
+        // Initialize quiz and video on load
         document.addEventListener('DOMContentLoaded', () => {
             initFinalQuiz();
+            initVimeoPlayer();
             updateUI();
         });
     </script>
