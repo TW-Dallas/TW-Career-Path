@@ -305,7 +305,7 @@
         }
     </style>
 </head>
-<body style="background-color: var(--crust-light); margin: 0; padding-bottom: 80px;">
+<body style="background-color: var(--crust-light); margin: 0; padding-bottom: 3.5rem;">
 
     <!-- UNIFIED TOP NAVBAR -->
     <header style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
@@ -322,7 +322,9 @@
         </div>
     </header>
 
-    <div class="classroom-container-wide" style="max-width: 960px; margin: 1.5rem auto; padding: 0 1rem;">
+    <div class="classroom-container-wide" style="max-width: 960px; margin: 1.25rem auto 3rem auto; padding: 0 1rem;">
+        
+        <div class="classroom-content" style="background: #ffffff; border: 2px solid var(--crust-med); border-radius: 12px 12px 0 0; padding: 1.75rem 2rem 1.5rem 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
         
         <!-- ========================================================================= -->
         <!-- STEP 1: HANDWASHING NON-NEGOTIABLES & 5-STEP PROCESS -->
@@ -699,22 +701,22 @@
             </div>
         </div>
 
-    </div>
+        </div> <!-- END classroom-content -->
 
-    <!-- ========================================================================= -->
-    <!-- UNIFIED CLASSROOM FOOTER -->
-    <!-- ========================================================================= -->
-    <div class="classroom-footer" style="padding: 0.85rem 2rem; position: fixed; bottom: 0; left: 0; right: 0; z-index: 99; background: #ffffff; border-top: 2px solid var(--crust-med); box-shadow: 0 -4px 12px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center;">
-        <button class="btn btn-outline" id="btn-prev" onclick="changeStep(-1)" style="visibility: hidden;">
-            &#8592; Previous
-        </button>
-        <span id="footer-checkpoint" style="font-family: 'Subhead2', sans-serif; font-size: 0.95rem; color: var(--crust-deep); text-transform: uppercase; letter-spacing: 0.5px;">
-            Checkpoint 1 of 6: Handwashing Standard
-        </span>
-        <button class="btn" id="btn-next" onclick="changeStep(1)">
-            Next Step &#8594;
-        </button>
-    </div>
+        <!-- UNIFIED CLASSROOM FOOTER -->
+        <div class="classroom-footer" style="padding: 0.85rem 1.5rem; background: var(--crust-light); border: 2px solid var(--crust-med); border-top: none; border-radius: 0 0 12px 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+            <button class="btn btn-outline" id="btn-prev" onclick="changeStep(-1)" style="visibility: hidden; padding: 0.6rem 1.5rem; font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1rem; width: auto;">
+                &#8592; Previous
+            </button>
+            <span id="footer-checkpoint" style="font-family: 'Subhead2', sans-serif; font-size: 0.95rem; color: var(--crust-deep); text-transform: uppercase; letter-spacing: 0.5px;">
+                Checkpoint 1 of 6: Handwashing Standard
+            </span>
+            <button class="btn" id="btn-next" onclick="changeStep(1)" style="padding: 0.6rem 1.5rem; font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1rem; width: auto; margin-top: 0;">
+                Next Step &#8594;
+            </button>
+        </div>
+
+    </div> <!-- END classroom-container-wide -->
 
     <script>
         let currentStep = 1;
