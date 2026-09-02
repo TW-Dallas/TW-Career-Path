@@ -764,23 +764,31 @@
         ];
 
         const CALL2_TRANSCRIPT = [
-            { start: 0.0, end: 3.9, speaker: "Liz", text: "Domino's Pizza, this is Liz, what can I get started for you today?" },
-            { start: 3.9, end: 11.0, speaker: "Aiden", text: "Hi there, good evening Liz, this is Aiden. I placed a delivery order and I kind of didn't get what I ordered." },
-            { start: 11.0, end: 16.6, speaker: "Liz", text: "Oh no, I'm so sorry about that. Was that a delivery order placed for today?" },
-            { start: 16.6, end: 19.8, speaker: "Aiden", text: "Yes, I just got it about five minutes ago." },
-            { start: 19.8, end: 29.2, speaker: "Liz", text: "Gotcha. Well, I'd be more than happy to get that taken care of for you. I just need a little bit of information so I can track your order. Can I get your phone number please?" },
-            { start: 30.2, end: 35.6, speaker: "Aiden", text: "Yeah, it's 214-873-1900." },
-            { start: 36.3, end: 41.0, speaker: "Liz", text: "Perfect, thank you. And if you don't mind me asking, what was missing or incorrect?" },
-            { start: 41.8, end: 47.8, speaker: "Aiden", text: "I was supposed to have a large pizza with jalapenos, but I received one with sausage and bell peppers." },
-            { start: 48.6, end: 61.3, speaker: "Liz", text: "Oh goodness, I apologize about that. That would frustrate me too. I can see right here that's exactly what you ordered: Large pizza with jalapenos. I can do one of two things for you." },
-            { start: 61.8, end: 76.1, speaker: "Liz", text: "We're running a delivery time of about 25 to 35 minutes right now, and I'd be more than happy to get that made hot and fresh and sent right back out to you. Or if it's more convenient, I can issue a store credit for the next time you order." },
-            { start: 77.0, end: 80.6, speaker: "Aiden", text: "Yeah, it's already kind of getting late, so I'll take the credit." },
-            { start: 81.2, end: 92.8, speaker: "Liz", text: "Okay, not a problem at all. Your order total was $24.37. What I'm going to do is bump that up to an even $35 credit on your account." },
-            { start: 93.4, end: 99.9, speaker: "Liz", text: "Not only will that cover your pizza next time, but it'll give you the chance to try one of our desserts or add on some wings." },
-            { start: 100.6, end: 103.4, speaker: "Aiden", text: "Oh, yes ma'am. I really appreciate that." },
-            { start: 104.1, end: 115.8, speaker: "Liz", text: "No worries at all. Next time you order, just use that same phone number, the one ending in 1900, and let us know you have a credit. We'll apply it directly to your total." },
-            { start: 116.3, end: 117.8, speaker: "Aiden", text: "Awesome. Thank you Liz." },
-            { start: 118.6, end: 125.8, speaker: "Liz", text: "Thank you, Aiden. We look forward to serving you next time. Have a great night." }
+            // Section 0: Opening exchange (0:00 to 0:11)
+            { start: 0.0, end: 3.9, speaker: "Liz", text: "Domino's Pizza, this is Liz, what can I get started for you today?", section: 0 },
+            { start: 3.9, end: 11.0, speaker: "Aiden", text: "Hi there, good evening Liz, this is Aiden. I placed a delivery order and I kind of didn't get what I ordered.", section: 0 },
+            
+            // Section 1: Decision 1 Outcome & Inquiry (0:11 to 1:01)
+            { start: 11.0, end: 16.6, speaker: "Liz", text: "Oh no, I'm so sorry about that. Was that a delivery order placed for today?", section: 1 },
+            { start: 16.6, end: 19.8, speaker: "Aiden", text: "Yes, I just got it about five minutes ago.", section: 1 },
+            { start: 19.8, end: 29.2, speaker: "Liz", text: "Gotcha. Well, I'd be more than happy to get that taken care of for you. I just need a little bit of information so I can track your order. Can I get your phone number please?", section: 1 },
+            { start: 30.2, end: 35.6, speaker: "Aiden", text: "Yeah, it's 214-873-1900.", section: 1 },
+            { start: 36.3, end: 41.0, speaker: "Liz", text: "Perfect, thank you. And if you don't mind me asking, what was missing or incorrect?", section: 1 },
+            { start: 41.8, end: 47.8, speaker: "Aiden", text: "I was supposed to have a large pizza with jalapenos, but I received one with sausage and bell peppers.", section: 1 },
+            { start: 48.6, end: 61.3, speaker: "Liz", text: "Oh goodness, I apologize about that. That would frustrate me too. I can see right here that's exactly what you ordered: Large pizza with jalapenos. I can do one of two things for you.", section: 1 },
+            
+            // Section 2: Decision 2 Outcome & Options (1:01 to 1:27)
+            { start: 61.8, end: 76.1, speaker: "Liz", text: "We're running a delivery time of about 25 to 35 minutes right now, and I'd be more than happy to get that made hot and fresh and sent right back out to you. Or if it's more convenient, I can issue a store credit for the next time you order.", section: 2 },
+            { start: 77.0, end: 80.6, speaker: "Aiden", text: "Yeah, it's already kind of getting late, so I'll take the credit.", section: 2 },
+            { start: 81.2, end: 87.0, speaker: "Liz", text: "Okay, not a problem at all. Your order total was $24.37.", section: 2 },
+            
+            // Section 3: Decision 3 Outcome & Final Wrap-Up (1:27 to 2:06)
+            { start: 87.0, end: 92.8, speaker: "Liz", text: "What I'm going to do is bump that up to an even $35 credit on your account.", section: 3 },
+            { start: 93.4, end: 99.9, speaker: "Liz", text: "Not only will that cover your pizza next time, but it'll give you the chance to try one of our desserts or add on some wings.", section: 3 },
+            { start: 100.6, end: 103.4, speaker: "Aiden", text: "Oh, yes ma'am. I really appreciate that.", section: 3 },
+            { start: 104.1, end: 115.8, speaker: "Liz", text: "No worries at all. Next time you order, just use that same phone number, the one ending in 1900, and let us know you have a credit. We'll apply it directly to your total.", section: 3 },
+            { start: 116.3, end: 117.8, speaker: "Aiden", text: "Awesome. Thank you Liz.", section: 3 },
+            { start: 118.6, end: 125.8, speaker: "Liz", text: "Thank you, Aiden. We look forward to serving you next time. Have a great night.", section: 3 }
         ];
 
         let c1ActiveIdx = -1;
@@ -798,11 +806,25 @@
 
             const box2 = document.getElementById('call2-transcript-box');
             if (box2) {
-                box2.innerHTML = CALL2_TRANSCRIPT.map((item, idx) => `
-                    <p id="c2-line-${idx}" style="margin: 0 0 0.45rem 0; padding: 2px 4px; border-radius: 4px; transition: all 0.2s ease;">
-                        <strong>${item.speaker}:</strong> <em>"${item.text}"</em>
-                    </p>
-                `).join('');
+                let html = `
+                    <div id="c2-initial-hint" style="color: #64748b; font-style: italic; text-align: center; padding: 1.5rem 0.5rem; font-size: 0.88rem; line-height: 1.4;">
+                        🎧 Press <strong>▶ Play</strong> above to start the live call.<br>
+                        The transcript will unfold live as each person speaks!
+                    </div>
+                `;
+                CALL2_TRANSCRIPT.forEach((item, idx) => {
+                    html += `
+                        <p id="c2-line-${idx}" style="margin: 0 0 0.45rem 0; padding: 3px 6px; border-radius: 4px; transition: all 0.25s ease; display: none;">
+                            <strong>${item.speaker}:</strong> <em>"${item.text}"</em>
+                        </p>
+                    `;
+                });
+                html += `
+                    <div id="c2-decision-banner" style="display: none; background: rgba(0, 144, 226, 0.08); border: 1.5px dashed var(--brand-blue); border-radius: 6px; padding: 6px 10px; margin: 6px 0; color: var(--dark-blue); font-size: 0.84rem; font-family: 'Subhead2', sans-serif;">
+                        ⏸️ <strong>Call Paused:</strong> Choose Liz's winning response on the right to resume...
+                    </div>
+                `;
+                box2.innerHTML = html;
             }
         }
 
@@ -837,13 +859,41 @@
         }
 
         function syncCall2Transcript(time) {
-            let idx = -1;
-            for (let i = 0; i < CALL2_TRANSCRIPT.length; i++) {
-                if (time >= CALL2_TRANSCRIPT[i].start) {
-                    idx = i;
-                }
+            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+            const hint = document.getElementById('c2-initial-hint');
+            if (hint && time > 0.2) {
+                hint.style.display = 'none';
             }
-            if (idx !== -1 && idx !== c2ActiveIdx) {
+
+            // Determine highest unlocked section
+            const maxSection = isAdmin ? 3 : (
+                call2CpCompleted[2] ? 3 : (
+                    call2CpCompleted[1] ? 2 : (
+                        call2CpCompleted[0] ? 1 : 0
+                    )
+                )
+            );
+
+            let activeIdx = -1;
+
+            CALL2_TRANSCRIPT.forEach((item, idx) => {
+                const el = document.getElementById(`c2-line-${idx}`);
+                if (!el) return;
+
+                const isSectionUnlocked = isAdmin || (item.section <= maxSection);
+                const hasSpoken = isAdmin || (time >= item.start);
+
+                if (isSectionUnlocked && hasSpoken) {
+                    el.style.display = 'block';
+                    if (time >= item.start) {
+                        activeIdx = idx;
+                    }
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+
+            if (activeIdx !== -1 && activeIdx !== c2ActiveIdx) {
                 if (c2ActiveIdx !== -1) {
                     const prev = document.getElementById(`c2-line-${c2ActiveIdx}`);
                     if (prev) {
@@ -852,7 +902,7 @@
                         prev.style.background = "transparent";
                     }
                 }
-                const cur = document.getElementById(`c2-line-${idx}`);
+                const cur = document.getElementById(`c2-line-${activeIdx}`);
                 const box = document.getElementById('call2-transcript-box');
                 if (cur && box) {
                     cur.style.color = "var(--dark-blue)";
@@ -862,7 +912,7 @@
                     const targetTop = cur.offsetTop - box.offsetTop - 15;
                     box.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
                 }
-                c2ActiveIdx = idx;
+                c2ActiveIdx = activeIdx;
             }
         }
 
@@ -1141,6 +1191,17 @@
                         document.getElementById('call2-status-pill').innerText = `Decision ${i + 1}/3 ⏸`;
                         document.getElementById('call2-status-pill').style.background = "#fef3c7";
                         document.getElementById('call2-status-pill').style.color = "#b45309";
+
+                        const banner = document.getElementById('c2-decision-banner');
+                        if (banner) {
+                            banner.innerHTML = `⏸️ <strong>Decision ${i + 1} of 3:</strong> Choose Liz's winning response on the right to resume...`;
+                            banner.style.display = 'block';
+                            banner.style.background = "rgba(0, 144, 226, 0.08)";
+                            banner.style.borderColor = "var(--brand-blue)";
+                            banner.style.color = "var(--dark-blue)";
+                            const box = document.getElementById('call2-transcript-box');
+                            if (box) box.scrollTo({ top: box.scrollHeight, behavior: 'smooth' });
+                        }
                         break;
                     }
                 }
@@ -1153,6 +1214,10 @@
             document.getElementById('call2-status-pill').innerText = "Call Complete ✓";
             document.getElementById('call2-status-pill').style.background = "rgba(0, 144, 226, 0.15)";
             document.getElementById('call2-status-pill').style.color = "var(--dark-blue)";
+
+            const banner = document.getElementById('c2-decision-banner');
+            if (banner) banner.style.display = 'none';
+            syncCall2Transcript(audio2.duration || audio2.currentTime);
 
             const allPassed = call2CpCompleted.every(Boolean);
             if (allPassed) {
@@ -1182,13 +1247,24 @@
                 feedback.style.display = 'block';
                 call2CpCompleted[cpIdx] = true;
 
+                const banner = document.getElementById('c2-decision-banner');
+                if (banner) {
+                    banner.innerHTML = `✓ <strong>Winning Play Chosen!</strong> Resuming call in 3 seconds...`;
+                    banner.style.background = "#f0fdf4";
+                    banner.style.borderColor = "#86efac";
+                    banner.style.color = "#16a34a";
+                }
+
                 if (!call2AudioCompleted) {
                     setTimeout(() => {
+                        const b = document.getElementById('c2-decision-banner');
+                        if (b) b.style.display = 'none';
                         audio2.play();
                         document.getElementById('call2-play-btn').innerText = "⏸";
                         if (cpIdx + 1 < CALL2_CHECKPOINTS.length) {
                             renderCall2Checkpoint(cpIdx + 1, false);
                         }
+                        syncCall2Transcript(audio2.currentTime);
                     }, 3000);
                 } else {
                     if (call2CpCompleted.every(Boolean)) {
