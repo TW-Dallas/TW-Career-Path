@@ -274,45 +274,42 @@
             <!-- STEP 4: SCENARIO 1 AUDIO (DECONSTRUCTING ANGEL & JONATHAN)-->
             <!-- ======================================================== -->
             <div id="step4-container" class="hidden" style="width: 100%;">
-                <div style="text-align: center; margin-bottom: 0.65rem;">
-                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.75rem; margin: 0 0 0.15rem 0;">🎧 Live Scenario 1: Angel & Jonathan</h3>
-                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Deconstructing a Live Carryout Recovery Call (2:47)</p>
+                <div style="text-align: center; margin-bottom: 0.4rem;">
+                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.6rem; margin: 0 0 0.1rem 0;">🎧 Live Scenario 1: Angel & Jonathan</h3>
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 0.98rem; margin: 0;">Deconstructing a Live Carryout Recovery Call (2:47)</p>
                 </div>
 
-                <!-- Scenario Instructions Banner -->
-                <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 8px; padding: 0.65rem 1rem; text-align: left; margin-bottom: 0.75rem;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="font-size: 1.25rem;">🎧</span>
-                            <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.15rem; color: var(--brand-blue); text-transform: uppercase; letter-spacing: 0.3px;">Live Scenario Instructions & Deconstruction</strong>
-                        </div>
-                        <span style="font-family: 'Compact', sans-serif; font-size: 0.95rem; color: #64748b;">4 Interactive Checkpoints</span>
+                <!-- Sleek Single-Bar Instructions -->
+                <div style="background: var(--crust-base); border: 1.5px solid var(--brand-blue); border-radius: 6px; padding: 0.35rem 0.85rem; text-align: left; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.15rem;">🎧</span>
+                        <span style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.94rem; color: var(--crust-deep); line-height: 1.3;">
+                            Click <strong>▶ Play</strong> to start the recording. The audio will <strong>automatically pause at 4 checkpoints</strong> for you to select the winning response!
+                        </span>
                     </div>
-                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 1.02rem; color: var(--crust-deep); line-height: 1.35; margin: 0;">
-                        Click <strong>▶ Play</strong> below to start the recording. Follow the live transcript on the left—the audio will <strong>automatically pause at 4 key checkpoints</strong> for you to analyze Angel's LEADS recovery strategy on the right!
-                    </p>
+                    <span style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.82rem; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 10px; white-space: nowrap;">4 Checkpoints</span>
                 </div>
 
                 <!-- 2-Column Workspace (Left: Audio + Transcript | Right: Checkpoint Question Engine) -->
-                <div style="display: grid; grid-template-columns: 1.05fr 1fr; gap: 1.15rem; align-items: stretch;">
+                <div style="display: grid; grid-template-columns: 1.05fr 1fr; gap: 1rem; align-items: stretch;">
                     
                     <!-- Left: Audio Player + Synchronized Transcript Feed -->
-                    <div style="display: flex; flex-direction: column; gap: 0.55rem;">
+                    <div style="display: flex; flex-direction: column; gap: 0.45rem;">
                         <!-- Call 1 Player Card (Sized to match transcript) -->
-                        <div class="audio-player-pill" style="margin-bottom: 0; background: #fff; border: 2px solid var(--brand-blue); padding: 0.45rem 0.75rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
-                            <button type="button" class="audio-play-btn" id="call1-play-btn" onclick="toggleCall1Audio()" style="width: 34px; height: 34px; font-size: 0.95rem;">▶</button>
+                        <div class="audio-player-pill" style="margin-bottom: 0; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.35rem 0.65rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+                            <button type="button" class="audio-play-btn" id="call1-play-btn" onclick="toggleCall1Audio()" style="width: 30px; height: 30px; font-size: 0.88rem;">▶</button>
                             
-                            <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 3px;">
+                            <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.98rem; color: var(--dark-blue); text-transform: uppercase;">Carryout Mix-Up: Angel & Jonathan</span>
-                                    <span id="call1-status-pill" style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.82rem; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 8px;">Ready</span>
+                                    <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.92rem; color: var(--dark-blue); text-transform: uppercase;">Carryout Mix-Up: Angel & Jonathan</span>
+                                    <span id="call1-status-pill" style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.78rem; background: #e0f2fe; color: #0284c7; padding: 1px 6px; border-radius: 8px;">Ready</span>
                                 </div>
-                                <div class="audio-progress-container" style="background: var(--crust-med); height: 5px; border-radius: 3px; overflow: hidden; cursor: pointer;">
+                                <div class="audio-progress-container" style="background: var(--crust-med); height: 4px; border-radius: 2px; overflow: hidden; cursor: pointer;">
                                     <div class="audio-progress-bar" id="call1-progress-bar" style="background: var(--brand-blue); height: 100%; width: 0%; transition: width 0.1s linear;"></div>
                                 </div>
                                 <div style="display: flex; justify-content: space-between;">
-                                    <span class="audio-time" id="call1-time" style="font-family: 'Condensed', sans-serif; font-size: 0.88rem; color: #64748b;">0:00 / 2:47</span>
-                                    <span style="font-family: 'Compact', sans-serif; font-size: 0.85rem; color: #64748b;">4 Checkpoints</span>
+                                    <span class="audio-time" id="call1-time" style="font-family: 'Condensed', sans-serif; font-size: 0.82rem; color: #64748b;">0:00 / 2:47</span>
+                                    <span style="font-family: 'Compact', sans-serif; font-size: 0.8rem; color: #64748b;">4 Checkpoints</span>
                                 </div>
                             </div>
 
@@ -320,33 +317,33 @@
                         </div>
 
                         <!-- Transcript Box -->
-                        <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 0.65rem 0.85rem; text-align: left; flex-grow: 1;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--crust-med); padding-bottom: 0.35rem; margin-bottom: 0.45rem;">
-                                <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.98rem; color: var(--dark-blue); text-transform: uppercase;">Live Transcript</strong>
-                                <span style="font-family: 'Compact', sans-serif; font-size: 0.82rem; color: #64748b;">Auto-Scrolls with Audio</span>
+                        <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 0.5rem 0.75rem; text-align: left; flex-grow: 1;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--crust-med); padding-bottom: 0.25rem; margin-bottom: 0.35rem;">
+                                <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--dark-blue); text-transform: uppercase;">Live Transcript</strong>
+                                <span style="font-family: 'Compact', sans-serif; font-size: 0.78rem; color: #64748b;">Auto-Scrolls with Audio</span>
                             </div>
-                            <div id="call1-transcript-box" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; padding-right: 3px; font-size: 0.95rem;">
+                            <div id="call1-transcript-box" style="max-height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding-right: 3px; font-size: 0.92rem;">
                                 <!-- Populated dynamically via JS -->
                             </div>
                         </div>
                     </div>
 
                     <!-- Right: Dynamic Checkpoint Question Engine (Even with top of audio player) -->
-                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 8px; padding: 0.85rem 1rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 8px; padding: 0.65rem 0.85rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
                         <div>
-                            <p id="call1-cp-badge" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; color: var(--brand-blue); font-size: 1.25rem; margin: 0 0 0.35rem 0; text-transform: uppercase; letter-spacing: 0.5px;">
+                            <p id="call1-cp-badge" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; color: var(--brand-blue); font-size: 1.15rem; margin: 0 0 0.25rem 0; text-transform: uppercase; letter-spacing: 0.5px;">
                                 🎯 LEADS Checkpoint 1 of 4: Listen & Empathize
                             </p>
-                            <p id="call1-cp-prompt" style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 1.05rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.55rem 0;">
+                            <p id="call1-cp-prompt" style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; color: var(--crust-deep); line-height: 1.32; margin: 0 0 0.4rem 0;">
                                 When Jonathan asks to speak to a manager about his wrong order, Angel responds: <em>"Oh no! Okay, yeah, I can definitely help you with this."</em> Which opening steps of LEADS did Angel demonstrate?
                             </p>
 
-                            <div id="call1-options" style="display: flex; flex-direction: column; gap: 5px;">
+                            <div id="call1-options" style="display: flex; flex-direction: column; gap: 4px;">
                                 <!-- Populated dynamically via JS -->
                             </div>
                         </div>
 
-                        <p id="call1-feedback" style="font-family: 'Compact', 'OneDotCd-Bold', sans-serif; font-size: 1.02rem; margin-top: 0.5rem; margin-bottom: 0; display: none; line-height: 1.35;"></p>
+                        <p id="call1-feedback" style="font-family: 'Compact', 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; margin-top: 0.35rem; margin-bottom: 0; display: none; line-height: 1.3;"></p>
                     </div>
 
                 </div>
@@ -356,45 +353,42 @@
             <!-- STEP 5: SCENARIO 2 AUDIO (CALL THE SHOT — LIZ & AIDEN)   -->
             <!-- ======================================================== -->
             <div id="step5-container" class="hidden" style="width: 100%;">
-                <div style="text-align: center; margin-bottom: 0.65rem;">
-                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.75rem; margin: 0 0 0.15rem 0;">🎮 Live Scenario 2: Liz & Aiden</h3>
-                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Call the Shot Simulator: Choose Liz's Winning Responses in Real Time (2:06)</p>
+                <div style="text-align: center; margin-bottom: 0.4rem;">
+                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.6rem; margin: 0 0 0.1rem 0;">🎮 Live Scenario 2: Liz & Aiden</h3>
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 0.98rem; margin: 0;">Call the Shot Simulator: Choose Liz's Winning Responses in Real Time (2:06)</p>
                 </div>
 
-                <!-- Simulator Instructions Banner -->
-                <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 8px; padding: 0.65rem 1rem; text-align: left; margin-bottom: 0.75rem;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="font-size: 1.25rem;">🎮</span>
-                            <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.15rem; color: var(--brand-blue); text-transform: uppercase; letter-spacing: 0.3px;">Call the Shot Simulator Instructions</strong>
-                        </div>
-                        <span style="font-family: 'Compact', sans-serif; font-size: 0.95rem; color: #64748b;">3 Real-Time Decisions</span>
+                <!-- Sleek Single-Bar Instructions -->
+                <div style="background: var(--crust-base); border: 1.5px solid var(--brand-blue); border-radius: 6px; padding: 0.35rem 0.85rem; text-align: left; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.15rem;">🎮</span>
+                        <span style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.94rem; color: var(--crust-deep); line-height: 1.3;">
+                            Click <strong>▶ Play</strong> to start the call. When the audio pauses at each decision point, <strong>choose Liz's winning response</strong> on the right to resume!
+                        </span>
                     </div>
-                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 1.02rem; color: var(--crust-deep); line-height: 1.35; margin: 0;">
-                        Click <strong>▶ Play</strong> below to start the call. When the audio pauses at each decision point, <strong>choose Liz's winning response</strong> on the right to resume the recording and turn an upset customer into a fan for life!
-                    </p>
+                    <span style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.82rem; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 10px; white-space: nowrap;">3 Decisions</span>
                 </div>
 
                 <!-- 2-Column Workspace (Left: Audio + Transcript | Right: Decision Question Engine) -->
-                <div style="display: grid; grid-template-columns: 1.05fr 1fr; gap: 1.15rem; align-items: stretch;">
+                <div style="display: grid; grid-template-columns: 1.05fr 1fr; gap: 1rem; align-items: stretch;">
                     
                     <!-- Left: Audio Player + Synchronized Transcript Feed -->
-                    <div style="display: flex; flex-direction: column; gap: 0.55rem;">
+                    <div style="display: flex; flex-direction: column; gap: 0.45rem;">
                         <!-- Call 2 Player Card (Sized to match transcript) -->
-                        <div class="audio-player-pill" style="margin-bottom: 0; background: #fff; border: 2px solid var(--brand-blue); padding: 0.45rem 0.75rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
-                            <button type="button" class="audio-play-btn" id="call2-play-btn" onclick="toggleCall2Audio()" style="width: 34px; height: 34px; font-size: 0.95rem;">▶</button>
+                        <div class="audio-player-pill" style="margin-bottom: 0; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.35rem 0.65rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+                            <button type="button" class="audio-play-btn" id="call2-play-btn" onclick="toggleCall2Audio()" style="width: 30px; height: 30px; font-size: 0.88rem;">▶</button>
                             
-                            <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 3px;">
+                            <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.98rem; color: var(--dark-blue); text-transform: uppercase;">Delivery Mix-Up: Liz & Aiden</span>
-                                    <span id="call2-status-pill" style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.82rem; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 8px;">Ready</span>
+                                    <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.92rem; color: var(--dark-blue); text-transform: uppercase;">Delivery Mix-Up: Liz & Aiden</span>
+                                    <span id="call2-status-pill" style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.78rem; background: #e0f2fe; color: #0284c7; padding: 1px 6px; border-radius: 8px;">Ready</span>
                                 </div>
-                                <div class="audio-progress-container" style="background: var(--crust-med); height: 5px; border-radius: 3px; overflow: hidden; cursor: pointer;">
+                                <div class="audio-progress-container" style="background: var(--crust-med); height: 4px; border-radius: 2px; overflow: hidden; cursor: pointer;">
                                     <div class="audio-progress-bar" id="call2-progress-bar" style="background: var(--brand-blue); height: 100%; width: 0%; transition: width 0.1s linear;"></div>
                                 </div>
                                 <div style="display: flex; justify-content: space-between;">
-                                    <span class="audio-time" id="call2-time" style="font-family: 'Condensed', sans-serif; font-size: 0.88rem; color: #64748b;">0:00 / 2:06</span>
-                                    <span style="font-family: 'Compact', sans-serif; font-size: 0.85rem; color: #64748b;">3 Decisions</span>
+                                    <span class="audio-time" id="call2-time" style="font-family: 'Condensed', sans-serif; font-size: 0.82rem; color: #64748b;">0:00 / 2:06</span>
+                                    <span style="font-family: 'Compact', sans-serif; font-size: 0.8rem; color: #64748b;">3 Decisions</span>
                                 </div>
                             </div>
 
@@ -402,33 +396,33 @@
                         </div>
 
                         <!-- Transcript Box -->
-                        <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 0.65rem 0.85rem; text-align: left; flex-grow: 1;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--crust-med); padding-bottom: 0.35rem; margin-bottom: 0.45rem;">
-                                <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.98rem; color: var(--dark-blue); text-transform: uppercase;">Live Transcript</strong>
-                                <span style="font-family: 'Compact', sans-serif; font-size: 0.82rem; color: #64748b;">Auto-Scrolls with Audio</span>
+                        <div style="background: #fff; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 0.5rem 0.75rem; text-align: left; flex-grow: 1;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--crust-med); padding-bottom: 0.25rem; margin-bottom: 0.35rem;">
+                                <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--dark-blue); text-transform: uppercase;">Live Transcript</strong>
+                                <span style="font-family: 'Compact', sans-serif; font-size: 0.78rem; color: #64748b;">Auto-Scrolls with Audio</span>
                             </div>
-                            <div id="call2-transcript-box" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; padding-right: 3px; font-size: 0.95rem;">
+                            <div id="call2-transcript-box" style="max-height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding-right: 3px; font-size: 0.92rem;">
                                 <!-- Populated dynamically via JS -->
                             </div>
                         </div>
                     </div>
 
                     <!-- Right: Dynamic Multi-Decision Call the Shot Engine (Even with top of audio player) -->
-                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 8px; padding: 0.85rem 1rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 8px; padding: 0.65rem 0.85rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
                         <div>
-                            <p id="call2-cp-badge" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; color: var(--brand-blue); font-size: 1.25rem; margin: 0 0 0.35rem 0; text-transform: uppercase; letter-spacing: 0.5px;">
+                            <p id="call2-cp-badge" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; color: var(--brand-blue); font-size: 1.15rem; margin: 0 0 0.25rem 0; text-transform: uppercase; letter-spacing: 0.5px;">
                                 🎮 Call the Shot 1 of 3: Opening Recovery
                             </p>
-                            <p id="call2-cp-prompt" style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 1.05rem; color: var(--crust-deep); line-height: 1.35; margin: 0 0 0.55rem 0;">
+                            <p id="call2-cp-prompt" style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; color: var(--crust-deep); line-height: 1.32; margin: 0 0 0.4rem 0;">
                                 Aiden calls explaining she received the wrong pizza. What is the most effective immediate response for Liz to say next?
                             </p>
 
-                            <div id="call2-options" style="display: flex; flex-direction: column; gap: 5px;">
+                            <div id="call2-options" style="display: flex; flex-direction: column; gap: 4px;">
                                 <!-- Populated dynamically via JS -->
                             </div>
                         </div>
 
-                        <p id="call2-feedback" style="font-family: 'Compact', 'OneDotCd-Bold', sans-serif; font-size: 1.02rem; margin-top: 0.5rem; margin-bottom: 0; display: none; line-height: 1.35;"></p>
+                        <p id="call2-feedback" style="font-family: 'Compact', 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; margin-top: 0.35rem; margin-bottom: 0; display: none; line-height: 1.3;"></p>
                     </div>
 
                 </div>
@@ -935,11 +929,11 @@
             const optBox = document.getElementById('call1-options');
             
             const lockBanner = isUnlocked 
-                ? `<div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 6px; padding: 0.45rem 0.75rem; margin-bottom: 0.45rem; font-family: 'Subhead2', sans-serif; font-size: 0.92rem; color: #16a34a; text-align: center;">👉 Choose the winning response below to resume:</div>`
-                : `<div style="background: var(--crust-light); border: 1.5px dashed #cbd5e1; border-radius: 6px; padding: 0.45rem 0.75rem; margin-bottom: 0.45rem; font-family: 'Subhead2', sans-serif; font-size: 0.92rem; color: #64748b; text-align: center;">🔒 Press ▶ Play on the left. Unlocks when audio pauses here!</div>`;
+                ? `<div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 6px; padding: 0.35rem 0.65rem; margin-bottom: 0.35rem; font-family: 'Subhead2', sans-serif; font-size: 0.86rem; color: #16a34a; text-align: center;">👉 Choose the winning response below to resume:</div>`
+                : `<div style="background: var(--crust-light); border: 1.5px dashed #cbd5e1; border-radius: 6px; padding: 0.35rem 0.65rem; margin-bottom: 0.35rem; font-family: 'Subhead2', sans-serif; font-size: 0.86rem; color: #64748b; text-align: center;">🔒 Press ▶ Play on the left. Unlocks when audio pauses here!</div>`;
 
             optBox.innerHTML = lockBanner + cp.options.map((opt, oIdx) => `
-                <button type="button" class="quiz-option" ${!isUnlocked ? 'disabled' : ''} style="padding: 0.65rem 0.95rem; font-size: 0.98rem; line-height: 1.35; margin-bottom: 5px; ${!isUnlocked ? 'opacity: 0.55; cursor: not-allowed; pointer-events: none;' : 'cursor: pointer;'}" onclick="handleCall1CheckpointChoice(this, ${idx}, ${oIdx})">
+                <button type="button" class="quiz-option" ${!isUnlocked ? 'disabled' : ''} style="padding: 0.5rem 0.8rem; font-size: 0.92rem; line-height: 1.3; margin-bottom: 4px; ${!isUnlocked ? 'opacity: 0.55; cursor: not-allowed; pointer-events: none;' : 'cursor: pointer;'}" onclick="handleCall1CheckpointChoice(this, ${idx}, ${oIdx})">
                     ${opt.text}
                 </button>
             `).join('');
@@ -1020,7 +1014,7 @@
                 feedback.style.color = "var(--dark-blue)";
                 const isLast = (cpIdx === CALL1_CHECKPOINTS.length - 1);
                 const nextTxt = isLast ? "Resuming in 3 seconds to hear the call wrap-up..." : `Resuming recording in 3 seconds to hear the next play...`;
-                feedback.innerHTML = `${opt.feedback}<br><span style='font-family: OneDotCd; font-size: 0.95rem; color: #64748b;'>${nextTxt}</span>`;
+                feedback.innerHTML = `${opt.feedback}<br><span style='font-family: OneDotCd; font-size: 0.9rem; color: #64748b;'>${nextTxt}</span>`;
                 feedback.style.display = 'block';
                 call1CpCompleted[cpIdx] = true;
 
@@ -1099,11 +1093,11 @@
             const optBox = document.getElementById('call2-options');
             
             const lockBanner = isUnlocked 
-                ? `<div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 6px; padding: 0.45rem 0.75rem; margin-bottom: 0.45rem; font-family: 'Subhead2', sans-serif; font-size: 0.92rem; color: #16a34a; text-align: center;">👉 Choose the winning response below to resume:</div>`
-                : `<div style="background: var(--crust-light); border: 1.5px dashed #cbd5e1; border-radius: 6px; padding: 0.45rem 0.75rem; margin-bottom: 0.45rem; font-family: 'Subhead2', sans-serif; font-size: 0.92rem; color: #64748b; text-align: center;">🔒 Press ▶ Play on the left. Unlocks when audio pauses here!</div>`;
+                ? `<div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 6px; padding: 0.35rem 0.65rem; margin-bottom: 0.35rem; font-family: 'Subhead2', sans-serif; font-size: 0.86rem; color: #16a34a; text-align: center;">👉 Choose the winning response below to resume:</div>`
+                : `<div style="background: var(--crust-light); border: 1.5px dashed #cbd5e1; border-radius: 6px; padding: 0.35rem 0.65rem; margin-bottom: 0.35rem; font-family: 'Subhead2', sans-serif; font-size: 0.86rem; color: #64748b; text-align: center;">🔒 Press ▶ Play on the left. Unlocks when audio pauses here!</div>`;
 
             optBox.innerHTML = lockBanner + cp.options.map((opt, oIdx) => `
-                <button type="button" class="quiz-option" ${!isUnlocked ? 'disabled' : ''} style="padding: 0.65rem 0.95rem; font-size: 0.98rem; line-height: 1.35; margin-bottom: 5px; ${!isUnlocked ? 'opacity: 0.55; cursor: not-allowed; pointer-events: none;' : 'cursor: pointer;'}" onclick="handleCall2CheckpointChoice(this, ${idx}, ${oIdx})">
+                <button type="button" class="quiz-option" ${!isUnlocked ? 'disabled' : ''} style="padding: 0.5rem 0.8rem; font-size: 0.92rem; line-height: 1.3; margin-bottom: 4px; ${!isUnlocked ? 'opacity: 0.55; cursor: not-allowed; pointer-events: none;' : 'cursor: pointer;'}" onclick="handleCall2CheckpointChoice(this, ${idx}, ${oIdx})">
                     ${opt.text}
                 </button>
             `).join('');
