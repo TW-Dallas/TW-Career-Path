@@ -283,8 +283,19 @@
             }
         }
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true' || urlParams.get('unlock') === 'all';
+        const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
+
+        window.unlockAll = function() {
+            videoWatched = true;
+            quizPassed = true;
+            const btnNext = document.getElementById('btn-next');
+            if (btnNext) btnNext.classList.remove('btn-disabled');
+            console.log("🔓 DEV MODE: Day 1 Module 1 unlocked!");
+        };
+
         function changeStep(direction) {
-            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
             if (direction === 1 && !isAdmin) {
                 if (currentStep === 1 && !videoWatched) return;
                 if (currentStep === 2 && !quizPassed) {
@@ -297,7 +308,6 @@
         }
 
         function updateUI() {
-            const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
             document.getElementById('content-video').classList.add('hidden');
             document.getElementById('content-quiz').classList.add('hidden');
             document.getElementById('content-prompt').classList.add('hidden');

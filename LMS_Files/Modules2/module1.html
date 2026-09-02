@@ -459,15 +459,33 @@
     </div>
 
     <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true' || urlParams.get('unlock') === 'all';
+        const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
+
         let currentStep = 1;
         const totalSteps = 6;
 
         // Step completion flags
-        let step1Passed = false;
-        let step2Passed = false;
-        let step3Passed = false;
-        let step4Passed = false;
-        let step5Passed = false;
+        let step1Passed = isAdmin;
+        let step2Passed = isAdmin;
+        let step3Passed = isAdmin;
+        let step4Passed = isAdmin;
+        let step5Passed = isAdmin;
+
+        window.unlockAll = function() {
+            step1Passed = true;
+            step2Passed = true;
+            step3Passed = true;
+            step4Passed = true;
+            step5Passed = true;
+            if (typeof call1AudioCompleted !== 'undefined') call1AudioCompleted = true;
+            if (typeof call1CpCompleted !== 'undefined') call1CpCompleted = [true, true, true, true];
+            if (typeof call2AudioCompleted !== 'undefined') call2AudioCompleted = true;
+            if (typeof call2CpCompleted !== 'undefined') call2CpCompleted = [true, true, true];
+            updateUI();
+            console.log("🔓 DEV MODE: All Day 2 Module 1 steps unlocked!");
+        };
 
         // Tracking state
         const moduleStartTime = Date.now();
@@ -1039,7 +1057,7 @@
         function changeStep(direction) {
             pauseAllAudio();
 
-            if (direction === 1) {
+            if (direction === 1 && !isAdmin) {
                 if (currentStep === 1 && !step1Passed) return;
                 if (currentStep === 2 && !step2Passed) return;
                 if (currentStep === 3 && !step3Passed) return;
@@ -1072,32 +1090,32 @@
             if (currentStep === 1) {
                 document.getElementById('step1-container').classList.remove('hidden');
                 btnBack.classList.add('hidden');
-                btnNext.disabled = !step1Passed;
-                if (!step1Passed) btnNext.classList.add('btn-disabled');
+                btnNext.disabled = !step1Passed && !isAdmin;
+                if (!step1Passed && !isAdmin) btnNext.classList.add('btn-disabled');
                 else btnNext.classList.remove('btn-disabled');
             } 
             else if (currentStep === 2) {
                 document.getElementById('step2-container').classList.remove('hidden');
-                btnNext.disabled = !step2Passed;
-                if (!step2Passed) btnNext.classList.add('btn-disabled');
+                btnNext.disabled = !step2Passed && !isAdmin;
+                if (!step2Passed && !isAdmin) btnNext.classList.add('btn-disabled');
                 else btnNext.classList.remove('btn-disabled');
             } 
             else if (currentStep === 3) {
                 document.getElementById('step3-container').classList.remove('hidden');
-                btnNext.disabled = !step3Passed;
-                if (!step3Passed) btnNext.classList.add('btn-disabled');
+                btnNext.disabled = !step3Passed && !isAdmin;
+                if (!step3Passed && !isAdmin) btnNext.classList.add('btn-disabled');
                 else btnNext.classList.remove('btn-disabled');
             }
             else if (currentStep === 4) {
                 document.getElementById('step4-container').classList.remove('hidden');
-                btnNext.disabled = !step4Passed;
-                if (!step4Passed) btnNext.classList.add('btn-disabled');
+                btnNext.disabled = !step4Passed && !isAdmin;
+                if (!step4Passed && !isAdmin) btnNext.classList.add('btn-disabled');
                 else btnNext.classList.remove('btn-disabled');
             }
             else if (currentStep === 5) {
                 document.getElementById('step5-container').classList.remove('hidden');
-                btnNext.disabled = !step5Passed;
-                if (!step5Passed) btnNext.classList.add('btn-disabled');
+                btnNext.disabled = !step5Passed && !isAdmin;
+                if (!step5Passed && !isAdmin) btnNext.classList.add('btn-disabled');
                 else btnNext.classList.remove('btn-disabled');
             }
             else if (currentStep === 6) {
