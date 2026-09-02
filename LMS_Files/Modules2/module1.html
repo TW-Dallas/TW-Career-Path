@@ -109,45 +109,28 @@
                     <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Mushroom Pizza Mix-Up — Tone, Empathy, & Immediate Ownership</p>
                 </div>
 
-                <!-- 2 Side-by-Side Comparison Cards -->
+                <!-- Physical Playbook Note Prompt (Above Call Containers) -->
+                <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem 1.25rem; text-align: left; margin-bottom: 1.25rem;">
+                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.35rem;">
+                        <span style="font-size: 1.2rem;">📓</span>
+                        <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; color: var(--brand-blue); text-transform: uppercase;">Physical Playbook Film Study Notes</strong>
+                    </div>
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; color: var(--crust-deep); line-height: 1.35; margin: 0;">
+                        Open your physical playbook to the <strong>Customer Recovery</strong> page. Write down:
+                        <br><strong>Prompt:</strong> <em>What specific phrases in the Winning Play immediately lowered tension before offering a replacement?</em>
+                    </p>
+                </div>
+
+                <!-- 2 Side-by-Side Comparison Cards (Bad Left, Good Right) -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
                     
-                    <!-- Good Clip Card -->
-                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1.15rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
-                                <div style="display: flex; align-items: center; gap: 6px;">
-                                    <span style="font-size: 1.2rem;">🟢</span>
-                                    <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">The Winning Play</strong>
-                                </div>
-                                <span style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;">0:35</span>
-                            </div>
-
-                            <!-- Audio Player -->
-                            <div style="display: flex; align-items: center; gap: 8px; background: var(--crust-base); border: 1.5px solid var(--brand-blue); padding: 0.4rem 0.85rem; border-radius: 20px; margin-bottom: 0.75rem;">
-                                <button type="button" class="audio-play-btn" id="ex1-good-btn" onclick="toggleExAudio('ex1-good')" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
-                                <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--dark-blue); flex-grow: 1;">Play Winning Tape</span>
-                                <audio id="audio-ex1-good" src="../resources/Day2_audio/Example1_Good.mp3" onended="onExEnded('ex1-good')"></audio>
-                            </div>
-
-                            <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
-                                <em>"Oh no, I am so sorry about that. Can you please provide me with some additional details so we can make it right?... I completely understand your frustration. That would upset me too. I'll get a replacement in the oven for you right away."</em>
-                            </p>
-                        </div>
-
-                        <div style="background: rgba(0, 144, 226, 0.08); border-radius: 6px; padding: 0.5rem 0.75rem;">
-                            <strong style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.88rem; color: var(--dark-blue); text-transform: uppercase;">✓ Key Coaching Takeaway:</strong>
-                            <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep); margin: 0;">Validates frustration immediately, uses sincere empathy, and moves straight into action.</p>
-                        </div>
-                    </div>
-
-                    <!-- Bad Clip Card -->
+                    <!-- Bad Clip Card (Left) -->
                     <div style="background: #fff; border: 2px solid var(--brand-red); border-radius: 10px; padding: 1.15rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
                                 <div style="display: flex; align-items: center; gap: 6px;">
                                     <span style="font-size: 1.2rem;">🔴</span>
-                                    <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; color: var(--brand-red); text-transform: uppercase; letter-spacing: 0.5px;">The Defensive Fumble</strong>
+                                    <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; color: var(--brand-red); text-transform: uppercase; letter-spacing: 0.5px;">1. The Defensive Fumble</strong>
                                 </div>
                                 <span style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;">0:26</span>
                             </div>
@@ -170,18 +153,35 @@
                         </div>
                     </div>
 
-                </div>
+                    <!-- Good Clip Card (Right - Locked until Bad finishes) -->
+                    <div id="ex1-good-card" style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1.15rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-size: 1.2rem;">🟢</span>
+                                    <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">2. The Winning Play</strong>
+                                </div>
+                                <span style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;">0:35</span>
+                            </div>
 
-                <!-- Physical Playbook Note Prompt -->
-                <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem 1.25rem; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.35rem;">
-                        <span style="font-size: 1.2rem;">📓</span>
-                        <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; color: var(--brand-blue); text-transform: uppercase;">Physical Playbook Film Study Notes</strong>
+                            <!-- Audio Player -->
+                            <div id="ex1-good-player-box" style="display: flex; align-items: center; gap: 8px; background: var(--crust-base); border: 1.5px solid var(--brand-blue); padding: 0.4rem 0.85rem; border-radius: 20px; margin-bottom: 0.75rem;">
+                                <button type="button" class="audio-play-btn" id="ex1-good-btn" onclick="toggleExAudio('ex1-good')" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
+                                <span id="ex1-good-status" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--dark-blue); flex-grow: 1;">Play Winning Tape</span>
+                                <audio id="audio-ex1-good" src="../resources/Day2_audio/Example1_Good.mp3" onended="onExEnded('ex1-good')"></audio>
+                            </div>
+
+                            <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; line-height: 1.4; color: var(--crust-deep); margin: 0 0 0.5rem 0;">
+                                <em>"Oh no, I am so sorry about that. Can you please provide me with some additional details so we can make it right?... I completely understand your frustration. That would upset me too. I'll get a replacement in the oven for you right away."</em>
+                            </p>
+                        </div>
+
+                        <div style="background: rgba(0, 144, 226, 0.08); border-radius: 6px; padding: 0.5rem 0.75rem;">
+                            <strong style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.88rem; color: var(--dark-blue); text-transform: uppercase;">✓ Key Coaching Takeaway:</strong>
+                            <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep); margin: 0;">Validates frustration immediately, uses sincere empathy, and moves straight into action.</p>
+                        </div>
                     </div>
-                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; color: var(--crust-deep); line-height: 1.35; margin: 0;">
-                        Open your physical playbook to the <strong>Customer Recovery</strong> page. Write down:
-                        <br><strong>Prompt:</strong> <em>What specific phrases in the Winning Play immediately lowered tension before offering a replacement?</em>
-                    </p>
+
                 </div>
             </div>
 
@@ -194,16 +194,28 @@
                     <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 1.05rem; margin: 0;">Late Delivery on a School Night — Excuses vs. Do What It Takes</p>
                 </div>
 
-                <!-- 2 Side-by-Side Comparison Cards -->
+                <!-- Physical Playbook Note Prompt (Above Call Containers) -->
+                <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem 1.25rem; text-align: left; margin-bottom: 1.25rem;">
+                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.35rem;">
+                        <span style="font-size: 1.2rem;">📓</span>
+                        <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; color: var(--brand-blue); text-transform: uppercase;">Physical Playbook Film Study Notes</strong>
+                    </div>
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; color: var(--crust-deep); line-height: 1.35; margin: 0;">
+                        Open your physical playbook to the <strong>Customer Recovery</strong> page. Write down:
+                        <br><strong>Prompt:</strong> <em>Why does making store excuses destroy customer trust, and how does a proactive credit protect customer retention?</em>
+                    </p>
+                </div>
+
+                <!-- 2 Side-by-Side Comparison Cards (Bad Left, Good Right) -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
                     
-                    <!-- Bad Clip Card -->
+                    <!-- Bad Clip Card (Left) -->
                     <div style="background: #fff; border: 2px solid var(--brand-red); border-radius: 10px; padding: 1.15rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
                                 <div style="display: flex; align-items: center; gap: 6px;">
                                     <span style="font-size: 1.2rem;">🔴</span>
-                                    <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; color: var(--brand-red); text-transform: uppercase; letter-spacing: 0.5px;">The Defensive Fumble</strong>
+                                    <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; color: var(--brand-red); text-transform: uppercase; letter-spacing: 0.5px;">1. The Defensive Fumble</strong>
                                 </div>
                                 <span style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;">0:46</span>
                             </div>
@@ -226,21 +238,21 @@
                         </div>
                     </div>
 
-                    <!-- Good Clip Card -->
-                    <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1.15rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
+                    <!-- Good Clip Card (Right - Locked until Bad finishes) -->
+                    <div id="ex2-good-card" style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1.15rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
                                 <div style="display: flex; align-items: center; gap: 6px;">
                                     <span style="font-size: 1.2rem;">🟢</span>
-                                    <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">The Winning Play</strong>
+                                    <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.2rem; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">2. The Winning Play</strong>
                                 </div>
                                 <span style="font-family: 'Condensed', sans-serif; font-size: 0.9rem; color: #64748b;">1:06</span>
                             </div>
 
                             <!-- Audio Player -->
-                            <div style="display: flex; align-items: center; gap: 8px; background: var(--crust-base); border: 1.5px solid var(--brand-blue); padding: 0.4rem 0.85rem; border-radius: 20px; margin-bottom: 0.75rem;">
+                            <div id="ex2-good-player-box" style="display: flex; align-items: center; gap: 8px; background: var(--crust-base); border: 1.5px solid var(--brand-blue); padding: 0.4rem 0.85rem; border-radius: 20px; margin-bottom: 0.75rem;">
                                 <button type="button" class="audio-play-btn" id="ex2-good-btn" onclick="toggleExAudio('ex2-good')" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
-                                <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--dark-blue); flex-grow: 1;">Play Winning Tape</span>
+                                <span id="ex2-good-status" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--dark-blue); flex-grow: 1;">Play Winning Tape</span>
                                 <audio id="audio-ex2-good" src="../resources/Day2_audio/Example2_Good.mp3" onended="onExEnded('ex2-good')"></audio>
                             </div>
 
@@ -255,18 +267,6 @@
                         </div>
                     </div>
 
-                </div>
-
-                <!-- Physical Playbook Note Prompt -->
-                <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 1rem 1.25rem; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.35rem;">
-                        <span style="font-size: 1.2rem;">📓</span>
-                        <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; color: var(--brand-blue); text-transform: uppercase;">Physical Playbook Film Study Notes</strong>
-                    </div>
-                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; color: var(--crust-deep); line-height: 1.35; margin: 0;">
-                        Open your physical playbook to the <strong>Customer Recovery</strong> page. Write down:
-                        <br><strong>Prompt:</strong> <em>Why does making store excuses destroy customer trust, and how does a proactive credit protect customer retention?</em>
-                    </p>
                 </div>
             </div>
 
@@ -479,6 +479,12 @@
             step3Passed = true;
             step4Passed = true;
             step5Passed = true;
+            step2BadFinished = true;
+            step2GoodFinished = true;
+            step3BadFinished = true;
+            step3GoodFinished = true;
+            if (typeof unlockStep2Good === 'function') unlockStep2Good();
+            if (typeof unlockStep3Good === 'function') unlockStep3Good();
             if (typeof call1AudioCompleted !== 'undefined') call1AudioCompleted = true;
             if (typeof call1CpCompleted !== 'undefined') call1CpCompleted = [true, true, true, true];
             if (typeof call2AudioCompleted !== 'undefined') call2AudioCompleted = true;
@@ -562,6 +568,15 @@
         }
 
         function toggleExAudio(key) {
+            if (key === 'ex1-good' && !step2BadFinished && !isAdmin) {
+                alert("Please listen to 1. The Defensive Fumble tape first before scouting The Winning Play!");
+                return;
+            }
+            if (key === 'ex2-good' && !step3BadFinished && !isAdmin) {
+                alert("Please listen to 1. The Defensive Fumble tape first before scouting The Winning Play!");
+                return;
+            }
+
             const audio = document.getElementById(`audio-${key}`);
             const btn = document.getElementById(`${key}-btn`);
             if (!audio || !btn) return;
@@ -576,12 +591,91 @@
             }
         }
 
+        function unlockStep2Good() {
+            const btn = document.getElementById('ex1-good-btn');
+            const status = document.getElementById('ex1-good-status');
+            const playerBox = document.getElementById('ex1-good-player-box');
+            if (btn) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            }
+            if (status) {
+                status.innerText = "Play Winning Tape";
+                status.style.color = "var(--dark-blue)";
+            }
+            if (playerBox) {
+                playerBox.style.opacity = '1';
+            }
+        }
+
+        function lockStep2Good() {
+            if (isAdmin || step2BadFinished) return;
+            const btn = document.getElementById('ex1-good-btn');
+            const status = document.getElementById('ex1-good-status');
+            const playerBox = document.getElementById('ex1-good-player-box');
+            if (btn) {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+            }
+            if (status) {
+                status.innerText = "🔒 Complete Fumble Tape First";
+                status.style.color = "#64748b";
+            }
+            if (playerBox) {
+                playerBox.style.opacity = '0.7';
+            }
+        }
+
+        function unlockStep3Good() {
+            const btn = document.getElementById('ex2-good-btn');
+            const status = document.getElementById('ex2-good-status');
+            const playerBox = document.getElementById('ex2-good-player-box');
+            if (btn) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            }
+            if (status) {
+                status.innerText = "Play Winning Tape";
+                status.style.color = "var(--dark-blue)";
+            }
+            if (playerBox) {
+                playerBox.style.opacity = '1';
+            }
+        }
+
+        function lockStep3Good() {
+            if (isAdmin || step3BadFinished) return;
+            const btn = document.getElementById('ex2-good-btn');
+            const status = document.getElementById('ex2-good-status');
+            const playerBox = document.getElementById('ex2-good-player-box');
+            if (btn) {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+            }
+            if (status) {
+                status.innerText = "🔒 Complete Fumble Tape First";
+                status.style.color = "#64748b";
+            }
+            if (playerBox) {
+                playerBox.style.opacity = '0.7';
+            }
+        }
+
         function onExEnded(key) {
             const btn = document.getElementById(`${key}-btn`);
             if (btn) btn.innerText = "▶";
 
-            if (key === 'ex1-good') step2GoodFinished = true;
-            if (key === 'ex1-bad') step2BadFinished = true;
+            if (key === 'ex1-bad') {
+                step2BadFinished = true;
+                unlockStep2Good();
+            }
+            if (key === 'ex1-good') {
+                step2GoodFinished = true;
+            }
             if (step2GoodFinished && step2BadFinished) {
                 step2Passed = true;
                 if (currentStep === 2) {
@@ -593,8 +687,13 @@
                 }
             }
 
-            if (key === 'ex2-good') step3GoodFinished = true;
-            if (key === 'ex2-bad') step3BadFinished = true;
+            if (key === 'ex2-bad') {
+                step3BadFinished = true;
+                unlockStep3Good();
+            }
+            if (key === 'ex2-good') {
+                step3GoodFinished = true;
+            }
             if (step3GoodFinished && step3BadFinished) {
                 step3Passed = true;
                 if (currentStep === 3) {
@@ -1166,6 +1265,15 @@
             step3Passed = true;
             step4Passed = true;
             step5Passed = true;
+            step2BadFinished = true;
+            step2GoodFinished = true;
+            step3BadFinished = true;
+            step3GoodFinished = true;
+            unlockStep2Good();
+            unlockStep3Good();
+        } else {
+            lockStep2Good();
+            lockStep3Good();
         }
 
         updateUI();
