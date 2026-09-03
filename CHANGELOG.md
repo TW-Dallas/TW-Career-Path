@@ -20,6 +20,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Product Guides Library Expansion & Firewall-Safe Vimeo Streaming:**
   * **Domino Product Tutorial (Spot #2):** Embedded the complete product walkthrough video directly inside the Product Guides catalog via Vimeo (`1223729233?h=3fcc7edbf7`), ensuring smooth streaming on in-store networks where YouTube is firewalled.
   * **Domino Training Guide PDF (Spot #3):** Integrated the official Domino Training Guide PDF covering pizza procedures, makeline builds, and operational guidelines.
+  * **Live Fuzzy Search Bar:** Added a smart search bar to the Resource Library that performs instant letter-by-letter fuzzy matching across titles, descriptions, and file types, prioritizing the most relevant guides, videos, and job aids at the top as users type.
   * **Enhanced Viewer & Audio Safety:** Upgraded the Resource Library viewer with native Vimeo playback support, sleek dark theater mode for video streaming, and automatic audio silencing whenever navigating back to the resource list.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
