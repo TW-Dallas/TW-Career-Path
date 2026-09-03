@@ -4,6 +4,45 @@
 
     const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
 
+    // Rolling buffer of recent Dev Console errors & uncaught exceptions
+    const devConsoleErrors = [];
+    const maxErrors = 8;
+
+    try {
+        const origConsoleError = console.error;
+        console.error = function(...args) {
+            try {
+                const msg = args.map(a => {
+                    if (a instanceof Error) return a.stack || a.message;
+                    if (typeof a === 'object') {
+                        try { return JSON.stringify(a); } catch(_) { return String(a); }
+                    }
+                    return String(a);
+                }).join(' ');
+                devConsoleErrors.push(`[${new Date().toLocaleTimeString()}] [console.error] ${msg}`);
+                if (devConsoleErrors.length > maxErrors) devConsoleErrors.shift();
+            } catch (_) {}
+            origConsoleError.apply(console, args);
+        };
+
+        window.addEventListener('error', function(e) {
+            try {
+                const src = e.filename ? e.filename.split('/').pop() : 'unknown';
+                const msg = `${e.message || 'Error'} (${src}:${e.lineno || 0}:${e.colno || 0})`;
+                devConsoleErrors.push(`[${new Date().toLocaleTimeString()}] [Uncaught Exception] ${msg}`);
+                if (devConsoleErrors.length > maxErrors) devConsoleErrors.shift();
+            } catch (_) {}
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            try {
+                const reason = e.reason ? (e.reason.stack || e.reason.message || String(e.reason)) : 'Unknown rejection';
+                devConsoleErrors.push(`[${new Date().toLocaleTimeString()}] [Unhandled Rejection] ${reason}`);
+                if (devConsoleErrors.length > maxErrors) devConsoleErrors.shift();
+            } catch (_) {}
+        });
+    } catch (_) {}
+
     // Inject Styles using strictly established brand colors
     const styles = `
         /* Floating Trigger Button */
@@ -331,7 +370,12 @@
             const currentStepNum = typeof currentStep !== 'undefined' ? ` (Step ${currentStep})` : '';
             const pageLocation = `${page}${currentStepNum}`;
 
-            const url = `${AUTH_SCRIPT_URL}?action=feedback&id=${encodeURIComponent(id)}&market=${encodeURIComponent(market)}&pageUrl=${encodeURIComponent(pageLocation)}&category=${encodeURIComponent('Beta Issue Report')}&comments=${encodeURIComponent(feedbackText)}`;
+            let finalComments = feedbackText;
+            if (devConsoleErrors.length > 0) {
+                finalComments += "\n\n--- [Auto-Captured Dev Console Errors] ---\n" + devConsoleErrors.join("\n");
+            }
+
+            const url = `${AUTH_SCRIPT_URL}?action=feedback&id=${encodeURIComponent(id)}&market=${encodeURIComponent(market)}&pageUrl=${encodeURIComponent(pageLocation)}&category=${encodeURIComponent('Beta Issue Report')}&comments=${encodeURIComponent(finalComments)}`;
 
             fetch(url, { method: 'GET', credentials: 'omit' })
             .then(() => {

@@ -15,26 +15,23 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Full Practice Orders in the POS Simulator (Live Order Practice):** Connected Stage 4 seamlessly into the Order Entry training flow, allowing new hires to practice realistic, full-speed live phone orders with customer audio, hold/rewind controls, complex toppings, sides, and shift evaluation scorecards.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
+* **Day 1 Module 2 Video Progression (Sense of Urgency):** Resolved an issue on Card 4 ("Hustle Mentality / Sense of Urgency") where completing the video did not properly trigger the next card. Progression is fully restored and trainees can complete and advance seamlessly.
 * **Balanced Headset Audio Across All Lessons:** Leveled the volume across every video and audio clip so trainees won't have to constantly fiddle with their headset volume or get blasted by sudden loud calls.
-* **Responsive Classroom Split-Screen Layouts:** Upgraded live transcript boxes to dynamic auto-expanding flex containers, ensuring seamless side-by-side reading with zero card border bleeds across store computers.
-* **Master Days Lobby Status Clarity (Day 2 & Day 3):** Updated the Day 2 and Day 3 cards in the master lobby with amber **`COMING SOON • In Production`** badges and disabled buttons to eliminate confusion for trainees completing Day 1.
-* **Audio Completion Gating & Button Disabled Hardening:** Hardened disabled buttons across all modules with `pointer-events: none` and bound native HTML `disabled` properties so trainees must complete 100% of required audio before advancing.
-* **Strict Store Device Lockout Policy:** Enhanced the system-wide mobile detection to enforce that training is completed strictly on approved in-store computers and store tablets, preventing unauthorized training attempts on personal cell phones.
+* **Strict Store Device Policy:** Enforced that training is completed strictly on approved in-store computers and store tablets, preventing unauthorized training attempts on personal cell phones.
+* **Audio Completion Gating:** Trainees must listen completely through required audio coaching and practice calls before unlocking next steps.
+* **Auto-Scrolling Live Transcripts:** Synchronized scrolling with audio during phone orders for smooth reading side-by-side with questions.
 
 ### ⚠️ On Our Radar (Known Issues & Interim Fixes)
-* *(None currently active — all reported issues resolved!)*
+* *(None currently active — all reported issues resolved! If your store ever encounters an unexpected glitch or lag during a shift, report it instantly via the in-app **Feedback** button in the bottom-right corner of the screen.)*
 
 ### 🔜 On the Horizon (Upcoming Content & Rollouts)
-* **Day 2 Rollout Coming Soon (Customer Recovery & Sanitation):** Putting the finishing touches on the complete Day 2 training experience:
-  * **Module 1 (Customer Recovery & The Q-TIP Game Plan):** Coach Mike's empowerment & manager escalation playbook ("Own It or Escalate?" sorter game), interactive film studies (winning vs. defensive plays), live call deconstructions, and customer recovery branching drills.
-  * **Module 2 (Cleaning & Sanitation):** 5-step handwashing, RTE glove boundaries, 3-compartment sink & 10-second PPM test strip simulator, and the Team WOW store chore board.
+* **Day 2 Training in Development:** Content creation and interactive store simulations for Day 2 (covering advanced Customer Recovery and Store Sanitation standards) are in active production behind the scenes.
 * **Executive Culture Finale Video:** Adding Brent's inspiring Team WOW culture and core values message into the Day 1 final wrap-up before manager sign-off.
-* **Weekly New Hire Training Adoption Reporting:** Developing executive reporting to track and compare weekly new hires per market (from the Staffing Tracker) against active Wow Way training participation and completions to measure onboarding compliance.
 * **Virtual MIT Classes Link (All Stores):** Adding a direct signup and schedule link on the main Career Path page for virtual MIT classes accessible across all store locations.
 
-### 💡 Store Pro-Tip of the Week
-* **Reporting Typos & Issues On the Fly:** If you or a trainee ever spot a typo, glitch, or question you'd like adjusted while training, click the blue **Feedback** button in the bottom-right corner of that exact screen! Submitting directly from the page automatically tags the module and step so our team can review and update it immediately.
-* **Quick Refresh for Store Computers (`Ctrl + F5`):** If a store computer or training workstation ever seems to show an older screen or cached version after an update, press **`Ctrl + F5`** (or **`Ctrl + Shift + R`**) on the keyboard to perform an instant hard refresh and pull down the latest cloud version.
+### 💡 Store Pro-Tip of the Week: The Winning Training Combination
+* **Pairing Digital LMS with Physical Guides:** The online modules are designed to work hand-in-hand with your store's physical **Trainer & Trainee Packets**! When new hires write notes in their physical workbook and trainers use their coaching checklist during live order practice, information retention skyrockets.
+* **Printable Handouts on Demand:** Need extra copies? You can print fresh Day 1 Trainee & Trainer packets and the 2-page **Visual FAQ & PIN Guide** anytime directly from the **Learning Hub Resource Library** (under *Training*). Keep a couple of clean packets ready in your store office so your shift runners are always game-day ready!
 
 ---
 
