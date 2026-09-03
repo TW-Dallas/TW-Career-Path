@@ -17,6 +17,10 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
   * **Automated Leadership Completion Alerts:** Instantly sends an executive HTML Report Card email to operations leadership and the store GM as soon as the trainer signs off, giving real-time visibility into training completions and shift velocity across all markets.
 * **Full Practice Orders in the POS Simulator (Live Order Practice):** Connected Stage 4 seamlessly into the Order Entry training flow, allowing new hires to practice realistic, full-speed live phone orders with customer audio, hold/rewind controls, complex toppings, sides, and shift evaluation scorecards.
 * **Interactive Makeline & Product Build Job Aids:** Replaced the legacy build guide in the **Product Guides** section of the Learning Hub Resource Library with the newly updated, official **Interactive Job Aids Domino Team Wow** digital guide covering makeline builds, pizza procedures, and store specs.
+* **Product Guides Library Expansion & Firewall-Safe Vimeo Streaming:**
+  * **Domino Product Tutorial (Spot #2):** Embedded the complete product walkthrough video directly inside the Product Guides catalog via Vimeo (`1223729233?h=3fcc7edbf7`), ensuring smooth streaming on in-store networks where YouTube is firewalled.
+  * **Domino Training Guide PDF (Spot #3):** Integrated the official Domino Training Guide PDF covering pizza procedures, makeline builds, and operational guidelines.
+  * **Enhanced Viewer & Audio Safety:** Upgraded the Resource Library viewer with native Vimeo playback support, sleek dark theater mode for video streaming, and automatic audio silencing whenever navigating back to the resource list.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
 * **POS Simulator Wi-Fi Resilience & Safe Hitbox Sync:** Added store connection safeguards so if store Wi-Fi hiccups while downloading a screen, hitboxes remain safely locked (preventing accidental misclicks or desync), and trainees can tap an on-screen prompt to instantly reload the screen without losing progress.
