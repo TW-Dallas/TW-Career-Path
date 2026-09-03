@@ -872,10 +872,35 @@
                 hideStreamLoader();
             });
 
+            function completeCurrentVideo() {
+                const currentVid = moduleVideos[activeVideoIndex];
+                if (!currentVid) return;
+
+                if (currentVid.id === '1220730023') {
+                    uniformParts.video = true;
+                    saveUniformPartsProgress();
+                    checkUniformRequirements();
+                } else {
+                    currentVid.completed = true;
+                    saveModule2VideoProgress();
+                    renderVideoCards();
+                    checkModuleVideosCompletion();
+                }
+            }
+
             player.on('timeupdate', function(data) {
                 if (isEnforcingHold) return;
 
                 const currentVid = moduleVideos[activeVideoIndex];
+
+                // Auto-complete if trainee reaches 95%+ of video
+                if (data.duration && (data.seconds / data.duration) >= 0.95) {
+                    if (currentVid && !currentVid.completed && currentVid.id !== '1220730023') {
+                        completeCurrentVideo();
+                    } else if (currentVid && currentVid.id === '1220730023' && !uniformParts.video) {
+                        completeCurrentVideo();
+                    }
+                }
 
                 // --- STORE IMAGE (ID: 1215101422) INTERACTIVE EXERCISES ---
                 if (currentVid && currentVid.id === '1215101422') {
@@ -923,16 +948,7 @@
             });
 
             player.on('ended', function() {
-                if (activeVideoIndex === 3) {
-                    uniformParts.video = true;
-                    saveUniformPartsProgress();
-                    checkUniformRequirements();
-                } else {
-                    moduleVideos[activeVideoIndex].completed = true;
-                    saveModule2VideoProgress();
-                    renderVideoCards();
-                    checkModuleVideosCompletion();
-                }
+                completeCurrentVideo();
                 closeVideoModal();
             });
         }
