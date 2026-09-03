@@ -32,7 +32,7 @@
         
         <div style="display: flex; align-items: center; gap: 15px;">
             <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 1: Customer Recovery & Q-TIP</span>
-            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Step 1 of 6</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Step 1 of 7</span>
         </div>
     </header>
 
@@ -271,11 +271,117 @@
             </div>
 
             <!-- ======================================================== -->
-            <!-- STEP 4: SCENARIO 1 AUDIO (DECONSTRUCTING ANGEL & JONATHAN)-->
+            <!-- STEP 4: EMPOWERMENT & ESCALATION (OWN IT OR ESCALATE?)   -->
             <!-- ======================================================== -->
             <div id="step4-container" class="hidden" style="width: 100%;">
+                <div style="text-align: center; margin-bottom: 0.85rem;">
+                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.75rem; margin: 0 0 0.2rem 0;">🛡️ Empowerment & Escalation: Own It or Escalate?</h3>
+                    <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 1rem; margin: 0;">You have the power to make it right — know when to run the play and when to get leadership.</p>
+                </div>
+
+                <!-- 2-Column Coach Wisdom & Guardrails -->
+                <div style="display: grid; grid-template-columns: 1.05fr 1fr; gap: 1rem; margin-bottom: 0.85rem; text-align: left;">
+                    
+                    <!-- Left: Coach Mike Audio & Core Philosophy -->
+                    <div style="background: var(--crust-base); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 0.85rem 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <!-- Coach Audio Bar -->
+                            <div class="audio-player-pill" style="margin-bottom: 0.65rem; background: #fff; border: 1.5px solid var(--brand-blue); padding: 0.4rem 0.85rem; border-radius: 8px;">
+                                <button type="button" class="audio-play-btn" id="escalation-play-btn" onclick="toggleEscalationAudio()" style="width: 28px; height: 28px; font-size: 0.85rem;">▶</button>
+                                <div class="audio-info" style="flex-grow: 1;">
+                                    <span class="audio-title" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.9rem; color: var(--dark-blue);">Coach Mike: The Power to Make It Right</span>
+                                    <span class="audio-time" id="escalation-audio-time" style="font-family: 'Condensed', sans-serif; font-size: 0.82rem; color: #64748b;">0:00 / 1:45</span>
+                                </div>
+                                <audio id="audio-escalation" src="../resources/Day2_audio/Manager_Escalation.mp3" ontimeupdate="onEscalationTimeUpdate()" onended="onEscalationEnded()"></audio>
+                            </div>
+
+                            <!-- Fender Bender Rule -->
+                            <div style="background: #fff; border-left: 3.5px solid var(--brand-blue); border-radius: 6px; padding: 0.5rem 0.75rem; margin-bottom: 0.6rem;">
+                                <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.92rem; color: var(--brand-blue); display: flex; align-items: center; gap: 6px;">
+                                    🚗 The Fender-Bender Analogy
+                                </strong>
+                                <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.9rem; color: var(--crust-deep); line-height: 1.35; margin: 2px 0 0 0;">
+                                    <em>"If you rear-end someone in traffic, you can't likely get out of your car, say sorry, and offer a free pizza hoping they don't call insurance! But here, you get the rare opportunity to completely turn someone's day around on the spot."</em>
+                                </p>
+                            </div>
+
+                            <!-- 90% Loyalty Rule -->
+                            <div style="background: #fff; border-left: 3.5px solid #2e7d32; border-radius: 6px; padding: 0.5rem 0.75rem;">
+                                <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.92rem; color: #2e7d32; display: flex; align-items: center; gap: 6px;">
+                                    📈 The 90% Loyalty Fact
+                                </strong>
+                                <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.9rem; color: var(--crust-deep); line-height: 1.35; margin: 2px 0 0 0;">
+                                    A customer is <strong>90% more likely</strong> to become a lifelong loyal customer after a problem is handled correctly than if they never experienced an issue at all.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: The 4 Store Guardrails (When MUST You Involve a Manager?) -->
+                    <div style="background: #fff; border: 2px solid var(--crust-med); border-radius: 10px; padding: 0.85rem 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.4rem;">
+                            <span style="font-size: 1.15rem;">🛑</span>
+                            <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.3px;">When MUST You Involve a Manager?</strong>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <div style="display: flex; gap: 8px; align-items: flex-start;">
+                                <span style="font-size: 1rem;">💵</span>
+                                <span style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep); line-height: 1.3;">
+                                    <strong>Orders Over $30:</strong> Any financial refund, large discount, or void over $30 requires manager authorization (always check your store's threshold).
+                                </span>
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: flex-start;">
+                                <span style="font-size: 1rem;">👔</span>
+                                <span style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep); line-height: 1.3;">
+                                    <strong>Firm Insistence:</strong> If a customer firmly insists on leadership after your best efforts, <strong>never argue or deny them</strong>. Get a manager politely.
+                                </span>
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: flex-start;">
+                                <span style="font-size: 1rem;">🚫</span>
+                                <span style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep); line-height: 1.3;">
+                                    <strong>Never Lie:</strong> Never pretend to be a manager. Be proud: <em>"I'm not the manager on duty, but I am fully empowered to fix this for you right now!"</em>
+                                </span>
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: flex-start;">
+                                <span style="font-size: 1rem;">⚠️</span>
+                                <span style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep); line-height: 1.3;">
+                                    <strong>Zero Abuse:</strong> You are never expected to endure profanity, harassment, or verbal threats. Step back and alert management immediately.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Interactive 6-Card Sorter Challenge -->
+                <div style="background: #fff; border: 2px solid var(--brand-blue); border-radius: 12px; padding: 1rem 1.25rem; box-shadow: 0 4px 12px rgba(0,0,0,0.04); text-align: left;">
+                    
+                    <!-- Sorter Top Bar -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--crust-med); padding-bottom: 0.5rem; margin-bottom: 0.85rem;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.25rem;">🎮</span>
+                            <strong style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.15rem; color: var(--brand-blue); text-transform: uppercase; letter-spacing: 0.5px;">Interactive Sorter: Own It or Escalate?</strong>
+                        </div>
+                        <span id="sorter-progress-badge" style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.85rem; background: #e0f2fe; color: #0284c7; padding: 3px 10px; border-radius: 12px;">
+                            Scenario 1 of 6
+                        </span>
+                    </div>
+
+                    <!-- Scenario Card Container -->
+                    <div id="sorter-card-area">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- STEP 5: PRACTICE CALL 1 (DECONSTRUCTING ANGEL & JONATHAN) -->
+            <!-- ======================================================== -->
+            <div id="step5-container" class="hidden" style="width: 100%;">
                 <div style="text-align: center; margin-bottom: 0.4rem;">
-                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.6rem; margin: 0 0 0.1rem 0;">🎧 Live Scenario 1: Angel & Jonathan</h3>
+                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.6rem; margin: 0 0 0.1rem 0;">📞 Practice Call 1 of 2: Angel & Jonathan</h3>
                     <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 0.98rem; margin: 0;">Deconstructing a Live Carryout Recovery Call (2:47)</p>
                 </div>
 
@@ -350,11 +456,11 @@
             </div>
 
             <!-- ======================================================== -->
-            <!-- STEP 5: SCENARIO 2 AUDIO (CALL THE SHOT — LIZ & AIDEN)   -->
+            <!-- STEP 6: PRACTICE CALL 2 (CALL THE SHOT — LIZ & AIDEN)   -->
             <!-- ======================================================== -->
-            <div id="step5-container" class="hidden" style="width: 100%;">
+            <div id="step6-container" class="hidden" style="width: 100%;">
                 <div style="text-align: center; margin-bottom: 0.4rem;">
-                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.6rem; margin: 0 0 0.1rem 0;">🎮 Live Scenario 2: Liz & Aiden</h3>
+                    <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.6rem; margin: 0 0 0.1rem 0;">📞 Practice Call 2 of 2: Liz & Aiden</h3>
                     <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 0.98rem; margin: 0;">Call the Shot Simulator: Choose Liz's Winning Responses in Real Time (2:06)</p>
                 </div>
 
@@ -429,10 +535,10 @@
             </div>
 
             <!-- ======================================================== -->
-            <!-- STEP 6: DECISION GUIDE & COMPLETION                      -->
+            <!-- STEP 7: DECISION GUIDE & COMPLETION                      -->
             <!-- ======================================================== -->
-            <div id="step6-container" class="hidden" style="width: 100%; text-align: center;">
-                <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.35rem 0;">Store Decision Guide</h3>
+            <div id="step7-container" class="hidden" style="width: 100%; text-align: center;">
+                <h3 style="font-family: 'PizzaPress', sans-serif; color: var(--brand-blue); font-size: 1.85rem; margin: 0 0 0.35rem 0;">Store Decision Guide & Wrap-Up</h3>
                 <p style="font-family: 'Compact', 'OneDotCd', sans-serif; color: var(--crust-deep); font-size: 1.05rem; margin: 0 0 1rem 0;">Remake vs. Store Credit — Calling the right play every time.</p>
 
                 <!-- Decision Grid -->
@@ -496,7 +602,7 @@
         const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
 
         let currentStep = 1;
-        const totalSteps = 6;
+        const totalSteps = 7;
 
         // Step completion flags
         let step1Passed = isAdmin;
@@ -504,6 +610,7 @@
         let step3Passed = isAdmin;
         let step4Passed = isAdmin;
         let step5Passed = isAdmin;
+        let step6Passed = isAdmin;
 
         window.unlockAll = function() {
             step1Passed = true;
@@ -511,6 +618,7 @@
             step3Passed = true;
             step4Passed = true;
             step5Passed = true;
+            step6Passed = true;
             step2BadFinished = true;
             step2GoodFinished = true;
             step3BadFinished = true;
@@ -539,6 +647,12 @@
                 audioCoach.pause();
                 const coachBtn = document.getElementById('coach-play-btn');
                 if (coachBtn) coachBtn.innerText = "▶";
+            }
+            const escAudio = document.getElementById('audio-escalation');
+            if (escAudio) {
+                escAudio.pause();
+                const escBtn = document.getElementById('escalation-play-btn');
+                if (escBtn) escBtn.innerText = "▶";
             }
             ['ex1-good', 'ex1-bad', 'ex2-bad', 'ex2-good'].forEach(id => {
                 const el = document.getElementById(`audio-${id}`);
@@ -736,6 +850,223 @@
                     }
                 }
             }
+        }
+
+        // ========================================================
+        // STEP 4: EMPOWERMENT & ESCALATION SORTER ENGINE
+        // ========================================================
+        let escalationAudioFinished = false;
+        let currentSorterIndex = 0;
+
+        const ESCALATION_SCENARIOS = [
+            {
+                id: 1,
+                speaker: "Customer (Marcus)",
+                situation: "Carryout Order",
+                quote: "“Hey, I just opened my box at home and my large pepperoni pizza is lukewarm and the crust is tough. Can I get a fresh remake?”",
+                correct: "own",
+                badge: "🍕 Quality Remake",
+                ownFeedback: "🎯 Spot On! You have 100% empowerment to make this right. Apologize sincerely using LEADS, fire a fresh hot remake on priority immediately, and offer a beverage or dipping sauces while they wait!",
+                escalateFeedback: "⚠️ No manager needed here! As a Team Wow member, you are fully authorized to solve food-quality issues immediately. Don't make the customer wait on management—own the remake and turn their day around!"
+            },
+            {
+                id: 2,
+                speaker: "Customer (Corporate Client)",
+                situation: "Office Catering Lunch",
+                quote: "“We ordered $85 worth of pizzas for our quarterly board meeting at noon. Two specialty pizzas were missing and everyone had to leave. I want a full refund back on my company card.”",
+                correct: "escalate",
+                badge: "💵 Over $30 Refund",
+                ownFeedback: "⚠️ Caution! Financial refunds or credits exceeding the $30 threshold require manager authorization in the POS. Involve your manager to review the invoice and process the card refund.",
+                escalateFeedback: "🎯 Exactly Right! Any refund or credit exceeding the $30 threshold requires manager authorization. Politely say: 'I completely understand how important that meeting was. Let me get my manager on duty right now to review the invoice and process that refund for you!'"
+            },
+            {
+                id: 3,
+                speaker: "Customer (Frustrated Caller)",
+                situation: "Phone Complaint",
+                quote: "“I don't want to explain this to you. Put the store manager on the phone right now, or I'm calling corporate!”",
+                correct: "escalate",
+                badge: "👔 Firm Manager Demand",
+                ownFeedback: "⚠️ Golden Rule: Never argue or refuse when a customer directly demands a manager! Even if you can solve the issue, refusing to transfer only escalates their frustration.",
+                escalateFeedback: "🎯 Golden Rule Followed! If a customer explicitly demands management after a polite greeting, do not debate or defend. Say: 'I understand completely. Let me place you on a brief hold while I grab the manager on duty,' and transfer promptly."
+            },
+            {
+                id: 4,
+                speaker: "Customer (Curious Caller)",
+                situation: "Phone Inquiry",
+                quote: "“Before I tell you what's wrong with my delivery... are you the manager?”",
+                correct: "own",
+                badge: "🛡️ Honesty & Ownership",
+                ownFeedback: "🎯 Perfect Play! Never lie and claim to be a manager. Be proud and honest: 'I’m not the manager on duty, but I am fully empowered to fix your order and make things right! How can I help you today?'",
+                escalateFeedback: "⚠️ Don't rush to hand off the call! As long as you are honest about your role ('I’m not the manager, but I can definitely solve this for you!'), you have the power to resolve their problem."
+            },
+            {
+                id: 5,
+                speaker: "Customer (Sarah)",
+                situation: "Delivery Missing Items",
+                quote: "“Our pizzas are great, but the driver forgot our 2 cups of garlic dipping sauce and the icing for our cinnastix!”",
+                correct: "own",
+                badge: "🥫 Missing Dippers / Sides",
+                ownFeedback: "🎯 That's how we roll! Small missing sides or drinks never need a manager. Credit their phone profile in Pulse, dispatch the next driver, or hook them up with an extra treat next time!",
+                escalateFeedback: "⚠️ Don't escalate for missing sauces! You are trusted and fully authorized to fix this immediately—apply a quick store credit or dispatch the next driver without hesitation."
+            },
+            {
+                id: 6,
+                speaker: "Customer (Hostile Caller)",
+                situation: "Angry Caller",
+                quote: "“You people are complete idiots! [Screaming profanity & personal insults at you through the receiver]”",
+                correct: "escalate",
+                badge: "⚠️ Abusive Language / Safety",
+                ownFeedback: "⚠️ Never endure abusive hostility or harassment! You deserve respect in our stores. When someone is screaming profanity or making personal insults, calmly transfer the call to your manager.",
+                escalateFeedback: "🎯 Safety & Respect First! Team Wow members are never expected to tolerate personal abuse or profane attacks. Calmly inform them: 'I want to help you, but I will not be spoken to that way. Let me get my manager on the line.'"
+            }
+        ];
+
+        function renderSorterScenario(idx) {
+            const area = document.getElementById('sorter-card-area');
+            const badge = document.getElementById('sorter-progress-badge');
+            if (!area) return;
+
+            if (idx >= ESCALATION_SCENARIOS.length) {
+                step4Passed = true;
+                const nextBtn = document.getElementById('btn-next');
+                if (nextBtn && currentStep === 4) {
+                    nextBtn.classList.remove('btn-disabled');
+                    nextBtn.disabled = false;
+                }
+                if (badge) {
+                    badge.innerText = "✓ Complete";
+                    badge.style.background = "#dcfce7";
+                    badge.style.color = "#15803d";
+                }
+                area.innerHTML = `
+                    <div style="text-align: center; padding: 1.5rem 1rem; background: #f0fdf4; border: 2px solid #86efac; border-radius: 10px;">
+                        <span style="font-size: 2.2rem; display: block; margin-bottom: 0.5rem;">🎉</span>
+                        <h4 style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.35rem; color: #166534; margin: 0 0 0.35rem 0; text-transform: uppercase;">
+                            Master of Customer Recovery Unlocked!
+                        </h4>
+                        <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 1.05rem; color: #1e3a8a; margin: 0 0 1rem 0;">
+                            You nailed all 6 scenarios! You know exactly when to take the wheel and solve problems, and when store policy requires a manager handoff.
+                        </p>
+                        <button type="button" class="btn" onclick="changeStep(1)" style="padding: 0.65rem 2rem; font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; background: var(--brand-blue); color: white; border-radius: 25px; border: none; cursor: pointer;">
+                            Continue to Practice Call 1 ➔
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            const sc = ESCALATION_SCENARIOS[idx];
+            if (badge) badge.innerText = `Scenario ${idx + 1} of ${ESCALATION_SCENARIOS.length}`;
+
+            area.innerHTML = `
+                <div style="background: var(--crust-light); border: 1.5px solid var(--crust-med); border-radius: 10px; padding: 1rem 1.15rem; margin-bottom: 0.85rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <span style="font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.85rem; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px;">
+                            ${sc.speaker} • ${sc.situation}
+                        </span>
+                        <span style="font-family: 'Condensed', sans-serif; font-size: 0.8rem; background: #fff; border: 1px solid #cbd5e1; color: #475569; padding: 2px 8px; border-radius: 10px;">
+                            ${sc.badge}
+                        </span>
+                    </div>
+
+                    <!-- Customer Speech Bubble -->
+                    <div style="background: #fff; border-left: 4px solid var(--brand-blue); border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+                        <p style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.08rem; color: var(--dark-blue); line-height: 1.35; margin: 0;">
+                            ${sc.quote}
+                        </p>
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 0.5rem;">
+                        <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; color: var(--crust-burnt); text-transform: uppercase; letter-spacing: 0.5px;">
+                            What is the winning play?
+                        </span>
+                    </div>
+
+                    <!-- Decision Buttons -->
+                    <div id="sorter-btn-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 0.5rem;">
+                        <button type="button" id="btn-choice-own" onclick="handleSorterChoice('own')" class="btn" style="padding: 0.75rem 1rem; font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; border-radius: 25px; background: var(--brand-blue); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <span>🍕</span> Own It & Make It Right
+                        </button>
+                        <button type="button" id="btn-choice-esc" onclick="handleSorterChoice('escalate')" class="btn" style="padding: 0.75rem 1rem; font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; border-radius: 25px; background: var(--dark-blue); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <span>👔</span> Escalate to Manager
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Feedback Box -->
+                    <div id="sorter-feedback-box" style="display: none; border-radius: 8px; padding: 0.75rem 1rem; margin-top: 0.75rem;"></div>
+                </div>
+            `;
+        }
+
+        function handleSorterChoice(choice) {
+            const sc = ESCALATION_SCENARIOS[currentSorterIndex];
+            const isCorrect = (choice === sc.correct);
+            const feedbackBox = document.getElementById('sorter-feedback-box');
+            const btnOwn = document.getElementById('btn-choice-own');
+            const btnEsc = document.getElementById('btn-choice-esc');
+
+            if (btnOwn) btnOwn.disabled = true;
+            if (btnEsc) btnEsc.disabled = true;
+
+            if (choice === 'own' && btnOwn) {
+                btnOwn.style.boxShadow = isCorrect ? "0 0 0 3px #86efac" : "0 0 0 3px #fca5a5";
+            }
+            if (choice === 'escalate' && btnEsc) {
+                btnEsc.style.boxShadow = isCorrect ? "0 0 0 3px #86efac" : "0 0 0 3px #fca5a5";
+            }
+
+            const explanation = (choice === 'own') ? sc.ownFeedback : sc.escalateFeedback;
+
+            if (feedbackBox) {
+                feedbackBox.style.display = 'block';
+                feedbackBox.style.background = isCorrect ? '#f0fdf4' : '#fff7ed';
+                feedbackBox.style.border = isCorrect ? '1.5px solid #86efac' : '1.5px solid #fdba74';
+                feedbackBox.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+                        <p style="font-family: 'Compact', 'OneDotCd', sans-serif; font-size: 0.98rem; color: ${isCorrect ? '#166534' : '#9a3412'}; line-height: 1.35; margin: 0;">
+                            ${explanation}
+                        </p>
+                        <button type="button" class="btn" onclick="nextSorterScenario()" style="padding: 0.45rem 1.15rem; font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.92rem; background: ${isCorrect ? '#16a34a' : 'var(--brand-blue)'}; color: white; border-radius: 20px; border: none; cursor: pointer; white-space: nowrap;">
+                            ${currentSorterIndex + 1 < ESCALATION_SCENARIOS.length ? 'Next Scenario ➔' : 'Complete Challenge ✓'}
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function nextSorterScenario() {
+            currentSorterIndex++;
+            renderSorterScenario(currentSorterIndex);
+        }
+
+        function toggleEscalationAudio() {
+            const audio = document.getElementById('audio-escalation');
+            const btn = document.getElementById('escalation-play-btn');
+            if (!audio) return;
+            if (audio.paused) {
+                pauseAllAudio();
+                audio.play().catch(console.warn);
+                if (btn) btn.innerText = "⏸";
+            } else {
+                audio.pause();
+                if (btn) btn.innerText = "▶";
+            }
+        }
+
+        function onEscalationTimeUpdate() {
+            const audio = document.getElementById('audio-escalation');
+            const timeEl = document.getElementById('escalation-audio-time');
+            if (audio && timeEl) {
+                const cur = formatTime(audio.currentTime);
+                const dur = formatTime(audio.duration || 105);
+                timeEl.innerText = `${cur} / ${dur}`;
+            }
+        }
+
+        function onEscalationEnded() {
+            const btn = document.getElementById('escalation-play-btn');
+            if (btn) btn.innerText = "▶";
+            escalationAudioFinished = true;
         }
 
         // ========================================================
@@ -1042,7 +1373,7 @@
 
             const allPassed = call1CpCompleted.every(Boolean);
             if (allPassed) {
-                step4Passed = true;
+                step5Passed = true;
                 document.getElementById('btn-next').classList.remove('btn-disabled');
             }
         }
@@ -1078,7 +1409,7 @@
                     }, 3000);
                 } else {
                     if (call1CpCompleted.every(Boolean)) {
-                        step4Passed = true;
+                        step5Passed = true;
                         nextBtn.classList.remove('btn-disabled');
                     }
                 }
@@ -1221,7 +1552,7 @@
 
             const allPassed = call2CpCompleted.every(Boolean);
             if (allPassed) {
-                step5Passed = true;
+                step6Passed = true;
                 document.getElementById('btn-next').classList.remove('btn-disabled');
             }
         }
@@ -1268,7 +1599,7 @@
                     }, 3000);
                 } else {
                     if (call2CpCompleted.every(Boolean)) {
-                        step5Passed = true;
+                        step6Passed = true;
                         nextBtn.classList.remove('btn-disabled');
                     }
                 }
@@ -1292,6 +1623,7 @@
                 if (currentStep === 3 && !step3Passed) return;
                 if (currentStep === 4 && !step4Passed) return;
                 if (currentStep === 5 && !step5Passed) return;
+                if (currentStep === 6 && !step6Passed) return;
             }
 
             currentStep += direction;
@@ -1305,6 +1637,7 @@
             document.getElementById('step4-container').classList.add('hidden');
             document.getElementById('step5-container').classList.add('hidden');
             document.getElementById('step6-container').classList.add('hidden');
+            document.getElementById('step7-container').classList.add('hidden');
 
             const btnBack = document.getElementById('btn-back');
             const btnNext = document.getElementById('btn-next');
@@ -1349,6 +1682,12 @@
             }
             else if (currentStep === 6) {
                 document.getElementById('step6-container').classList.remove('hidden');
+                btnNext.disabled = !step6Passed && !isAdmin;
+                if (!step6Passed && !isAdmin) btnNext.classList.add('btn-disabled');
+                else btnNext.classList.remove('btn-disabled');
+            }
+            else if (currentStep === 7) {
+                document.getElementById('step7-container').classList.remove('hidden');
                 btnNext.classList.add('hidden');
                 btnFinish.classList.remove('hidden');
                 localStorage.setItem('day2_mod1_complete', 'true');
@@ -1395,6 +1734,7 @@
             step3Passed = true;
             step4Passed = true;
             step5Passed = true;
+            step6Passed = true;
             step2BadFinished = true;
             step2GoodFinished = true;
             step3BadFinished = true;
@@ -1408,7 +1748,8 @@
 
         updateUI();
 
-        // Initialize dynamic live transcripts and first checkpoints
+        // Initialize dynamic live transcripts, sorter game, and first checkpoints
+        renderSorterScenario(0);
         renderTranscripts();
         renderCall1Checkpoint(0);
         renderCall2Checkpoint(0);
