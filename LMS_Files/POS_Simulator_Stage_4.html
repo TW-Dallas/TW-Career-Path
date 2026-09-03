@@ -1538,6 +1538,12 @@
                 console.log("[ADMIN MODE] Progress tracking bypassed for executive view.");
                 localStorage.setItem('mod4_complete', 'true');
                 localStorage.removeItem('mod4_saved_stage');
+                localStorage.setItem('mod4_scorecard', JSON.stringify({
+                    accuracyScore: 98,
+                    grade: 'A+ (Shift Ready)',
+                    stars: '⭐⭐⭐⭐⭐',
+                    wrongClicks: 0
+                }));
                 return;
             }
             const market = localStorage.getItem('tw_market');
@@ -1563,8 +1569,14 @@
 
             console.log("SENDING STAGE 4 EVALUATION DATA: ", url);
 
-            // 1. Mark Module 4 complete for the Dashboard
+            // 1. Mark Module 4 complete and store scorecard for Day 1 Report Card
             localStorage.setItem('mod4_complete', 'true');
+            localStorage.setItem('mod4_scorecard', JSON.stringify({
+                accuracyScore: metrics.accuracyScore,
+                grade: metrics.grade,
+                stars: metrics.stars,
+                wrongClicks: wrongClicks
+            }));
 
             // 2. Clear saved stage (so clicking Module 4 later starts fresh if re-taken)
             localStorage.removeItem('mod4_saved_stage');

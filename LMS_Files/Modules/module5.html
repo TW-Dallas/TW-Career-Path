@@ -422,7 +422,7 @@
                             </div>
                         </td>
                         <td class="scorecard-col-status">
-                            <span style="background: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 12px; font-size: 0.88rem;">&#10004; Live Orders Certified</span>
+                            <span id="rc-mod4-status" style="background: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 12px; font-size: 0.88rem;">&#10004; Live Orders Certified</span>
                         </td>
                     </tr>
                     <tr class="scorecard-row">
@@ -724,6 +724,28 @@
 
             const activeEl = document.getElementById('rc-active-time');
             if (activeEl) activeEl.innerText = activeFormatted;
+
+            // Module 4 Scorecard Integration
+            let mod4ScoreDisplay = "Live Orders Certified • Grade A (Shift Ready) ⭐⭐⭐⭐⭐";
+            try {
+                const rawMod4 = localStorage.getItem('mod4_scorecard');
+                if (rawMod4) {
+                    const parsed = JSON.parse(rawMod4);
+                    if (parsed && parsed.accuracyScore !== undefined) {
+                        const grade = parsed.grade || 'A (Shift Ready)';
+                        const acc = parsed.accuracyScore;
+                        const stars = parsed.stars || '⭐⭐⭐⭐⭐';
+                        const wrong = (parsed.wrongClicks !== undefined && parsed.wrongClicks !== null) ? ` (${parsed.wrongClicks} Misses)` : '';
+                        mod4ScoreDisplay = `Grade: ${grade} • ${acc}% Accuracy${wrong} ${stars}`;
+                    }
+                }
+            } catch(err) {
+                console.warn("Could not parse Mod 4 scorecard:", err);
+            }
+            const mod4StatusEl = document.getElementById('rc-mod4-status');
+            if (mod4StatusEl) {
+                mod4StatusEl.innerHTML = `&#10004; ${mod4ScoreDisplay}`;
+            }
         }
 
         // --- TRAINER PIN VERIFICATION ---
@@ -747,12 +769,13 @@
             const store = localStorage.getItem('tw_store') || '';
             const elapsedTime = document.getElementById('rc-elapsed-time') ? document.getElementById('rc-elapsed-time').innerText : '2h 15m';
             const activeTime = document.getElementById('rc-active-time') ? document.getElementById('rc-active-time').innerText : '1h 45m';
+            const mod4Score = document.getElementById('rc-mod4-status') ? document.getElementById('rc-mod4-status').innerText.replace(/^✔\s*/i, '').trim() : 'Live Orders Certified';
 
             verifyBtn.disabled = true;
             verifyBtn.innerText = "Verifying PIN...";
             errorMsg.style.display = 'none';
 
-            const verifyUrl = `${AUTH_SCRIPT_URL}?action=verifyTrainerPin&market=${encodeURIComponent(market)}&pin=${encodeURIComponent(enteredPin)}&traineeId=${encodeURIComponent(id)}&traineeName=${encodeURIComponent(traineeName)}&traineeStore=${encodeURIComponent(store)}&traineeMarket=${encodeURIComponent(market)}&module=${encodeURIComponent('Day 1 Mod 5')}&elapsedTime=${encodeURIComponent(elapsedTime)}&activeTime=${encodeURIComponent(activeTime)}`;
+            const verifyUrl = `${AUTH_SCRIPT_URL}?action=verifyTrainerPin&market=${encodeURIComponent(market)}&pin=${encodeURIComponent(enteredPin)}&traineeId=${encodeURIComponent(id)}&traineeName=${encodeURIComponent(traineeName)}&traineeStore=${encodeURIComponent(store)}&traineeMarket=${encodeURIComponent(market)}&module=${encodeURIComponent('Day 1 Mod 5')}&elapsedTime=${encodeURIComponent(elapsedTime)}&activeTime=${encodeURIComponent(activeTime)}&mod4Score=${encodeURIComponent(mod4Score)}`;
 
             fetch(verifyUrl, { method: 'GET', credentials: 'omit' })
                 .then(res => res.json())
