@@ -110,6 +110,7 @@
         #orderForm { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
         .form-scroll-area { flex: 1; overflow-y: auto; padding-right: 8px; margin-bottom: 8px; }
         .form-actions { flex: 0 0 auto; display: flex; gap: 12px; background: var(--card-bg); padding-top: 10px; border-top: 1px solid var(--crust-med); }
+        .form-actions button { white-space: nowrap; }
         
         .control-row { display: flex; gap: 10px; margin-bottom: 8px; }
         .control-row select { padding: 8px; border-radius: 6px; border: 1px solid var(--crust-dark); font-family: 'Subhead2', sans-serif; font-size: 18px; background: var(--card-bg); flex: 1; }
@@ -611,6 +612,17 @@
                         <input type="text" id="fieldPoPdf" placeholder="Paste Google Drive PDF URL here">
                     </div>
 
+                    <!-- Fulfillment & PO Quick Action Strip -->
+                    <div class="fulfillment-strip" style="display: flex; align-items: center; justify-content: space-between; background: var(--crust-light); border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 10px 14px; margin-top: 10px; margin-bottom: 2px; gap: 12px; flex-wrap: wrap;">
+                        <label style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Subhead1', sans-serif; font-size: 15px; cursor: pointer; user-select: none; margin: 0; color: var(--crust-burnt);">
+                            <input type="checkbox" id="checkPulse" style="width: 18px; height: 18px; accent-color: var(--brand-blue); cursor: pointer;">
+                            <span>🍕 Entered in Pulse (POS)</span>
+                        </label>
+                        <button type="button" id="btnPushMadison" onclick="triggerSendToMadison()" title="Email PO packet to Madison (Accounts Payable) now" style="background: var(--dark-blue); font-family: 'Subhead1', sans-serif; font-size: 13px; padding: 7px 14px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            📧 Send PO Packet to Madison
+                        </button>
+                    </div>
+
                     <!-- COLLAPSIBLE BRANDED EMAIL REPLY BUILDER -->
                     <details class="manual-overrides-details" style="margin-top: 12px;">
                         <summary>📋 Branded Email Reply Builder</summary>
@@ -672,33 +684,21 @@
                         </div>
                     </details>
 
-                    <!-- COLLAPSIBLE ACTIVE STAGE CHECKBOXES (Manual Overrides) -->
-                    <details class="manual-overrides-details">
-                        <summary>⚙️ View Active Stages & Manual Overrides</summary>
-                        <div class="checkbox-grid">
-                            <div class="section-header">Stage 1: Quote Tracking</div>
-                            <label class="checkbox-item"><input type="checkbox" id="checkQuoteDrafted" disabled> Quote Drafted / Created</label>
-                            <label class="checkbox-item"><input type="checkbox" id="checkQuoteSent"> Quote Email Sent</label>
-                            
-                            <div class="section-header">Stage 2: Store Processing</div>
-                            <label class="checkbox-item"><input type="checkbox" id="checkPulse"> Entered in Pulse (POS) / Store Notified</label>
-                            <label class="checkbox-item"><input type="checkbox" id="checkCe" disabled> Morning of Coordinator Confirmation Sent (By Trigger)</label>
-                            
-                            <div class="section-header">Stage 3: Accounts Payable & PO</div>
-                            <label class="checkbox-item"><input type="checkbox" id="checkPoProcessed"> PO Received / PO Confirmation Sent</label>
-                            <label class="checkbox-item" style="display: flex; align-items: center; gap: 4px;">
-                                <input type="checkbox" id="checkAccountingSent" disabled> Sent to Madison 
-                                <button type="button" id="btnPushMadison" onclick="triggerSendToMadison()" title="Email PO packet to Madison now" style="padding: 2px 6px; font-size: 11px; background: var(--dark-blue); border-radius: 3px; height: 22px;">📧 Send Now</button>
-                            </label>
-                            <label class="checkbox-item"><input type="checkbox" id="checkChaserSent" disabled> PO Chaser (By Trigger)</label>
-                        </div>
-                    </details>
+                    <!-- Hidden stage inputs for script compatibility -->
+                    <div class="hidden">
+                        <input type="checkbox" id="checkQuoteDrafted" disabled>
+                        <input type="checkbox" id="checkQuoteSent">
+                        <input type="checkbox" id="checkCe" disabled>
+                        <input type="checkbox" id="checkPoProcessed">
+                        <input type="checkbox" id="checkAccountingSent" disabled>
+                        <input type="checkbox" id="checkChaserSent" disabled>
+                    </div>
                 </div>
 
                 <div class="form-actions" id="orderFormActions">
                     <button type="submit" style="flex: 1.5; background: var(--med-blue);">💾 Save Row Details</button>
                     <button type="button" id="btnDraftQuote" style="flex: 1.5; background: var(--brand-red);" onclick="triggerQuoteGeneration()" disabled>📄 Draft Quote Sheet</button>
-                    <button type="button" id="btnSendQuote" style="flex: 1.5; background: var(--brand-red);" class="hidden" onclick="triggerQuoteSend()">📧 Send Quote to School</button>
+                    <button type="button" id="btnSendQuote" style="flex: 1.5; background: var(--brand-red);" class="hidden" onclick="triggerQuoteSend()">📧 Send Quote</button>
                     <button type="button" id="btnDeleteOrder" style="background: var(--dark-red);" class="hidden" onclick="deleteCurrentOrder()">🗑️ Delete Order</button> <!-- ADDED -->
                     <button type="button" class="secondary" id="btnCancel" onclick="clearForm()" style="flex: 1;">Cancel</button>
                 </div>
