@@ -127,8 +127,8 @@ const QUESTION_BANK = {
             topic: 'Team WOW Mission',
             question: 'What is the overarching mission of Team WOW that guides every position in the store?',
             options: [
-                { text: 'A. Dedicated to delivering the best customer experience possible', correct: true },
-                { text: 'B. Making pizzas as fast as possible regardless of mistakes', correct: false },
+                { text: 'A. Making pizzas as fast as possible regardless of mistakes', correct: false },
+                { text: 'B. Dedicated to delivering the best customer experience possible', correct: true },
                 { text: 'C. Reaching maximum sales targets above all else', correct: false }
             ]
         },
@@ -138,8 +138,8 @@ const QUESTION_BANK = {
             question: 'What are the four core focus areas of your 3-day onboarding program?',
             options: [
                 { text: 'A. Speed, Dough Prep, Sales Contests, and Routing', correct: false },
-                { text: 'B. Service, Uniform & Professionalism, Safety & Workplace Standards, and Execution', correct: true },
-                { text: 'C. Cash Handling, Oven Tending, Dishwashing, and Phone Scripts', correct: false }
+                { text: 'B. Cash Handling, Oven Tending, Dishwashing, and Phone Scripts', correct: false },
+                { text: 'C. Service, Uniform & Professionalism, Safety & Workplace Standards, and Execution', correct: true }
             ]
         },
         {
@@ -157,9 +157,9 @@ const QUESTION_BANK = {
             topic: 'Uniform Standards',
             question: 'Why do we treat our uniform as our "Game Day Jersey"?',
             options: [
-                { text: 'A. Because appearance creates confidence and shows customers we are prepared, professional, and proud', correct: true },
-                { text: 'B. So that shift managers do not have to conduct daily pre-game checks', correct: false },
-                { text: 'C. It allows team members to wear athletic sweatpants on busy days', correct: false }
+                { text: 'A. So that shift managers do not have to conduct daily pre-game checks', correct: false },
+                { text: 'B. It allows team members to wear athletic sweatpants on busy days', correct: false },
+                { text: 'C. Because appearance creates confidence and shows customers we are prepared, professional, and proud', correct: true }
             ]
         },
         {
@@ -167,8 +167,8 @@ const QUESTION_BANK = {
             topic: 'LEADS Recovery',
             question: 'When handling a customer concern or remake, what does LEADS stand for?',
             options: [
-                { text: 'A. Listen, Empathize, Apologize, Do what it takes, Stand by your promise', correct: true },
-                { text: 'B. Look, Evaluate, Assess, Deliver, Smile', correct: false },
+                { text: 'A. Look, Evaluate, Assess, Deliver, Smile', correct: false },
+                { text: 'B. Listen, Empathize, Apologize, Do what it takes, Stand by your promise', correct: true },
                 { text: 'C. Listen, Explain internal mistakes, Argue, Discount, Send out', correct: false }
             ]
         },
@@ -177,8 +177,8 @@ const QUESTION_BANK = {
             topic: 'Sense of Urgency',
             question: 'What is true "Sense of Urgency" on a Team WOW shift?',
             options: [
-                { text: 'A. Running in a panic and shouting at teammates when orders drop', correct: false },
-                { text: 'B. Moving with purpose: fast but controlled, quick but accurate, focused and intentional', correct: true },
+                { text: 'A. Moving with purpose: fast but controlled, quick but accurate, focused and intentional', correct: true },
+                { text: 'B. Running in a panic and shouting at teammates when orders drop', correct: false },
                 { text: 'C. Cutting corners on topping portions to clear the make line faster', correct: false }
             ]
         },
@@ -187,9 +187,9 @@ const QUESTION_BANK = {
             topic: 'Operations as Service',
             question: 'Why is customer service considered a "team sport" in our stores?',
             options: [
-                { text: 'A. Because everyone touches the customer experience — a smile cannot fix a missing, late, or cold pizza', correct: true },
+                { text: 'A. Because make line athletes are not responsible for customer satisfaction', correct: false },
                 { text: 'B. Because only the driver and counter CSR interact with the guest', correct: false },
-                { text: 'C. Because make line athletes are not responsible for customer satisfaction', correct: false }
+                { text: 'C. Because everyone touches the customer experience — a smile cannot fix a missing, late, or cold pizza', correct: true }
             ]
         },
         {
@@ -197,9 +197,9 @@ const QUESTION_BANK = {
             topic: 'Menu Mastery',
             question: 'Why is product and menu knowledge critical when taking customer orders?',
             options: [
-                { text: 'A. It gives you the confidence to guide customers, suggest favorites, and answer dietary/crust questions smoothly', correct: true },
-                { text: 'B. It is only needed if the computer register goes offline', correct: false },
-                { text: 'C. It allows you to change recipe portions without manager approval', correct: false }
+                { text: 'A. It allows you to change recipe portions without manager approval', correct: false },
+                { text: 'B. It gives you the confidence to guide customers, suggest favorites, and answer dietary/crust questions smoothly', correct: true },
+                { text: 'C. It is only needed if the computer register goes offline', correct: false }
             ]
         },
         {
@@ -207,9 +207,9 @@ const QUESTION_BANK = {
             topic: 'Phone Standards',
             question: 'What is our standard for answering store phone calls?',
             options: [
-                { text: 'A. Answer promptly by the 2nd ring with a friendly, professional greeting script', correct: true },
-                { text: 'B. Let the phone ring 5 times so callers know the kitchen is busy', correct: false },
-                { text: 'C. Pick up and immediately place the caller on hold without greeting them', correct: false }
+                { text: 'A. Let the phone ring 5 times so callers know the kitchen is busy', correct: false },
+                { text: 'B. Pick up and immediately place the caller on hold without greeting them', correct: false },
+                { text: 'C. Answer promptly by the 2nd ring with a friendly, professional greeting script', correct: true }
             ]
         },
         {
