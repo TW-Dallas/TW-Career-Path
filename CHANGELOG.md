@@ -16,6 +16,8 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Interactive Makeline & Product Build Job Aids:** Replaced the legacy build guide in the **Product Guides** section of the Learning Hub Resource Library with the newly updated, official **Interactive Job Aids Domino Team Wow** digital guide covering makeline builds, pizza procedures, and store specs.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
+* **POS Simulator Wi-Fi Resilience & Safe Hitbox Sync:** Added store connection safeguards so if store Wi-Fi hiccups while downloading a screen, hitboxes remain safely locked (preventing accidental misclicks or desync), and trainees can tap an on-screen prompt to instantly reload the screen without losing progress.
+* **In-App Issue & Bug Reporter Reliability:** Upgraded the store feedback and bug reporter to submit directly through secure background channels, guaranteeing that feedback, screenshots, and error logs land in management's inbox and Google Sheet without getting dropped by strict Chromebook browser security filters.
 * **Day 1 Module 2 Video Progression (Sense of Urgency):** Resolved an issue on Card 4 ("Hustle Mentality / Sense of Urgency") where completing the video did not properly trigger the next card. Progression is fully restored and trainees can complete and advance seamlessly.
 * **Balanced Headset Audio Across All Lessons:** Leveled the volume across every video and audio clip so trainees won't have to constantly fiddle with their headset volume or get blasted by sudden loud calls.
 * **Strict Store Device Policy:** Enforced that training is completed strictly on approved in-store computers and store tablets, preventing unauthorized training attempts on personal cell phones.
