@@ -2075,19 +2075,19 @@ function renderList() {
                 </div>
             `;
         } else if (select.value === 'info') {
-            let portionBlock = `* 🍕 <strong>Portion Recommendation:</strong> 2 - 3 slices per person`;
+            let portionBlock = `🍕 <strong>Portion Recommendation:</strong> 2 - 3 slices per person`;
             
             if (!isNaN(headcount) && headcount > 0) {
                 if (calcMode === 'slices') {
                     const pizzas = Math.ceil(headcount / 8);
                     portionBlock = `
-                        * 🍕 <strong>Order Recommendation:</strong> ${pizzas} pizzas (provides ${pizzas * 8} slices based on your request for ${headcount} slices)
+                        🍕 <strong>Order Recommendation:</strong> ${pizzas} pizzas (provides ${pizzas * 8} slices based on your request for ${headcount} slices)
                     `;
                 } else {
                     const pizzas2Slices = Math.ceil((headcount * 2) / 8);
                     const pizzas3Slices = Math.ceil((headcount * 3) / 8);
                     portionBlock = `
-                        * 🍕 <strong>Portion Recommendation:</strong> 2 - 3 slices per person (${headcount} people)
+                        🍕 <strong>Portion Recommendation:</strong> 2 - 3 slices per person (${headcount} people)
                         <ul style="margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; list-style-type: circle;">
                             <li style="margin-bottom: 4px;">2 slices each: <strong>${pizzas2Slices} pizzas</strong></li>
                             <li style="margin-bottom: 4px;">3 slices each: <strong>${pizzas3Slices} pizzas</strong></li>
