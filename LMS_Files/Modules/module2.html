@@ -766,22 +766,22 @@
 
                     const cardHTML = `
                         <div class="v-card ${cardStatusClass}" style="display: flex; flex-direction: column;">
-                            <div class="v-card-thumb" style="background-image: url('${video.thumb}'); background-size: cover; background-position: center; min-height: 160px; height: 160px;">
+                            <div class="v-card-thumb" style="background-image: url('${video.thumb}'); background-size: cover; background-position: center; min-height: 160px; height: 160px; position: relative;">
                                 <span class="v-card-badge">${badgeText}</span>
-                            </div>
 
-                            <!-- Progress Bar Strip (Right under thumbnail) -->
-                            <div style="background: var(--crust-light); border-bottom: 1.5px solid var(--crust-med); padding: 7px 14px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-family: 'OneDotCd-Bold'; font-size: 0.78rem;">
-                                    <span style="color: var(--dark-blue); letter-spacing: 0.3px;">Requirements:</span>
-                                    <span style="color: ${allDone ? '#2e7d32' : 'var(--brand-blue)'}; font-weight: bold;">
-                                        ${completedCount} of 3 Complete ${allDone ? '✓' : ''}
-                                    </span>
-                                </div>
-                                <div style="display: flex; gap: 4px; height: 5px; border-radius: 3px; overflow: hidden; background: #e2e8f0;">
-                                    <div style="flex: 1; background: ${isVideoDone ? '#2e7d32' : '#cbd5e1'}; border-radius: 2px;"></div>
-                                    <div style="flex: 1; background: ${isPosterDone ? '#2e7d32' : '#cbd5e1'}; border-radius: 2px;"></div>
-                                    <div style="flex: 1; background: ${isLookBookDone ? '#2e7d32' : '#cbd5e1'}; border-radius: 2px;"></div>
+                                <!-- Requirements Overlay Anchored at Bottom of Thumbnail -->
+                                <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(4px); padding: 5px 10px; border-top: 1px solid rgba(255, 255, 255, 0.15); z-index: 5;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; font-family: 'OneDotCd-Bold'; font-size: 0.75rem;">
+                                        <span style="color: #cbd5e1; letter-spacing: 0.3px;">Requirements:</span>
+                                        <span style="color: ${allDone ? '#4ade80' : '#38bdf8'}; font-weight: bold;">
+                                            ${completedCount} of 3 Complete ${allDone ? '✓' : ''}
+                                        </span>
+                                    </div>
+                                    <div style="display: flex; gap: 4px; height: 4px; border-radius: 2px; overflow: hidden; background: rgba(255, 255, 255, 0.2);">
+                                        <div style="flex: 1; background: ${isVideoDone ? '#4ade80' : 'rgba(255,255,255,0.25)'}; border-radius: 1px;"></div>
+                                        <div style="flex: 1; background: ${isPosterDone ? '#4ade80' : 'rgba(255,255,255,0.25)'}; border-radius: 1px;"></div>
+                                        <div style="flex: 1; background: ${isLookBookDone ? '#4ade80' : 'rgba(255,255,255,0.25)'}; border-radius: 1px;"></div>
+                                    </div>
                                 </div>
                             </div>
 
