@@ -746,7 +746,7 @@
             if (!rawHash) return;
             const hash = rawHash.replace(/[-_]/g, '');
 
-            if (hash === 'categories' || hash === 'resources') {
+            if (hash === 'categories' || hash === 'resources' || hash === 'resourcelibrary' || hash === 'resourceslibrary' || hash === 'library') {
                 navigateTo('categories');
             } else if (hash === 'training' || hash === 'trainingcenter') {
                 openCategory('training', 'Training Center');
