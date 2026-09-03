@@ -1488,7 +1488,9 @@
 
             const urlParams = new URLSearchParams(window.location.search);
             const stepParam = urlParams.get('step');
-            const savedStep = localStorage.getItem('mod4_stage4_step');
+            const currentUserId = localStorage.getItem('tw_id') || 'guest';
+            const stepStorageKey = 'mod4_stage4_step_' + currentUserId;
+            const savedStep = localStorage.getItem(stepStorageKey);
             if (stepParam !== null) {
                 const targetStep = parseInt(stepParam, 10);
                 if (!isNaN(targetStep) && targetStep >= 0 && targetStep < sequence.length) {
@@ -1668,8 +1670,9 @@
             // Immediately lock hitboxes while image is loading to prevent desync
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
 
-            // Save step progression in localStorage so page reloads jump right back to this step
-            localStorage.setItem('mod4_stage4_step', String(stepIndex));
+            // Save step progression in localStorage scoped to this specific user ID
+            const currentUserId = localStorage.getItem('tw_id') || 'guest';
+            localStorage.setItem('mod4_stage4_step_' + currentUserId, String(stepIndex));
 
             const stepData = sequence[stepIndex];
             instructionText.innerHTML = stepData.instruction;
@@ -1711,6 +1714,8 @@
 
         // --- END SIMULATION & SCORECARD DISPLAY ---
         function endSimulation() {
+            const currentUserId = localStorage.getItem('tw_id') || 'guest';
+            localStorage.removeItem('mod4_stage4_step_' + currentUserId);
             localStorage.removeItem('mod4_stage4_step');
             // Keep POS_4.70.png (Coach Mike) visible as the final background
             posImage.src = "resources/POS_assets/Stage_4/POS_4.70.png";
