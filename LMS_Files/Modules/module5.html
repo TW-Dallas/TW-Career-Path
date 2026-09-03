@@ -311,7 +311,7 @@
             <!-- STEP 1: OUTRO VIDEO -->
             <div id="content-video" style="width: 100%; text-align: center;">
                 <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 0.5rem;">Day 1 Post-Game Breakdown</h3>
-                <p id="video-status-msg" style="color: var(--crust-burnt); font-size: 1rem; margin-bottom: 1.5rem;">Watch Coach Bobby's Day 1 summary before taking the final quiz.</p>
+                <p id="video-status-msg" style="color: var(--crust-burnt); font-size: 1rem; margin-bottom: 1.5rem; min-height: 1.6rem; line-height: 1.4; display: flex; align-items: center; justify-content: center;">Watch Coach Bobby's Day 1 summary before taking the final quiz.</p>
                 
                 <div class="video-wrapper">
                     <iframe id="vimeo-iframe" title="Day 1 Post-Game Breakdown" src="https://player.vimeo.com/video/1223337666?h=a9d779ca1d" style="width: 100%; height: 100%; border: 0;" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
@@ -327,7 +327,7 @@
             <!-- STEP 3: BRENT'S WELCOME & TEAM WOW CULTURE -->
             <div id="content-brent-video" class="hidden" style="width: 100%; text-align: center;">
                 <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 0.5rem;">Welcome to the WOW Family</h3>
-                <p id="brent-video-status-msg" style="color: var(--crust-burnt); font-size: 1rem; margin-bottom: 1.5rem;">Watch Brent's welcome message to unlock the trainer sign-off.</p>
+                <p id="brent-video-status-msg" style="color: var(--crust-burnt); font-size: 1rem; margin-bottom: 1.5rem; min-height: 1.6rem; line-height: 1.4; display: flex; align-items: center; justify-content: center;">Watch Brent's welcome message to unlock the trainer sign-off.</p>
                 
                 <div class="video-wrapper">
                     <iframe id="vimeo-iframe-brent" title="A Message from Brent: Welcome to Team WOW" src="https://player.vimeo.com/video/1223290523?h=911aa0e4fa" style="width: 100%; height: 100%; border: 0;" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
@@ -859,6 +859,33 @@
             if (bobbyIframe && typeof Vimeo !== 'undefined') {
                 try {
                     bobbyPlayer = new Vimeo.Player(bobbyIframe);
+                    let maxBobbyTime = 0;
+                    let isHoldingBobby = false;
+
+                    // Track legitimate furthest watched point for anti-scrubbing
+                    bobbyPlayer.on('timeupdate', (data) => {
+                        if (isHoldingBobby) return;
+                        if (data.seconds > maxBobbyTime) {
+                            maxBobbyTime = data.seconds;
+                        }
+                    });
+
+                    // Snap forward seeking attempts back to furthest legitimate watched progress
+                    bobbyPlayer.on('seeked', (data) => {
+                        if (isAdmin) return; // Allow trainers/execs with admin mode to scrub freely
+                        if (isHoldingBobby) return;
+
+                        if (data.seconds > maxBobbyTime + 2.0) {
+                            isHoldingBobby = true;
+                            bobbyPlayer.setCurrentTime(maxBobbyTime).then(() => {
+                                setTimeout(() => { isHoldingBobby = false; }, 200);
+                            }).catch(() => {
+                                isHoldingBobby = false;
+                            });
+                        }
+                    });
+
+                    // Strictly unlock ONLY when the full video has ended
                     bobbyPlayer.on('ended', () => {
                         bobbyVideoWatched = true;
                         const statusMsg = document.getElementById('video-status-msg');
@@ -871,23 +898,9 @@
                             if (nextBtn) nextBtn.classList.remove('btn-disabled');
                         }
                     });
-                    bobbyPlayer.on('timeupdate', (data) => {
-                        if (data.percent >= 0.92) {
-                            bobbyVideoWatched = true;
-                            const statusMsg = document.getElementById('video-status-msg');
-                            if (statusMsg) {
-                                statusMsg.innerHTML = '✅ <strong>Post-game recap completed!</strong> Click Next Step to start the final quiz.';
-                                statusMsg.style.color = '#27ae60';
-                            }
-                            if (currentStep === 1) {
-                                const nextBtn = document.getElementById('btn-next');
-                                if (nextBtn) nextBtn.classList.remove('btn-disabled');
-                            }
-                        }
-                    });
                 } catch (e) {
                     console.warn("Bobby Vimeo Player init:", e);
-                    bobbyVideoWatched = true;
+                    if (isAdmin) bobbyVideoWatched = true;
                 }
             }
 
@@ -896,6 +909,33 @@
             if (brentIframe && typeof Vimeo !== 'undefined') {
                 try {
                     brentPlayer = new Vimeo.Player(brentIframe);
+                    let maxBrentTime = 0;
+                    let isHoldingBrent = false;
+
+                    // Track legitimate furthest watched point for anti-scrubbing
+                    brentPlayer.on('timeupdate', (data) => {
+                        if (isHoldingBrent) return;
+                        if (data.seconds > maxBrentTime) {
+                            maxBrentTime = data.seconds;
+                        }
+                    });
+
+                    // Snap forward seeking attempts back to furthest legitimate watched progress
+                    brentPlayer.on('seeked', (data) => {
+                        if (isAdmin) return; // Allow trainers/execs with admin mode to scrub freely
+                        if (isHoldingBrent) return;
+
+                        if (data.seconds > maxBrentTime + 2.0) {
+                            isHoldingBrent = true;
+                            brentPlayer.setCurrentTime(maxBrentTime).then(() => {
+                                setTimeout(() => { isHoldingBrent = false; }, 200);
+                            }).catch(() => {
+                                isHoldingBrent = false;
+                            });
+                        }
+                    });
+
+                    // Strictly unlock ONLY when the full video has ended
                     brentPlayer.on('ended', () => {
                         brentVideoWatched = true;
                         const statusMsg = document.getElementById('brent-video-status-msg');
@@ -908,23 +948,9 @@
                             if (nextBtn) nextBtn.classList.remove('btn-disabled');
                         }
                     });
-                    brentPlayer.on('timeupdate', (data) => {
-                        if (data.percent >= 0.92) {
-                            brentVideoWatched = true;
-                            const statusMsg = document.getElementById('brent-video-status-msg');
-                            if (statusMsg) {
-                                statusMsg.innerHTML = '✅ <strong>Welcome message completed!</strong> Click Next Step to proceed to Trainer Authorization.';
-                                statusMsg.style.color = '#27ae60';
-                            }
-                            if (currentStep === 3) {
-                                const nextBtn = document.getElementById('btn-next');
-                                if (nextBtn) nextBtn.classList.remove('btn-disabled');
-                            }
-                        }
-                    });
                 } catch (e) {
                     console.warn("Brent Vimeo Player init:", e);
-                    brentVideoWatched = true;
+                    if (isAdmin) brentVideoWatched = true;
                 }
             }
         }
