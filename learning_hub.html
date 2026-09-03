@@ -227,7 +227,11 @@
         }
 
         .section-header {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
             margin-bottom: 2rem;
             border-bottom: 2px solid var(--crust-med);
             padding-bottom: 1rem;
@@ -239,6 +243,60 @@
             color: var(--dark-blue);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .search-box-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-width: 270px;
+            max-width: 360px;
+            width: 100%;
+        }
+
+        .search-box-input {
+            width: 100%;
+            padding: 0.55rem 2.2rem 0.55rem 2.4rem;
+            border: 2px solid var(--crust-med);
+            border-radius: 24px;
+            font-size: 0.95rem;
+            font-family: 'OneDotCd', sans-serif;
+            color: var(--crust-deep);
+            background: #ffffff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+
+        .search-box-input:focus {
+            outline: none;
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 3px rgba(0, 100, 145, 0.15);
+        }
+
+        .search-box-icon {
+            position: absolute;
+            left: 12px;
+            font-size: 0.95rem;
+            color: var(--crust-burnt);
+            pointer-events: none;
+        }
+
+        .search-clear-btn {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: #999;
+            cursor: pointer;
+            padding: 0 4px;
+            line-height: 1;
+            display: none;
+        }
+
+        .search-clear-btn:hover {
+            color: var(--brand-red);
         }
 
         .resource-grid {
@@ -475,6 +533,13 @@
         <div id="view-resources-list" class="hidden">
             <div class="section-header">
                 <div class="section-title" id="list-title">Category Name</div>
+
+                <!-- LIVE SEARCH BAR -->
+                <div class="search-box-container">
+                    <span class="search-box-icon">&#128269;</span>
+                    <input type="text" id="resource-search-input" class="search-box-input" placeholder="Search guides, videos & PDFs..." oninput="filterResources(this.value)" autocomplete="off">
+                    <button id="search-clear-btn" class="search-clear-btn" onclick="clearSearch()" title="Clear search">&times;</button>
+                </div>
             </div>
             
             <div class="resource-grid" id="resource-container">
@@ -632,45 +697,146 @@
             }
         }
 
-        // --- CONTENT LOGIC ---
+        // --- SEARCH & CONTENT LOGIC ---
+        let activeCategoryKey = '';
+        let activeCategoryTitle = '';
+
+        function fuzzyScore(pattern, text) {
+            if (!pattern || !text) return 0;
+            const p = pattern.toLowerCase();
+            const t = text.toLowerCase();
+            
+            // 1. Exact substring match gets top score
+            const exactIdx = t.indexOf(p);
+            if (exactIdx !== -1) {
+                return 1000 - (exactIdx * 10);
+            }
+
+            // 2. Letter-by-letter ordered sequence matching
+            let pIdx = 0;
+            let score = 0;
+            let prevMatchIdx = -2;
+
+            for (let i = 0; i < t.length && pIdx < p.length; i++) {
+                if (t[i] === p[pIdx]) {
+                    score += 15;
+                    // Bonus for consecutive letters
+                    if (i === prevMatchIdx + 1) score += 25;
+                    // Bonus for word starts / boundaries
+                    if (i === 0 || t[i-1] === ' ' || t[i-1] === '-' || t[i-1] === '_') score += 30;
+                    prevMatchIdx = i;
+                    pIdx++;
+                }
+            }
+
+            // Must match all characters in the search pattern
+            return (pIdx === p.length) ? score : 0;
+        }
+
+        function filterResources(query) {
+            const clearBtn = document.getElementById('search-clear-btn');
+            const trimmed = (query || '').trim();
+            
+            if (clearBtn) {
+                clearBtn.style.display = trimmed.length > 0 ? 'block' : 'none';
+            }
+
+            const baseList = resources.filter(r => r.category === activeCategoryKey);
+
+            if (!trimmed) {
+                renderResourceCards(baseList);
+                return;
+            }
+
+            // Score each card based on title, description, and type
+            const scored = [];
+            baseList.forEach(res => {
+                const titleScore = fuzzyScore(trimmed, res.title);
+                const descScore = fuzzyScore(trimmed, res.desc);
+                const typeScore = fuzzyScore(trimmed, res.type);
+                const maxScore = Math.max(titleScore * 1.8, descScore, typeScore * 0.9);
+                if (maxScore > 0) {
+                    scored.push({ res, score: maxScore });
+                }
+            });
+
+            // Sort highest relevance score first
+            scored.sort((a, b) => b.score - a.score);
+            const matchedResources = scored.map(item => item.res);
+
+            renderResourceCards(matchedResources, trimmed);
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('resource-search-input');
+            if (input) {
+                input.value = '';
+                filterResources('');
+                input.focus();
+            }
+        }
+
+        function renderResourceCards(cardList, query = '') {
+            const container = document.getElementById('resource-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (cardList.length === 0) {
+                const safeQuery = query.replace(/[&<>"']/g, function(m) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+                });
+                container.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 2.5rem 1rem; color: #8c7158;">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔍</div>
+                        <h4 style="font-family: 'OneDotCd-Bold'; font-size: 1.3rem; color: var(--dark-blue); margin: 0 0 0.4rem 0;">No matching resources found</h4>
+                        <p style="font-family: 'OneDotCd'; font-size: 1.05rem; margin: 0 0 1.2rem 0;">No items in ${activeCategoryTitle} match "<strong>${safeQuery}</strong>".</p>
+                        <button onclick="clearSearch()" style="background: var(--brand-blue); color: #fff; border: none; padding: 7px 20px; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.95rem; cursor: pointer;">Clear Search</button>
+                    </div>
+                `;
+                return;
+            }
+
+            cardList.forEach(res => {
+                const pulseClass = res.pulse ? 'pulse-featured' : '';
+                const html = `
+                    <div class="resource-card ${pulseClass}">
+                        <span class="res-type">${res.type}</span>
+                        <div class="res-title">${res.title}</div>
+                        <div class="res-desc">${res.desc}</div>
+                        <div class="res-actions">
+                            <a href="#" class="action-link" onclick="openDocument('${res.link}'); return false;">
+                                <span>👁️</span> View
+                            </a>
+                            <a href="#" class="action-link" onclick="alert('Opening Email Client...')">
+                                <span>✉️</span> Email
+                            </a>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
         function openCategory(catKey, catTitle) {
+            activeCategoryKey = catKey;
+            activeCategoryTitle = catTitle;
+
             // 1. Switch Screen
             navigateTo('list');
 
-            // 2. Find Container
-            const container = document.getElementById('resource-container');
-
-            // 3. Set Title and Clear
+            // 2. Set Title and Reset Search Input
             document.getElementById('list-title').innerText = catTitle;
-            container.innerHTML = '';
-
-            // 4. Filter
-            const filtered = resources.filter(r => r.category === catKey);
-
-            // 5. Render Cards
-            if (filtered.length === 0) {
-                container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888;">No resources found.</p>';
-            } else {
-                filtered.forEach(res => {
-                    const pulseClass = res.pulse ? 'pulse-featured' : '';
-                    const html = `
-                        <div class="resource-card ${pulseClass}">
-                            <span class="res-type">${res.type}</span>
-                            <div class="res-title">${res.title}</div>
-                            <div class="res-desc">${res.desc}</div>
-                            <div class="res-actions">
-                                <a href="#" class="action-link" onclick="openDocument('${res.link}'); return false;">
-                                    <span>👁️</span> View
-                                </a>
-                                <a href="#" class="action-link" onclick="alert('Opening Email Client...')">
-                                    <span>✉️</span> Email
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                    container.innerHTML += html;
-                });
+            const searchInput = document.getElementById('resource-search-input');
+            const clearBtn = document.getElementById('search-clear-btn');
+            if (searchInput) {
+                searchInput.value = '';
+                searchInput.placeholder = `Search ${catTitle} (e.g. 'dom', 'pizza')...`;
             }
+            if (clearBtn) clearBtn.style.display = 'none';
+
+            // 3. Render Initial Cards
+            const filtered = resources.filter(r => r.category === catKey);
+            renderResourceCards(filtered);
         }
 
         function openDocument(url) {
