@@ -485,8 +485,8 @@
         <!-- STEP 4: VIEWER (PDF / VIDEO / IMAGE) -->
         <div id="view-viewer" class="hidden" style="height: 100%; display: flex; flex-direction: column;">
             
-            <!-- Viewer for PDFs and Websites -->
-            <iframe id="content-frame" src="" class="hidden" style="width: 100%; height: 80vh; border: none; border-radius: 8px; background: white;"></iframe>
+            <!-- Viewer for PDFs, Videos, and Websites -->
+            <iframe id="content-frame" src="" class="hidden" style="width: 100%; height: 80vh; border: none; border-radius: 8px; background: white;" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
             
             <!-- Viewer for Images (Auto-Fit) -->
             <img id="content-image" src="" class="hidden" style="width: 100%; height: 80vh; object-fit: contain; background: white; border-radius: 8px;">
@@ -529,6 +529,10 @@
             // PRODUCT GUIDES (CSR)
             { id: 8, category: 'insiders', type: 'PDF', title: 'Comprehensive Product Build Guide', desc: 'Interactive job aids for makeline products and Domino Team WOW builds.', 
                  link: 'resources/csr/Interactive%20Job%20Aids%20Domino%20Team%20Wow.pdf', pulse: true },
+            { id: 24, category: 'insiders', type: 'Video', title: 'Domino Product Tutorial', desc: 'Comprehensive video walkthrough covering Domino core product builds, makeline standards, and procedures.', 
+                 link: 'https://player.vimeo.com/video/1223729233?h=3fcc7edbf7' },
+            { id: 25, category: 'insiders', type: 'PDF', title: 'Domino Training Guide', desc: 'Official comprehensive training reference guide for store operations and product standards.', 
+                 link: 'resources/csr/Domino_Training_Guide.pdf' },
             { id: 7, category: 'insiders', type: 'PDF', title: 'Influencer Pizza Build Job Aid', desc: 'Build information for the influencer pizzas being promoted during the Best Deal Ever 4.0 campaign.', 
                  link: 'resources/csr/BDE_Builds.pdf' },
             { id: 9, category: 'insiders', type: 'Image', title: 'Toppings Codes', desc: 'English and Spanish Toppings Codes.', 
@@ -578,12 +582,18 @@
                 updateNav('back', 'Back to Lobby');
             } else if (view === 'list') {
                 document.getElementById('view-resources-list').classList.remove('hidden');
-                updateNav('back', 'Back to Resource Library'); // <--- FIXED THIS
+                updateNav('back', 'Back to Resource Library');
             } else if (view === 'viewer') {
                 document.getElementById('view-viewer').classList.remove('hidden');
                 updateNav('back', 'Back to Resources');
             }
-            
+
+            // Clear frame src when leaving viewer to stop playing videos in the background
+            if (view !== 'viewer') {
+                const frame = document.getElementById('content-frame');
+                if (frame && frame.src) frame.src = "";
+            }
+
             // Update State
             currentView = view;
             window.scrollTo(0,0);
@@ -667,8 +677,9 @@
             const frame = document.getElementById('content-frame');
             const img = document.getElementById('content-image');
             
-            // Check if it's an image
+            // Check if it's an image or video
             const isImage = url.match(/\.(jpeg|jpg|gif|png|webp)$/i);
+            const isVideo = url.includes('vimeo.com') || url.includes('youtube.com') || url.includes('youtu.be');
 
             if (isImage) {
                 frame.classList.add('hidden');
@@ -677,6 +688,7 @@
             } else {
                 img.classList.add('hidden');
                 frame.classList.remove('hidden');
+                frame.style.background = isVideo ? '#000000' : '#ffffff';
                 frame.src = url;
             }
 
