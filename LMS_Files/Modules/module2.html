@@ -769,49 +769,48 @@
                             <div class="v-card-thumb" style="background-image: url('${video.thumb}'); background-size: cover; background-position: center; min-height: 160px; height: 160px;">
                                 <span class="v-card-badge">${badgeText}</span>
                             </div>
+
+                            <!-- Progress Bar Strip (Right under thumbnail) -->
+                            <div style="background: var(--crust-light); border-bottom: 1.5px solid var(--crust-med); padding: 7px 14px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-family: 'OneDotCd-Bold'; font-size: 0.78rem;">
+                                    <span style="color: var(--dark-blue); letter-spacing: 0.3px;">Requirements:</span>
+                                    <span style="color: ${allDone ? '#2e7d32' : 'var(--brand-blue)'}; font-weight: bold;">
+                                        ${completedCount} of 3 Complete ${allDone ? '✓' : ''}
+                                    </span>
+                                </div>
+                                <div style="display: flex; gap: 4px; height: 5px; border-radius: 3px; overflow: hidden; background: #e2e8f0;">
+                                    <div style="flex: 1; background: ${isVideoDone ? '#2e7d32' : '#cbd5e1'}; border-radius: 2px;"></div>
+                                    <div style="flex: 1; background: ${isPosterDone ? '#2e7d32' : '#cbd5e1'}; border-radius: 2px;"></div>
+                                    <div style="flex: 1; background: ${isLookBookDone ? '#2e7d32' : '#cbd5e1'}; border-radius: 2px;"></div>
+                                </div>
+                            </div>
+
                             <div class="v-card-body" style="display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;">
                                 <div>
                                     <div class="v-card-title">${video.title}</div>
                                     <div class="v-card-desc" style="margin-bottom: 12px;">${video.desc}</div>
                                 </div>
 
-                                <div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto;">
-                                    <!-- 3 Action Buttons on One Single Row -->
-                                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px;">
-                                        <button class="btn ${isBtnDisabled ? 'disabled' : ''}" 
-                                                onclick="${isBtnDisabled ? '' : `openVideoModal(${index})`}" 
-                                                ${isBtnDisabled ? 'disabled' : ''}
-                                                style="padding: 0.45rem 0.2rem; font-size: clamp(0.74rem, 0.9vw, 0.82rem); border-radius: 6px; white-space: nowrap; ${isVideoDone ? 'background: #2e7d32; border-color: #2e7d32;' : 'background: var(--brand-blue);'}">
-                                            ${isVideoDone ? '✓ Video' : '🎬 Video'}
-                                        </button>
-                                        <button class="btn ${isBtnDisabled ? 'disabled' : ''}" 
-                                                onclick="${isBtnDisabled ? '' : 'openUniformPosterModal()'}" 
-                                                ${isBtnDisabled ? 'disabled' : ''}
-                                                style="padding: 0.45rem 0.2rem; font-size: clamp(0.74rem, 0.9vw, 0.82rem); border-radius: 6px; white-space: nowrap; ${isPosterDone ? 'background: #2e7d32; border-color: #2e7d32;' : 'background: var(--dark-blue); border: 1px solid var(--dark-blue);'}">
-                                            ${isPosterDone ? '✓ Poster' : `🔍 Poster${uniformParts.posterItems.length > 0 ? ` (${uniformParts.posterItems.length})` : ''}`}
-                                        </button>
-                                        <button class="btn ${isBtnDisabled ? 'disabled' : ''}" 
-                                                onclick="${isBtnDisabled ? '' : 'openLookBookModal()'}" 
-                                                ${isBtnDisabled ? 'disabled' : ''}
-                                                style="padding: 0.45rem 0.2rem; font-size: clamp(0.74rem, 0.9vw, 0.82rem); border-radius: 6px; white-space: nowrap; ${isLookBookDone ? 'background: #2e7d32; border-color: #2e7d32;' : 'background: var(--dark-blue); border: 1px solid var(--dark-blue);'}">
-                                            ${isLookBookDone ? '✓ LookBook' : '📖 LookBook'}
-                                        </button>
-                                    </div>
-
-                                    <!-- Progress Bar at Bottom of Card -->
-                                    <div style="background: var(--crust-light); border: 1.5px solid var(--crust-med); border-radius: 6px; padding: 5px 8px;">
-                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-family: 'OneDotCd-Bold'; font-size: 0.78rem;">
-                                            <span style="color: var(--dark-blue); letter-spacing: 0.3px;">Requirements:</span>
-                                            <span style="color: ${allDone ? '#2e7d32' : 'var(--brand-blue)'}; font-weight: bold;">
-                                                ${completedCount} of 3 Complete ${allDone ? '✓' : ''}
-                                            </span>
-                                        </div>
-                                        <div style="display: flex; gap: 4px; height: 5px; border-radius: 3px; overflow: hidden; background: #e2e8f0;">
-                                            <div style="flex: 1; background: ${isVideoDone ? '#2e7d32' : '#cbd5e1'}; border-radius: 2px;"></div>
-                                            <div style="flex: 1; background: ${isPosterDone ? '#2e7d32' : '#cbd5e1'}; border-radius: 2px;"></div>
-                                            <div style="flex: 1; background: ${isLookBookDone ? '#2e7d32' : '#cbd5e1'}; border-radius: 2px;"></div>
-                                        </div>
-                                    </div>
+                                <!-- 3 Action Buttons on One Single Row (Anchored at very bottom) -->
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: auto;">
+                                    <button class="btn ${isBtnDisabled ? 'disabled' : ''}" 
+                                            onclick="${isBtnDisabled ? '' : `openVideoModal(${index})`}" 
+                                            ${isBtnDisabled ? 'disabled' : ''}
+                                            style="padding: 0.45rem 0.2rem; font-size: clamp(0.74rem, 0.9vw, 0.82rem); border-radius: 6px; white-space: nowrap; ${isVideoDone ? 'background: #2e7d32; border-color: #2e7d32;' : 'background: var(--brand-blue);'}">
+                                        ${isVideoDone ? '✓ Video' : '🎬 Video'}
+                                    </button>
+                                    <button class="btn ${isBtnDisabled ? 'disabled' : ''}" 
+                                            onclick="${isBtnDisabled ? '' : 'openUniformPosterModal()'}" 
+                                            ${isBtnDisabled ? 'disabled' : ''}
+                                            style="padding: 0.45rem 0.2rem; font-size: clamp(0.74rem, 0.9vw, 0.82rem); border-radius: 6px; white-space: nowrap; ${isPosterDone ? 'background: #2e7d32; border-color: #2e7d32;' : 'background: var(--dark-blue); border: 1px solid var(--dark-blue);'}">
+                                        ${isPosterDone ? '✓ Poster' : `🔍 Poster${uniformParts.posterItems.length > 0 ? ` (${uniformParts.posterItems.length})` : ''}`}
+                                    </button>
+                                    <button class="btn ${isBtnDisabled ? 'disabled' : ''}" 
+                                            onclick="${isBtnDisabled ? '' : 'openLookBookModal()'}" 
+                                            ${isBtnDisabled ? 'disabled' : ''}
+                                            style="padding: 0.45rem 0.2rem; font-size: clamp(0.74rem, 0.9vw, 0.82rem); border-radius: 6px; white-space: nowrap; ${isLookBookDone ? 'background: #2e7d32; border-color: #2e7d32;' : 'background: var(--dark-blue); border: 1px solid var(--dark-blue);'}">
+                                        ${isLookBookDone ? '✓ LookBook' : '📖 LookBook'}
+                                    </button>
                                 </div>
                             </div>
                         </div>
