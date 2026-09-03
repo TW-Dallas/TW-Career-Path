@@ -260,6 +260,27 @@
             box-shadow: 0 8px 12px rgba(0,0,0,0.1);
         }
 
+        .resource-card.pulse-featured {
+            border-left: 4px solid #0090e2 !important;
+            animation: softPulseBlue 2.6s infinite ease-in-out;
+        }
+
+        .resource-card.pulse-featured:hover {
+            box-shadow: 0 0 20px 4px rgba(0, 144, 226, 0.45);
+        }
+
+        @keyframes softPulseBlue {
+            0% {
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 0 0 0 rgba(0, 144, 226, 0.4);
+            }
+            50% {
+                box-shadow: 0 4px 14px rgba(0,0,0,0.08), 0 0 16px 4px rgba(0, 144, 226, 0.35);
+            }
+            100% {
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 0 0 0 rgba(0, 144, 226, 0.4);
+            }
+        }
+
         .res-type {
             font-size: 0.8rem;
             text-transform: uppercase;
@@ -506,10 +527,10 @@
                  link: 'https://team-wow-hr.com/drivosity-rewards.html' },
             
             // PRODUCT GUIDES (CSR)
+            { id: 8, category: 'insiders', type: 'PDF', title: 'Comprehensive Product Build Guide', desc: 'Interactive job aids for makeline products and Domino Team WOW builds.', 
+                 link: 'resources/csr/Interactive%20Job%20Aids%20Domino%20Team%20Wow.pdf', pulse: true },
             { id: 7, category: 'insiders', type: 'PDF', title: 'Influencer Pizza Build Job Aid', desc: 'Build information for the influencer pizzas being promoted during the Best Deal Ever 4.0 campaign.', 
                  link: 'resources/csr/BDE_Builds.pdf' },
-            { id: 8, category: 'insiders', type: 'PDF', title: 'Comprehensive Product Build Guide', desc: 'Interactive job aids for makeline products and Domino Team WOW builds.', 
-                 link: 'resources/csr/Interactive%20Job%20Aids%20Domino%20Team%20Wow.pdf' },
             { id: 9, category: 'insiders', type: 'Image', title: 'Toppings Codes', desc: 'English and Spanish Toppings Codes.', 
                  link: 'resources/csr/toppings.jpg' },
             { id: 10, category: 'insiders', type: 'Video', title: 'Parmesan Stuff Crust Tutorial', desc: 'Step-by-step guide covering how to make the new Parmesan Stuffed Crust pizza.', 
@@ -621,8 +642,9 @@
                 container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888;">No resources found.</p>';
             } else {
                 filtered.forEach(res => {
+                    const pulseClass = res.pulse ? 'pulse-featured' : '';
                     const html = `
-                        <div class="resource-card">
+                        <div class="resource-card ${pulseClass}">
                             <span class="res-type">${res.type}</span>
                             <div class="res-title">${res.title}</div>
                             <div class="res-desc">${res.desc}</div>
