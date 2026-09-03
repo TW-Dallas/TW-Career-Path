@@ -612,13 +612,12 @@
                         <input type="text" id="fieldPoPdf" placeholder="Paste Google Drive PDF URL here">
                     </div>
 
-                    <!-- Fulfillment & PO Quick Action Strip -->
-                    <div class="fulfillment-strip" style="display: flex; align-items: center; justify-content: space-between; background: var(--crust-light); border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 10px 14px; margin-top: 10px; margin-bottom: 2px; gap: 12px; flex-wrap: wrap;">
-                        <label style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Subhead1', sans-serif; font-size: 15px; cursor: pointer; user-select: none; margin: 0; color: var(--crust-burnt);">
-                            <input type="checkbox" id="checkPulse" style="width: 18px; height: 18px; accent-color: var(--brand-blue); cursor: pointer;">
-                            <span>🍕 Entered in Pulse (POS)</span>
-                        </label>
-                        <button type="button" id="btnPushMadison" onclick="triggerSendToMadison()" title="Email PO packet to Madison (Accounts Payable) now" style="background: var(--dark-blue); font-family: 'Subhead1', sans-serif; font-size: 13px; padding: 7px 14px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <!-- Fulfillment & PO Quick Actions -->
+                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 4px; flex-wrap: wrap;">
+                        <button type="button" id="btnPulseToggle" onclick="togglePulseInstant()" style="background: var(--crust-light); color: var(--crust-burnt); border: 1.5px solid var(--crust-dark); font-family: 'Subhead1', sans-serif; font-size: 13.5px; padding: 7px 14px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; transition: all 0.15s ease;">
+                            🍕 Mark Entered in Pulse
+                        </button>
+                        <button type="button" id="btnPushMadison" onclick="triggerSendToMadison()" title="Email PO packet to Madison (Accounts Payable) now" style="background: var(--dark-blue); color: white; font-family: 'Subhead1', sans-serif; font-size: 13.5px; padding: 7px 14px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; border: none; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                             📧 Send PO Packet to Madison
                         </button>
                     </div>
@@ -688,6 +687,7 @@
                     <div class="hidden">
                         <input type="checkbox" id="checkQuoteDrafted" disabled>
                         <input type="checkbox" id="checkQuoteSent">
+                        <input type="checkbox" id="checkPulse">
                         <input type="checkbox" id="checkCe" disabled>
                         <input type="checkbox" id="checkPoProcessed">
                         <input type="checkbox" id="checkAccountingSent" disabled>
@@ -1740,6 +1740,7 @@ function renderList() {
         if (checkQuoteDrafted) checkQuoteDrafted.checked = item.quoteUrl ? true : false;
         if (checkQuoteSent) checkQuoteSent.checked = item.quoteEmailSent || false;
         if (checkPulse) checkPulse.checked = item.enteredInPulse || false;
+        updatePulseButtonUi(item.enteredInPulse || false);
         if (checkCe) checkCe.checked = item.ceSent || false;
         if (checkPoProcessed) checkPoProcessed.checked = item.poProcessed || false;
         if (checkAccountingSent) checkAccountingSent.checked = item.accountingSent || false;
@@ -1829,6 +1830,8 @@ function renderList() {
 
         const btnDeleteOrder = document.getElementById('btnDeleteOrder');
         if (btnDeleteOrder) btnDeleteOrder.classList.add('hidden');
+
+        updatePulseButtonUi(false);
     }
 
     function setPanelTab(tabName) {
@@ -2235,8 +2238,8 @@ function renderList() {
         }
     }
 
-    async function saveOrder(e) {
-        e.preventDefault();
+    async function saveOrder(e, customLoaderText = "Saving order details...") {
+        if (e && e.preventDefault) e.preventDefault();
 
         const dateInput = document.getElementById('fieldDate').value;
 
@@ -2265,7 +2268,7 @@ function renderList() {
         const id = fieldId ? fieldId.value : '';
         const action = id ? 'update' : 'add';
 
-        showLoader(true, "Saving order details...");
+        showLoader(true, customLoaderText);
 
         const schoolDropdown = document.getElementById('fieldSchool');
         const coordDropdown = document.getElementById('fieldCoordinator');
@@ -2823,6 +2826,42 @@ function renderList() {
         } catch (err) {
             showLoader(false);
             await showBrandAlert("Error sending email: " + err.message, "Error");
+        }
+    }
+
+    function updatePulseButtonUi(isEntered) {
+        const btn = document.getElementById('btnPulseToggle');
+        if (!btn) return;
+        if (isEntered) {
+            btn.innerHTML = '✅ Entered in Pulse (POS)';
+            btn.style.background = '#198754';
+            btn.style.color = '#ffffff';
+            btn.style.borderColor = '#146c43';
+        } else {
+            btn.innerHTML = '🍕 Mark Entered in Pulse';
+            btn.style.background = 'var(--crust-light)';
+            btn.style.color = 'var(--crust-burnt)';
+            btn.style.borderColor = 'var(--crust-dark)';
+        }
+    }
+
+    async function togglePulseInstant() {
+        const fieldId = document.getElementById('fieldId');
+        const id = fieldId ? fieldId.value : '';
+        const checkPulse = document.getElementById('checkPulse');
+        const currentEntered = checkPulse ? checkPulse.checked : false;
+        const newState = !currentEntered;
+
+        if (checkPulse) checkPulse.checked = newState;
+        updatePulseButtonUi(newState);
+
+        if (id) {
+            try {
+                await saveOrder(null, newState ? "Marking entered in Pulse & notifying store..." : "Updating Pulse status...");
+            } catch (err) {
+                if (checkPulse) checkPulse.checked = currentEntered;
+                updatePulseButtonUi(currentEntered);
+            }
         }
     }
 
