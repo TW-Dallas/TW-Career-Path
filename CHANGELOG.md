@@ -26,7 +26,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 
 ### 🔜 On the Horizon (Upcoming Content & Rollouts)
 * **Day 2 Rollout Coming Soon (Customer Recovery & Sanitation):** Putting the finishing touches on the complete Day 2 training experience:
-  * **Module 1 (The Q-TIP Game Plan):** Interactive film studies (winning vs. defensive plays), live call deconstructions, and customer recovery branching drills.
+  * **Module 1 (Customer Recovery & The Q-TIP Game Plan):** Coach Mike's empowerment & manager escalation playbook ("Own It or Escalate?" sorter game), interactive film studies (winning vs. defensive plays), live call deconstructions, and customer recovery branching drills.
   * **Module 2 (Cleaning & Sanitation):** 5-step handwashing, RTE glove boundaries, 3-compartment sink & 10-second PPM test strip simulator, and the Team WOW store chore board.
 * **Executive Culture Finale Video:** Adding Brent's inspiring Team WOW culture and core values message into the Day 1 final wrap-up before manager sign-off.
 * **Weekly New Hire Training Adoption Reporting:** Developing executive reporting to track and compare weekly new hires per market (from the Staffing Tracker) against active Wow Way training participation and completions to measure onboarding compliance.
