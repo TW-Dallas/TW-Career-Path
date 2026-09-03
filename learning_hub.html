@@ -912,21 +912,21 @@
             if (!rawHash) return;
             const hash = rawHash.replace(/[-_]/g, '');
 
-            if (hash === 'categories' || hash === 'resources' || hash === 'resourcelibrary' || hash === 'resourceslibrary' || hash === 'library') {
+            if (hash === 'resource' || hash === 'resources' || hash === 'resourcelibrary' || hash === 'resourceslibrary' || hash === 'library' || hash === 'category' || hash === 'categories') {
                 navigateTo('categories');
-            } else if (hash === 'training' || hash === 'trainingcenter') {
+            } else if (hash.startsWith('training')) {
                 openCategory('training', 'Training Center');
-            } else if (hash === 'managers' || hash === 'manager' || hash === 'gm') {
+            } else if (hash.startsWith('manager') || hash === 'gm') {
                 openCategory('managers', 'Manager Resources');
-            } else if (hash === 'drivers' || hash === 'driver') {
+            } else if (hash.startsWith('driver')) {
                 openCategory('drivers', 'Driver Resources');
-            } else if (hash === 'insiders' || hash === 'csr' || hash === 'products' || hash === 'product' || hash === 'productguides' || hash === 'productguide') {
+            } else if (hash.startsWith('product') || hash === 'csr' || hash === 'insiders') {
                 openCategory('insiders', 'Product Guides');
-            } else if (hash === 'newhire' || hash === 'newhires' || hash === 'onboarding') {
+            } else if (hash.startsWith('newhire') || hash === 'onboarding') {
                 openCategory('newhire', 'New Hire Onboarding');
-            } else if (hash === 'hr' || hash === 'humanresources') {
+            } else if (hash.startsWith('hr') || hash.startsWith('benefit') || hash.startsWith('humanresource')) {
                 openCategory('hr', 'Human Resources');
-            } else if (hash === 'lobby') {
+            } else if (hash === 'lobby' || hash === 'home') {
                 navigateTo('lobby');
             }
         }
