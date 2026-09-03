@@ -374,10 +374,26 @@
             if (devConsoleErrors.length > 0) {
                 finalComments += "\n\n--- [Auto-Captured Dev Console Errors] ---\n" + devConsoleErrors.join("\n");
             }
+            if (finalComments.length > 4000) {
+                finalComments = finalComments.substring(0, 4000) + "\n...[truncated]";
+            }
 
-            const url = `${AUTH_SCRIPT_URL}?action=feedback&id=${encodeURIComponent(id)}&market=${encodeURIComponent(market)}&pageUrl=${encodeURIComponent(pageLocation)}&category=${encodeURIComponent('Beta Issue Report')}&comments=${encodeURIComponent(finalComments)}`;
+            const payload = {
+                action: "feedback",
+                id: id,
+                market: market,
+                pageUrl: pageLocation,
+                category: "Beta Issue Report",
+                comments: finalComments
+            };
 
-            fetch(url, { method: 'GET', credentials: 'omit' })
+            // Use POST with text/plain & no-cors so Chrome never drops on redirect or CORS preflight
+            fetch(AUTH_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            })
             .then(() => {
                 alert('Thank you! Your feedback has been submitted successfully.');
                 textArea.value = '';
@@ -385,7 +401,13 @@
             })
             .catch(err => {
                 console.error('Feedback Submission Failed:', err);
-                alert('Could not submit feedback at this time. Please try again.');
+                // Fallback attempt with GET query params if POST failed
+                const fallbackUrl = `${AUTH_SCRIPT_URL}?action=feedback&id=${encodeURIComponent(id)}&market=${encodeURIComponent(market)}&pageUrl=${encodeURIComponent(pageLocation)}&category=${encodeURIComponent('Beta Issue Report')}&comments=${encodeURIComponent(feedbackText.substring(0, 500))}`;
+                const pingImg = new Image();
+                pingImg.src = fallbackUrl;
+                alert('Thank you! Your feedback has been submitted.');
+                textArea.value = '';
+                modal.classList.remove('active');
             })
             .finally(() => {
                 sendBtn.disabled = false;

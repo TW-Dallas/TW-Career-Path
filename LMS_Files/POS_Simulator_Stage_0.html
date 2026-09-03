@@ -58,6 +58,18 @@
             <div id="hitbox-wrapper">
                 <img id="pos-image" src="resources/POS_assets/Stage_0/POS_0.01.png" alt="POS Screen">
                 <!-- HITBOXES WILL BE INJECTED HERE BY JAVASCRIPT -->
+
+                <!-- STORE WI-FI RELOAD SCREEN OVERLAY -->
+                <div id="reload-screen-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 25, 47, 0.94); z-index: 999; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; box-sizing: border-box;">
+                    <div style="font-size: 2.8rem; margin-bottom: 10px;">📶</div>
+                    <div style="font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.35rem; color: #fefaf6; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Store Connection Hiccup</div>
+                    <p style="font-family: 'OneDotCd', sans-serif; font-size: 1.05rem; color: #ccd6f6; margin: 0 0 20px 0; max-width: 420px; line-height: 1.4;">
+                        The POS screen image paused while downloading over store Wi-Fi. Hitboxes are safely locked.
+                    </p>
+                    <button id="reload-screen-btn" class="btn" style="background-color: #0090e2; color: #fff; border: 2px solid #fff; padding: 10px 24px; border-radius: 50px; font-family: 'OneDotCd-Bold', sans-serif; font-size: 1.05rem; cursor: pointer; box-shadow: 0 4px 15px rgba(0,144,226,0.4);" onclick="retryLoadPosImage()">
+                        🔄 Tap to Reload Screen
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -281,6 +293,46 @@
         const instructionText = document.getElementById('instruction-text');
         const errorMsg = document.getElementById('error-message');
         const hitboxWrapper = document.getElementById('hitbox-wrapper');
+
+        function reportErrorToDeveloper(errorType, details) {
+            const market = localStorage.getItem('tw_market') || 'Unknown Market';
+            const id = localStorage.getItem('tw_id') || 'Unknown ID';
+            const currentStepNum = typeof currentStep !== 'undefined' ? currentStep : 'N/A';
+
+            const payload = {
+                action: 'error',
+                market: market,
+                userId: id,
+                module: 'Day 1 Mod 4 Practice Stage 0',
+                step: currentStepNum,
+                errorType: errorType,
+                details: details,
+                userAgent: navigator.userAgent
+            };
+
+            fetch(AUTH_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            })
+            .then(() => console.log("Error report sent successfully."))
+            .catch(err => console.error("Could not send error report:", err));
+        }
+
+        window.onerror = function (message, source, lineno, colno, error) {
+            const details = `${message} at ${source}:${lineno}:${colno}`;
+            reportErrorToDeveloper('JavaScript Exception', details);
+            return false;
+        };
+
+        window.addEventListener('error', function (event) {
+            if (event.target && event.target.tagName === 'IMG') {
+                const src = event.target.src || '';
+                if (!src || src === window.location.href || src.endsWith('.html') || src.endsWith('/')) return;
+                reportErrorToDeveloper('Broken Image Asset', src);
+            }
+        }, true);
 
         // Fetch the global hitboxes automatically
         fetch('Globals/LMS_Master_html.html')
@@ -508,28 +560,55 @@
             fetch(url, { method: 'GET', credentials: 'omit' });
         }
 
-        function loadStep(stepIndex) {
-            if (stepIndex >= sequence.length) {
-                localStorage.setItem('mod4_saved_stage', '1');
-                sendProgressUpdate('Day 1 Mod 4', 'In Progress');
-                setTimeout(() => {
-                    window.location.href = "POS_Simulator_Stage_1.html";
+        let imageRetryTimer = null;
+        let imageRetryCount = 0;
+
+        function showReloadOverlay() {
+            const overlay = document.getElementById('reload-screen-overlay');
+            if (overlay) overlay.style.display = 'flex';
+        }
+
+        function hideReloadOverlay() {
+            const overlay = document.getElementById('reload-screen-overlay');
+            if (overlay) overlay.style.display = 'none';
+        }
+
+        window.retryLoadPosImage = function () {
+            hideReloadOverlay();
+            imageRetryCount++;
+            const stepData = sequence[currentStep];
+            if (stepData && stepData.image) {
+                posImage.src = stepData.image + '?retry=' + Date.now();
+            }
+        };
+
+        posImage.onerror = function () {
+            document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+            reportErrorToDeveloper('Image Load Timeout/Error', posImage.src);
+
+            if (imageRetryCount < 1) {
+                imageRetryCount++;
+                imageRetryTimer = setTimeout(() => {
+                    const stepData = sequence[currentStep];
+                    if (stepData && stepData.image) {
+                        posImage.src = stepData.image + '?retry=' + Date.now();
+                    }
                 }, 1000);
-                return;
+            } else {
+                showReloadOverlay();
             }
+        };
 
-            const stepData = sequence[stepIndex];
-            posImage.src = stepData.image; 
-            instructionText.innerHTML = stepData.instruction;
-
-            // Preload next 3 steps in background for instant transitions
-            for (let i = 1; i <= 3; i++) {
-                if (sequence[stepIndex + i] && sequence[stepIndex + i].image) {
-                    const preloadImg = new Image();
-                    preloadImg.src = sequence[stepIndex + i].image;
-                }
+        posImage.onload = function () {
+            hideReloadOverlay();
+            imageRetryCount = 0;
+            if (imageRetryTimer) clearTimeout(imageRetryTimer);
+            if (currentStep < sequence.length) {
+                activateHitboxesForStep(sequence[currentStep], currentStep);
             }
-            
+        };
+
+        function activateHitboxesForStep(stepData, stepIndex) {
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.style.display = 'none';
             });
@@ -552,6 +631,42 @@
 
             // TRIGGER AUDIO FOR THE STEP:
             handleAudioForStep(stepData);
+        }
+
+        function loadStep(stepIndex) {
+            if (stepIndex >= sequence.length) {
+                localStorage.setItem('mod4_saved_stage', '1');
+                sendProgressUpdate('Day 1 Mod 4', 'In Progress');
+                setTimeout(() => {
+                    window.location.href = "POS_Simulator_Stage_1.html";
+                }, 1000);
+                return;
+            }
+
+            // Immediately lock hitboxes while image is loading to prevent desync
+            document.querySelectorAll('.hitbox').forEach(hb => {
+                hb.style.display = 'none';
+            });
+
+            const stepData = sequence[stepIndex];
+            instructionText.innerHTML = stepData.instruction;
+
+            // Preload next 3 steps in background for instant transitions
+            for (let i = 1; i <= 3; i++) {
+                if (sequence[stepIndex + i] && sequence[stepIndex + i].image) {
+                    const preloadImg = new Image();
+                    preloadImg.src = sequence[stepIndex + i].image;
+                }
+            }
+            
+            // If image is already rendered and complete, activate hitboxes immediately
+            const targetSrc = stepData.image;
+            if (posImage.src.endsWith(targetSrc) && posImage.complete && posImage.naturalWidth > 0) {
+                hideReloadOverlay();
+                activateHitboxesForStep(stepData, stepIndex);
+            } else {
+                posImage.src = targetSrc;
+            }
         }
 
         function goBack() {
