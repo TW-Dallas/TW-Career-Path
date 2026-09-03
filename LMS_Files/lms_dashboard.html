@@ -2119,7 +2119,9 @@
             localStorage.removeItem('tw_tutorial_complete');
             localStorage.removeItem('mod4_saved_stage');
             localStorage.removeItem('mod4_stage4_step');
-            localStorage.removeItem('tw_mod2_completed_videos');
+            const currentId = localStorage.getItem('tw_id');
+            if (currentId) localStorage.removeItem('tw_day1_start_time_' + currentId);
+            localStorage.removeItem('tw_day1_start_time');
             
             window.location.reload();
         }
@@ -2180,6 +2182,10 @@
                 localStorage.setItem('tw_lastName', result.lastName);
                 localStorage.setItem('tw_role', result.role);
                 localStorage.setItem('tw_store', result.store);
+
+                if (!localStorage.getItem('tw_day1_start_time_' + normalizedId)) {
+                    localStorage.setItem('tw_day1_start_time_' + normalizedId, Date.now());
+                }
 
                 if (result.role && (result.role.toLowerCase().includes('exec') || result.role.toLowerCase().includes('admin') || result.role.toLowerCase().includes('corp'))) {
                     localStorage.setItem('tw_admin_mode', 'true');
