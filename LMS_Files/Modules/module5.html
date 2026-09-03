@@ -162,7 +162,7 @@
         
         <div style="display: flex; align-items: center; gap: 15px;">
             <span style="font-family: 'OneDotCd-Bold'; font-size: 1.1rem; color: var(--crust-base); text-transform: uppercase; letter-spacing: 0.5px;">Module 5: Day 1 Recap & Sign-Off</span>
-            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Step 1 of 3</span>
+            <span id="step-counter" style="background: rgba(254, 250, 246, 0.15); color: var(--crust-base); padding: 0.3rem 0.8rem; border-radius: 20px; font-family: 'OneDotCd-Bold'; font-size: 0.9rem; border: 1px solid rgba(254, 250, 246, 0.25);">Step 1 of 4</span>
         </div>
     </header>
 
@@ -185,7 +185,17 @@
                 <p id="quiz-feedback" style="color: var(--brand-red); font-family: 'OneDotCd-Bold'; margin-top: 1rem; display: none;">Please select the correct play to continue.</p>
             </div>
 
-            <!-- STEP 3: TRAINER PIN SIGN-OFF -->
+            <!-- STEP 3: BRENT'S WELCOME & TEAM WOW CULTURE -->
+            <div id="content-brent-video" class="hidden" style="width: 100%; text-align: center;">
+                <h3 style="font-family: 'PizzaPress'; color: var(--brand-blue); font-size: 2.2rem; margin-top: 0; margin-bottom: 0.5rem;">Welcome to the WOW Family</h3>
+                <p id="brent-video-status-msg" style="color: var(--crust-burnt); font-size: 1rem; margin-bottom: 1.5rem;">Watch Brent's welcome message to unlock the trainer sign-off.</p>
+                
+                <div class="video-wrapper">
+                    <iframe id="vimeo-iframe-brent" title="A Message from Brent: Welcome to Team WOW" src="https://player.vimeo.com/video/1223290523?h=911aa0e4fa" style="width: 100%; height: 100%; border: 0;" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- STEP 4: TRAINER PIN SIGN-OFF -->
             <div id="content-signoff" class="signoff-card hidden">
                 <div style="font-size: 3rem; margin-bottom: 0.5rem;">🔐</div>
                 <h3 style="font-family: 'OneDotCd-Bold'; color: var(--dark-blue); font-size: 1.8rem; margin: 0 0 0.5rem 0;">Trainer Authorization</h3>
@@ -202,7 +212,7 @@
                 <button class="btn" id="btn-verify-pin" onclick="verifyTrainerPin()" style="padding: 0.8rem 2.5rem;">Authorize & Unlock Day 2</button>
             </div>
 
-            <!-- STEP 4: DAY 1 COMPLETION CELEBRATION -->
+            <!-- STEP 5: DAY 1 COMPLETION CELEBRATION -->
             <div id="content-complete" class="prompt-container hidden" style="text-align: center;">
                 <div class="prompt-icon" style="font-size: 4rem; margin-bottom: 1rem;">🏆</div>
                 <h2 style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 2.4rem; margin-bottom: 0.5rem;">Day 1 Officially Complete!</h2>
@@ -225,11 +235,13 @@
     <script>
         let currentStep = 1;
         const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
-        let videoWatched = isAdmin;
+        let bobbyVideoWatched = isAdmin;
+        let brentVideoWatched = isAdmin;
         let quizPassed = false;
         let trainerAuthorized = false;
         let activeQuizQuestions = [];
-        let vimeoPlayer = null;
+        let bobbyPlayer = null;
+        let brentPlayer = null;
 
         const moduleStartTime = Date.now();
         let userAnswers = {};
@@ -316,13 +328,19 @@
         function changeStep(direction) {
             const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
             if (direction === 1 && !isAdmin) {
-                if (currentStep === 1 && !videoWatched) return;
+                if (currentStep === 1 && !bobbyVideoWatched) return;
                 if (currentStep === 2 && !quizPassed) {
                     const fb = document.getElementById('quiz-feedback');
                     if (fb) fb.style.display = 'block';
                     return;
                 }
+                if (currentStep === 3 && !brentVideoWatched) return;
             }
+
+            // Pause both players if active during step change
+            if (bobbyPlayer && typeof bobbyPlayer.pause === 'function') bobbyPlayer.pause();
+            if (brentPlayer && typeof brentPlayer.pause === 'function') brentPlayer.pause();
+
             currentStep += direction;
             updateUI();
         }
@@ -330,6 +348,7 @@
         function updateUI() {
             document.getElementById('content-video').classList.add('hidden');
             document.getElementById('content-quiz').classList.add('hidden');
+            document.getElementById('content-brent-video').classList.add('hidden');
             document.getElementById('content-signoff').classList.add('hidden');
             document.getElementById('content-complete').classList.add('hidden');
 
@@ -341,21 +360,38 @@
 
             if (currentStep === 1) {
                 document.getElementById('content-video').classList.remove('hidden');
-                document.getElementById('step-counter').innerText = 'Step 1 of 3';
+                document.getElementById('step-counter').innerText = 'Step 1 of 4';
                 btnBack.classList.add('hidden');
-                if (!videoWatched) btnNext.classList.add('btn-disabled');
+                if (!bobbyVideoWatched) {
+                    btnNext.classList.add('btn-disabled');
+                } else {
+                    btnNext.classList.remove('btn-disabled');
+                }
             } 
             else if (currentStep === 2) {
                 document.getElementById('content-quiz').classList.remove('hidden');
-                document.getElementById('step-counter').innerText = 'Step 2 of 3';
-                if (!quizPassed) btnNext.classList.add('btn-disabled');
+                document.getElementById('step-counter').innerText = 'Step 2 of 4';
+                if (!quizPassed) {
+                    btnNext.classList.add('btn-disabled');
+                } else {
+                    btnNext.classList.remove('btn-disabled');
+                }
             } 
             else if (currentStep === 3) {
-                document.getElementById('content-signoff').classList.remove('hidden');
-                document.getElementById('step-counter').innerText = 'Step 3 of 3';
-                btnNext.classList.add('hidden'); // Verification button triggers progression
+                document.getElementById('content-brent-video').classList.remove('hidden');
+                document.getElementById('step-counter').innerText = 'Step 3 of 4';
+                if (!brentVideoWatched) {
+                    btnNext.classList.add('btn-disabled');
+                } else {
+                    btnNext.classList.remove('btn-disabled');
+                }
             }
             else if (currentStep === 4) {
+                document.getElementById('content-signoff').classList.remove('hidden');
+                document.getElementById('step-counter').innerText = 'Step 4 of 4';
+                btnNext.classList.add('hidden'); // Verification button triggers progression
+            }
+            else if (currentStep === 5) {
                 document.getElementById('content-complete').classList.remove('hidden');
                 document.getElementById('step-counter').innerText = 'Certified';
                 btnBack.classList.add('hidden');
@@ -423,7 +459,7 @@
             }));
 
             localStorage.setItem('mod5_complete', 'true');
-            currentStep = 4;
+            currentStep = 5;
             updateUI();
         }
 
@@ -448,26 +484,78 @@
                 .catch(e => console.error("Error logging progress:", e));
         }
 
-        function initVimeoPlayer() {
-            const iframe = document.getElementById('vimeo-iframe');
-            if (iframe && typeof Vimeo !== 'undefined') {
+        function initVimeoPlayers() {
+            // 1. Coach Bobby's Outro Recap Video (Step 1)
+            const bobbyIframe = document.getElementById('vimeo-iframe');
+            if (bobbyIframe && typeof Vimeo !== 'undefined') {
                 try {
-                    vimeoPlayer = new Vimeo.Player(iframe);
-                    vimeoPlayer.on('ended', () => {
-                        videoWatched = true;
-                        const nextBtn = document.getElementById('btn-next');
-                        if (nextBtn) nextBtn.classList.remove('btn-disabled');
-                    });
-                    vimeoPlayer.on('timeupdate', (data) => {
-                        if (data.percent >= 0.92) {
-                            videoWatched = true;
+                    bobbyPlayer = new Vimeo.Player(bobbyIframe);
+                    bobbyPlayer.on('ended', () => {
+                        bobbyVideoWatched = true;
+                        const statusMsg = document.getElementById('video-status-msg');
+                        if (statusMsg) {
+                            statusMsg.innerHTML = '✅ <strong>Post-game recap completed!</strong> Click Next Step to start the final quiz.';
+                            statusMsg.style.color = '#27ae60';
+                        }
+                        if (currentStep === 1) {
                             const nextBtn = document.getElementById('btn-next');
                             if (nextBtn) nextBtn.classList.remove('btn-disabled');
                         }
                     });
+                    bobbyPlayer.on('timeupdate', (data) => {
+                        if (data.percent >= 0.92) {
+                            bobbyVideoWatched = true;
+                            const statusMsg = document.getElementById('video-status-msg');
+                            if (statusMsg) {
+                                statusMsg.innerHTML = '✅ <strong>Post-game recap completed!</strong> Click Next Step to start the final quiz.';
+                                statusMsg.style.color = '#27ae60';
+                            }
+                            if (currentStep === 1) {
+                                const nextBtn = document.getElementById('btn-next');
+                                if (nextBtn) nextBtn.classList.remove('btn-disabled');
+                            }
+                        }
+                    });
                 } catch (e) {
-                    console.warn("Vimeo Player init:", e);
-                    videoWatched = true;
+                    console.warn("Bobby Vimeo Player init:", e);
+                    bobbyVideoWatched = true;
+                }
+            }
+
+            // 2. Brent's Welcome & Culture Video (Step 3)
+            const brentIframe = document.getElementById('vimeo-iframe-brent');
+            if (brentIframe && typeof Vimeo !== 'undefined') {
+                try {
+                    brentPlayer = new Vimeo.Player(brentIframe);
+                    brentPlayer.on('ended', () => {
+                        brentVideoWatched = true;
+                        const statusMsg = document.getElementById('brent-video-status-msg');
+                        if (statusMsg) {
+                            statusMsg.innerHTML = '✅ <strong>Welcome message completed!</strong> Click Next Step to proceed to Trainer Authorization.';
+                            statusMsg.style.color = '#27ae60';
+                        }
+                        if (currentStep === 3) {
+                            const nextBtn = document.getElementById('btn-next');
+                            if (nextBtn) nextBtn.classList.remove('btn-disabled');
+                        }
+                    });
+                    brentPlayer.on('timeupdate', (data) => {
+                        if (data.percent >= 0.92) {
+                            brentVideoWatched = true;
+                            const statusMsg = document.getElementById('brent-video-status-msg');
+                            if (statusMsg) {
+                                statusMsg.innerHTML = '✅ <strong>Welcome message completed!</strong> Click Next Step to proceed to Trainer Authorization.';
+                                statusMsg.style.color = '#27ae60';
+                            }
+                            if (currentStep === 3) {
+                                const nextBtn = document.getElementById('btn-next');
+                                if (nextBtn) nextBtn.classList.remove('btn-disabled');
+                            }
+                        }
+                    });
+                } catch (e) {
+                    console.warn("Brent Vimeo Player init:", e);
+                    brentVideoWatched = true;
                 }
             }
         }
@@ -476,10 +564,10 @@
             window.location.href = '../lms_dashboard.html#day1';
         }
 
-        // Initialize quiz and video on load
+        // Initialize quiz and video players on load
         document.addEventListener('DOMContentLoaded', () => {
             initFinalQuiz();
-            initVimeoPlayer();
+            initVimeoPlayers();
             updateUI();
         });
     </script>

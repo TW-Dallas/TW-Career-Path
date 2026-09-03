@@ -11,6 +11,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Day 1 Module 5: Post-Game Recap & Trainer Certification Sign-Off:** Module 5 is officially unlocked on the Day 1 Dashboard!
   * **Coach Bobby's Post-Game Wrap-Up:** High-definition wrap-up video reviewing core customer service, phone etiquette, and teamwork skills before taking the final assessment.
   * **Day 1 Comprehensive Knowledge Check:** 10-question final review covering customer service standards, LEADS recovery, phone etiquette, and store operations.
+  * **Brent's Welcome & Team WOW Culture Finale:** A personal welcome and core values message from Brent celebrating new team members and reinforcing what makes Team WOW extraordinary before manager sign-off.
   * **Manager / Trainer PIN Certification:** Requires the store Shift Runner, GM, or Trainer to enter their 4-digit PIN to officially certify Day 1 completion and unlock Day 2.
 * **Full Practice Orders in the POS Simulator (Live Order Practice):** Connected Stage 4 seamlessly into the Order Entry training flow, allowing new hires to practice realistic, full-speed live phone orders with customer audio, hold/rewind controls, complex toppings, sides, and shift evaluation scorecards.
 * **Interactive Makeline & Product Build Job Aids:** Replaced the legacy build guide in the **Product Guides** section of the Learning Hub Resource Library with the newly updated, official **Interactive Job Aids Domino Team Wow** digital guide covering makeline builds, pizza procedures, and store specs.
@@ -29,7 +30,6 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 
 ### 🔜 On the Horizon (Upcoming Content & Rollouts)
 * **Day 2 Training in Development:** Content creation and interactive store simulations for Day 2 (covering advanced Customer Recovery and Store Sanitation standards) are in active production behind the scenes.
-* **Executive Culture Finale Video:** Adding Brent's inspiring Team WOW culture and core values message into the Day 1 final wrap-up before manager sign-off.
 * **Virtual MIT Classes Link (All Stores):** Adding a direct signup and schedule link on the main Career Path page for virtual MIT classes accessible across all store locations.
 
 ### 💡 Store Pro-Tip of the Week: The Winning Training Combination
