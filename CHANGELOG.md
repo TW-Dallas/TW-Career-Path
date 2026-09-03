@@ -13,6 +13,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
   * **Day 1 Comprehensive Knowledge Check:** 10-question final review covering customer service standards, LEADS recovery, phone etiquette, and store operations.
   * **Manager / Trainer PIN Certification:** Requires the store Shift Runner, GM, or Trainer to enter their 4-digit PIN to officially certify Day 1 completion and unlock Day 2.
 * **Full Practice Orders in the POS Simulator (Live Order Practice):** Connected Stage 4 seamlessly into the Order Entry training flow, allowing new hires to practice realistic, full-speed live phone orders with customer audio, hold/rewind controls, complex toppings, sides, and shift evaluation scorecards.
+* **Interactive Makeline & Product Build Job Aids:** Replaced the legacy build guide in the **Product Guides** section of the Learning Hub Resource Library with the newly updated, official **Interactive Job Aids Domino Team Wow** digital guide covering makeline builds, pizza procedures, and store specs.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
 * **Day 1 Module 2 Video Progression (Sense of Urgency):** Resolved an issue on Card 4 ("Hustle Mentality / Sense of Urgency") where completing the video did not properly trigger the next card. Progression is fully restored and trainees can complete and advance seamlessly.
