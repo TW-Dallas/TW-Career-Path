@@ -275,7 +275,7 @@
                 desc: 'Maintaining the field for the win.',
                 completed: false,
                 maxTimeWatched: 0,
-                thumb: '../resources/Title_Slides/Store_Image_Title.png'
+                thumb: '../resources/Title_Slides/Store_Image_Title.png?v=20260902'
             },
             {
                 id: '1215101559',
@@ -284,7 +284,7 @@
                 desc: 'Suiting up for success.',
                 completed: false,
                 maxTimeWatched: 0,
-                thumb: '../resources/Title_Slides/Perfect_Image_Title.png'
+                thumb: '../resources/Title_Slides/Perfect_Image_Title.png?v=20260902'
             },
             {
                 id: '1220730023',
@@ -292,7 +292,7 @@
                 desc: 'Wearing the game day jersey with pride.',
                 completed: false,
                 maxTimeWatched: 0,
-                thumb: '../resources/Title_Slides/Perfect_Image_2_Title.png'
+                thumb: '../resources/Title_Slides/Perfect_Image_2_Title.png?v=20260902'
             },
             {
                 id: '1215101421',
@@ -301,7 +301,7 @@
                 desc: 'Take pride in the huddle & the hustle.',
                 completed: false,
                 maxTimeWatched: 0,
-                thumb: '../resources/Title_Slides/Sense_of_Urgency_Title.png'
+                thumb: '../resources/Title_Slides/Sense_of_Urgency_Title.png?v=20260902'
             },
             {
                 id: '1215119848',
@@ -310,7 +310,7 @@
                 desc: 'Using the equipment that isn\'t tangible.',
                 completed: false,
                 maxTimeWatched: 0,
-                thumb: '../resources/Title_Slides/Intangibles_Title.png'
+                thumb: '../resources/Title_Slides/Intangibles_Title.png?v=20260902'
             },
             {
                 id: '1215101650',
@@ -319,7 +319,7 @@
                 desc: 'Running the plays with skill & efficiency.',
                 completed: false,
                 maxTimeWatched: 0,
-                thumb: '../resources/Title_Slides/Operations_Title.png'
+                thumb: '../resources/Title_Slides/Operations_Title.png?v=20260902'
             },
             {
                 id: '1219789245',
@@ -327,7 +327,7 @@
                 desc: 'Mastering the game plan for world-class service & the LEADS playbook.',
                 completed: false,
                 maxTimeWatched: 0,
-                thumb: '../resources/Title_Slides/Service_Title.png'
+                thumb: '../resources/Title_Slides/Service_Title.png?v=20260902'
             }
         ];
 
@@ -820,16 +820,19 @@
 
                 // Standard Video Cards
                 const cardHTML = `
-                    <div class="v-card ${cardStatusClass}">
-                        <div class="v-card-thumb" style="background-image: url('${video.thumb}');">
+                    <div class="v-card ${cardStatusClass}" style="display: flex; flex-direction: column;">
+                        <div class="v-card-thumb" style="background-image: url('${video.thumb}'); background-size: cover; background-position: center; min-height: 160px; height: 160px;">
                             <span class="v-card-badge">${badgeText}</span>
                         </div>
-                        <div class="v-card-body">
-                            <div class="v-card-title">${video.title}</div>
-                            <div class="v-card-desc">${video.desc}</div>
+                        <div class="v-card-body" style="display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;">
+                            <div>
+                                <div class="v-card-title">${video.title}</div>
+                                <div class="v-card-desc">${video.desc}</div>
+                            </div>
                             <button class="btn ${isBtnDisabled ? 'disabled' : ''}" 
                                     onclick="${isBtnDisabled ? '' : `openVideoModal(${index})`}" 
-                                    ${isBtnDisabled ? 'disabled' : ''}>
+                                    ${isBtnDisabled ? 'disabled' : ''}
+                                    style="width: 100%; margin-top: auto;">
                                 ${btnText}
                             </button>
                         </div>
