@@ -742,21 +742,23 @@
 
         // --- DEEP-LINKING / HASH ROUTING ---
         function handleHashRouting() {
-            const hash = window.location.hash.toLowerCase().replace('#', '').trim();
-            if (!hash) return;
+            const rawHash = window.location.hash.toLowerCase().replace('#', '').trim();
+            if (!rawHash) return;
+            const hash = rawHash.replace(/[-_]/g, '');
+
             if (hash === 'categories' || hash === 'resources') {
                 navigateTo('categories');
-            } else if (hash === 'training') {
+            } else if (hash === 'training' || hash === 'trainingcenter') {
                 openCategory('training', 'Training Center');
-            } else if (hash === 'managers' || hash === 'gm') {
+            } else if (hash === 'managers' || hash === 'manager' || hash === 'gm') {
                 openCategory('managers', 'Manager Resources');
-            } else if (hash === 'drivers') {
+            } else if (hash === 'drivers' || hash === 'driver') {
                 openCategory('drivers', 'Driver Resources');
-            } else if (hash === 'insiders' || hash === 'csr' || hash === 'products' || hash === 'product-guides') {
+            } else if (hash === 'insiders' || hash === 'csr' || hash === 'products' || hash === 'product' || hash === 'productguides' || hash === 'productguide') {
                 openCategory('insiders', 'Product Guides');
-            } else if (hash === 'newhire') {
+            } else if (hash === 'newhire' || hash === 'newhires' || hash === 'onboarding') {
                 openCategory('newhire', 'New Hire Onboarding');
-            } else if (hash === 'hr') {
+            } else if (hash === 'hr' || hash === 'humanresources') {
                 openCategory('hr', 'Human Resources');
             } else if (hash === 'lobby') {
                 navigateTo('lobby');
