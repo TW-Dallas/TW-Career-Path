@@ -761,6 +761,9 @@
                     const isPosterDone = uniformParts.posterItems.length >= 10;
                     const isLookBookDone = uniformParts.lookbook;
 
+                    const completedCount = (isVideoDone ? 1 : 0) + (isPosterDone ? 1 : 0) + (isLookBookDone ? 1 : 0);
+                    const allDone = completedCount === 3;
+
                     const cardHTML = `
                         <div class="v-card ${cardStatusClass}" style="display: flex; flex-direction: column;">
                             <div class="v-card-thumb" style="background-image: url('${video.thumb}'); background-size: cover; background-position: center; min-height: 160px; height: 160px;">
@@ -769,18 +772,20 @@
                             <div class="v-card-body" style="display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;">
                                 <div>
                                     <div class="v-card-title">${video.title}</div>
-                                    <div class="v-card-desc" style="margin-bottom: 8px;">${video.desc}</div>
+                                    <div class="v-card-desc" style="margin-bottom: 10px;">${video.desc}</div>
                                     
-                                    <!-- Compact 3-Part Status Pills -->
-                                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 10px; text-align: center; font-size: 0.78rem; font-family: 'OneDotCd-Bold';">
-                                        <div style="background: ${isVideoDone ? '#e8f5e9' : 'var(--crust-light)'}; color: ${isVideoDone ? '#2e7d32' : 'var(--crust-burnt)'}; border: 1px solid ${isVideoDone ? '#a5d6a7' : 'var(--crust-med)'}; border-radius: 6px; padding: 4px 2px;">
-                                            ${isVideoDone ? '✓ 1. Video' : '⏳ 1. Video'}
+                                    <!-- Sleek 3-Segment Progress Bar -->
+                                    <div style="background: var(--crust-light); border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 7px 10px; margin-bottom: 12px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-family: 'OneDotCd-Bold'; font-size: 0.82rem;">
+                                            <span style="color: var(--dark-blue); letter-spacing: 0.3px;">Requirements:</span>
+                                            <span style="color: ${allDone ? '#2e7d32' : 'var(--brand-blue)'}; font-weight: bold;">
+                                                ${completedCount} of 3 Complete ${allDone ? '✓' : ''}
+                                            </span>
                                         </div>
-                                        <div style="background: ${isPosterDone ? '#e8f5e9' : 'var(--crust-light)'}; color: ${isPosterDone ? '#2e7d32' : 'var(--crust-burnt)'}; border: 1px solid ${isPosterDone ? '#a5d6a7' : 'var(--crust-med)'}; border-radius: 6px; padding: 4px 2px;">
-                                            ${isPosterDone ? '✓ 2. Poster' : `⏳ 2. Poster (${uniformParts.posterItems.length}/10)`}
-                                        </div>
-                                        <div style="background: ${isLookBookDone ? '#e8f5e9' : 'var(--crust-light)'}; color: ${isLookBookDone ? '#2e7d32' : 'var(--crust-burnt)'}; border: 1px solid ${isLookBookDone ? '#a5d6a7' : 'var(--crust-med)'}; border-radius: 6px; padding: 4px 2px;">
-                                            ${isLookBookDone ? '✓ 3. LookBook' : '⏳ 3. LookBook'}
+                                        <div style="display: flex; gap: 4px; height: 5px; border-radius: 3px; overflow: hidden; background: #e2e8f0;">
+                                            <div style="flex: 1; background: ${isVideoDone ? '#2e7d32' : '#cbd5e1'}; border-radius: 2px;"></div>
+                                            <div style="flex: 1; background: ${isPosterDone ? '#2e7d32' : '#cbd5e1'}; border-radius: 2px;"></div>
+                                            <div style="flex: 1; background: ${isLookBookDone ? '#2e7d32' : '#cbd5e1'}; border-radius: 2px;"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -789,21 +794,21 @@
                                     <button class="btn ${isBtnDisabled ? 'disabled' : ''}" 
                                             onclick="${isBtnDisabled ? '' : `openVideoModal(${index})`}" 
                                             ${isBtnDisabled ? 'disabled' : ''}
-                                            style="width: 100%; padding: 0.5rem 0.8rem; font-size: 0.9rem;">
-                                        ${isVideoDone ? 'Rewatch Video' : '🎬 Watch Video'}
+                                            style="width: 100%; padding: 0.45rem 0.8rem; font-size: 0.88rem;">
+                                        ${isVideoDone ? '✓ 1. Video Watched' : '🎬 1. Watch Video'}
                                     </button>
                                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
                                         <button class="btn btn-outline ${isBtnDisabled ? 'disabled' : ''}" 
                                                 onclick="${isBtnDisabled ? '' : 'openUniformPosterModal()'}" 
                                                 ${isBtnDisabled ? 'disabled' : ''}
-                                                style="padding: 0.35rem 0.4rem; font-size: 0.82rem; border-radius: 6px; white-space: nowrap; ${isPosterDone ? 'border-color: #2e7d32; color: #2e7d32;' : ''}">
-                                            ${isPosterDone ? '✓ Poster Done' : '🔍 Open Poster'}
+                                                style="padding: 0.38rem 0.4rem; font-size: 0.8rem; border-radius: 6px; white-space: nowrap; ${isPosterDone ? 'border-color: #2e7d32; color: #2e7d32; font-weight: bold;' : ''}">
+                                            ${isPosterDone ? '✓ 2. Poster' : `🔍 2. Poster (${uniformParts.posterItems.length}/10)`}
                                         </button>
                                         <button class="btn btn-outline ${isBtnDisabled ? 'disabled' : ''}" 
                                                 onclick="${isBtnDisabled ? '' : 'openLookBookModal()'}" 
                                                 ${isBtnDisabled ? 'disabled' : ''}
-                                                style="padding: 0.35rem 0.4rem; font-size: 0.82rem; border-radius: 6px; white-space: nowrap; ${isLookBookDone ? 'border-color: #2e7d32; color: #2e7d32;' : ''}">
-                                            ${isLookBookDone ? '✓ Look Book' : '📖 Look Book'}
+                                                style="padding: 0.38rem 0.4rem; font-size: 0.8rem; border-radius: 6px; white-space: nowrap; ${isLookBookDone ? 'border-color: #2e7d32; color: #2e7d32; font-weight: bold;' : ''}">
+                                            ${isLookBookDone ? '✓ 3. Look Book' : '📖 3. Look Book'}
                                         </button>
                                     </div>
                                 </div>
