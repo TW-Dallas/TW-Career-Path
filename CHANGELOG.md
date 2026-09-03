@@ -4,55 +4,58 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 
 ---
 
-## 📌 [Draft: The Wow Way Huddle — Edition #3]
+## 📌 [Draft: Next Wow Way Huddle Edition]
 *Scheduled: Thursday @ 9:00 AM CST/CDT (Compiled @ 5:00 AM CST/CDT)*
 
 ### 🍕 Fresh Out of the Oven (New Features & Content)
-* **Day 1 Module 5: Post-Game Recap & Trainer Certification Sign-Off:** Module 5 is officially unlocked on the Day 1 Dashboard!
-  * **Coach Bobby's Post-Game Wrap-Up:** High-definition wrap-up video reviewing core customer service, phone etiquette, and teamwork skills before taking the final assessment.
-  * **Day 1 Comprehensive Knowledge Check:** 10-question final review covering customer service standards, LEADS recovery, phone etiquette, and store operations.
-  * **Brent's Welcome & Team WOW Culture Finale:** A personal welcome and core values message from Brent celebrating new team members and reinforcing what makes Team WOW extraordinary before manager sign-off.
-  * **Day 1 Official Trainee Report Card & Shift Evaluation:** After completing Brent's welcome video, trainees and trainers are greeted by a comprehensive Day 1 Report Card showcasing their candidate profile, store number, shift elapsed duration, active learning time, and full 5-module competency checklist.
-  * **Manager / Trainer PIN Certification & Digital Seal:** Requires the store Shift Runner, GM, or Trainer to enter their 4-digit PIN directly on the report card to certify completion, stamping an official digital certification badge with the trainer's name, store, and timestamp.
-  * **Automated Leadership Completion Alerts:** Instantly sends an executive HTML Report Card email to operations leadership and the store GM as soon as the trainer signs off, giving real-time visibility into training completions and shift velocity across all markets.
-* **Full Practice Orders in the POS Simulator (Live Order Practice):** Connected Stage 4 seamlessly into the Order Entry training flow, allowing new hires to practice realistic, full-speed live phone orders with customer audio, hold/rewind controls, complex toppings, sides, and shift evaluation scorecards.
-* **Interactive Makeline & Product Build Job Aids:** Replaced the legacy build guide in the **Product Guides** section of the Learning Hub Resource Library with the newly updated, official **Interactive Job Aids Domino Team Wow** digital guide covering makeline builds, pizza procedures, and store specs.
-* **Product Guides Library Expansion & Firewall-Safe Vimeo Streaming:**
-  * **Domino Product Tutorial (Spot #2):** Embedded the complete product walkthrough video directly inside the Product Guides catalog via Vimeo (`1223729233?h=3fcc7edbf7`), ensuring smooth streaming on in-store networks where YouTube is firewalled.
-  * **Domino Training Guide PDF (Spot #3):** Integrated the official Domino Training Guide PDF covering pizza procedures, makeline builds, and operational guidelines.
-  * **Live Fuzzy Search Bar:** Added a smart search bar to the Resource Library that performs instant letter-by-letter fuzzy matching across titles, descriptions, and file types, prioritizing the most relevant guides, videos, and job aids at the top as users type.
-  * **100% Firewall-Safe Video Library:** Fully migrated all operational tutorials from YouTube to Vimeo (including Sandwiches & Lava Cakes, Pizza Grading Tool, and Parmesan Stuffed Crust), completely eliminating store firewall streaming blocks across all markets.
-  * **Enhanced Viewer & Audio Safety:** Upgraded the Resource Library viewer with native Vimeo playback support, sleek dark theater mode for video streaming, and automatic audio silencing whenever navigating back to the resource list.
+* **Day 2 Module 2: Cleaning, Chemical Safety & Sanitation:** Rolled out the comprehensive 6-step sanitation module directly aligned with official Domino's Operations Assessment (OA) standards:
+  * **The 5-Step Handwashing Process:** Features Coach Bobby's audio coaching, visual step ladder (Wet, Soap & Scrub 20s, Rinse, Dry, Paper Towel Faucet Shutoff), and strict OA guidelines (*Hand sanitizer is NEVER a replacement for handwashing*).
+  * **Glove Standards & Ready-To-Eat (RTE) Food Boundaries:** Strict rules on no-bare-hand contact for prepped bagging ingredients and cut-table post-bake items, artificial/painted nail policies, and The Golden Rule (*Hands washed and dried before donning clean gloves*).
+  * **3-Compartment Sink & Interactive PPM Test Strip Lab:** Audio breakdown with Coach Mike, exact water temperatures (**110°F–120°F Wash/Rinse** vs **75°F Sanitize**), 60-second contact time, air-dry only policy, and a **10-second interactive virtual test strip simulator** matching the 200 PPM target.
+  * **Chemical Safety & SDS Protocols:** Features Coach Mike's audio on the **#1 Chemical Law** (*NEVER mix chemicals / toxic chloramine gas prevention*), 15-minute emergency eyewash station flush, and manager SDS binder locations.
+  * **The Store Chore Board:** Coach Bobby's accountability breakdown (*"If it isn't documented and initialed, it didn't happen"*) with the official Team WOW daily station chore chart.
+  * **Sanitation Mastery Knowledge Check:** 6-question randomized OA mastery check authorizing trainees for in-person **Experience 1 (Hands-on Cleaning Tour)**.
+* **Day 2 Module 1: The Art of Customer Recovery & The Q-TIP Game Plan:** Rolled out the first interactive module of Day 2 training! Features:
+  * **Coach Mike's Pre-Game Huddle:** High-definition Coach Mike audio & visual playbook teaching the essential **Q-TIP** mindset (*Quit Taking It Personally!*) and the "Hungry + Angry = Hangry" customer recovery formula.
+  * **Interactive Film Studies (Scouting the Tape):** Trainees listen to real Winning Plays vs. Defensive Fumbles side-by-side (handling wrong toppings and late deliveries), breaking down what works and taking physical notes in their workbook.
+  * **Live Call Deconstructions (Angel & Jonathan):** Auto-scrolling synchronized live audio transcripts with progressive **LEADS** checkpoints (*Listen, Empathize, Apologize, Do what it takes, Stand by our promise*).
+  * **"Call the Shot" Simulator (Liz & Aiden):** Trainees step into the caller's shoes in real time, pausing during live conversation to choose Liz's next best recovery play and immediately hearing the outcome.
+  * **Store Decision Guide:** Clear rules of thumb on when to issue a priority rush remake vs. when to offer a proactive store credit.
+* **Live Phone Order Practice in the POS Simulator (Stage 4 Boss Mode):** Trainees can now tackle realistic, full-speed live phone order practice! Features live customer audio recordings, interactive telephone hardware training (Park vs. Mute), on-screen "Put on Hold" and "Rewind 5s" controls, multiline delivery instructions, complex multi-item pizzas with half-and-half toppings, sides, drinks, rewards gating, and end-of-stage performance scorecards with Coach Mike.
+* **Printable New Hire Training Program FAQ & Visual Reference Guide:** Released a store-ready, 2-page printable job aid for GMs, Shift Runners, and Trainers. Covers key onboarding FAQs, step-by-step visual credential guides, and QR codes for the Training Hub and Trainer PIN generator. Available directly in the [Resource Library](https://tw-dallas.github.io/TW-Career-Path/learning_hub.html) under Training!
+* **New Hire Trainer & Trainee Packets (Day 1):** Official Day 1 Trainer and Trainee packets are live in the Resource Library, giving trainers structured coaching checklists and new hires their day-one workbook.
+* **Module 1 Orientation Video Refresh:** Released an enhanced Day 1 introduction video featuring Coach Mike alongside the training team, featuring normalized high-definition audio, polished visual elements, and unlisted stream privacy to set clear expectations right out of the gate.
+* **Module 1 Knowledge Check Refresh:** Updated the Module 1 end-of-module quiz questions to align directly with the orientation video (covering Team WOW mission, core focus areas, and Day 1 expectations).
+* **Module 2 Video Upgrades & Dynamic Question Bank:** High-definition video streams and an 8-question rotating quiz bank with fresh customer service scenarios on every attempt so trainees truly learn the LEADS principles instead of just guessing the same answers.
+* **Module 5 Clarification & Day 1 Progress:** Clarified Card 5 production status on the Day 1 dashboard so trainees receive a clean 100% completion badge upon finishing active Modules 1–4.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
-* **POS Simulator Wi-Fi Resilience & Safe Hitbox Sync:** Added store connection safeguards so if store Wi-Fi hiccups while downloading a screen, hitboxes remain safely locked (preventing accidental misclicks or desync), and trainees can tap an on-screen prompt to instantly reload the screen without losing progress.
-* **In-App Issue & Bug Reporter Reliability:** Upgraded the store feedback and bug reporter to submit directly through secure background channels, guaranteeing that feedback, screenshots, and error logs land in management's inbox and Google Sheet without getting dropped by strict Chromebook browser security filters.
-* **Day 1 Module 2 Video Progression (Sense of Urgency):** Resolved an issue on Card 4 ("Hustle Mentality / Sense of Urgency") where completing the video did not properly trigger the next card. Progression is fully restored and trainees can complete and advance seamlessly.
-* **Balanced Headset Audio Across All Lessons:** Leveled the volume across every video and audio clip so trainees won't have to constantly fiddle with their headset volume or get blasted by sudden loud calls.
-* **Strict Store Device Policy:** Enforced that training is completed strictly on approved in-store computers and store tablets, preventing unauthorized training attempts on personal cell phones.
-* **Audio Completion Gating:** Trainees must listen completely through required audio coaching and practice calls before unlocking next steps.
-* **Auto-Scrolling Live Transcripts:** Synchronized scrolling with audio during phone orders for smooth reading side-by-side with questions.
+* **Catering Portal Non-Blocking Status Pill & Dancing Dots:** Replaced the disruptive full-screen beige loading overlay with a modern floating top-pill featuring animated dancing dots (in Domino's blue and red) and real-time status updates (syncing data, refreshing totals, emailing quotes), keeping the portal interactive and free of visual freeze-ups.
+* **Master Days Lobby Status Clarity (Day 2 & Day 3):** Updated the Day 2 and Day 3 cards in the master lobby with amber **`COMING SOON • In Production`** badges and disabled buttons to eliminate confusion for trainees completing Day 1.
+* **Audio Completion Gating & Button Disabled Hardening:** Hardened disabled buttons across all modules with `pointer-events: none` and bound native HTML `disabled` properties so trainees must complete 100% of required audio before advancing.
+* **Master Typography Harmonization & Navigation Polish:** Standardized all headers, badges, and top-navigation `← Back` links across modules and dashboards to strictly follow the official Domino's Master Typography hierarchy (Dominos Sans Header 1, Header 2, Subhead 1, Subhead 2, Compact, and Condensed).
+* **Strict Store Device Lockout Policy:** Enhanced the system-wide mobile detection to enforce that training is completed strictly on approved in-store computers and store tablets, preventing unauthorized training attempts on personal cell phones.
+* **Streamlined Single-Button Module Navigation:** Replaced dual-click prompts with single unified bottom-footer navigation that automatically unlocks as trainees complete 100% of required coaching audio.
+* **Team WOW Animated Stream Loader & Auto-Retry Watchdog:** Replaced blank black video boxes with a custom animated Team WOW breathing-glow loader and a 7-second connection watchdog with a 1-tap retry button to automatically recover from slow store Wi-Fi or packet loss.
+* **Learning Hub & Resource Library Organization:** Modernized the main lobby cards with crisp visual iconography, renamed CSR to **Product Guides**, moved OA Standards & Pizza Grading tools to **Managers**, and updated card title typography to crisp **Domino's Sans Subhead 1**.
+* **Prerequisite Locks:** Modules unlock strictly in sequential order (Module 1 ➔ Module 2 ➔ Module 3 ➔ Module 4) to ensure structured onboarding.
 
 ### ⚠️ On Our Radar (Known Issues & Interim Fixes)
-* **Video Sound Level Review & Balancing:** Continuing to monitor store feedback on audio volume across training videos and lessons to ensure consistent, comfortable decibel levels on all store headsets. If your team encounters any video that feels too quiet or loud, let us know via the in-app Feedback button!
+* *(None currently active — all reported issues resolved!)*
 
 ### 🔜 On the Horizon (Upcoming Content & Rollouts)
-* **Day 2 Training in Development:** Content creation and interactive store simulations for Day 2 (covering advanced Customer Recovery and Store Sanitation standards) are in active production behind the scenes.
+* **Executive Welcome Video:** A new standalone orientation intro section featuring a personal welcome from Brent.
+* **Weekly New Hire Training Adoption Reporting:** Developing executive reporting to track and compare weekly new hires per market (from the Staffing Tracker) against active Wow Way training participation and completions to measure onboarding compliance.
 * **Virtual MIT Classes Link (All Stores):** Adding a direct signup and schedule link on the main Career Path page for virtual MIT classes accessible across all store locations.
+* **Final Day 1 Summary Video & Master Certification Quiz (Module 5):** Finalizing Coach Bobby's Day 1 post-game wrap-up video and the comprehensive final Day 1 sign-off quiz.
+* **Day 2 Module 3 (Delivery Safety & Makeline Basics):** Building out the specialized driver and CSR tracks for Day 2!
 
-### 💡 Store Pro-Tip of the Week: The Winning Training Combination
-* **Pairing Digital LMS with Physical Guides:** The online modules are designed to work hand-in-hand with your store's physical **Trainer & Trainee Packets**! When new hires write notes in their physical workbook and trainers use their coaching checklist during live order practice, information retention skyrockets.
-* **Printable Handouts on Demand:** Need extra copies? You can print fresh Day 1 Trainee & Trainer packets and the 2-page **Visual FAQ & PIN Guide** anytime directly from the **Learning Hub Resource Library** (under *Training*). Keep a couple of clean packets ready in your store office so your shift runners are always game-day ready!
+### 💡 Store Pro-Tip of the Week
+* **Reporting Typos & Issues On the Fly:** If you or a trainee ever spot a typo, glitch, or question you'd like adjusted while training, click the blue **Feedback** button in the bottom-right corner of that exact screen! Submitting directly from the page automatically tags the module and step so our team can review and update it immediately.
+* **Quick Refresh for Store Computers (`Ctrl + F5`):** If a store computer or training workstation ever seems to show an older screen or cached version after an update, press **`Ctrl + F5`** (or **`Ctrl + Shift + R`**) on the keyboard to perform an instant hard refresh and pull down the latest cloud version.
 
 ---
 
 ## 📦 Archive / Past Editions
 
-### 📜 Edition 2: Orientation Enhancements & Job Aids
-* **Printable New Hire Training Program FAQ & Visual Reference Guide:** Released a store-ready, 2-page printable job aid for GMs, Shift Runners, and Trainers with QR codes for the Training Hub and Trainer PIN generator.
-* **New Hire Trainer & Trainee Packets (Day 1):** Official Day 1 Trainer and Trainee packets published in the Resource Library.
-* **Module 1 & 2 Orientation & Customer Service:** High-definition video streams and dynamic question banks covering LEADS principles.
-
-### 📜 Edition 1: The LMS Launch & Foundations Rollout
-* **Initial LMS Rollout:** Launch of the 3-day training architecture, login pre-flight, and foundational store onboarding modules.
-* **Prerequisite Locks:** Sequential module unlocking (Module 1 ➔ Module 2 ➔ Module 3 ➔ Module 4).
+*(Previous newsletter editions will be archived here once sent.)*
