@@ -23,7 +23,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Auto-Scrolling Live Transcripts:** Synchronized scrolling with audio during phone orders for smooth reading side-by-side with questions.
 
 ### ⚠️ On Our Radar (Known Issues & Interim Fixes)
-* *(None currently active — all reported issues resolved! If your store ever encounters an unexpected glitch or lag during a shift, report it instantly via the in-app **Feedback** button in the bottom-right corner of the screen.)*
+* **Video Sound Level Review & Balancing:** Continuing to monitor store feedback on audio volume across training videos and lessons to ensure consistent, comfortable decibel levels on all store headsets. If your team encounters any video that feels too quiet or loud, let us know via the in-app Feedback button!
 
 ### 🔜 On the Horizon (Upcoming Content & Rollouts)
 * **Day 2 Training in Development:** Content creation and interactive store simulations for Day 2 (covering advanced Customer Recovery and Store Sanitation standards) are in active production behind the scenes.
