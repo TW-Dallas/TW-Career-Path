@@ -220,7 +220,76 @@
         .badge-drafted { background: #e3f2fd; color: #0d47a1; font-family: 'Compact', sans-serif; font-size: 12px; padding: 3px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #bbdefb; }
         .badge-sent { background: var(--crust-light); color: var(--crust-burnt); font-family: 'Compact', sans-serif; font-size: 12px; padding: 3px 8px; border-radius: 4px; font-weight: bold; border: 1px solid var(--crust-dark); margin-left: 4px; }
 
-        .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 242, 233, 0.8); display: flex; align-items: center; justify-content: center; font-family: 'ExtraBlack', sans-serif; font-size: 26px; z-index: 1000; color: var(--crust-burnt); text-transform: uppercase; }
+        /* Dynamic Dancing Dots Status Pill (Non-blocking) */
+        .status-pill-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            color: var(--crust-burnt);
+            padding: 9px 22px;
+            border-radius: 50px;
+            box-shadow: 0 10px 28px rgba(71, 43, 16, 0.22), 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1.5px solid var(--crust-med);
+            border-top: 3px solid var(--brand-blue);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 9999;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 15px;
+            letter-spacing: 0.3px;
+            pointer-events: none;
+            transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
+        }
+
+        .status-pill-container.hidden {
+            display: inline-flex !important;
+            opacity: 0 !important;
+            transform: translate(-50%, -32px) scale(0.95) !important;
+            pointer-events: none !important;
+            visibility: hidden !important;
+        }
+
+        /* Dancing / Bouncing Dots */
+        .dancing-dots {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            height: 14px;
+        }
+
+        .dancing-dots span {
+            width: 7px;
+            height: 7px;
+            background-color: var(--brand-blue);
+            border-radius: 50%;
+            display: inline-block;
+            animation: danceBounce 1.2s infinite ease-in-out both;
+        }
+
+        .dancing-dots span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+        .dancing-dots span:nth-child(2) {
+            animation-delay: -0.16s;
+            background-color: var(--brand-red);
+        }
+        .dancing-dots span:nth-child(3) {
+            animation-delay: 0s;
+        }
+
+        @keyframes danceBounce {
+            0%, 80%, 100% {
+                transform: translateY(0) scale(0.75);
+                opacity: 0.5;
+            }
+            40% {
+                transform: translateY(-5px) scale(1.2);
+                opacity: 1;
+            }
+        }
         
         .auth-container { max-width: 520px; margin: 10vh auto; background: var(--card-bg); border-radius: var(--border-radius); box-shadow: 0 16px 48px rgba(71, 43, 16, 0.18); border: 2px solid var(--crust-dark); position: relative; overflow: hidden; box-sizing: border-box; }
         .auth-brand-stripe { background: linear-gradient(90deg, var(--brand-red) 50%, var(--brand-blue) 50%); height: 10px; width: 100%; }
@@ -342,8 +411,15 @@
 </head>
 <body>
 
-<!-- Loader Overlay -->
-<div id="loadingOverlay" class="overlay hidden">Loading Portal...</div>
+<!-- Floating Dancing Dots Status Pill (Non-blocking) -->
+<div id="loadingOverlay" class="status-pill-container hidden">
+    <div class="dancing-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <span id="loadingOverlayText">Loading Portal...</span>
+</div>
 
 <!-- Custom Brand Dialog Modal -->
 <div id="brandModal" class="brand-modal-overlay hidden">
@@ -1061,9 +1137,17 @@
     function showLoader(show, text = "Loading...") {
         const loader = document.getElementById('loadingOverlay');
         if (!loader) return;
-        loader.innerText = text;
-        if (show) loader.classList.remove('hidden');
-        else loader.classList.add('hidden');
+        const textEl = document.getElementById('loadingOverlayText');
+        if (textEl) {
+            textEl.innerText = text;
+        } else {
+            loader.innerText = text;
+        }
+        if (show) {
+            loader.classList.remove('hidden');
+        } else {
+            loader.classList.add('hidden');
+        }
     }
 
     function toggleQuickAddCoord() {
