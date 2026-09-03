@@ -893,15 +893,6 @@
 
                 const currentVid = moduleVideos[activeVideoIndex];
 
-                // Auto-complete if trainee reaches 95%+ of video
-                if (data.duration && (data.seconds / data.duration) >= 0.95) {
-                    if (currentVid && !currentVid.completed && currentVid.id !== '1220730023') {
-                        completeCurrentVideo();
-                    } else if (currentVid && currentVid.id === '1220730023' && !uniformParts.video) {
-                        completeCurrentVideo();
-                    }
-                }
-
                 // --- STORE IMAGE (ID: 1215101422) INTERACTIVE EXERCISES ---
                 if (currentVid && currentVid.id === '1215101422') {
                     // EXERCISE 1: Lobby Check at 3:20 (200 seconds)
