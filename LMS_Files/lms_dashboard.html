@@ -2192,10 +2192,13 @@
                     });
                 }
 
-                // Load in-progress video checkpoints from Cloud Tracking Sheet
+                // Load in-progress video checkpoints and POS Simulator stages from Cloud Tracking Sheet
                 if (result.inProgress) {
                     if (result.inProgress["day 1 mod 2"] && result.inProgress["day 1 mod 2"].completedVideos) {
                         localStorage.setItem('tw_mod2_completed_videos', JSON.stringify(result.inProgress["day 1 mod 2"].completedVideos));
+                    }
+                    if (result.inProgress["day 1 mod 4"] && result.inProgress["day 1 mod 4"].currentStage !== undefined) {
+                        localStorage.setItem('mod4_saved_stage', String(result.inProgress["day 1 mod 4"].currentStage));
                     }
                 }
 
