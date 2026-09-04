@@ -1510,9 +1510,12 @@
                 const activeHitboxIds = getActiveHitboxIds(stepData);
                 const nextStepData = sequence[currentStep + 1];
                 const nextHitboxIds = nextStepData ? getActiveHitboxIds(nextStepData) : [];
+                const nextNextStepData = sequence[currentStep + 2];
+                const nextNextHitboxIds = nextNextStepData ? getActiveHitboxIds(nextNextStepData) : [];
 
                 const isAllowedClick = activeHitboxIds.includes(clickedId) || 
                                        nextHitboxIds.includes(clickedId) || 
+                                       nextNextHitboxIds.includes(clickedId) ||
                                        (activeHitboxIds.includes('hb-phone-entry') && clickedId === 'hb-phone-OK');
 
                 if (isMatch && isAllowedClick) {
@@ -1522,6 +1525,9 @@
                     errorMsg.style.display = 'none';
                     if (stepData.nextStepMap && stepData.nextStepMap[clickedId] !== undefined) {
                         currentStep = stepData.nextStepMap[clickedId];
+                    } else if (nextNextStepData && nextNextStepData.input && nextNextHitboxIds.includes(clickedId)) {
+                        // Skip intermediate click-to-focus step so the clicked field is immediately active and ready to type
+                        currentStep += 2;
                     } else {
                         currentStep++;
                     }
@@ -1766,7 +1772,7 @@
             const activeIds = [...getActiveHitboxIds(stepData)];
 
             // If this is a text input step, also ensure submit hitboxes (like hb-phone-OK)
-            // and next step hitboxes are active in the DOM so clicking them works seamlessly!
+            // and upcoming target hitboxes are active in the DOM so clicking them works seamlessly!
             if (stepData.input) {
                 if (activeIds.includes('hb-phone-entry') && !activeIds.includes('hb-phone-OK')) {
                     activeIds.push('hb-phone-OK');
@@ -1774,9 +1780,13 @@
                 const nextStepData = sequence[stepIndex + 1];
                 if (nextStepData) {
                     getActiveHitboxIds(nextStepData).forEach(nextId => {
-                        if (!activeIds.includes(nextId)) {
-                            activeIds.push(nextId);
-                        }
+                        if (!activeIds.includes(nextId)) activeIds.push(nextId);
+                    });
+                }
+                const nextNextStepData = sequence[stepIndex + 2];
+                if (nextNextStepData && nextNextStepData.input) {
+                    getActiveHitboxIds(nextNextStepData).forEach(nnId => {
+                        if (!activeIds.includes(nnId)) activeIds.push(nnId);
                     });
                 }
             }
