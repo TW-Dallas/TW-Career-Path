@@ -407,7 +407,8 @@
                         { name: "Handmade Pan", image: "../resources/Menu/Menu-Pan.png", desc: "Thick, buttery, baked in a pan." },
                         { name: "Crunchy Thin Crust", image: "../resources/Menu/Menu-TC.png", desc: "Thin and crispy." },
                         { name: "New York Style", image: "../resources/Menu/Menu-NY.png", desc: "Thin and perfect for folding." },
-                        { name: "Gluten Free Crust", image: "../resources/Menu/Menu-GF.png", desc: "Certified free of gluten." }
+                        { name: "Gluten Free Crust", image: "../resources/Menu/Menu-GF.png", desc: "Certified free of gluten." },
+                        { name: "Domino™", image: "../resources/Menu/Menu-Domino.png", desc: "Crispy Detroit Style Parmesan crust. 3 toppings max." }
                     ]
                 },
                 {
@@ -730,17 +731,17 @@
                 if (!container) return;
 
                 if (activeCrustTab === 'overview') {
-                    // Render the original 3x2 description grid (What they learned first)
                     const items = [
                         { name: "Hand Tossed", image: "../resources/Menu/Menu-HT.png", desc: "Garlic-oil seasoned rim. Our standard." },
                         { name: "Parmesan Stuffed Crust", image: "../resources/Menu/Menu-PSC.png", desc: "Mozzarella cheese-stuffed rim." },
                         { name: "Handmade Pan", image: "../resources/Menu/Menu-Pan.png", desc: "Thick, buttery, baked in a pan." },
                         { name: "Crunchy Thin Crust", image: "../resources/Menu/Menu-TC.png", desc: "Thin and crispy." },
                         { name: "New York Style", image: "../resources/Menu/Menu-NY.png", desc: "Thin and perfect for folding." },
-                        { name: "Gluten Free Crust", image: "../resources/Menu/Menu-GF.png", desc: "Certified free of gluten." }
+                        { name: "Gluten Free Crust", image: "../resources/Menu/Menu-GF.png", desc: "Certified free of gluten." },
+                        { name: "Domino™", image: "../resources/Menu/Menu-Domino.png", desc: "Crispy Detroit Style Parmesan crust. 3 toppings max." }
                     ];
 
-                    let html = `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">`;
+                    let html = `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 15px;">`;
                     items.forEach(item => {
                         html += `
                         <div style="display: flex; flex-direction: column; align-items: center; text-align: center; background: white; padding: 10px; border-radius: 8px; border: 1px solid var(--crust-med);">
