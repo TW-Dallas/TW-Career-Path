@@ -359,10 +359,10 @@
   }
 
   .btn {
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 8px !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       background: var(--brand-blue);
       color: var(--crust-base) !important;
       padding: 0.55rem 1.2rem !important;
