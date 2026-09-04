@@ -301,16 +301,29 @@
         <button id="beta-feedback-trigger">🛠️ Report Issue</button>
         <div id="beta-feedback-modal">
             <div class="beta-feedback-card">
-                <h3>🛠️ Feedback / Bug Report</h3>
-                <p>Spotted a typo, broken button, or layout issue? Let us know!</p>
-                <form id="beta-feedback-form">
-                    <label for="beta-feedback-text">Issue Description:</label>
-                    <textarea id="beta-feedback-text" placeholder="Describe what went wrong or how to improve this step..." required></textarea>
-                    <div class="beta-feedback-actions">
-                        <button type="button" class="beta-btn beta-btn-cancel" id="beta-feedback-close">Cancel</button>
-                        <button type="submit" class="beta-btn beta-btn-submit" id="beta-feedback-send">Submit Report</button>
-                    </div>
-                </form>
+                <!-- FORM VIEW -->
+                <div id="beta-feedback-form-view">
+                    <h3>🛠️ Feedback / Bug Report</h3>
+                    <p>Spotted a typo, broken button, or layout issue? Let us know!</p>
+                    <form id="beta-feedback-form">
+                        <label for="beta-feedback-text">Issue Description:</label>
+                        <textarea id="beta-feedback-text" placeholder="Describe what went wrong or how to improve this step..." required></textarea>
+                        <div class="beta-feedback-actions">
+                            <button type="button" class="beta-btn beta-btn-cancel" id="beta-feedback-close">Cancel</button>
+                            <button type="submit" class="beta-btn beta-btn-submit" id="beta-feedback-send">Submit Report</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- SUCCESS CONFIRMATION VIEW (Replaces System Alert) -->
+                <div id="beta-feedback-success-view" style="display: none; text-align: center; padding: 10px 4px 6px;">
+                    <div style="font-size: 3rem; margin-bottom: 8px; user-select: none;">🍕</div>
+                    <h3 style="justify-content: center; color: #005c91; font-size: 1.35rem; margin-bottom: 6px;">Report Submitted!</h3>
+                    <p style="color: #603913; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.45;">
+                        Thank you! Your feedback has been logged and sent directly to the training development team.
+                    </p>
+                    <button type="button" class="beta-btn beta-btn-submit" id="beta-feedback-done-btn" style="width: 100%; font-size: 1rem; padding: 10px 0;">Done</button>
+                </div>
             </div>
         </div>
 
@@ -367,9 +380,12 @@
         const trigger = document.getElementById('beta-feedback-trigger');
         const modal = document.getElementById('beta-feedback-modal');
         const closeBtn = document.getElementById('beta-feedback-close');
+        const doneBtn = document.getElementById('beta-feedback-done-btn');
         const form = document.getElementById('beta-feedback-form');
         const sendBtn = document.getElementById('beta-feedback-send');
         const textArea = document.getElementById('beta-feedback-text');
+        const formView = document.getElementById('beta-feedback-form-view');
+        const successView = document.getElementById('beta-feedback-success-view');
 
         if (!trigger || !modal) return;
 
@@ -380,11 +396,49 @@
             headerLeft.appendChild(trigger);
         }
 
+        function openModal() {
+            if (formView) formView.style.display = 'block';
+            if (successView) successView.style.display = 'none';
+            modal.classList.add('active');
+            setTimeout(() => { if (textArea) textArea.focus(); }, 150);
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                if (formView) formView.style.display = 'block';
+                if (successView) successView.style.display = 'none';
+                if (textArea) textArea.value = '';
+                if (sendBtn) {
+                    sendBtn.disabled = false;
+                    sendBtn.innerText = "Submit Report";
+                }
+            }, 250);
+        }
+
+        function showSuccess() {
+            if (formView) formView.style.display = 'none';
+            if (successView) successView.style.display = 'block';
+            if (textArea) textArea.value = '';
+            if (sendBtn) {
+                sendBtn.disabled = false;
+                sendBtn.innerText = "Submit Report";
+            }
+        }
+
         // UI Handlers
-        trigger.addEventListener('click', () => modal.classList.add('active'));
-        closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+        trigger.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+        if (doneBtn) doneBtn.addEventListener('click', closeModal);
+
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.classList.remove('active');
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
         });
 
         // Form Submission Handler
@@ -427,9 +481,7 @@
                 body: JSON.stringify(payload)
             })
             .then(() => {
-                alert('Thank you! Your feedback has been submitted successfully.');
-                textArea.value = '';
-                modal.classList.remove('active');
+                showSuccess();
             })
             .catch(err => {
                 console.error('Feedback Submission Failed:', err);
@@ -437,13 +489,7 @@
                 const fallbackUrl = `${AUTH_SCRIPT_URL}?action=feedback&id=${encodeURIComponent(id)}&market=${encodeURIComponent(market)}&pageUrl=${encodeURIComponent(pageLocation)}&category=${encodeURIComponent('Beta Issue Report')}&comments=${encodeURIComponent(feedbackText.substring(0, 500))}`;
                 const pingImg = new Image();
                 pingImg.src = fallbackUrl;
-                alert('Thank you! Your feedback has been submitted.');
-                textArea.value = '';
-                modal.classList.remove('active');
-            })
-            .finally(() => {
-                sendBtn.disabled = false;
-                sendBtn.innerText = "Submit Report";
+                showSuccess();
             });
         });
     }
