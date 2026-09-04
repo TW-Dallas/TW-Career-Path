@@ -72,10 +72,10 @@
                     <!-- PRIMARY CALL CONTROLS (HOLD / REWIND) -->
                     <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none;">
                         <button id="audio-hold-btn" class="call-ctrl-btn call-hold-btn" onclick="toggleHold()">
-                            Put on Hold
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><rect x="6" y="4" width="4" height="16" rx="1.5"/><rect x="14" y="4" width="4" height="16" rx="1.5"/></svg><span>Put on Hold</span>
                         </button>
                         <button id="audio-rewind-btn" class="call-ctrl-btn call-rewind-btn" onclick="rewindAudio5s()">
-                            &#9664;&#9664; Rewind 5s
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg><span>Rewind 5s</span>
                         </button>
                     </div>
                 </div>
@@ -94,8 +94,12 @@
                 <button class="btn" onclick="goBack()">&#8592; Back</button>
                 
                 <div style="display: flex; gap: 8px; align-items: center;">
-                    <button id="btn-request-hint" class="btn btn-hint" onclick="triggerHint()">Hint (1 Free)</button>
-                    <button id="btn-request-answer" class="btn btn-answer" onclick="triggerDirectAnswer()">Answer (-5%)</button>
+                    <button id="btn-request-hint" class="btn btn-hint" onclick="triggerHint()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg><span>Hint (1 Free)</span>
+                    </button>
+                    <button id="btn-request-answer" class="btn btn-answer" onclick="triggerDirectAnswer()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg><span>Answer (-5%)</span>
+                    </button>
                 </div>
 
                 <button class="btn btn-finish" id="finish-sim-btn" style="display: none;"
@@ -1229,6 +1233,15 @@
             hbWrap.appendChild(arrow);
         }
 
+        const ICONS = {
+            hint: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>',
+            answer: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>',
+            lock: '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>',
+            pause: '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><rect x="6" y="4" width="4" height="16" rx="1.5"/><rect x="14" y="4" width="4" height="16" rx="1.5"/></svg>',
+            play: '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M8 5v14l11-7z"/></svg>',
+            rewind: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>'
+        };
+
         function updateAssistanceUI() {
             const hintBtn = document.getElementById('btn-request-hint');
             const answerBtn = document.getElementById('btn-request-answer');
@@ -1237,17 +1250,17 @@
 
             // Hint allowance state
             if (hintsUsed === 0) {
-                hintBtn.innerText = 'Hint (1 Free)';
+                hintBtn.innerHTML = `${ICONS.hint}<span>Hint (1 Free)</span>`;
                 hintBtn.className = 'btn btn-hint';
                 hintBtn.style.background = '';
                 hintBtn.style.color = '';
             } else if (hintsUsed === 1) {
-                hintBtn.innerText = 'Hint (-2%)';
+                hintBtn.innerHTML = `${ICONS.hint}<span>Hint (-2%)</span>`;
                 hintBtn.className = 'btn btn-hint';
                 hintBtn.style.background = '';
                 hintBtn.style.color = '';
             } else {
-                hintBtn.innerText = 'Hint (PIN Required)';
+                hintBtn.innerHTML = `${ICONS.lock}<span>Hint (PIN Required)</span>`;
                 hintBtn.className = 'btn btn-locked';
                 hintBtn.style.background = '';
                 hintBtn.style.color = '';
@@ -1255,12 +1268,12 @@
 
             // Direct Answer allowance state
             if (answersUsed === 0) {
-                answerBtn.innerText = 'Answer (-5%)';
+                answerBtn.innerHTML = `${ICONS.answer}<span>Answer (-5%)</span>`;
                 answerBtn.className = 'btn btn-answer';
                 answerBtn.style.background = '';
                 answerBtn.style.color = '';
             } else {
-                answerBtn.innerText = 'Answer (PIN Required)';
+                answerBtn.innerHTML = `${ICONS.lock}<span>Answer (PIN Required)</span>`;
                 answerBtn.className = 'btn btn-locked';
                 answerBtn.style.background = '';
                 answerBtn.style.color = '';
@@ -1476,7 +1489,7 @@
                 holdCount++;
                 audioPlayer.pause();
 
-                holdBtn.innerHTML = "&#9654; Resume Call";
+                holdBtn.innerHTML = `${ICONS.play}<span>Resume Call</span>`;
                 holdBtn.style.backgroundColor = "var(--brand-red)";
                 updateAudioHeaderState('hold');
 
@@ -1495,7 +1508,7 @@
                 isOnHold = false;
                 clearInterval(holdTimerInterval);
 
-                holdBtn.innerHTML = "Put on Hold";
+                holdBtn.innerHTML = `${ICONS.pause}<span>Put on Hold</span>`;
                 holdBtn.style.backgroundColor = "var(--brand-blue)";
                 updateAudioHeaderState('playing');
 
