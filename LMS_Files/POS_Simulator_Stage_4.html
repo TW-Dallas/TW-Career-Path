@@ -94,8 +94,8 @@
                 <button class="btn" onclick="goBack()">&#8592; Back</button>
                 
                 <div style="display: flex; gap: 8px; align-items: center;">
-                    <button id="btn-request-hint" class="btn btn-hint" onclick="triggerHint()">💡 Hint (1 Free)</button>
-                    <button id="btn-request-answer" class="btn btn-answer" onclick="triggerDirectAnswer()">🎯 Answer (-5%)</button>
+                    <button id="btn-request-hint" class="btn btn-hint" onclick="triggerHint()"><span class="btn-emoji">&#128161;</span><span class="btn-text">Hint (1 Free)</span></button>
+                    <button id="btn-request-answer" class="btn btn-answer" onclick="triggerDirectAnswer()"><span class="btn-emoji">&#127919;</span><span class="btn-text">Answer (-5%)</span></button>
                 </div>
 
                 <button class="btn btn-finish" id="finish-sim-btn" style="display: none;"
@@ -1237,17 +1237,17 @@
 
             // Hint allowance state
             if (hintsUsed === 0) {
-                hintBtn.innerHTML = '💡 Hint (1 Free)';
+                hintBtn.innerHTML = '<span class="btn-emoji">&#128161;</span><span class="btn-text">Hint (1 Free)</span>';
                 hintBtn.className = 'btn btn-hint';
                 hintBtn.style.background = '';
                 hintBtn.style.color = '';
             } else if (hintsUsed === 1) {
-                hintBtn.innerHTML = '💡 Hint (-2%)';
+                hintBtn.innerHTML = '<span class="btn-emoji">&#128161;</span><span class="btn-text">Hint (-2%)</span>';
                 hintBtn.className = 'btn btn-hint';
                 hintBtn.style.background = '';
                 hintBtn.style.color = '';
             } else {
-                hintBtn.innerHTML = '💡 Hint (🔐 PIN)';
+                hintBtn.innerHTML = '<span class="btn-emoji">&#128274;</span><span class="btn-text">Hint (PIN)</span>';
                 hintBtn.className = 'btn btn-locked';
                 hintBtn.style.background = '';
                 hintBtn.style.color = '';
@@ -1255,12 +1255,12 @@
 
             // Direct Answer allowance state
             if (answersUsed === 0) {
-                answerBtn.innerHTML = '🎯 Answer (-5%)';
+                answerBtn.innerHTML = '<span class="btn-emoji">&#127919;</span><span class="btn-text">Answer (-5%)</span>';
                 answerBtn.className = 'btn btn-answer';
                 answerBtn.style.background = '';
                 answerBtn.style.color = '';
             } else {
-                answerBtn.innerHTML = '🎯 Answer (🔐 PIN)';
+                answerBtn.innerHTML = '<span class="btn-emoji">&#128274;</span><span class="btn-text">Answer (PIN)</span>';
                 answerBtn.className = 'btn btn-locked';
                 answerBtn.style.background = '';
                 answerBtn.style.color = '';

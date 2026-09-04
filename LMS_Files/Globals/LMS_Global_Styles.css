@@ -1754,6 +1754,9 @@
     .btn-hint {
         background: var(--med-blue) !important;
         color: var(--crust-base) !important;
+        padding: 0.45rem 1.1rem !important;
+        font-size: 0.92rem !important;
+        line-height: 1.2 !important;
     }
 
     .btn-hint:hover {
@@ -1764,6 +1767,9 @@
     .btn-answer {
         background: var(--brand-red) !important;
         color: var(--crust-base) !important;
+        padding: 0.45rem 1.1rem !important;
+        font-size: 0.92rem !important;
+        line-height: 1.2 !important;
     }
 
     .btn-answer:hover {
@@ -1774,9 +1780,25 @@
     .btn-locked {
         background: var(--crust-dark) !important;
         color: var(--crust-base) !important;
+        padding: 0.45rem 1.1rem !important;
+        font-size: 0.92rem !important;
+        line-height: 1.2 !important;
         opacity: 0.7 !important;
         cursor: not-allowed !important;
         transform: none !important;
+    }
+
+    .btn-text {
+        font-family: 'Subhead1', 'OneDotCd-Bold', 'Arial Narrow', sans-serif !important;
+        font-weight: bold;
+    }
+
+    .btn-emoji {
+        font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+        font-size: 0.9em;
+        line-height: 1;
+        margin-right: 4px;
+        display: inline-block;
     }
 
     #assist-display-box {
