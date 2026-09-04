@@ -2105,6 +2105,7 @@
     
     function logoutUser() {
         if (confirm("Are you sure you want to sign out? This will clear your current session so another candidate can log in.")) {
+            const currentId = localStorage.getItem('tw_id');
             // Safely remove only LMS keys so Admin & Catering stay logged in:
             localStorage.removeItem('tw_admin_mode');
             localStorage.removeItem('tw_market');
@@ -2122,8 +2123,10 @@
             localStorage.removeItem('tw_beta_welcome_seen');
             localStorage.removeItem('tw_tutorial_complete');
             localStorage.removeItem('mod4_saved_stage');
-            localStorage.removeItem('mod4_stage4_step');
-            const currentId = localStorage.getItem('tw_id');
+            ['0', '1', '2', '3', '4'].forEach(s => {
+                localStorage.removeItem('mod4_stage' + s + '_step');
+                if (currentId) localStorage.removeItem('mod4_stage' + s + '_step_' + currentId);
+            });
             if (currentId) localStorage.removeItem('tw_day1_start_time_' + currentId);
             localStorage.removeItem('tw_day1_start_time');
             
@@ -2175,7 +2178,10 @@
                 localStorage.removeItem('mod4_complete');
                 localStorage.removeItem('mod5_complete');
                 localStorage.removeItem('mod4_saved_stage');
-                localStorage.removeItem('mod4_stage4_step');
+                ['0', '1', '2', '3', '4'].forEach(s => {
+                    localStorage.removeItem('mod4_stage' + s + '_step');
+                    localStorage.removeItem('mod4_stage' + s + '_step_' + normalizedId);
+                });
                 localStorage.removeItem('tw_mod2_completed_videos');
                 localStorage.removeItem('tw_admin_mode');
 

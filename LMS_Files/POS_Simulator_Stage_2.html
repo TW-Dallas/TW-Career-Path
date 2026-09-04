@@ -883,14 +883,21 @@
                 wrongClicks++; // Increment wrong clicks for Stage 2
             });
 
-            // ---- NEW: JUMP TO STEP VIA URL QUERY PARAMETER ----
+            // ---- JUMP TO STEP (URL PARAM OR LEARNER-SCOPED AUTO-RESUME) ----
             const urlParams = new URLSearchParams(window.location.search);
             const stepParam = urlParams.get('step');
+            const currentUserId = localStorage.getItem('tw_id') || 'guest';
+            const stepStorageKey = 'mod4_stage2_step_' + currentUserId;
+            const savedStep = localStorage.getItem(stepStorageKey);
 
             if (stepParam !== null) {
                 const targetStep = parseInt(stepParam, 10);
-                // Ensure the step is a valid number within your sequence array limits
                 if (!isNaN(targetStep) && targetStep >= 0 && targetStep < sequence.length) {
+                    currentStep = targetStep;
+                }
+            } else if (savedStep !== null) {
+                const targetStep = parseInt(savedStep, 10);
+                if (!isNaN(targetStep) && targetStep > 0 && targetStep < sequence.length) {
                     currentStep = targetStep;
                 }
             }
@@ -1019,8 +1026,12 @@
         }
 
         function loadStep(stepIndex) {
+            const currentUserId = localStorage.getItem('tw_id') || 'guest';
+
             // 1. AUTO-REDIRECT TO STAGE 3 WHEN SEQUENCE ENDS
             if (stepIndex >= sequence.length) {
+                localStorage.removeItem('mod4_stage2_step_' + currentUserId);
+                localStorage.removeItem('mod4_stage2_step');
                 localStorage.setItem('mod4_saved_stage', '3');
                 sendProgressUpdate('Day 1 Mod 4', 'In Progress');
                 setTimeout(() => {
@@ -1028,6 +1039,9 @@
                 }, 1000);
                 return;
             }
+
+            // Silently store learner step progress for instant refresh resilience
+            localStorage.setItem('mod4_stage2_step_' + currentUserId, String(stepIndex));
 
             // Immediately lock hitboxes while image is loading to prevent desync
             document.querySelectorAll('.hitbox').forEach(hb => {
