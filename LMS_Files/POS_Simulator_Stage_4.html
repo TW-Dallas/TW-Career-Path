@@ -158,13 +158,13 @@
 
         /* Unified Simulator Control Card */
         #sim-control-card {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             background: #fdfbf7;
             border: 1px solid #e2ddd5;
             border-left: 4px solid var(--brand-blue);
-            border-radius: 8px;
-            padding: 8px 10px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            border-radius: 12px;
+            padding: 10px 12px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
             flex-shrink: 0;
         }
 
@@ -178,22 +178,27 @@
 
         .sim-ctrl-btn {
             font-family: 'OneDotCd-Bold', sans-serif;
-            border-radius: 6px;
+            border-radius: 20px;
             border: none;
+            padding: 6px 12px;
+            font-size: 0.82rem;
             cursor: pointer;
             transition: all 0.15s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
         }
 
         .sim-ctrl-btn:hover {
             opacity: 0.92;
             transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
         }
 
         .sim-ctrl-btn:active {
             transform: translateY(1px);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
         }
     </style>
 </head>
@@ -240,24 +245,24 @@
             <div id="sim-control-card">
 
                 <!-- Play / Pause / Hold Call Header & Controls (Active on audio steps) -->
-                <div id="audio-control-panel" style="display: none; margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px dashed #dcd5ca;">
-                    <div class="audio-header" id="audio-main-header" style="margin-bottom: 5px; display: flex; align-items: center; justify-content: space-between;">
-                        <div id="audio-header-left" style="display: flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 700; color: var(--dark-blue);">
+                <div id="audio-control-panel" style="display: none; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed #dcd5ca;">
+                    <div class="audio-header" id="audio-main-header" style="margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                        <div id="audio-header-left" style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 700; color: var(--dark-blue);">
                             <span id="audio-status-dot" class="audio-pulse-indicator" style="background-color: #2ecc71;"></span>
                             <span id="audio-status-text">CALL IN PROGRESS</span>
                         </div>
-                        <span id="audio-time-display" style="font-size: 0.8rem; font-family: monospace; color: #52796f; font-weight: normal;">0:00 / 0:00</span>
+                        <span id="audio-time-display" style="font-size: 0.82rem; font-family: monospace; color: #52796f; font-weight: normal;">0:00 / 0:00</span>
                     </div>
 
                     <!-- Dynamic Track Stack dynamically generated in JS -->
                     <div id="audio-track-container"></div>
 
                     <!-- HOLD & REWIND CONTROLS -->
-                    <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none; gap: 6px;">
-                        <button id="audio-hold-btn" class="sim-ctrl-btn" onclick="toggleHold()" style="flex: 1; padding: 4px 6px; background: #e67e22; color: #fff; font-size: 0.76rem; gap: 4px;">
+                    <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none; gap: 8px;">
+                        <button id="audio-hold-btn" class="sim-ctrl-btn" onclick="toggleHold()" style="flex: 1; background: #e67e22; color: #fff; gap: 5px;">
                             ⏸️ Put on Hold
                         </button>
-                        <button id="audio-rewind-btn" class="sim-ctrl-btn" onclick="rewindAudio5s()" style="flex: 1; padding: 4px 6px; background: #34495e; color: #fff; font-size: 0.76rem; gap: 4px;">
+                        <button id="audio-rewind-btn" class="sim-ctrl-btn" onclick="rewindAudio5s()" style="flex: 1; background: #34495e; color: #fff; gap: 5px;">
                             ⏪ Rewind 5s
                         </button>
                     </div>
@@ -265,15 +270,15 @@
 
                 <!-- TACTICAL ASSISTANCE CONTROLS -->
                 <div id="assist-control-bar">
-                    <div style="display: flex; gap: 6px;">
-                        <button id="btn-request-hint" class="sim-ctrl-btn" onclick="triggerHint()" style="flex: 1; padding: 4px 6px; background: #1e6091; color: #fff; font-size: 0.76rem;">
+                    <div style="display: flex; gap: 8px;">
+                        <button id="btn-request-hint" class="sim-ctrl-btn" onclick="triggerHint()" style="flex: 1; background: #1e6091; color: #fff;">
                             💡 Request Hint (<span id="hint-allowance-badge">1 Free</span>)
                         </button>
-                        <button id="btn-request-answer" class="sim-ctrl-btn" onclick="triggerDirectAnswer()" style="flex: 1; padding: 4px 6px; background: #e74c3c; color: #fff; font-size: 0.76rem;">
+                        <button id="btn-request-answer" class="sim-ctrl-btn" onclick="triggerDirectAnswer()" style="flex: 1; background: #e74c3c; color: #fff;">
                             🎯 Direct Answer (<span id="answer-allowance-badge">-5%</span>)
                         </button>
                     </div>
-                    <div id="assist-display-box" style="display: none; margin-top: 5px; padding: 4px 6px; border-radius: 5px; font-size: 0.78rem; line-height: 1.25;"></div>
+                    <div id="assist-display-box" style="display: none; margin-top: 8px; padding: 7px 10px; border-radius: 8px; font-size: 0.84rem; line-height: 1.35;"></div>
                 </div>
 
             </div>
@@ -1201,88 +1206,120 @@
                 const expected = Array.isArray(stepData.input.expectedValue) 
                     ? stepData.input.expectedValue[0] 
                     : stepData.input.expectedValue;
-                const fieldName = stepData.input.placeholder || "the active field";
+                const fieldName = (stepData.input.placeholder || "").toLowerCase();
                 
+                if (fieldName.includes('name') || firstId.includes('name')) {
+                    return {
+                        hint: "Listen to the customer on the call and type their name into the field.",
+                        answer: `Type "${expected}" into the Customer Name field and press Enter or click away.`
+                    };
+                }
+                if (fieldName.includes('phone') || firstId.includes('phone')) {
+                    return {
+                        hint: "Listen for the caller's 10-digit phone number and enter it in the phone field.",
+                        answer: `Type "${expected}" into the Phone field and press Enter.`
+                    };
+                }
+                if (fieldName.includes('number') || fieldName.includes('address') || firstId.includes('add') || firstId.includes('street')) {
+                    return {
+                        hint: "Listen for the delivery address given on the call and enter it in the field.",
+                        answer: `Type "${expected}" into the highlighted address field.`
+                    };
+                }
+                if (fieldName.includes('instruction') || firstId.includes('instruction') || firstId.includes('note')) {
+                    return {
+                        hint: "Type the delivery instructions or gate code requested by the customer.",
+                        answer: `Type "${expected}" into Delivery Instructions.`
+                    };
+                }
                 return {
-                    hint: `💡 Type the customer's <strong>${fieldName}</strong> into the highlighted input field.`,
-                    answer: `🎯 Type <strong>"${expected}"</strong> into ${fieldName} and proceed.`
+                    hint: "Listen to the caller and enter the requested information into the active field.",
+                    answer: `Type "${expected}" into the active field.`
                 };
             }
 
             // Phone hardware
             if (firstId.includes('phone-park')) {
                 return {
-                    hint: "💡 Click the phone hardware button used to place the caller in the store hold queue.",
-                    answer: "🎯 Click the <strong>PARK</strong> button on the phone handset."
+                    hint: "Use the phone handset button to place the caller in the store hold queue.",
+                    answer: "Click PARK on the phone handset."
                 };
             }
             if (firstId.includes('phone-mute')) {
                 return {
-                    hint: "💡 Click the phone hardware button used for quick 2-second muting.",
-                    answer: "🎯 Click the <strong>MUTE</strong> button on the phone handset."
+                    hint: "Use the phone handset button for quick 2-second muting.",
+                    answer: "Click MUTE on the phone handset."
                 };
             }
             if (firstId.includes('phone-OK') || firstId.includes('phone-ok')) {
                 return {
-                    hint: "💡 Confirm and submit the customer's phone number.",
-                    answer: "🎯 Click the green <strong>OK</strong> button next to the phone keypad."
+                    hint: "Confirm and submit the customer's phone number on the keypad.",
+                    answer: "Click the green OK button next to the phone keypad."
                 };
             }
 
             // Category Tabs
             if (firstId.includes('tab') || firstId.includes('pizzas') || firstId.includes('sides') || firstId.includes('drinks') || firstId.includes('desserts') || firstId.includes('coupons')) {
-                const tabName = firstId.replace('hb-', '').replace('-tab', '').toUpperCase();
+                const tabName = firstId.replace('hb-', '').replace('-tab', '').replace('-6386', '').toUpperCase();
                 return {
-                    hint: `💡 Look at the top navigation category tabs for <strong>${tabName}</strong>.`,
-                    answer: `🎯 Click the <strong>${tabName}</strong> tab in the menu bar.`
+                    hint: `Navigate to the ${tabName} category tab in the top menu bar.`,
+                    answer: `Click the ${tabName} tab in the menu bar.`
                 };
             }
 
             // Sizes & Crusts
             if (firstId.includes('size') || firstId.includes('crust') || firstId.includes('ht') || firstId.includes('thin') || firstId.includes('pan') || firstId.includes('14') || firstId.includes('12') || firstId.includes('10') || firstId.includes('16')) {
                 return {
-                    hint: "💡 Select the required pizza size and crust from the options grid.",
-                    answer: "🎯 Click the required pizza size/crust on the screen."
+                    hint: "Select the required pizza size and crust style requested by the caller.",
+                    answer: "Click the requested pizza size or crust style on the screen."
                 };
             }
 
             // Specialties / Pizzas
             if (firstId.includes('extravaganz') || firstId.includes('meatzza') || firstId.includes('pepperoni') || firstId.includes('cheese') || firstId.includes('deluxe') || firstId.includes('specialty')) {
                 return {
-                    hint: "💡 Find and select the requested specialty pizza from the menu selection.",
-                    answer: "🎯 Click the requested pizza item button on the POS screen."
+                    hint: "Select the pizza flavor requested on the customer call.",
+                    answer: "Click the requested pizza item button on the POS screen."
+                };
+            }
+
+            // Sides & Breads & Wings
+            if (firstId.includes('bread') || firstId.includes('parm') || firstId.includes('wing') || firstId.includes('dip')) {
+                return {
+                    hint: "Select the requested side item, wings, or dip cup from the menu.",
+                    answer: "Click the requested side item button on the POS screen."
                 };
             }
 
             // Sauce / Cheese / Topping modifications
             if (firstId.includes('sauce') || firstId.includes('cheese') || firstId.includes('top') || firstId.includes('whole') || firstId.includes('half')) {
                 return {
-                    hint: "💡 Adjust the toppings or portion modifiers on the customization grid.",
-                    answer: "🎯 Click the designated topping or portion selector on the screen."
+                    hint: "Adjust the toppings or portion modifiers on the customization grid.",
+                    answer: "Click the designated topping or portion selector on the screen."
                 };
             }
 
             // Order Type / Delivery / Carryout
             if (firstId.includes('delivery') || firstId.includes('carryout') || firstId.includes('order-type')) {
                 return {
-                    hint: "💡 Choose the correct order fulfillment method (Delivery / Carryout).",
-                    answer: "🎯 Click the <strong>Delivery / Carryout</strong> dispatch button."
+                    hint: "Choose the order fulfillment method (Delivery or Carryout) requested by the customer.",
+                    answer: "Click the Delivery / Carryout dispatch button."
                 };
             }
 
             // Payment / Finish / Tender
             if (firstId.includes('pay') || firstId.includes('cash') || firstId.includes('card') || firstId.includes('finish') || firstId.includes('tender')) {
                 return {
-                    hint: "💡 Proceed to payment/tender to finalize the transaction.",
-                    answer: "🎯 Click the payment method or Finish Order button."
+                    hint: "Proceed to the payment screen to select the payment method.",
+                    answer: "Click the payment method or Finish Order button."
                 };
             }
 
             // General fallback based on active hitbox ID
             const cleanName = firstId.replace('hb-', '').replace(/-/g, ' ');
             return {
-                hint: `💡 Look in the section for <strong>${cleanName}</strong> on the screen.`,
-                answer: `🎯 Click on <strong>${cleanName}</strong>.`
+                hint: `Look for the option matching ${cleanName} on the POS screen.`,
+                answer: `Click on ${cleanName}.`
             };
         }
 
@@ -1432,12 +1469,14 @@
             const assist = getSemanticAssistance(stepData, currentStep);
             const displayBox = document.getElementById('assist-display-box');
             if (displayBox) {
-                const penaltyText = hintsUsed === 1 ? '<span style="color: #27ae60; font-weight: bold;">(Free Hint)</span>' : '<span style="color: #e67e22; font-weight: bold;">(-2% Penalty)</span>';
+                const penaltyBadge = hintsUsed === 1 
+                    ? '<span style="color: #27ae60; font-weight: 700;">💡 Free Hint:</span>' 
+                    : '<span style="color: #e67e22; font-weight: 700;">💡 Hint (-2%):</span>';
                 displayBox.style.display = 'block';
-                displayBox.style.background = 'rgba(30, 96, 145, 0.1)';
+                displayBox.style.background = 'rgba(30, 96, 145, 0.08)';
                 displayBox.style.borderLeft = '4px solid #1e6091';
                 displayBox.style.color = '#1e6091';
-                displayBox.innerHTML = `${penaltyText} ${assist.hint}`;
+                displayBox.innerHTML = `${penaltyBadge} ${assist.hint}`;
             }
 
             showRegionRadarPulse(stepData);
@@ -1461,10 +1500,10 @@
             const displayBox = document.getElementById('assist-display-box');
             if (displayBox) {
                 displayBox.style.display = 'block';
-                displayBox.style.background = 'rgba(231, 76, 60, 0.1)';
+                displayBox.style.background = 'rgba(231, 76, 60, 0.08)';
                 displayBox.style.borderLeft = '4px solid #e74c3c';
                 displayBox.style.color = '#c0392b';
-                displayBox.innerHTML = `<span style="font-weight: bold; color: #c0392b;">(-5% Penalty)</span> ${assist.answer}`;
+                displayBox.innerHTML = `<span style="font-weight: 700; color: #c0392b;">🎯 Direct Answer (-5%):</span> ${assist.answer}`;
             }
 
             showSpotlight(stepData);
