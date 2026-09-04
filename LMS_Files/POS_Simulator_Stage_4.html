@@ -678,11 +678,17 @@
             {
                 "step": 50,
                 "image": "resources/POS_assets/Stage_4/POS_4.40.A.png",
-                "activeHitbox": "hb-delivery-instructions",
+                "activeHitbox": ["hb-delivery-instructions", "hb-pizzas-tab", "hb-pizzas"],
+                "inputHitbox": "hb-delivery-instructions",
+                "nextStepMap": {
+                    "hb-pizzas-tab": 52,
+                    "hb-pizzas": 52
+                },
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
                 "input": {
                     "type": "text",
+                    "submitOnEnter": false,
                     "expectedValue": [
                         "PLEASE CALL",
                         "Please Call",
@@ -1401,8 +1407,12 @@
                 inputEl.addEventListener('click', (e) => e.stopPropagation());
                 inputEl.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter') {
-                        if (isTextarea) e.preventDefault();
-                        validateTextEntry(inputEl.value, stepData.input.expectedValue);
+                        if (isTextarea || stepData.input.submitOnEnter === false) {
+                            e.preventDefault();
+                            inputEl.blur();
+                        } else {
+                            validateTextEntry(inputEl.value, stepData.input.expectedValue);
+                        }
                     }
                 });
 
@@ -1486,24 +1496,29 @@
 
             // If on a text input step:
             if (stepData.input && (stepData.input.type === 'text' || stepData.input.type === 'textarea')) {
+                const targetInputId = stepData.inputHitbox || 
+                    (Array.isArray(stepData.activeHitbox) ? stepData.activeHitbox[0] : stepData.activeHitbox);
+
+                if (clickedId === targetInputId) {
+                    return; // Re-focusing or clicking within input box
+                }
+
                 const activeInput = document.querySelector('.hitbox-text-input');
                 const typedVal = activeInput ? activeInput.value : '';
                 const isMatch = isTextEntryValid(typedVal, stepData.input.expectedValue);
 
-                const currentHitboxIds = getActiveHitboxIds(stepData);
-                if (currentHitboxIds.includes(clickedId)) {
-                    return; // Re-focusing or clicking within input box
-                }
+                const activeHitboxIds = getActiveHitboxIds(stepData);
 
-                const nextStepData = sequence[currentStep + 1];
-                const nextHitboxIds = nextStepData ? getActiveHitboxIds(nextStepData) : [];
-
-                if (isMatch && nextHitboxIds.includes(clickedId)) {
+                if (isMatch && activeHitboxIds.includes(clickedId)) {
                     if (typedVal && typedVal.trim()) {
                         lastTypedDeliveryNote = typedVal.trim();
                     }
                     errorMsg.style.display = 'none';
-                    currentStep += 2; // Typed valid note AND clicked next step hitbox (e.g. Pizzas tab)
+                    if (stepData.nextStepMap && stepData.nextStepMap[clickedId] !== undefined) {
+                        currentStep = stepData.nextStepMap[clickedId];
+                    } else {
+                        currentStep++;
+                    }
                     loadStep(currentStep);
                     return;
                 }
