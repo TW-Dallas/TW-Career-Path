@@ -755,32 +755,39 @@
                     container.innerHTML = html;
 
                 } else if (activeCrustTab === 'sizes') {
-                    // Render 4 Columns showing Sizes with relative scales
+                    // Render 5 Columns showing Sizes with relative scales
                     const sizes = [
-                        { name: "Small (10\")", width: "70px", height: "70px", items: ["Hand Tossed", "Gluten Free Crust"] },
-                        { name: "Medium (12\")", width: "90px", height: "90px", items: ["Hand Tossed", "Handmade Pan", "Parmesan Stuffed Crust", "Crunchy Thin Crust"] },
-                        { name: "Large (14\")", width: "110px", height: "110px", items: ["Hand Tossed", "Crunchy Thin Crust", "New York Style"] },
-                        { name: "XL (16\")", width: "130px", height: "130px", items: ["New York Style"] }
+                        { name: "Small (10\")", width: "65px", height: "65px", shape: "circle", label: "Small", items: ["Hand Tossed", "Gluten Free Crust"] },
+                        { name: "Medium (12\")", width: "80px", height: "80px", shape: "circle", label: "Medium", items: ["Hand Tossed", "Handmade Pan", "Parmesan Stuffed Crust", "Crunchy Thin Crust"] },
+                        { name: "Large (14\")", width: "95px", height: "95px", shape: "circle", label: "Large", items: ["Hand Tossed", "Crunchy Thin Crust", "New York Style"] },
+                        { name: "XL (16\")", width: "110px", height: "110px", shape: "circle", label: "XL", items: ["New York Style"] },
+                        { name: "Domino™", width: "85px", height: "60px", shape: "rect", label: "Domino™", items: ["Domino™ Crust (Dedicated 1-size button)"] }
                     ];
 
                     let html = `
                     <p style="font-family: 'OneDotCd', sans-serif; font-size: 1.1rem; color: var(--crust-deep); margin: 0 0 20px 0;">
-                        Important register rule: Crusts are constrained to specific sizes. Note that <strong>Pan only comes in Medium</strong>, and <strong>Gluten Free only comes in Small</strong>!
+                        Important register rule: Crusts are constrained to specific sizes. Note that <strong>Pan only comes in Medium</strong>, <strong>Gluten Free only comes in Small</strong>, and <strong>Domino™ comes in only one size</strong> (with its own dedicated button)!
                     </p>
-                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+                    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">
                 `;
                     sizes.forEach(sz => {
                         let listItems = sz.items.map(i => `<li style="margin-bottom: 6px;">${i}</li>`).join('');
+                        let shapeStyle = sz.shape === 'rect'
+                            ? `width: ${sz.width}; height: ${sz.height}; border-radius: 6px; background: #faf2e9; border: 3px dashed var(--brand-blue); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);`
+                            : `width: ${sz.width}; height: ${sz.height}; border-radius: 50%; background: #faf2e9; border: 3px dashed var(--brand-blue); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);`;
+
                         html += `
-                        <div style="background: white; border: 1px solid var(--crust-med); border-radius: 8px; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 220px; box-sizing: border-box;">
-                            <h3 style="font-family: 'Subhead2'; color: var(--dark-blue); font-size: 1.25rem; margin: 0 0 15px 0;">${sz.name}</h3>
+                        <div style="background: white; border: 1px solid var(--crust-med); border-radius: 8px; padding: 12px 10px; display: flex; flex-direction: column; align-items: center; min-height: 230px; box-sizing: border-box;">
+                            <h3 style="font-family: 'Subhead2'; color: var(--dark-blue); font-size: 1.15rem; margin: 0 0 10px 0; text-align: center;">${sz.name}</h3>
                             
-                            <!-- Custom scaled CSS Pizza Circle -->
-                            <div style="width: ${sz.width}; height: ${sz.height}; border-radius: 50%; background: #faf2e9; border: 3px dashed var(--brand-blue); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                                <span style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 0.9rem;">${sz.name.split(' ')[0]}</span>
+                            <!-- Custom scaled CSS Shape Container -->
+                            <div style="height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+                                <div style="${shapeStyle}">
+                                    <span style="font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 0.85rem;">${sz.label}</span>
+                                </div>
                             </div>
                             
-                            <ul style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 0.95rem; text-align: left; padding-left: 20px; margin: 0; width: 100%;">
+                            <ul style="font-family: 'OneDotCd'; color: var(--crust-deep); font-size: 0.9rem; text-align: left; padding-left: 16px; margin: 0; width: 100%;">
                                 ${listItems}
                             </ul>
                         </div>
