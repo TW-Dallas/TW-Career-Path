@@ -735,7 +735,7 @@
             // 45. Click Pizzas Tab
             {
                 "step": 51,
-                "image": "resources/POS_assets/Stage_4/POS_4.40.png",
+                "image": "resources/POS_assets/Stage_4/POS_4.40.A.png",
                 "activeHitbox": ["hb-pizzas-tab", "hb-pizzas"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
@@ -1431,10 +1431,15 @@
             }) || (targets.some(t => String(t).toLowerCase().includes('call')) && /\bcall\b/i.test(cleanUser));
         }
 
+        let lastTypedDeliveryNote = "PLEASE CALL";
+
         function validateTextEntry(userTyped, expectedValue) {
             const isMatch = isTextEntryValid(userTyped, expectedValue);
 
             if (isMatch) {
+                if (userTyped && userTyped.trim()) {
+                    lastTypedDeliveryNote = userTyped.trim();
+                }
                 errorMsg.style.display = 'none';
                 currentStep++;
                 loadStep(currentStep);
@@ -1494,6 +1499,9 @@
                 const nextHitboxIds = nextStepData ? getActiveHitboxIds(nextStepData) : [];
 
                 if (isMatch && nextHitboxIds.includes(clickedId)) {
+                    if (typedVal && typedVal.trim()) {
+                        lastTypedDeliveryNote = typedVal.trim();
+                    }
                     errorMsg.style.display = 'none';
                     currentStep += 2; // Typed valid note AND clicked next step hitbox (e.g. Pizzas tab)
                     loadStep(currentStep);
@@ -1757,6 +1765,26 @@
 
                 if (foundCount === 0) {
                     reportErrorToDeveloper('Missing Hitbox Element', `Expected at least one active hitbox from [${activeIds.join(', ')}] but none were found in the DOM.`);
+                }
+
+                // If on step 51 (Pizzas Tab right after delivery instructions), display the typed note in readonly mode over POS_4.40.A.png
+                const delivHb = document.getElementById('hb-delivery-instructions');
+                if (stepIndex === 51 && delivHb) {
+                    delivHb.style.display = 'block';
+                    delivHb.style.pointerEvents = 'none';
+                    let readonlyEl = delivHb.querySelector('.hitbox-text-input');
+                    if (!readonlyEl) {
+                        readonlyEl = document.createElement('textarea');
+                        readonlyEl.className = 'hitbox-text-input';
+                        delivHb.appendChild(readonlyEl);
+                    }
+                    readonlyEl.value = lastTypedDeliveryNote || 'PLEASE CALL';
+                    readonlyEl.readOnly = true;
+                    readonlyEl.style.pointerEvents = 'none';
+                    readonlyEl.style.cursor = 'default';
+                } else if (stepIndex !== 50) {
+                    const lingeringInput = document.querySelector('#hb-delivery-instructions .hitbox-text-input');
+                    if (lingeringInput) lingeringInput.remove();
                 }
 
                 handleAudioForStep(stepData);
