@@ -64,6 +64,53 @@
             top: 71%;
             left: 80%;
         }
+
+        /* Tactical Assistance Animations & Highlighting */
+        @keyframes regionRadarPulse {
+            0% {
+                transform: scale(0.6);
+                opacity: 0.85;
+                box-shadow: 0 0 0 0 rgba(0, 144, 226, 0.7), 0 0 20px rgba(0, 144, 226, 0.5);
+            }
+            50% {
+                transform: scale(1.15);
+                opacity: 0.45;
+                box-shadow: 0 0 0 25px rgba(0, 144, 226, 0.2), 0 0 40px rgba(0, 144, 226, 0.3);
+            }
+            100% {
+                transform: scale(1.35);
+                opacity: 0;
+                box-shadow: 0 0 0 50px rgba(0, 144, 226, 0), 0 0 65px rgba(0, 144, 226, 0);
+            }
+        }
+
+        .region-radar-pulse {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 144, 226, 0.35) 0%, rgba(30, 96, 145, 0.15) 60%, rgba(0, 144, 226, 0) 100%);
+            pointer-events: none;
+            z-index: 99;
+            animation: regionRadarPulse 2s infinite ease-out;
+        }
+
+        .spotlight-active {
+            outline: 3px solid #e74c3c !important;
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.8) !important;
+            animation: pulseSpotlight 1s infinite alternate !important;
+        }
+
+        @keyframes pulseSpotlight {
+            from { box-shadow: 0 0 8px rgba(231, 76, 60, 0.6); }
+            to { box-shadow: 0 0 22px rgba(231, 76, 60, 1); }
+        }
+
+        .assist-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .assist-btn:active {
+            transform: translateY(1px);
+        }
     </style>
 </head>
 
@@ -136,6 +183,19 @@
                 <div id="hold-status-bar" class="hold-status-bar">
                     🔴 LINE 1 ON HOLD — <span id="hold-timer-text">00:00</span>
                 </div>
+            </div>
+
+            <!-- TACTICAL ASSISTANCE CONTROLS -->
+            <div id="assist-control-bar" style="margin-bottom: 12px; background: rgba(255, 255, 255, 0.95); border: 1px solid #d2d8e8; border-radius: 8px; padding: 8px 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <div style="display: flex; gap: 8px;">
+                    <button id="btn-request-hint" class="assist-btn" onclick="triggerHint()" style="flex: 1; padding: 7px 10px; background: #1e6091; color: #fff; border: none; border-radius: 6px; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">
+                        💡 Request Hint (<span id="hint-allowance-badge">1 Free</span>)
+                    </button>
+                    <button id="btn-request-answer" class="assist-btn" onclick="triggerDirectAnswer()" style="flex: 1; padding: 7px 10px; background: #e74c3c; color: #fff; border: none; border-radius: 6px; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">
+                        🎯 Direct Answer (<span id="answer-allowance-badge">-5%</span>)
+                    </button>
+                </div>
+                <div id="assist-display-box" style="display: none; margin-top: 8px; padding: 8px 10px; border-radius: 6px; font-size: 0.85rem; line-height: 1.4;"></div>
             </div>
 
             <div id="instruction-text">
@@ -1031,6 +1091,16 @@
         let isOnHold = false;
         let holdTimerInterval = null;
 
+        // --- TACTICAL ASSISTANCE & TRAINER PIN STATE ---
+        let hintsUsed = 0;
+        let answersUsed = 0;
+        let trainerAssistsUsed = 0;
+        let consecutiveTrainerSteps = 0;
+        let lastTrainerAssistStep = -1;
+        let trainerPinAbuseFlag = false;
+        let trainerPinAbuseReasons = [];
+        let pendingTrainerAction = null; // 'hint' or 'answer'
+
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
 
         let currentStep = 0;
@@ -1038,6 +1108,332 @@
         const instructionText = document.getElementById('instruction-text');
         const errorMsg = document.getElementById('error-message');
         const hitboxWrapper = document.getElementById('hitbox-wrapper');
+
+        // --- SEMANTIC ASSISTANCE DICTIONARY ENGINE ---
+        function getSemanticAssistance(stepData, stepIndex) {
+            if (!stepData) return { hint: "Complete the requested action on screen.", answer: "Click the active region to proceed." };
+
+            const activeIds = getActiveHitboxIds(stepData);
+            const firstId = activeIds[0] || "";
+
+            // Text Input Steps
+            if (stepData.input) {
+                const expected = Array.isArray(stepData.input.expectedValue) 
+                    ? stepData.input.expectedValue[0] 
+                    : stepData.input.expectedValue;
+                const fieldName = stepData.input.placeholder || "the active field";
+                
+                return {
+                    hint: `💡 Type the customer's <strong>${fieldName}</strong> into the highlighted input field.`,
+                    answer: `🎯 Type <strong>"${expected}"</strong> into ${fieldName} and proceed.`
+                };
+            }
+
+            // Phone hardware
+            if (firstId.includes('phone-park')) {
+                return {
+                    hint: "💡 Click the phone hardware button used to place the caller in the store hold queue.",
+                    answer: "🎯 Click the <strong>PARK</strong> button on the phone handset."
+                };
+            }
+            if (firstId.includes('phone-mute')) {
+                return {
+                    hint: "💡 Click the phone hardware button used for quick 2-second muting.",
+                    answer: "🎯 Click the <strong>MUTE</strong> button on the phone handset."
+                };
+            }
+            if (firstId.includes('phone-OK') || firstId.includes('phone-ok')) {
+                return {
+                    hint: "💡 Confirm and submit the customer's phone number.",
+                    answer: "🎯 Click the green <strong>OK</strong> button next to the phone keypad."
+                };
+            }
+
+            // Category Tabs
+            if (firstId.includes('tab') || firstId.includes('pizzas') || firstId.includes('sides') || firstId.includes('drinks') || firstId.includes('desserts') || firstId.includes('coupons')) {
+                const tabName = firstId.replace('hb-', '').replace('-tab', '').toUpperCase();
+                return {
+                    hint: `💡 Look at the top navigation category tabs for <strong>${tabName}</strong>.`,
+                    answer: `🎯 Click the <strong>${tabName}</strong> tab in the menu bar.`
+                };
+            }
+
+            // Sizes & Crusts
+            if (firstId.includes('size') || firstId.includes('crust') || firstId.includes('ht') || firstId.includes('thin') || firstId.includes('pan') || firstId.includes('14') || firstId.includes('12') || firstId.includes('10') || firstId.includes('16')) {
+                return {
+                    hint: "💡 Select the required pizza size and crust from the options grid.",
+                    answer: "🎯 Click the required pizza size/crust on the screen."
+                };
+            }
+
+            // Specialties / Pizzas
+            if (firstId.includes('extravaganz') || firstId.includes('meatzza') || firstId.includes('pepperoni') || firstId.includes('cheese') || firstId.includes('deluxe') || firstId.includes('specialty')) {
+                return {
+                    hint: "💡 Find and select the requested specialty pizza from the menu selection.",
+                    answer: "🎯 Click the requested pizza item button on the POS screen."
+                };
+            }
+
+            // Sauce / Cheese / Topping modifications
+            if (firstId.includes('sauce') || firstId.includes('cheese') || firstId.includes('top') || firstId.includes('whole') || firstId.includes('half')) {
+                return {
+                    hint: "💡 Adjust the toppings or portion modifiers on the customization grid.",
+                    answer: "🎯 Click the designated topping or portion selector on the screen."
+                };
+            }
+
+            // Order Type / Delivery / Carryout
+            if (firstId.includes('delivery') || firstId.includes('carryout') || firstId.includes('order-type')) {
+                return {
+                    hint: "💡 Choose the correct order fulfillment method (Delivery / Carryout).",
+                    answer: "🎯 Click the <strong>Delivery / Carryout</strong> dispatch button."
+                };
+            }
+
+            // Payment / Finish / Tender
+            if (firstId.includes('pay') || firstId.includes('cash') || firstId.includes('card') || firstId.includes('finish') || firstId.includes('tender')) {
+                return {
+                    hint: "💡 Proceed to payment/tender to finalize the transaction.",
+                    answer: "🎯 Click the payment method or Finish Order button."
+                };
+            }
+
+            // General fallback based on active hitbox ID
+            const cleanName = firstId.replace('hb-', '').replace(/-/g, ' ');
+            return {
+                hint: `💡 Look in the section for <strong>${cleanName}</strong> on the screen.`,
+                answer: `🎯 Click on <strong>${cleanName}</strong>.`
+            };
+        }
+
+        // --- VISUAL ASSISTS & RADAR PULSE ---
+        function removeVisualAssists() {
+            const existingPulse = document.getElementById('active-radar-pulse');
+            if (existingPulse) existingPulse.remove();
+
+            document.querySelectorAll('.hitbox').forEach(hb => {
+                hb.classList.remove('spotlight-active');
+            });
+
+            const displayBox = document.getElementById('assist-display-box');
+            if (displayBox) {
+                displayBox.style.display = 'none';
+                displayBox.innerHTML = '';
+            }
+        }
+
+        function showRegionRadarPulse(stepData) {
+            const existingPulse = document.getElementById('active-radar-pulse');
+            if (existingPulse) existingPulse.remove();
+
+            const activeIds = getActiveHitboxIds(stepData);
+            if (!activeIds || activeIds.length === 0) return;
+            const targetId = activeIds[0];
+            const hb = document.getElementById(targetId);
+            if (!hb) return;
+
+            const hbWrap = document.getElementById('hitbox-wrapper');
+            if (!hbWrap) return;
+
+            const pulse = document.createElement('div');
+            pulse.id = 'active-radar-pulse';
+            pulse.className = 'region-radar-pulse';
+
+            const pulseSize = 130;
+            pulse.style.width = pulseSize + 'px';
+            pulse.style.height = pulseSize + 'px';
+
+            const hbLeft = parseFloat(hb.style.left || 0);
+            const hbTop = parseFloat(hb.style.top || 0);
+            const hbWidth = parseFloat(hb.style.width || 0);
+            const hbHeight = parseFloat(hb.style.height || 0);
+
+            const centerX = hbLeft + (hbWidth / 2);
+            const centerY = hbTop + (hbHeight / 2);
+
+            pulse.style.left = `calc(${centerX}% - ${pulseSize / 2}px)`;
+            pulse.style.top = `calc(${centerY}% - ${pulseSize / 2}px)`;
+
+            hbWrap.appendChild(pulse);
+        }
+
+        function showSpotlight(stepData) {
+            const activeIds = getActiveHitboxIds(stepData);
+            activeIds.forEach(id => {
+                const hb = document.getElementById(id);
+                if (hb) {
+                    hb.classList.add('spotlight-active');
+                    hb.classList.remove('hide-arrow');
+                }
+            });
+        }
+
+        function updateAssistanceUI() {
+            const hintBadge = document.getElementById('hint-allowance-badge');
+            const answerBadge = document.getElementById('answer-allowance-badge');
+            const hintBtn = document.getElementById('btn-request-hint');
+            const answerBtn = document.getElementById('btn-request-answer');
+
+            if (!hintBadge || !answerBadge || !hintBtn || !answerBtn) return;
+
+            // Hint allowance state
+            if (hintsUsed === 0) {
+                hintBadge.innerText = '1 Free';
+                hintBtn.style.background = '#1e6091';
+            } else if (hintsUsed === 1) {
+                hintBadge.innerText = '-2%';
+                hintBtn.style.background = '#2c3e50';
+            } else {
+                hintBadge.innerText = '🔐 Trainer PIN';
+                hintBtn.style.background = '#7f8c8d';
+            }
+
+            // Direct Answer allowance state
+            if (answersUsed === 0) {
+                answerBadge.innerText = '-5%';
+                answerBtn.style.background = '#e74c3c';
+            } else {
+                answerBadge.innerText = '🔐 Trainer PIN';
+                answerBtn.style.background = '#7f8c8d';
+            }
+        }
+
+        function triggerHint() {
+            if (currentStep >= sequence.length - 1) return;
+            const stepData = sequence[currentStep];
+
+            if (hintsUsed >= 2) {
+                // Exhausted: Require Trainer Authorization
+                pendingTrainerAction = 'hint';
+                openTrainerModal();
+                return;
+            }
+
+            hintsUsed++;
+            updateAssistanceUI();
+
+            const assist = getSemanticAssistance(stepData, currentStep);
+            const displayBox = document.getElementById('assist-display-box');
+            if (displayBox) {
+                const penaltyText = hintsUsed === 1 ? '<span style="color: #27ae60; font-weight: bold;">(Free Hint)</span>' : '<span style="color: #e67e22; font-weight: bold;">(-2% Penalty)</span>';
+                displayBox.style.display = 'block';
+                displayBox.style.background = 'rgba(30, 96, 145, 0.1)';
+                displayBox.style.borderLeft = '4px solid #1e6091';
+                displayBox.style.color = '#1e6091';
+                displayBox.innerHTML = `${penaltyText} ${assist.hint}`;
+            }
+
+            showRegionRadarPulse(stepData);
+        }
+
+        function triggerDirectAnswer() {
+            if (currentStep >= sequence.length - 1) return;
+            const stepData = sequence[currentStep];
+
+            if (answersUsed >= 1) {
+                // Exhausted: Require Trainer Authorization
+                pendingTrainerAction = 'answer';
+                openTrainerModal();
+                return;
+            }
+
+            answersUsed++;
+            updateAssistanceUI();
+
+            const assist = getSemanticAssistance(stepData, currentStep);
+            const displayBox = document.getElementById('assist-display-box');
+            if (displayBox) {
+                displayBox.style.display = 'block';
+                displayBox.style.background = 'rgba(231, 76, 60, 0.1)';
+                displayBox.style.borderLeft = '4px solid #e74c3c';
+                displayBox.style.color = '#c0392b';
+                displayBox.innerHTML = `<span style="font-weight: bold; color: #c0392b;">(-5% Penalty)</span> ${assist.answer}`;
+            }
+
+            showSpotlight(stepData);
+        }
+
+        // --- TRAINER PIN MODAL & WATCHDOG ---
+        function openTrainerModal() {
+            const overlay = document.getElementById('trainer-modal-overlay');
+            const pinInput = document.getElementById('trainer-pin-input');
+            const errDiv = document.getElementById('trainer-pin-error');
+            if (overlay && pinInput) {
+                pinInput.value = '';
+                if (errDiv) errDiv.style.display = 'none';
+                overlay.style.display = 'flex';
+                pinInput.focus();
+            }
+        }
+
+        function closeTrainerModal() {
+            const overlay = document.getElementById('trainer-modal-overlay');
+            if (overlay) overlay.style.display = 'none';
+            pendingTrainerAction = null;
+        }
+
+        function verifyTrainerPinSubmit() {
+            const pinInput = document.getElementById('trainer-pin-input');
+            const errDiv = document.getElementById('trainer-pin-error');
+            const pin = pinInput ? pinInput.value.trim() : '';
+
+            // Valid PIN rule: any 4-digit code (e.g., standard store trainer PIN)
+            if (!/^\d{4}$/.test(pin)) {
+                if (errDiv) {
+                    errDiv.innerText = "Please enter a valid 4-digit trainer PIN.";
+                    errDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            // Trainer Authorization Successful
+            trainerAssistsUsed++;
+
+            // Watchdog Abuse Detection
+            if (lastTrainerAssistStep === currentStep - 1) {
+                consecutiveTrainerSteps++;
+            } else {
+                consecutiveTrainerSteps = 1;
+            }
+            lastTrainerAssistStep = currentStep;
+
+            if (consecutiveTrainerSteps >= 2) {
+                trainerPinAbuseFlag = true;
+                const reason = `Trainer PIN entered on ${consecutiveTrainerSteps} consecutive steps (Step ${currentStep})`;
+                if (!trainerPinAbuseReasons.includes(reason)) {
+                    trainerPinAbuseReasons.push(reason);
+                }
+            }
+
+            if (trainerAssistsUsed > 2) {
+                trainerPinAbuseFlag = true;
+                const reason = `Excessive Trainer PIN overrides (${trainerAssistsUsed} assists used in module)`;
+                if (!trainerPinAbuseReasons.includes(reason)) {
+                    trainerPinAbuseReasons.push(reason);
+                }
+            }
+
+            const stepData = sequence[currentStep];
+            const assist = getSemanticAssistance(stepData, currentStep);
+            const displayBox = document.getElementById('assist-display-box');
+
+            if (displayBox) {
+                displayBox.style.display = 'block';
+                displayBox.style.background = 'rgba(243, 156, 18, 0.15)';
+                displayBox.style.borderLeft = '4px solid #f39c12';
+                displayBox.style.color = '#d35400';
+
+                if (pendingTrainerAction === 'hint') {
+                    displayBox.innerHTML = `🔐 <strong>Trainer Assist (-5%):</strong> ${assist.hint}`;
+                    showRegionRadarPulse(stepData);
+                } else {
+                    displayBox.innerHTML = `🔐 <strong>Trainer Assist (-5%):</strong> ${assist.answer}`;
+                    showSpotlight(stepData);
+                }
+            }
+
+            closeTrainerModal();
+        }
 
         // --- AUDIO ENGINE ELEMENTS ---
         const audioPlayer = document.getElementById('global-audio-player');
@@ -1641,7 +2037,11 @@
         // --- SCORECARD CALCULATION & SENDING DATA ---
         function calculateScorecard() {
             const timeSpentSeconds = Math.floor((Date.now() - moduleStartTime) / 1000);
-            const accuracyScore = Math.max(0, 100 - (wrongClicks * 5));
+            const penalizedHints = Math.max(0, hintsUsed - 1);
+            const penalizedAnswers = answersUsed;
+            const trainerPenalties = trainerAssistsUsed * 5;
+            const totalDeductions = (wrongClicks * 5) + (penalizedHints * 2) + (penalizedAnswers * 5) + trainerPenalties;
+            const accuracyScore = Math.max(0, 100 - totalDeductions);
 
             let grade = 'A+';
             let stars = '⭐⭐⭐⭐⭐';
@@ -1661,7 +2061,10 @@
                 timeSpentSeconds,
                 accuracyScore,
                 grade,
-                stars
+                stars,
+                penalizedHints,
+                penalizedAnswers,
+                trainerAssistsUsed
             };
         }
 
@@ -1691,6 +2094,11 @@
                 "Stage 4 Holds Used": holdCount,
                 "Stage 4 Replays Used": replayCount,
                 "Stage 4 Hold Secs": holdDurationSeconds,
+                "Stage 4 Hints Used": hintsUsed,
+                "Stage 4 Answers Used": answersUsed,
+                "Stage 4 Trainer Assists": trainerAssistsUsed,
+                "Stage 4 Trainer Abuse Flag": trainerPinAbuseFlag,
+                "Stage 4 Trainer Abuse Reasons": trainerPinAbuseReasons.join(' | '),
                 "Stage 4 Accuracy Score": metrics.accuracyScore + "%",
                 "Stage 4 Grade": metrics.grade,
                 "Stage 4 Status": status
@@ -1707,7 +2115,10 @@
                 accuracyScore: metrics.accuracyScore,
                 grade: metrics.grade,
                 stars: metrics.stars,
-                wrongClicks: wrongClicks
+                wrongClicks: wrongClicks,
+                hintsUsed: hintsUsed,
+                answersUsed: answersUsed,
+                trainerAssistsUsed: trainerAssistsUsed
             }));
 
             // 2. Clear saved stage (so clicking Module 4 later starts fresh if re-taken)
@@ -1842,6 +2253,9 @@
         }
 
         function loadStep(stepIndex) {
+            removeVisualAssists();
+            updateAssistanceUI();
+
             if (stepIndex >= sequence.length - 1) {
                 // Final Step: Coach Mike debrief & live scorecard
                 const finalStepData = sequence[sequence.length - 1];
@@ -1906,6 +2320,9 @@
             // Keep POS_4.70.png (Coach Mike) visible as the final background
             posImage.src = "resources/POS_assets/Stage_4/POS_4.70.png";
 
+            const assistControl = document.getElementById('assist-control-bar');
+            if (assistControl) assistControl.style.display = 'none';
+
             const metrics = calculateScorecard();
             const mins = Math.floor(metrics.timeSpentSeconds / 60);
             const secs = metrics.timeSpentSeconds % 60;
@@ -1933,6 +2350,25 @@
                         <span>❌ Incorrect Clicks:</span>
                         <strong>${wrongClicks}</strong>
                     </div>
+                    ${hintsUsed > 0 ? `
+                    <div class="scorecard-metric">
+                        <span>💡 Hints Used:</span>
+                        <strong>${hintsUsed} (${Math.max(0, hintsUsed - 1) * 2}% deduction)</strong>
+                    </div>` : ''}
+                    ${answersUsed > 0 ? `
+                    <div class="scorecard-metric">
+                        <span>🎯 Direct Answers:</span>
+                        <strong>${answersUsed} (${answersUsed * 5}% deduction)</strong>
+                    </div>` : ''}
+                    ${trainerAssistsUsed > 0 ? `
+                    <div class="scorecard-metric">
+                        <span>🔐 Trainer Overrides:</span>
+                        <strong>${trainerAssistsUsed} (${trainerAssistsUsed * 5}% deduction)</strong>
+                    </div>` : ''}
+                    ${trainerPinAbuseFlag ? `
+                    <div style="background: rgba(231, 76, 60, 0.1); border-left: 3px solid #e74c3c; padding: 6px 10px; margin-top: 8px; border-radius: 4px; font-size: 0.8rem; color: #c0392b; text-align: left;">
+                        ⚠️ <strong>Watchdog Alert:</strong> Excessive Trainer PIN usage was flagged and logged for management audit.
+                    </div>` : ''}
                     <div class="scorecard-metric">
                         <span>⏸️ Holds Placed:</span>
                         <strong>${holdCount}</strong>
@@ -2020,6 +2456,25 @@
                 <!-- Text injected dynamically via JS -->
             </div>
             <button class="modal-close-btn" onclick="closePhoneModal()">Got It!</button>
+        </div>
+    </div>
+
+    <!-- TRAINER PIN AUTHORIZATION MODAL -->
+    <div id="trainer-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 25, 47, 0.85); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="background: #ffffff; width: 90%; max-width: 380px; border-radius: 12px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); text-align: center; border-top: 5px solid var(--brand-red);">
+            <div style="font-size: 2rem; margin-bottom: 8px;">🔐</div>
+            <h3 style="margin: 0 0 8px 0; font-family: 'OneDotCd-Bold', sans-serif; color: var(--dark-blue); font-size: 1.3rem; text-transform: uppercase;">Trainer Authorization</h3>
+            <p style="font-size: 0.88rem; color: #555; margin: 0 0 16px 0; line-height: 1.4;">
+                Assistance allowances for this shift have been used. A Trainer or GM must enter their 4-digit PIN to unlock additional step guidance.
+            </p>
+            <div style="margin-bottom: 16px;">
+                <input type="password" id="trainer-pin-input" maxlength="4" placeholder="••••" style="width: 130px; font-size: 1.8rem; text-align: center; letter-spacing: 8px; padding: 6px 12px; border: 2px solid var(--med-blue); border-radius: 8px; font-family: monospace; outline: none;">
+                <div id="trainer-pin-error" style="display: none; color: #e74c3c; font-size: 0.8rem; font-weight: 700; margin-top: 6px;">Invalid PIN. Enter 4-digit trainer code.</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <button onclick="closeTrainerModal()" style="flex: 1; padding: 8px 12px; background: #e0e0e0; color: #333; border: none; border-radius: 6px; font-weight: 700; cursor: pointer;">Cancel</button>
+                <button onclick="verifyTrainerPinSubmit()" style="flex: 1; padding: 8px 12px; background: var(--brand-blue); color: #fff; border: none; border-radius: 6px; font-weight: 700; cursor: pointer;">Authorize</button>
+            </div>
         </div>
     </div>
 
