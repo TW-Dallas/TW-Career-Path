@@ -1508,8 +1508,14 @@
                 const isMatch = isTextEntryValid(typedVal, stepData.input.expectedValue);
 
                 const activeHitboxIds = getActiveHitboxIds(stepData);
+                const nextStepData = sequence[currentStep + 1];
+                const nextHitboxIds = nextStepData ? getActiveHitboxIds(nextStepData) : [];
 
-                if (isMatch && activeHitboxIds.includes(clickedId)) {
+                const isAllowedClick = activeHitboxIds.includes(clickedId) || 
+                                       nextHitboxIds.includes(clickedId) || 
+                                       (activeHitboxIds.includes('hb-phone-entry') && clickedId === 'hb-phone-OK');
+
+                if (isMatch && isAllowedClick) {
                     if (typedVal && typedVal.trim()) {
                         lastTypedDeliveryNote = typedVal.trim();
                     }
@@ -1757,7 +1763,24 @@
             if (!hitboxesLoaded) return;
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
 
-            const activeIds = getActiveHitboxIds(stepData);
+            const activeIds = [...getActiveHitboxIds(stepData)];
+
+            // If this is a text input step, also ensure submit hitboxes (like hb-phone-OK)
+            // and next step hitboxes are active in the DOM so clicking them works seamlessly!
+            if (stepData.input) {
+                if (activeIds.includes('hb-phone-entry') && !activeIds.includes('hb-phone-OK')) {
+                    activeIds.push('hb-phone-OK');
+                }
+                const nextStepData = sequence[stepIndex + 1];
+                if (nextStepData) {
+                    getActiveHitboxIds(nextStepData).forEach(nextId => {
+                        if (!activeIds.includes(nextId)) {
+                            activeIds.push(nextId);
+                        }
+                    });
+                }
+            }
+
             let foundCount = 0;
 
             if (activeIds.length > 0) {
