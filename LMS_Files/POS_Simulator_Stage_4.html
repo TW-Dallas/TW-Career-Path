@@ -1976,27 +1976,52 @@
 
                 const isTextarea = stepData.input.type === 'textarea' || activeHb.id === 'hb-delivery-instructions';
                 const inputEl = document.createElement(isTextarea ? 'textarea' : 'input');
-                if (!isTextarea) inputEl.type = 'text';
+                if (!isTextarea) {
+                    inputEl.type = 'search'; // 'search' prevents browser password/username heuristics
+                }
                 inputEl.className = 'hitbox-text-input';
                 inputEl.placeholder = stepData.input.placeholder || '';
-                inputEl.autofocus = true;
-                inputEl.value = ''; // Ensure input starts completely empty
+                inputEl.value = '';
 
-                // Strict Autofill & Password Manager Disablers
-                inputEl.setAttribute('autocomplete', 'new-password');
+                // Ironclad Autofill & Password Manager Disablers
+                inputEl.setAttribute('autocomplete', 'one-time-code');
                 inputEl.setAttribute('autocorrect', 'off');
                 inputEl.setAttribute('autocapitalize', 'off');
                 inputEl.setAttribute('spellcheck', 'false');
                 inputEl.setAttribute('data-lpignore', 'true');
                 inputEl.setAttribute('data-1p-ignore', 'true');
+                inputEl.setAttribute('data-bwignore', 'true');
                 inputEl.setAttribute('data-form-type', 'other');
-                inputEl.setAttribute('name', 'pos_field_' + Math.random().toString(36).substring(2, 9));
+                inputEl.setAttribute('role', 'presentation');
+                inputEl.setAttribute('aria-autocomplete', 'none');
+                inputEl.setAttribute('name', 'pos_search_' + Math.random().toString(36).substring(2, 9));
+
+                const sanitizeAutofill = () => {
+                    const savedId = localStorage.getItem('tw_id') || '';
+                    if (inputEl.value === 'DALLAS_ADMIN' || inputEl.value.includes('DALLAS_ADMIN') || (savedId && inputEl.value === savedId)) {
+                        inputEl.value = '';
+                    }
+                };
+
+                inputEl.addEventListener('focus', sanitizeAutofill);
+                inputEl.addEventListener('change', sanitizeAutofill);
+                inputEl.addEventListener('animationstart', (e) => {
+                    if (e.animationName && e.animationName.toLowerCase().includes('autofill')) {
+                        sanitizeAutofill();
+                    }
+                });
+
+                // Periodic sanitization during mount phase
+                [10, 30, 60, 100, 200, 350, 500].forEach(delay => setTimeout(sanitizeAutofill, delay));
 
                 if (activeHb.id === "hb-phone-entry" || (stepData.input.placeholder && stepData.input.placeholder.toLowerCase().includes("phone"))) {
                     inputEl.addEventListener("input", (e) => {
+                        sanitizeAutofill();
                         let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
                         e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
                     });
+                } else {
+                    inputEl.addEventListener("input", sanitizeAutofill);
                 }
 
                 inputEl.addEventListener('click', (e) => e.stopPropagation());
