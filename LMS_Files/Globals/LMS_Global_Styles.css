@@ -1531,3 +1531,246 @@
         background: rgba(227, 24, 55, 0.08) !important;
         color: var(--brand-red) !important;
     }
+
+    /* --- POS SIMULATOR CALL & ASSISTANCE CONTROLS --- */
+    .phone-guide-arrow {
+        position: absolute;
+        display: none;
+        align-items: center;
+        gap: 6px;
+        background: rgba(0, 100, 145, 0.95);
+        color: #fff;
+        font-family: 'OneDotCd-Bold', sans-serif;
+        font-size: 0.95rem;
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: 2px solid #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 10px rgba(0, 100, 145, 0.6);
+        cursor: pointer;
+        z-index: 50;
+        user-select: none;
+        transition: transform 0.2s ease, opacity 0.3s ease;
+        animation: bounceIndicator 1.2s infinite ease-in-out;
+    }
+
+    .phone-guide-arrow:hover {
+        transform: scale(1.08);
+        background: #004d70;
+    }
+
+    @keyframes bounceIndicator {
+        0%, 100% {
+            transform: translateX(0);
+        }
+        50% {
+            transform: translateX(-6px);
+        }
+    }
+
+    /* Tactical Assistance Animations & Highlighting */
+    @keyframes regionRadarPulse {
+        0% {
+            transform: scale(0.4);
+            opacity: 0.95;
+            box-shadow: 0 0 0 0 rgba(0, 144, 226, 0.8), 0 0 25px rgba(0, 144, 226, 0.6);
+        }
+        50% {
+            transform: scale(1.1);
+            opacity: 0.7;
+            box-shadow: 0 0 0 35px rgba(0, 144, 226, 0.4), 0 0 50px rgba(0, 144, 226, 0.4);
+        }
+        100% {
+            transform: scale(1.4);
+            opacity: 0;
+            box-shadow: 0 0 0 70px rgba(0, 144, 226, 0), 0 0 75px rgba(0, 144, 226, 0);
+        }
+    }
+
+    .region-radar-pulse {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(0, 144, 226, 0.45) 0%, rgba(30, 96, 145, 0.25) 50%, rgba(0, 144, 226, 0) 100%);
+        border: 2px solid rgba(0, 144, 226, 0.8);
+        pointer-events: none;
+        z-index: 99;
+        animation: regionRadarPulse 1.8s infinite cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* Direct Answer Directional Pointer Arrow */
+    .direct-answer-arrow {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff0000"><path d="M12 21l-9-9h6V3h6v9h6z"/></svg>');
+        background-size: contain;
+        background-repeat: no-repeat;
+        filter: drop-shadow(0 3px 6px rgba(0,0,0,0.6));
+        animation: bounceDirectArrow 1s infinite ease-in-out;
+        z-index: 999;
+        pointer-events: none;
+    }
+
+    .direct-answer-arrow.arrow-bottom {
+        transform: rotate(180deg);
+        animation: bounceDirectArrowUp 1s infinite ease-in-out;
+    }
+
+    @keyframes bounceDirectArrow {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+        100% { transform: translateY(0); }
+    }
+
+    @keyframes bounceDirectArrowUp {
+        0% { transform: rotate(180deg) translateY(0); }
+        50% { transform: rotate(180deg) translateY(-8px); }
+        100% { transform: rotate(180deg) translateY(0); }
+    }
+
+    /* Unified Simulator Control Card */
+    #sim-control-card {
+        margin-bottom: 10px;
+        background: #fdfbf7;
+        border: 1px solid var(--crust-dark);
+        border-left: 4px solid var(--brand-blue);
+        border-radius: 12px;
+        padding: 8px 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        flex-shrink: 0;
+    }
+
+    #audio-control-panel {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 0 6px 0 !important;
+        margin: 0 0 6px 0 !important;
+        border-bottom: 1px solid var(--crust-dark) !important;
+        box-shadow: none !important;
+    }
+
+    .audio-header {
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    #audio-header-left {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 0.85rem;
+        font-family: 'OneDotCd-Bold', sans-serif;
+        color: var(--dark-blue);
+        letter-spacing: 0.3px;
+    }
+
+    .audio-pulse-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: var(--brand-blue);
+        display: inline-block;
+    }
+
+    #audio-time-display {
+        font-size: 0.78rem;
+        font-family: monospace;
+        color: var(--crust-burnt);
+        opacity: 0.75;
+    }
+
+    /* PRIMARY CALL BUTTONS (HOLD & REWIND) */
+    .audio-btn-row-extra {
+        display: flex;
+        gap: 8px;
+    }
+
+    .call-ctrl-btn {
+        font-family: 'OneDotCd-Bold', sans-serif;
+        border-radius: 20px;
+        padding: 6px 14px;
+        font-size: 0.86rem;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        flex: 1;
+        border: none;
+        color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    }
+
+    .call-hold-btn {
+        background: #d97706;
+    }
+
+    .call-hold-btn:hover {
+        background: #b45309;
+        transform: translateY(-1px);
+    }
+
+    .call-rewind-btn {
+        background: #334155;
+    }
+
+    .call-rewind-btn:hover {
+        background: #1e293b;
+        transform: translateY(-1px);
+    }
+
+    /* SECONDARY ASSISTANCE SOLID PILL BUTTONS */
+    #assist-control-bar {
+        padding-top: 4px;
+    }
+
+    .assist-btn-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .assist-solid-btn {
+        font-family: 'OneDotCd-Bold', sans-serif;
+        font-size: 0.86rem;
+        padding: 6px 14px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        flex: 1;
+        border: none;
+        color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    }
+
+    .assist-hint-btn {
+        background: var(--med-blue);
+    }
+
+    .assist-hint-btn:hover {
+        background: var(--dark-blue);
+        transform: translateY(-1px);
+    }
+
+    .assist-answer-btn {
+        background: var(--brand-red);
+    }
+
+    .assist-answer-btn:hover {
+        background: var(--dark-red);
+        transform: translateY(-1px);
+    }
+
+    #assist-display-box {
+        margin-top: 8px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.84rem;
+        line-height: 1.4;
+    }

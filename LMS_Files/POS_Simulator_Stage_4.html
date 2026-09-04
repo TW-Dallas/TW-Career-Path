@@ -16,290 +16,6 @@
         .hitbox::before {
             display: none !important;
         }
-
-        /* Interactive Phone Guide Arrows on Step 3 */
-        .phone-guide-arrow {
-            position: absolute;
-            display: none;
-            align-items: center;
-            gap: 6px;
-            background: rgba(0, 100, 145, 0.95);
-            color: #fff;
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 0.95rem;
-            padding: 6px 14px;
-            border-radius: 20px;
-            border: 2px solid #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 10px rgba(0, 100, 145, 0.6);
-            cursor: pointer;
-            z-index: 50;
-            user-select: none;
-            transition: transform 0.2s ease, opacity 0.3s ease;
-            animation: bounceIndicator 1.2s infinite ease-in-out;
-        }
-
-        .phone-guide-arrow:hover {
-            transform: scale(1.08);
-            background: #004d70;
-        }
-
-        @keyframes bounceIndicator {
-
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-
-            50% {
-                transform: translateX(-6px);
-            }
-        }
-
-        #arrow-phone-park {
-            top: 27.5%;
-            left: 82.5%;
-        }
-
-        #arrow-phone-mute {
-            top: 71%;
-            left: 80%;
-        }
-
-        /* Tactical Assistance Animations & Highlighting */
-        @keyframes regionRadarPulse {
-            0% {
-                transform: scale(0.4);
-                opacity: 0.95;
-                box-shadow: 0 0 0 0 rgba(0, 144, 226, 0.8), 0 0 25px rgba(0, 144, 226, 0.6);
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 0.7;
-                box-shadow: 0 0 0 35px rgba(0, 144, 226, 0.4), 0 0 50px rgba(0, 144, 226, 0.4);
-            }
-            100% {
-                transform: scale(1.4);
-                opacity: 0;
-                box-shadow: 0 0 0 70px rgba(0, 144, 226, 0), 0 0 75px rgba(0, 144, 226, 0);
-            }
-        }
-
-        .region-radar-pulse {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 144, 226, 0.45) 0%, rgba(30, 96, 145, 0.25) 50%, rgba(0, 144, 226, 0) 100%);
-            border: 2px solid rgba(0, 144, 226, 0.8);
-            pointer-events: none;
-            z-index: 99;
-            animation: regionRadarPulse 1.8s infinite cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        /* Direct Answer Directional Pointer Arrow (No boxy red outline) */
-        .direct-answer-arrow {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff0000"><path d="M12 21l-9-9h6V3h6v9h6z"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.6));
-            animation: bounceDirectArrow 1s infinite ease-in-out;
-            z-index: 999;
-            pointer-events: none;
-        }
-
-        .direct-answer-arrow.arrow-bottom {
-            transform: rotate(180deg);
-            animation: bounceDirectArrowUp 1s infinite ease-in-out;
-        }
-
-        @keyframes bounceDirectArrow {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0); }
-        }
-
-        @keyframes bounceDirectArrowUp {
-            0% { transform: rotate(180deg) translateY(0); }
-            50% { transform: rotate(180deg) translateY(-8px); }
-            100% { transform: rotate(180deg) translateY(0); }
-        }
-
-        /* Compact instruction panel and text styling to ensure Action is visible without scrolling */
-        #instruction-panel {
-            padding: 12px 14px;
-        }
-
-        #instruction-text {
-            font-size: 0.98rem;
-            line-height: 1.35;
-            margin-top: 6px;
-        }
-
-        #instruction-text p {
-            margin: 0 0 6px 0;
-            font-size: 0.92rem;
-        }
-
-        #instruction-text h3 {
-            margin: 0 0 6px 0;
-            font-size: 1.1rem;
-        }
-
-        #instruction-text ul {
-            margin: 4px 0 6px 0;
-            padding-left: 18px;
-        }
-
-        #instruction-text li {
-            margin-bottom: 2px;
-            font-size: 0.88rem;
-        }
-
-        /* Unified Simulator Control Card */
-        #sim-control-card {
-            margin-bottom: 10px;
-            background: #fdfbf7;
-            border: 1px solid var(--crust-dark);
-            border-left: 4px solid var(--brand-blue);
-            border-radius: 12px;
-            padding: 8px 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-            flex-shrink: 0;
-        }
-
-        #audio-control-panel {
-            background: transparent !important;
-            border: none !important;
-            padding: 0 0 6px 0 !important;
-            margin: 0 0 6px 0 !important;
-            border-bottom: 1px solid var(--crust-dark) !important;
-            box-shadow: none !important;
-        }
-
-        .audio-header {
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        #audio-header-left {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            font-size: 0.85rem;
-            font-family: 'OneDotCd-Bold', sans-serif;
-            color: var(--dark-blue);
-            letter-spacing: 0.3px;
-        }
-
-        .audio-pulse-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--brand-blue);
-            display: inline-block;
-        }
-
-        #audio-time-display {
-            font-size: 0.78rem;
-            font-family: monospace;
-            color: var(--crust-burnt);
-            opacity: 0.75;
-        }
-
-        /* PRIMARY CALL BUTTONS (HOLD & REWIND) */
-        .audio-btn-row-extra {
-            display: flex;
-            gap: 8px;
-        }
-
-        .call-ctrl-btn {
-            font-family: 'OneDotCd-Bold', sans-serif;
-            border-radius: 20px;
-            padding: 5px 12px;
-            font-size: 0.84rem;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            flex: 1;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-        }
-
-        .call-hold-btn {
-            background: var(--brand-blue);
-            color: #ffffff;
-            border: 1.5px solid var(--brand-blue);
-        }
-
-        .call-hold-btn:hover {
-            background: var(--dark-blue);
-            border-color: var(--dark-blue);
-            transform: translateY(-1px);
-        }
-
-        .call-rewind-btn {
-            background: #ffffff;
-            color: var(--brand-blue);
-            border: 1.5px solid var(--brand-blue);
-        }
-
-        .call-rewind-btn:hover {
-            background: rgba(0, 100, 145, 0.06);
-            transform: translateY(-1px);
-        }
-
-        /* SECONDARY ASSISTANCE OUTLINE BUTTONS */
-        #assist-control-bar {
-            padding-top: 2px;
-        }
-
-        .assist-btn-row {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .assist-outline-btn {
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 0.76rem;
-            padding: 4px 10px;
-            border-radius: 14px;
-            background: transparent;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            flex: 1;
-            border: 1px solid #ccd6df;
-            color: #5a738e;
-        }
-
-        .assist-hint-btn:hover {
-            border-color: var(--brand-blue);
-            color: var(--brand-blue);
-            background: rgba(0, 100, 145, 0.06);
-        }
-
-        .assist-answer-btn:hover {
-            border-color: var(--brand-red);
-            color: var(--brand-red);
-            background: rgba(227, 24, 55, 0.06);
-        }
-
-        #assist-display-box {
-            margin-top: 6px;
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 0.82rem;
-            line-height: 1.35;
-        }
     </style>
 </head>
 
@@ -368,15 +84,11 @@
                     </div>
                 </div>
 
-                <!-- SECONDARY TACTICAL ASSISTANCE (Subtle Outline / Footer bar) -->
+                <!-- SECONDARY TACTICAL ASSISTANCE -->
                 <div id="assist-control-bar">
                     <div class="assist-btn-row">
-                        <button id="btn-request-hint" class="assist-outline-btn assist-hint-btn" onclick="triggerHint()">
-                            💡 Request Hint (<span id="hint-allowance-badge">1 Free</span>)
-                        </button>
-                        <button id="btn-request-answer" class="assist-outline-btn assist-answer-btn" onclick="triggerDirectAnswer()">
-                            🎯 Direct Answer (<span id="answer-allowance-badge">-5%</span>)
-                        </button>
+                        <button id="btn-request-hint" class="assist-solid-btn assist-hint-btn" onclick="triggerHint()">💡 Request Hint (<span id="hint-allowance-badge">1 Free</span>)</button>
+                        <button id="btn-request-answer" class="assist-solid-btn assist-answer-btn" onclick="triggerDirectAnswer()">🎯 Direct Answer (<span id="answer-allowance-badge">-5%</span>)</button>
                     </div>
                     <div id="assist-display-box" style="display: none;"></div>
                 </div>
@@ -1530,33 +1242,35 @@
 
             if (!hintBadge || !answerBadge || !hintBtn || !answerBtn) return;
 
-            hintBtn.style.background = 'transparent';
-            answerBtn.style.background = 'transparent';
-
             // Hint allowance state
             if (hintsUsed === 0) {
                 hintBadge.innerText = '1 Free';
-                hintBtn.style.borderColor = '#ccd6df';
-                hintBtn.style.color = '#5a738e';
+                hintBtn.style.background = 'var(--med-blue)';
+                hintBtn.style.color = '#ffffff';
+                hintBtn.style.opacity = '1';
             } else if (hintsUsed === 1) {
                 hintBadge.innerText = '-2%';
-                hintBtn.style.borderColor = 'var(--brand-blue)';
-                hintBtn.style.color = 'var(--brand-blue)';
+                hintBtn.style.background = 'var(--brand-blue)';
+                hintBtn.style.color = '#ffffff';
+                hintBtn.style.opacity = '1';
             } else {
                 hintBadge.innerText = '🔐 Trainer PIN';
-                hintBtn.style.borderColor = 'var(--crust-dark)';
-                hintBtn.style.color = 'var(--crust-burnt)';
+                hintBtn.style.background = '#64748b';
+                hintBtn.style.color = '#ffffff';
+                hintBtn.style.opacity = '0.85';
             }
 
             // Direct Answer allowance state
             if (answersUsed === 0) {
                 answerBadge.innerText = '-5%';
-                answerBtn.style.borderColor = '#ccd6df';
-                answerBtn.style.color = '#5a738e';
+                answerBtn.style.background = 'var(--brand-red)';
+                answerBtn.style.color = '#ffffff';
+                answerBtn.style.opacity = '1';
             } else {
                 answerBadge.innerText = '🔐 Trainer PIN';
-                answerBtn.style.borderColor = 'var(--crust-dark)';
-                answerBtn.style.color = 'var(--crust-burnt)';
+                answerBtn.style.background = '#64748b';
+                answerBtn.style.color = '#ffffff';
+                answerBtn.style.opacity = '0.85';
             }
         }
 
@@ -1750,7 +1464,6 @@
 
                 holdBtn.innerHTML = "▶ Resume Call";
                 holdBtn.style.backgroundColor = "var(--brand-red)";
-                holdBtn.style.borderColor = "var(--brand-red)";
                 updateAudioHeaderState('hold');
 
                 holdTimerInterval = setInterval(() => {
@@ -1769,8 +1482,7 @@
                 clearInterval(holdTimerInterval);
 
                 holdBtn.innerHTML = "⏸️ Put on Hold";
-                holdBtn.style.backgroundColor = "var(--brand-blue)";
-                holdBtn.style.borderColor = "var(--brand-blue)";
+                holdBtn.style.backgroundColor = "#d97706";
                 updateAudioHeaderState('playing');
 
                 audioPlayer.play().catch(e => console.log("Audio play error:", e));
