@@ -1093,6 +1093,17 @@
                 inputEl.className = 'hitbox-text-input';
                 inputEl.placeholder = stepData.input.placeholder || '';
                 inputEl.autofocus = true;
+                inputEl.value = '';
+
+                // Strict Autofill & Password Manager Disablers
+                inputEl.setAttribute('autocomplete', 'new-password');
+                inputEl.setAttribute('autocorrect', 'off');
+                inputEl.setAttribute('autocapitalize', 'off');
+                inputEl.setAttribute('spellcheck', 'false');
+                inputEl.setAttribute('data-lpignore', 'true');
+                inputEl.setAttribute('data-1p-ignore', 'true');
+                inputEl.setAttribute('data-form-type', 'other');
+                inputEl.setAttribute('name', 'pos_field_' + Math.random().toString(36).substring(2, 9));
 
                 // Add phone number masking if it's a phone input step
                 if (activeHb.id === "hb-phone-entry" || (stepData.input.placeholder && stepData.input.placeholder.toLowerCase().includes("phone"))) {
