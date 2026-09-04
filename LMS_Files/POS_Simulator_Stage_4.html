@@ -1211,7 +1211,7 @@
                 if (fieldName.includes('name') || firstId.includes('name')) {
                     return {
                         hint: "Listen to the customer on the call and type their name into the field.",
-                        answer: `Type "${expected}" into the Customer Name field and press Enter or click away.`
+                        answer: `Type "${expected}" into the Customer Name field and press Enter (or click the next field).`
                     };
                 }
                 if (fieldName.includes('phone') || firstId.includes('phone')) {
@@ -1223,18 +1223,18 @@
                 if (fieldName.includes('number') || fieldName.includes('address') || firstId.includes('add') || firstId.includes('street')) {
                     return {
                         hint: "Listen for the delivery address given on the call and enter it in the field.",
-                        answer: `Type "${expected}" into the highlighted address field.`
+                        answer: `Type "${expected}" into the highlighted address field and press Enter.`
                     };
                 }
                 if (fieldName.includes('instruction') || firstId.includes('instruction') || firstId.includes('note')) {
                     return {
                         hint: "Type the delivery instructions or gate code requested by the customer.",
-                        answer: `Type "${expected}" into Delivery Instructions.`
+                        answer: `Type "${expected}" into Delivery Instructions and press Enter.`
                     };
                 }
                 return {
                     hint: "Listen to the caller and enter the requested information into the active field.",
-                    answer: `Type "${expected}" into the active field.`
+                    answer: `Type "${expected}" into the active field and press Enter.`
                 };
             }
 
