@@ -877,14 +877,6 @@
         margin-bottom: 8px;
     }
 
-    /* STAGE 4: HOLD & REWIND BUTTON ROW */
-    .audio-btn-row-extra {
-        display: flex;
-        gap: 6px;
-        margin-top: 8px;
-        flex-wrap: wrap;
-    }
-
     /* Removes default browser top margin on instruction paragraphs */
     #instruction-text p {
         margin-top: 0;
@@ -1738,18 +1730,19 @@
         font-family: 'Subhead1', sans-serif !important;
         font-weight: normal !important;
         border-radius: 50px;
-        padding: 0.5rem 1rem;
+        padding: 0.55rem 1rem;
         font-size: 0.95rem;
         line-height: 1;
         cursor: pointer;
         transition: all 0.2s ease;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        flex: 1 1 0;
-        min-width: 0;
-        text-align: center;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        text-align: center !important;
         border: none;
         color: var(--crust-base) !important;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
@@ -1757,8 +1750,15 @@
     }
 
     .call-ctrl-btn svg, .btn svg {
-        display: block;
-        flex-shrink: 0;
+        display: inline-block !important;
+        flex-shrink: 0 !important;
+        margin: 0 !important;
+    }
+
+    .call-ctrl-btn span, .btn span {
+        display: inline-block !important;
+        flex-shrink: 0 !important;
+        margin: 0 !important;
     }
 
     .call-hold-btn {
