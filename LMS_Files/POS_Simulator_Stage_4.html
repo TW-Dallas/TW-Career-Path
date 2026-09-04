@@ -160,45 +160,145 @@
         #sim-control-card {
             margin-bottom: 10px;
             background: #fdfbf7;
-            border: 1px solid #e2ddd5;
+            border: 1px solid var(--crust-dark);
             border-left: 4px solid var(--brand-blue);
             border-radius: 12px;
-            padding: 10px 12px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+            padding: 8px 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
             flex-shrink: 0;
         }
 
         #audio-control-panel {
             background: transparent !important;
             border: none !important;
-            padding: 0 !important;
-            margin: 0 !important;
+            padding: 0 0 6px 0 !important;
+            margin: 0 0 6px 0 !important;
+            border-bottom: 1px solid var(--crust-dark) !important;
             box-shadow: none !important;
         }
 
-        .sim-ctrl-btn {
+        .audio-header {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #audio-header-left {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 0.85rem;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            color: var(--dark-blue);
+            letter-spacing: 0.3px;
+        }
+
+        .audio-pulse-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--brand-blue);
+            display: inline-block;
+        }
+
+        #audio-time-display {
+            font-size: 0.78rem;
+            font-family: monospace;
+            color: var(--crust-burnt);
+            opacity: 0.75;
+        }
+
+        /* PRIMARY CALL BUTTONS (HOLD & REWIND) */
+        .audio-btn-row-extra {
+            display: flex;
+            gap: 8px;
+        }
+
+        .call-ctrl-btn {
             font-family: 'OneDotCd-Bold', sans-serif;
             border-radius: 20px;
-            border: none;
-            padding: 6px 12px;
-            font-size: 0.82rem;
+            padding: 5px 12px;
+            font-size: 0.84rem;
             cursor: pointer;
             transition: all 0.15s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 5px;
+            flex: 1;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
         }
 
-        .sim-ctrl-btn:hover {
-            opacity: 0.92;
-            transform: translateY(-1px);
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+        .call-hold-btn {
+            background: var(--brand-blue);
+            color: #ffffff;
+            border: 1.5px solid var(--brand-blue);
         }
 
-        .sim-ctrl-btn:active {
-            transform: translateY(1px);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+        .call-hold-btn:hover {
+            background: var(--dark-blue);
+            border-color: var(--dark-blue);
+            transform: translateY(-1px);
+        }
+
+        .call-rewind-btn {
+            background: #ffffff;
+            color: var(--brand-blue);
+            border: 1.5px solid var(--brand-blue);
+        }
+
+        .call-rewind-btn:hover {
+            background: rgba(0, 100, 145, 0.06);
+            transform: translateY(-1px);
+        }
+
+        /* SECONDARY ASSISTANCE OUTLINE BUTTONS */
+        #assist-control-bar {
+            padding-top: 2px;
+        }
+
+        .assist-btn-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .assist-outline-btn {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 0.76rem;
+            padding: 4px 10px;
+            border-radius: 14px;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            flex: 1;
+            border: 1px solid #ccd6df;
+            color: #5a738e;
+        }
+
+        .assist-hint-btn:hover {
+            border-color: var(--brand-blue);
+            color: var(--brand-blue);
+            background: rgba(0, 100, 145, 0.06);
+        }
+
+        .assist-answer-btn:hover {
+            border-color: var(--brand-red);
+            color: var(--brand-red);
+            background: rgba(227, 24, 55, 0.06);
+        }
+
+        #assist-display-box {
+            margin-top: 6px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            line-height: 1.35;
         }
     </style>
 </head>
@@ -244,41 +344,41 @@
             <!-- UNIFIED SIMULATOR CONTROL CARD -->
             <div id="sim-control-card">
 
-                <!-- Play / Pause / Hold Call Header & Controls (Active on audio steps) -->
-                <div id="audio-control-panel" style="display: none; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed #dcd5ca;">
-                    <div class="audio-header" id="audio-main-header" style="margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
-                        <div id="audio-header-left" style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 700; color: var(--dark-blue);">
-                            <span id="audio-status-dot" class="audio-pulse-indicator" style="background-color: #2ecc71;"></span>
+                <!-- Primary Call Controls (Active on audio steps) -->
+                <div id="audio-control-panel" style="display: none;">
+                    <div class="audio-header" id="audio-main-header">
+                        <div id="audio-header-left">
+                            <span id="audio-status-dot" class="audio-pulse-indicator"></span>
                             <span id="audio-status-text">CALL IN PROGRESS</span>
                         </div>
-                        <span id="audio-time-display" style="font-size: 0.82rem; font-family: monospace; color: #52796f; font-weight: normal;">0:00 / 0:00</span>
+                        <span id="audio-time-display">0:00 / 0:00</span>
                     </div>
 
                     <!-- Dynamic Track Stack dynamically generated in JS -->
                     <div id="audio-track-container"></div>
 
-                    <!-- HOLD & REWIND CONTROLS -->
-                    <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none; gap: 8px;">
-                        <button id="audio-hold-btn" class="sim-ctrl-btn" onclick="toggleHold()" style="flex: 1; background: #e67e22; color: #fff; gap: 5px;">
+                    <!-- PRIMARY CALL CONTROLS (HOLD / REWIND) -->
+                    <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none;">
+                        <button id="audio-hold-btn" class="call-ctrl-btn call-hold-btn" onclick="toggleHold()">
                             ⏸️ Put on Hold
                         </button>
-                        <button id="audio-rewind-btn" class="sim-ctrl-btn" onclick="rewindAudio5s()" style="flex: 1; background: #34495e; color: #fff; gap: 5px;">
+                        <button id="audio-rewind-btn" class="call-ctrl-btn call-rewind-btn" onclick="rewindAudio5s()">
                             ⏪ Rewind 5s
                         </button>
                     </div>
                 </div>
 
-                <!-- TACTICAL ASSISTANCE CONTROLS -->
+                <!-- SECONDARY TACTICAL ASSISTANCE (Subtle Outline / Footer bar) -->
                 <div id="assist-control-bar">
-                    <div style="display: flex; gap: 8px;">
-                        <button id="btn-request-hint" class="sim-ctrl-btn" onclick="triggerHint()" style="flex: 1; background: #1e6091; color: #fff;">
+                    <div class="assist-btn-row">
+                        <button id="btn-request-hint" class="assist-outline-btn assist-hint-btn" onclick="triggerHint()">
                             💡 Request Hint (<span id="hint-allowance-badge">1 Free</span>)
                         </button>
-                        <button id="btn-request-answer" class="sim-ctrl-btn" onclick="triggerDirectAnswer()" style="flex: 1; background: #e74c3c; color: #fff;">
+                        <button id="btn-request-answer" class="assist-outline-btn assist-answer-btn" onclick="triggerDirectAnswer()">
                             🎯 Direct Answer (<span id="answer-allowance-badge">-5%</span>)
                         </button>
                     </div>
-                    <div id="assist-display-box" style="display: none; margin-top: 8px; padding: 7px 10px; border-radius: 8px; font-size: 0.84rem; line-height: 1.35;"></div>
+                    <div id="assist-display-box" style="display: none;"></div>
                 </div>
 
             </div>
@@ -1430,25 +1530,33 @@
 
             if (!hintBadge || !answerBadge || !hintBtn || !answerBtn) return;
 
+            hintBtn.style.background = 'transparent';
+            answerBtn.style.background = 'transparent';
+
             // Hint allowance state
             if (hintsUsed === 0) {
                 hintBadge.innerText = '1 Free';
-                hintBtn.style.background = '#1e6091';
+                hintBtn.style.borderColor = '#ccd6df';
+                hintBtn.style.color = '#5a738e';
             } else if (hintsUsed === 1) {
                 hintBadge.innerText = '-2%';
-                hintBtn.style.background = '#2c3e50';
+                hintBtn.style.borderColor = 'var(--brand-blue)';
+                hintBtn.style.color = 'var(--brand-blue)';
             } else {
                 hintBadge.innerText = '🔐 Trainer PIN';
-                hintBtn.style.background = '#7f8c8d';
+                hintBtn.style.borderColor = 'var(--crust-dark)';
+                hintBtn.style.color = 'var(--crust-burnt)';
             }
 
             // Direct Answer allowance state
             if (answersUsed === 0) {
                 answerBadge.innerText = '-5%';
-                answerBtn.style.background = '#e74c3c';
+                answerBtn.style.borderColor = '#ccd6df';
+                answerBtn.style.color = '#5a738e';
             } else {
                 answerBadge.innerText = '🔐 Trainer PIN';
-                answerBtn.style.background = '#7f8c8d';
+                answerBtn.style.borderColor = 'var(--crust-dark)';
+                answerBtn.style.color = 'var(--crust-burnt)';
             }
         }
 
@@ -1470,12 +1578,12 @@
             const displayBox = document.getElementById('assist-display-box');
             if (displayBox) {
                 const penaltyBadge = hintsUsed === 1 
-                    ? '<span style="color: #27ae60; font-weight: 700;">💡 Free Hint:</span>' 
-                    : '<span style="color: #e67e22; font-weight: 700;">💡 Hint (-2%):</span>';
+                    ? '<span style="color: var(--brand-blue); font-weight: 700;">💡 Free Hint:</span>' 
+                    : '<span style="color: var(--brand-red); font-weight: 700;">💡 Hint (-2%):</span>';
                 displayBox.style.display = 'block';
-                displayBox.style.background = 'rgba(30, 96, 145, 0.08)';
-                displayBox.style.borderLeft = '4px solid #1e6091';
-                displayBox.style.color = '#1e6091';
+                displayBox.style.background = 'rgba(0, 100, 145, 0.06)';
+                displayBox.style.borderLeft = '3px solid var(--brand-blue)';
+                displayBox.style.color = 'var(--dark-blue)';
                 displayBox.innerHTML = `${penaltyBadge} ${assist.hint}`;
             }
 
@@ -1500,10 +1608,10 @@
             const displayBox = document.getElementById('assist-display-box');
             if (displayBox) {
                 displayBox.style.display = 'block';
-                displayBox.style.background = 'rgba(231, 76, 60, 0.08)';
-                displayBox.style.borderLeft = '4px solid #e74c3c';
-                displayBox.style.color = '#c0392b';
-                displayBox.innerHTML = `<span style="font-weight: 700; color: #c0392b;">🎯 Direct Answer (-5%):</span> ${assist.answer}`;
+                displayBox.style.background = 'rgba(227, 24, 55, 0.06)';
+                displayBox.style.borderLeft = '3px solid var(--brand-red)';
+                displayBox.style.color = 'var(--crust-burnt)';
+                displayBox.innerHTML = `<span style="font-weight: 700; color: var(--brand-red);">🎯 Direct Answer (-5%):</span> ${assist.answer}`;
             }
 
             showSpotlight(stepData);
@@ -1575,9 +1683,9 @@
 
             if (displayBox) {
                 displayBox.style.display = 'block';
-                displayBox.style.background = 'rgba(243, 156, 18, 0.15)';
-                displayBox.style.borderLeft = '4px solid #f39c12';
-                displayBox.style.color = '#d35400';
+                displayBox.style.background = 'rgba(0, 100, 145, 0.08)';
+                displayBox.style.borderLeft = '3px solid var(--brand-blue)';
+                displayBox.style.color = 'var(--dark-blue)';
 
                 if (pendingTrainerAction === 'hint') {
                     displayBox.innerHTML = `🔐 <strong>Trainer Assist (-5%):</strong> ${assist.hint}`;
@@ -1610,19 +1718,23 @@
             if (!statusDot || !statusText) return;
 
             if (state === 'hold') {
-                statusDot.style.backgroundColor = '#e74c3c';
+                statusDot.style.backgroundColor = 'var(--brand-red)';
                 const mins = Math.floor(holdDurationSeconds / 60).toString().padStart(2, '0');
                 const secs = (holdDurationSeconds % 60).toString().padStart(2, '0');
                 statusText.innerHTML = `LINE 1 ON HOLD (<span id="hold-timer-text">${mins}:${secs}</span>)`;
+                statusText.style.color = 'var(--brand-red)';
             } else if (state === 'playing') {
-                statusDot.style.backgroundColor = '#2ecc71';
+                statusDot.style.backgroundColor = 'var(--brand-blue)';
                 statusText.innerText = 'CALL IN PROGRESS';
+                statusText.style.color = 'var(--dark-blue)';
             } else if (state === 'demo') {
                 statusDot.style.backgroundColor = 'var(--brand-blue)';
                 statusText.innerText = 'DEMO AUDIO PLAYBOOK';
+                statusText.style.color = 'var(--dark-blue)';
             } else if (state === 'ended') {
-                statusDot.style.backgroundColor = '#27ae60';
+                statusDot.style.backgroundColor = 'var(--dark-blue)';
                 statusText.innerText = 'CALL CONCLUDED';
+                statusText.style.color = 'var(--dark-blue)';
             }
         }
 
@@ -1637,7 +1749,8 @@
                 audioPlayer.pause();
 
                 holdBtn.innerHTML = "▶ Resume Call";
-                holdBtn.style.backgroundColor = "#27ae60";
+                holdBtn.style.backgroundColor = "var(--brand-red)";
+                holdBtn.style.borderColor = "var(--brand-red)";
                 updateAudioHeaderState('hold');
 
                 holdTimerInterval = setInterval(() => {
@@ -1656,7 +1769,8 @@
                 clearInterval(holdTimerInterval);
 
                 holdBtn.innerHTML = "⏸️ Put on Hold";
-                holdBtn.style.backgroundColor = "#e67e22";
+                holdBtn.style.backgroundColor = "var(--brand-blue)";
+                holdBtn.style.borderColor = "var(--brand-blue)";
                 updateAudioHeaderState('playing');
 
                 audioPlayer.play().catch(e => console.log("Audio play error:", e));
