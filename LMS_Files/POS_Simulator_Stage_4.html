@@ -1398,11 +1398,12 @@
             }
         }
 
-        function validateTextEntry(userTyped, expectedValue) {
+        function isTextEntryValid(userTyped, expectedValue) {
+            if (!userTyped || !userTyped.trim()) return false;
             const targets = Array.isArray(expectedValue) ? expectedValue : [expectedValue];
             const cleanUser = userTyped.trim().toLowerCase();
             
-            const isMatch = targets.some(target => {
+            return targets.some(target => {
                 const cleanExpectedDigits = String(target).replace(/\D/g, '');
                 const isNumericTarget = cleanExpectedDigits.length > 0 && /^\d+$/.test(cleanExpectedDigits);
                 if (isNumericTarget) {
@@ -1412,6 +1413,10 @@
                     return cleanUser === String(target).trim().toLowerCase();
                 }
             }) || (targets.some(t => String(t).toLowerCase().includes('call')) && /\bcall\b/i.test(cleanUser));
+        }
+
+        function validateTextEntry(userTyped, expectedValue) {
+            const isMatch = isTextEntryValid(userTyped, expectedValue);
 
             if (isMatch) {
                 errorMsg.style.display = 'none';
@@ -1457,7 +1462,28 @@
 
             const stepData = sequence[currentStep];
             if (!stepData) return;
-            if (stepData.input && stepData.input.type === 'text') return;
+
+            // Allow clicking the next step's target hitbox directly (e.g. Pizzas tab) if text input is valid
+            if (stepData.input && (stepData.input.type === 'text' || stepData.input.type === 'textarea')) {
+                const nextStepData = sequence[currentStep + 1];
+                const nextHitboxIds = nextStepData ? getActiveHitboxIds(nextStepData) : [];
+
+                if (nextHitboxIds.includes(clickedId)) {
+                    const activeInput = document.querySelector('.hitbox-text-input');
+                    const typedVal = activeInput ? activeInput.value : '';
+                    if (isTextEntryValid(typedVal, stepData.input.expectedValue)) {
+                        errorMsg.style.display = 'none';
+                        currentStep += 2; // Committed note AND clicked next tab (Pizzas)
+                        loadStep(currentStep);
+                        return;
+                    } else {
+                        errorMsg.style.display = 'block';
+                        wrongClicks++;
+                        return;
+                    }
+                }
+                return;
+            }
 
             // --- INTERACTIVE PHONE HARDWARE LOGIC (PARK / MUTE) ---
             if (clickedId === 'hb-phone-park') {
