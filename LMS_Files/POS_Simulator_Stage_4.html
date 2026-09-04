@@ -678,7 +678,7 @@
             {
                 "step": 50,
                 "image": "resources/POS_assets/Stage_4/POS_4.40.A.png",
-                "activeHitbox": "hb-delivery-instructions",
+                "activeHitbox": ["hb-delivery-instructions", "hb-pizzas-tab", "hb-pizzas"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
                 "input": {
@@ -1530,8 +1530,6 @@
 
             posImage.addEventListener('click', function () {
                 if (currentStep >= sequence.length) return;
-                const stepData = sequence[currentStep];
-                if (stepData && stepData.input && stepData.input.type === 'text') return;
                 errorMsg.style.display = 'block';
                 wrongClicks++;
             });
