@@ -1,46 +1,53 @@
-  /* --- FONT LOADING --- */
+  /* --- MASTER DOMINO'S TYPOGRAPHY SYSTEM --- */
+  /* 1. DISPLAY / HERO (ExtraBlack Regular) */
+  @font-face {
+      font-family: 'Header1';
+      src: url('../../fonts/Dominos Sans Header 1.ttf') format('truetype');
+      font-weight: normal;
+  }
   @font-face {
       font-family: 'PizzaPress';
       src: url('../../fonts/Dominos Sans Header 1.ttf') format('truetype');
       font-weight: normal;
   }
+  /* 2. PRIMARY HEADERS (ExtraBold Regular) */
   @font-face {
       font-family: 'Header2';
       src: url('../../fonts/Dominos Sans Header 2.ttf') format('truetype');
       font-weight: normal;
   }
+  /* 3. ACTION & BANNERS (Subhead 1 Regular) */
   @font-face {
       font-family: 'Subhead1';
       src: url('../../fonts/Dominos Sans Subhead 1.ttf') format('truetype');
       font-weight: normal;
   }
+  /* 4. LABELS & BADGES (Subhead 2 Regular) */
   @font-face {
       font-family: 'Subhead2';
       src: url('../../fonts/Dominos Sans Subhead 2.ttf') format('truetype');
       font-weight: normal;
   }
+  /* 5. BODY & READING (Body Compact Regular) */
   @font-face {
-      font-family: 'OneDotCd-Bold';
-      src: url('../../fonts/Dominos Sans Bold.ttf') format('truetype');
+      font-family: 'Compact';
+      src: url('../../fonts/Dominos Sans Body Compact.ttf') format('truetype');
       font-weight: normal;
   }
-  @font-face {
-      font-family: 'OneDotCd-Bold';
-      src: url('../../fonts/Dominos Sans Bold.ttf') format('truetype');
-      font-weight: bold;
-  }
-  @font-face {
-      font-family: 'OneDotCd';
-      src: url('../../fonts/Dominos Sans Body.ttf') format('truetype');
-      font-weight: normal;
-  }
+  /* 6. DATA TABLES / NUM (Body Condensed Regular) */
   @font-face {
       font-family: 'Condensed';
       src: url('../../fonts/Dominos Sans Body Condensed.ttf') format('truetype');
       font-weight: normal;
   }
+  /* Legacy aliases for backwards compatibility without synthetic bolding */
   @font-face {
-      font-family: 'Compact';
+      font-family: 'OneDotCd-Bold';
+      src: url('../../fonts/Dominos Sans Subhead 1.ttf') format('truetype');
+      font-weight: normal;
+  }
+  @font-face {
+      font-family: 'OneDotCd';
       src: url('../../fonts/Dominos Sans Body Compact.ttf') format('truetype');
       font-weight: normal;
   }
@@ -345,9 +352,10 @@
       font-weight: bold;
   }
 
-  /* The Master Button Template */
+  /* The Master Button Template (Action & Banners -> Subhead 1) */
   button, input[type="button"], input[type="submit"] {
-      font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif !important;
+      font-family: 'Subhead1', sans-serif !important;
+      font-weight: normal !important;
   }
 
   .btn {
@@ -356,10 +364,10 @@
       justify-content: center;
       background: var(--brand-blue);
       color: var(--crust-base);
-      padding: 0.6rem 1.4rem;
+      padding: 0.65rem 1.6rem;
       border-radius: 50px;
-      font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif !important;
-      font-weight: bold;
+      font-family: 'Subhead1', sans-serif !important;
+      font-weight: normal !important;
       text-decoration: none;
       transition: 0.3s ease;
       border: none;
@@ -377,8 +385,8 @@
   .back-link {
       color: var(--crust-base);
       text-decoration: none;
-      font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif !important;
-      font-weight: bold;
+      font-family: 'Subhead1', sans-serif !important;
+      font-weight: normal !important;
       font-size: 1.05rem;
       opacity: 0.85;
       transition: opacity 0.2s;
@@ -539,10 +547,10 @@
         justify-content: center;
         background: var(--brand-blue);
         color: var(--crust-base);
-        padding: 0.6rem 1.4rem;
+        padding: 0.65rem 1.6rem;
         border-radius: 50px;
-        font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif !important;
-        font-weight: bold;
+        font-family: 'Subhead1', sans-serif !important;
+        font-weight: normal !important;
         text-decoration: none;
         transition: var(--transition);
         border: none;
@@ -562,7 +570,8 @@
         background: transparent;
         color: var(--brand-blue);
         border: 2px solid var(--brand-blue);
-        font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+        font-family: 'Subhead1', sans-serif !important;
+        font-weight: normal !important;
     }
     
     .btn-outline:hover {
@@ -1724,8 +1733,8 @@
     }
 
     .call-ctrl-btn {
-        font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif !important;
-        font-weight: bold;
+        font-family: 'Subhead1', sans-serif !important;
+        font-weight: normal !important;
         border-radius: 50px;
         padding: 0.45rem 1rem;
         font-size: 0.95rem;
@@ -1767,6 +1776,8 @@
         color: var(--crust-base) !important;
         padding: 0.5rem 1.2rem !important;
         font-size: 0.95rem !important;
+        font-family: 'Subhead1', sans-serif !important;
+        font-weight: normal !important;
     }
 
     .btn-hint:hover {
@@ -1779,6 +1790,8 @@
         color: var(--crust-base) !important;
         padding: 0.5rem 1.2rem !important;
         font-size: 0.95rem !important;
+        font-family: 'Subhead1', sans-serif !important;
+        font-weight: normal !important;
     }
 
     .btn-answer:hover {
@@ -1791,6 +1804,8 @@
         color: var(--crust-base) !important;
         padding: 0.5rem 1.2rem !important;
         font-size: 0.95rem !important;
+        font-family: 'Subhead1', sans-serif !important;
+        font-weight: normal !important;
         opacity: 0.7 !important;
         cursor: not-allowed !important;
         transform: none !important;
