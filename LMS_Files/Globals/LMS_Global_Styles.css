@@ -22,6 +22,11 @@
   @font-face {
       font-family: 'OneDotCd-Bold';
       src: url('../../fonts/Dominos Sans Bold.ttf') format('truetype');
+      font-weight: normal;
+  }
+  @font-face {
+      font-family: 'OneDotCd-Bold';
+      src: url('../../fonts/Dominos Sans Bold.ttf') format('truetype');
       font-weight: bold;
   }
   @font-face {
@@ -347,7 +352,8 @@
       color: var(--crust-base);
       padding: 0.8rem 2rem;
       border-radius: 50px;
-      font-family: 'OneDotCd-Bold';
+      font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif;
+      font-weight: bold;
       text-decoration: none;
       transition: 0.3s ease;
       border: none;
@@ -357,6 +363,24 @@
   
   .btn:hover {
       opacity: 0.8;
+  }
+
+  /* Master Navbar Back Link */
+  .back-link {
+      color: var(--crust-base);
+      text-decoration: none;
+      font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif;
+      font-weight: bold;
+      font-size: 1.05rem;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+  }
+
+  .back-link:hover {
+      opacity: 1;
   }
 
   /* The Red Override */
@@ -1729,7 +1753,8 @@
         gap: 4px;
         padding: 0.45rem 1rem;
         border-radius: 50px;
-        font-family: 'OneDotCd-Bold', sans-serif;
+        font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif;
+        font-weight: bold;
         font-size: 0.88rem;
         cursor: pointer;
         transition: all 0.2s ease;
