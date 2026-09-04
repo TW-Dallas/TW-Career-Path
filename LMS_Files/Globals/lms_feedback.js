@@ -45,24 +45,24 @@
 
     // Inject Styles using strictly established brand colors
     const styles = `
-        /* Floating Trigger Button */
+        /* Floating Header Trigger Button */
         #beta-feedback-trigger {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            top: 14px;
+            right: 24px;
             background-color: #0090e2; /* var(--brand-blue) */
             color: #fefaf6;            /* var(--crust-base) */
             border: 2px solid #005c91;  /* var(--dark-blue) */
-            padding: 10px 18px;
+            padding: 7px 15px;
             border-radius: 50px;
             font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.25);
             z-index: 999999;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: all 0.2s ease;
         }
 

@@ -193,8 +193,8 @@
             {
                 "step": 2,
                 "image": "resources/POS_assets/Stage_0/POS_D.png",
-                "activeHitbox": "hb-carryout",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 8px;'><br><strong>Full Order Call</strong><br><br>Now that you have a strong place to start, try listening to a complete customer call. See if you can identify the different parts of the call that resemble the order entry steps you learned previously.</p><p style='margin-bottom: 32px;'>Pay close attention to how the customer provides their contact and order details, as well as what the team member says to help guide them throughout the conversation.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> After the recording completes, click the <strong>Carryout</strong> button to continue.</p>",
+                "activeHitbox": ["hb-anywhere", "hb-carryout"],
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Practice</p><p style='margin-bottom: 8px;'><br><strong>Full Order Call</strong><br><br>Now that you have a strong place to start, try listening to a complete customer call. See if you can identify the different parts of the call that resemble the order entry steps you learned previously.</p><p style='margin-bottom: 32px;'>Pay close attention to how the customer provides their contact and order details, as well as what the team member says to help guide them throughout the conversation.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> After the recording completes, click anywhere on the POS screen to continue.</p>",
                 "audio": {
                     "file": "resources/POS_assets/Stage_3_audio/Example_1_Full.mp3",
                     "requireAllPlayed": true
@@ -441,8 +441,8 @@
             {
                 "step": 30,
                 "image": "resources/POS_assets/Stage_3/POS_3.27.png",
-                "activeHitbox": "hb-carryout",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2</p><p style='margin-bottom: 16px;'>Let's get in another warm-up before jumping into the next round.</p><p style='margin-bottom: 32px;'>You will notice things move a little faster, and you'll have to catch more information at once.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Press 'Play' to listen to the whole call, then the 'Carryout' button to begin.</p>",
+                "activeHitbox": ["hb-anywhere", "hb-delivery-service", "hb-carryout"],
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2</p><p style='margin-bottom: 16px;'>Let's get in another warm-up before jumping into the next round.</p><p style='margin-bottom: 32px;'>You will notice things move a little faster, and you'll have to catch more information at once.</p><p style='font-size: 1rem; margin-top: 24px;'>👉 <strong>Action:</strong> Press 'Play' to listen to the full call, then click anywhere on the POS screen to begin.</p>",
                 "audio": {
                     "file": "resources/POS_assets/Stage_3_audio/Example_2_Full.mp3",
                     "requireAllPlayed": true
@@ -1174,29 +1174,83 @@
             }
         }
 
+        function levenshteinDistance(s1, s2) {
+            if (!s1) return s2 ? s2.length : 0;
+            if (!s2) return s1.length;
+            const a = s1.toLowerCase().trim();
+            const b = s2.toLowerCase().trim();
+            if (a === b) return 0;
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1,     // insertion
+                            matrix[i - 1][j] + 1      // deletion
+                        );
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        function normalizeStreetText(str) {
+            return String(str || '')
+                .toLowerCase()
+                .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
+                .replace(/\b(dr|drive|st|street|rd|road|ave|avenue|blvd|boulevard|ln|lane|ct|court|way|pkwy|parkway|pl|place)\b/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
         /**
-         * Smart validator: Checks if the expected value is numeric (like a phone number).
-         * If it is numeric, it compares strictly by stripped digits.
-         * If it is alphabetical text (like names), it compares case-insensitively.
+         * Intelligent validator: Handles phone digits, suite numbers, street abbreviations,
+         * and common spelling typos (Levenshtein distance <= 2) so learners never get trapped.
          */
         function isTextEntryValid(userTyped, expectedValue) {
             if (!userTyped || !userTyped.trim()) return false;
             const targets = Array.isArray(expectedValue) ? expectedValue : [expectedValue];
-            const cleanFirstDigits = String(targets[0]).replace(/\D/g, '');
-            const isNumericTarget = cleanFirstDigits.length > 0 && /^\d+$/.test(cleanFirstDigits);
+            const rawUser = userTyped.trim().toLowerCase();
 
-            if (isNumericTarget) {
-                const cleanUser = userTyped.replace(/\D/g, '');
-                return targets.some(target => {
-                    const cleanTarget = String(target).replace(/\D/g, '');
-                    return cleanUser === cleanTarget;
-                });
-            } else {
-                const cleanUser = userTyped.trim().toLowerCase();
-                return targets.some(target => {
-                    return cleanUser === String(target).trim().toLowerCase();
-                });
-            }
+            return targets.some(target => {
+                const strTarget = String(target).trim().toLowerCase();
+                const cleanExpectedDigits = strTarget.replace(/\D/g, '');
+                const isNumericTarget = cleanExpectedDigits.length > 0 && /^\d+$/.test(cleanExpectedDigits);
+
+                // 1. Numeric / Phone / Suite / Address Number comparisons
+                if (isNumericTarget) {
+                    const userDigits = rawUser.replace(/\D/g, '');
+                    return userDigits === cleanExpectedDigits;
+                }
+
+                // 2. Direct string equality (case-insensitive)
+                if (rawUser === strTarget) return true;
+
+                // 3. Delivery instruction / special notes keyword matching
+                if (strTarget.includes('call') && /\bcall\b/i.test(rawUser)) return true;
+                if (strTarget.includes('gate') && /\bgate\b/i.test(rawUser)) return true;
+
+                // 4. Street name normalization (ignore suffix differences like Dr vs Drive vs none)
+                const normUser = normalizeStreetText(rawUser);
+                const normTarget = normalizeStreetText(strTarget);
+                if (normUser && normTarget && normUser === normTarget) return true;
+
+                // 5. Typo tolerance via Levenshtein distance (e.g. Pleasent vs Pleasant)
+                const directDist = levenshteinDistance(rawUser, strTarget);
+                if (directDist <= 2) return true;
+
+                if (normUser && normTarget) {
+                    const normDist = levenshteinDistance(normUser, normTarget);
+                    if (normDist <= 2) return true;
+                }
+
+                return false;
+            });
         }
 
         function validateTextEntry(userTyped, expectedValue) {
@@ -1207,6 +1261,7 @@
                 currentStep++;
                 loadStep(currentStep);
             } else {
+                errorMsg.innerText = "❌ Incorrect action. Try again.";
                 errorMsg.style.display = 'block';
                 wrongClicks++;
             }
@@ -1291,6 +1346,7 @@
                     return;
                 }
 
+                errorMsg.innerText = "❌ Incorrect action. Try again.";
                 errorMsg.style.display = 'block';
                 wrongClicks++;
                 return;
@@ -1317,6 +1373,16 @@
             // Tracks incorrect clicks on the background image
             posImage.addEventListener('click', function () {
                 if (currentStep >= sequence.length) return;
+                const stepData = sequence[currentStep];
+                if (stepData && stepData.audio && (stepData.audio.requireAllPlayed || (stepData.audio.tracks && stepData.audio.tracks.length > 1))) {
+                    const totalTracks = stepData.audio.tracks ? stepData.audio.tracks.length : 1;
+                    if (completedTracks.size < totalTracks) {
+                        errorMsg.innerText = "🎧 Please finish listening to the audio recording to continue.";
+                        errorMsg.style.display = 'block';
+                        return;
+                    }
+                }
+                errorMsg.innerText = "❌ Incorrect action. Try again.";
                 errorMsg.style.display = 'block';
                 wrongClicks++;
             });

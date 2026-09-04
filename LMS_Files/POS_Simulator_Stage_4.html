@@ -1900,21 +1900,74 @@
             }
         }
 
+        function levenshteinDistance(s1, s2) {
+            if (!s1) return s2 ? s2.length : 0;
+            if (!s2) return s1.length;
+            const a = s1.toLowerCase().trim();
+            const b = s2.toLowerCase().trim();
+            if (a === b) return 0;
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1,
+                            matrix[i][j - 1] + 1,
+                            matrix[i - 1][j] + 1
+                        );
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        function normalizeStreetText(str) {
+            return String(str || '')
+                .toLowerCase()
+                .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
+                .replace(/\b(dr|drive|st|street|rd|road|ave|avenue|blvd|boulevard|ln|lane|ct|court|way|pkwy|parkway|pl|place)\b/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
         function isTextEntryValid(userTyped, expectedValue) {
             if (!userTyped || !userTyped.trim()) return false;
             const targets = Array.isArray(expectedValue) ? expectedValue : [expectedValue];
-            const cleanUser = userTyped.trim().toLowerCase();
-            
+            const rawUser = userTyped.trim().toLowerCase();
+
             return targets.some(target => {
-                const cleanExpectedDigits = String(target).replace(/\D/g, '');
+                const strTarget = String(target).trim().toLowerCase();
+                const cleanExpectedDigits = strTarget.replace(/\D/g, '');
                 const isNumericTarget = cleanExpectedDigits.length > 0 && /^\d+$/.test(cleanExpectedDigits);
+
                 if (isNumericTarget) {
-                    const userDigits = cleanUser.replace(/\D/g, '');
+                    const userDigits = rawUser.replace(/\D/g, '');
                     return userDigits === cleanExpectedDigits;
-                } else {
-                    return cleanUser === String(target).trim().toLowerCase();
                 }
-            }) || (targets.some(t => String(t).toLowerCase().includes('call')) && /\bcall\b/i.test(cleanUser));
+
+                if (rawUser === strTarget) return true;
+
+                if (strTarget.includes('call') && /\bcall\b/i.test(rawUser)) return true;
+                if (strTarget.includes('gate') && /\bgate\b/i.test(rawUser)) return true;
+
+                const normUser = normalizeStreetText(rawUser);
+                const normTarget = normalizeStreetText(strTarget);
+                if (normUser && normTarget && normUser === normTarget) return true;
+
+                const directDist = levenshteinDistance(rawUser, strTarget);
+                if (directDist <= 2) return true;
+
+                if (normUser && normTarget) {
+                    const normDist = levenshteinDistance(normUser, normTarget);
+                    if (normDist <= 2) return true;
+                }
+
+                return false;
+            });
         }
 
         let lastTypedDeliveryNote = "PLEASE CALL";
@@ -1930,6 +1983,7 @@
                 currentStep++;
                 loadStep(currentStep);
             } else {
+                errorMsg.innerText = "❌ Incorrect action. Try again.";
                 errorMsg.style.display = 'block';
                 wrongClicks++;
             }
@@ -2067,6 +2121,17 @@
 
             posImage.addEventListener('click', function () {
                 if (currentStep >= sequence.length) return;
+                const stepData = sequence[currentStep];
+                const isAdmin = localStorage.getItem('tw_admin_mode') === 'true' || new URLSearchParams(window.location.search).get('test') === 'true';
+                if (!isAdmin && stepData && stepData.audio && (stepData.audio.requireAllPlayed || (stepData.audio.tracks && stepData.audio.tracks.length > 1))) {
+                    const totalTracks = stepData.audio.tracks ? stepData.audio.tracks.length : 1;
+                    if (completedTracks.size < totalTracks) {
+                        errorMsg.innerText = "🎧 Please finish listening to the audio recording to continue.";
+                        errorMsg.style.display = 'block';
+                        return;
+                    }
+                }
+                errorMsg.innerText = "❌ Incorrect action. Try again.";
                 errorMsg.style.display = 'block';
                 wrongClicks++;
             });
