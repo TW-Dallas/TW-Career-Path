@@ -678,8 +678,7 @@
             {
                 "step": 50,
                 "image": "resources/POS_assets/Stage_4/POS_4.40.A.png",
-                "activeHitbox": ["hb-delivery-instructions", "hb-pizzas-tab", "hb-pizzas"],
-                "inputHitbox": "hb-delivery-instructions",
+                "activeHitbox": "hb-delivery-instructions",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
                 "input": {
@@ -1406,6 +1405,13 @@
                         validateTextEntry(inputEl.value, stepData.input.expectedValue);
                     }
                 });
+                inputEl.addEventListener('blur', () => {
+                    if (inputEl.value && isTextEntryValid(inputEl.value, stepData.input.expectedValue)) {
+                        errorMsg.style.display = 'none';
+                        currentStep++;
+                        loadStep(currentStep);
+                    }
+                });
 
                 activeHb.appendChild(inputEl);
                 inputEl.focus();
@@ -1480,24 +1486,14 @@
             const stepData = sequence[currentStep];
             if (!stepData) return;
 
-            // Allow clicking the next step's target hitbox directly (e.g. Pizzas tab) if text input is valid
+            // If on a text input step, validate typed text on click
             if (stepData.input && (stepData.input.type === 'text' || stepData.input.type === 'textarea')) {
-                const nextStepData = sequence[currentStep + 1];
-                const nextHitboxIds = nextStepData ? getActiveHitboxIds(nextStepData) : [];
-
-                if (nextHitboxIds.includes(clickedId)) {
-                    const activeInput = document.querySelector('.hitbox-text-input');
-                    const typedVal = activeInput ? activeInput.value : '';
-                    if (isTextEntryValid(typedVal, stepData.input.expectedValue)) {
-                        errorMsg.style.display = 'none';
-                        currentStep += 2; // Committed note AND clicked next tab (Pizzas)
-                        loadStep(currentStep);
-                        return;
-                    } else {
-                        errorMsg.style.display = 'block';
-                        wrongClicks++;
-                        return;
-                    }
+                const activeInput = document.querySelector('.hitbox-text-input');
+                const typedVal = activeInput ? activeInput.value : '';
+                if (isTextEntryValid(typedVal, stepData.input.expectedValue)) {
+                    errorMsg.style.display = 'none';
+                    currentStep++;
+                    loadStep(currentStep);
                 }
                 return;
             }
@@ -1547,6 +1543,19 @@
 
             posImage.addEventListener('click', function () {
                 if (currentStep >= sequence.length) return;
+                const stepData = sequence[currentStep];
+
+                if (stepData && stepData.input && (stepData.input.type === 'text' || stepData.input.type === 'textarea')) {
+                    const activeInput = document.querySelector('.hitbox-text-input');
+                    const typedVal = activeInput ? activeInput.value : '';
+                    if (isTextEntryValid(typedVal, stepData.input.expectedValue)) {
+                        errorMsg.style.display = 'none';
+                        currentStep++;
+                        loadStep(currentStep);
+                        return;
+                    }
+                }
+
                 errorMsg.style.display = 'block';
                 wrongClicks++;
             });
