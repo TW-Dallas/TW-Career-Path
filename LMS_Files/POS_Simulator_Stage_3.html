@@ -1066,10 +1066,25 @@
 
         // --- DYNAMIC TEXT INPUT OVERLAY ENGINE ---
         function handleInputForStep(stepData, activeHb) {
+            if (!stepData.input) {
+                activeHb.style.cursor = 'default';
+                activeHb.style.caretColor = 'transparent';
+                return;
+            }
+
+            const targetInputId = stepData.inputHitbox || 
+                (Array.isArray(stepData.activeHitbox) ? stepData.activeHitbox[0] : stepData.activeHitbox);
+
+            if (activeHb.id !== targetInputId) {
+                activeHb.style.cursor = 'pointer';
+                activeHb.style.caretColor = 'transparent';
+                return;
+            }
+
             const existingInput = document.querySelector('.hitbox-text-input');
             if (existingInput) existingInput.remove();
 
-            if (stepData.input && stepData.input.type === 'text') {
+            if (stepData.input.type === 'text') {
                 activeHb.style.cursor = 'text';
                 activeHb.style.caretColor = 'auto';
 
@@ -1080,7 +1095,7 @@
                 inputEl.autofocus = true;
 
                 // Add phone number masking if it's a phone input step
-                if (stepData.activeHitbox === "hb-phone-entry" || (stepData.input.placeholder && stepData.input.placeholder.toLowerCase().includes("phone"))) {
+                if (activeHb.id === "hb-phone-entry" || (stepData.input.placeholder && stepData.input.placeholder.toLowerCase().includes("phone"))) {
                     inputEl.addEventListener("input", (e) => {
                         let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
                         e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
@@ -1110,30 +1125,29 @@
          * If it is numeric, it compares strictly by stripped digits.
          * If it is alphabetical text (like names), it compares case-insensitively.
          */
-        function validateTextEntry(userTyped, expectedValue) {
-    // 1. Normalize expectedValue to an Array regardless of single string or array input
+        function isTextEntryValid(userTyped, expectedValue) {
+            if (!userTyped || !userTyped.trim()) return false;
             const targets = Array.isArray(expectedValue) ? expectedValue : [expectedValue];
-        
-            // 2. Determine if we are matching numbers or text based on the first target
             const cleanFirstDigits = String(targets[0]).replace(/\D/g, '');
             const isNumericTarget = cleanFirstDigits.length > 0 && /^\d+$/.test(cleanFirstDigits);
-        
-            let isCorrect = false;
-        
+
             if (isNumericTarget) {
                 const cleanUser = userTyped.replace(/\D/g, '');
-                isCorrect = targets.some(target => {
+                return targets.some(target => {
                     const cleanTarget = String(target).replace(/\D/g, '');
                     return cleanUser === cleanTarget;
                 });
             } else {
                 const cleanUser = userTyped.trim().toLowerCase();
-                isCorrect = targets.some(target => {
+                return targets.some(target => {
                     return cleanUser === String(target).trim().toLowerCase();
                 });
             }
-        
-            // 3. Handle step advancement or error display
+        }
+
+        function validateTextEntry(userTyped, expectedValue) {
+            const isCorrect = isTextEntryValid(userTyped, expectedValue);
+
             if (isCorrect) {
                 errorMsg.style.display = 'none';
                 currentStep++;
@@ -1184,8 +1198,46 @@
             const stepData = sequence[currentStep];
             if (!stepData) return;
 
-            // If this is a typing step, ignore click advances on this hitbox
-            if (stepData.input && stepData.input.type === 'text') {
+            // If on a text input step:
+            if (stepData.input && (stepData.input.type === 'text' || stepData.input.type === 'textarea')) {
+                const targetInputId = stepData.inputHitbox || 
+                    (Array.isArray(stepData.activeHitbox) ? stepData.activeHitbox[0] : stepData.activeHitbox);
+
+                if (clickedId === targetInputId) {
+                    return; // Re-focusing or clicking within input box
+                }
+
+                const activeInput = document.querySelector('.hitbox-text-input');
+                const typedVal = activeInput ? activeInput.value : '';
+                const isMatch = isTextEntryValid(typedVal, stepData.input.expectedValue);
+
+                const activeHitboxIds = getActiveHitboxIds(stepData);
+                const nextStepData = sequence[currentStep + 1];
+                const nextHitboxIds = nextStepData ? getActiveHitboxIds(nextStepData) : [];
+                const nextNextStepData = sequence[currentStep + 2];
+                const nextNextHitboxIds = nextNextStepData ? getActiveHitboxIds(nextNextStepData) : [];
+
+                const isAllowedClick = activeHitboxIds.includes(clickedId) || 
+                                       nextHitboxIds.includes(clickedId) || 
+                                       nextNextHitboxIds.includes(clickedId) ||
+                                       (activeHitboxIds.includes('hb-phone-entry') && clickedId === 'hb-phone-OK');
+
+                if (isMatch && isAllowedClick) {
+                    errorMsg.style.display = 'none';
+                    if (stepData.nextStepMap && stepData.nextStepMap[clickedId] !== undefined) {
+                        currentStep = stepData.nextStepMap[clickedId];
+                    } else if (nextNextStepData && nextNextStepData.input && nextNextHitboxIds.includes(clickedId)) {
+                        // Skip intermediate click-to-focus step so the clicked field is immediately active and ready to type
+                        currentStep += 2;
+                    } else {
+                        currentStep++;
+                    }
+                    loadStep(currentStep);
+                    return;
+                }
+
+                errorMsg.style.display = 'block';
+                wrongClicks++;
                 return;
             }
 
@@ -1210,11 +1262,6 @@
             // Tracks incorrect clicks on the background image
             posImage.addEventListener('click', function() {
                 if (currentStep >= sequence.length) return;
-                // If it is a text-typing step, clicking the BG image does not register as incorrect immediately
-                const stepData = sequence[currentStep];
-                if (stepData && stepData.input && stepData.input.type === 'text') {
-                    return;
-                }
                 errorMsg.style.display = 'block';
                 wrongClicks++; 
             });
@@ -1340,7 +1387,27 @@
             if (!hitboxesLoaded) return;
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
             
-            const activeIds = getActiveHitboxIds(stepData);
+            const activeIds = [...getActiveHitboxIds(stepData)];
+
+            // If this is a text input step, also ensure submit hitboxes (like hb-phone-OK)
+            // and upcoming target hitboxes are active in the DOM so clicking them works seamlessly!
+            if (stepData.input) {
+                if (activeIds.includes('hb-phone-entry') && !activeIds.includes('hb-phone-OK')) {
+                    activeIds.push('hb-phone-OK');
+                }
+                const nextStepData = sequence[stepIndex + 1];
+                if (nextStepData) {
+                    getActiveHitboxIds(nextStepData).forEach(nextId => {
+                        if (!activeIds.includes(nextId)) activeIds.push(nextId);
+                    });
+                }
+                const nextNextStepData = sequence[stepIndex + 2];
+                if (nextNextStepData && nextNextStepData.input) {
+                    getActiveHitboxIds(nextNextStepData).forEach(nnId => {
+                        if (!activeIds.includes(nnId)) activeIds.push(nnId);
+                    });
+                }
+            }
 
             if (activeIds.length > 0) {
                 activeIds.forEach(id => {
