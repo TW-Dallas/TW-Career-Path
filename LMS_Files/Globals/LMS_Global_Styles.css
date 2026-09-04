@@ -602,36 +602,38 @@
         transform: scale(1.02);
     }
     /* ==========================================
-   STAGE 3: CALL AUDIO CONTROLLER CARD
-   ========================================== */
+    /* ==========================================
+       CALL AUDIO CONTROLLER CARD & MULTI-TRACK ENGINE
+       ========================================== */
     #audio-control-panel {
-        background-color: var(--crust-light);
-        border: 1px solid var(--crust-med);
-        border-left: 5px solid var(--brand-blue);
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        background: #fdfbf7;
+        border: 1px solid var(--crust-dark);
+        border-left: 4px solid var(--brand-blue);
+        border-radius: 12px;
+        padding: 8px 12px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
     }
 
     .audio-header {
-        font-family: 'OneDotCd-Bold', sans-serif;
+        font-family: 'Subhead2', sans-serif;
         color: var(--dark-blue);
-        font-size: 1.05rem;
+        font-size: 0.85rem;
         text-transform: uppercase;
+        letter-spacing: 0.3px;
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-bottom: 12px;
+        gap: 7px;
+        margin-bottom: 6px;
     }
 
-    /* Red pulsing recording light */
     .audio-pulse-indicator {
         width: 8px;
         height: 8px;
-        background-color: var(--brand-red);
+        background-color: var(--brand-blue);
         border-radius: 50%;
         display: inline-block;
+        flex-shrink: 0;
         animation: pulse 1.5s infinite;
     }
 
@@ -641,76 +643,11 @@
         100% { transform: scale(0.9); opacity: 0.5; }
     }
 
-    .audio-btn-row {
-        display: flex;
-        gap: 10px;
-    }
-
-    .audio-btn {
-        flex-grow: 1;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        background: var(--brand-blue);
-        color: var(--crust-base);
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-family: 'OneDotCd-Bold';
-        font-size: 0.95rem;
-        cursor: pointer;
-        border: none;
-        transition: 0.2s ease;
-    }
-
-    .audio-btn:hover {
-        background: var(--dark-blue);
-    }
-
-    .audio-btn.btn-outline {
-        background: transparent;
-        color: var(--brand-blue);
-        border: 2px solid var(--brand-blue);
-    }
-
-    .audio-btn.btn-outline:hover {
-        background: rgba(0, 144, 226, 0.08);
-    }
-
-    /* ==========================================
-    STAGE 3: OVERLAY TEXT INPUT FOR HITBOXES
-    ========================================== */
-    .hitbox-text-input {
-        width: 100%;
-        height: 100%;
-        border: 2px solid var(--brand-blue);
-        background-color: white;
-        color: var(--crust-burnt);
-        font-family: 'OneDotCd-Bold', sans-serif;
-        font-size: 1.25rem;
-        box-sizing: border-box;
-        text-align: left;       /* 👈 Changes typing direction to left-justified */
-        padding-left: 8px;      /* 👈 Keeps the text from hitting the left border */
-        border-radius: 4px;
-        outline: none;
-    }
-
-    /* --- COMPACT AUDIO PANEL (ELIMINATES PANEL SCROLL) --- */
-    #audio-control-panel {
-        padding: 8px 12px !important;
-        margin-bottom: 10px !important;
-    }
-
-    .audio-header {
-        font-size: 0.85rem !important;
-        margin-bottom: 4px !important;
-    }
-
     .audio-track-stack {
         display: flex;
         flex-direction: column;
-        gap: 4px !important; /* Compact gap between track rows */
-        margin-top: 4px !important;
+        gap: 4px;
+        margin-top: 4px;
     }
 
     .audio-track-row {
@@ -720,7 +657,7 @@
         background: rgba(0, 92, 145, 0.06);
         border: 1px solid var(--crust-dark);
         border-radius: 6px;
-        padding: 4px 8px !important; /* Slim row padding */
+        padding: 4px 8px;
         transition: opacity 0.25s ease;
     }
 
@@ -729,9 +666,8 @@
         pointer-events: none;
     }
 
-    /* Fix text contrast: readable dark text */
     .audio-track-row .track-label {
-        font-family: 'OneDotCd-Bold', sans-serif;
+        font-family: 'Subhead2', sans-serif;
         font-size: 0.85rem;
         color: var(--crust-burnt) !important;
         flex: 1;
@@ -739,17 +675,67 @@
         padding-right: 6px;
     }
 
-    /* FIX BUTTON SHAPE: Locks height & prevents text wrapping */
+    .track-badge {
+        font-family: 'Subhead2', sans-serif;
+        font-size: 0.72rem;
+        padding: 2px 8px;
+        border-radius: 12px;
+        line-height: 1.2;
+        display: inline-flex;
+        align-items: center;
+        font-weight: normal;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    .track-badge.pending {
+        background: rgba(0, 0, 0, 0.08);
+        color: var(--crust-deep);
+    }
+
+    .track-badge.playing {
+        background: rgba(0, 144, 226, 0.15);
+        color: var(--brand-blue);
+    }
+
+    .track-badge.complete {
+        background: rgba(40, 167, 69, 0.15);
+        color: #28a745;
+    }
+
     .audio-btn {
+        font-family: 'Subhead1', sans-serif !important;
+        font-weight: normal !important;
         white-space: nowrap !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        height: 26px !important; /* Locks identical button height */
+        gap: 4px;
+        height: 26px !important;
         padding: 0 10px !important;
         border-radius: 20px !important;
         flex-shrink: 0 !important;
         font-size: 0.8rem !important;
+        line-height: 1 !important;
+        background: var(--brand-blue);
+        color: var(--crust-base) !important;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .audio-btn:hover {
+        background: var(--dark-blue);
+    }
+
+    .audio-btn.btn-outline {
+        background: transparent !important;
+        color: var(--brand-blue) !important;
+        border: 1.5px solid var(--brand-blue) !important;
+    }
+
+    .audio-btn.btn-outline:hover {
+        background: rgba(0, 144, 226, 0.08) !important;
     }
 
 /* POS Input Box Solid White Override */
@@ -1687,7 +1673,7 @@
         100% { transform: rotate(180deg) translateY(0); }
     }
 
-    /* Unified Simulator Control Card */
+    /* Unified Simulator Control Card (Stage 4) */
     #sim-control-card {
         margin-bottom: 10px;
         background: #fdfbf7;
@@ -1699,16 +1685,17 @@
         flex-shrink: 0;
     }
 
-    #audio-control-panel {
+    #sim-control-card #audio-control-panel {
         background: transparent !important;
         border: none !important;
         padding: 0 0 6px 0 !important;
         margin: 0 0 6px 0 !important;
         border-bottom: 1px solid var(--crust-dark) !important;
+        border-radius: 0 !important;
         box-shadow: none !important;
     }
 
-    .audio-header {
+    #sim-control-card .audio-header {
         margin-bottom: 6px;
         display: flex;
         align-items: center;
