@@ -450,11 +450,23 @@
             sendBtn.disabled = true;
             sendBtn.innerText = "Submitting...";
 
-            const id = localStorage.getItem('tw_id') || 'unknown';
-            const market = localStorage.getItem('tw_market') || 'unknown';
-            const page = window.location.pathname.split('/').pop() || 'Dashboard';
-            const currentStepNum = typeof currentStep !== 'undefined' ? ` (Step ${currentStep})` : '';
-            const pageLocation = `${page}${currentStepNum}`;
+            const id = localStorage.getItem('tw_id') || sessionStorage.getItem('tw_id') || (localStorage.getItem('tw_admin_mode') === 'true' ? 'exec_review' : 'unknown');
+            const market = localStorage.getItem('tw_market') || sessionStorage.getItem('tw_market') || 'unknown';
+            
+            // Build rich page location
+            let pageName = window.location.pathname.split('/').pop() || window.location.href.split('/').pop() || 'Dashboard';
+            if (pageName.includes('?')) pageName = pageName.split('?')[0];
+            if (pageName.includes('#')) pageName = pageName.split('#')[0];
+            if (!pageName) pageName = document.title || 'LMS Page';
+
+            let stepInfo = '';
+            if (typeof currentStep !== 'undefined') {
+                stepInfo = ` (Step ${currentStep})`;
+            } else if (document.getElementById('step-counter')) {
+                stepInfo = ` (${document.getElementById('step-counter').innerText.trim()})`;
+            }
+
+            const pageLocation = `${pageName}${stepInfo}`.trim();
 
             let finalComments = feedbackText;
             if (devConsoleErrors.length > 0) {
@@ -467,10 +479,15 @@
             const payload = {
                 action: "feedback",
                 id: id,
+                userId: id,
                 market: market,
                 pageUrl: pageLocation,
+                page: pageLocation,
+                url: pageLocation,
+                pageLocation: pageLocation,
                 category: "Beta Issue Report",
-                comments: finalComments
+                comments: finalComments,
+                feedback: finalComments
             };
 
             // Use POST with text/plain & no-cors so Chrome never drops on redirect or CORS preflight
@@ -486,7 +503,7 @@
             .catch(err => {
                 console.error('Feedback Submission Failed:', err);
                 // Fallback attempt with GET query params if POST failed
-                const fallbackUrl = `${AUTH_SCRIPT_URL}?action=feedback&id=${encodeURIComponent(id)}&market=${encodeURIComponent(market)}&pageUrl=${encodeURIComponent(pageLocation)}&category=${encodeURIComponent('Beta Issue Report')}&comments=${encodeURIComponent(feedbackText.substring(0, 500))}`;
+                const fallbackUrl = `${AUTH_SCRIPT_URL}?action=feedback&id=${encodeURIComponent(id)}&userId=${encodeURIComponent(id)}&market=${encodeURIComponent(market)}&pageUrl=${encodeURIComponent(pageLocation)}&page=${encodeURIComponent(pageLocation)}&category=${encodeURIComponent('Beta Issue Report')}&comments=${encodeURIComponent(feedbackText.substring(0, 500))}`;
                 const pingImg = new Image();
                 pingImg.src = fallbackUrl;
                 showSuccess();
