@@ -346,13 +346,17 @@
   }
 
   /* The Master Button Template */
+  button, input[type="button"], input[type="submit"] {
+      font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif !important;
+  }
+
   .btn {
       display: inline-block;
       background: var(--brand-blue);
       color: var(--crust-base);
       padding: 0.8rem 2rem;
       border-radius: 50px;
-      font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif;
+      font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif !important;
       font-weight: bold;
       text-decoration: none;
       transition: 0.3s ease;
@@ -369,7 +373,7 @@
   .back-link {
       color: var(--crust-base);
       text-decoration: none;
-      font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif;
+      font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif !important;
       font-weight: bold;
       font-size: 1.05rem;
       opacity: 0.85;
@@ -1711,10 +1715,11 @@
     }
 
     .call-ctrl-btn {
-        font-family: 'OneDotCd-Bold', sans-serif;
+        font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif !important;
+        font-weight: bold;
         border-radius: 50px;
-        padding: 5px 14px;
-        font-size: 0.88rem;
+        padding: 6px 14px;
+        font-size: 0.95rem;
         cursor: pointer;
         transition: all 0.2s ease;
         display: inline-flex;
@@ -1745,48 +1750,28 @@
         opacity: 0.95;
     }
 
-    /* FOOTER ASSISTANCE BUTTONS (SOLID BRAND PILLS, COMPACT, MATCHING .btn FONT) */
-    .btn-assist {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        padding: 6px 16px;
-        border-radius: 50px;
-        font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif;
-        font-weight: bold;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        border: none;
-        color: var(--crust-base);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-        text-decoration: none;
-    }
-
-    .btn-assist-hint {
+    /* FOOTER ASSISTANCE BUTTON VARIANTS (EXTENDING .btn) */
+    .btn-hint {
         background: var(--med-blue) !important;
         color: var(--crust-base) !important;
     }
 
-    .btn-assist-hint:hover {
+    .btn-hint:hover {
         background: var(--dark-blue) !important;
         opacity: 0.92;
-        transform: translateY(-1px);
     }
 
-    .btn-assist-answer {
+    .btn-answer {
         background: var(--brand-red) !important;
         color: var(--crust-base) !important;
     }
 
-    .btn-assist-answer:hover {
+    .btn-answer:hover {
         background: var(--dark-red) !important;
         opacity: 0.92;
-        transform: translateY(-1px);
     }
 
-    .btn-assist-locked {
+    .btn-locked {
         background: var(--crust-dark) !important;
         color: var(--crust-base) !important;
         opacity: 0.7 !important;

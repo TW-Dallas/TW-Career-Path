@@ -31,9 +31,7 @@
         style="background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue)); border-bottom: 4px solid var(--brand-red); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box;">
         <div style="display: flex; align-items: center; gap: 20px;">
             <img src="../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
-            <a href="lms_dashboard.html#day1" class="back-link"
-                style="color: var(--crust-base) !important; text-decoration: none !important; font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif !important; font-weight: bold !important; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;"
-                onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+            <a href="lms_dashboard.html#day1" class="back-link">
                 &#8592; Back to Day 1
             </a>
         </div>
@@ -96,8 +94,8 @@
                 <button class="btn" onclick="goBack()">&#8592; Back</button>
                 
                 <div style="display: flex; gap: 8px; align-items: center;">
-                    <button id="btn-request-hint" class="btn-assist btn-assist-hint" onclick="triggerHint()">💡 Hint (1 Free)</button>
-                    <button id="btn-request-answer" class="btn-assist btn-assist-answer" onclick="triggerDirectAnswer()">🎯 Answer (-5%)</button>
+                    <button id="btn-request-hint" class="btn btn-hint" onclick="triggerHint()">💡 Hint (1 Free)</button>
+                    <button id="btn-request-answer" class="btn btn-answer" onclick="triggerDirectAnswer()">🎯 Answer (-5%)</button>
                 </div>
 
                 <button class="btn btn-finish" id="finish-sim-btn" style="display: none;"
@@ -1240,28 +1238,32 @@
             // Hint allowance state
             if (hintsUsed === 0) {
                 hintBtn.innerHTML = '💡 Hint (1 Free)';
-                hintBtn.className = 'btn-assist btn-assist-hint';
+                hintBtn.className = 'btn btn-hint';
                 hintBtn.style.background = '';
                 hintBtn.style.color = '';
             } else if (hintsUsed === 1) {
                 hintBtn.innerHTML = '💡 Hint (-2%)';
-                hintBtn.className = 'btn-assist btn-assist-hint';
-                hintBtn.style.background = 'rgba(0, 119, 189, 0.14)';
-                hintBtn.style.color = 'var(--dark-blue)';
+                hintBtn.className = 'btn btn-hint';
+                hintBtn.style.background = '';
+                hintBtn.style.color = '';
             } else {
                 hintBtn.innerHTML = '💡 Hint (🔐 PIN)';
-                hintBtn.className = 'btn-assist btn-assist-locked';
+                hintBtn.className = 'btn btn-locked';
+                hintBtn.style.background = '';
+                hintBtn.style.color = '';
             }
 
             // Direct Answer allowance state
             if (answersUsed === 0) {
                 answerBtn.innerHTML = '🎯 Answer (-5%)';
-                answerBtn.className = 'btn-assist btn-assist-answer';
+                answerBtn.className = 'btn btn-answer';
                 answerBtn.style.background = '';
                 answerBtn.style.color = '';
             } else {
                 answerBtn.innerHTML = '🎯 Answer (🔐 PIN)';
-                answerBtn.className = 'btn-assist btn-assist-locked';
+                answerBtn.className = 'btn btn-locked';
+                answerBtn.style.background = '';
+                answerBtn.style.color = '';
             }
         }
 
