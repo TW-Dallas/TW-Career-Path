@@ -30,6 +30,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Module 5 Clarification & Day 1 Progress:** Clarified Card 5 production status on the Day 1 dashboard so trainees receive a clean 100% completion badge upon finishing active Modules 1–4.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
+* **Continuing Education (CEU) Status Clarity:** Added official amber **`COMING SOON`** badges and disabled buttons on the Continuing Education (CEU) card in the main Learning Hub lobby (`learning_hub.html`) and the LMS path selector (`lms_dashboard.html`), clarifying that elective modules and skill refreshers for existing team members are currently in production.
 * **POS Simulator Initial Screen Asset Fix:** Corrected an image path typo on the initial POS Simulator tutorial screen (`POS_0.png`) that was triggering automated broken asset error reports and connection retry alerts upon launching.
 * **Strict Video Completion & Anti-Scrubbing Hardening (Day 1 Module 5):** Removed early-unlock thresholds (such as 90%/92% progress triggers) so all curriculum videos must be watched to 100% completion before the "Next Step" button unlocks. Implemented full anti-scrubbing protection (preventing skipping ahead while preserving trainer/admin override) and stabilized the status message banner height to prevent any layout shifts or video jumping during playback.
 * **Catering Email Reply Builder Asterisk Cleanup:** Removed a stray asterisk artifact preceding the pizza slice emoji in the Onboarding & Information Request portion recommendation section.

@@ -394,8 +394,21 @@
         /* --- Media Queries --- */
         @media (min-width: 768px) {
             .grid-view {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             }
+        }
+
+        .lobby-card.locked {
+            cursor: default !important;
+            border-top-color: #f59e0b !important;
+        }
+        .lobby-card.locked:hover {
+            transform: none !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
+        }
+        .lobby-card.locked:hover .btn {
+            background: #fef3c7 !important;
+            transform: none !important;
         }
 
         @keyframes fadeIn {
@@ -455,7 +468,22 @@
                 </div>
             </div>
 
-            <!-- Card 2: Resources -->
+            <!-- Card 2: Continuing Education (CEU) -->
+            <div class="lobby-card locked">
+                <div class="card-image-area" style="background: linear-gradient(135deg, #fef9ee 0%, #fef3c7 100%); position: relative;">
+                    <div style="position: absolute; top: 14px; right: 14px; background: #fef3c7; color: #b45309; border: 1.5px solid #fde68a; font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif; font-size: 0.8rem; font-weight: bold; padding: 4px 11px; border-radius: 20px; letter-spacing: 0.5px;">COMING SOON</div>
+                    <div style="width: 88px; height: 88px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(217,119,6,0.15); border: 2px solid #fde68a;">
+                        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Continuing Education (CEU)</div>
+                    <div class="card-desc">Advanced skill refreshers & elective training for current team members.</div>
+                    <button class="btn" style="background: #fef3c7; color: #b45309; border: 1.5px solid #fde68a; cursor: default;" disabled>Coming Soon</button>
+                </div>
+            </div>
+
+            <!-- Card 3: Resources -->
             <div class="lobby-card" onclick="navigateTo('categories')">
                 <div class="card-image-area" style="background: linear-gradient(135deg, #fbf7f0 0%, #f1e7d8 100%);">
                     <div style="width: 88px; height: 88px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(184,134,11,0.12); border: 2px solid #ecdcc6;">
