@@ -1377,15 +1377,22 @@
             }
         }
 
+        let hitboxesLoaded = false;
+
         // Fetch Master Hitbox HTML
         fetch('Globals/LMS_Master_html.html')
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                return response.text();
+            })
             .then(html => {
                 hitboxWrapper.insertAdjacentHTML('beforeend', html);
+                hitboxesLoaded = true;
                 initializeSimulator();
             })
             .catch(error => {
                 console.error("Error loading hitboxes:", error);
+                reportErrorToDeveloper('Hitbox Fetch Failed', `Globals/LMS_Master_html.html failed to load: ${error.message}`);
                 instructionText.innerHTML = "<strong>Error:</strong> Could not load hitboxes. Check console.";
             });
 
@@ -1628,12 +1635,13 @@
             hideReloadOverlay();
             imageRetryCount = 0;
             if (imageRetryTimer) clearTimeout(imageRetryTimer);
-            if (currentStep < sequence.length - 1) {
+            if (hitboxesLoaded && currentStep < sequence.length - 1) {
                 activateHitboxesForStep(sequence[currentStep], currentStep);
             }
         };
 
         function activateHitboxesForStep(stepData, stepIndex) {
+            if (!hitboxesLoaded) return;
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
 
             const activeIds = getActiveHitboxIds(stepData);
