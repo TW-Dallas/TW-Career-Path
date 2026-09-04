@@ -1405,13 +1405,6 @@
                         validateTextEntry(inputEl.value, stepData.input.expectedValue);
                     }
                 });
-                inputEl.addEventListener('blur', () => {
-                    if (inputEl.value && isTextEntryValid(inputEl.value, stepData.input.expectedValue)) {
-                        errorMsg.style.display = 'none';
-                        currentStep++;
-                        loadStep(currentStep);
-                    }
-                });
 
                 activeHb.appendChild(inputEl);
                 inputEl.focus();
@@ -1486,15 +1479,29 @@
             const stepData = sequence[currentStep];
             if (!stepData) return;
 
-            // If on a text input step, validate typed text on click
+            // If on a text input step:
             if (stepData.input && (stepData.input.type === 'text' || stepData.input.type === 'textarea')) {
                 const activeInput = document.querySelector('.hitbox-text-input');
                 const typedVal = activeInput ? activeInput.value : '';
-                if (isTextEntryValid(typedVal, stepData.input.expectedValue)) {
-                    errorMsg.style.display = 'none';
-                    currentStep++;
-                    loadStep(currentStep);
+                const isMatch = isTextEntryValid(typedVal, stepData.input.expectedValue);
+
+                const currentHitboxIds = getActiveHitboxIds(stepData);
+                if (currentHitboxIds.includes(clickedId)) {
+                    return; // Re-focusing or clicking within input box
                 }
+
+                const nextStepData = sequence[currentStep + 1];
+                const nextHitboxIds = nextStepData ? getActiveHitboxIds(nextStepData) : [];
+
+                if (isMatch && nextHitboxIds.includes(clickedId)) {
+                    errorMsg.style.display = 'none';
+                    currentStep += 2; // Typed valid note AND clicked next step hitbox (e.g. Pizzas tab)
+                    loadStep(currentStep);
+                    return;
+                }
+
+                errorMsg.style.display = 'block';
+                wrongClicks++;
                 return;
             }
 
@@ -1543,19 +1550,6 @@
 
             posImage.addEventListener('click', function () {
                 if (currentStep >= sequence.length) return;
-                const stepData = sequence[currentStep];
-
-                if (stepData && stepData.input && (stepData.input.type === 'text' || stepData.input.type === 'textarea')) {
-                    const activeInput = document.querySelector('.hitbox-text-input');
-                    const typedVal = activeInput ? activeInput.value : '';
-                    if (isTextEntryValid(typedVal, stepData.input.expectedValue)) {
-                        errorMsg.style.display = 'none';
-                        currentStep++;
-                        loadStep(currentStep);
-                        return;
-                    }
-                }
-
                 errorMsg.style.display = 'block';
                 wrongClicks++;
             });
