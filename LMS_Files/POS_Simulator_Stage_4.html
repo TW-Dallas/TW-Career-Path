@@ -205,35 +205,26 @@
             <audio id="global-audio-player"></audio>
 
             <!-- Play / Pause / Hold Call Card -->
-            <div id="audio-control-panel" style="display: none;">
-                <div class="audio-header">
-                    <span class="audio-pulse-indicator"></span> Live Audio Call
+            <div id="audio-control-panel" style="display: none; margin-bottom: 8px;">
+                <div class="audio-header" id="audio-main-header" style="margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between;">
+                    <div id="audio-header-left" style="display: flex; align-items: center; gap: 8px; font-size: 0.92rem; font-weight: 700; color: var(--dark-blue);">
+                        <span id="audio-status-dot" class="audio-pulse-indicator" style="background-color: #2ecc71;"></span>
+                        <span id="audio-status-text">CALL IN PROGRESS</span>
+                    </div>
+                    <span id="audio-time-display" style="font-size: 0.8rem; font-family: monospace; color: #52796f; font-weight: normal;">0:00 / 0:00</span>
                 </div>
 
                 <!-- Dynamic Track Stack dynamically generated in JS -->
                 <div id="audio-track-container"></div>
 
                 <!-- HOLD & REWIND CONTROLS -->
-                <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none; flex-direction: column; gap: 8px;">
-                    <div style="display: flex; align-items: center; justify-content: space-between;">
-                        <span style="font-size: 0.85rem; font-weight: 700; color: #1e6091; display: flex; align-items: center; gap: 6px;">
-                            <span style="display: inline-block; width: 8px; height: 8px; background: #2ecc71; border-radius: 50%;"></span>
-                            CALL IN PROGRESS
-                        </span>
-                        <span id="audio-time-display" style="font-size: 0.8rem; font-family: monospace; color: #52796f;">0:00 / 0:00</span>
-                    </div>
-                    <div style="display: flex; gap: 8px;">
-                        <button id="audio-hold-btn" class="audio-btn hold-btn" onclick="toggleHold()" style="flex: 1; padding: 6px 10px; background: #e67e22; color: #fff; border: none; border-radius: 6px; font-weight: 700; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
-                            ⏸️ Put on Hold
-                        </button>
-                        <button id="audio-rewind-btn" class="audio-btn btn-outline" onclick="rewindAudio5s()" style="flex: 1; padding: 6px 10px; background: #34495e; color: #fff; border: none; border-radius: 6px; font-weight: 700; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
-                            ⏪ Rewind 5s
-                        </button>
-                    </div>
-                </div>
-
-                <div id="hold-status-bar" class="hold-status-bar">
-                    🔴 LINE 1 ON HOLD — <span id="hold-timer-text">00:00</span>
+                <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none; gap: 6px;">
+                    <button id="audio-hold-btn" class="audio-btn hold-btn" onclick="toggleHold()" style="flex: 1; padding: 5px 8px; background: #e67e22; color: #fff; border: none; border-radius: 5px; font-weight: 700; font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
+                        ⏸️ Put on Hold
+                    </button>
+                    <button id="audio-rewind-btn" class="audio-btn btn-outline" onclick="rewindAudio5s()" style="flex: 1; padding: 5px 8px; background: #34495e; color: #fff; border: none; border-radius: 5px; font-weight: 700; font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
+                        ⏪ Rewind 5s
+                    </button>
                 </div>
             </div>
 
@@ -1533,6 +1524,28 @@
         let currentPlayingTrackIndex = null;
         let currentAudioKey = null;
 
+        function updateAudioHeaderState(state) {
+            const statusDot = document.getElementById('audio-status-dot');
+            const statusText = document.getElementById('audio-status-text');
+            if (!statusDot || !statusText) return;
+
+            if (state === 'hold') {
+                statusDot.style.backgroundColor = '#e74c3c';
+                const mins = Math.floor(holdDurationSeconds / 60).toString().padStart(2, '0');
+                const secs = (holdDurationSeconds % 60).toString().padStart(2, '0');
+                statusText.innerHTML = `🔴 LINE 1 ON HOLD (<span id="hold-timer-text">${mins}:${secs}</span>)`;
+            } else if (state === 'playing') {
+                statusDot.style.backgroundColor = '#2ecc71';
+                statusText.innerText = 'CALL IN PROGRESS';
+            } else if (state === 'demo') {
+                statusDot.style.backgroundColor = 'var(--brand-blue)';
+                statusText.innerText = 'DEMO AUDIO PLAYBOOK';
+            } else if (state === 'ended') {
+                statusDot.style.backgroundColor = '#27ae60';
+                statusText.innerText = 'CALL CONCLUDED';
+            }
+        }
+
         // --- STAGE 4 HOLD & REWIND MECHANICS ---
         function toggleHold() {
             if (!audioPlayer.src && !currentAudioKey) return;
@@ -1545,13 +1558,16 @@
 
                 holdBtn.innerHTML = "▶ Resume Call";
                 holdBtn.style.backgroundColor = "#27ae60";
-                holdStatusBar.style.display = "block";
+                updateAudioHeaderState('hold');
 
                 holdTimerInterval = setInterval(() => {
                     holdDurationSeconds++;
-                    const mins = Math.floor(holdDurationSeconds / 60).toString().padStart(2, '0');
-                    const secs = (holdDurationSeconds % 60).toString().padStart(2, '0');
-                    holdTimerText.innerText = `${mins}:${secs}`;
+                    const timerEl = document.getElementById('hold-timer-text');
+                    if (timerEl) {
+                        const mins = Math.floor(holdDurationSeconds / 60).toString().padStart(2, '0');
+                        const secs = (holdDurationSeconds % 60).toString().padStart(2, '0');
+                        timerEl.innerText = `${mins}:${secs}`;
+                    }
                 }, 1000);
 
             } else {
@@ -1560,8 +1576,8 @@
                 clearInterval(holdTimerInterval);
 
                 holdBtn.innerHTML = "⏸️ Put on Hold";
-                holdBtn.style.backgroundColor = "#f39c12";
-                holdStatusBar.style.display = "none";
+                holdBtn.style.backgroundColor = "#e67e22";
+                updateAudioHeaderState('playing');
 
                 audioPlayer.play().catch(e => console.log("Audio play error:", e));
             }
@@ -1619,6 +1635,11 @@
             if (holdBtn) holdBtn.style.display = allowHold ? "inline-block" : "none";
             if (rewindBtn) rewindBtn.style.display = allowHold ? "inline-block" : "none";
 
+            const timeDisplay = document.getElementById('audio-time-display');
+            if (timeDisplay) {
+                timeDisplay.style.display = allowHold ? "inline" : "none";
+            }
+
             const trackContainer = document.getElementById('audio-track-container');
 
             if (nextAudioKey === currentAudioKey) {
@@ -1648,6 +1669,7 @@
             audioPanel.style.display = 'block';
 
             if (allowHold) {
+                updateAudioHeaderState(isOnHold ? 'hold' : 'playing');
                 // Live Customer Call: Hide generic play/pause track stack, start live call directly
                 if (trackContainer) {
                     trackContainer.style.display = 'none';
@@ -1657,6 +1679,7 @@
                 audioPlayer.src = stepData.audio.file;
                 audioPlayer.play().catch(e => console.log("Live call audio autoplay note:", e));
             } else {
+                updateAudioHeaderState('demo');
                 // Demo / Hardware Tutorial Clips: Show sequential play/pause track list
                 if (trackContainer) {
                     trackContainer.style.display = 'block';
