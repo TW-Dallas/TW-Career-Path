@@ -181,7 +181,7 @@
             <div id="start-panel" class="start-overlay">
                 <h1 style="font-family: 'PizzaPress'; color: var(--dark-blue); font-size: 2.2rem; margin-top: 0; text-transform: uppercase;">Perfect Pairs</h1>
                 <p style="font-family: 'OneDotCd', sans-serif; font-size: 1.2rem; max-width: 500px; color: var(--crust-deep); margin-bottom: 25px;">
-                    Test your knowledge of menu defaults, crust constraints, and register rules. Resolve 10 customer scenarios to finish the challenge.
+                    Test your knowledge of menu defaults, crust constraints, and register rules. Resolve 12 customer scenarios to finish the challenge.
                 </p>
                 <button class="btn" onclick="startGamePlay()" style="font-size: 1.2rem; padding: 1rem 3rem;">Start Challenge</button>
             </div>
@@ -337,6 +337,28 @@
                     "Only Ranch is free with chicken sides."
                 ],
                 answer: "No, all dipping cups with chicken sides are paid add-ons."
+            },
+            {
+                category: "Crust Constraints",
+                question: "A customer wants to order a Large Domino™ crust with 5 toppings. How should you guide the customer?",
+                options: [
+                    "Explain that the Domino™ comes in one size only and has a 3-topping maximum.",
+                    "Ring it up as an XL New York style with Detroit seasoning.",
+                    "Ring it up as a 14\" Hand Tossed with extra Parmesan.",
+                    "Domino™ crust can have unlimited toppings in any size."
+                ],
+                answer: "Explain that the Domino™ comes in one size only and has a 3-topping maximum."
+            },
+            {
+                category: "Cut Styles",
+                question: "What is the standard cut for the Domino™?",
+                options: [
+                    "Cut in half vertically (2 square halves)",
+                    "Standard 8-slice pie cut",
+                    "Square / party cut with 16 squares",
+                    "6-slice New York cut"
+                ],
+                answer: "Cut in half vertically (2 square halves)"
             }
         ];
 
@@ -355,7 +377,7 @@
             document.getElementById('game-hud').classList.remove('hidden');
             document.getElementById('action-panel').classList.remove('hidden');
 
-            // Randomize order of the 10 scenarios
+            // Randomize order of the scenarios
             deck = [...scenariosDatabase].sort(() => Math.random() - 0.5);
             currentScenarioIndex = 0;
             score = 0;
@@ -367,7 +389,7 @@
         function showScenario() {
             const scenario = deck[currentScenarioIndex];
             
-            document.getElementById('hud-index').innerText = `${currentScenarioIndex + 1} / 10`;
+            document.getElementById('hud-index').innerText = `${currentScenarioIndex + 1} / ${deck.length}`;
             document.getElementById('hud-score').innerText = score;
             
             document.getElementById('scenario-category').innerText = scenario.category;

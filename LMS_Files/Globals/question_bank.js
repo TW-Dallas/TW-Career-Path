@@ -221,6 +221,16 @@ const QUESTION_BANK = {
                 { text: 'B. Forcing customers to purchase items they didn’t ask for', correct: false },
                 { text: 'C. Slowing down order entry time at the register', correct: false }
             ]
+        },
+        {
+            id: 'm5_q11_domino_crust',
+            topic: 'Menu Mastery / Crusts',
+            question: 'What is true regarding the Domino™ Detroit Style crust?',
+            options: [
+                { text: 'A. It only comes in one size, has a 3-topping maximum, and is cut in half vertically', correct: true },
+                { text: 'B. It is available in 14" Large with unlimited toppings and standard pie cut', correct: false },
+                { text: 'C. It is an XL thin crust cut into 16 party squares', correct: false }
+            ]
         }
     ],
 
