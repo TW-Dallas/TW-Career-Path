@@ -45,20 +45,46 @@
 
     // Inject Styles using strictly established brand colors
     const styles = `
-        /* Floating Header Trigger Button */
-        #beta-feedback-trigger {
-            position: fixed;
-            top: 14px;
-            right: 24px;
-            background-color: #0090e2; /* var(--brand-blue) */
-            color: #fefaf6;            /* var(--crust-base) */
-            border: 2px solid #005c91;  /* var(--dark-blue) */
-            padding: 7px 15px;
-            border-radius: 50px;
+        /* Header-Embedded Trigger Button */
+        #beta-feedback-trigger.in-header {
+            position: static;
+            background-color: rgba(254, 250, 246, 0.15);
+            color: #fefaf6;
+            border: 1px solid rgba(254, 250, 246, 0.3);
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
             font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            box-shadow: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 8px;
+            transition: all 0.2s ease;
+        }
+
+        #beta-feedback-trigger.in-header:hover {
+            background-color: rgba(254, 250, 246, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* Floating Fallback Trigger (Docked Right Edge Tab when no header) */
+        #beta-feedback-trigger:not(.in-header) {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background-color: #0090e2;
+            color: #fefaf6;
+            border: 2px solid #005c91;
+            border-right: none;
+            padding: 8px 12px;
+            border-radius: 8px 0 0 8px;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: -2px 4px 15px rgba(0,0,0,0.25);
             z-index: 999999;
             display: flex;
             align-items: center;
@@ -66,9 +92,8 @@
             transition: all 0.2s ease;
         }
 
-        #beta-feedback-trigger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,144,226,0.4);
+        #beta-feedback-trigger:not(.in-header):hover {
+            padding-right: 16px;
             background-color: #0077bd;
         }
 
@@ -347,6 +372,13 @@
         const textArea = document.getElementById('beta-feedback-text');
 
         if (!trigger || !modal) return;
+
+        // Neatly nest trigger into Header left action group if a header exists
+        const headerLeft = document.querySelector('header > div:first-child') || document.querySelector('header');
+        if (headerLeft) {
+            trigger.classList.add('in-header');
+            headerLeft.appendChild(trigger);
+        }
 
         // UI Handlers
         trigger.addEventListener('click', () => modal.classList.add('active'));
