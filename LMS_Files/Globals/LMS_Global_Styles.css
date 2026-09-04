@@ -364,22 +364,43 @@
       justify-content: center;
       gap: 8px;
       background: var(--brand-blue);
-      color: var(--crust-base) !important;
-      padding: 0.55rem 1.2rem !important;
-      border-radius: 50px !important;
+      color: var(--crust-base);
+      padding: 0.55rem 1.2rem;
+      border-radius: 50px;
       font-family: 'Subhead1', sans-serif !important;
       font-weight: normal !important;
       text-decoration: none;
       transition: 0.3s ease;
-      border: none !important;
-      font-size: 0.95rem !important;
-      line-height: 1 !important;
+      border: none;
+      font-size: 0.95rem;
+      line-height: 1;
       cursor: pointer;
-      box-sizing: border-box !important;
+      box-sizing: border-box;
   }
   
   .btn:hover {
-      opacity: 0.8;
+      opacity: 0.85;
+  }
+
+  .btn-outline {
+      background: transparent !important;
+      color: var(--brand-blue) !important;
+      border: 2px solid var(--brand-blue) !important;
+  }
+
+  .btn-outline:hover {
+      background: rgba(0, 144, 226, 0.1) !important;
+      color: var(--dark-blue) !important;
+      opacity: 1 !important;
+  }
+
+  .btn-disabled {
+      background: #ccc !important;
+      cursor: not-allowed !important;
+      transform: none !important;
+      color: #888 !important;
+      border: none !important;
+      pointer-events: none !important;
   }
 
   /* Master Navbar Back Link */
