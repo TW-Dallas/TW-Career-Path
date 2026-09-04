@@ -364,15 +364,15 @@
       justify-content: center;
       background: var(--brand-blue);
       color: var(--crust-base);
-      padding: 0.65rem 1.6rem;
+      padding: 0.5rem 1.2rem;
       border-radius: 50px;
       font-family: 'Subhead1', sans-serif !important;
       font-weight: normal !important;
       text-decoration: none;
       transition: 0.3s ease;
       border: none;
-      font-size: 1.05rem;
-      line-height: 1.2;
+      font-size: 0.95rem;
+      line-height: 1;
       cursor: pointer;
       box-sizing: border-box;
   }
