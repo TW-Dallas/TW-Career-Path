@@ -679,6 +679,7 @@
                 "step": 50,
                 "image": "resources/POS_assets/Stage_4/POS_4.40.A.png",
                 "activeHitbox": ["hb-delivery-instructions", "hb-pizzas-tab", "hb-pizzas"],
+                "inputHitbox": "hb-delivery-instructions",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
                 "input": {
@@ -1361,10 +1362,26 @@
 
         // --- DYNAMIC TEXT INPUT OVERLAY ENGINE ---
         function handleInputForStep(stepData, activeHb) {
+            if (!stepData.input) {
+                activeHb.style.cursor = 'default';
+                activeHb.style.caretColor = 'transparent';
+                return;
+            }
+
+            // Determine the designated input container (default to first hitbox if array)
+            const targetInputId = stepData.inputHitbox || 
+                (Array.isArray(stepData.activeHitbox) ? stepData.activeHitbox[0] : stepData.activeHitbox);
+
+            if (activeHb.id !== targetInputId) {
+                activeHb.style.cursor = 'pointer';
+                activeHb.style.caretColor = 'transparent';
+                return;
+            }
+
             const existingInput = document.querySelector('.hitbox-text-input');
             if (existingInput) existingInput.remove();
 
-            if (stepData.input && (stepData.input.type === 'text' || stepData.input.type === 'textarea')) {
+            if (stepData.input.type === 'text' || stepData.input.type === 'textarea') {
                 activeHb.style.cursor = 'text';
                 activeHb.style.caretColor = 'auto';
 
@@ -1375,7 +1392,7 @@
                 inputEl.placeholder = stepData.input.placeholder || '';
                 inputEl.autofocus = true;
 
-                if (stepData.activeHitbox === "hb-phone-entry" || (stepData.input.placeholder && stepData.input.placeholder.toLowerCase().includes("phone"))) {
+                if (activeHb.id === "hb-phone-entry" || (stepData.input.placeholder && stepData.input.placeholder.toLowerCase().includes("phone"))) {
                     inputEl.addEventListener("input", (e) => {
                         let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
                         e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
