@@ -91,14 +91,14 @@
 
             <!-- FOOTER NAV STRIP -->
             <div class="nav-strip" style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                <button class="btn" style="padding: 0.45rem 1.2rem; font-size: 0.92rem;" onclick="goBack()">&#8592; Back</button>
+                <button class="btn" onclick="goBack()">&#8592; Back</button>
                 
-                <div style="display: flex; gap: 6px; align-items: center;">
-                    <button id="btn-request-hint" class="btn-assist btn-assist-hint" onclick="triggerHint()">💡 Hint (1 Free)</button>
-                    <button id="btn-request-answer" class="btn-assist btn-assist-answer" onclick="triggerDirectAnswer()">🎯 Answer (-5%)</button>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <button id="btn-request-hint" class="btn btn-hint" onclick="triggerHint()">💡 Hint (1 Free)</button>
+                    <button id="btn-request-answer" class="btn btn-answer" onclick="triggerDirectAnswer()">🎯 Answer (-5%)</button>
                 </div>
 
-                <button class="btn btn-finish" id="finish-sim-btn" style="display: none; padding: 0.45rem 1.2rem; font-size: 0.92rem;"
+                <button class="btn btn-finish" id="finish-sim-btn" style="display: none;"
                     onclick="endSimulation()">Finish</button>
             </div>
         </div>
@@ -1240,15 +1240,15 @@
                 hintBtn.innerHTML = '💡 Hint (1 Free)';
                 hintBtn.style.background = 'var(--med-blue)';
                 hintBtn.style.color = 'var(--crust-base)';
-                hintBtn.classList.remove('btn-assist-locked');
+                hintBtn.classList.remove('btn-locked');
             } else if (hintsUsed === 1) {
                 hintBtn.innerHTML = '💡 Hint (-2%)';
                 hintBtn.style.background = 'var(--brand-blue)';
                 hintBtn.style.color = 'var(--crust-base)';
-                hintBtn.classList.remove('btn-assist-locked');
+                hintBtn.classList.remove('btn-locked');
             } else {
                 hintBtn.innerHTML = '💡 Hint (🔐 PIN)';
-                hintBtn.classList.add('btn-assist-locked');
+                hintBtn.classList.add('btn-locked');
             }
 
             // Direct Answer allowance state
@@ -1256,10 +1256,10 @@
                 answerBtn.innerHTML = '🎯 Answer (-5%)';
                 answerBtn.style.background = 'var(--brand-red)';
                 answerBtn.style.color = 'var(--crust-base)';
-                answerBtn.classList.remove('btn-assist-locked');
+                answerBtn.classList.remove('btn-locked');
             } else {
                 answerBtn.innerHTML = '🎯 Answer (🔐 PIN)';
-                answerBtn.classList.add('btn-assist-locked');
+                answerBtn.classList.add('btn-locked');
             }
         }
 

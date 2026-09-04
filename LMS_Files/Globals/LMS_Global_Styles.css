@@ -1745,47 +1745,29 @@
         opacity: 0.95;
     }
 
-    /* FOOTER ASSISTANCE BUTTONS (COHESIVE WITH .btn) */
-    .btn-assist {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-        padding: 0.45rem 1rem;
-        border-radius: 50px;
-        font-family: 'OneDotCd-Bold', 'Arial Narrow', sans-serif;
-        font-weight: bold;
-        font-size: 0.88rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        border: none;
-        color: var(--crust-base);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-        text-decoration: none;
+    /* FOOTER ASSISTANCE BUTTONS (EXTENDS .btn) */
+    .btn-hint {
+        background: var(--med-blue) !important;
+        color: var(--crust-base) !important;
     }
 
-    .btn-assist-hint {
-        background: var(--med-blue);
+    .btn-hint:hover {
+        background: var(--dark-blue) !important;
     }
 
-    .btn-assist-hint:hover {
-        background: var(--dark-blue);
-        opacity: 0.9;
+    .btn-answer {
+        background: var(--brand-red) !important;
+        color: var(--crust-base) !important;
     }
 
-    .btn-assist-answer {
-        background: var(--brand-red);
+    .btn-answer:hover {
+        background: var(--dark-red) !important;
     }
 
-    .btn-assist-answer:hover {
-        background: var(--dark-red);
-        opacity: 0.9;
-    }
-
-    .btn-assist-locked {
+    .btn-locked {
         background: var(--crust-dark) !important;
         color: var(--crust-base) !important;
-        opacity: 0.75 !important;
+        opacity: 0.7 !important;
         cursor: not-allowed !important;
     }
 
