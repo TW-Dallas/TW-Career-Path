@@ -1705,13 +1705,21 @@
                 instructionText.innerHTML = "<strong>Error:</strong> Could not load hitboxes. Check console.";
             });
 
+        let lastAdvanceStepTime = 0;
+
         // Global advanceStep function capable of parsing any argument structure
         window.advanceStep = function (target, event) {
             if (currentStep >= sequence.length || !sequence[currentStep]) return;
 
-            let clickedId = "";
+            const now = Date.now();
+            if (now - lastAdvanceStepTime < 150) return;
 
             const evt = event || window.event;
+            if (evt && typeof evt.stopPropagation === 'function') {
+                evt.stopPropagation();
+            }
+
+            let clickedId = "";
             if (target && typeof target === 'object' && target.id) {
                 clickedId = target.id;
             } else if (evt) {
@@ -1786,7 +1794,7 @@
             // Bind listeners to all hitboxes to guarantee execution if inline onclick is missing
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.addEventListener('click', function (e) {
-                    advanceStep(this);
+                    advanceStep(this, e);
                 });
             });
 
@@ -1981,6 +1989,7 @@
         }
 
         function loadStep(stepIndex) {
+            lastAdvanceStepTime = Date.now();
             currentStepHintRevealed = false;
             currentStepAnswerRevealed = false;
             removeVisualAssists();
