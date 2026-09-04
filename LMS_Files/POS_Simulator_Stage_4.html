@@ -72,10 +72,10 @@
                     <!-- PRIMARY CALL CONTROLS (HOLD / REWIND) -->
                     <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none;">
                         <button id="audio-hold-btn" class="call-ctrl-btn call-hold-btn" onclick="toggleHold()">
-                            ⏸️ Put on Hold
+                            Put on Hold
                         </button>
                         <button id="audio-rewind-btn" class="call-ctrl-btn call-rewind-btn" onclick="rewindAudio5s()">
-                            ⏪ Rewind 5s
+                            &#9664;&#9664; Rewind 5s
                         </button>
                     </div>
                 </div>
@@ -94,8 +94,8 @@
                 <button class="btn" onclick="goBack()">&#8592; Back</button>
                 
                 <div style="display: flex; gap: 8px; align-items: center;">
-                    <button id="btn-request-hint" class="btn btn-hint" onclick="triggerHint()"><span class="btn-emoji">&#128161;</span><span class="btn-text">Hint (1 Free)</span></button>
-                    <button id="btn-request-answer" class="btn btn-answer" onclick="triggerDirectAnswer()"><span class="btn-emoji">&#127919;</span><span class="btn-text">Answer (-5%)</span></button>
+                    <button id="btn-request-hint" class="btn btn-hint" onclick="triggerHint()">Hint (1 Free)</button>
+                    <button id="btn-request-answer" class="btn btn-answer" onclick="triggerDirectAnswer()">Answer (-5%)</button>
                 </div>
 
                 <button class="btn btn-finish" id="finish-sim-btn" style="display: none;"
@@ -1237,17 +1237,17 @@
 
             // Hint allowance state
             if (hintsUsed === 0) {
-                hintBtn.innerHTML = '<span class="btn-emoji">&#128161;</span><span class="btn-text">Hint (1 Free)</span>';
+                hintBtn.innerText = 'Hint (1 Free)';
                 hintBtn.className = 'btn btn-hint';
                 hintBtn.style.background = '';
                 hintBtn.style.color = '';
             } else if (hintsUsed === 1) {
-                hintBtn.innerHTML = '<span class="btn-emoji">&#128161;</span><span class="btn-text">Hint (-2%)</span>';
+                hintBtn.innerText = 'Hint (-2%)';
                 hintBtn.className = 'btn btn-hint';
                 hintBtn.style.background = '';
                 hintBtn.style.color = '';
             } else {
-                hintBtn.innerHTML = '<span class="btn-emoji">&#128274;</span><span class="btn-text">Hint (PIN)</span>';
+                hintBtn.innerText = 'Hint (PIN Required)';
                 hintBtn.className = 'btn btn-locked';
                 hintBtn.style.background = '';
                 hintBtn.style.color = '';
@@ -1255,12 +1255,12 @@
 
             // Direct Answer allowance state
             if (answersUsed === 0) {
-                answerBtn.innerHTML = '<span class="btn-emoji">&#127919;</span><span class="btn-text">Answer (-5%)</span>';
+                answerBtn.innerText = 'Answer (-5%)';
                 answerBtn.className = 'btn btn-answer';
                 answerBtn.style.background = '';
                 answerBtn.style.color = '';
             } else {
-                answerBtn.innerHTML = '<span class="btn-emoji">&#128274;</span><span class="btn-text">Answer (PIN)</span>';
+                answerBtn.innerText = 'Answer (PIN Required)';
                 answerBtn.className = 'btn btn-locked';
                 answerBtn.style.background = '';
                 answerBtn.style.color = '';
@@ -1476,7 +1476,7 @@
                 holdCount++;
                 audioPlayer.pause();
 
-                holdBtn.innerHTML = "▶ Resume Call";
+                holdBtn.innerHTML = "&#9654; Resume Call";
                 holdBtn.style.backgroundColor = "var(--brand-red)";
                 updateAudioHeaderState('hold');
 
@@ -1495,7 +1495,7 @@
                 isOnHold = false;
                 clearInterval(holdTimerInterval);
 
-                holdBtn.innerHTML = "⏸️ Put on Hold";
+                holdBtn.innerHTML = "Put on Hold";
                 holdBtn.style.backgroundColor = "var(--brand-blue)";
                 updateAudioHeaderState('playing');
 
