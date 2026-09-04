@@ -683,8 +683,53 @@
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
                 "input": {
                     "type": "text",
-                    "expectedValue": ["Please Call", "please call", "PLEASE CALL"],
-                    "placeholder": "Click in the box and type: PLEASE CALL"
+                    "expectedValue": [
+                        "PLEASE CALL",
+                        "Please Call",
+                        "please call",
+                        "CALL",
+                        "Call",
+                        "call",
+                        "CALL WHEN YOU ARRIVE",
+                        "Call when you arrive",
+                        "CALL WHEN YOU ARRIVE AT THE GATE",
+                        "Call when you arrive at the gate",
+                        "CALL AT GATE",
+                        "Call at gate",
+                        "CALL AT THE GATE",
+                        "Call at the gate",
+                        "CALL WHEN ARRIVE",
+                        "Call when arrive",
+                        "CALL WHEN THEY ARRIVE",
+                        "Call when they arrive",
+                        "PLEASE HAVE DRIVER CALL",
+                        "Please have driver call",
+                        "PLEASE HAVE THE DRIVER CALL",
+                        "Please have the driver call",
+                        "PLEASE HAVE DRIVER CALL WHEN THEY ARRIVE",
+                        "Please have driver call when they arrive",
+                        "PLEASE HAVE THE DRIVER CALL WHEN THEY ARRIVE",
+                        "Please have the driver call when they arrive",
+                        "HAVE DRIVER CALL",
+                        "Have driver call",
+                        "HAVE DRIVER CALL WHEN THEY ARRIVE",
+                        "Have driver call when they arrive",
+                        "DRIVER PLEASE CALL",
+                        "Driver please call",
+                        "DRIVER CALL",
+                        "Driver call",
+                        "CALL ON ARRIVAL",
+                        "Call on arrival",
+                        "CALL UPON ARRIVAL",
+                        "Call upon arrival",
+                        "PLEASE CALL ON ARRIVAL",
+                        "Please call on arrival",
+                        "CALL CUSTOMER",
+                        "Call customer",
+                        "PLEASE CALL CUSTOMER",
+                        "Please call customer"
+                    ],
+                    "placeholder": "PLEASE CALL"
                 }
             },
             // 45. Click Pizzas Tab
@@ -1344,6 +1389,11 @@
                         validateTextEntry(inputEl.value, stepData.input.expectedValue);
                     }
                 });
+                inputEl.addEventListener('blur', () => {
+                    if (inputEl.value.trim().length > 0) {
+                        validateTextEntry(inputEl.value, stepData.input.expectedValue, true);
+                    }
+                });
 
                 activeHb.appendChild(inputEl);
                 inputEl.focus();
@@ -1353,27 +1403,32 @@
             }
         }
 
-        function validateTextEntry(userTyped, expectedValue) {
+        function validateTextEntry(userTyped, expectedValue, isBlur = false) {
             const targets = Array.isArray(expectedValue) ? expectedValue : [expectedValue];
+            const cleanUser = userTyped.trim().toLowerCase();
             
             const isMatch = targets.some(target => {
                 const cleanExpectedDigits = String(target).replace(/\D/g, '');
                 const isNumericTarget = cleanExpectedDigits.length > 0 && /^\d+$/.test(cleanExpectedDigits);
                 if (isNumericTarget) {
-                    const cleanUser = userTyped.replace(/\D/g, '');
-                    return cleanUser === cleanExpectedDigits;
+                    const userDigits = cleanUser.replace(/\D/g, '');
+                    return userDigits === cleanExpectedDigits;
                 } else {
-                    return userTyped.trim().toLowerCase() === String(target).trim().toLowerCase();
+                    return cleanUser === String(target).trim().toLowerCase();
                 }
-            });
+            }) || (targets.some(t => String(t).toLowerCase().includes('call')) && /\bcall\b/i.test(cleanUser));
 
             if (isMatch) {
                 errorMsg.style.display = 'none';
                 currentStep++;
                 loadStep(currentStep);
+                return true;
             } else {
-                errorMsg.style.display = 'block';
-                wrongClicks++;
+                if (!isBlur) {
+                    errorMsg.style.display = 'block';
+                    wrongClicks++;
+                }
+                return false;
             }
         }
 
@@ -1411,7 +1466,15 @@
 
             const stepData = sequence[currentStep];
             if (!stepData) return;
-            if (stepData.input && stepData.input.type === 'text') return;
+            if (stepData.input && stepData.input.type === 'text') {
+                const activeInput = document.querySelector('.hitbox-text-input');
+                if (activeInput && activeInput.value.trim().length > 0) {
+                    if (validateTextEntry(activeInput.value, stepData.input.expectedValue, true)) {
+                        return;
+                    }
+                }
+                return;
+            }
 
             // --- INTERACTIVE PHONE HARDWARE LOGIC (PARK / MUTE) ---
             if (clickedId === 'hb-phone-park') {
