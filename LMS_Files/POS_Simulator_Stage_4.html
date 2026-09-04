@@ -1389,11 +1389,6 @@
                         validateTextEntry(inputEl.value, stepData.input.expectedValue);
                     }
                 });
-                inputEl.addEventListener('blur', () => {
-                    if (inputEl.value.trim().length > 0) {
-                        validateTextEntry(inputEl.value, stepData.input.expectedValue, true);
-                    }
-                });
 
                 activeHb.appendChild(inputEl);
                 inputEl.focus();
@@ -1403,7 +1398,7 @@
             }
         }
 
-        function validateTextEntry(userTyped, expectedValue, isBlur = false) {
+        function validateTextEntry(userTyped, expectedValue) {
             const targets = Array.isArray(expectedValue) ? expectedValue : [expectedValue];
             const cleanUser = userTyped.trim().toLowerCase();
             
@@ -1422,13 +1417,9 @@
                 errorMsg.style.display = 'none';
                 currentStep++;
                 loadStep(currentStep);
-                return true;
             } else {
-                if (!isBlur) {
-                    errorMsg.style.display = 'block';
-                    wrongClicks++;
-                }
-                return false;
+                errorMsg.style.display = 'block';
+                wrongClicks++;
             }
         }
 
@@ -1466,15 +1457,7 @@
 
             const stepData = sequence[currentStep];
             if (!stepData) return;
-            if (stepData.input && stepData.input.type === 'text') {
-                const activeInput = document.querySelector('.hitbox-text-input');
-                if (activeInput && activeInput.value.trim().length > 0) {
-                    if (validateTextEntry(activeInput.value, stepData.input.expectedValue, true)) {
-                        return;
-                    }
-                }
-                return;
-            }
+            if (stepData.input && stepData.input.type === 'text') return;
 
             // --- INTERACTIVE PHONE HARDWARE LOGIC (PARK / MUTE) ---
             if (clickedId === 'hb-phone-park') {
