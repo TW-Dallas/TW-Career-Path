@@ -1267,9 +1267,20 @@
             }
         }
 
+        let currentStepHintRevealed = false;
+        let currentStepAnswerRevealed = false;
+
         function triggerHint() {
             if (currentStep >= sequence.length - 1) return;
             const stepData = sequence[currentStep];
+
+            // If hint was already revealed on THIS step, re-trigger radar pulse without consuming an extra hint/penalty
+            if (currentStepHintRevealed) {
+                const displayBox = document.getElementById('assist-display-box');
+                if (displayBox) displayBox.style.display = 'block';
+                showRegionRadarPulse(stepData);
+                return;
+            }
 
             if (hintsUsed >= 2) {
                 // Exhausted: Require Trainer Authorization
@@ -1279,13 +1290,14 @@
             }
 
             hintsUsed++;
+            currentStepHintRevealed = true;
             updateAssistanceUI();
 
             const assist = getSemanticAssistance(stepData, currentStep);
             const displayBox = document.getElementById('assist-display-box');
             if (displayBox) {
                 const penaltyBadge = hintsUsed === 1 
-                    ? '<span style="color: var(--brand-blue); font-weight: 700;">💡 Free Hint:</span>' 
+                    ? '<span style="color: var(--med-blue); font-weight: 700;">💡 Free Hint:</span>' 
                     : '<span style="color: var(--brand-red); font-weight: 700;">💡 Hint (-2%):</span>';
                 displayBox.style.display = 'block';
                 displayBox.style.background = 'rgba(0, 100, 145, 0.06)';
@@ -1301,6 +1313,14 @@
             if (currentStep >= sequence.length - 1) return;
             const stepData = sequence[currentStep];
 
+            // If direct answer was already revealed on THIS step, re-trigger spotlight without consuming an extra answer/penalty
+            if (currentStepAnswerRevealed) {
+                const displayBox = document.getElementById('assist-display-box');
+                if (displayBox) displayBox.style.display = 'block';
+                showSpotlight(stepData);
+                return;
+            }
+
             if (answersUsed >= 1) {
                 // Exhausted: Require Trainer Authorization
                 pendingTrainerAction = 'answer';
@@ -1309,6 +1329,7 @@
             }
 
             answersUsed++;
+            currentStepAnswerRevealed = true;
             updateAssistanceUI();
 
             const assist = getSemanticAssistance(stepData, currentStep);
@@ -2303,6 +2324,8 @@
         }
 
         function loadStep(stepIndex) {
+            currentStepHintRevealed = false;
+            currentStepAnswerRevealed = false;
             removeVisualAssists();
             updateAssistanceUI();
 
