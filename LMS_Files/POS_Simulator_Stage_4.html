@@ -56,7 +56,7 @@
             <audio id="global-audio-player"></audio>
 
             <!-- CALL CONTROL CARD (Active on audio steps) -->
-            <div id="sim-control-card" style="margin-bottom: 10px;">
+            <div id="sim-control-card" style="margin-bottom: 10px; display: none;">
                 <div id="audio-control-panel" style="display: none;">
                     <div class="audio-header" id="audio-main-header">
                         <div id="audio-header-left">
@@ -501,7 +501,7 @@
                 "step": 36,
                 "image": "resources/POS_assets/Stage_4/POS_4.30.png",
                 "activeHitbox": "hb-carryout",
-                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><p style='font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 12px;'>🏆 Boss Level Order!</p><p style='margin-bottom: 14px;'>Listen carefully to the caller and enter all items accurately without prompts.</p><p style='margin-bottom: 14px;'>🎧 <strong>Live Call Notice:</strong> The live customer call will begin as soon as you click <strong>CARRY OUT</strong>!</p><p style='font-size: 0.95rem;'>👉 <strong>Action:</strong> Click <strong>CARRY OUT</strong> to begin Order 2.</p>"
+                "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Final Evaluation — Order 2</p><p style='font-size: 1.15rem; font-family: \"OneDotCd-Bold\", sans-serif; color: var(--dark-blue); margin-bottom: 8px;'>🏆 Live Practice & Shift Evaluation</p><p style='margin-bottom: 12px;'><strong>This is your final scored order entry evaluation.</strong> Listen closely to the caller and enter their complete delivery order accurately without prompts.</p><div style='background: rgba(0, 144, 226, 0.08); border-left: 4px solid var(--brand-blue); padding: 8px 12px; border-radius: 6px; margin-bottom: 12px; font-size: 0.88rem; line-height: 1.35;'><div style='font-family: \"OneDotCd-Bold\", sans-serif; color: var(--dark-blue); font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 3px;'>📊 Evaluation Standards</div><span style='color: var(--crust-deep);'><span style='color: var(--med-blue); font-weight: bold;'>•</span> Fast & accurate entry earns top marks.<br><span style='color: var(--med-blue); font-weight: bold;'>•</span> Hints (-2%) & Direct Answers (-5%) deduct from your final score.<br><span style='color: var(--med-blue); font-weight: bold;'>•</span> Use <strong>Put on Hold</strong> (30–45s) or <strong>Rewind 5s</strong> if you need extra time!</span></div><p style='margin-bottom: 14px;'>🎧 <strong>Live Call Notice:</strong> The live customer call begins as soon as you click <strong>CARRY OUT</strong>!</p><p style='font-size: 1rem;'>👉 <strong>Action:</strong> Click <strong>CARRY OUT</strong> to start your evaluation.</p>"
             },
             // 31. Select Delivery Service Method
             {
@@ -1445,6 +1445,7 @@
         // --- AUDIO ENGINE ELEMENTS ---
         const audioPlayer = document.getElementById('global-audio-player');
         const audioPanel = document.getElementById('audio-control-panel');
+        const simControlCard = document.getElementById('sim-control-card');
         const holdBtn = document.getElementById('audio-hold-btn');
         const rewindBtn = document.getElementById('audio-rewind-btn');
         const audioExtraRow = document.getElementById('audio-extra-row');
@@ -1555,6 +1556,7 @@
             const nextAudioKey = getAudioKey(stepData);
 
             if (!nextAudioKey) {
+                if (simControlCard) simControlCard.style.display = 'none';
                 audioPanel.style.display = 'none';
                 audioPlayer.pause();
                 audioPlayer.src = "";
@@ -1601,6 +1603,7 @@
             audioPlayer.pause();
             audioPlayer.src = "";
 
+            if (simControlCard) simControlCard.style.display = 'block';
             audioPanel.style.display = 'block';
 
             if (allowHold) {
@@ -2537,6 +2540,7 @@
             `;
 
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
+            if (simControlCard) simControlCard.style.display = 'none';
             audioPanel.style.display = 'none';
             audioPlayer.pause();
 
