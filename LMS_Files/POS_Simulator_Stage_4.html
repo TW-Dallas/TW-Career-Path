@@ -156,11 +156,43 @@
             font-size: 0.88rem;
         }
 
-        .assist-btn:hover {
-            opacity: 0.9;
+        /* Unified Simulator Control Card */
+        #sim-control-card {
+            margin-bottom: 8px;
+            background: #fdfbf7;
+            border: 1px solid #e2ddd5;
+            border-left: 4px solid var(--brand-blue);
+            border-radius: 8px;
+            padding: 8px 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            flex-shrink: 0;
+        }
+
+        #audio-control-panel {
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+        }
+
+        .sim-ctrl-btn {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sim-ctrl-btn:hover {
+            opacity: 0.92;
             transform: translateY(-1px);
         }
-        .assist-btn:active {
+
+        .sim-ctrl-btn:active {
             transform: translateY(1px);
         }
     </style>
@@ -204,41 +236,46 @@
             <!-- Hidden Audio Elements -->
             <audio id="global-audio-player"></audio>
 
-            <!-- Play / Pause / Hold Call Card -->
-            <div id="audio-control-panel" style="display: none; margin-bottom: 8px;">
-                <div class="audio-header" id="audio-main-header" style="margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between;">
-                    <div id="audio-header-left" style="display: flex; align-items: center; gap: 8px; font-size: 0.92rem; font-weight: 700; color: var(--dark-blue);">
-                        <span id="audio-status-dot" class="audio-pulse-indicator" style="background-color: #2ecc71;"></span>
-                        <span id="audio-status-text">CALL IN PROGRESS</span>
+            <!-- UNIFIED SIMULATOR CONTROL CARD -->
+            <div id="sim-control-card">
+
+                <!-- Play / Pause / Hold Call Header & Controls (Active on audio steps) -->
+                <div id="audio-control-panel" style="display: none; margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px dashed #dcd5ca;">
+                    <div class="audio-header" id="audio-main-header" style="margin-bottom: 5px; display: flex; align-items: center; justify-content: space-between;">
+                        <div id="audio-header-left" style="display: flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 700; color: var(--dark-blue);">
+                            <span id="audio-status-dot" class="audio-pulse-indicator" style="background-color: #2ecc71;"></span>
+                            <span id="audio-status-text">CALL IN PROGRESS</span>
+                        </div>
+                        <span id="audio-time-display" style="font-size: 0.8rem; font-family: monospace; color: #52796f; font-weight: normal;">0:00 / 0:00</span>
                     </div>
-                    <span id="audio-time-display" style="font-size: 0.8rem; font-family: monospace; color: #52796f; font-weight: normal;">0:00 / 0:00</span>
+
+                    <!-- Dynamic Track Stack dynamically generated in JS -->
+                    <div id="audio-track-container"></div>
+
+                    <!-- HOLD & REWIND CONTROLS -->
+                    <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none; gap: 6px;">
+                        <button id="audio-hold-btn" class="sim-ctrl-btn" onclick="toggleHold()" style="flex: 1; padding: 4px 6px; background: #e67e22; color: #fff; font-size: 0.76rem; gap: 4px;">
+                            ⏸️ Put on Hold
+                        </button>
+                        <button id="audio-rewind-btn" class="sim-ctrl-btn" onclick="rewindAudio5s()" style="flex: 1; padding: 4px 6px; background: #34495e; color: #fff; font-size: 0.76rem; gap: 4px;">
+                            ⏪ Rewind 5s
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Dynamic Track Stack dynamically generated in JS -->
-                <div id="audio-track-container"></div>
-
-                <!-- HOLD & REWIND CONTROLS -->
-                <div class="audio-btn-row-extra" id="audio-extra-row" style="display: none; gap: 6px;">
-                    <button id="audio-hold-btn" class="audio-btn hold-btn" onclick="toggleHold()" style="flex: 1; padding: 5px 8px; background: #e67e22; color: #fff; border: none; border-radius: 5px; font-weight: 700; font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
-                        ⏸️ Put on Hold
-                    </button>
-                    <button id="audio-rewind-btn" class="audio-btn btn-outline" onclick="rewindAudio5s()" style="flex: 1; padding: 5px 8px; background: #34495e; color: #fff; border: none; border-radius: 5px; font-weight: 700; font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
-                        ⏪ Rewind 5s
-                    </button>
+                <!-- TACTICAL ASSISTANCE CONTROLS -->
+                <div id="assist-control-bar">
+                    <div style="display: flex; gap: 6px;">
+                        <button id="btn-request-hint" class="sim-ctrl-btn" onclick="triggerHint()" style="flex: 1; padding: 4px 6px; background: #1e6091; color: #fff; font-size: 0.76rem;">
+                            💡 Request Hint (<span id="hint-allowance-badge">1 Free</span>)
+                        </button>
+                        <button id="btn-request-answer" class="sim-ctrl-btn" onclick="triggerDirectAnswer()" style="flex: 1; padding: 4px 6px; background: #e74c3c; color: #fff; font-size: 0.76rem;">
+                            🎯 Direct Answer (<span id="answer-allowance-badge">-5%</span>)
+                        </button>
+                    </div>
+                    <div id="assist-display-box" style="display: none; margin-top: 5px; padding: 4px 6px; border-radius: 5px; font-size: 0.78rem; line-height: 1.25;"></div>
                 </div>
-            </div>
 
-            <!-- TACTICAL ASSISTANCE CONTROLS -->
-            <div id="assist-control-bar" style="margin-bottom: 6px; background: rgba(255, 255, 255, 0.95); border: 1px solid #d2d8e8; border-radius: 6px; padding: 4px 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); flex-shrink: 0;">
-                <div style="display: flex; gap: 6px;">
-                    <button id="btn-request-hint" class="assist-btn" onclick="triggerHint()" style="flex: 1; padding: 4px 6px; background: #1e6091; color: #fff; border: none; border-radius: 4px; font-weight: 700; font-size: 0.76rem; cursor: pointer; transition: all 0.2s;">
-                        💡 Request Hint (<span id="hint-allowance-badge">1 Free</span>)
-                    </button>
-                    <button id="btn-request-answer" class="assist-btn" onclick="triggerDirectAnswer()" style="flex: 1; padding: 4px 6px; background: #e74c3c; color: #fff; border: none; border-radius: 4px; font-weight: 700; font-size: 0.76rem; cursor: pointer; transition: all 0.2s;">
-                        🎯 Direct Answer (<span id="answer-allowance-badge">-5%</span>)
-                    </button>
-                </div>
-                <div id="assist-display-box" style="display: none; margin-top: 4px; padding: 4px 6px; border-radius: 4px; font-size: 0.78rem; line-height: 1.25;"></div>
             </div>
 
             <div id="instruction-text">
@@ -1250,12 +1287,16 @@
         }
 
         // --- VISUAL ASSISTS & RADAR PULSE ---
-        function removeVisualAssists() {
+        function removeVisualMarkers() {
             const existingPulse = document.getElementById('active-radar-pulse');
             if (existingPulse) existingPulse.remove();
 
             const existingArrow = document.getElementById('active-direct-arrow');
             if (existingArrow) existingArrow.remove();
+        }
+
+        function removeVisualAssists() {
+            removeVisualMarkers();
 
             const displayBox = document.getElementById('assist-display-box');
             if (displayBox) {
@@ -1265,7 +1306,7 @@
         }
 
         function showRegionRadarPulse(stepData) {
-            removeVisualAssists();
+            removeVisualMarkers();
 
             const activeIds = getActiveHitboxIds(stepData);
             if (!activeIds || activeIds.length === 0) return;
@@ -1302,7 +1343,7 @@
         }
 
         function showSpotlight(stepData) {
-            removeVisualAssists();
+            removeVisualMarkers();
 
             const activeIds = getActiveHitboxIds(stepData);
             if (!activeIds || activeIds.length === 0) return;
@@ -2428,8 +2469,8 @@
             // Keep POS_4.70.png (Coach Mike) visible as the final background
             posImage.src = "resources/POS_assets/Stage_4/POS_4.70.png";
 
-            const assistControl = document.getElementById('assist-control-bar');
-            if (assistControl) assistControl.style.display = 'none';
+            const simCard = document.getElementById('sim-control-card');
+            if (simCard) simCard.style.display = 'none';
 
             const metrics = calculateScorecard();
             const mins = Math.floor(metrics.timeSpentSeconds / 60);
