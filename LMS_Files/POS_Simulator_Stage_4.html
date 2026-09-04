@@ -1533,7 +1533,7 @@
                 statusDot.style.backgroundColor = '#e74c3c';
                 const mins = Math.floor(holdDurationSeconds / 60).toString().padStart(2, '0');
                 const secs = (holdDurationSeconds % 60).toString().padStart(2, '0');
-                statusText.innerHTML = `🔴 LINE 1 ON HOLD (<span id="hold-timer-text">${mins}:${secs}</span>)`;
+                statusText.innerHTML = `LINE 1 ON HOLD (<span id="hold-timer-text">${mins}:${secs}</span>)`;
             } else if (state === 'playing') {
                 statusDot.style.backgroundColor = '#2ecc71';
                 statusText.innerText = 'CALL IN PROGRESS';
