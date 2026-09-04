@@ -1730,26 +1730,35 @@
     .audio-btn-row-extra {
         display: flex;
         gap: 8px;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .call-ctrl-btn {
         font-family: 'Subhead1', sans-serif !important;
         font-weight: normal !important;
         border-radius: 50px;
-        padding: 0.45rem 1rem;
+        padding: 0.5rem 1rem;
         font-size: 0.95rem;
-        line-height: 1.2;
+        line-height: 1;
         cursor: pointer;
         transition: all 0.2s ease;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 6px;
-        flex: 1;
+        flex: 1 1 0;
+        min-width: 0;
+        text-align: center;
         border: none;
-        color: var(--crust-base);
+        color: var(--crust-base) !important;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
         box-sizing: border-box;
+    }
+
+    .call-ctrl-btn svg, .btn svg {
+        display: block;
+        flex-shrink: 0;
     }
 
     .call-hold-btn {
