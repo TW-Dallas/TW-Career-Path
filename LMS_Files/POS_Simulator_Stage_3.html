@@ -1212,23 +1212,21 @@
             });
 
         // Global advanceStep function capable of parsing any argument structure
-        window.advanceStep = function(target) {
+        window.advanceStep = function(target, event) {
             if (currentStep >= sequence.length || !sequence[currentStep]) return;
 
             let clickedId = "";
 
-            if (typeof target === 'string') {
-                clickedId = target;
-            } else if (target && target.id) {
+            const evt = event || window.event;
+            if (target && typeof target === 'object' && target.id) {
                 clickedId = target.id;
-            } else if (target && target.target) {
-                clickedId = target.target.id;
-            } else if (window.event) {
-                const eventTarget = window.event.currentTarget || window.event.target;
-                if (eventTarget) {
-                    clickedId = eventTarget.id;
-                }
-            } 
+            } else if (evt) {
+                const eventTarget = evt.currentTarget || evt.target;
+                if (eventTarget && eventTarget.id) clickedId = eventTarget.id;
+            }
+            if (!clickedId && typeof target === 'string' && target !== 'next') {
+                clickedId = target;
+            }
 
             const stepData = sequence[currentStep];
             if (!stepData) return;
@@ -1237,8 +1235,12 @@
             if (stepData.input && (stepData.input.type === 'text' || stepData.input.type === 'textarea')) {
                 const targetInputId = stepData.inputHitbox || 
                     (Array.isArray(stepData.activeHitbox) ? stepData.activeHitbox[0] : stepData.activeHitbox);
+                const activeHitboxIds = getActiveHitboxIds(stepData);
 
-                if (clickedId === targetInputId) {
+                // Clicking anywhere inside the current active input or re-focusing is ALWAYS safe
+                if (clickedId === targetInputId || activeHitboxIds.includes(clickedId) || !clickedId || clickedId === 'next') {
+                    const inputEl = document.querySelector('.hitbox-text-input');
+                    if (inputEl) inputEl.focus();
                     return; // Re-focusing or clicking within input box
                 }
 
@@ -1246,7 +1248,6 @@
                 const typedVal = activeInput ? activeInput.value : '';
                 const isMatch = isTextEntryValid(typedVal, stepData.input.expectedValue);
 
-                const activeHitboxIds = getActiveHitboxIds(stepData);
                 const nextStepData = sequence[currentStep + 1];
                 const nextHitboxIds = nextStepData ? getActiveHitboxIds(nextStepData) : [];
                 const nextNextStepData = sequence[currentStep + 2];
