@@ -68,40 +68,92 @@
         /* Tactical Assistance Animations & Highlighting */
         @keyframes regionRadarPulse {
             0% {
-                transform: scale(0.6);
-                opacity: 0.85;
-                box-shadow: 0 0 0 0 rgba(0, 144, 226, 0.7), 0 0 20px rgba(0, 144, 226, 0.5);
+                transform: scale(0.4);
+                opacity: 0.95;
+                box-shadow: 0 0 0 0 rgba(0, 144, 226, 0.8), 0 0 25px rgba(0, 144, 226, 0.6);
             }
             50% {
-                transform: scale(1.15);
-                opacity: 0.45;
-                box-shadow: 0 0 0 25px rgba(0, 144, 226, 0.2), 0 0 40px rgba(0, 144, 226, 0.3);
+                transform: scale(1.1);
+                opacity: 0.7;
+                box-shadow: 0 0 0 35px rgba(0, 144, 226, 0.4), 0 0 50px rgba(0, 144, 226, 0.4);
             }
             100% {
-                transform: scale(1.35);
+                transform: scale(1.4);
                 opacity: 0;
-                box-shadow: 0 0 0 50px rgba(0, 144, 226, 0), 0 0 65px rgba(0, 144, 226, 0);
+                box-shadow: 0 0 0 70px rgba(0, 144, 226, 0), 0 0 75px rgba(0, 144, 226, 0);
             }
         }
 
         .region-radar-pulse {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 144, 226, 0.35) 0%, rgba(30, 96, 145, 0.15) 60%, rgba(0, 144, 226, 0) 100%);
+            background: radial-gradient(circle, rgba(0, 144, 226, 0.45) 0%, rgba(30, 96, 145, 0.25) 50%, rgba(0, 144, 226, 0) 100%);
+            border: 2px solid rgba(0, 144, 226, 0.8);
             pointer-events: none;
             z-index: 99;
-            animation: regionRadarPulse 2s infinite ease-out;
+            animation: regionRadarPulse 1.8s infinite cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .spotlight-active {
-            outline: 3px solid #e74c3c !important;
-            box-shadow: 0 0 15px rgba(231, 76, 60, 0.8) !important;
-            animation: pulseSpotlight 1s infinite alternate !important;
+        /* Direct Answer Directional Pointer Arrow (No boxy red outline) */
+        .direct-answer-arrow {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff0000"><path d="M12 21l-9-9h6V3h6v9h6z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.6));
+            animation: bounceDirectArrow 1s infinite ease-in-out;
+            z-index: 999;
+            pointer-events: none;
         }
 
-        @keyframes pulseSpotlight {
-            from { box-shadow: 0 0 8px rgba(231, 76, 60, 0.6); }
-            to { box-shadow: 0 0 22px rgba(231, 76, 60, 1); }
+        .direct-answer-arrow.arrow-bottom {
+            transform: rotate(180deg);
+            animation: bounceDirectArrowUp 1s infinite ease-in-out;
+        }
+
+        @keyframes bounceDirectArrow {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes bounceDirectArrowUp {
+            0% { transform: rotate(180deg) translateY(0); }
+            50% { transform: rotate(180deg) translateY(-8px); }
+            100% { transform: rotate(180deg) translateY(0); }
+        }
+
+        /* Compact instruction panel and text styling to ensure Action is visible without scrolling */
+        #instruction-panel {
+            padding: 12px 14px;
+        }
+
+        #instruction-text {
+            font-size: 0.98rem;
+            line-height: 1.35;
+            margin-top: 6px;
+        }
+
+        #instruction-text p {
+            margin: 0 0 6px 0;
+            font-size: 0.92rem;
+        }
+
+        #instruction-text h3 {
+            margin: 0 0 6px 0;
+            font-size: 1.1rem;
+        }
+
+        #instruction-text ul {
+            margin: 4px 0 6px 0;
+            padding-left: 18px;
+        }
+
+        #instruction-text li {
+            margin-bottom: 2px;
+            font-size: 0.88rem;
         }
 
         .assist-btn:hover {
@@ -186,16 +238,16 @@
             </div>
 
             <!-- TACTICAL ASSISTANCE CONTROLS -->
-            <div id="assist-control-bar" style="margin-bottom: 12px; background: rgba(255, 255, 255, 0.95); border: 1px solid #d2d8e8; border-radius: 8px; padding: 8px 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                <div style="display: flex; gap: 8px;">
-                    <button id="btn-request-hint" class="assist-btn" onclick="triggerHint()" style="flex: 1; padding: 7px 10px; background: #1e6091; color: #fff; border: none; border-radius: 6px; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">
+            <div id="assist-control-bar" style="margin-bottom: 6px; background: rgba(255, 255, 255, 0.95); border: 1px solid #d2d8e8; border-radius: 6px; padding: 4px 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); flex-shrink: 0;">
+                <div style="display: flex; gap: 6px;">
+                    <button id="btn-request-hint" class="assist-btn" onclick="triggerHint()" style="flex: 1; padding: 4px 6px; background: #1e6091; color: #fff; border: none; border-radius: 4px; font-weight: 700; font-size: 0.76rem; cursor: pointer; transition: all 0.2s;">
                         💡 Request Hint (<span id="hint-allowance-badge">1 Free</span>)
                     </button>
-                    <button id="btn-request-answer" class="assist-btn" onclick="triggerDirectAnswer()" style="flex: 1; padding: 7px 10px; background: #e74c3c; color: #fff; border: none; border-radius: 6px; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">
+                    <button id="btn-request-answer" class="assist-btn" onclick="triggerDirectAnswer()" style="flex: 1; padding: 4px 6px; background: #e74c3c; color: #fff; border: none; border-radius: 4px; font-weight: 700; font-size: 0.76rem; cursor: pointer; transition: all 0.2s;">
                         🎯 Direct Answer (<span id="answer-allowance-badge">-5%</span>)
                     </button>
                 </div>
-                <div id="assist-display-box" style="display: none; margin-top: 8px; padding: 8px 10px; border-radius: 6px; font-size: 0.85rem; line-height: 1.4;"></div>
+                <div id="assist-display-box" style="display: none; margin-top: 4px; padding: 4px 6px; border-radius: 4px; font-size: 0.78rem; line-height: 1.25;"></div>
             </div>
 
             <div id="instruction-text">
@@ -1211,9 +1263,8 @@
             const existingPulse = document.getElementById('active-radar-pulse');
             if (existingPulse) existingPulse.remove();
 
-            document.querySelectorAll('.hitbox').forEach(hb => {
-                hb.classList.remove('spotlight-active');
-            });
+            const existingArrow = document.getElementById('active-direct-arrow');
+            if (existingArrow) existingArrow.remove();
 
             const displayBox = document.getElementById('assist-display-box');
             if (displayBox) {
@@ -1223,8 +1274,7 @@
         }
 
         function showRegionRadarPulse(stepData) {
-            const existingPulse = document.getElementById('active-radar-pulse');
-            if (existingPulse) existingPulse.remove();
+            removeVisualAssists();
 
             const activeIds = getActiveHitboxIds(stepData);
             if (!activeIds || activeIds.length === 0) return;
@@ -1235,6 +1285,14 @@
             const hbWrap = document.getElementById('hitbox-wrapper');
             if (!hbWrap) return;
 
+            const prevDisplay = hb.style.display;
+            if (prevDisplay === 'none' || !prevDisplay) {
+                hb.style.display = 'block';
+            }
+
+            const hbRect = hb.getBoundingClientRect();
+            const wrapRect = hbWrap.getBoundingClientRect();
+
             const pulse = document.createElement('div');
             pulse.id = 'active-radar-pulse';
             pulse.className = 'region-radar-pulse';
@@ -1243,29 +1301,56 @@
             pulse.style.width = pulseSize + 'px';
             pulse.style.height = pulseSize + 'px';
 
-            const hbLeft = parseFloat(hb.style.left || 0);
-            const hbTop = parseFloat(hb.style.top || 0);
-            const hbWidth = parseFloat(hb.style.width || 0);
-            const hbHeight = parseFloat(hb.style.height || 0);
+            const centerX = (hbRect.left + hbRect.width / 2) - wrapRect.left;
+            const centerY = (hbRect.top + hbRect.height / 2) - wrapRect.top;
 
-            const centerX = hbLeft + (hbWidth / 2);
-            const centerY = hbTop + (hbHeight / 2);
-
-            pulse.style.left = `calc(${centerX}% - ${pulseSize / 2}px)`;
-            pulse.style.top = `calc(${centerY}% - ${pulseSize / 2}px)`;
+            pulse.style.left = `${centerX - (pulseSize / 2)}px`;
+            pulse.style.top = `${centerY - (pulseSize / 2)}px`;
 
             hbWrap.appendChild(pulse);
         }
 
         function showSpotlight(stepData) {
+            removeVisualAssists();
+
             const activeIds = getActiveHitboxIds(stepData);
-            activeIds.forEach(id => {
-                const hb = document.getElementById(id);
-                if (hb) {
-                    hb.classList.add('spotlight-active');
-                    hb.classList.remove('hide-arrow');
-                }
-            });
+            if (!activeIds || activeIds.length === 0) return;
+            const targetId = activeIds[0];
+            const hb = document.getElementById(targetId);
+            if (!hb) return;
+
+            const hbWrap = document.getElementById('hitbox-wrapper');
+            if (!hbWrap) return;
+
+            const prevDisplay = hb.style.display;
+            if (prevDisplay === 'none' || !prevDisplay) {
+                hb.style.display = 'block';
+            }
+
+            const hbRect = hb.getBoundingClientRect();
+            const wrapRect = hbWrap.getBoundingClientRect();
+
+            const centerX = (hbRect.left + hbRect.width / 2) - wrapRect.left;
+            const topY = hbRect.top - wrapRect.top;
+
+            const arrow = document.createElement('div');
+            arrow.id = 'active-direct-arrow';
+            arrow.className = 'direct-answer-arrow';
+
+            const arrowSize = 40;
+            arrow.style.left = `${centerX - (arrowSize / 2)}px`;
+
+            if (topY < 50) {
+                // If target is near top of POS screen, point up from beneath
+                const bottomY = (hbRect.bottom - wrapRect.top) + 6;
+                arrow.style.top = `${bottomY}px`;
+                arrow.classList.add('arrow-bottom');
+            } else {
+                // Point down from directly above the hitbox
+                arrow.style.top = `${topY - arrowSize - 6}px`;
+            }
+
+            hbWrap.appendChild(arrow);
         }
 
         function updateAssistanceUI() {
