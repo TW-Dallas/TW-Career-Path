@@ -96,8 +96,8 @@
                 <button class="btn" style="padding: 0.45rem 1.2rem; font-size: 0.92rem;" onclick="goBack()">&#8592; Back</button>
                 
                 <div style="display: flex; gap: 6px; align-items: center;">
-                    <button id="btn-request-hint" class="btn-assist btn-assist-hint" onclick="triggerHint()">💡 Hint (<span id="hint-allowance-badge">1 Free</span>)</button>
-                    <button id="btn-request-answer" class="btn-assist btn-assist-answer" onclick="triggerDirectAnswer()">🎯 Answer (<span id="answer-allowance-badge">-5%</span>)</button>
+                    <button id="btn-request-hint" class="btn-assist btn-assist-hint" onclick="triggerHint()">💡 Hint (1 Free)</button>
+                    <button id="btn-request-answer" class="btn-assist btn-assist-answer" onclick="triggerDirectAnswer()">🎯 Answer (-5%)</button>
                 </div>
 
                 <button class="btn btn-finish" id="finish-sim-btn" style="display: none; padding: 0.45rem 1.2rem; font-size: 0.92rem;"
@@ -1232,37 +1232,35 @@
         }
 
         function updateAssistanceUI() {
-            const hintBadge = document.getElementById('hint-allowance-badge');
-            const answerBadge = document.getElementById('answer-allowance-badge');
             const hintBtn = document.getElementById('btn-request-hint');
             const answerBtn = document.getElementById('btn-request-answer');
 
-            if (!hintBadge || !answerBadge || !hintBtn || !answerBtn) return;
+            if (!hintBtn || !answerBtn) return;
 
             // Hint allowance state
             if (hintsUsed === 0) {
-                hintBadge.innerText = '1 Free';
+                hintBtn.innerHTML = '💡 Hint (1 Free)';
                 hintBtn.style.background = 'var(--med-blue)';
                 hintBtn.style.color = 'var(--crust-base)';
                 hintBtn.classList.remove('btn-assist-locked');
             } else if (hintsUsed === 1) {
-                hintBadge.innerText = '-2%';
+                hintBtn.innerHTML = '💡 Hint (-2%)';
                 hintBtn.style.background = 'var(--brand-blue)';
                 hintBtn.style.color = 'var(--crust-base)';
                 hintBtn.classList.remove('btn-assist-locked');
             } else {
-                hintBadge.innerText = '🔐 PIN';
+                hintBtn.innerHTML = '💡 Hint (🔐 PIN)';
                 hintBtn.classList.add('btn-assist-locked');
             }
 
             // Direct Answer allowance state
             if (answersUsed === 0) {
-                answerBadge.innerText = '-5%';
+                answerBtn.innerHTML = '🎯 Answer (-5%)';
                 answerBtn.style.background = 'var(--brand-red)';
                 answerBtn.style.color = 'var(--crust-base)';
                 answerBtn.classList.remove('btn-assist-locked');
             } else {
-                answerBadge.innerText = '🔐 PIN';
+                answerBtn.innerHTML = '🎯 Answer (🔐 PIN)';
                 answerBtn.classList.add('btn-assist-locked');
             }
         }
