@@ -1688,89 +1688,87 @@
 
     .call-ctrl-btn {
         font-family: 'OneDotCd-Bold', sans-serif;
-        border-radius: 20px;
-        padding: 6px 14px;
-        font-size: 0.86rem;
+        border-radius: 50px;
+        padding: 5px 14px;
+        font-size: 0.88rem;
         cursor: pointer;
-        transition: all 0.15s ease;
+        transition: all 0.2s ease;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 6px;
         flex: 1;
         border: none;
-        color: #ffffff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+        color: var(--crust-base);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     }
 
     .call-hold-btn {
-        background: #d97706;
+        background: var(--brand-blue);
     }
 
     .call-hold-btn:hover {
-        background: #b45309;
-        transform: translateY(-1px);
+        background: var(--dark-blue);
+        opacity: 0.95;
     }
 
     .call-rewind-btn {
-        background: #334155;
+        background: var(--dark-blue);
     }
 
     .call-rewind-btn:hover {
-        background: #1e293b;
-        transform: translateY(-1px);
+        background: var(--med-blue);
+        opacity: 0.95;
     }
 
-    /* SECONDARY ASSISTANCE SOLID PILL BUTTONS */
-    #assist-control-bar {
-        padding-top: 4px;
-    }
-
-    .assist-btn-row {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-    }
-
-    .assist-solid-btn {
-        font-family: 'OneDotCd-Bold', sans-serif;
-        font-size: 0.86rem;
-        padding: 6px 14px;
-        border-radius: 20px;
-        cursor: pointer;
-        transition: all 0.15s ease;
+    /* FOOTER ASSISTANCE BUTTONS (COHESIVE WITH .btn) */
+    .btn-assist {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 6px;
-        flex: 1;
+        gap: 4px;
+        padding: 0.45rem 1rem;
+        border-radius: 50px;
+        font-family: 'OneDotCd-Bold', sans-serif;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
         border: none;
-        color: #ffffff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+        color: var(--crust-base);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        text-decoration: none;
     }
 
-    .assist-hint-btn {
+    .btn-assist-hint {
         background: var(--med-blue);
     }
 
-    .assist-hint-btn:hover {
+    .btn-assist-hint:hover {
         background: var(--dark-blue);
-        transform: translateY(-1px);
+        opacity: 0.9;
     }
 
-    .assist-answer-btn {
+    .btn-assist-answer {
         background: var(--brand-red);
     }
 
-    .assist-answer-btn:hover {
+    .btn-assist-answer:hover {
         background: var(--dark-red);
-        transform: translateY(-1px);
+        opacity: 0.9;
+    }
+
+    .btn-assist-locked {
+        background: var(--crust-dark) !important;
+        color: var(--crust-base) !important;
+        opacity: 0.75 !important;
+        cursor: not-allowed !important;
     }
 
     #assist-display-box {
-        margin-top: 8px;
+        margin: 6px 0 10px 0;
         padding: 8px 12px;
         border-radius: 8px;
-        font-size: 0.84rem;
+        font-family: 'OneDotCd', sans-serif;
+        font-size: 0.92rem;
         line-height: 1.4;
     }

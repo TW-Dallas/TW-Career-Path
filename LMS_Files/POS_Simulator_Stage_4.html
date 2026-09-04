@@ -57,10 +57,8 @@
             <!-- Hidden Audio Elements -->
             <audio id="global-audio-player"></audio>
 
-            <!-- UNIFIED SIMULATOR CONTROL CARD -->
-            <div id="sim-control-card">
-
-                <!-- Primary Call Controls (Active on audio steps) -->
+            <!-- CALL CONTROL CARD (Active on audio steps) -->
+            <div id="sim-control-card" style="margin-bottom: 10px;">
                 <div id="audio-control-panel" style="display: none;">
                     <div class="audio-header" id="audio-main-header">
                         <div id="audio-header-left">
@@ -83,27 +81,26 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- SECONDARY TACTICAL ASSISTANCE -->
-                <div id="assist-control-bar">
-                    <div class="assist-btn-row">
-                        <button id="btn-request-hint" class="assist-solid-btn assist-hint-btn" onclick="triggerHint()">💡 Request Hint (<span id="hint-allowance-badge">1 Free</span>)</button>
-                        <button id="btn-request-answer" class="assist-solid-btn assist-answer-btn" onclick="triggerDirectAnswer()">🎯 Direct Answer (<span id="answer-allowance-badge">-5%</span>)</button>
-                    </div>
-                    <div id="assist-display-box" style="display: none;"></div>
-                </div>
-
             </div>
+
+            <!-- TACTICAL ASSIST BANNER (Revealed when hint or answer is triggered) -->
+            <div id="assist-display-box" style="display: none;"></div>
 
             <div id="instruction-text">
                 <!-- JavaScript will inject the text/tickets here -->
             </div>
             <div id="error-message" class="error-msg">❌ Incorrect Action. Try again.</div>
 
-            <!-- THE TEST BUTTONS -->
-            <div class="nav-strip" style="margin-top: auto; display: flex; gap: 10px;">
-                <button class="btn" onclick="goBack()">&#8592; Back</button>
-                <button class="btn" id="finish-sim-btn" style="display: none; background-color: var(--brand-red);"
+            <!-- FOOTER NAV STRIP -->
+            <div class="nav-strip" style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                <button class="btn" style="padding: 0.45rem 1.2rem; font-size: 0.92rem;" onclick="goBack()">&#8592; Back</button>
+                
+                <div style="display: flex; gap: 6px; align-items: center;">
+                    <button id="btn-request-hint" class="btn-assist btn-assist-hint" onclick="triggerHint()">💡 Hint (<span id="hint-allowance-badge">1 Free</span>)</button>
+                    <button id="btn-request-answer" class="btn-assist btn-assist-answer" onclick="triggerDirectAnswer()">🎯 Answer (<span id="answer-allowance-badge">-5%</span>)</button>
+                </div>
+
+                <button class="btn btn-finish" id="finish-sim-btn" style="display: none; padding: 0.45rem 1.2rem; font-size: 0.92rem;"
                     onclick="endSimulation()">Finish</button>
             </div>
         </div>
@@ -1246,31 +1243,27 @@
             if (hintsUsed === 0) {
                 hintBadge.innerText = '1 Free';
                 hintBtn.style.background = 'var(--med-blue)';
-                hintBtn.style.color = '#ffffff';
-                hintBtn.style.opacity = '1';
+                hintBtn.style.color = 'var(--crust-base)';
+                hintBtn.classList.remove('btn-assist-locked');
             } else if (hintsUsed === 1) {
                 hintBadge.innerText = '-2%';
                 hintBtn.style.background = 'var(--brand-blue)';
-                hintBtn.style.color = '#ffffff';
-                hintBtn.style.opacity = '1';
+                hintBtn.style.color = 'var(--crust-base)';
+                hintBtn.classList.remove('btn-assist-locked');
             } else {
-                hintBadge.innerText = '🔐 Trainer PIN';
-                hintBtn.style.background = '#64748b';
-                hintBtn.style.color = '#ffffff';
-                hintBtn.style.opacity = '0.85';
+                hintBadge.innerText = '🔐 PIN';
+                hintBtn.classList.add('btn-assist-locked');
             }
 
             // Direct Answer allowance state
             if (answersUsed === 0) {
                 answerBadge.innerText = '-5%';
                 answerBtn.style.background = 'var(--brand-red)';
-                answerBtn.style.color = '#ffffff';
-                answerBtn.style.opacity = '1';
+                answerBtn.style.color = 'var(--crust-base)';
+                answerBtn.classList.remove('btn-assist-locked');
             } else {
-                answerBadge.innerText = '🔐 Trainer PIN';
-                answerBtn.style.background = '#64748b';
-                answerBtn.style.color = '#ffffff';
-                answerBtn.style.opacity = '0.85';
+                answerBadge.innerText = '🔐 PIN';
+                answerBtn.classList.add('btn-assist-locked');
             }
         }
 
@@ -1482,7 +1475,7 @@
                 clearInterval(holdTimerInterval);
 
                 holdBtn.innerHTML = "⏸️ Put on Hold";
-                holdBtn.style.backgroundColor = "#d97706";
+                holdBtn.style.backgroundColor = "var(--brand-blue)";
                 updateAudioHeaderState('playing');
 
                 audioPlayer.play().catch(e => console.log("Audio play error:", e));
