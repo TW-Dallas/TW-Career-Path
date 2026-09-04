@@ -117,11 +117,10 @@
         <div class="video-modal-content">
             <span class="video-modal-close" onclick="closeVideoModal()">&times;</span>
             <div class="video-wrapper-inner">
-                <!-- 1. RESPONSIVE LEFT SHIELD (Top-Left Logo & Title Cover) -->
-                <div style="position: absolute; top: 0; left: 0; width: 280px; height: 85px; z-index: 1000; cursor: default;"></div>
-                
-                <!-- 2. RESPONSIVE RIGHT SHIELD (Top-Right Buttons Cover) -->
-                <div style="position: absolute; top: 0; right: 0; width: 90px; height: 90px; z-index: 1000; cursor: default;"></div>
+                <!-- VIMEO INVISIBLE SHIELDS (Top-Left, Full Right Stack, and Bottom-Right Logo) -->
+                <div class="vimeo-shield-top-left"></div>
+                <div class="vimeo-shield-right"></div>
+                <div class="vimeo-shield-bottom-right"></div>
                 
                 <!-- STREAM LOADER & WATCHDOG -->
                 <div id="video-stream-loader" class="video-stream-loader">
