@@ -145,7 +145,7 @@
             animation: fadeIn 0.5s ease-out;
         }
 
-        /* Category Selector Grid: 4 cards per row on desktop, proportionate 3:2 photos */
+        /* Category Selector Grid: 3 cards per row on desktop (3x2 layout), proportionate 3:2 photos */
         #view-categories {
             display: grid;
             grid-template-columns: 1fr;
@@ -456,7 +456,7 @@
 
         @media (min-width: 900px) {
             #view-categories.grid-view {
-                grid-template-columns: repeat(4, 1fr) !important;
+                grid-template-columns: repeat(3, 1fr) !important;
             }
         }
 
