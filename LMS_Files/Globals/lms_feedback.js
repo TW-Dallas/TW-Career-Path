@@ -43,8 +43,97 @@
         });
     } catch (_) {}
 
-    // Inject Styles using strictly established brand colors
+    // Determine Base URL for fonts folder relative to lms_feedback.js location
+    let fontsBaseUrl = 'fonts/';
+    try {
+        const scriptEl = document.querySelector('script[src*="lms_feedback.js"]');
+        const scriptSrc = (document.currentScript && document.currentScript.src) || (scriptEl && scriptEl.src) || '';
+        if (scriptSrc) {
+            fontsBaseUrl = scriptSrc.replace(/\/LMS_Files\/Globals\/lms_feedback\.js.*$/, '/fonts/').replace(/\/Globals\/lms_feedback\.js.*$/, '/fonts/');
+            if (!fontsBaseUrl.endsWith('/')) fontsBaseUrl += '/';
+        }
+    } catch (_) {}
+
+    // Inject Styles using strictly established brand colors and Domino's typography
     const styles = `
+        /* Master Domino's Font Declarations for Feedback UI */
+        @font-face {
+            font-family: 'PizzaPress';
+            src: url('${fontsBaseUrl}Dominos%20Sans%20Header%201.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos Sans Header 1.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'PizzaPress';
+            src: url('${fontsBaseUrl}Dominos%20Sans%20Header%201.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos Sans Header 1.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Header1';
+            src: url('${fontsBaseUrl}Dominos%20Sans%20Header%201.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos Sans Header 1.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Subhead1';
+            src: url('${fontsBaseUrl}Dominos%20Sans%20Subhead%201.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos Sans Subhead 1.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Compact';
+            src: url('${fontsBaseUrl}Dominos%20Sans%20Body%20Compact.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos Sans Body Compact.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'OneDotCd-Bold';
+            src: url('${fontsBaseUrl}Dominos%20Sans%20Subhead%201.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos Sans Subhead 1.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos%20Sans%20Bold.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos Sans Bold.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'OneDotCd-Bold';
+            src: url('${fontsBaseUrl}Dominos%20Sans%20Bold.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos Sans Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'OneDotCd';
+            src: url('${fontsBaseUrl}Dominos%20Sans%20Body%20Compact.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos Sans Body Compact.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos%20Sans%20Body.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos Sans Body.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'OneDotCd';
+            src: url('${fontsBaseUrl}Dominos%20Sans%20Body%20Compact.ttf') format('truetype'),
+                 url('${fontsBaseUrl}Dominos Sans Body Compact.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
         /* Header-Embedded Trigger Button */
         #beta-feedback-trigger.in-header {
             position: static;
@@ -53,7 +142,7 @@
             border: 1px solid rgba(254, 250, 246, 0.3);
             padding: 0.35rem 0.85rem;
             border-radius: 20px;
-            font-family: 'OneDotCd-Bold', sans-serif;
+            font-family: 'OneDotCd-Bold', 'Subhead1', sans-serif;
             font-size: 0.85rem;
             cursor: pointer;
             box-shadow: none;
@@ -85,7 +174,7 @@
             border-right: none;
             padding: 8px 12px;
             border-radius: 8px 0 0 8px;
-            font-family: 'OneDotCd-Bold', sans-serif;
+            font-family: 'OneDotCd-Bold', 'Subhead1', sans-serif;
             font-size: 0.85rem;
             cursor: pointer;
             box-shadow: -2px 4px 15px rgba(0,0,0,0.25);
@@ -145,9 +234,11 @@
 
         .beta-feedback-card h3 {
             margin: 0 0 6px 0;
-            font-family: 'OneDotCd-Bold', sans-serif;
+            font-family: 'PizzaPress', 'Header1', 'Arial Black', Impact, sans-serif;
+            font-weight: normal;
+            letter-spacing: 0.5px;
             color: #005c91;
-            font-size: 1.15rem;
+            font-size: 1.35rem;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -155,8 +246,10 @@
 
         .beta-feedback-card p {
             margin: 0 0 14px 0;
+            font-family: 'OneDotCd', 'Compact', sans-serif;
+            font-weight: normal;
             color: #603913;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             line-height: 1.35;
         }
 
@@ -179,21 +272,22 @@
 
         .beta-feedback-field label {
             display: block;
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 0.8rem;
+            font-family: 'OneDotCd-Bold', 'Subhead1', sans-serif;
+            font-weight: normal;
+            font-size: 0.85rem;
             color: #005c91;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
             margin-bottom: 3px;
         }
 
         .beta-feedback-field input {
             width: 100%;
-            padding: 7px 10px;
+            padding: 8px 10px;
             border: 1.5px solid #c0a588;
             border-radius: 6px;
-            font-family: 'OneDotCd', sans-serif;
-            font-size: 0.92rem;
+            font-family: 'OneDotCd', 'Compact', sans-serif;
+            font-size: 0.95rem;
             box-sizing: border-box;
             background: #faf2e9;
             color: #472b10;
@@ -207,11 +301,12 @@
 
         .beta-feedback-card label.text-label {
             display: block;
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 0.8rem;
+            font-family: 'OneDotCd-Bold', 'Subhead1', sans-serif;
+            font-weight: normal;
+            font-size: 0.85rem;
             color: #005c91;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
             margin-bottom: 3px;
         }
 
@@ -221,8 +316,8 @@
             border: 1.5px solid #c0a588;
             border-radius: 6px;
             padding: 8px 10px;
-            font-family: 'OneDotCd', sans-serif;
-            font-size: 0.92rem;
+            font-family: 'OneDotCd', 'Compact', sans-serif;
+            font-size: 0.95rem;
             box-sizing: border-box;
             resize: vertical;
             outline: none;
@@ -245,8 +340,10 @@
         .beta-btn {
             padding: 8px 18px;
             border-radius: 50px;
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 0.9rem;
+            font-family: 'OneDotCd-Bold', 'Subhead1', sans-serif;
+            font-weight: normal;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
             cursor: pointer;
             border: none;
             transition: 0.2s ease;
