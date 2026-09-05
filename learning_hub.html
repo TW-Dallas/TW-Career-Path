@@ -131,7 +131,7 @@
         /* --- Main Content --- */
         main {
             max-width: 1000px;
-            margin: 1.2rem auto;
+            margin: 0.75rem auto;
             padding: 0 1rem;
             flex: 1;
             width: 100%;
@@ -141,7 +141,7 @@
         .grid-view {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 2rem;
+            gap: 1.25rem;
             animation: fadeIn 0.5s ease-out;
         }
 
@@ -152,7 +152,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             transition: var(--transition);
             cursor: pointer;
-            border-top: 6px solid var(--acc-blue);
+            border-top: 5px solid var(--acc-blue);
             display: flex;
             flex-direction: column;
             text-decoration: none;
@@ -161,53 +161,55 @@
         }
 
         .lobby-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 18px rgba(0,0,0,0.12);
         }
 
         .card-image-area {
-            height: 240px;
+            height: 140px;
             background-color: var(--crust-med);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+            font-size: 3rem;
             color: var(--crust-burnt);
             background-size: cover;
             background-position: top;
         }
         
         .card-content {
-            padding: 2rem;
+            padding: 1.1rem 1.4rem;
             text-align: center;
             flex-grow: 1;
         }
 
         .card-title {
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 1.7rem;
+            font-size: 1.45rem;
             color: var(--dark-blue);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .card-desc {
             color: #666;
-            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            margin-bottom: 0.9rem;
+            line-height: 1.35;
         }
 
         .btn {
             display: inline-block;
             background: var(--brand-blue);
             color: white;
-            padding: 0.8rem 2rem;
+            padding: 0.6rem 1.6rem;
             border-radius: 50px;
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
             text-decoration: none;
             transition: var(--transition);
             border: none;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             cursor: pointer;
         }
 
@@ -384,11 +386,24 @@
         /* --- Footer --- */
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 0.65rem 1rem 0.5rem;
             background-color: var(--dark-blue);
             color: white;
             font-family: 'OneDotCd', sans-serif;
+            font-size: 0.82rem;
             margin-top: auto;
+        }
+
+        footer p {
+            margin: 0;
+            line-height: 1.35;
+        }
+
+        footer .footer-subtext {
+            margin-top: 2px;
+            font-size: 0.7rem;
+            opacity: 0.75;
+            letter-spacing: 0.3px;
         }
 
         /* --- Media Queries --- */
@@ -444,8 +459,8 @@
             <!-- Card 1: LMS -->
             <div class="lobby-card">
                 <div class="card-image-area" style="background: linear-gradient(135deg, #eef4f8 0%, #dbe9f4 100%);">
-                    <div style="width: 88px; height: 88px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,100,145,0.12); border: 2px solid #c9e0f0;">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--brand-blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                    <div style="width: 72px; height: 72px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,100,145,0.12); border: 2px solid #c9e0f0;">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="var(--brand-blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
                     </div>
                 </div>
                 <div class="card-content">
@@ -458,8 +473,8 @@
             <!-- Card 2: Resources -->
             <div class="lobby-card" onclick="navigateTo('categories')">
                 <div class="card-image-area" style="background: linear-gradient(135deg, #fbf7f0 0%, #f1e7d8 100%);">
-                    <div style="width: 88px; height: 88px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(184,134,11,0.12); border: 2px solid #ecdcc6;">
-                        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#b56f2a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="16" y2="10"></line></svg>
+                    <div style="width: 72px; height: 72px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(184,134,11,0.12); border: 2px solid #ecdcc6;">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#b56f2a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="16" y2="10"></line></svg>
                     </div>
                 </div>
                 <div class="card-content">
@@ -562,7 +577,7 @@
 
     <footer>
         <p>&copy; 2026 Team Wow! | Domino's Pizza</p>
-        <p style="margin-top:5px; font-size: 0.7em;">Powered by Crust & Code</p>
+        <p class="footer-subtext">Powered by Crust & Code</p>
     </footer>
 
        <script>
