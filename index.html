@@ -185,11 +185,24 @@
         /* --- Footer --- */
         footer {
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 1.2rem 1rem 0.8rem;
             background-color: var(--dark-blue);
             color: var(--crust-base);
-            margin-top: 3rem;
+            margin-top: 2rem;
             font-family: 'OneDotCd', sans-serif;
+            font-size: 0.82rem;
+        }
+
+        footer p {
+            margin: 0;
+            line-height: 1.35;
+        }
+
+        footer .footer-subtext {
+            margin-top: 2px;
+            font-size: 0.7rem;
+            opacity: 0.75;
+            letter-spacing: 0.3px;
         }
 
         /* --- Desktop --- */
@@ -341,7 +354,7 @@
         /* Footer Button Wrapper */
         .footer-support-wrapper {
             text-align: center;
-            padding: 20px;
+            padding: 0 0 6px 0;
             /* Removed background-color: var(--crust-light); */
             background: transparent; 
         }
@@ -351,10 +364,11 @@
             background: rgba(254, 250, 246, 0.15); /* Updated to Crust Base RGB */
             border: 1px solid var(--crust-base);
             color: var(--crust-base);
-            padding: 8px 20px;
+            padding: 5px 16px;
             border-radius: 20px;
             cursor: pointer;
             font-family: 'OneDotCd-Bold';
+            font-size: 0.85rem;
             transition: all 0.2s ease;
         }
         
@@ -572,13 +586,13 @@
 
     <footer>
         <!-- Button FIRST (Prominent) -->
-        <div class="footer-support-wrapper" style="margin-bottom: 20px;">
+        <div class="footer-support-wrapper" style="margin-bottom: 8px;">
             <button onclick="toggleSupportModal()" class="footer-support-btn">Technical Support / Feedback</button>
         </div>
     
         <!-- Copyright SECOND -->
-        <p style="font-size: 0.9rem;">&copy; 2026 Team Wow! | Domino's Pizza</p>
-        <p style="margin-top:5px; font-size: 0.7em; opacity: 0.7;">Powered by Crust & Code</p>
+        <p>&copy; 2026 Team Wow! | Domino's Pizza</p>
+        <p class="footer-subtext">Powered by Crust & Code</p>
     </footer>
 
     <!-- Add this Modal HTML first (hidden by default) -->
