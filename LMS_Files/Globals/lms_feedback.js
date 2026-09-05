@@ -147,43 +147,93 @@
             margin: 0 0 6px 0;
             font-family: 'OneDotCd-Bold', sans-serif;
             color: #005c91;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .beta-feedback-card p {
-            margin: 0 0 16px 0;
+            margin: 0 0 14px 0;
             color: #603913;
             font-size: 0.85rem;
-            line-height: 1.4;
+            line-height: 1.35;
         }
 
-        .beta-feedback-card label {
+        .beta-feedback-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        @media (max-width: 480px) {
+            .beta-feedback-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+        }
+
+        .beta-feedback-field {
+            margin-bottom: 8px;
+        }
+
+        .beta-feedback-field label {
             display: block;
             font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            color: #005c91;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 3px;
+        }
+
+        .beta-feedback-field input {
+            width: 100%;
+            padding: 7px 10px;
+            border: 1.5px solid #c0a588;
+            border-radius: 6px;
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 0.92rem;
+            box-sizing: border-box;
+            background: #faf2e9;
             color: #472b10;
-            margin-bottom: 4px;
+        }
+
+        .beta-feedback-field input:focus {
+            border-color: #0090e2;
+            outline: none;
+            background: #fff;
+        }
+
+        .beta-feedback-card label.text-label {
+            display: block;
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 0.8rem;
+            color: #005c91;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 3px;
         }
 
         .beta-feedback-card textarea {
             width: 100%;
-            height: 100px;
-            border: 2px solid #f0decc;
+            height: 90px;
+            border: 1.5px solid #c0a588;
             border-radius: 6px;
-            padding: 10px;
-            font-family: inherit;
-            font-size: 0.9rem;
+            padding: 8px 10px;
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 0.92rem;
             box-sizing: border-box;
             resize: vertical;
             outline: none;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
+            background: #faf2e9;
+            color: #472b10;
         }
 
         .beta-feedback-card textarea:focus {
             border-color: #0090e2;
+            background: #fff;
         }
 
         .beta-feedback-actions {
@@ -307,15 +357,27 @@
             <div class="beta-feedback-card">
                 <!-- FORM VIEW -->
                 <div id="beta-feedback-form-view">
-                    <h3>🛠️ Feedback / Bug Report</h3>
-                    <p>Spotted a typo, broken button, or layout issue? Let us know!</p>
+                    <h3>🛠️ Report Issue / Support</h3>
+                    <p>Found a problem or need help? Let us know!</p>
                     <form id="beta-feedback-form">
-                        <div id="beta-feedback-contact-group" style="display: none; margin-bottom: 10px;">
-                            <label for="beta-feedback-contact" style="font-size: 0.85rem; color: #005c91; font-family: 'OneDotCd-Bold', sans-serif; text-transform: uppercase; margin-bottom: 4px; display: block;">Your Name & Email / Store # (Optional):</label>
-                            <input type="text" id="beta-feedback-contact" placeholder="e.g. Jane Doe - Store 1234 / jane@example.com" style="width: 100%; padding: 8px 10px; border: 1.5px solid #c0a588; border-radius: 6px; font-family: 'OneDotCd', sans-serif; font-size: 0.95rem; box-sizing: border-box; background: #faf2e9; color: #472b10;">
+                        <div class="beta-feedback-grid">
+                            <div class="beta-feedback-field">
+                                <label for="beta-feedback-name">Your Name *</label>
+                                <input type="text" id="beta-feedback-name" placeholder="Your Name" required>
+                            </div>
+                            <div class="beta-feedback-field">
+                                <label for="beta-feedback-store">Store # *</label>
+                                <input type="text" id="beta-feedback-store" placeholder="e.g. 1234" required>
+                            </div>
                         </div>
-                        <label for="beta-feedback-text">Issue Description:</label>
-                        <textarea id="beta-feedback-text" placeholder="Describe what went wrong or how to improve this step..." required></textarea>
+                        <div class="beta-feedback-field">
+                            <label for="beta-feedback-email">Email Address *</label>
+                            <input type="email" id="beta-feedback-email" placeholder="your.email@example.com" required>
+                        </div>
+                        <div class="beta-feedback-field">
+                            <label for="beta-feedback-text" class="text-label">Issue Description *</label>
+                            <textarea id="beta-feedback-text" placeholder="Describe what went wrong or what you need help with..." required></textarea>
+                        </div>
                         <div class="beta-feedback-actions">
                             <button type="button" class="beta-btn beta-btn-cancel" id="beta-feedback-close">Cancel</button>
                             <button type="submit" class="beta-btn beta-btn-submit" id="beta-feedback-send">Submit Report</button>
@@ -326,9 +388,9 @@
                 <!-- SUCCESS CONFIRMATION VIEW (Replaces System Alert) -->
                 <div id="beta-feedback-success-view" style="display: none; text-align: center; padding: 10px 4px 6px;">
                     <div style="font-size: 3rem; margin-bottom: 8px; user-select: none;">🍕</div>
-                    <h3 style="justify-content: center; color: #005c91; font-size: 1.35rem; margin-bottom: 6px;">Report Submitted!</h3>
+                    <h3 style="justify-content: center; color: #005c91; font-size: 1.25rem; margin-bottom: 6px;">Report Submitted!</h3>
                     <p style="color: #603913; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.45;">
-                        Thank you! Your feedback has been logged and sent directly to the training development team.
+                        Thank you! Your feedback has been logged and sent directly to the development and support team.
                     </p>
                     <button type="button" class="beta-btn beta-btn-submit" id="beta-feedback-done-btn" style="width: 100%; font-size: 1rem; padding: 10px 0;">Done</button>
                 </div>
@@ -391,9 +453,10 @@
         const doneBtn = document.getElementById('beta-feedback-done-btn');
         const form = document.getElementById('beta-feedback-form');
         const sendBtn = document.getElementById('beta-feedback-send');
+        const nameInput = document.getElementById('beta-feedback-name');
+        const storeInput = document.getElementById('beta-feedback-store');
+        const emailInput = document.getElementById('beta-feedback-email');
         const textArea = document.getElementById('beta-feedback-text');
-        const contactGroup = document.getElementById('beta-feedback-contact-group');
-        const contactInput = document.getElementById('beta-feedback-contact');
         const formView = document.getElementById('beta-feedback-form-view');
         const successView = document.getElementById('beta-feedback-success-view');
 
@@ -402,18 +465,33 @@
         function openModal() {
             if (formView) formView.style.display = 'block';
             if (successView) successView.style.display = 'none';
+
+            // Auto-populate contact info from session storage if available
             const storedId = localStorage.getItem('tw_id') || sessionStorage.getItem('tw_id');
-            if (contactGroup) {
-                contactGroup.style.display = storedId ? 'none' : 'block';
+            const storedName = localStorage.getItem('tw_name') || sessionStorage.getItem('tw_name');
+            const storedStore = localStorage.getItem('tw_store') || sessionStorage.getItem('tw_store');
+            const storedEmail = localStorage.getItem('tw_email') || sessionStorage.getItem('tw_email');
+
+            if (nameInput && !nameInput.value && storedName) nameInput.value = storedName;
+            if (storeInput && !storeInput.value) {
+                if (storedStore) storeInput.value = storedStore;
+                else if (storedId && /^\d{4}$/.test(storedId)) storeInput.value = storedId;
             }
+            if (emailInput && !emailInput.value && storedEmail) emailInput.value = storedEmail;
+
             modal.classList.add('active');
-            setTimeout(() => { if (textArea) textArea.focus(); }, 150);
+            setTimeout(() => {
+                if (nameInput && !nameInput.value) nameInput.focus();
+                else if (storeInput && !storeInput.value) storeInput.focus();
+                else if (emailInput && !emailInput.value) emailInput.focus();
+                else if (textArea) textArea.focus();
+            }, 150);
         }
 
         window.openBetaFeedbackModal = openModal;
         window.toggleSupportModal = openModal; // Seamless legacy fallback
 
-        // Support custom trigger placement (e.g. navigation strip)
+        // Support custom trigger placement (e.g. navigation strip or footer)
         const customTrigger = document.getElementById('beta-feedback-trigger-custom');
         if (customTrigger) {
             customTrigger.addEventListener('click', openModal);
@@ -438,7 +516,6 @@
                 if (formView) formView.style.display = 'block';
                 if (successView) successView.style.display = 'none';
                 if (textArea) textArea.value = '';
-                if (contactInput) contactInput.value = '';
                 if (sendBtn) {
                     sendBtn.disabled = false;
                     sendBtn.innerText = "Submit Report";
@@ -450,7 +527,6 @@
             if (formView) formView.style.display = 'none';
             if (successView) successView.style.display = 'block';
             if (textArea) textArea.value = '';
-            if (contactInput) contactInput.value = '';
             if (sendBtn) {
                 sendBtn.disabled = false;
                 sendBtn.innerText = "Submit Report";
@@ -478,10 +554,15 @@
             const feedbackText = textArea.value.trim();
             if (!feedbackText) return;
 
+            const nameVal = nameInput ? nameInput.value.trim() : '';
+            const storeVal = storeInput ? storeInput.value.trim() : '';
+            const emailVal = emailInput ? emailInput.value.trim() : '';
+
             sendBtn.disabled = true;
             sendBtn.innerText = "Submitting...";
 
-            const id = localStorage.getItem('tw_id') || sessionStorage.getItem('tw_id') || (localStorage.getItem('tw_admin_mode') === 'true' ? 'exec_review' : 'unknown');
+            const storedId = localStorage.getItem('tw_id') || sessionStorage.getItem('tw_id');
+            const id = (storedId && storedId !== 'unknown') ? storedId : (nameVal ? `${nameVal} (Store ${storeVal || 'N/A'})` : 'unknown');
             const market = localStorage.getItem('tw_market') || sessionStorage.getItem('tw_market') || 'unknown';
             
             // Build rich page location
@@ -500,10 +581,7 @@
             const pageLocation = `${pageName}${stepInfo}`.trim();
 
             let finalComments = feedbackText;
-            const contactVal = contactInput ? contactInput.value.trim() : '';
-            if (contactVal) {
-                finalComments = `--- [Contact Info] ---\n${contactVal}\n\n` + finalComments;
-            }
+            finalComments = `--- [Reporter Details] ---\nName: ${nameVal || 'N/A'}\nStore: ${storeVal || 'N/A'}\nEmail: ${emailVal || 'N/A'}\n\n` + finalComments;
             if (devConsoleErrors.length > 0) {
                 finalComments += "\n\n--- [Auto-Captured Dev Console Errors] ---\n" + devConsoleErrors.join("\n");
             }
@@ -515,12 +593,16 @@
                 action: "feedback",
                 id: id,
                 userId: id,
+                name: nameVal,
+                storeNumber: storeVal,
+                store: storeVal,
+                email: emailVal,
                 market: market,
                 pageUrl: pageLocation,
                 page: pageLocation,
                 url: pageLocation,
                 pageLocation: pageLocation,
-                category: "Beta Issue Report",
+                category: "Support & Bug Report",
                 comments: finalComments,
                 feedback: finalComments
             };
@@ -538,7 +620,7 @@
             .catch(err => {
                 console.error('Feedback Submission Failed:', err);
                 // Fallback attempt with GET query params if POST failed
-                const fallbackUrl = `${AUTH_SCRIPT_URL}?action=feedback&id=${encodeURIComponent(id)}&userId=${encodeURIComponent(id)}&market=${encodeURIComponent(market)}&pageUrl=${encodeURIComponent(pageLocation)}&page=${encodeURIComponent(pageLocation)}&category=${encodeURIComponent('Beta Issue Report')}&comments=${encodeURIComponent(feedbackText.substring(0, 500))}`;
+                const fallbackUrl = `${AUTH_SCRIPT_URL}?action=feedback&id=${encodeURIComponent(id)}&userId=${encodeURIComponent(id)}&name=${encodeURIComponent(nameVal)}&store=${encodeURIComponent(storeVal)}&email=${encodeURIComponent(emailVal)}&market=${encodeURIComponent(market)}&pageUrl=${encodeURIComponent(pageLocation)}&page=${encodeURIComponent(pageLocation)}&category=${encodeURIComponent('Support & Bug Report')}&comments=${encodeURIComponent(finalComments.substring(0, 500))}`;
                 const pingImg = new Image();
                 pingImg.src = fallbackUrl;
                 showSuccess();
