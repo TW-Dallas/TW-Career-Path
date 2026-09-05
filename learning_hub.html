@@ -874,22 +874,11 @@
                            <span>👁️</span> View
                        </a>`;
 
-                const linkDisplay = isLink 
-                    ? `<div style="margin-top: 8px; word-break: break-all;">
-                           <a href="${res.link}" target="_blank" rel="noopener noreferrer" style="color: var(--brand-blue); font-size: 0.82rem; font-family: 'OneDotCd-Bold', sans-serif; text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
-                               <span>🔗</span> ${res.link} ↗
-                           </a>
-                       </div>`
-                    : '';
-
                 const html = `
                     <div class="resource-card ${pulseClass}">
                         <span class="res-type">${res.type}</span>
                         <div class="res-title">${res.title}</div>
-                        <div class="res-desc">
-                            ${res.desc}
-                            ${linkDisplay}
-                        </div>
+                        <div class="res-desc">${res.desc}</div>
                         <div class="res-actions">
                             ${viewAction}
                             <a href="#" class="action-link" onclick="alert('Opening Email Client...')">
