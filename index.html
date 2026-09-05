@@ -530,7 +530,7 @@
     <footer>
         <!-- Button FIRST (Prominent) -->
         <div class="footer-support-wrapper" style="margin-bottom: 8px;">
-            <button onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null" class="footer-support-btn">Technical Support / Feedback</button>
+            <button type="button" id="beta-feedback-trigger-custom" class="footer-support-btn">Technical Support / Feedback</button>
         </div>
     
         <!-- Copyright SECOND -->
@@ -544,7 +544,7 @@
             
             <h2 style="color: var(--dark-blue); margin-bottom: 1rem;">DO-IT Program Requirements</h2>
             
-                        <div style="text-align: left; max-height: 400px; overflow-y: auto; margin-bottom: 1.5rem; padding-right: 10px;">
+            <div style="text-align: left; max-height: 400px; overflow-y: auto; margin-bottom: 1.5rem; padding-right: 10px;">
                 
                 <h4 style="color:var(--brand-blue); margin: 10px 0 5px; border-bottom: 1px solid #eee;">I. Prerequisites</h4>
                 <ul style="list-style: none; padding-left: 5px; font-size: 0.95rem;">
@@ -573,7 +573,6 @@
 
             </div>
 
-
             <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSeSOZpZRVGiv-pRs1dvE1T75k_SQwzEK3QLxvWTiqvOj7-NTw/viewform?usp=publish-editor', '_blank')" class="learning-btn" style="position: static; display: block; width: 100%; background: var(--brand-red); text-align: center; margin-bottom: 10px;">
                 Apply Now
             </button>
@@ -584,7 +583,7 @@
         </div>
     </div>
 
-<!-- VIEW: PDF Viewer Modal -->
+    <!-- VIEW: PDF Viewer Modal -->
     <div id="view-viewer" class="hidden" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; flex-direction: column; align-items: center; justify-content: center;">
         
         <!-- Header Bar -->
@@ -598,6 +597,33 @@
             <iframe id="content-frame" src="" style="width: 100%; height: 100%; border: none;"></iframe>
         </div>
     </div>
+
+    <script>
+        function showSITInfo(e) {
+            e.stopPropagation(); // Stop the card from toggling
+            document.getElementById('sit-modal').style.display = 'flex';
+        }
+
+        function closeSITInfo() {
+            document.getElementById('sit-modal').style.display = 'none';
+        }
+        
+        // Close modal if clicking outside the box
+        document.getElementById('sit-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSITInfo();
+            }
+        });
+
+        function viewResource(file, title) {
+            // 1. Set the source
+            document.getElementById('content-frame').src = file;
+            
+            // 2. Show the Viewer Div (Make it flex so it centers)
+            const viewer = document.getElementById('view-viewer');
+            viewer.classList.remove('hidden');
+            viewer.style.display = 'flex'; // Force it visible
+        }
 
         function closeViewer() {
             // 1. Hide the div
