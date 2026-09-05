@@ -6,13 +6,53 @@
     <title>Driver Rewards</title>
     <!-- Favicon (Optional) -->
     <link rel="icon" type="image/png" href="image/tile_blue.png">    
-    <script src="LMS_Files/Globals/lms_feedback.js"></script>
     
     <style>
-        /* --- FONTS --- */
-        @font-face { font-family: 'PizzaPress'; src: url('fonts/Dominos Sans Header 1.ttf') format('truetype'); font-weight: normal; }
-        @font-face { font-family: 'OneDotCd-Bold'; src: url('fonts/Dominos Sans Bold.ttf') format('truetype'); font-weight: bold; }
-        @font-face { font-family: 'OneDotCd'; src: url('fonts/Dominos Sans Body.ttf') format('truetype'); font-weight: normal; }
+        /* --- MASTER DOMINO'S FONTS --- */
+        @font-face {
+            font-family: 'PizzaPress';
+            src: url('fonts/Dominos%20Sans%20Header%201.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Header 1.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'PizzaPress';
+            src: url('fonts/Dominos%20Sans%20Header%201.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Header 1.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'OneDotCd-Bold';
+            src: url('fonts/Dominos%20Sans%20Subhead%201.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Subhead 1.ttf') format('truetype'),
+                 url('fonts/Dominos%20Sans%20Bold.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Bold.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'OneDotCd-Bold';
+            src: url('fonts/Dominos%20Sans%20Bold.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'OneDotCd';
+            src: url('fonts/Dominos%20Sans%20Body%20Compact.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Body Compact.ttf') format('truetype'),
+                 url('fonts/Dominos%20Sans%20Body.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Body.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
 
         /* --- BRAND VARIABLES (Matches Main Site) --- */
         :root {
@@ -37,7 +77,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body { 
-            font-family: 'OneDotCd', sans-serif; 
+            font-family: 'OneDotCd', 'Segoe UI', Arial, sans-serif; 
             background-color: var(--crust-light); 
             display: flex; flex-direction: column; 
             min-height: 100vh; 
@@ -54,7 +94,7 @@
         }
         
         .logo { max-width: 250px; height: auto; margin-bottom: 5px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); }
-        h1 { font-family: 'PizzaPress'; margin: 0; color: var(--crust-base); font-size: 1.4rem; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        h1 { font-family: 'PizzaPress', 'Arial Black', Impact, sans-serif; font-weight: normal; margin: 0; color: var(--crust-base); font-size: 1.4rem; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
         /* --- MAIN CARD (Floating on Beige) --- */
         .app-container {
@@ -71,21 +111,21 @@
         }
 
         /* --- INPUTS --- */
-        label { font-family: 'OneDotCd-Bold'; color: var(--brand-blue); font-size: 1.1rem; display: block; margin-bottom: 8px; }
-        select, input { width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid #ddd; border-radius: 8px; background: var(--crust-base); font-family: 'OneDotCd'; margin-bottom: 20px; color: var(--crust-burnt); }
+        label { font-family: 'OneDotCd-Bold', 'Segoe UI', Arial, sans-serif; color: var(--brand-blue); font-size: 1.1rem; display: block; margin-bottom: 8px; }
+        select, input { width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid #ddd; border-radius: 8px; background: var(--crust-base); font-family: 'OneDotCd', 'Segoe UI', Arial, sans-serif; margin-bottom: 20px; color: var(--crust-burnt); }
         select:focus, input:focus { border-color: var(--brand-blue); outline: none; background: var(--crust-base); }
         
-        .btn-main { background-color: var(--brand-red); color: var(--crust-base); width: 100%; padding: 15px; font-size: 1.3rem; border: none; border-radius: 8px; font-family: 'PizzaPress'; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 0 #b30000; transition: transform 0.1s; }
+        .btn-main { background-color: var(--brand-red); color: var(--crust-base); width: 100%; padding: 15px; font-size: 1.3rem; border: none; border-radius: 8px; font-family: 'PizzaPress', 'Arial Black', Impact, sans-serif; font-weight: normal; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 0 #b30000; transition: transform 0.1s; }
         .btn-main:active { transform: translateY(4px); box-shadow: none; }
 
         /* --- RESULTS CARD --- */
         .results-card { background-color: var(--crust-light); border: 2px solid var(--brand-blue); border-radius: 10px; padding: 20px; text-align: center; display: none; margin-top: 10px; }
-        .points-value { font-family: 'PizzaPress'; font-size: 4rem; color: var(--brand-blue); line-height: 1; margin: 10px 0; }
-        .prize-btn { display: block; background-color: var(--brand-blue); color: var(--crust-base); text-decoration: none; padding: 15px; border-radius: 8px; font-family: 'OneDotCd-Bold'; margin-top: 20px; text-align: center; border: none; cursor: pointer; width: 100%; }
+        .points-value { font-family: 'PizzaPress', 'Arial Black', Impact, sans-serif; font-weight: normal; font-size: 4rem; color: var(--brand-blue); line-height: 1; margin: 10px 0; }
+        .prize-btn { display: block; background-color: var(--brand-blue); color: var(--crust-base); text-decoration: none; padding: 15px; border-radius: 8px; font-family: 'OneDotCd-Bold', 'Segoe UI', Arial, sans-serif; margin-top: 20px; text-align: center; border: none; cursor: pointer; width: 100%; }
 
         /* --- ADMIN STYLES --- */
         .admin-section { display: none; flex-direction: column; gap: 15px; margin-top: 20px; }
-        .admin-header { background: var(--text-dark); color: var(--crust-base); padding: 10px; text-align: center; font-family: 'PizzaPress'; }
+        .admin-header { background: var(--text-dark); color: var(--crust-base); padding: 10px; text-align: center; font-family: 'PizzaPress', 'Arial Black', Impact, sans-serif; font-weight: normal; }
         .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 10px; }
         .data-table th { background: var(--brand-blue); color: var(--crust-base); padding: 8px; text-align: left; }
         .data-table td { border-bottom: 1px solid #ccc; padding: 8px; }
@@ -126,7 +166,7 @@
             letter-spacing: 0.3px;
         }
 
-        .footer-slogan { display: block; font-family: 'PizzaPress'; font-size: 1.05rem; color: var(--crust-base); margin-bottom: 8px; }
+        .footer-slogan { display: block; font-family: 'PizzaPress', 'Arial Black', Impact, sans-serif; font-weight: normal; font-size: 1.05rem; color: var(--crust-base); margin-bottom: 8px; }
         .admin-link { display: block; margin-bottom: 8px; color: rgba(254,250,246,0.7); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
         .admin-link:hover { color: var(--crust-base); text-decoration: underline; }
 
@@ -137,11 +177,14 @@
             padding: 5px 16px; 
             border-radius: 20px; 
             cursor: pointer;
-            font-family: 'OneDotCd-Bold';
+            font-family: 'OneDotCd-Bold', 'Segoe UI', Arial, sans-serif;
             font-size: 0.85rem;
             transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
-        .footer-support-btn:hover { background-color: var(--crust-base); color: var(--brand-blue); }
+        .footer-support-btn:hover { background-color: var(--brand-red); border-color: var(--brand-red); color: #fff; }
 
         /* --- SUPPORT MODAL --- */
                .modal-overlay {
@@ -249,6 +292,7 @@
             opacity: 0.8;
         }
     </style>
+    <script src="LMS_Files/Globals/lms_feedback.js" defer></script>
 </head>
 <body>
 
@@ -352,7 +396,7 @@
         <span class="footer-slogan">Drive Safe. Earn Points. Win Big.</span>
         
         <div class="footer-support-wrapper" style="margin-bottom: 6px;">
-            <button type="button" id="beta-feedback-trigger-custom" class="footer-support-btn">Technical Support / Feedback</button>
+            <button type="button" id="beta-feedback-trigger-custom" class="footer-support-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">🛠️ Report Issue</button>
         </div>
     
         <a href="#" class="admin-link" onclick="adminLogin()">Manager / DO Login</a>
@@ -567,10 +611,6 @@
                 document.getElementById('currentPeriodDisplay').innerText = "Current Period Active.";
             }
         });
-        
-        // Set the hidden input value to the current filename on page load
-        document.getElementById('supportPageSource').value = window.location.pathname.split('/').pop() || "index.html";
-        
     </script>
 </body>
 </html>

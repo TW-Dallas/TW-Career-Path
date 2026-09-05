@@ -4,25 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Wow Career Path</title>
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="image/tile_blue.png">
-    <script src="LMS_Files/Globals/lms_feedback.js"></script>
     
     <style>
-        /* --- FONT LOADING --- */
+        /* --- MASTER DOMINO'S FONT LOADING --- */
         @font-face {
             font-family: 'PizzaPress';
-            src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
+            src: url('fonts/Dominos%20Sans%20Header%201.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Header 1.ttf') format('truetype');
             font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'PizzaPress';
+            src: url('fonts/Dominos%20Sans%20Header%201.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Header 1.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
         }
         @font-face {
             font-family: 'OneDotCd-Bold';
-            src: url('fonts/Dominos Sans Bold.ttf') format('truetype');
+            src: url('fonts/Dominos%20Sans%20Subhead%201.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Subhead 1.ttf') format('truetype'),
+                 url('fonts/Dominos%20Sans%20Bold.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Bold.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'OneDotCd-Bold';
+            src: url('fonts/Dominos%20Sans%20Bold.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Bold.ttf') format('truetype');
             font-weight: bold;
+            font-style: normal;
+            font-display: swap;
         }
         @font-face {
             font-family: 'OneDotCd';
-            src: url('fonts/Dominos Sans Body.ttf') format('truetype');
+            src: url('fonts/Dominos%20Sans%20Body%20Compact.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Body Compact.ttf') format('truetype'),
+                 url('fonts/Dominos%20Sans%20Body.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Body.ttf') format('truetype');
             font-weight: normal;
+            font-style: normal;
+            font-display: swap;
         }
 
         :root {
@@ -354,6 +383,7 @@
         }
 
     </style>
+    <script src="LMS_Files/Globals/lms_feedback.js" defer></script>
 </head>
 <body>
     
@@ -530,7 +560,7 @@
     <footer>
         <!-- Button FIRST (Prominent) -->
         <div class="footer-support-wrapper" style="margin-bottom: 8px;">
-            <button type="button" id="beta-feedback-trigger-custom" class="footer-support-btn">Technical Support / Feedback</button>
+            <button type="button" id="beta-feedback-trigger-custom" class="footer-support-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">🛠️ Report Issue</button>
         </div>
     
         <!-- Copyright SECOND -->

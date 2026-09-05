@@ -70,6 +70,10 @@
         }
 
         /* Floating Fallback Trigger (Docked Right Edge Tab when no header) */
+        body:has(#beta-feedback-trigger-custom) #beta-feedback-trigger {
+            display: none !important;
+        }
+
         #beta-feedback-trigger:not(.in-header) {
             position: fixed;
             top: 50%;
@@ -413,7 +417,10 @@
         const customTrigger = document.getElementById('beta-feedback-trigger-custom');
         if (customTrigger) {
             customTrigger.addEventListener('click', openModal);
-            if (trigger) trigger.style.display = 'none';
+            if (trigger) {
+                trigger.style.display = 'none';
+                trigger.remove();
+            }
         } else {
             // Neatly nest trigger into Header left action group only if NOT a hero/lobby header
             const header = document.querySelector('header');
