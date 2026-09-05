@@ -447,6 +447,57 @@
     styleSheet.innerText = styles;
     document.head.appendChild(styleSheet);
 
+    function isLmsTrainingPage() {
+        const path = (window.location.pathname || '').toLowerCase();
+
+        // 1. Explicitly exempt main landing page, lobbies, and public portals
+        if (
+            path === '' ||
+            path === '/' ||
+            path.endsWith('/') ||
+            path.endsWith('/index.html') ||
+            path.includes('learning_hub') ||
+            path.includes('driver_rewards') ||
+            path.includes('catering_hub') ||
+            path.includes('trainer_portal') ||
+            path.includes('trainer_dashboard') ||
+            path.includes('do_dashboard') ||
+            path.includes('classes') ||
+            path.includes('exec_notes')
+        ) {
+            return false;
+        }
+
+        // 2. Strictly enforce mobile blocker ONLY on structured LMS student dashboard, training modules, and POS simulators
+        const isModule = path.includes('/modules/') || path.includes('/modules2/') || /module\d+/i.test(path);
+        const isPosSim = path.includes('pos_simulator');
+        const isLmsDash = path.includes('lms_dashboard');
+
+        return isModule || isPosSim || isLmsDash || document.body.hasAttribute('data-require-laptop');
+    }
+
+    const mobileBlockerHTML = isLmsTrainingPage() ? `
+        <!-- Global Universal Mobile Blocker -->
+        <div id="global-mobile-blocker">
+            <div class="global-mobile-card">
+                <div style="font-size: 3.2rem; margin-bottom: 6px; user-select: none;">💻</div>
+                <h2>Store Laptop Required</h2>
+                <div class="mobile-notice-box">
+                    <div class="mobile-notice-title">Mobile Devices Not Supported</div>
+                    <div class="mobile-notice-desc">
+                        Team WOW LMS modules, interactive training videos, menu games, and POS simulators cannot be completed on mobile phones.
+                    </div>
+                </div>
+                <p>
+                    Please open this link on your store's computer or training laptop to complete your onboarding.
+                </p>
+                <div style="font-family: 'OneDotCd-Bold', 'Subhead1', sans-serif; color: #005c91; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                    🍕 TEAM WOW LEARNING SYSTEM
+                </div>
+            </div>
+        </div>
+    ` : '';
+
     // Build Modal & Mobile Blocker HTML
     const modalHTML = `
         <button id="beta-feedback-trigger">🛠️ Report Issue</button>
@@ -494,30 +545,19 @@
             </div>
         </div>
 
-        <!-- Global Universal Mobile Blocker -->
-        <div id="global-mobile-blocker">
-            <div class="global-mobile-card">
-                <div style="font-size: 3.2rem; margin-bottom: 6px; user-select: none;">💻</div>
-                <h2>Store Laptop Required</h2>
-                <div class="mobile-notice-box">
-                    <div class="mobile-notice-title">Mobile Devices Not Supported</div>
-                    <div class="mobile-notice-desc">
-                        Team WOW LMS modules, interactive training videos, menu games, and POS simulators cannot be completed on mobile phones.
-                    </div>
-                </div>
-                <p>
-                    Please open this link on your store's computer or training laptop to complete your onboarding.
-                </p>
-                <div style="font-family: 'OneDotCd-Bold', sans-serif; color: #005c91; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
-                    🍕 TEAM WOW LEARNING SYSTEM
-                </div>
-            </div>
-        </div>
+        ${mobileBlockerHTML}
     `;
 
     function checkDeviceSupport() {
         const blocker = document.getElementById('global-mobile-blocker');
         if (!blocker) return;
+
+        // Never block the main page, learning hub, or non-LMS pages
+        if (!isLmsTrainingPage()) {
+            blocker.style.display = 'none';
+            document.body.style.overflow = '';
+            return;
+        }
 
         const isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         const isSmallScreen = window.innerWidth <= 850;
