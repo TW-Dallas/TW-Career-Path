@@ -306,6 +306,10 @@
                     <h3>🛠️ Feedback / Bug Report</h3>
                     <p>Spotted a typo, broken button, or layout issue? Let us know!</p>
                     <form id="beta-feedback-form">
+                        <div id="beta-feedback-contact-group" style="display: none; margin-bottom: 10px;">
+                            <label for="beta-feedback-contact" style="font-size: 0.85rem; color: #005c91; font-family: 'OneDotCd-Bold', sans-serif; text-transform: uppercase; margin-bottom: 4px; display: block;">Your Name & Email / Store # (Optional):</label>
+                            <input type="text" id="beta-feedback-contact" placeholder="e.g. Jane Doe - Store 1234 / jane@example.com" style="width: 100%; padding: 8px 10px; border: 1.5px solid #c0a588; border-radius: 6px; font-family: 'OneDotCd', sans-serif; font-size: 0.95rem; box-sizing: border-box; background: #faf2e9; color: #472b10;">
+                        </div>
                         <label for="beta-feedback-text">Issue Description:</label>
                         <textarea id="beta-feedback-text" placeholder="Describe what went wrong or how to improve this step..." required></textarea>
                         <div class="beta-feedback-actions">
@@ -384,6 +388,8 @@
         const form = document.getElementById('beta-feedback-form');
         const sendBtn = document.getElementById('beta-feedback-send');
         const textArea = document.getElementById('beta-feedback-text');
+        const contactGroup = document.getElementById('beta-feedback-contact-group');
+        const contactInput = document.getElementById('beta-feedback-contact');
         const formView = document.getElementById('beta-feedback-form-view');
         const successView = document.getElementById('beta-feedback-success-view');
 
@@ -392,11 +398,16 @@
         function openModal() {
             if (formView) formView.style.display = 'block';
             if (successView) successView.style.display = 'none';
+            const storedId = localStorage.getItem('tw_id') || sessionStorage.getItem('tw_id');
+            if (contactGroup) {
+                contactGroup.style.display = storedId ? 'none' : 'block';
+            }
             modal.classList.add('active');
             setTimeout(() => { if (textArea) textArea.focus(); }, 150);
         }
 
         window.openBetaFeedbackModal = openModal;
+        window.toggleSupportModal = openModal; // Seamless legacy fallback
 
         // Support custom trigger placement (e.g. navigation strip)
         const customTrigger = document.getElementById('beta-feedback-trigger-custom');
@@ -420,6 +431,7 @@
                 if (formView) formView.style.display = 'block';
                 if (successView) successView.style.display = 'none';
                 if (textArea) textArea.value = '';
+                if (contactInput) contactInput.value = '';
                 if (sendBtn) {
                     sendBtn.disabled = false;
                     sendBtn.innerText = "Submit Report";
@@ -431,6 +443,7 @@
             if (formView) formView.style.display = 'none';
             if (successView) successView.style.display = 'block';
             if (textArea) textArea.value = '';
+            if (contactInput) contactInput.value = '';
             if (sendBtn) {
                 sendBtn.disabled = false;
                 sendBtn.innerText = "Submit Report";
@@ -480,6 +493,10 @@
             const pageLocation = `${pageName}${stepInfo}`.trim();
 
             let finalComments = feedbackText;
+            const contactVal = contactInput ? contactInput.value.trim() : '';
+            if (contactVal) {
+                finalComments = `--- [Contact Info] ---\n${contactVal}\n\n` + finalComments;
+            }
             if (devConsoleErrors.length > 0) {
                 finalComments += "\n\n--- [Auto-Captured Dev Console Errors] ---\n" + devConsoleErrors.join("\n");
             }
