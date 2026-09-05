@@ -651,7 +651,7 @@
             { id: 5, category: 'drivers', type: 'PDF', title: 'Delivery Expert App FAQ', desc: 'Job Aid for the Delivery Expert App.', 
                  link: 'resources/driver/delivery_exp_jobaid.pdf' },
             { id: 6, category: 'drivers', type: 'Link', title: 'Drivosity Points', desc: 'See how many points you have. Speak with a manager to redeem points for prizes!', 
-                 link: 'driver_rewards_v1.html' },
+                 link: 'https://tw-dallas.github.io/TW-Career-Path/driver_rewards_v1.html' },
             
             // PRODUCT GUIDES (CSR)
             { id: 8, category: 'insiders', type: 'PDF', title: 'Comprehensive Product Build Guide', desc: 'Interactive job aids for makeline products and Domino Team WOW builds.', 
@@ -864,15 +864,34 @@
 
             cardList.forEach(res => {
                 const pulseClass = res.pulse ? 'pulse-featured' : '';
+                const isLink = res.type === 'Link';
+                
+                const viewAction = isLink
+                    ? `<a href="${res.link}" target="_blank" rel="noopener noreferrer" class="action-link">
+                           <span>🔗</span> Open Link ↗
+                       </a>`
+                    : `<a href="#" class="action-link" onclick="openDocument('${res.link}'); return false;">
+                           <span>👁️</span> View
+                       </a>`;
+
+                const linkDisplay = isLink 
+                    ? `<div style="margin-top: 8px; word-break: break-all;">
+                           <a href="${res.link}" target="_blank" rel="noopener noreferrer" style="color: var(--brand-blue); font-size: 0.82rem; font-family: 'OneDotCd-Bold', sans-serif; text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
+                               <span>🔗</span> ${res.link} ↗
+                           </a>
+                       </div>`
+                    : '';
+
                 const html = `
                     <div class="resource-card ${pulseClass}">
                         <span class="res-type">${res.type}</span>
                         <div class="res-title">${res.title}</div>
-                        <div class="res-desc">${res.desc}</div>
+                        <div class="res-desc">
+                            ${res.desc}
+                            ${linkDisplay}
+                        </div>
                         <div class="res-actions">
-                            <a href="#" class="action-link" onclick="openDocument('${res.link}'); return false;">
-                                <span>👁️</span> View
-                            </a>
+                            ${viewAction}
                             <a href="#" class="action-link" onclick="alert('Opening Email Client...')">
                                 <span>✉️</span> Email
                             </a>
