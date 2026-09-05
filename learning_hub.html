@@ -57,15 +57,20 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+        }
+
         body {
             font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
             background-color: var(--crust-light);
             color: var(--crust-deep);
             line-height: 1.5;
             font-size: 1.1rem;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
         }
 
         /* --- Header --- */
@@ -130,11 +135,14 @@
 
         /* --- Main Content --- */
         main {
-            max-width: 1120px;
-            margin: 0.3rem auto;
-            padding: 0 1rem;
+            max-width: 1200px;
+            margin: 0.35rem auto;
+            padding: 0 1.25rem;
             flex: 1;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
         }
 
         /* --- View: LOBBY & CATEGORIES --- */
@@ -145,13 +153,17 @@
             animation: fadeIn 0.5s ease-out;
         }
 
-        /* Category Selector Grid: 3 cards per row on desktop (3x2 layout), proportionate 3:2 photos */
+        /* Category Selector Grid: 3 cards per row on desktop (3x2 layout), dynamically fills vertical viewport */
         #view-categories {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 0.65rem;
-            max-width: 690px;
-            margin: 0 auto;
+            gap: clamp(8px, 1.2vh, 18px);
+            width: 100%;
+            max-width: min(1200px, calc((100vh - 180px) * 1.75));
+            margin: auto;
+            flex: 1;
+            min-height: 0;
+            height: 100%;
         }
 
         .lobby-card {
@@ -174,6 +186,13 @@
             box-shadow: 0 10px 18px rgba(0,0,0,0.12);
         }
 
+        #view-categories .lobby-card {
+            height: 100%;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
         /* Default / Lobby image area (for SVG icon cards) */
         .card-image-area {
             height: 140px;
@@ -187,12 +206,13 @@
             background-position: center;
         }
 
-        /* Category Photo Cards: restore authentic 3:2 photographic ratio & center framing */
+        /* Category Photo Cards: dynamic flex height with centered cover framing */
         #view-categories .card-image-area {
             width: 100%;
+            flex: 1 1 0% !important;
+            min-height: 0 !important;
             height: auto !important;
-            aspect-ratio: 3 / 2 !important;
-            min-height: unset;
+            aspect-ratio: unset !important;
             background-size: cover;
             background-position: center !important;
         }
@@ -204,7 +224,9 @@
         }
 
         #view-categories .card-content {
-            padding: 0.35rem 0.5rem 0.45rem;
+            flex: 0 0 auto !important;
+            flex-grow: 0 !important;
+            padding: clamp(6px, 1vh, 12px) clamp(8px, 1.2vw, 16px);
             text-align: center;
         }
 
@@ -218,8 +240,8 @@
         }
 
         #view-categories .card-title {
-            font-size: 0.95rem;
-            margin-bottom: 0.08rem;
+            font-size: clamp(1rem, 1.3vw, 1.25rem);
+            margin-bottom: 2px;
             line-height: 1.15;
         }
 
@@ -231,9 +253,9 @@
         }
 
         #view-categories .card-desc {
-            font-size: 0.75rem;
+            font-size: clamp(0.78rem, 0.95vw, 0.88rem);
             margin-bottom: 0;
-            line-height: 1.2;
+            line-height: 1.25;
         }
 
         .btn {
@@ -453,12 +475,16 @@
         @media (min-width: 580px) and (max-width: 899px) {
             #view-categories.grid-view {
                 grid-template-columns: repeat(2, 1fr) !important;
+                grid-template-rows: repeat(3, 1fr) !important;
+                height: 100%;
             }
         }
 
         @media (min-width: 900px) {
             #view-categories.grid-view {
                 grid-template-columns: repeat(3, 1fr) !important;
+                grid-template-rows: repeat(2, 1fr) !important;
+                height: 100%;
             }
         }
 
