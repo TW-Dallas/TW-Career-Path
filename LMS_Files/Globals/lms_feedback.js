@@ -389,18 +389,29 @@
 
         if (!trigger || !modal) return;
 
-        // Neatly nest trigger into Header left action group if a header exists
-        const headerLeft = document.querySelector('header > div:first-child') || document.querySelector('header');
-        if (headerLeft) {
-            trigger.classList.add('in-header');
-            headerLeft.appendChild(trigger);
-        }
-
         function openModal() {
             if (formView) formView.style.display = 'block';
             if (successView) successView.style.display = 'none';
             modal.classList.add('active');
             setTimeout(() => { if (textArea) textArea.focus(); }, 150);
+        }
+
+        window.openBetaFeedbackModal = openModal;
+
+        // Support custom trigger placement (e.g. navigation strip)
+        const customTrigger = document.getElementById('beta-feedback-trigger-custom');
+        if (customTrigger) {
+            customTrigger.addEventListener('click', openModal);
+            if (trigger) trigger.style.display = 'none';
+        } else {
+            // Neatly nest trigger into Header left action group only if NOT a hero/lobby header
+            const header = document.querySelector('header');
+            const isHeroHeader = header && (header.querySelector('.logo-container') || header.querySelector('.tagline'));
+            const headerLeft = document.querySelector('header > div:first-child');
+            if (headerLeft && !isHeroHeader) {
+                trigger.classList.add('in-header');
+                headerLeft.appendChild(trigger);
+            }
         }
 
         function closeModal() {
