@@ -777,6 +777,16 @@
         border-radius: 2px !important;
     }
 
+    /* Strips browser default clear 'X' button on search inputs */
+    .hitbox-text-input::-webkit-search-cancel-button,
+    .hitbox-text-input::-webkit-search-decoration,
+    .hitbox-text-input::-webkit-search-results-button,
+    .hitbox-text-input::-webkit-search-results-decoration {
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        display: none !important;
+    }
+
     #hb-delivery-instructions .hitbox-text-input {
         width: 100% !important;
         height: 100% !important;
