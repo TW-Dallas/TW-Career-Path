@@ -615,7 +615,8 @@
             {
                 "step": 46,
                 "image": "resources/POS_assets/Stage_4/POS_4.37.png",
-                "activeHitbox": "hb-street-name",
+                "activeHitbox": ["hb-street-name", "hb-street-dropdown", "hb-street-select"],
+                "inputHitbox": "hb-street-name",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
                 "input": {
@@ -1041,6 +1042,12 @@
                     : stepData.input.expectedValue;
                 const fieldName = (stepData.input.placeholder || "").toLowerCase();
 
+                if (fieldName.includes('street') || firstId.includes('street')) {
+                    return {
+                        hint: "Listen for the caller's street name and start typing it, then click the street from the dropdown list.",
+                        answer: `Type "Adriatic" or click "ADRIATIC PARKWAY" in the dropdown list to proceed.`
+                    };
+                }
                 if (fieldName.includes('name') || firstId.includes('name')) {
                     return {
                         hint: "Listen to the customer on the call and type their name into the field.",
@@ -1053,7 +1060,7 @@
                         answer: `Type "${expected}" into the Phone field and press Enter.`
                     };
                 }
-                if (fieldName.includes('number') || fieldName.includes('address') || firstId.includes('add') || firstId.includes('street')) {
+                if (fieldName.includes('number') || fieldName.includes('address') || firstId.includes('add')) {
                     return {
                         hint: "Listen for the delivery address given on the call and enter it in the field.",
                         answer: `Type "${expected}" into the highlighted address field and press Enter.`
@@ -1898,14 +1905,34 @@
                         let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
                         e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
                     });
+                } else if (activeHb.id === "hb-street-name") {
+                    inputEl.addEventListener("input", (e) => {
+                        sanitizeAutofill();
+                        const val = e.target.value.trim().toLowerCase();
+                        const ddHb = document.getElementById('hb-street-dropdown');
+                        const selHb = document.getElementById('hb-street-select');
+                        if (val.startsWith('a')) {
+                            // Immediately reveal open dropdown menu (POS_4.38.png)
+                            posImage.src = "resources/POS_assets/Stage_4/POS_4.38.png";
+                            if (ddHb) ddHb.style.display = 'block';
+                            if (selHb) selHb.style.display = 'block';
+                        } else if (val.length === 0) {
+                            posImage.src = "resources/POS_assets/Stage_4/POS_4.37.png";
+                            if (ddHb) ddHb.style.display = 'none';
+                            if (selHb) selHb.style.display = 'none';
+                        }
+                    });
                 } else {
                     inputEl.addEventListener("input", sanitizeAutofill);
                 }
 
-                inputEl.addEventListener('click', (e) => e.stopPropagation());
+                inputEl.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    errorMsg.style.display = 'none';
+                });
                 inputEl.addEventListener('mousedown', (e) => e.stopPropagation());
                 inputEl.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === 'Enter' || e.key === 'Tab') {
                         e.preventDefault();
                         validateTextEntry(inputEl.value, stepData.input.expectedValue);
                     }
@@ -1974,9 +2001,16 @@
                 if (strTarget.includes('gate') && /\bgate\b/i.test(rawUser)) return true;
                 if (strTarget.includes('driver') && /\bdriver\b/i.test(rawUser)) return true;
 
+                // Also strip leading house numbers if accidentally typed here (e.g. '470 Adriatic')
+                const userWithoutLeadingDigits = rawUser.replace(/^\d+\s+/, '');
+                if (userWithoutLeadingDigits === strTarget) return true;
+
                 const normUser = normalizeStreetText(rawUser);
                 const normTarget = normalizeStreetText(strTarget);
                 if (normUser && normTarget && normUser === normTarget) return true;
+
+                const normUserClean = normalizeStreetText(userWithoutLeadingDigits);
+                if (normUserClean && normTarget && normUserClean === normTarget) return true;
 
                 const directDist = levenshteinDistance(rawUser, strTarget);
                 if (directDist <= 2) return true;
@@ -1993,6 +2027,38 @@
         let lastTypedDeliveryNote = "PLEASE CALL";
 
         function validateTextEntry(userTyped, expectedValue) {
+            const stepData = sequence[currentStep];
+            const targetInputId = stepData ? (stepData.inputHitbox || (Array.isArray(stepData.activeHitbox) ? stepData.activeHitbox[0] : stepData.activeHitbox)) : '';
+
+            // Street Name Entry (Step 46 / hb-street-name)
+            if (targetInputId === 'hb-street-name') {
+                const rawLower = String(userTyped || '').trim().toLowerCase();
+                const isFullMatch = isTextEntryValid(userTyped, expectedValue);
+
+                if (isFullMatch) {
+                    errorMsg.style.display = 'none';
+                    // Fast-typist full match: advance directly to suite entry (Step 48)
+                    currentStep = 48;
+                    loadStep(currentStep);
+                    return;
+                }
+
+                // If user typed 'a' or 'adr' but hit Enter without selecting from dropdown
+                if (rawLower.startsWith('a')) {
+                    errorMsg.innerText = "⚠️ Incomplete address. Please select Adriatic Parkway from the dropdown list.";
+                    errorMsg.style.display = 'block';
+                    wrongClicks++;
+                    posImage.src = "resources/POS_assets/Stage_4/POS_4.38.png";
+                    const ddHb = document.getElementById('hb-street-dropdown');
+                    const selHb = document.getElementById('hb-street-select');
+                    if (ddHb) ddHb.style.display = 'block';
+                    if (selHb) selHb.style.display = 'block';
+                    const inputEl = document.querySelector('.hitbox-text-input');
+                    if (inputEl) inputEl.focus();
+                    return;
+                }
+            }
+
             const isMatch = isTextEntryValid(userTyped, expectedValue);
 
             if (isMatch) {
@@ -2000,12 +2066,20 @@
                     lastTypedDeliveryNote = userTyped.trim();
                 }
                 errorMsg.style.display = 'none';
-                currentStep++;
+
+                // If on Step 44 (House Number 470), skip step 45 click and jump directly to Step 46 street typing!
+                if (currentStep === 44) {
+                    currentStep = 46;
+                } else {
+                    currentStep++;
+                }
                 loadStep(currentStep);
             } else {
                 errorMsg.innerText = "❌ Incorrect action. Try again.";
                 errorMsg.style.display = 'block';
                 wrongClicks++;
+                const inputEl = document.querySelector('.hitbox-text-input');
+                if (inputEl) inputEl.focus();
             }
         }
 
@@ -2065,11 +2139,32 @@
                 if (clickedId === targetInputId || !clickedId || clickedId === 'next') {
                     const inputEl = document.querySelector('.hitbox-text-input');
                     if (inputEl) inputEl.focus();
+                    errorMsg.style.display = 'none';
                     return; // Re-focusing or clicking within input box
                 }
 
                 const activeInput = document.querySelector('.hitbox-text-input');
                 const typedVal = activeInput ? activeInput.value : '';
+
+                // --- SPECIAL HANDLING FOR STREET DROPDOWN SELECTION ---
+                if (targetInputId === 'hb-street-name' && (clickedId === 'hb-street-dropdown' || clickedId === 'hb-street-select')) {
+                    const rawLower = typedVal.trim().toLowerCase();
+                    // If they typed 'a' or any initial part of Adriatic, clicking the dropdown is the exact correct action!
+                    if (rawLower.startsWith('a') || rawLower.includes('adr')) {
+                        errorMsg.style.display = 'none';
+                        currentStep = 48; // Advance directly to suite entry (Step 48)
+                        loadStep(currentStep);
+                        return;
+                    } else {
+                        errorMsg.innerText = "❌ Start typing the street name into the address field first.";
+                        errorMsg.style.display = 'block';
+                        wrongClicks++;
+                        const inputEl = document.querySelector('.hitbox-text-input');
+                        if (inputEl) inputEl.focus();
+                        return;
+                    }
+                }
+
                 const isMatch = isTextEntryValid(typedVal, stepData.input.expectedValue);
 
                 const nextStepData = sequence[currentStep + 1];
@@ -2099,6 +2194,7 @@
                     return;
                 }
 
+                errorMsg.innerText = "❌ Incorrect action. Enter the required information on the POS screen.";
                 errorMsg.style.display = 'block';
                 wrongClicks++;
                 return;
@@ -2159,6 +2255,15 @@
                         return;
                     }
                 }
+
+                // If on a text input step, warn the trainee, but keep the input element accessible and ready
+                if (stepData && stepData.input) {
+                    errorMsg.innerText = "❌ Incorrect action. Enter the required information into the POS field.";
+                    errorMsg.style.display = 'block';
+                    wrongClicks++;
+                    return;
+                }
+
                 errorMsg.innerText = "❌ Incorrect action. Try again.";
                 errorMsg.style.display = 'block';
                 wrongClicks++;
