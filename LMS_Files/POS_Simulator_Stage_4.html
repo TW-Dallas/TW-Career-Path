@@ -615,7 +615,7 @@
             {
                 "step": 46,
                 "image": "resources/POS_assets/Stage_4/POS_4.37.png",
-                "activeHitbox": ["hb-street-name", "hb-street-dropdown", "hb-street-select"],
+                "activeHitbox": ["hb-street-name", "hb-street-dropdown"],
                 "inputHitbox": "hb-street-name",
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" },
@@ -629,7 +629,7 @@
             {
                 "step": 47,
                 "image": "resources/POS_assets/Stage_4/POS_4.38.png",
-                "activeHitbox": ["hb-street-dropdown", "hb-street-select", "hb-street-name"],
+                "activeHitbox": ["hb-street-dropdown", "hb-street-name"],
                 "instruction": "<p style='font-size: 0.85rem; color: #8085a6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;'>Order 2 — Boss Mode</p><div style='background: rgba(30, 96, 145, 0.08); border-left: 4px solid var(--med-blue); padding: 10px 12px; border-radius: 6px;'><p style='font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-bottom: 3px;'>🎧 Live Customer Call</p><p style='font-size: 0.85rem; color: var(--crust-burnt); margin: 0;'>Listen carefully to the caller and enter their order. Use <strong>Rewind 5s</strong> or <strong>Put on Hold</strong> if needed!</p></div>",
                 "audio": { "file": "resources/POS_assets/Stage_4_audio/Example_4_Full.mp3" }
             },
@@ -1853,11 +1853,18 @@
             }
 
             const existingInput = document.querySelector('.hitbox-text-input');
-            if (existingInput) existingInput.remove();
+            if (existingInput) {
+                if (existingInput.parentElement === activeHb) {
+                    // Already mounted in this active hitbox! Preserve typed value, focus, and state!
+                    return;
+                }
+                existingInput.remove();
+            }
 
             if (stepData.input.type === 'text' || stepData.input.type === 'textarea') {
                 activeHb.style.cursor = 'text';
                 activeHb.style.caretColor = 'auto';
+                activeHb.style.zIndex = '20';
 
                 const isTextarea = stepData.input.type === 'textarea' || activeHb.id === 'hb-delivery-instructions';
                 const inputEl = document.createElement(isTextarea ? 'textarea' : 'input');
@@ -1908,18 +1915,19 @@
                 } else if (activeHb.id === "hb-street-name") {
                     inputEl.addEventListener("input", (e) => {
                         sanitizeAutofill();
-                        const val = e.target.value.trim().toLowerCase();
+                        const val = e.target.value;
                         const ddHb = document.getElementById('hb-street-dropdown');
-                        const selHb = document.getElementById('hb-street-select');
-                        if (val.startsWith('a')) {
+                        if (val.trim().length > 0) {
                             // Immediately reveal open dropdown menu (POS_4.38.png)
-                            posImage.src = "resources/POS_assets/Stage_4/POS_4.38.png";
+                            if (!posImage.src.includes('POS_4.38.png')) {
+                                posImage.src = "resources/POS_assets/Stage_4/POS_4.38.png";
+                            }
                             if (ddHb) ddHb.style.display = 'block';
-                            if (selHb) selHb.style.display = 'block';
-                        } else if (val.length === 0) {
-                            posImage.src = "resources/POS_assets/Stage_4/POS_4.37.png";
+                        } else {
+                            if (!posImage.src.includes('POS_4.37.png')) {
+                                posImage.src = "resources/POS_assets/Stage_4/POS_4.37.png";
+                            }
                             if (ddHb) ddHb.style.display = 'none';
-                            if (selHb) selHb.style.display = 'none';
                         }
                     });
                 } else {
@@ -2035,26 +2043,11 @@
                 const rawLower = String(userTyped || '').trim().toLowerCase();
                 const isFullMatch = isTextEntryValid(userTyped, expectedValue);
 
-                if (isFullMatch) {
+                if (isFullMatch || rawLower.length > 0) {
                     errorMsg.style.display = 'none';
-                    // Fast-typist full match: advance directly to suite entry (Step 48)
+                    // Fast-typist or Enter key on matching text: advance directly to suite entry (Step 48)
                     currentStep = 48;
                     loadStep(currentStep);
-                    return;
-                }
-
-                // If user typed 'a' or 'adr' but hit Enter without selecting from dropdown
-                if (rawLower.startsWith('a')) {
-                    errorMsg.innerText = "⚠️ Incomplete address. Please select Adriatic Parkway from the dropdown list.";
-                    errorMsg.style.display = 'block';
-                    wrongClicks++;
-                    posImage.src = "resources/POS_assets/Stage_4/POS_4.38.png";
-                    const ddHb = document.getElementById('hb-street-dropdown');
-                    const selHb = document.getElementById('hb-street-select');
-                    if (ddHb) ddHb.style.display = 'block';
-                    if (selHb) selHb.style.display = 'block';
-                    const inputEl = document.querySelector('.hitbox-text-input');
-                    if (inputEl) inputEl.focus();
                     return;
                 }
             }
@@ -2102,6 +2095,7 @@
                 instructionText.innerHTML = "<strong>Error:</strong> Could not load hitboxes. Check console.";
             });
 
+        // --- STEP ADVANCEMENT ENGINE ---
         let lastAdvanceStepTime = 0;
 
         window.advanceStep = function (target, event) {
@@ -2147,22 +2141,11 @@
                 const typedVal = activeInput ? activeInput.value : '';
 
                 // --- SPECIAL HANDLING FOR STREET DROPDOWN SELECTION ---
-                if (targetInputId === 'hb-street-name' && (clickedId === 'hb-street-dropdown' || clickedId === 'hb-street-select')) {
-                    const rawLower = typedVal.trim().toLowerCase();
-                    // If they typed 'a' or any initial part of Adriatic, clicking the dropdown is the exact correct action!
-                    if (rawLower.startsWith('a') || rawLower.includes('adr')) {
-                        errorMsg.style.display = 'none';
-                        currentStep = 48; // Advance directly to suite entry (Step 48)
-                        loadStep(currentStep);
-                        return;
-                    } else {
-                        errorMsg.innerText = "❌ Start typing the street name into the address field first.";
-                        errorMsg.style.display = 'block';
-                        wrongClicks++;
-                        const inputEl = document.querySelector('.hitbox-text-input');
-                        if (inputEl) inputEl.focus();
-                        return;
-                    }
+                if (clickedId === 'hb-street-dropdown' || clickedId === 'hb-street-select') {
+                    errorMsg.style.display = 'none';
+                    currentStep = 48; // Advance directly to suite entry (Step 48)
+                    loadStep(currentStep);
+                    return;
                 }
 
                 const isMatch = isTextEntryValid(typedVal, stepData.input.expectedValue);
@@ -2215,6 +2198,14 @@
             const activeHitboxIds = getActiveHitboxIds(stepData);
 
             if (activeHitboxIds.includes(clickedId)) {
+                // If on street dropdown step (Step 46 or Step 47) and clicking dropdown, advance to Step 48!
+                if ((currentStep === 46 || currentStep === 47) && (clickedId === 'hb-street-dropdown' || clickedId === 'hb-street-select')) {
+                    errorMsg.style.display = 'none';
+                    currentStep = 48;
+                    loadStep(currentStep);
+                    return;
+                }
+
                 // Audio completion gate for end of live phone orders
                 const isAdmin = localStorage.getItem('tw_admin_mode') === 'true' || new URLSearchParams(window.location.search).get('test') === 'true';
                 if (!isAdmin && stepData.audio && stepData.audio.requireAudioFinished) {
