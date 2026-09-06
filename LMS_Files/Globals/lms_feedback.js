@@ -718,7 +718,6 @@
             const pageLocation = `${pageName}${stepInfo}`.trim();
 
             let finalComments = feedbackText;
-            finalComments = `--- [Reporter Details] ---\nName: ${nameVal || 'N/A'}\nStore: ${storeVal || 'N/A'}\nEmail: ${emailVal || 'N/A'}\n\n` + finalComments;
             if (devConsoleErrors.length > 0) {
                 finalComments += "\n\n--- [Auto-Captured Dev Console Errors] ---\n" + devConsoleErrors.join("\n");
             }
