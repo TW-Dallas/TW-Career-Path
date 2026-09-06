@@ -2009,16 +2009,9 @@
                 if (strTarget.includes('gate') && /\bgate\b/i.test(rawUser)) return true;
                 if (strTarget.includes('driver') && /\bdriver\b/i.test(rawUser)) return true;
 
-                // Also strip leading house numbers if accidentally typed here (e.g. '470 Adriatic')
-                const userWithoutLeadingDigits = rawUser.replace(/^\d+\s+/, '');
-                if (userWithoutLeadingDigits === strTarget) return true;
-
                 const normUser = normalizeStreetText(rawUser);
                 const normTarget = normalizeStreetText(strTarget);
                 if (normUser && normTarget && normUser === normTarget) return true;
-
-                const normUserClean = normalizeStreetText(userWithoutLeadingDigits);
-                if (normUserClean && normTarget && normUserClean === normTarget) return true;
 
                 const directDist = levenshteinDistance(rawUser, strTarget);
                 if (directDist <= 2) return true;

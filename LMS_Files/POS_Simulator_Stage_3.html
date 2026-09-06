@@ -1529,7 +1529,12 @@
             }
 
             const existingInput = document.querySelector('.hitbox-text-input');
-            if (existingInput) existingInput.remove();
+            if (existingInput) {
+                if (existingInput.parentElement === activeHb) {
+                    return;
+                }
+                existingInput.remove();
+            }
 
             if (stepData.input.type === 'text') {
                 activeHb.style.cursor = 'text';
@@ -1585,11 +1590,15 @@
                 }
 
                 // Stop dynamic background clicking issues while working in the field
-                inputEl.addEventListener('click', (e) => e.stopPropagation());
+                inputEl.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    errorMsg.style.display = 'none';
+                });
 
-                // Enter Key Submission event
+                // Enter / Tab Key Submission event
                 inputEl.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === 'Enter' || e.key === 'Tab') {
+                        e.preventDefault();
                         validateTextEntry(inputEl.value, stepData.input.expectedValue);
                     }
                 });
@@ -1692,6 +1701,8 @@
                 errorMsg.innerText = "❌ Incorrect action. Try again.";
                 errorMsg.style.display = 'block';
                 wrongClicks++;
+                const inputEl = document.querySelector('.hitbox-text-input');
+                if (inputEl) inputEl.focus();
             }
         }
         let hitboxesLoaded = false;
@@ -1818,6 +1829,16 @@
                         return;
                     }
                 }
+                // If on a text input step, warn the trainee, but keep the input element accessible and ready
+                if (stepData && stepData.input) {
+                    errorMsg.innerText = "❌ Incorrect action. Enter the required information into the POS field.";
+                    errorMsg.style.display = 'block';
+                    wrongClicks++;
+                    const inputEl = document.querySelector('.hitbox-text-input');
+                    if (inputEl) inputEl.focus();
+                    return;
+                }
+
                 errorMsg.innerText = "❌ Incorrect action. Try again.";
                 errorMsg.style.display = 'block';
                 wrongClicks++;
