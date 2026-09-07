@@ -485,8 +485,8 @@
 
             const answersStr = encodeURIComponent(JSON.stringify({ scores: runScores }));
             
-            // Default arbitrary dummy time variable matching expected sheet parameter
-            const timeSpent = 420; 
+            // Authentic active seconds accumulated across games
+            const timeSpent = parseInt(localStorage.getItem(`tw_${id}_mod3_seconds`) || '0', 10) || 420; 
 
             const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=Day%201%20Mod%203&timeSpent=${timeSpent}&answers=${answersStr}&status=Completed`;
             

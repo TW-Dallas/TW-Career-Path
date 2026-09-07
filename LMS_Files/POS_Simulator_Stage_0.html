@@ -655,6 +655,8 @@
             if (!market || !id) return;
 
             const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            const curM4 = parseInt(localStorage.getItem('tw_' + id + '_mod4_seconds') || '0', 10);
+            localStorage.setItem('tw_' + id + '_mod4_seconds', curM4 + timeSpent);
             
             // Save that Stage 0 is complete and Stage 1 is up next
             const answers = {

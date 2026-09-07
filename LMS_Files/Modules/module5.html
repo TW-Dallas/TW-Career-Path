@@ -717,26 +717,14 @@
             const now = new Date();
             if (dateEl) dateEl.innerText = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-            // Shift Elapsed Time & Start/End Time Calculation
+            // 1. Shift Elapsed Time & Exact Start/End Timestamps (Authentic)
             const startKey = 'tw_day1_start_time_' + id;
             let storedStartTime = localStorage.getItem(startKey) || localStorage.getItem('tw_day1_start_time');
             let startMs = storedStartTime ? parseInt(storedStartTime, 10) : null;
             const nowMs = Date.now();
             
-            // If missing or if elapsed time is under 45m (e.g. trainee relogged in right before trainer signoff),
-            // calculate a realistic shift duration of 2h 15m (135m)
-            let elapsedMins = 135;
-            if (startMs && !isNaN(startMs)) {
-                const diffMins = Math.round((nowMs - startMs) / 60000);
-                if (diffMins >= 45 && diffMins <= 600) {
-                    elapsedMins = diffMins;
-                } else {
-                    elapsedMins = 135;
-                    startMs = nowMs - (135 * 60 * 1000);
-                    localStorage.setItem(startKey, startMs);
-                }
-            } else {
-                startMs = nowMs - (135 * 60 * 1000);
+            if (!startMs || isNaN(startMs)) {
+                startMs = nowMs;
                 localStorage.setItem(startKey, startMs);
             }
 
@@ -746,14 +734,28 @@
             const startTimeFormatted = startDateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }) + ' CST';
             const endTimeFormatted = endDateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }) + ' CST';
 
-            const hours = Math.floor(elapsedMins / 60);
-            const mins = elapsedMins % 60;
+            const elapsedMs = Math.max(0, nowMs - startMs);
+            const totalElapsedMins = Math.floor(elapsedMs / 60000);
+            const hours = Math.floor(totalElapsedMins / 60);
+            const mins = totalElapsedMins % 60;
             const elapsedFormatted = hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
 
-            // Active Learning Seat Time (proportional active time, min 1h 15m)
-            const activeMins = Math.max(75, Math.min(elapsedMins, Math.round(elapsedMins * 0.78)));
-            const aHours = Math.floor(activeMins / 60);
-            const aMins = activeMins % 60;
+            // 2. Active Learning Seat Time (Authentic Sum of Module Timers)
+            const mod1Sec = parseInt(localStorage.getItem('tw_' + id + '_mod1_seconds') || '0', 10);
+            const mod2Sec = parseInt(localStorage.getItem('tw_' + id + '_mod2_seconds') || '0', 10);
+            const mod3Sec = parseInt(localStorage.getItem('tw_' + id + '_mod3_seconds') || '0', 10);
+            const mod4Sec = parseInt(localStorage.getItem('tw_' + id + '_mod4_seconds') || '0', 10);
+            const mod5Sec = Math.floor((Date.now() - moduleStartTime) / 1000);
+
+            const totalActiveSec = mod1Sec + mod2Sec + mod3Sec + mod4Sec + mod5Sec;
+            let activeMinutes = 0;
+            if (totalActiveSec > 0) {
+                activeMinutes = Math.floor(totalActiveSec / 60);
+            } else {
+                activeMinutes = totalElapsedMins;
+            }
+            const aHours = Math.floor(activeMinutes / 60);
+            const aMins = activeMinutes % 60;
             const activeFormatted = aHours > 0 ? `${aHours}h ${aMins}m` : `${aMins}m`;
 
             const startEl = document.getElementById('rc-start-time');

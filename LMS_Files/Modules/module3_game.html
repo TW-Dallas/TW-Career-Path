@@ -388,11 +388,13 @@ function endGamePlay() {
             // Save state to User-ID scoped keys
             localStorage.setItem(`tw_${userId}_game1_complete`, 'true');
             
-            // Set highest score tracking
+            // Set highest score tracking & accumulate active game seconds
             const previousHighScore = parseInt(localStorage.getItem(`tw_${userId}_game1_score`) || '0', 10);
             if (finalScore > previousHighScore) {
                 localStorage.setItem(`tw_${userId}_game1_score`, finalScore);
             }
+            const curMod3 = parseInt(localStorage.getItem(`tw_${userId}_mod3_seconds`) || '0', 10);
+            localStorage.setItem(`tw_${userId}_mod3_seconds`, curMod3 + Math.round(elapsedSeconds));
         }
 
         function returnToLobby() {

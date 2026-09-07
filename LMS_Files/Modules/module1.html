@@ -361,6 +361,7 @@
             
             // Calculate active seconds spent since loading
             const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            localStorage.setItem('tw_' + id + '_mod1_seconds', timeSpent);
             
             // Stringify and safely encode JSON responses
             const answersStr = encodeURIComponent(JSON.stringify(userAnswers));

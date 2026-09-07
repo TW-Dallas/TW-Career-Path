@@ -1936,6 +1936,8 @@
             if (!market || !id) return;
 
             const timeSpent = Math.floor((Date.now() - moduleStartTime) / 1000);
+            const curM4 = parseInt(localStorage.getItem('tw_' + id + '_mod4_seconds') || '0', 10);
+            localStorage.setItem('tw_' + id + '_mod4_seconds', curM4 + timeSpent);
 
             const answers = {
                 "currentStage": 4,
