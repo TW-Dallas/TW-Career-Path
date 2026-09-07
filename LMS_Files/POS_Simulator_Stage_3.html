@@ -1432,6 +1432,38 @@
             }
         }
 
+        function markTrackComplete(index) {
+            const stepData = sequence[currentStep];
+            if (!stepData || !stepData.audio) return;
+
+            const tracks = stepData.audio.tracks || [
+                { id: "track-0", label: "Live Call", file: stepData.audio.file }
+            ];
+
+            completedTracks.add(index);
+            updateTrackUI(index, 'complete');
+
+            const nextIndex = index + 1;
+            if (tracks[nextIndex]) {
+                const nextRow = document.getElementById(`track-row-${nextIndex}`);
+                const nextBtn = document.getElementById(`btn-track-${nextIndex}`);
+                if (nextRow && nextBtn) {
+                    nextRow.classList.remove('locked');
+                    nextBtn.disabled = false;
+                    const labelEl = nextRow.querySelector('.track-label');
+                    if (labelEl) labelEl.innerText = tracks[nextIndex].label;
+                }
+            }
+
+            const currentStepData = sequence[currentStep];
+            if (completedTracks.size === tracks.length) {
+                getActiveHitboxIds(currentStepData).forEach(id => {
+                    const activeHb = document.getElementById(id);
+                    if (activeHb) activeHb.style.display = 'block';
+                });
+            }
+        }
+
         function playTrack(index) {
             const stepData = sequence[currentStep];
 
@@ -1442,6 +1474,7 @@
             ];
 
             const targetTrack = tracks[index];
+            if (!targetTrack) return;
 
             if (currentPlayingTrackIndex === index && !audioPlayer.paused) {
                 audioPlayer.pause();
@@ -1450,7 +1483,9 @@
             }
 
             audioPlayer.src = targetTrack.file;
-            audioPlayer.play();
+            audioPlayer.play().catch(err => {
+                console.warn("Audio play error:", err);
+            });
             currentPlayingTrackIndex = index;
 
             tracks.forEach((_, i) => {
@@ -1462,30 +1497,23 @@
             });
 
             audioPlayer.onended = function () {
-                completedTracks.add(index);
-                updateTrackUI(index, 'complete');
+                markTrackComplete(index);
+            };
 
-                const nextIndex = index + 1;
-                if (tracks[nextIndex]) {
-                    const nextRow = document.getElementById(`track-row-${nextIndex}`);
-                    const nextBtn = document.getElementById(`btn-track-${nextIndex}`);
-                    if (nextRow && nextBtn) {
-                        nextRow.classList.remove('locked');
-                        nextBtn.disabled = false;
-                        const labelEl = nextRow.querySelector('.track-label');
-                        if (labelEl) labelEl.innerText = tracks[nextIndex].label;
-                    }
-                }
-
-                const currentStepData = sequence[currentStep];
-                if (completedTracks.size === tracks.length) {
-                    getActiveHitboxIds(currentStepData).forEach(id => {
-                        const activeHb = document.getElementById(id);
-                        if (activeHb) activeHb.style.display = 'block';
-                    });
+            // Backup 1: timeupdate threshold in case ended event drops near end of track
+            audioPlayer.ontimeupdate = function() {
+                if (audioPlayer.duration > 0 && audioPlayer.currentTime >= (audioPlayer.duration - 0.35)) {
+                    markTrackComplete(index);
                 }
             };
-        } // <-- This was the missing closing brace that wraps playTrack()
+
+            // Backup 2: onerror fallback if audio file cannot be loaded or decoded
+            audioPlayer.onerror = function() {
+                console.error("Audio playback error on track:", targetTrack.file);
+                reportErrorToDeveloper('Audio Playback Failure', `File failed to play: ${targetTrack.file}`);
+                markTrackComplete(index);
+            };
+        }
 
         function updateTrackUI(index, state) {
             const badge = document.getElementById(`badge-track-${index}`);

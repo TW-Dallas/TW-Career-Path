@@ -403,27 +403,96 @@
         const audioPlayer = document.getElementById('global-audio-player');
         const audioPanel = document.getElementById('audio-control-panel');
 
+        let currentAudioKey = null;
         let completedTracks = new Set();
         let currentPlayingTrackIndex = null;
 
-        function handleAudioForStep(stepData) {
-            completedTracks.clear();
-            currentPlayingTrackIndex = null;
-
-            if (!stepData.audio) {
-                if (audioPanel) audioPanel.style.display = 'none';
-                if (audioPlayer) audioPlayer.pause();
-                return;
+        function getAudioKey(stepData) {
+            if (!stepData || !stepData.audio) return null;
+            if (stepData.audio.file) return `audio_${stepData.audio.file}`;
+            if (stepData.audio.tracks) {
+                return `audio_tracks_${stepData.audio.tracks.map(t => t.id || t.file).join('_')}`;
             }
+            return `audio_step_${stepData.step}`;
+        }
 
-            if (audioPanel) audioPanel.style.display = 'block';
-
+        function markTrackComplete(index) {
+            const stepData = sequence[currentStep];
+            if (!stepData || !stepData.audio) return;
             const tracks = stepData.audio.tracks || [
                 { id: "track-0", label: "Live Call", file: stepData.audio.file }
             ];
 
+            completedTracks.add(index);
+            updateTrackUI(index, 'complete');
+
+            const nextIndex = index + 1;
+            if (tracks[nextIndex]) {
+                const nextRow = document.getElementById(`track-row-${nextIndex}`);
+                const nextBtn = document.getElementById(`btn-track-${nextIndex}`);
+                if (nextRow && nextBtn) {
+                    nextRow.classList.remove('locked');
+                    nextBtn.disabled = false;
+                    const labelEl = nextRow.querySelector('.track-label');
+                    if (labelEl) labelEl.innerText = tracks[nextIndex].label;
+                }
+            }
+
+            if (completedTracks.size === tracks.length) {
+                const activeHitboxIds = getActiveHitboxIds(stepData);
+                activeHitboxIds.forEach(hbId => {
+                    const el = document.getElementById(hbId);
+                    if (el) el.style.display = 'block';
+                });
+            }
+        }
+
+        function handleAudioForStep(stepData) {
+            const nextAudioKey = getAudioKey(stepData);
+
+            if (!nextAudioKey) {
+                if (audioPanel) audioPanel.style.display = 'none';
+                if (audioPlayer) {
+                    audioPlayer.pause();
+                    audioPlayer.src = "";
+                }
+                currentAudioKey = null;
+                completedTracks.clear();
+                currentPlayingTrackIndex = null;
+                return;
+            }
+
+            const tracks = stepData.audio.tracks || [
+                { id: "track-0", label: "Live Call", file: stepData.audio.file }
+            ];
             const isSequential = stepData.audio.sequential !== false && tracks.length > 1;
             const requireAll = stepData.audio.requireAllPlayed === true || tracks.length > 1;
+
+            if (nextAudioKey === currentAudioKey) {
+                // Audio already initialized for this step; preserve existing playback progress
+                const activeHitboxIds = getActiveHitboxIds(stepData);
+                activeHitboxIds.forEach(hbId => {
+                    const el = document.getElementById(hbId);
+                    if (el) {
+                        if (requireAll && completedTracks.size < tracks.length) {
+                            el.style.display = 'none';
+                        } else {
+                            el.style.display = 'block';
+                        }
+                    }
+                });
+                return;
+            }
+
+            currentAudioKey = nextAudioKey;
+            completedTracks.clear();
+            currentPlayingTrackIndex = null;
+            if (audioPlayer) {
+                audioPlayer.pause();
+                audioPlayer.src = "";
+            }
+
+            if (audioPanel) audioPanel.style.display = 'block';
 
             let html = `<div class="audio-header"><span class="audio-pulse-indicator"></span> Live Audio Call</div>`;
             html += `<div class="audio-track-stack">`;
@@ -451,7 +520,7 @@
             if (audioPanel) audioPanel.innerHTML = html;
 
             const activeHitboxIds = getActiveHitboxIds(stepData);
-            if (requireAll && localStorage.getItem('tw_admin_mode') !== 'true') {
+            if (requireAll) {
                 activeHitboxIds.forEach(hbId => {
                     const el = document.getElementById(hbId);
                     if (el) el.style.display = 'none';
@@ -461,11 +530,14 @@
 
         function playTrack(index) {
             const stepData = sequence[currentStep];
+            if (!stepData || !stepData.audio) return;
+
             const tracks = stepData.audio.tracks || [
                 { id: "track-0", label: "Live Call", file: stepData.audio.file }
             ];
 
             const targetTrack = tracks[index];
+            if (!targetTrack) return;
 
             if (currentPlayingTrackIndex === index && !audioPlayer.paused) {
                 audioPlayer.pause();
@@ -474,7 +546,9 @@
             }
 
             audioPlayer.src = targetTrack.file;
-            audioPlayer.play();
+            audioPlayer.play().catch(err => {
+                console.warn("Audio play error:", err);
+            });
             currentPlayingTrackIndex = index;
 
             tracks.forEach((_, i) => {
@@ -486,28 +560,21 @@
             });
 
             audioPlayer.onended = function() {
-                completedTracks.add(index);
-                updateTrackUI(index, 'complete');
+                markTrackComplete(index);
+            };
 
-                const nextIndex = index + 1;
-                if (tracks[nextIndex]) {
-                    const nextRow = document.getElementById(`track-row-${nextIndex}`);
-                    const nextBtn = document.getElementById(`btn-track-${nextIndex}`);
-                    if (nextRow && nextBtn) {
-                        nextRow.classList.remove('locked');
-                        nextBtn.disabled = false;
-                        const labelEl = nextRow.querySelector('.track-label');
-                        if (labelEl) labelEl.innerText = tracks[nextIndex].label;
-                    }
+            // Backup 1: timeupdate threshold in case ended event drops near end of track
+            audioPlayer.ontimeupdate = function() {
+                if (audioPlayer.duration > 0 && audioPlayer.currentTime >= (audioPlayer.duration - 0.35)) {
+                    markTrackComplete(index);
                 }
+            };
 
-                if (completedTracks.size === tracks.length) {
-                    const activeHitboxIds = getActiveHitboxIds(stepData);
-                    activeHitboxIds.forEach(hbId => {
-                        const el = document.getElementById(hbId);
-                        if (el) el.style.display = 'block';
-                    });
-                }
+            // Backup 2: onerror fallback if audio file cannot be loaded or decoded
+            audioPlayer.onerror = function() {
+                console.error("Audio playback error on track:", targetTrack.file);
+                reportErrorToDeveloper('Audio Playback Failure', `File failed to play: ${targetTrack.file}`);
+                markTrackComplete(index);
             };
         }
 
