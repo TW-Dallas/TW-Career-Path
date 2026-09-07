@@ -265,6 +265,15 @@
         const moduleStartTime = Date.now();
         let userAnswers = {};
 
+        // Initialize Day 1 shift start time if not already captured
+        const currentUserId = localStorage.getItem('tw_id') || 'guest';
+        if (!localStorage.getItem('tw_day1_start_time_' + currentUserId)) {
+            localStorage.setItem('tw_day1_start_time_' + currentUserId, Date.now());
+        }
+        if (!localStorage.getItem('tw_day1_start_time')) {
+            localStorage.setItem('tw_day1_start_time', Date.now());
+        }
+
         // --- MODULE VIDEOS CONFIGURATION ---
         const moduleVideos = [
             {

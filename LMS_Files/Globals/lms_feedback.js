@@ -489,7 +489,7 @@
                     </div>
                 </div>
                 <p>
-                    Please open this link on your store's computer or training laptop to complete your onboarding.
+                    Please open this link on your store's computer or training laptop to complete your Day 1 training.
                 </p>
                 <div style="font-family: 'OneDotCd-Bold', 'Subhead1', sans-serif; color: #005c91; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
                     🍕 TEAM WOW LEARNING SYSTEM

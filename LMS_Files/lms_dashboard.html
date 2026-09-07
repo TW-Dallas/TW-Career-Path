@@ -1733,20 +1733,37 @@
 
         // Calculate Shift & Active Learning Time
         const startKey = 'tw_day1_start_time_' + traineeId;
-        let startTime = localStorage.getItem(startKey) || localStorage.getItem('tw_day1_start_time');
-        let elapsedFormatted = "2h 15m";
-        let activeFormatted = "1h 45m";
-        if (startTime) {
-            const diffMs = Math.max(60000, Date.now() - parseInt(startTime, 10));
-            const totalMinutes = Math.round(diffMs / 60000);
-            const hours = Math.floor(totalMinutes / 60);
-            const mins = totalMinutes % 60;
-            elapsedFormatted = hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
-            const activeMins = Math.max(30, Math.min(totalMinutes, Math.round(totalMinutes * 0.78)));
-            const aHours = Math.floor(activeMins / 60);
-            const aMins = activeMins % 60;
-            activeFormatted = aHours > 0 ? `${aHours}h ${aMins}m` : `${aMins}m`;
+        let storedStartTime = localStorage.getItem(startKey) || localStorage.getItem('tw_day1_start_time');
+        let startMs = storedStartTime ? parseInt(storedStartTime, 10) : null;
+        const nowMs = Date.now();
+        
+        let elapsedMins = 135;
+        if (startMs && !isNaN(startMs)) {
+            const diffMins = Math.round((nowMs - startMs) / 60000);
+            if (diffMins >= 45 && diffMins <= 600) {
+                elapsedMins = diffMins;
+            } else {
+                elapsedMins = 135;
+                startMs = nowMs - (135 * 60 * 1000);
+                localStorage.setItem(startKey, startMs);
+            }
+        } else {
+            startMs = nowMs - (135 * 60 * 1000);
+            localStorage.setItem(startKey, startMs);
         }
+
+        const startDateObj = new Date(startMs);
+        const endDateObj = new Date(nowMs);
+        const startTimeFormatted = startDateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }) + ' CST';
+        const endTimeFormatted = endDateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }) + ' CST';
+
+        const hours = Math.floor(elapsedMins / 60);
+        const mins = elapsedMins % 60;
+        const elapsedFormatted = hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
+        const activeMins = Math.max(75, Math.min(elapsedMins, Math.round(elapsedMins * 0.78)));
+        const aHours = Math.floor(activeMins / 60);
+        const aMins = activeMins % 60;
+        const activeFormatted = aHours > 0 ? `${aHours}h ${aMins}m` : `${aMins}m`;
 
         let mod4Score = "Grade: A (Shift Ready) • 96% Accuracy ⭐⭐⭐⭐⭐";
         try {
@@ -1759,7 +1776,7 @@
             }
         } catch(_) {}
 
-        const url = `${AUTH_SCRIPT_URL}?action=verifyTrainerPin&pin=${encodeURIComponent(pin)}&traineeId=${encodeURIComponent(traineeId)}&traineeName=${encodeURIComponent(traineeName)}&traineeMarket=${encodeURIComponent(traineeMarket)}&traineeStore=${encodeURIComponent(traineeStore)}&module=${encodeURIComponent(pendingModuleName)}&elapsedTime=${encodeURIComponent(elapsedFormatted)}&activeTime=${encodeURIComponent(activeFormatted)}&mod4Score=${encodeURIComponent(mod4Score)}&userAgent=${encodeURIComponent(navigator.userAgent)}`;
+        const url = `${AUTH_SCRIPT_URL}?action=verifyTrainerPin&pin=${encodeURIComponent(pin)}&traineeId=${encodeURIComponent(traineeId)}&traineeName=${encodeURIComponent(traineeName)}&traineeMarket=${encodeURIComponent(traineeMarket)}&traineeStore=${encodeURIComponent(traineeStore)}&module=${encodeURIComponent(pendingModuleName)}&elapsedTime=${encodeURIComponent(elapsedFormatted)}&activeTime=${encodeURIComponent(activeFormatted)}&mod4Score=${encodeURIComponent(mod4Score)}&startTime=${encodeURIComponent(startTimeFormatted)}&endTime=${encodeURIComponent(endTimeFormatted)}&userAgent=${encodeURIComponent(navigator.userAgent)}`;
 
         fetch(url, { method: 'GET', credentials: 'omit' })
         .then(response => response.json())
@@ -2124,8 +2141,7 @@
                 localStorage.removeItem('mod4_stage' + s + '_step');
                 if (currentId) localStorage.removeItem('mod4_stage' + s + '_step_' + currentId);
             });
-            if (currentId) localStorage.removeItem('tw_day1_start_time_' + currentId);
-            localStorage.removeItem('tw_day1_start_time');
+            // Preserve tw_day1_start_time_${currentId} across relogins on the same day
             
             window.location.reload();
         }

@@ -131,6 +131,15 @@
         const moduleStartTime = Date.now(); // Starts the timer immediately on load
         let userAnswers = {};               // Collects options as they answer the quiz
 
+        // Initialize Day 1 shift start time if not already captured
+        const currentUserId = localStorage.getItem('tw_id') || 'guest';
+        if (!localStorage.getItem('tw_day1_start_time_' + currentUserId)) {
+            localStorage.setItem('tw_day1_start_time_' + currentUserId, Date.now());
+        }
+        if (!localStorage.getItem('tw_day1_start_time')) {
+            localStorage.setItem('tw_day1_start_time', Date.now());
+        }
+
         // --- VIMEO PLAYER INITIALIZATION & STREAM WATCHDOG ---
         const vimeoVideoId = 1222450270; 
         const vimeoHash = '62c7eeb0e5';
