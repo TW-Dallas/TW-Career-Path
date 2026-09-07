@@ -135,7 +135,7 @@ const QUESTION_BANK = {
         {
             id: 'm5_q2_pillars',
             topic: 'Core Pillars',
-            question: 'What are the four core focus areas of your 3-day onboarding program?',
+            question: 'What are the four core focus areas of your 3-day training program?',
             options: [
                 { text: 'A. Speed, Dough Prep, Sales Contests, and Routing', correct: false },
                 { text: 'B. Cash Handling, Oven Tending, Dishwashing, and Phone Scripts', correct: false },
