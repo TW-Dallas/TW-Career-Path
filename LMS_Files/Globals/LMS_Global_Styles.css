@@ -100,7 +100,7 @@
       margin: 0 0 14px 0;
       text-transform: uppercase;
       letter-spacing: 1px;
-      border-bottom: 3px solid var(--brand-red, #e31837);
+      border-bottom: 3px solid var(--brand-red, #ff0000);
       padding-bottom: 8px;
       display: inline-block;
   }
@@ -1363,7 +1363,7 @@
     .tw-retry-btn {
         display: none;
         margin-top: 14px;
-        background: var(--brand-red, #e31837);
+        background: var(--med-red, #e70000);
         color: #ffffff;
         border: 2px solid rgba(255,255,255,0.4);
         border-radius: 25px;
@@ -1371,7 +1371,7 @@
         font-family: 'Subhead2', sans-serif;
         font-size: 0.95rem;
         cursor: pointer;
-        box-shadow: 0 4px 15px rgba(227, 24, 55, 0.5);
+        box-shadow: 0 4px 15px rgba(231, 0, 0, 0.5);
         transition: all 0.2s ease;
         animation: fadeIn 0.3s ease-out;
     }
