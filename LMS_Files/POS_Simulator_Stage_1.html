@@ -653,32 +653,45 @@
                 instructionText.innerHTML = "<strong>Error:</strong> Could not load hitboxes. Check console.";
             });
 
+        let lastAdvanceStepTime = 0;
+
+        function getActiveHitboxIds(stepData) {
+            if (!stepData || !stepData.activeHitbox) return [];
+            if (Array.isArray(stepData.activeHitbox)) return stepData.activeHitbox;
+            return [stepData.activeHitbox];
+        }
+
         // Global advanceStep function capable of parsing any argument structure
-        window.advanceStep = function(target) {
+        window.advanceStep = function(target, event) {
             if (currentStep >= sequence.length || !sequence[currentStep]) return;
 
-            let clickedId = "";
+            const now = Date.now();
+            if (now - lastAdvanceStepTime < 150) return;
 
-            if (typeof target === 'string') {
-                clickedId = target;
-            } else if (target && target.id) {
+            const evt = event || window.event;
+            if (evt && typeof evt.stopPropagation === 'function') {
+                evt.stopPropagation();
+            }
+
+            let clickedId = "";
+            if (target && typeof target === 'object' && target.id) {
                 clickedId = target.id;
-            } else if (target && target.target) {
-                clickedId = target.target.id;
-            } else if (window.event) {
-                const eventTarget = window.event.currentTarget || window.event.target;
-                if (eventTarget) {
-                    clickedId = eventTarget.id;
-                }
-            } 
+            } else if (evt) {
+                const eventTarget = evt.currentTarget || evt.target;
+                if (eventTarget && eventTarget.id) clickedId = eventTarget.id;
+            }
+            if (!clickedId && typeof target === 'string' && target !== 'next') {
+                clickedId = target;
+            }
 
             const stepData = sequence[currentStep];
             if (!stepData) return;
 
-            const activeHitboxId = stepData.activeHitbox;
+            const activeHitboxIds = getActiveHitboxIds(stepData);
 
-            // If the clicked ID matches the active hitbox for the current step
-            if (clickedId === activeHitboxId) {
+            // If the clicked ID matches any active hitbox for the current step
+            if (activeHitboxIds.includes(clickedId)) {
+                lastAdvanceStepTime = Date.now();
                 errorMsg.style.display = 'none'; 
                 currentStep++; 
                 loadStep(currentStep); 
@@ -689,7 +702,7 @@
             // Bind listeners to all hitboxes to guarantee execution if inline onclick is missing
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.addEventListener('click', function(e) {
-                    advanceStep(this);
+                    advanceStep(this, e);
                 });
             });
 
@@ -796,25 +809,30 @@
                 hb.style.display = 'none';
             });
             
-            const activeHb = document.getElementById(stepData.activeHitbox);
-            if (activeHb) {
-                activeHb.style.display = 'block';
-                if (stepIndex === 0) {
-                    activeHb.classList.add('arrow-bottom');
-                } else {
-                    activeHb.classList.remove('arrow-bottom'); 
-                }
+            const activeHitboxIds = getActiveHitboxIds(stepData);
+            if (activeHitboxIds.length > 0) {
+                activeHitboxIds.forEach(hbId => {
+                    const activeHb = document.getElementById(hbId);
+                    if (activeHb) {
+                        activeHb.style.display = 'block';
+                        if (stepIndex === 0) {
+                            activeHb.classList.add('arrow-bottom');
+                        } else {
+                            activeHb.classList.remove('arrow-bottom'); 
+                        }
 
-                // Detect if the subtitle contains "Order 2" (case-insensitive)
-                const isOrderTwo = stepData.instruction.toUpperCase().includes('ORDER 2');
-                
-                if (isOrderTwo) {
-                    activeHb.classList.add('hide-arrow');    // Hide arrow on Order 2
-                } else {
-                    activeHb.classList.remove('hide-arrow'); // Show arrow on Practice / Order 1
-                }
-            } else {
-                reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${stepData.activeHitbox}" but it was not found in the DOM.`);
+                        // Detect if the subtitle contains "Order 2" (case-insensitive)
+                        const isOrderTwo = stepData.instruction.toUpperCase().includes('ORDER 2');
+                        
+                        if (isOrderTwo) {
+                            activeHb.classList.add('hide-arrow');    // Hide arrow on Order 2
+                        } else {
+                            activeHb.classList.remove('hide-arrow'); // Show arrow on Practice / Order 1
+                        }
+                    } else {
+                        reportErrorToDeveloper('Missing Hitbox Element', `Expected ID "${hbId}" but it was not found in the DOM.`);
+                    }
+                });
             }
         }
 

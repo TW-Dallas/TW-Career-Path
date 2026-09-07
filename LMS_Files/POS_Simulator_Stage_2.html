@@ -836,23 +836,29 @@
                 instructionText.innerHTML = "<strong>Error:</strong> Could not load hitboxes. Check console.";
             });
 
+        let lastAdvanceStepTime = 0;
+
         // Global advanceStep function capable of parsing any argument structure
-        window.advanceStep = function (target) {
+        window.advanceStep = function (target, event) {
             if (currentStep >= sequence.length || !sequence[currentStep]) return;
 
-            let clickedId = "";
+            const now = Date.now();
+            if (now - lastAdvanceStepTime < 150) return;
 
-            if (typeof target === 'string') {
-                clickedId = target;
-            } else if (target && target.id) {
+            const evt = event || window.event;
+            if (evt && typeof evt.stopPropagation === 'function') {
+                evt.stopPropagation();
+            }
+
+            let clickedId = "";
+            if (target && typeof target === 'object' && target.id) {
                 clickedId = target.id;
-            } else if (target && target.target) {
-                clickedId = target.target.id;
-            } else if (window.event) {
-                const eventTarget = window.event.currentTarget || window.event.target;
-                if (eventTarget) {
-                    clickedId = eventTarget.id;
-                }
+            } else if (evt) {
+                const eventTarget = evt.currentTarget || evt.target;
+                if (eventTarget && eventTarget.id) clickedId = eventTarget.id;
+            }
+            if (!clickedId && typeof target === 'string' && target !== 'next') {
+                clickedId = target;
             }
 
             const stepData = sequence[currentStep];
@@ -862,6 +868,7 @@
 
             // If the clicked ID matches any active hitbox for the current step
             if (activeIds.includes(clickedId)) {
+                lastAdvanceStepTime = Date.now();
                 errorMsg.style.display = 'none';
                 currentStep++;
                 loadStep(currentStep);
@@ -872,7 +879,7 @@
             // Bind listeners to all hitboxes to guarantee execution if inline onclick is missing
             document.querySelectorAll('.hitbox').forEach(hb => {
                 hb.addEventListener('click', function (e) {
-                    advanceStep(this);
+                    advanceStep(this, e);
                 });
             });
 
