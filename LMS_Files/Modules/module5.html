@@ -791,7 +791,7 @@
                     if (data && data.success) {
                         handleSuccessfulSignoff(data.trainerName || "Store Trainer", data.trainerStore || store, data.elapsedTime || elapsedTime);
                     } else {
-                        errorMsg.innerText = data.error || "Invalid Trainer PIN. Please ask your GM or Trainer.";
+                        errorMsg.innerText = data.isLegacyPin ? `⚠️ ${data.error}` : `❌ ${data.error || "Invalid Trainer PIN. Please ask your GM or Trainer."}`;
                         errorMsg.style.display = 'block';
                         verifyBtn.disabled = false;
                         verifyBtn.innerText = "Certify Trainee & Unlock Day 2";
@@ -799,8 +799,10 @@
                 })
                 .catch(err => {
                     console.error("Trainer PIN check error:", err);
-                    // Offline fallback if network blip
-                    handleSuccessfulSignoff("Store Trainer (Offline Verified)", store, elapsedTime);
+                    errorMsg.innerText = "❌ Connection hiccup verifying PIN. Please check your connection and try again.";
+                    errorMsg.style.display = 'block';
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerText = "Certify Trainee & Unlock Day 2";
                 });
         }
 
