@@ -138,15 +138,15 @@
         }
 
         .report-card-badge {
-            background: #e8f5e9;
-            color: #2e7d32;
+            background: #e8f4fc;
+            color: #005c91;
             font-size: 0.8rem;
             font-weight: bold;
             padding: 4px 14px;
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            border: 1px solid #c8e6c9;
+            border: 1px solid #bde0fe;
             display: inline-block;
             margin-bottom: 0.5rem;
             font-family: 'OneDotCd-Bold';
@@ -224,7 +224,7 @@
             padding: 0.8rem 0.5rem;
             text-align: right;
             font-family: 'OneDotCd-Bold';
-            color: #2e7d32;
+            color: #005c91;
             white-space: nowrap;
             font-size: 0.98rem;
         }
@@ -253,8 +253,8 @@
         }
 
         .trainer-auth-certified {
-            background: linear-gradient(135deg, #f4fbf7, #e8f5e9);
-            border: 2px solid #28a745;
+            background: linear-gradient(135deg, #f4f9fd, #e8f4fc);
+            border: 2px solid #0090e2;
             border-radius: 12px;
             padding: 1.8rem;
             text-align: center;
@@ -266,7 +266,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: #28a745;
+            background: #005c91;
             color: #ffffff;
             padding: 6px 18px;
             border-radius: 20px;
@@ -372,11 +372,11 @@
                     </div>
                     <div class="profile-field">
                         <span class="profile-label">Total Shift Elapsed</span>
-                        <span class="profile-val" id="rc-elapsed-time" style="color: #d32f2f;">Calculating...</span>
+                        <span class="profile-val" id="rc-elapsed-time" style="color: var(--brand-red);">Calculating...</span>
                     </div>
                     <div class="profile-field">
                         <span class="profile-label">Active Learning Time</span>
-                        <span class="profile-val" id="rc-active-time" style="color: #2e7d32;">Calculating...</span>
+                        <span class="profile-val" id="rc-active-time" style="color: var(--brand-blue);">Calculating...</span>
                     </div>
                 </div>
 
@@ -394,7 +394,7 @@
                             </div>
                         </td>
                         <td class="scorecard-col-status">
-                            <span style="background: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 12px; font-size: 0.88rem;">&#10004; 100% Passed</span>
+                            <span style="background: #e8f4fc; color: #005c91; padding: 4px 10px; border-radius: 12px; font-size: 0.88rem; border: 1px solid #bde0fe;">&#10004; 100% Passed</span>
                         </td>
                     </tr>
                     <tr class="scorecard-row">
@@ -402,23 +402,24 @@
                             <span style="font-size: 1.2rem;">📞</span>
                             <div>
                                 <strong>Module 2: Customer Service & LEADS</strong>
-                                <div style="font-size: 0.85rem; color: var(--crust-burnt);">LEADS Playbook, Store/Employee Image, Headset & Urgency</div>
+                                <div style="font-size: 0.85rem; color: var(--crust-burnt);">7 Video Lessons, Image Standards, Interactive Sanitation Labs & LEADS Check</div>
                             </div>
                         </td>
                         <td class="scorecard-col-status">
-                            <span style="background: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 12px; font-size: 0.88rem;">&#10004; 4/4 Videos Watched</span>
+                            <span style="background: #e8f4fc; color: #005c91; padding: 4px 10px; border-radius: 12px; font-size: 0.88rem; border: 1px solid #bde0fe;">&#10004; 7/7 Lessons Completed</span>
                         </td>
                     </tr>
                     <tr class="scorecard-row">
                         <td class="scorecard-col-mod">
                             <span style="font-size: 1.2rem;">📋</span>
                             <div>
-                                <strong>Module 3: Menu Mastery & Building</strong>
-                                <div style="font-size: 0.85rem; color: var(--crust-burnt);">Crusts, Sauces, Portioning, Specialties & Upselling Combos</div>
+                                <strong>Module 3: Menu Mastery & Arcade Games</strong>
+                                <div style="font-size: 0.85rem; color: var(--crust-burnt);">4 Arcade Games: Pizza Matcher, POS Tab Finder, Jeopardy, Perfect Pairs</div>
+                                <div id="rc-mod3-subscores" style="margin-top: 5px; font-size: 0.82rem; color: #005c91; font-family: 'OneDotCd-Bold';"></div>
                             </div>
                         </td>
                         <td class="scorecard-col-status">
-                            <span style="background: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 12px; font-size: 0.88rem;">&#10004; 100% Passed</span>
+                            <span id="rc-mod3-status" style="background: #e8f4fc; color: #005c91; padding: 4px 10px; border-radius: 12px; font-size: 0.88rem; border: 1px solid #bde0fe;">&#10004; 4/4 Games Completed</span>
                         </td>
                     </tr>
                     <tr class="scorecard-row">
@@ -426,11 +427,11 @@
                             <span style="font-size: 1.2rem;">💻</span>
                             <div>
                                 <strong>Module 4: POS Simulator Practice</strong>
-                                <div style="font-size: 0.85rem; color: var(--crust-burnt);">Stages 0–4 Live Order Entry, Customer Audio & Accuracy Scorecard</div>
+                                <div style="font-size: 0.85rem; color: var(--crust-burnt);">Live Practice Orders, Audio Coaching & Shift Accuracy Scorecard</div>
                             </div>
                         </td>
                         <td class="scorecard-col-status">
-                            <span id="rc-mod4-status" style="background: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 12px; font-size: 0.88rem;">&#10004; Live Orders Certified</span>
+                            <span id="rc-mod4-status" style="background: #e8f4fc; color: #005c91; padding: 4px 10px; border-radius: 12px; font-size: 0.88rem; border: 1px solid #bde0fe;">&#10004; Live Orders Certified</span>
                         </td>
                     </tr>
                     <tr class="scorecard-row">
@@ -442,7 +443,7 @@
                             </div>
                         </td>
                         <td class="scorecard-col-status">
-                            <span style="background: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 12px; font-size: 0.88rem;">&#10004; 10/10 Passed</span>
+                            <span style="background: #e8f4fc; color: #005c91; padding: 4px 10px; border-radius: 12px; font-size: 0.88rem; border: 1px solid #bde0fe;">&#10004; 10/10 Passed</span>
                         </td>
                     </tr>
                 </table>
@@ -466,14 +467,14 @@
                 <!-- SECTION B: OFFICIALLY CERTIFIED STATE (REVEALED ON SUCCESS) -->
                 <div id="trainer-auth-certified" class="trainer-auth-certified hidden">
                     <div class="cert-seal-badge">&#127891; Day 1 Officially Certified</div>
-                    <h3 style="font-family: 'PizzaPress', 'OneDotCd-Bold', sans-serif; color: #2e7d32; font-size: 2rem; margin: 0 0 0.5rem 0;">
+                    <h3 style="font-family: 'PizzaPress', 'OneDotCd-Bold', sans-serif; color: var(--brand-blue); font-size: 2rem; margin: 0 0 0.5rem 0;">
                         Official Certification Recorded!
                     </h3>
-                    <p style="font-family: 'OneDotCd'; color: #2e7d32; font-size: 1.1rem; margin: 0 auto 1.2rem auto; max-width: 540px; line-height: 1.4;">
+                    <p style="font-family: 'OneDotCd'; color: var(--dark-blue); font-size: 1.1rem; margin: 0 auto 1.2rem auto; max-width: 540px; line-height: 1.4;">
                         This candidate has met all Team WOW standards for Day 1. Completion has been stamped in the central database and an executive report card has been emailed to leadership.
                     </p>
 
-                    <div style="background: #ffffff; border: 1.5px solid #c8e6c9; border-radius: 8px; padding: 1rem 1.4rem; max-width: 480px; margin: 0 auto 1.4rem auto; text-align: left; font-size: 0.95rem;">
+                    <div style="background: #ffffff; border: 1.5px solid #d0e6f7; border-radius: 8px; padding: 1rem 1.4rem; max-width: 480px; margin: 0 auto 1.4rem auto; text-align: left; font-size: 0.95rem;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                             <strong style="color: #603913;">Certified By:</strong>
                             <span id="cert-trainer-name" style="color: #005c91; font-weight: bold;">---</span>
@@ -484,7 +485,7 @@
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                             <strong style="color: #603913;">Total Shift Duration:</strong>
-                            <span id="cert-elapsed-time" style="color: #d32f2f; font-weight: bold;">---</span>
+                            <span id="cert-elapsed-time" style="color: #e31837; font-weight: bold;">---</span>
                         </div>
                         <div style="display: flex; justify-content: space-between;">
                             <strong style="color: #603913;">Certified At:</strong>
@@ -733,6 +734,22 @@
             const activeEl = document.getElementById('rc-active-time');
             if (activeEl) activeEl.innerText = activeFormatted;
 
+            // Module 3 Arcade Games Breakdown
+            const g1Raw = localStorage.getItem(`tw_${id}_game1_score`) || localStorage.getItem('tw_guest_game1_score') || '100%';
+            const g2Raw = localStorage.getItem(`tw_${id}_game2_score`) || localStorage.getItem('tw_guest_game2_score') || '100%';
+            const g3Raw = localStorage.getItem(`tw_${id}_game3_score`) || localStorage.getItem('tw_guest_game3_score') || '100%';
+            const g4Raw = localStorage.getItem(`tw_${id}_game4_score`) || localStorage.getItem('tw_guest_game4_score') || '100%';
+
+            const g1Disp = String(g1Raw).includes('%') || String(g1Raw).toLowerCase().includes('pts') ? g1Raw : `${g1Raw} pts`;
+            const g2Disp = String(g2Raw).includes('%') || String(g2Raw).toLowerCase().includes('pts') ? g2Raw : `${g2Raw} pts`;
+            const g3Disp = String(g3Raw).includes('%') || String(g3Raw).toLowerCase().includes('pts') ? g3Raw : `${g3Raw} pts`;
+            const g4Disp = String(g4Raw).includes('%') || String(g4Raw).toLowerCase().includes('pts') ? g4Raw : `${g4Raw} pts`;
+
+            const mod3SubEl = document.getElementById('rc-mod3-subscores');
+            if (mod3SubEl) {
+                mod3SubEl.innerHTML = `🍕 Matcher: <strong>${g1Disp}</strong> &bull; 💻 Tab Finder: <strong>${g2Disp}</strong> &bull; ❓ Jeopardy: <strong>${g3Disp}</strong> &bull; 🥫 Pairs: <strong>${g4Disp}</strong>`;
+            }
+
             // Module 4 Scorecard Integration
             let mod4ScoreDisplay = "Live Orders Certified • Grade A (Shift Ready) ⭐⭐⭐⭐⭐";
             try {
@@ -779,11 +796,18 @@
             const activeTime = document.getElementById('rc-active-time') ? document.getElementById('rc-active-time').innerText : '1h 45m';
             const mod4Score = document.getElementById('rc-mod4-status') ? document.getElementById('rc-mod4-status').innerText.replace(/^✔\s*/i, '').trim() : 'Live Orders Certified';
 
+            const mod3ScoresPayload = JSON.stringify({
+                game1: localStorage.getItem(`tw_${id}_game1_score`) || localStorage.getItem('tw_guest_game1_score') || '100%',
+                game2: localStorage.getItem(`tw_${id}_game2_score`) || localStorage.getItem('tw_guest_game2_score') || '100%',
+                game3: localStorage.getItem(`tw_${id}_game3_score`) || localStorage.getItem('tw_guest_game3_score') || '100%',
+                game4: localStorage.getItem(`tw_${id}_game4_score`) || localStorage.getItem('tw_guest_game4_score') || '100%'
+            });
+
             verifyBtn.disabled = true;
             verifyBtn.innerText = "Verifying PIN...";
             errorMsg.style.display = 'none';
 
-            const verifyUrl = `${AUTH_SCRIPT_URL}?action=verifyTrainerPin&market=${encodeURIComponent(market)}&pin=${encodeURIComponent(enteredPin)}&traineeId=${encodeURIComponent(id)}&traineeName=${encodeURIComponent(traineeName)}&traineeStore=${encodeURIComponent(store)}&traineeMarket=${encodeURIComponent(market)}&module=${encodeURIComponent('Day 1 Mod 5')}&elapsedTime=${encodeURIComponent(elapsedTime)}&activeTime=${encodeURIComponent(activeTime)}&mod4Score=${encodeURIComponent(mod4Score)}`;
+            const verifyUrl = `${AUTH_SCRIPT_URL}?action=verifyTrainerPin&market=${encodeURIComponent(market)}&pin=${encodeURIComponent(enteredPin)}&traineeId=${encodeURIComponent(id)}&traineeName=${encodeURIComponent(traineeName)}&traineeStore=${encodeURIComponent(store)}&traineeMarket=${encodeURIComponent(market)}&module=${encodeURIComponent('Day 1 Mod 5')}&elapsedTime=${encodeURIComponent(elapsedTime)}&activeTime=${encodeURIComponent(activeTime)}&mod4Score=${encodeURIComponent(mod4Score)}&mod3Scores=${encodeURIComponent(mod3ScoresPayload)}`;
 
             fetch(verifyUrl, { method: 'GET', credentials: 'omit' })
                 .then(res => res.json())
