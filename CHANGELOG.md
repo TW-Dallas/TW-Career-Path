@@ -41,6 +41,10 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Module 5 Clarification & Day 1 Progress:** Clarified Card 5 production status on the Day 1 dashboard so trainees receive a clean 100% completion badge upon finishing active Modules 1–4.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
+* **Day 1 Trainee Report Card Dispatch Precision & Duplicate Prevention:** 
+  * **Strict Final Sign-Off Matching:** Fixed an issue where unlocking Module 5 from the Training Dashboard prematurely dispatched a Day 1 completion report card before the trainee had started or finished the module. Report card emails are now strictly locked to the final sign-off screen at the end of Module 5.
+  * **Module 5 Review & Certified Seal Persistence:** When revisiting or reviewing Module 5 after completion, the report card screen now permanently preserves and displays the candidate's official Day 1 Certified badge and trainer sign-off details, removing the PIN entry form to prevent redundant re-authorizations.
+  * **Server-Side Shift Deduplication:** Added an automatic server-side rate-limit and deduplication safeguard in Google Apps Script that prevents sending duplicate report card emails for the same trainee on the same shift date.
 * **Day 1 Trainee Report Card & Scorecard Polish:** 
   * **Shift Start & Completion Timestamps:** Day 1 report card certificates and executive notifications now clearly display the exact **Shift Date**, **Training Started** time (e.g. `2:01 PM CST`), and **Completed & Certified** time (e.g. `4:16 PM CST`) alongside total shift duration.
   * **Authentic Active Seat Time & Rapid Completion Alerts:** Replaced estimated durations with 100% authentic per-module active seat timers (summed directly across video lessons, interactive labs, menu games, and POS simulator practice stages). If a trainee is certified unusually quickly (< 45 minutes), leadership emails automatically feature a high-visibility **Rapid Shift Completion Alert** so executives can immediately investigate if training was rushed or bypassed.
