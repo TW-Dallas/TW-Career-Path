@@ -1790,6 +1790,7 @@
                 if (pendingUnlockUrl && pendingUnlockUrl.includes('module2')) localStorage.setItem('tw_mod2_unlocked', 'true');
                 if (pendingUnlockUrl && pendingUnlockUrl.includes('module3')) localStorage.setItem('tw_mod3_unlocked', 'true');
                 if (pendingUnlockUrl && (pendingUnlockUrl.includes('Stage') || pendingUnlockUrl.includes('POS'))) localStorage.setItem('tw_mod4_unlocked', 'true');
+                if (pendingUnlockUrl && pendingUnlockUrl.includes('module5')) localStorage.setItem('tw_mod5_unlocked', 'true');
 
                 refreshCardLocks();
 
@@ -1882,7 +1883,7 @@
                 unlockedKey: 'tw_mod5_unlocked', 
                 targetCardId: 'card-mod5', 
                 targetUrl: 'Modules/module5.html', 
-                moduleName: 'Day 1 Mod 5 (Recap & Sign-Off)', 
+                moduleName: 'Day 1 Mod 5 Unlock', 
                 startText: 'Start Module 5',
                 reviewText: 'Review Module 5',
                 doneKey: 'mod5_complete'

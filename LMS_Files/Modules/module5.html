@@ -529,10 +529,11 @@
     <script>
         let currentStep = 1;
         const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
-        let bobbyVideoWatched = isAdmin;
-        let brentVideoWatched = isAdmin;
-        let quizPassed = false;
-        let trainerAuthorized = false;
+        const isMod5Complete = localStorage.getItem('mod5_complete') === 'true' || localStorage.getItem('tw_day1_certified') === 'true';
+        let bobbyVideoWatched = isAdmin || isMod5Complete;
+        let brentVideoWatched = isAdmin || isMod5Complete;
+        let quizPassed = isAdmin || isMod5Complete;
+        let trainerAuthorized = isAdmin || isMod5Complete;
         let activeQuizQuestions = [];
         let bobbyPlayer = null;
         let brentPlayer = null;
@@ -805,6 +806,39 @@
             if (mod4StatusEl) {
                 mod4StatusEl.innerHTML = `&#10004; ${mod4ScoreDisplay}`;
             }
+
+            // Restore certified seal state if already completed/certified
+            if (isMod5Complete) {
+                trainerAuthorized = true;
+                const pendingBox = document.getElementById('trainer-auth-pending');
+                const certBox = document.getElementById('trainer-auth-certified');
+                if (pendingBox) pendingBox.classList.add('hidden');
+                if (certBox) {
+                    certBox.classList.remove('hidden');
+                    const certNameEl = document.getElementById('cert-trainer-name');
+                    const certStoreEl = document.getElementById('cert-trainer-store');
+                    const certElapsedEl = document.getElementById('cert-elapsed-time');
+                    const certTimeEl = document.getElementById('cert-timestamp');
+
+                    const savedTrainer = localStorage.getItem('tw_day1_trainer_name') || 'Store Trainer (Certified)';
+                    const savedStore = localStorage.getItem('tw_day1_trainer_store') || store;
+                    const savedElapsed = localStorage.getItem('tw_day1_elapsed_time') || (elapsedEl ? elapsedEl.innerText : 'Shift Complete');
+                    const savedTime = localStorage.getItem('tw_day1_certified_at');
+
+                    if (certNameEl) certNameEl.innerText = savedTrainer;
+                    if (certStoreEl) certStoreEl.innerText = 'Store ' + String(savedStore || '').replace(/^store\s*/i, '');
+                    if (certElapsedEl) certElapsedEl.innerText = savedElapsed;
+                    if (certTimeEl) {
+                        if (savedTime) {
+                            const d = new Date(savedTime);
+                            const timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                            certTimeEl.innerText = `${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} at ${timeStr} CST`;
+                        } else {
+                            certTimeEl.innerText = 'Day 1 Complete';
+                        }
+                    }
+                }
+            }
         }
 
         // --- TRAINER PIN VERIFICATION ---
@@ -881,7 +915,8 @@
             
             const now = new Date();
             const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-            if (certTimeEl) certTimeEl.innerText = `${now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} at ${timeStr} CST`;
+            const timeFormatted = `${now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} at ${timeStr} CST`;
+            if (certTimeEl) certTimeEl.innerText = timeFormatted;
 
             // Reveal certified seal and hide pending input
             const pendingBox = document.getElementById('trainer-auth-pending');
@@ -889,15 +924,23 @@
             if (pendingBox) pendingBox.classList.add('hidden');
             if (certBox) certBox.classList.remove('hidden');
 
+            // Save certification state to localStorage
+            localStorage.setItem('mod5_complete', 'true');
+            localStorage.setItem('tw_mod5_unlocked', 'true');
+            localStorage.setItem('tw_day1_certified', 'true');
+            localStorage.setItem('tw_day1_trainer_name', trainerName);
+            localStorage.setItem('tw_day1_trainer_store', trainerStore);
+            localStorage.setItem('tw_day1_elapsed_time', elapsedTime);
+            localStorage.setItem('tw_day1_certified_at', now.toISOString());
+
             sendProgressUpdate('Day 1 Mod 5', 'Completed', JSON.stringify({
                 quizAnswers: userAnswers,
                 signedOffBy: trainerName,
                 trainerStore: trainerStore,
                 elapsedTime: elapsedTime,
-                completedAt: new Date().toISOString()
+                completedAt: now.toISOString()
             }));
 
-            localStorage.setItem('mod5_complete', 'true');
             const counter = document.getElementById('step-counter');
             if (counter) counter.innerText = 'Day 1 Certified';
         }
