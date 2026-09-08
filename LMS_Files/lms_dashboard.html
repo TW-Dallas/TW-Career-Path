@@ -1768,13 +1768,15 @@
         const aMins = activeMinutes % 60;
         const activeFormatted = aHours > 0 ? `${aHours}h ${aMins}m` : `${aMins}m`;
 
-        let mod4Score = "Grade: A (Shift Ready) • 96% Accuracy ⭐⭐⭐⭐⭐";
+        let mod4Score = "Not Completed / In Progress";
         try {
             const rawMod4 = localStorage.getItem('mod4_scorecard');
             if (rawMod4) {
                 const parsed = JSON.parse(rawMod4);
                 if (parsed && parsed.accuracyScore !== undefined) {
-                    mod4Score = `Grade: ${parsed.grade || 'A (Shift Ready)'} • ${parsed.accuracyScore}% Accuracy ⭐⭐⭐⭐⭐`;
+                    const grade = parsed.grade || 'A (Shift Ready)';
+                    const wrong = (parsed.wrongClicks !== undefined && parsed.wrongClicks !== null) ? ` (${parsed.wrongClicks} Misses)` : '';
+                    mod4Score = `Grade: ${grade} • ${parsed.accuracyScore}% Accuracy${wrong}`;
                 }
             }
         } catch(_) {}

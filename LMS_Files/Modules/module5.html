@@ -785,7 +785,7 @@
             }
 
             // Module 4 Scorecard Integration
-            let mod4ScoreDisplay = "Live Orders Certified • Grade A (Shift Ready) ⭐⭐⭐⭐⭐";
+            let mod4ScoreDisplay = "Live Orders Certified";
             try {
                 const rawMod4 = localStorage.getItem('mod4_scorecard');
                 if (rawMod4) {
@@ -843,7 +843,7 @@
             verifyBtn.innerText = "Verifying PIN...";
             errorMsg.style.display = 'none';
 
-            const verifyUrl = `${AUTH_SCRIPT_URL}?action=verifyTrainerPin&market=${encodeURIComponent(market)}&pin=${encodeURIComponent(enteredPin)}&traineeId=${encodeURIComponent(id)}&traineeName=${encodeURIComponent(traineeName)}&traineeStore=${encodeURIComponent(store)}&traineeMarket=${encodeURIComponent(market)}&module=${encodeURIComponent('Day 1 Mod 5')}&elapsedTime=${encodeURIComponent(elapsedTime)}&activeTime=${encodeURIComponent(activeTime)}&mod4Score=${encodeURIComponent(mod4Score)}&mod3Scores=${encodeURIComponent(mod3ScoresPayload)}&startTime=${encodeURIComponent(startTimeVal)}&endTime=${encodeURIComponent(endTimeVal)}`;
+            const verifyUrl = `${AUTH_SCRIPT_URL}?action=verifyTrainerPin&market=${encodeURIComponent(market)}&pin=${encodeURIComponent(enteredPin)}&traineeId=${encodeURIComponent(id)}&traineeName=${encodeURIComponent(traineeName)}&traineeStore=${encodeURIComponent(store)}&traineeMarket=${encodeURIComponent(market)}&module=${encodeURIComponent('Day 1 Final Certification')}&elapsedTime=${encodeURIComponent(elapsedTime)}&activeTime=${encodeURIComponent(activeTime)}&mod4Score=${encodeURIComponent(mod4Score)}&mod3Scores=${encodeURIComponent(mod3ScoresPayload)}&startTime=${encodeURIComponent(startTimeVal)}&endTime=${encodeURIComponent(endTimeVal)}`;
 
             fetch(verifyUrl, { method: 'GET', credentials: 'omit' })
                 .then(res => res.json())
