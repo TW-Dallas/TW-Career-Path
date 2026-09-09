@@ -1900,15 +1900,15 @@
             const badge = card.querySelector('.course-badge');
             const btn = card.querySelector('.btn-small');
 
-            if (!isPrereqDone) {
-                // Hard Locked: Prior prerequisite module is incomplete
+            if (!isPrereqDone && !isCompleted) {
+                // Hard Locked: Prior prerequisite module is incomplete AND module itself is not completed
                 card.classList.add('locked');
                 if (badge) badge.style.color = '#888';
                 if (btn) {
                     btn.outerHTML = `<button class="btn-small" style="background: #ccc; color: #888; cursor: not-allowed;" disabled>Complete ${rule.prereqName} First</button>`;
                 }
             } else {
-                // Prerequisite is complete! Unlocked card visually
+                // Prerequisite is complete or module itself is completed! Unlocked card visually
                 card.classList.remove('locked');
                 if (badge) badge.style.color = 'var(--dark-blue)';
 
@@ -2196,6 +2196,10 @@
                 localStorage.removeItem('mod3_complete');
                 localStorage.removeItem('mod4_complete');
                 localStorage.removeItem('mod5_complete');
+                localStorage.removeItem('tw_mod2_unlocked');
+                localStorage.removeItem('tw_mod3_unlocked');
+                localStorage.removeItem('tw_mod4_unlocked');
+                localStorage.removeItem('tw_mod5_unlocked');
                 localStorage.removeItem('mod4_saved_stage');
                 ['0', '1', '2', '3', '4'].forEach(s => {
                     localStorage.removeItem('mod4_stage' + s + '_step');
@@ -2220,21 +2224,49 @@
                     localStorage.setItem('tw_admin_mode', 'true');
                 }
 
-                // Load completions
+                // Load completions & unlock appropriate doors
                 if (result.completed && result.completed.length > 0) {
                     result.completed.forEach(modName => {
-                        if (modName === "day 1 mod 1") localStorage.setItem('mod1_complete', 'true');
-                        if (modName === "day 1 mod 2") localStorage.setItem('mod2_complete', 'true');
-                        if (modName === "day 1 mod 3") localStorage.setItem('mod3_complete', 'true');
-                        if (modName === "day 1 mod 4") localStorage.setItem('mod4_complete', 'true');
-                        if (modName === "day 1 mod 5") localStorage.setItem('mod5_complete', 'true');
+                        const m = (modName || '').toLowerCase().trim();
+                        if (m === "day 1 mod 1") {
+                            localStorage.setItem('mod1_complete', 'true');
+                            localStorage.setItem('tw_mod2_unlocked', 'true');
+                        }
+                        if (m === "day 1 mod 2") {
+                            localStorage.setItem('mod2_complete', 'true');
+                            localStorage.setItem('tw_mod2_unlocked', 'true');
+                            localStorage.setItem('tw_mod3_unlocked', 'true');
+                        }
+                        if (m === "day 1 mod 3") {
+                            localStorage.setItem('mod3_complete', 'true');
+                            localStorage.setItem('tw_mod3_unlocked', 'true');
+                            localStorage.setItem('tw_mod4_unlocked', 'true');
+                        }
+                        if (m === "day 1 mod 4") {
+                            localStorage.setItem('mod4_complete', 'true');
+                            localStorage.setItem('tw_mod4_unlocked', 'true');
+                            localStorage.setItem('tw_mod5_unlocked', 'true');
+                        }
+                        if (m === "day 1 mod 5") {
+                            localStorage.setItem('mod5_complete', 'true');
+                            localStorage.setItem('tw_mod5_unlocked', 'true');
+                        }
                     });
                 }
 
                 // Load in-progress video checkpoints and POS Simulator stages from Cloud Tracking Sheet
                 if (result.inProgress) {
-                    if (result.inProgress["day 1 mod 2"] && result.inProgress["day 1 mod 2"].completedVideos) {
-                        localStorage.setItem('tw_mod2_completed_videos', JSON.stringify(result.inProgress["day 1 mod 2"].completedVideos));
+                    if (result.inProgress["day 1 mod 2"]) {
+                        const m2Prog = result.inProgress["day 1 mod 2"];
+                        if (m2Prog.completedVideos) {
+                            localStorage.setItem('tw_mod2_completed_videos', JSON.stringify(m2Prog.completedVideos));
+                        }
+                        if (m2Prog.videoStates) {
+                            localStorage.setItem('tw_' + normalizedId + '_mod2_video_states', JSON.stringify(m2Prog.videoStates));
+                        }
+                        if (m2Prog.uniformParts) {
+                            localStorage.setItem('tw_' + normalizedId + '_mod2_uniform_parts', JSON.stringify(m2Prog.uniformParts));
+                        }
                     }
                     if (result.inProgress["day 1 mod 4"] && result.inProgress["day 1 mod 4"].currentStage !== undefined) {
                         localStorage.setItem('mod4_saved_stage', String(result.inProgress["day 1 mod 4"].currentStage));

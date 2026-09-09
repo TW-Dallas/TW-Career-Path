@@ -2053,6 +2053,22 @@
 
         let lastTypedDeliveryNote = "PLEASE CALL";
 
+        // --- ORDER 2 SCORED EVALUATION BOUNDARIES ---
+        const ORDER_2_START_STEP = 36;
+        const ORDER_2_END_STEP = 80;
+        let order2StepsWithMistakes = new Set();
+
+        function recordMistake(message) {
+            wrongClicks++;
+            if (currentStep >= ORDER_2_START_STEP && currentStep <= ORDER_2_END_STEP) {
+                order2StepsWithMistakes.add(currentStep);
+            }
+            if (errorMsg) {
+                errorMsg.innerText = message || "❌ Incorrect action. Try again.";
+                errorMsg.style.display = 'block';
+            }
+        }
+
         function validateTextEntry(userTyped, expectedValue) {
             const stepData = sequence[currentStep];
             const targetInputId = stepData ? (stepData.inputHitbox || (Array.isArray(stepData.activeHitbox) ? stepData.activeHitbox[0] : stepData.activeHitbox)) : '';
@@ -2087,9 +2103,7 @@
                 }
                 loadStep(currentStep);
             } else {
-                errorMsg.innerText = "❌ Incorrect action. Try again.";
-                errorMsg.style.display = 'block';
-                wrongClicks++;
+                recordMistake("❌ Incorrect action. Try again.");
                 const inputEl = document.querySelector('.hitbox-text-input');
                 if (inputEl) inputEl.focus();
             }
@@ -2196,9 +2210,7 @@
                     return;
                 }
 
-                errorMsg.innerText = "❌ Incorrect action. Enter the required information on the POS screen.";
-                errorMsg.style.display = 'block';
-                wrongClicks++;
+                recordMistake("❌ Incorrect action. Enter the required information on the POS screen.");
                 return;
             }
 
@@ -2217,6 +2229,12 @@
             const activeHitboxIds = getActiveHitboxIds(stepData);
 
             if (activeHitboxIds.includes(clickedId)) {
+                // If completing Order 1 (Step 35), mark Order 1 as completed for retries
+                if (currentStep === 35) {
+                    const currentUserId = localStorage.getItem('tw_id') || 'guest';
+                    localStorage.setItem('mod4_order1_completed_' + currentUserId, 'true');
+                }
+
                 // If on street dropdown step (Step 46 or Step 47) and clicking dropdown, advance to Step 48!
                 if ((currentStep === 46 || currentStep === 47) && (clickedId === 'hb-street-dropdown' || clickedId === 'hb-street-select')) {
                     errorMsg.style.display = 'none';
@@ -2268,15 +2286,11 @@
 
                 // If on a text input step, warn the trainee, but keep the input element accessible and ready
                 if (stepData && stepData.input) {
-                    errorMsg.innerText = "❌ Incorrect action. Enter the required information into the POS field.";
-                    errorMsg.style.display = 'block';
-                    wrongClicks++;
+                    recordMistake("❌ Incorrect action. Enter the required information into the POS field.");
                     return;
                 }
 
-                errorMsg.innerText = "❌ Incorrect action. Try again.";
-                errorMsg.style.display = 'block';
-                wrongClicks++;
+                recordMistake("❌ Incorrect action. Try again.");
             });
 
             window.addEventListener('keydown', function (event) {
@@ -2303,8 +2317,7 @@
                     currentStep++;
                     loadStep(currentStep);
                 } else {
-                    errorMsg.style.display = 'block';
-                    wrongClicks++;
+                    recordMistake("❌ Incorrect key pressed. Try again.");
                 }
             });
 
@@ -2313,6 +2326,8 @@
             const currentUserId = localStorage.getItem('tw_id') || 'guest';
             const stepStorageKey = 'mod4_stage4_step_' + currentUserId;
             const savedStep = localStorage.getItem(stepStorageKey);
+            const order1Done = localStorage.getItem('mod4_order1_completed_' + currentUserId) === 'true';
+
             if (stepParam !== null) {
                 const targetStep = parseInt(stepParam, 10);
                 if (!isNaN(targetStep) && targetStep >= 0 && targetStep < sequence.length) {
@@ -2323,6 +2338,9 @@
                 if (!isNaN(targetStep) && targetStep > 0 && targetStep < sequence.length - 1) {
                     currentStep = targetStep;
                 }
+            } else if (order1Done) {
+                // If Order 1 was already completed, resume/restart directly at Order 2 (Boss Mode Evaluation)
+                currentStep = ORDER_2_START_STEP;
             }
 
             loadStep(currentStep);
@@ -2334,16 +2352,25 @@
             const penalizedHints = Math.max(0, hintsUsed - 1);
             const penalizedAnswers = answersUsed;
             const trainerPenalties = trainerAssistsUsed * 5;
-            const totalDeductions = (wrongClicks * 5) + (penalizedHints * 2) + (penalizedAnswers * 5) + trainerPenalties;
-            const accuracyScore = Math.max(0, 100 - totalDeductions);
+
+            // FAIR SCORING: Graded strictly across Order 2 Boss Mode (Steps 36 to 80 = 45 steps)
+            const totalGradedSteps = (ORDER_2_END_STEP - ORDER_2_START_STEP) + 1; // 45
+            const stepsWithMistakes = order2StepsWithMistakes.size;
+
+            // Proportional step accuracy: deducts once per step that had errors
+            const baseAccuracy = Math.round(((totalGradedSteps - stepsWithMistakes) / totalGradedSteps) * 100);
+
+            // Assistance deductions apply only when hints, direct answers, or overrides are requested
+            const assistanceDeductions = (penalizedHints * 2) + (penalizedAnswers * 5) + trainerPenalties;
+            const accuracyScore = Math.max(0, baseAccuracy - assistanceDeductions);
 
             let grade = 'A+';
             let stars = '⭐⭐⭐⭐⭐';
 
-            if (accuracyScore < 70 || wrongClicks > 5) {
+            if (accuracyScore < 70 || stepsWithMistakes > 12) {
                 grade = 'C (Needs Review)';
                 stars = '⭐⭐⭐';
-            } else if (accuracyScore < 85 || wrongClicks > 2) {
+            } else if (accuracyScore < 85 || stepsWithMistakes > 6) {
                 grade = 'B (Good Job)';
                 stars = '⭐⭐⭐⭐';
             } else if (accuracyScore < 95) {
@@ -2358,7 +2385,10 @@
                 stars,
                 penalizedHints,
                 penalizedAnswers,
-                trainerAssistsUsed
+                trainerAssistsUsed,
+                stepsWithMistakes,
+                totalGradedSteps,
+                totalWrongClicks: wrongClicks
             };
         }
 
@@ -2371,7 +2401,8 @@
                     accuracyScore: 98,
                     grade: 'A+ (Shift Ready)',
                     stars: '⭐⭐⭐⭐⭐',
-                    wrongClicks: 0
+                    wrongClicks: 0,
+                    stepsWithMistakes: 0
                 }));
                 return;
             }
@@ -2385,6 +2416,8 @@
             const answers = {
                 "currentStage": 4,
                 "Stage 4 Wrong Clicks": wrongClicks,
+                "Stage 4 Steps Missed": metrics.stepsWithMistakes,
+                "Stage 4 Total Graded Steps": metrics.totalGradedSteps,
                 "Stage 4 Holds Used": holdCount,
                 "Stage 4 Replays Used": replayCount,
                 "Stage 4 Hold Secs": holdDurationSeconds,
@@ -2399,7 +2432,8 @@
             };
 
             const answersStr = encodeURIComponent(JSON.stringify(answers));
-            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${metrics.timeSpentSeconds}&answers=${answersStr}&status=${status}`;
+            // Send standardized database-ready parameters: score, grade, mistakes, timeSpent, status
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${metrics.timeSpentSeconds}&score=${metrics.accuracyScore}&grade=${encodeURIComponent(metrics.grade)}&mistakes=${metrics.stepsWithMistakes}&status=${encodeURIComponent(status)}&answers=${answersStr}`;
 
             console.log("SENDING STAGE 4 EVALUATION DATA: ", url);
 
@@ -2414,6 +2448,7 @@
                 grade: metrics.grade,
                 stars: metrics.stars,
                 wrongClicks: wrongClicks,
+                stepsWithMistakes: metrics.stepsWithMistakes,
                 hintsUsed: hintsUsed,
                 answersUsed: answersUsed,
                 trainerAssistsUsed: trainerAssistsUsed
@@ -2613,6 +2648,28 @@
             }
         }
 
+        // --- RETAKE EVALUATION (ORDER 2) SHORTCUT ---
+        window.retakeOrder2 = function () {
+            order2StepsWithMistakes.clear();
+            wrongClicks = 0;
+            hintsUsed = 0;
+            answersUsed = 0;
+            trainerAssistsUsed = 0;
+            currentStep = ORDER_2_START_STEP; // Step 36
+            const currentUserId = localStorage.getItem('tw_id') || 'guest';
+            localStorage.setItem('mod4_order1_completed_' + currentUserId, 'true');
+            localStorage.setItem('mod4_stage4_step_' + currentUserId, String(ORDER_2_START_STEP));
+
+            const simCard = document.getElementById('sim-control-card');
+            if (simCard) simCard.style.display = 'block';
+            const finishBtn = document.getElementById('finish-sim-btn');
+            if (finishBtn) finishBtn.style.display = 'none';
+            const retakeBtn = document.getElementById('retake-order2-btn');
+            if (retakeBtn) retakeBtn.style.display = 'none';
+
+            loadStep(ORDER_2_START_STEP);
+        };
+
         // --- END SIMULATION & SCORECARD DISPLAY ---
         function endSimulation() {
             const currentUserId = localStorage.getItem('tw_id') || 'guest';
@@ -2648,7 +2705,11 @@
                         <strong>${metrics.accuracyScore}%</strong>
                     </div>
                     <div class="scorecard-metric">
-                        <span>❌ Incorrect Clicks:</span>
+                        <span>❌ Graded Steps with Mistakes:</span>
+                        <strong>${metrics.stepsWithMistakes} of ${metrics.totalGradedSteps}</strong>
+                    </div>
+                    <div class="scorecard-metric">
+                        <span>🖱️ Total Misclicks:</span>
                         <strong>${wrongClicks}</strong>
                     </div>
                     ${hintsUsed > 0 ? `
@@ -2681,7 +2742,14 @@
                     <div class="scorecard-stars">${metrics.stars}</div>
                     <div class="scorecard-grade">Rating: ${metrics.grade}</div>
                 </div>
-                <p style="margin-top: 16px;">Click the button below to save your metrics and return to your Day 1 dashboard.</p>
+                <div style="display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap;">
+                    <button type="button" id="retake-order2-btn" onclick="retakeOrder2()" class="btn btn-outline" style="flex: 1; min-width: 200px; padding: 0.7rem 1.2rem; font-family: 'OneDotCd-Bold'; border: 2px solid var(--brand-blue); color: var(--brand-blue); border-radius: 25px; cursor: pointer; background: white;">
+                        🔄 Retake Evaluation (Order 2)
+                    </button>
+                    <button type="button" id="finish-sim-btn" class="btn" style="flex: 1; min-width: 200px; padding: 0.7rem 1.2rem; font-family: 'OneDotCd-Bold'; background: #27ae60; color: white; border: none; border-radius: 25px; cursor: pointer;">
+                        Save & Return to Day 1
+                    </button>
+                </div>
             `;
 
             document.querySelectorAll('.hitbox').forEach(hb => hb.style.display = 'none');
@@ -2691,9 +2759,6 @@
 
             const finishBtn = document.getElementById('finish-sim-btn');
             if (finishBtn) {
-                finishBtn.style.display = 'inline-block';
-                finishBtn.innerText = "Save & Return to Day 1";
-
                 finishBtn.onclick = function () {
                     finishBtn.innerText = "Saving Evaluation...";
                     finishBtn.style.pointerEvents = "none";

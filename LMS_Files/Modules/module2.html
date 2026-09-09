@@ -412,13 +412,16 @@
 
         function saveUniformPartsProgress() {
             try {
+                const currentUserId = localStorage.getItem('tw_id') || 'guest';
+                localStorage.setItem('tw_' + currentUserId + '_mod2_uniform_parts', JSON.stringify(uniformParts));
                 localStorage.setItem('tw_mod2_uniform_parts', JSON.stringify(uniformParts));
             } catch(e) {}
         }
 
         function loadUniformPartsProgress() {
             try {
-                const saved = localStorage.getItem('tw_mod2_uniform_parts');
+                const currentUserId = localStorage.getItem('tw_id') || 'guest';
+                const saved = localStorage.getItem('tw_' + currentUserId + '_mod2_uniform_parts') || localStorage.getItem('tw_mod2_uniform_parts');
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     if (parsed && typeof parsed === 'object') {
@@ -546,19 +549,44 @@
 
         function saveModule2VideoProgress() {
             try {
+                const currentUserId = localStorage.getItem('tw_id') || 'guest';
+                const videoStatesKey = 'tw_' + currentUserId + '_mod2_video_states';
+
+                let states = {};
+                try {
+                    const existing = localStorage.getItem(videoStatesKey);
+                    if (existing) states = JSON.parse(existing);
+                } catch(e) {}
+
+                moduleVideos.forEach(v => {
+                    states[v.id] = {
+                        completed: !!v.completed,
+                        maxTimeWatched: v.maxTimeWatched || 0,
+                        updatedAt: Date.now()
+                    };
+                });
+
+                localStorage.setItem(videoStatesKey, JSON.stringify(states));
+
                 const completedIndices = moduleVideos.map((v, i) => v.completed ? i : null).filter(i => i !== null);
                 localStorage.setItem('tw_mod2_completed_videos', JSON.stringify(completedIndices));
                 
-                // Cloud Sync: Instantly sync completed video checkpoints to Google Sheets
+                // Cloud Sync: Instantly sync completed video checkpoints and full states to Google Sheets
                 if (completedIndices.length > 0) {
-                    sendProgressUpdate('Day 1 Mod 2', 'In Progress', JSON.stringify({ completedVideos: completedIndices }));
+                    sendProgressUpdate('Day 1 Mod 2', 'In Progress', JSON.stringify({ 
+                        completedVideos: completedIndices,
+                        videoStates: states,
+                        uniformParts: uniformParts
+                    }));
                 }
             } catch(e) {}
         }
 
         function loadModule2VideoProgress() {
             try {
+                const currentUserId = localStorage.getItem('tw_id') || 'guest';
                 const uVid = moduleVideos.find(v => v.id === '1220730023');
+
                 // Support URL bypasses for instant debugging or skipping: ?unlock=all or ?unlock=4 or ?skip4=true
                 const urlParams = new URLSearchParams(window.location.search);
                 if (urlParams.get('unlock') === 'all') {
@@ -578,21 +606,55 @@
                     saveUniformPartsProgress();
                 }
 
-                const saved = localStorage.getItem('tw_mod2_completed_videos');
-                if (saved) {
-                    const completedIndices = JSON.parse(saved);
-                    if (Array.isArray(completedIndices)) {
-                        completedIndices.forEach(idx => {
-                            if (moduleVideos[idx] && moduleVideos[idx].id !== '1220730023') {
-                                moduleVideos[idx].completed = true;
+                // If Module 2 is marked completed on dashboard/cloud, keep all videos unlocked for review
+                const isMod2Done = localStorage.getItem('mod2_complete') === 'true';
+
+                // Check user-isolated granular video states
+                const videoStatesKey = 'tw_' + currentUserId + '_mod2_video_states';
+                const savedStatesRaw = localStorage.getItem(videoStatesKey);
+                let savedStates = null;
+                if (savedStatesRaw) {
+                    try { savedStates = JSON.parse(savedStatesRaw); } catch(e) {}
+                }
+
+                if (savedStates && typeof savedStates === 'object') {
+                    moduleVideos.forEach(v => {
+                        if (savedStates[v.id]) {
+                            if (savedStates[v.id].completed || isMod2Done) {
+                                v.completed = true;
                             }
-                        });
+                            if (savedStates[v.id].maxTimeWatched) {
+                                v.maxTimeWatched = savedStates[v.id].maxTimeWatched;
+                            }
+                        }
+                    });
+                } else {
+                    // Fallback to legacy completed indices array
+                    const saved = localStorage.getItem('tw_mod2_completed_videos');
+                    if (saved) {
+                        const completedIndices = JSON.parse(saved);
+                        if (Array.isArray(completedIndices)) {
+                            completedIndices.forEach(idx => {
+                                if (moduleVideos[idx] && moduleVideos[idx].id !== '1220730023') {
+                                    moduleVideos[idx].completed = true;
+                                }
+                            });
+                        }
+                    }
+                }
+
+                if (isMod2Done) {
+                    moduleVideos.forEach(v => v.completed = true);
+                    uniformParts.video = true;
+                    uniformParts.lookbook = true;
+                    if (uniformParts.posterItems.length < 10) {
+                        uniformParts.posterItems = ['shirts', 'aprons', 'bracelets', 'shoes', 'hats', 'piercings', 'nails', 'bottoms', 'jackets', 'facial-hair'];
                     }
                 }
 
                 // Card 3 completion is verified against actual uniformParts
                 if (uVid) {
-                    uVid.completed = (uniformParts.video && uniformParts.lookbook && uniformParts.posterItems.length >= 10);
+                    uVid.completed = isMod2Done || (uniformParts.video && uniformParts.lookbook && uniformParts.posterItems.length >= 10);
                 }
             } catch(e) {}
         }
@@ -930,6 +992,16 @@
                 if (currentVid && data.seconds > currentVid.maxTimeWatched) {
                     currentVid.maxTimeWatched = data.seconds;
                 }
+
+                // Auto-complete safeguard: If within 1.5s of end or >= 98.5%, mark completed
+                if (currentVid && !currentVid.completed && data.duration) {
+                    if (data.seconds >= data.duration - 1.5 || (data.seconds / data.duration) >= 0.985) {
+                        currentVid.completed = true;
+                        saveModule2VideoProgress();
+                        renderVideoCards();
+                        checkModuleVideosCompletion();
+                    }
+                }
             });
 
             player.on('seeked', function(data) {
@@ -940,7 +1012,8 @@
                 if (isEnforcingHold) return;
                 
                 const currentVid = moduleVideos[activeVideoIndex];
-                if (data.seconds > currentVid.maxTimeWatched + 2.0) {
+                if (currentVid && currentVid.completed) return; // Allow free scrubbing once completed
+                if (currentVid && data.seconds > currentVid.maxTimeWatched + 2.0) {
                     isEnforcingHold = true;
                     player.setCurrentTime(currentVid.maxTimeWatched).then(() => {
                         setTimeout(() => { isEnforcingHold = false; }, 200);
@@ -1160,7 +1233,7 @@
         // Vault API script URL
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec';
 
-        function sendProgressUpdate(moduleName, status = "Completed", payloadAnswers = null) {
+        function sendProgressUpdate(moduleName, status = "Completed", payloadAnswers = null, score = 100, grade = "100%", mistakes = 0) {
             if (localStorage.getItem('tw_admin_mode') === 'true') {
                 console.log("[ADMIN MODE] Progress tracking bypassed for executive view.");
                 return;
@@ -1177,7 +1250,7 @@
             localStorage.setItem('tw_' + id + '_mod2_seconds', timeSpent);
             const answersToEncode = payloadAnswers ? payloadAnswers : JSON.stringify(userAnswers);
             const answersStr = encodeURIComponent(answersToEncode);
-            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${encodeURIComponent(status)}`;
+            const url = `${AUTH_SCRIPT_URL}?action=update&market=${market}&id=${id}&module=${encodeURIComponent(moduleName)}&timeSpent=${timeSpent}&answers=${answersStr}&status=${encodeURIComponent(status)}&score=${score}&grade=${encodeURIComponent(grade)}&mistakes=${mistakes}`;
             
             fetch(url, {
                 method: 'GET',
@@ -1203,7 +1276,7 @@
                 btn.style.pointerEvents = "none";
             }
 
-            sendProgressUpdate('Day 1 Mod 2');
+            sendProgressUpdate('Day 1 Mod 2', 'Completed', null, 100, '100%', 0);
             localStorage.setItem('mod2_complete', 'true');
 
             setTimeout(() => {
