@@ -4,7 +4,7 @@ This archive preserves past editions, foundational releases, and architectural u
 
 ---
 
-## 📮 Edition 1: Launch & Core Platform Foundation (August – Early September 2026)
+## 📮 Editions 1–3: Launch & Foundations Archive (August – September 3, 2026)
 
 ### 🍕 Fresh Out of the Oven (Initial Releases)
 * **Team Wow Career Path & Learning Hub Launch:** Unveiled the public-access Career Path portal (`index.html`) and Learning Hub (`learning_hub.html`) connecting team members to position roadmaps, store job aids, and self-service training tools.

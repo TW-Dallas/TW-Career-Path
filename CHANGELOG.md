@@ -46,4 +46,4 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 ## 📦 Archive / Past Editions
 
 Looking for older updates or foundational release notes? Check out our complete historical log:
-* 📄 **[The Wow Way Huddle — Edition 1 Archive (August – Early September 2026)](CHANGELOG_ARCHIVE.md)**
+* 📄 **[The Wow Way Huddle — Editions 1–3 Archive (Through September 3, 2026)](CHANGELOG_ARCHIVE.md)**
