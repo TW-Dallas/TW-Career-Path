@@ -8,15 +8,15 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 *Scheduled: Thursday @ 9:00 AM CST/CDT (Compiled @ 5:00 AM CST/CDT)*
 
 ### 🍕 Fresh Out of the Oven (New Features & Content)
-* **Domino™ Detroit-Style Parmesan Crust Rollout:** Added the brand-new Domino™ Detroit Style Parmesan crust across all 3 interactive foundations slides in Module 3 Menu Overview:
+* **Domino™ Rollout:** Added the brand-new Domino™ Detroit Style Parmesan crust across all 3 interactive foundations slides in Module 3 Menu Overview:
   * **Crust Overview & Guidelines:** Features official menu photo reference, rectangular pan definition, two layers of cheese with signature garlic seasoning, and the crucial **3 toppings maximum** restriction.
   * **Size Constraints:** Highlights that Domino™ comes in **one size only** (with its own dedicated POS button).
   * **Default Cut Standard:** Added the official cut specification showing Domino™ is **cut in half vertically** (2 halves), complete with a custom matching visual diagram.
 * **Tactical Assistance System & Trainer Authorization (POS Practice):** Trainees experiencing roadblocks during live phone order practice can now request targeted on-screen guidance without getting stuck:
-  * **Visual Hints:** Trainees receive visual cues (blue radar pulse over target screen region or direct answer spotlights).
-  * **Trainer PIN Support:** Once assistance allowances are exhausted, additional hints require an on-duty Trainer or GM 4-digit PIN authorization (-5% deduction per assist) with built-in safeguards against excessive bypassing.
+  * **Visual Hints & Direct Answers:** Trainees receive visual cues (blue radar pulse or direct answer spotlights) to work through tricky steps, with assists factored fairly into the overall score calculation.
+  * **Trainer PIN Support:** Once assistance allowances are exhausted, additional hints require an on-duty Trainer or GM 4-digit PIN authorization with built-in safeguards against excessive bypassing.
   * **Physical Execution Guarantee:** Hints never advance the screen automatically—trainees must still physically locate, click, or type the required order details themselves.
-* **1-Click Field Focus in POS Practice:** Clicking directly on customer detail fields (such as phone number, address number, street name, or unit/suite) now immediately focuses and opens typing mode in 1 click, eliminating redundant clicks and streamlining order entry flow.
+* **1-Click Field Focus & Input Freeze Fix (POS Practice):** Trainees can now click directly on customer detail fields (such as phone number, address number, street name, or unit/suite) to jump straight into typing with zero redundant clicks. Resolved previous field freeze and focus lockout issues when clicking repeatedly, making customer and address entry completely seamless.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
 * **Fair Scoring & Scored Evaluation Retries:** Decoupled practice warm-up from evaluation scoring (warm-up mistakes no longer lower final grades), capped deductions to 1 penalty per step, and added an instant `"🔄 Retake Evaluation"` button so trainees can re-test without repeating the warm-up.
@@ -26,6 +26,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
   * Submitting automatically tags the exact module and step.
   * Instant confirmation receipts are sent to the reporting team member with the store email CC'd.
   * Closure notes with resolution details are emailed directly to whoever submitted with the store email CC'd.
+* **Beta Tester Welcome Popup Retired:** Streamlined the login experience on the Training Dashboard by removing the legacy beta tester welcome modal.
 * **Learning Hub Lobby Card Photography & Dynamic Layout:** Replaced placeholder icons with high-res store photography (`LMS_Cover.jpg` and `Library_cover.png`) optimized for fast store Wi-Fi, added dynamic zero-scroll responsive scaling, and introduced a `"← Back to Lobby"` navigation link on the Training Dashboard navbar.
 
 ### ⚠️ On Our Radar (Known Issues & Interim Fixes)
@@ -33,7 +34,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 
 ### 🔜 On the Horizon (Upcoming Content & Rollouts)
 * **Day 2 Rollout & Upcoming Trainer Coaching Class:** Day 2 curriculum development is well underway (featuring Customer Recovery and OA Sanitation & Chemical Safety). To ensure our store teams get the absolute most out of this new content, Day 2 rollout is currently paused while we finalize a dedicated Train-the-Trainer coaching class. This will give all trainers the tools and guidance they need to confidently coach their new hires through Day 2.
-* **Virtual MIT Classes Link:** Store-wide sign-up links for upcoming virtual MIT classes on the main Career Path page.
+* **Virtual MIT Program & Scheduling Hub:** Development is officially underway to build a dedicated Virtual MIT portal connecting online class schedules, automated registration rosters, and verified attendance across all stores.
 
 ### 💡 Store Pro-Tip of the Week
 * **Report Issues Right on the Page (Instant Tagging & Direct Support):** Spotted a glitch, typo, or question while a team member is training? Don't wait! Click the **`🛠️ Report Issue`** button in the top navigation header of that exact screen:
