@@ -423,3 +423,34 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* ─── Login Screen: Desktop Fit Overrides ────────────────────────────────
+           Scoped exclusively to #step-login. No other steps, cards, or
+           components are affected. Reduces vertical whitespace so the full
+           login form is visible on a standard 1366×768 store laptop without
+           scrolling. Font sizes are intentionally left unchanged.
+        ──────────────────────────────────────────────────────────────────────── */
+        #step-login.setup-container {
+            padding: 1.5rem 2.5rem;          /* was 2.5rem top/bottom */
+        }
+
+        #step-login img[alt="Secure Login"] {
+            height: 52px;                    /* was 80px */
+            margin-bottom: 0.75rem;          /* was 1.5rem */
+        }
+
+        #step-login .setup-title {
+            margin-bottom: 0.4rem;           /* was 1rem */
+        }
+
+        #step-login .setup-text {
+            margin-bottom: 0.9rem;           /* was 2rem */
+        }
+
+        #step-login .form-group {
+            margin-bottom: 0.9rem;           /* was 1.5rem */
+        }
+
+        #step-login .btn {
+            margin-top: 0.5rem;              /* was 1rem */
+        }
