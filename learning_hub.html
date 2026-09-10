@@ -532,7 +532,7 @@
                 gap: 1.75rem;
             }
             #view-lobby .card-image-area {
-                height: 155px;
+                height: 175px;
             }
             #view-lobby .card-content {
                 padding: 1.25rem 1.4rem 1.4rem;
@@ -644,12 +644,8 @@
         <div id="view-lobby" class="grid-view">
 
             <!-- Card 1: LMS -->
-            <div class="lobby-card">
-                <div class="card-image-area" style="background: linear-gradient(135deg, #eef4f8 0%, #dbe9f4 100%);">
-                    <div style="width: 72px; height: 72px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,100,145,0.12); border: 2px solid #c9e0f0;">
-                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="var(--brand-blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-                    </div>
-                </div>
+            <div class="lobby-card" onclick="window.location.href='LMS_Files/lms_dashboard.html'">
+                <div class="card-image-area" style="background-image: url('image/LMS_Cover.jpg'); background-color: #eee;"></div>
                 <div class="card-content">
                     <div class="card-title">Wow Way Training</div>
                     <div class="card-desc">New hire 3-day training program and access to continued learning.</div>
@@ -659,11 +655,7 @@
 
             <!-- Card 2: Resources -->
             <div class="lobby-card" onclick="navigateTo('categories')">
-                <div class="card-image-area" style="background: linear-gradient(135deg, #fbf7f0 0%, #f1e7d8 100%);">
-                    <div style="width: 72px; height: 72px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(184,134,11,0.12); border: 2px solid #ecdcc6;">
-                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#b56f2a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="16" y2="10"></line></svg>
-                    </div>
-                </div>
+                <div class="card-image-area" style="background-image: url('image/Library_cover.png'); background-color: #eee;"></div>
                 <div class="card-content">
                     <div class="card-title">Resource Library</div>
                     <div class="card-desc">Job Aids, Standards, and Policy Documents.</div>
