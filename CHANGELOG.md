@@ -19,6 +19,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **1-Click Field Focus & Input Freeze Fix (POS Practice):** Trainees can now click directly on customer detail fields (such as phone number, address number, street name, or unit/suite) to jump straight into typing with zero redundant clicks. Resolved previous field freeze and focus lockout issues when clicking repeatedly, making customer and address entry completely seamless.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
+* **Module 2 Progress Protection (Quiz Completion Sync):** Training credit for Module 2 is now locked in the instant a trainee answers the final quiz question correctly — not just when they click the Finish button. On store laptops where a browser can unexpectedly close or a session can time out, trainees will no longer lose their progress and have to repeat the full module.
 * **Fair Scoring & Scored Evaluation Retries:** Decoupled practice warm-up from evaluation scoring (warm-up mistakes no longer lower final grades), capped deductions to 1 penalty per step, and added an instant `"🔄 Retake Evaluation"` button so trainees can re-test without repeating the warm-up.
 * **Report Card Precision & Certified Badges:** Shift report cards are strictly locked to final [Module 5](https://tw-dallas.github.io/TW-Career-Path/LMS_Files/Modules/module5.html) sign-off, certified seals remain permanently saved upon review, and authentic seat timers track training duration.
 * **Revamped Store Support & Issue Resolution System:**
