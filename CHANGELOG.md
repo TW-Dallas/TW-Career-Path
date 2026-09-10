@@ -4,7 +4,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 
 ---
 
-## 📌 [Draft: Next Wow Way Huddle Edition]
+## 📌 [Draft: The Wow Way Huddle — Edition 4]
 *Scheduled: Thursday @ 9:00 AM CST/CDT (Compiled @ 5:00 AM CST/CDT)*
 
 ### 🍕 Fresh Out of the Oven (New Features & Content)
@@ -24,8 +24,8 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Revamped Store Support & Issue Resolution System:**
   * Moved the **`🛠️ Report Issue`** button directly into the top navigation header for instant access on any screen.
   * Submitting automatically tags the exact module and step.
-  * Instant confirmation receipts are sent to the reporting team member with the store GM CC'd.
-  * Resolution updates and closure notes are sent directly to the store and DO.
+  * Instant confirmation receipts are sent to the reporting team member with the store email CC'd.
+  * Closure notes with resolution details are emailed directly to whoever submitted with the store email CC'd.
 * **Learning Hub Lobby Card Photography & Dynamic Layout:** Replaced placeholder icons with high-res store photography (`LMS_Cover.jpg` and `Library_cover.png`) optimized for fast store Wi-Fi, added dynamic zero-scroll responsive scaling, and introduced a `"← Back to Lobby"` navigation link on the Training Dashboard navbar.
 
 ### ⚠️ On Our Radar (Known Issues & Interim Fixes)
@@ -36,10 +36,10 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Virtual MIT Classes Link:** Store-wide sign-up links for upcoming virtual MIT classes on the main Career Path page.
 
 ### 💡 Store Pro-Tip of the Week
-* **Report Issues Right on the Page (Instant Tagging & Support):** Spotted a glitch, typo, or question while a team member is training? Don't wait! Click the **`🛠️ Report Issue`** button in the top navigation header of that exact screen:
+* **Report Issues Right on the Page (Instant Tagging & Direct Support):** Spotted a glitch, typo, or question while a team member is training? Don't wait! Click the **`🛠️ Report Issue`** button in the top navigation header of that exact screen:
   * **Zero Guesswork:** The system automatically captures the exact module, step, and device, so you never have to explain where it happened.
-  * **Keeps You in the Loop:** Submitting immediately sends a confirmation receipt to your email (with the store GM CC'd) and opens a direct line of communication with our training development team.
-  * **Full Resolution Closure:** Once resolved, a summary closure note is sent straight to your store and DO so everyone stays informed!
+  * **Keeps You in the Loop:** Submitting immediately sends a confirmation receipt to your email (with your store email CC'd) and opens a direct line of communication with our training development team.
+  * **Full Resolution Closure:** Once resolved, a summary closure note is emailed directly to whoever submitted the report with the store email CC'd!
 
 ---
 
