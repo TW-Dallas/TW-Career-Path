@@ -34,7 +34,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 
 ### 🔜 On the Horizon (Upcoming Content & Rollouts)
 * **Day 2 Rollout & Upcoming Trainer Coaching Class:** Day 2 curriculum development is well underway (featuring Customer Recovery and OA Sanitation & Chemical Safety). To ensure our store teams get the absolute most out of this new content, Day 2 rollout is currently paused while we finalize a dedicated Train-the-Trainer coaching class. This will give all trainers the tools and guidance they need to confidently coach their new hires through Day 2.
-* **Virtual MIT Program & Scheduling Hub:** Development is officially underway to build a dedicated [Virtual MIT portal](https://tw-dallas.github.io/TW-Career-Path/classes.html) connecting online class schedules, automated registration rosters, and verified attendance across all stores.
+* **Virtual MIT Program & Scheduling Hub:** Development is officially underway to build a dedicated Virtual MIT portal connecting online class schedules, automated registration rosters, and verified attendance across all stores.
 
 ### 💡 Store Pro-Tip of the Week
 * **Report Issues Right on the Page (Instant Tagging & Direct Support):** Spotted a glitch, typo, or question while a team member is training? Don't wait! Click the **`🛠️ Report Issue`** button in the top navigation header of that exact screen:
