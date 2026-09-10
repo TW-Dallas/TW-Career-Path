@@ -566,6 +566,41 @@
       text-decoration: underline !important;       /* Interactive underline indicator */
   }
 
+  /* --- NAVBAR BACK LINK (Matches Learning Hub & Resource Library) --- */
+  .back-link {
+      color: var(--crust-base, #ffffff) !important;
+      text-decoration: none !important;
+      font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif !important;
+      font-size: 1.05rem !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      opacity: 0.92;
+  }
+  .back-link:hover {
+      color: #88aacc !important;
+      opacity: 1;
+      transform: translateX(-3px);
+  }
+
+  @media (max-width: 600px) {
+      header {
+          padding: 0.5rem 0.85rem !important;
+      }
+      header > div:first-child {
+          gap: 12px !important;
+      }
+      .back-link {
+          font-size: 0.95rem !important;
+          gap: 5px !important;
+      }
+      #nav-tagline {
+          display: none !important;
+      }
+  }
+
     </style>
 </head>
 <body style="min-height: 100vh; display: flex; flex-direction: column;">
@@ -574,8 +609,8 @@
     <header style="background-color: var(--dark-blue); border-bottom: 4px solid var(--brand-red); padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         <div style="display: flex; align-items: center; gap: 20px;">
             <img src="../New_Logo_v2.png" alt="Team Wow Logo" style="height: 35px; width: auto; user-select: none;">
-            <a id="nav-back-link" href="javascript:void(0)" onclick="goBackLobby()" class="back-link" style="color: var(--crust-base); text-decoration: none; font-family: 'Subhead2', sans-serif; font-size: 1.05rem; opacity: 0.85; transition: opacity 0.2s; display: none; align-items: center; gap: 6px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-                &#8592; Back
+            <a id="nav-back-link" href="javascript:void(0)" onclick="goBackLobby()" class="back-link">
+                &#8592; Back to Lobby
             </a>
         </div>
         
@@ -2051,20 +2086,26 @@
             // Show profile details, hide default tagline
             if (navWidget) navWidget.style.display = 'flex';
             if (navTagline) navTagline.style.display = 'none';
-
-            // Display back link on content dashboards, keep hidden on setup screens
-            if (navBack) {
-                if (stepId === 'login' || stepId === 'setup-profile' || stepId === 'tutorial') {
-                    navBack.style.display = 'none';
-                } else {
-                    navBack.style.display = 'inline-flex';
-                }
-            }
         } else {
             // Default logged-out view
-            if (navBack) navBack.style.display = 'none';
             if (navWidget) navWidget.style.display = 'none';
             if (navTagline) navTagline.style.display = 'block';
+        }
+
+        // Display Back link matching Resource Library
+        if (navBack) {
+            navBack.style.display = 'inline-flex';
+            if (stepId === 'login' || stepId === 'gateway') {
+                navBack.innerHTML = '&#8592; Back to Lobby';
+            } else if (stepId === 'master-lobby' || stepId === 'ceu-lobby') {
+                navBack.innerHTML = '&#8592; Back to Paths';
+            } else if (stepId === 'day1-dashboard') {
+                navBack.innerHTML = '&#8592; Back to Days';
+            } else if (stepId === 'setup-profile') {
+                navBack.innerHTML = '&#8592; Back to Login';
+            } else {
+                navBack.innerHTML = '&#8592; Back';
+            }
         }
 
         if (stepId === 'master-lobby' || stepId === 'day1-dashboard') {
@@ -2329,8 +2370,8 @@
             nextStep('master-lobby'); // From Day Modules, go to Days Selection map
         } else if (activeStep === 'master-lobby' || activeStep === 'ceu-lobby') {
             nextStep('gateway');      // From Days Selection map, go to Path Selection (Tracks)
-        } else if (activeStep === 'gateway') {
-            window.location.href = "../learning_hub.html"; // From Path Selection, exit to main Resource hub
+        } else if (activeStep === 'gateway' || activeStep === 'login') {
+            window.location.href = "../learning_hub.html"; // From Login or Path Selection, exit to main Learning Hub lobby
         } else if (activeStep === 'tutorial') {
             nextStep('setup-profile');
         } else if (activeStep === 'setup-profile') {
