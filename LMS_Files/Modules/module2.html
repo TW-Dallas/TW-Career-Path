@@ -1174,6 +1174,11 @@
                 if (questionNumber === activeQuizQuestions.length) {
                     quizPassed = true;
                     if (nextBtn) nextBtn.classList.remove('btn-disabled');
+                    // ✅ Instant cloud sync — lock in credit the moment the quiz is passed.
+                    // Prevents lost progress if the store laptop closes before the trainee hits Finish.
+                    // finishAndReturn() will fire a second Completed sync, which is harmless (backend high-water mark).
+                    localStorage.setItem('mod2_complete', 'true');
+                    sendProgressUpdate('Day 1 Mod 2', 'Completed', null, 100, '100%', 0);
                 } else {
                     setTimeout(() => {
                         const currentBlock = document.getElementById('q' + questionNumber + '-block');
