@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,21 +14,25 @@
             src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
             font-weight: normal;
         }
+
         @font-face {
             font-family: 'Subhead1';
             src: url('fonts/Dominos Sans Subhead 1.ttf') format('truetype');
             font-weight: normal;
         }
+
         @font-face {
             font-family: 'Subhead2';
             src: url('fonts/Dominos Sans Subhead 2.ttf') format('truetype');
             font-weight: normal;
         }
+
         @font-face {
             font-family: 'OneDotCd-Bold';
             src: url('fonts/Dominos Sans Bold.ttf') format('truetype');
             font-weight: bold;
         }
+
         @font-face {
             font-family: 'OneDotCd';
             src: url('fonts/Dominos Sans Body.ttf') format('truetype');
@@ -42,7 +47,7 @@
             --brand-blue: #0090e2;
             --acc-blue: #0077bd;
             --dark-blue: #005c91;
-            
+
             /* Crust Palette */
             --crust-light: #faf2e9;
             --crust-med: #f0decc;
@@ -55,7 +60,11 @@
             --transition: all 0.3s ease;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         html {
             min-height: 100%;
@@ -80,18 +89,18 @@
             padding: 0.5rem 1rem 0.35rem;
             text-align: center;
             border-bottom: 3px solid var(--brand-red);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .logo-container {
             max-width: 210px;
             margin: 0 auto 0.1rem;
         }
-        
+
         .logo-img {
             width: 100%;
             height: auto;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
         }
 
         .tagline {
@@ -99,7 +108,7 @@
             font-size: 0.85rem;
             letter-spacing: 0.8px;
             opacity: 0.95;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             margin-top: 1px;
             text-transform: uppercase;
         }
@@ -107,10 +116,10 @@
         /* --- Navigation Strip --- */
         .nav-strip {
             background-color: var(--dark-blue);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding: 0.28rem 1rem;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -165,7 +174,7 @@
             background: white;
             border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             transition: var(--transition);
             cursor: pointer;
             border-top: 4px solid var(--acc-blue);
@@ -178,7 +187,7 @@
 
         .lobby-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+            box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
         }
 
         /* Default / Lobby image area (for SVG icon cards) */
@@ -201,7 +210,7 @@
             background-size: cover;
             background-position: center;
         }
-        
+
         .card-content {
             padding: 1.1rem 1.4rem;
             text-align: center;
@@ -354,12 +363,12 @@
             padding: 1.5rem;
             border-radius: var(--border-radius);
             border-left: 4px solid var(--brand-red);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             transition: var(--transition);
         }
-        
+
         .resource-card:hover {
-            box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
         }
 
         .resource-card.pulse-featured {
@@ -373,13 +382,15 @@
 
         @keyframes softPulseBlue {
             0% {
-                box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 0 0 0 rgba(0, 144, 226, 0.4);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 0 0 0 rgba(0, 144, 226, 0.4);
             }
+
             50% {
-                box-shadow: 0 4px 14px rgba(0,0,0,0.08), 0 0 16px 4px rgba(0, 144, 226, 0.35);
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08), 0 0 16px 4px rgba(0, 144, 226, 0.35);
             }
+
             100% {
-                box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 0 0 0 rgba(0, 144, 226, 0.4);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 0 0 0 rgba(0, 144, 226, 0.4);
             }
         }
 
@@ -423,7 +434,9 @@
             gap: 5px;
         }
 
-        .action-link:hover { text-decoration: underline; }
+        .action-link:hover {
+            text-decoration: underline;
+        }
 
         /* --- Footer --- */
         footer {
@@ -457,6 +470,7 @@
                 gap: 1rem;
                 height: auto;
             }
+
             #view-categories .card-image-area {
                 height: 190px;
             }
@@ -471,6 +485,7 @@
                 padding: 0.5rem 0.85rem 0.5rem;
                 margin: 0 auto;
             }
+
             #view-lobby.grid-view {
                 flex: 1;
                 display: flex;
@@ -480,6 +495,7 @@
                 min-height: 0;
                 margin: 0;
             }
+
             #view-lobby .lobby-card {
                 flex: 1;
                 display: flex;
@@ -487,6 +503,7 @@
                 min-height: 0;
                 margin: 0;
             }
+
             #view-lobby .card-image-area {
                 flex: 1 1 0% !important;
                 height: auto !important;
@@ -495,28 +512,34 @@
                 align-items: center;
                 justify-content: center;
             }
+
             #view-lobby .card-image-area div[style*="width: 72px"] {
                 width: clamp(48px, 7vh, 64px) !important;
                 height: clamp(48px, 7vh, 64px) !important;
             }
+
             #view-lobby .card-image-area svg {
                 width: clamp(24px, 3.5vh, 32px) !important;
                 height: clamp(24px, 3.5vh, 32px) !important;
             }
+
             #view-lobby .card-content {
                 flex: 0 0 auto !important;
                 padding: clamp(6px, 1.2vh, 12px) 1rem clamp(8px, 1.5vh, 14px);
             }
+
             #view-lobby .card-title {
                 font-size: clamp(1.15rem, 2.2vh, 1.35rem);
                 margin-bottom: 2px;
                 line-height: 1.15;
             }
+
             #view-lobby .card-desc {
                 font-size: clamp(0.78rem, 1.3vh, 0.88rem);
                 margin-bottom: clamp(6px, 1vh, 10px);
                 line-height: 1.25;
             }
+
             #view-lobby .btn {
                 padding: clamp(6px, 1vh, 9px) 1.5rem;
                 font-size: clamp(0.82rem, 1.4vh, 0.92rem);
@@ -531,16 +554,20 @@
                 margin: auto;
                 gap: 1.75rem;
             }
+
             #view-lobby .card-image-area {
                 height: 175px;
             }
+
             #view-lobby .card-content {
                 padding: 1.25rem 1.4rem 1.4rem;
             }
+
             #view-lobby .card-title {
                 font-size: 1.4rem;
                 margin-bottom: 0.35rem;
             }
+
             #view-lobby .card-desc {
                 font-size: 0.95rem;
                 margin-bottom: 1.1rem;
@@ -600,19 +627,32 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Utility to hide/show */
-        .hidden { display: none !important; }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
 
-        .lobby-card, .logo-img, .btn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Utility to hide/show */
+        .hidden {
+            display: none !important;
+        }
+
+        .lobby-card,
+        .logo-img,
+        .btn {
             user-select: none;
-            -webkit-user-select: none; /* For Safari */
+            -webkit-user-select: none;
+            /* For Safari */
         }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -624,27 +664,33 @@
 
     <!-- Navigation -->
     <div class="nav-strip">
-        <div style="max-width: 1000px; margin: 0 auto; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+        <div
+            style="max-width: 1000px; margin: 0 auto; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
             <!-- Dynamic Back Link -->
             <a id="nav-back-btn" href="index.html" class="back-link">
                 <span id="nav-text">&#8592; Back to Career Path</span>
             </a>
 
             <!-- Support / Report Issue Button -->
-            <button type="button" id="beta-feedback-trigger-custom" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null" style="background: rgba(255, 255, 255, 0.12); color: white; border: 1.5px solid rgba(255, 255, 255, 0.4); padding: 6px 14px; border-radius: 20px; font-family: 'Subhead2', sans-serif; font-size: 0.92rem; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: all 0.2s;" onmouseover="this.style.background='var(--brand-red)'; this.style.borderColor='var(--brand-red)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.12)'; this.style.borderColor='rgba(255, 255, 255, 0.4)'">
+            <button type="button" id="beta-feedback-trigger-custom"
+                onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null"
+                style="background: rgba(255, 255, 255, 0.12); color: white; border: 1.5px solid rgba(255, 255, 255, 0.4); padding: 6px 14px; border-radius: 20px; font-family: 'Subhead2', sans-serif; font-size: 0.92rem; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: all 0.2s;"
+                onmouseover="this.style.background='var(--brand-red)'; this.style.borderColor='var(--brand-red)'"
+                onmouseout="this.style.background='rgba(255, 255, 255, 0.12)'; this.style.borderColor='rgba(255, 255, 255, 0.4)'">
                 <span style="font-size: 1rem; line-height: 1;">🛠️</span> Report Issue
             </button>
         </div>
     </div>
 
     <main>
-        
+
         <!-- STEP 1: MAIN LOBBY -->
         <div id="view-lobby" class="grid-view">
 
             <!-- Card 1: LMS -->
             <div class="lobby-card" onclick="window.location.href='LMS_Files/lms_dashboard.html'">
-                <div class="card-image-area" style="background-image: url('image/LMS_Cover.jpg'); background-color: #eee;"></div>
+                <div class="card-image-area"
+                    style="background-image: url('image/LMS_Cover.jpg'); background-color: #eee;"></div>
                 <div class="card-content">
                     <div class="card-title">Wow Way Training</div>
                     <div class="card-desc">New hire 3-day training program and access to continued learning.</div>
@@ -654,7 +700,8 @@
 
             <!-- Card 2: Resources -->
             <div class="lobby-card" onclick="navigateTo('categories')">
-                <div class="card-image-area" style="background-image: url('image/Library_cover.png'); background-color: #eee;"></div>
+                <div class="card-image-area"
+                    style="background-image: url('image/Library_cover.png'); background-color: #eee;"></div>
                 <div class="card-content">
                     <div class="card-title">Resource Library</div>
                     <div class="card-desc">Job Aids, Standards, and Policy Documents.</div>
@@ -664,12 +711,13 @@
 
         </div>
 
-                <!-- STEP 2: CATEGORY SELECTOR -->
+        <!-- STEP 2: CATEGORY SELECTOR -->
         <div id="view-categories" class="grid-view hidden">
-            
+
             <!-- Training -->
             <div class="lobby-card" onclick="openCategory('training', 'Training Center')">
-                <div class="card-image-area" style="background-image: url('image/photo_training.webp'); background-color: #eee;"></div>
+                <div class="card-image-area"
+                    style="background-image: url('image/photo_training.webp'); background-color: #eee;"></div>
                 <div class="card-content">
                     <div class="card-title">Training</div>
                     <div class="card-desc">Videos, Quizzes, Certification Paths.</div>
@@ -678,34 +726,38 @@
 
             <!-- Managers (GMs) -->
             <div class="lobby-card" onclick="openCategory('managers', 'Manager Resources')">
-                <div class="card-image-area" style="background-image: url('image/photo_gm.webp'); background-color: #eee;"></div>
+                <div class="card-image-area"
+                    style="background-image: url('image/photo_gm.webp'); background-color: #eee;"></div>
                 <div class="card-content">
                     <div class="card-title">Managers</div>
                     <div class="card-desc">OA Guides, Inventory, Cash, & Labor.</div>
                 </div>
             </div>
-        
+
             <!-- Drivers -->
             <div class="lobby-card" onclick="openCategory('drivers', 'Driver Resources')">
-                <div class="card-image-area" style="background-image: url('image/photo_driver.jpg'); background-color: #eee;"></div>
+                <div class="card-image-area"
+                    style="background-image: url('image/photo_driver.jpg'); background-color: #eee;"></div>
                 <div class="card-content">
                     <div class="card-title">Drivers</div>
                     <div class="card-desc">Safety Cards, Vehicle Inspections, Maps.</div>
                 </div>
             </div>
-        
+
             <!-- Product Guides (CSRs) -->
             <div class="lobby-card" onclick="openCategory('insiders', 'Product Guides')">
-                <div class="card-image-area" style="background-image: url('image/makeline.webp'); background-color: #eee;"></div>
+                <div class="card-image-area"
+                    style="background-image: url('image/makeline.webp'); background-color: #eee;"></div>
                 <div class="card-content">
                     <div class="card-title">Product Guides</div>
                     <div class="card-desc">Build Guides, Makeline Standards, RTU Sauces.</div>
                 </div>
             </div>
 
-           <!-- NEW: New Hire (Onboarding) -->
+            <!-- NEW: New Hire (Onboarding) -->
             <div class="lobby-card" onclick="openCategory('newhire', 'New Hire Onboarding')">
-                <div class="card-image-area" style="background-image: url('image/photo_team.jpg'); background-color: #eee;"></div>
+                <div class="card-image-area"
+                    style="background-image: url('image/photo_team.jpg'); background-color: #eee;"></div>
                 <div class="card-content">
                     <div class="card-title">New Hire</div>
                     <div class="card-desc">Welcome Packet, Uniforms, First Day Info.</div>
@@ -714,14 +766,15 @@
 
             <!-- NEW: HR (Benefits/Policy) -->
             <div class="lobby-card" onclick="openCategory('hr', 'Human Resources')">
-                <div class="card-image-area" style="background-image: url('image/photo_HR.jpg'); background-color: #eee;"></div>
+                <div class="card-image-area"
+                    style="background-image: url('image/photo_HR.jpg'); background-color: #eee;"></div>
                 <div class="card-content">
                     <div class="card-title">HR & Benefits</div>
                     <div class="card-desc">Benefits, Payroll, Policy Handbook.</div>
                 </div>
             </div>
-        </div>    
-        
+        </div>
+
         <!-- STEP 3: CONTENT GRID -->
         <div id="view-resources-list" class="hidden">
             <div class="section-header">
@@ -730,11 +783,14 @@
                 <!-- LIVE SEARCH BAR -->
                 <div class="search-box-container">
                     <span class="search-box-icon">&#128269;</span>
-                    <input type="text" id="resource-search-input" class="search-box-input" placeholder="Search guides, videos & PDFs..." oninput="filterResources(this.value)" autocomplete="off">
-                    <button id="search-clear-btn" class="search-clear-btn" onclick="clearSearch()" title="Clear search">&times;</button>
+                    <input type="text" id="resource-search-input" class="search-box-input"
+                        placeholder="Search guides, videos & PDFs..." oninput="filterResources(this.value)"
+                        autocomplete="off">
+                    <button id="search-clear-btn" class="search-clear-btn" onclick="clearSearch()"
+                        title="Clear search">&times;</button>
                 </div>
             </div>
-            
+
             <div class="resource-grid" id="resource-container">
                 <!-- Content injected via JS -->
             </div>
@@ -742,12 +798,17 @@
 
         <!-- STEP 4: VIEWER (PDF / VIDEO / IMAGE) -->
         <div id="view-viewer" class="hidden" style="height: 100%; display: flex; flex-direction: column;">
-            
+
             <!-- Viewer for PDFs, Videos, and Websites -->
-            <iframe id="content-frame" src="" class="hidden" style="width: 100%; height: 80vh; border: none; border-radius: 8px; background: white;" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
-            
+            <iframe id="content-frame" src="" class="hidden"
+                style="width: 100%; height: 80vh; border: none; border-radius: 8px; background: white;" frameborder="0"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                allowfullscreen></iframe>
+
             <!-- Viewer for Images (Auto-Fit) -->
-            <img id="content-image" src="" class="hidden" style="width: 100%; height: 80vh; object-fit: contain; background: white; border-radius: 8px;">
+            <img id="content-image" src="" class="hidden"
+                style="width: 100%; height: 80vh; object-fit: contain; background: white; border-radius: 8px;">
 
         </div>
 
@@ -758,71 +819,131 @@
         <p class="footer-subtext">Powered by Crust & Code</p>
     </footer>
 
-       <script>
+    <script>
         // --- STATE ---
         let currentView = 'lobby'; // lobby, categories, list
-        
+
         // --- DATA ---
         const resources = [
             // MANAGERS
-            { id: 26, category: 'managers', type: 'PDF', title: 'Pulse - New Employee Setup', desc: 'Guide for entering and setting up new employees in Pulse.', 
-                 link: 'resources/gm/Pulse_New_Employee.pdf' },
-            { id: 1, category: 'managers', type: 'PDF', title: 'Walk-In Hiring Guide - Dallas', desc: 'Dallas Walk-in Hiring Guide', 
-                 link: 'resources/gm/Walkin_Hiring.pdf' },
-            { id: 2, category: 'managers', type: 'PDF', title: 'I-9 Document List', desc: 'Visual list of acceptable I-9 documents.', 
-                 link: 'resources/gm/I-9.pdf' },
-            { id: 4, category: 'managers', type: 'PDF', title: 'Product Consistency Changes', desc: 'Information about new product consistency changes.', 
-                 link: 'resources/gm/Changes_Product%20Consistency.pdf' },
-            { id: 16, category: 'managers', type: 'PDF', title: 'OA Standards 2026', desc: '2026 Updated Operations Assessment Guidelines', 
-                 link: 'resources/training/2026_OA_Guide.pdf' },
-            
+            {
+                id: 26, category: 'managers', type: 'PDF', title: 'Pulse - New Employee Setup', desc: 'Guide for entering and setting up new employees in Pulse.',
+                link: 'resources/gm/Pulse_New_Employee.pdf'
+            },
+            {
+                id: 1, category: 'managers', type: 'PDF', title: 'Walk-In Hiring Guide - Dallas', desc: 'Dallas Walk-in Hiring Guide',
+                link: 'resources/gm/Walkin_Hiring.pdf'
+            },
+            {
+                id: 2, category: 'managers', type: 'PDF', title: 'I-9 Document List', desc: 'Visual list of acceptable I-9 documents.',
+                link: 'resources/gm/I-9.pdf'
+            },
+            {
+                id: 4, category: 'managers', type: 'PDF', title: 'Product Consistency Changes', desc: 'Information about new product consistency changes.',
+                link: 'resources/gm/Changes_Product%20Consistency.pdf'
+            },
+            {
+                id: 16, category: 'managers', type: 'PDF', title: 'OA Standards 2026', desc: '2026 Updated Operations Assessment Guidelines',
+                link: 'resources/training/2026_OA_Guide.pdf'
+            },
+
             // DRIVERS
-            { id: 5, category: 'drivers', type: 'PDF', title: 'Delivery Expert App FAQ', desc: 'Job Aid for the Delivery Expert App.', 
-                 link: 'resources/driver/delivery_exp_jobaid.pdf' },
-            { id: 6, category: 'drivers', type: 'Link', title: 'Drivosity Points', desc: 'See how many points you have. Speak with a manager to redeem points for prizes!', 
-                 link: 'https://tw-dallas.github.io/TW-Career-Path/driver_rewards_v1.html' },
-            
+            {
+                id: 6, category: 'drivers', type: 'Link', title: 'Drivosity Points', desc: 'See how many points you have. Speak with a manager to redeem points for prizes!',
+                link: 'https://driver-rewards.pages.dev'
+            },
+            {
+                id: 5, category: 'drivers', type: 'PDF', title: 'Delivery Expert App FAQ', desc: 'Job Aid for the Delivery Expert App.',
+                link: 'resources/driver/delivery_exp_jobaid.pdf'
+            },
+            {
+                id: 27, category: 'drivers', type: 'PDF', title: 'Driver Rewards Catalog', desc: 'Catalog of available prizes for driver rewards.',
+                link: 'resources/drivosity/Drivosity Prize Catalog.pdf'
+            },
+            {
+                id: 28, category: 'drivers', type: 'PDF', title: 'Driver Rewards FAQ - Manager', desc: 'Printer-Friendly FAQ for Managers regarding Driver Rewards.',
+                link: 'resources/drivosity/Drivosity_Manager_Guide.pdf'
+            },
+            {
+                id: 29, category: 'drivers', type: 'PDF', title: 'Driver Rewards FAQ - Team Member', desc: 'Printer-Friendly FAQ for Team Members regarding Driver Rewards.',
+                link: 'resources/drivosity/Drivosity_TM_Guide.pdf'
+            },
+
             // PRODUCT GUIDES (CSR)
-            { id: 8, category: 'insiders', type: 'PDF', title: 'Comprehensive Product Build Guide', desc: 'Interactive job aids for makeline products and Domino Team WOW builds.', 
-                 link: 'resources/csr/Interactive%20Job%20Aids%20Domino%20Team%20Wow.pdf', pulse: true },
-            { id: 24, category: 'insiders', type: 'Video', title: 'Domino Product Tutorial', desc: 'Comprehensive video walkthrough covering Domino core product builds, makeline standards, and procedures.', 
-                 link: 'https://player.vimeo.com/video/1223729233?h=3fcc7edbf7' },
-            { id: 25, category: 'insiders', type: 'PDF', title: 'Domino Training Guide', desc: 'Official comprehensive training reference guide for store operations and product standards.', 
-                 link: 'resources/csr/Domino_Training_Guide.pdf' },
-            { id: 3, category: 'insiders', type: 'PDF', title: 'Dough Management Tool', desc: 'Tool to assist in dough proofing and management.', 
-                 link: 'resources/gm/Dough_Management_Tool.pdf' },
-            { id: 17, category: 'insiders', type: 'Video', title: 'Pizza Grading Tool Tutorial', desc: 'Information regarding use of the new Pizza Grading tool.', 
-                 link: 'https://player.vimeo.com/video/1223737580?h=6a87be3d5e' },
-            { id: 7, category: 'insiders', type: 'PDF', title: 'Influencer Pizza Build Job Aid', desc: 'Build information for the influencer pizzas being promoted during the Best Deal Ever 4.0 campaign.', 
-                 link: 'resources/csr/BDE_Builds.pdf' },
-            { id: 9, category: 'insiders', type: 'Image', title: 'Toppings Codes', desc: 'English and Spanish Toppings Codes.', 
-                 link: 'resources/csr/toppings.jpg' },
-            { id: 10, category: 'insiders', type: 'Video', title: 'Parmesan Stuffed Crust Tutorial', desc: 'Step-by-step guide covering how to make the new Parmesan Stuffed Crust pizza.', 
-                 link: 'https://player.vimeo.com/video/1223737032?h=73781125e2' },
-            { id: 11, category: 'insiders', type: 'PDF', title: 'Pizza Procedures', desc: 'Job aids for pizza making.', 
-                 link: 'resources/csr/Pizza_Procedures.pdf' },
-            { id: 12, category: 'insiders', type: 'PDF', title: 'RTU Sauce Procedures', desc: 'Job aids for RTU sauce prep & use.', 
-                 link: 'resources/csr/RTU_Sauce_Procedures.pdf' },
-            { id: 13, category: 'insiders', type: 'Video', title: 'Sandwich and Lava Cakes Update', desc: 'Information on the updates to sandwiches and Lava Cakes, as well as the elimination of Loaded Tots.', 
-                 link: 'https://player.vimeo.com/video/1223737187?h=a3a0094f57' },
+            {
+                id: 8, category: 'insiders', type: 'PDF', title: 'Comprehensive Product Build Guide', desc: 'Interactive job aids for makeline products and Domino Team WOW builds.',
+                link: 'resources/csr/Interactive%20Job%20Aids%20Domino%20Team%20Wow.pdf', pulse: true
+            },
+            {
+                id: 24, category: 'insiders', type: 'Video', title: 'Domino Product Tutorial', desc: 'Comprehensive video walkthrough covering Domino core product builds, makeline standards, and procedures.',
+                link: 'https://player.vimeo.com/video/1223729233?h=3fcc7edbf7'
+            },
+            {
+                id: 25, category: 'insiders', type: 'PDF', title: 'Domino Training Guide', desc: 'Official comprehensive training reference guide for store operations and product standards.',
+                link: 'resources/csr/Domino_Training_Guide.pdf'
+            },
+            {
+                id: 3, category: 'insiders', type: 'PDF', title: 'Dough Management Tool', desc: 'Tool to assist in dough proofing and management.',
+                link: 'resources/gm/Dough_Management_Tool.pdf'
+            },
+            {
+                id: 17, category: 'insiders', type: 'Video', title: 'Pizza Grading Tool Tutorial', desc: 'Information regarding use of the new Pizza Grading tool.',
+                link: 'https://player.vimeo.com/video/1223737580?h=6a87be3d5e'
+            },
+            {
+                id: 7, category: 'insiders', type: 'PDF', title: 'Influencer Pizza Build Job Aid', desc: 'Build information for the influencer pizzas being promoted during the Best Deal Ever 4.0 campaign.',
+                link: 'resources/csr/BDE_Builds.pdf'
+            },
+            {
+                id: 9, category: 'insiders', type: 'Image', title: 'Toppings Codes', desc: 'English and Spanish Toppings Codes.',
+                link: 'resources/csr/toppings.jpg'
+            },
+            {
+                id: 10, category: 'insiders', type: 'Video', title: 'Parmesan Stuffed Crust Tutorial', desc: 'Step-by-step guide covering how to make the new Parmesan Stuffed Crust pizza.',
+                link: 'https://player.vimeo.com/video/1223737032?h=73781125e2'
+            },
+            {
+                id: 11, category: 'insiders', type: 'PDF', title: 'Pizza Procedures', desc: 'Job aids for pizza making.',
+                link: 'resources/csr/Pizza_Procedures.pdf'
+            },
+            {
+                id: 12, category: 'insiders', type: 'PDF', title: 'RTU Sauce Procedures', desc: 'Job aids for RTU sauce prep & use.',
+                link: 'resources/csr/RTU_Sauce_Procedures.pdf'
+            },
+            {
+                id: 13, category: 'insiders', type: 'Video', title: 'Sandwich and Lava Cakes Update', desc: 'Information on the updates to sandwiches and Lava Cakes, as well as the elimination of Loaded Tots.',
+                link: 'https://player.vimeo.com/video/1223737187?h=a3a0094f57'
+            },
 
             // TRAINING
-            { id: 21, category: 'training', type: 'PDF', title: 'New Hire Training Program FAQ & Visual Guide', desc: 'Printable 2-page guide covering onboarding FAQs, visual credential login aids, and QR codes for the Training Hub & Trainer PIN generator.', 
-                 link: 'resources/training/New%20Hire%20Training%20Program%20FAQ.pdf' },
-            { id: 22, category: 'training', type: 'PDF', title: 'New Hire Trainer Packet - Day 1', desc: 'Day 1 trainer facilitation guide, structured coaching steps, and verification checklists.', 
-                 link: 'resources/training/New%20Hire%20Trainer%20Packet%20-%20Day%201.pdf' },
-            { id: 23, category: 'training', type: 'PDF', title: 'New Hire Trainee Packet - Day 1', desc: 'Day 1 onboarding workbook, learning checkpoints, and notes for new team members.', 
-                 link: 'resources/training/New%20Hire%20Trainee%20Packet%20-%20Day%201.pdf' },
+            {
+                id: 21, category: 'training', type: 'PDF', title: 'New Hire Training Program FAQ & Visual Guide', desc: 'Printable 2-page guide covering onboarding FAQs, visual credential login aids, and QR codes for the Training Hub & Trainer PIN generator.',
+                link: 'resources/training/New%20Hire%20Training%20Program%20FAQ.pdf'
+            },
+            {
+                id: 22, category: 'training', type: 'PDF', title: 'New Hire Trainer Packet - Day 1', desc: 'Day 1 trainer facilitation guide, structured coaching steps, and verification checklists.',
+                link: 'resources/training/New%20Hire%20Trainer%20Packet%20-%20Day%201.pdf'
+            },
+            {
+                id: 23, category: 'training', type: 'PDF', title: 'New Hire Trainee Packet - Day 1', desc: 'Day 1 onboarding workbook, learning checkpoints, and notes for new team members.',
+                link: 'resources/training/New%20Hire%20Trainee%20Packet%20-%20Day%201.pdf'
+            },
 
-             // NEW HIRE
-            { id: 18, category: 'newhire', type: 'PDF', title: 'New Hire Training Packet', desc: 'Information packet for all new hires.', 
-                 link: 'resources/new%20hire/New%20Hire%20Packet%202025.pdf' },
+            // NEW HIRE
+            {
+                id: 18, category: 'newhire', type: 'PDF', title: 'New Hire Training Packet', desc: 'Information packet for all new hires.',
+                link: 'resources/new%20hire/New%20Hire%20Packet%202025.pdf'
+            },
 
-             // HR
-            { id: 19, category: 'hr', type: 'Link', title: 'MyPay FAQ', desc: 'MyPay Support and FAQ', 
-                 link: 'https://alliancehcm.com/employee-support' },
-            { id: 20, category: 'hr', type: 'PDF', title: 'Netspend FAQ', desc: 'Netspend Skylight ONE Support and FAQ', 
-                 link: 'resources/HR/Netspend%20FAQ.pdf' },
+            // HR
+            {
+                id: 19, category: 'hr', type: 'Link', title: 'MyPay FAQ', desc: 'MyPay Support and FAQ',
+                link: 'https://alliancehcm.com/employee-support'
+            },
+            {
+                id: 20, category: 'hr', type: 'PDF', title: 'Netspend FAQ', desc: 'Netspend Skylight ONE Support and FAQ',
+                link: 'resources/HR/Netspend%20FAQ.pdf'
+            },
         ];
 
         // --- NAVIGATION LOGIC ---
@@ -856,7 +977,7 @@
 
             // Update State
             currentView = view;
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
         }
 
         function updateNav(type, text) {
@@ -865,8 +986,8 @@
 
             if (type === 'exit') {
                 // Turn it into a normal link
-                navBtn.onclick = null; 
-                navBtn.href = 'index.html'; 
+                navBtn.onclick = null;
+                navBtn.href = 'index.html';
                 navText.innerHTML = '&#8592; Back to Career Path';
             } else {
                 // Turn it into a Back Button
@@ -876,18 +997,18 @@
             }
         }
 
-       function handleBack(e) {
+        function handleBack(e) {
             console.log("Current View is:", currentView);
             if (currentView === 'lobby') return;
-            
+
             e.preventDefault();
-            
+
             if (currentView === 'categories') {
                 navigateTo('lobby');
             } else if (currentView === 'list') {
                 navigateTo('categories');
             } else if (currentView === 'viewer') {
-                document.getElementById('content-frame').src = ''; 
+                document.getElementById('content-frame').src = '';
                 navigateTo('list');
             }
         }
@@ -900,7 +1021,7 @@
             if (!pattern || !text) return 0;
             const p = pattern.toLowerCase();
             const t = text.toLowerCase();
-            
+
             // 1. Exact substring match gets top score
             const exactIdx = t.indexOf(p);
             if (exactIdx !== -1) {
@@ -918,7 +1039,7 @@
                     // Bonus for consecutive letters
                     if (i === prevMatchIdx + 1) score += 25;
                     // Bonus for word starts / boundaries
-                    if (i === 0 || t[i-1] === ' ' || t[i-1] === '-' || t[i-1] === '_') score += 30;
+                    if (i === 0 || t[i - 1] === ' ' || t[i - 1] === '-' || t[i - 1] === '_') score += 30;
                     prevMatchIdx = i;
                     pIdx++;
                 }
@@ -931,7 +1052,7 @@
         function filterResources(query) {
             const clearBtn = document.getElementById('search-clear-btn');
             const trimmed = (query || '').trim();
-            
+
             if (clearBtn) {
                 clearBtn.style.display = trimmed.length > 0 ? 'block' : 'none';
             }
@@ -977,7 +1098,7 @@
             container.innerHTML = '';
 
             if (cardList.length === 0) {
-                const safeQuery = query.replace(/[&<>"']/g, function(m) {
+                const safeQuery = query.replace(/[&<>"']/g, function (m) {
                     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
                 });
                 container.innerHTML = `
@@ -994,7 +1115,7 @@
             cardList.forEach(res => {
                 const pulseClass = res.pulse ? 'pulse-featured' : '';
                 const isLink = res.type === 'Link';
-                
+
                 const viewAction = isLink
                     ? `<a href="${res.link}" target="_blank" rel="noopener noreferrer" class="action-link">
                            <span>🔗</span> Open Link ↗
@@ -1045,7 +1166,7 @@
         function openDocument(url) {
             const frame = document.getElementById('content-frame');
             const img = document.getElementById('content-image');
-            
+
             // Check if it's an image or video
             const isImage = url.match(/\.(jpeg|jpg|gif|png|webp)$/i);
             const isVideo = url.includes('vimeo.com') || url.includes('youtube.com') || url.includes('youtu.be');
@@ -1073,7 +1194,7 @@
             const modal = document.getElementById('trainer-pin-modal-overlay');
             const frame = document.getElementById('trainer-pin-form-frame');
             const spinner = document.getElementById('trainer-pin-loading-spinner');
-            
+
             if (modal) {
                 modal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
@@ -1081,7 +1202,7 @@
                 if (frame && (!frame.src || frame.src === "" || frame.src === window.location.href)) {
                     if (spinner) spinner.style.display = 'flex';
                     frame.src = TRAINER_PIN_FORM_EMBED_URL;
-                    frame.onload = function() {
+                    frame.onload = function () {
                         if (spinner) spinner.style.display = 'none';
                     };
                 }
@@ -1103,7 +1224,7 @@
         }
 
         // Close modal on Escape key press
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 closeTrainerPinModal();
             }
@@ -1142,40 +1263,62 @@
     </script>
 
     <!-- TRAINER PIN FORM MODAL (MANUAL TRIGGER) -->
-    <div id="trainer-pin-modal-overlay" onclick="handleTrainerPinBackdropClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 57, 100, 0.75); z-index: 999999; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); padding: 16px; box-sizing: border-box;">
-        <div style="background-color: #ffffff; border: 3px solid var(--crust-med); border-top: 6px solid #ff0000; border-radius: 14px; width: 100%; max-width: 840px; height: 90vh; max-height: 860px; display: flex; flex-direction: column; box-shadow: 0 16px 45px rgba(0,0,0,0.35); position: relative; overflow: hidden; animation: fadeIn 0.25s ease-out;">
-            
+    <div id="trainer-pin-modal-overlay" onclick="handleTrainerPinBackdropClick(event)"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 57, 100, 0.75); z-index: 999999; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); padding: 16px; box-sizing: border-box;">
+        <div
+            style="background-color: #ffffff; border: 3px solid var(--crust-med); border-top: 6px solid #ff0000; border-radius: 14px; width: 100%; max-width: 840px; height: 90vh; max-height: 860px; display: flex; flex-direction: column; box-shadow: 0 16px 45px rgba(0,0,0,0.35); position: relative; overflow: hidden; animation: fadeIn 0.25s ease-out;">
+
             <!-- Modal Header -->
-            <div style="padding: 16px 20px; background: #ffffff; border-bottom: 1px solid var(--crust-med); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
+            <div
+                style="padding: 16px 20px; background: #ffffff; border-bottom: 1px solid var(--crust-med); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <span style="font-size: 1.6rem; user-select: none;">🔑</span>
                     <div>
-                        <h3 style="margin: 0; font-family: 'Subhead1', 'PizzaPress', sans-serif; font-size: 1.25rem; color: var(--dark-blue); letter-spacing: 0.5px; text-transform: uppercase;">Manager & Trainer PIN Registration</h3>
-                        <p style="margin: 2px 0 0 0; font-family: 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep);">Register your individual 4-digit PIN to authorize trainee module unlocks.</p>
+                        <h3
+                            style="margin: 0; font-family: 'Subhead1', 'PizzaPress', sans-serif; font-size: 1.25rem; color: var(--dark-blue); letter-spacing: 0.5px; text-transform: uppercase;">
+                            Manager & Trainer PIN Registration</h3>
+                        <p
+                            style="margin: 2px 0 0 0; font-family: 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep);">
+                            Register your individual 4-digit PIN to authorize trainee module unlocks.</p>
                     </div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
-                    <a href="https://forms.gle/uCcPnqn8HShrRg2d7" target="_blank" rel="noopener noreferrer" style="font-family: 'Subhead2', sans-serif; font-size: 0.88rem; color: var(--brand-blue); background: white; border: 1.5px solid var(--brand-blue); padding: 7px 14px; border-radius: 20px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;" onmouseover="this.style.background='var(--brand-blue)'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='var(--brand-blue)';">
+                    <a href="https://forms.gle/uCcPnqn8HShrRg2d7" target="_blank" rel="noopener noreferrer"
+                        style="font-family: 'Subhead2', sans-serif; font-size: 0.88rem; color: var(--brand-blue); background: white; border: 1.5px solid var(--brand-blue); padding: 7px 14px; border-radius: 20px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;"
+                        onmouseover="this.style.background='var(--brand-blue)'; this.style.color='white';"
+                        onmouseout="this.style.background='white'; this.style.color='var(--brand-blue)';">
                         <span>Open in New Tab</span> ↗
                     </a>
-                    <span onclick="closeTrainerPinModal()" style="font-size: 28px; line-height: 1; cursor: pointer; color: var(--crust-dark); padding: 4px 8px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.color='var(--brand-red)'" onmouseout="this.style.color='var(--crust-dark)'">&times;</span>
+                    <span onclick="closeTrainerPinModal()"
+                        style="font-size: 28px; line-height: 1; cursor: pointer; color: var(--crust-dark); padding: 4px 8px; border-radius: 6px; transition: all 0.2s;"
+                        onmouseover="this.style.color='var(--brand-red)'"
+                        onmouseout="this.style.color='var(--crust-dark)'">&times;</span>
                 </div>
             </div>
 
             <!-- Modal Body / Iframe Container -->
-            <div style="flex: 1; background: #fafafa; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+            <div
+                style="flex: 1; background: #fafafa; position: relative; overflow: hidden; display: flex; flex-direction: column;">
                 <!-- Loading Spinner -->
-                <div id="trainer-pin-loading-spinner" style="display: flex; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); align-items: center; justify-content: center; flex-direction: column; gap: 12px; z-index: 10;">
-                    <div style="width: 38px; height: 38px; border: 4px solid var(--crust-med); border-top: 4px solid var(--brand-blue); border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
-                    <span style="font-family: 'Subhead2', sans-serif; font-size: 0.95rem; color: var(--dark-blue);">Loading Registration Form...</span>
+                <div id="trainer-pin-loading-spinner"
+                    style="display: flex; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); align-items: center; justify-content: center; flex-direction: column; gap: 12px; z-index: 10;">
+                    <div
+                        style="width: 38px; height: 38px; border: 4px solid var(--crust-med); border-top: 4px solid var(--brand-blue); border-radius: 50%; animation: spin 0.8s linear infinite;">
+                    </div>
+                    <span
+                        style="font-family: 'Subhead2', sans-serif; font-size: 0.95rem; color: var(--dark-blue);">Loading
+                        Registration Form...</span>
                 </div>
 
                 <!-- Embedded Form Iframe -->
-                <iframe id="trainer-pin-form-frame" src="" style="width: 100%; height: 100%; border: none; flex-grow: 1;" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                <iframe id="trainer-pin-form-frame" src=""
+                    style="width: 100%; height: 100%; border: none; flex-grow: 1;" frameborder="0" marginheight="0"
+                    marginwidth="0">Loading…</iframe>
             </div>
 
         </div>
     </div>
 
 </body>
+
 </html>

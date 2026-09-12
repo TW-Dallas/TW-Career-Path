@@ -16,6 +16,10 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
   * **Visual Hints & Direct Answers:** Trainees receive visual cues (blue radar pulse or direct answer spotlights) to work through tricky steps, with assists factored fairly into the overall score calculation.
   * **Trainer PIN Support:** Once assistance allowances are exhausted, additional hints require an on-duty Trainer or GM 4-digit PIN authorization with built-in safeguards against excessive bypassing.
   * **Physical Execution Guarantee:** Hints never advance the screen automatically—trainees must still physically locate, click, or type the required order details themselves.
+* **Driver Rewards Portal & Resource Library Upgrades:**
+  * **Updated 2026 Prize Catalog & FAQs:** Added the official updated 2026 Prize Catalog PDF and printer-friendly Manager & Team Member FAQ Guides directly into the [Resource Library](https://tw-dallas.github.io/TW-Career-Path/learning_hub.html).
+  * **Driver Rewards Portal Refresh & Mobile App Support:** Upgraded the [Driver Rewards Portal](https://driver-rewards.pages.dev) with home-screen Mobile App (PWA) installation for drivers on iPhone and Android.
+  * **Transparent Period Performance Tracking:** Drivers can now see their exact deliveries (towards 100 trips) and safety score (towards 96.0) for the current period, giving clear feedback even if they haven't earned points yet, plus an expandable Season History drawer showing all past qualifying periods and prize redemptions.
 * **1-Click Field Focus & Input Freeze Fix (POS Practice):** Trainees can now click directly on customer detail fields (such as phone number, address number, street name, or unit/suite) to jump straight into typing with zero redundant clicks. Resolved previous field freeze and focus lockout issues when clicking repeatedly, making customer and address entry completely seamless.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
