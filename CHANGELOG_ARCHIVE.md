@@ -44,6 +44,31 @@ This archive preserves past editions, foundational releases, and architectural u
 
 ---
 
+## 📮 Edition 4 (Sent September 10, 2026)
+
+### 🍕 Fresh Out of the Oven (New Features & Content)
+* **Domino™ Detroit Style Parmesan Crust Rollout:** Added the brand-new Domino™ Detroit Style crust across all 3 interactive foundations slides in [Module 3 Menu Overview](https://tw-dallas.github.io/TW-Career-Path/LMS_Files/Modules/module3.html):
+  * **Crust Overview & Guidelines:** Features official menu photo reference, rectangular pan definition, two layers of cheese with signature garlic seasoning, and the crucial **3 toppings maximum** restriction.
+  * **Size Constraints:** Highlights that Domino™ comes in **one size only** (with its own dedicated POS button).
+  * **Default Cut Standard:** Added the official cut specification showing Domino™ is **cut in half vertically** (2 halves), complete with a custom matching visual diagram.
+* **Tactical Assistance System & Trainer Authorization (POS Practice):** Trainees experiencing roadblocks during live phone order practice can now request targeted on-screen guidance without getting stuck in the [POS Simulator](https://tw-dallas.github.io/TW-Career-Path/LMS_Files/POS_Simulator_Stage_4.html):
+  * **Visual Hints & Direct Answers:** Trainees receive visual cues (blue radar pulse or direct answer spotlights) to work through tricky steps, with assists factored fairly into the overall score calculation.
+  * **Trainer PIN Support:** Once assistance allowances are exhausted, additional hints require an on-duty Trainer or GM 4-digit PIN authorization with built-in safeguards against excessive bypassing.
+  * **Physical Execution Guarantee:** Hints never advance the screen automatically—trainees must still physically locate, click, or type the required order details themselves.
+* **1-Click Field Focus & Input Freeze Fix (POS Practice):** Trainees can now click directly on customer detail fields (such as phone number, address number, street name, or unit/suite) to jump straight into typing with zero redundant clicks. Resolved previous field freeze and focus lockout issues when clicking repeatedly, making customer and address entry completely seamless.
+
+### 🛠️ Solved Issues & Technical Polish
+* **Fair Scoring & Scored Evaluation Retries:** Decoupled practice warm-up from evaluation scoring (warm-up mistakes no longer lower final grades), capped deductions to 1 penalty per step, and added an instant `"🔄 Retake Evaluation"` button so trainees can re-test without repeating the warm-up.
+* **Report Card Precision & Certified Badges:** Shift report cards are strictly locked to final [Module 5](https://tw-dallas.github.io/TW-Career-Path/LMS_Files/Modules/module5.html) sign-off, certified seals remain permanently saved upon review, and authentic seat timers track training duration.
+* **Revamped Store Support & Issue Resolution System:** Moved the **`🛠️ Report Issue`** button directly into the top navigation header for instant access on any screen. Submitting automatically tags the exact module and step, sends instant confirmation receipts to the team member with the store email CC'd, and sends closure notes with resolution details when resolved.
+* **Beta Tester Welcome Popup Retired:** Streamlined the login experience on the [Training Dashboard](https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html) by removing the legacy beta tester welcome modal.
+* **Learning Hub Lobby Card Photography & Dynamic Layout:** Replaced placeholder icons with high-res store photography (`LMS_Cover.jpg` and `Library_cover.png`) optimized for fast store Wi-Fi, added dynamic zero-scroll responsive scaling, and introduced a `"← Back to Lobby"` navigation link on the Training Dashboard navbar.
+
+### 💡 Store Pro-Tip of the Week
+* **Report Issues Right on the Page (Instant Tagging & Direct Support):** Click the **`🛠️ Report Issue`** button in the top navigation header of that exact screen. It auto-captures module, step, and screen details with zero guesswork and keeps you and your store GM in the loop.
+
+---
+
 ## 🔒 Internal Design Archive: Day 2 Curriculum Development Notes
 *(Preserved for Internal Training Design & Trainer Class Development)*
 
