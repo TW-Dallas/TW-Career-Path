@@ -127,6 +127,16 @@
         let quizPassed = false;
         let player;
 
+        // --- TRAINER AUTHORIZATION GATE CHECK ---
+        const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+        const isMod1Unlocked = localStorage.getItem('tw_mod1_unlocked') === 'true';
+        const isMod1Done = localStorage.getItem('mod1_complete') === 'true';
+
+        if (!isAdmin && !isMod1Unlocked && !isMod1Done) {
+            alert("⚠️ Trainer Authorization Required: Your store trainer must enter their PIN on the Dashboard before starting Day 1.");
+            window.location.href = '../lms_dashboard.html#day1';
+        }
+
         // --- RELATIONAL TRACKING STATE ---
         const moduleStartTime = Date.now(); // Starts the timer immediately on load
         let userAnswers = {};               // Collects options as they answer the quiz

@@ -2111,6 +2111,7 @@
                 .then(response => response.json())
                 .then(result => {
                     if (result.success) {
+                        if (pendingUnlockUrl && pendingUnlockUrl.includes('module1')) localStorage.setItem('tw_mod1_unlocked', 'true');
                         if (pendingUnlockUrl && pendingUnlockUrl.includes('module2')) localStorage.setItem('tw_mod2_unlocked', 'true');
                         if (pendingUnlockUrl && pendingUnlockUrl.includes('module3')) localStorage.setItem('tw_mod3_unlocked', 'true');
                         if (pendingUnlockUrl && (pendingUnlockUrl.includes('Stage') || pendingUnlockUrl.includes('POS'))) localStorage.setItem('tw_mod4_unlocked', 'true');
@@ -2157,13 +2158,18 @@
         function refreshCardLocks() {
             const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
 
-            // Module 1 Status
+            // Module 1 Status (Requires Trainer PIN to start Day 1)
             const mod1Done = localStorage.getItem('mod1_complete') === 'true';
+            const mod1Unlocked = isAdmin || localStorage.getItem('tw_mod1_unlocked') === 'true';
             const card1 = document.getElementById('card-mod1');
             if (card1) {
                 const btn1 = card1.querySelector('.btn-small');
                 if (btn1) {
-                    btn1.outerHTML = `<a href="Modules/module1.html" class="btn-small" style="background: var(--brand-blue); color: white; border: none; text-decoration: none; display: inline-block;">${mod1Done ? 'Review Module 1' : 'Start Module 1'}</a>`;
+                    if (mod1Done || mod1Unlocked) {
+                        btn1.outerHTML = `<a href="Modules/module1.html" class="btn-small" style="background: var(--brand-blue); color: white; border: none; text-decoration: none; display: inline-block;">${mod1Done ? 'Review Module 1' : 'Start Module 1'}</a>`;
+                    } else {
+                        btn1.outerHTML = `<button class="btn-small" onclick="requireTrainerPin('Modules/module1.html', 'Day 1 Mod 1 (Welcome & Orientation)', '', '')" style="background: var(--brand-blue); color: white; border: none; cursor: pointer;">Start Module 1</button>`;
+                    }
                 }
             }
 
