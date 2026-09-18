@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Training Director Notes — Dallas PTD Wins (P9W4)</title>
+<style>
+  body {
+    background-color: #f8fafc;
+    color: #1e293b;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 30px;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0056b3;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 10px rgba(0,86,179,0.2);
+  }
+  .toolbar h2 {
+    margin: 0;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    letter-spacing: 0.5px;
+  }
+  .copy-btn {
+    background: #ffffff;
+    color: #0056b3;
+    border: none;
+    padding: 8px 18px;
+    font-weight: bold;
+    font-size: 13px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    transition: all 0.2s ease;
+  }
+  .copy-btn:hover {
+    background: #e6f2ff;
+    transform: translateY(-1px);
+  }
+  .notes-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 24px 28px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  h2.main-header {
+    color: #0056b3;
+    margin: 0 0 4px 0;
+    font-size: 22px;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0 0 18px 0;
+    font-style: italic;
+  }
+  .section-tag {
+    background-color: #f1f5f9;
+    border-left: 4px solid #0056b3;
+    padding: 6px 12px;
+    margin: 18px 0 10px 0;
+    font-weight: bold;
+    font-size: 14px;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  ul {
+    margin: 6px 0 14px 0;
+    padding-left: 22px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  .badge {
+    background-color: #dbeafe;
+    color: #1e40af;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 4px;
+  }
+  .badge-gold {
+    background-color: #fef3c7;
+    color: #92400e;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 4px;
+  }
+  .toast {
+    display: none;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #10b981;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 9999;
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <h2>📋 Training Director Notes</h2>
+  <button class="copy-btn" id="copyBtn" onclick="copyNotes()">📋 Copy Formatted Notes</button>
+</div>
+
+<div class="notes-card" id="notesContent">
+  <h2 class="main-header">Dallas Operational Wins &amp; Highlights (PTD P9W4)</h2>
+  <p class="subtitle">Compiled from PTD Ranking Report &bull; September 17, 2026</p>
+
+  <!-- OVERALL LEADERBOARD -->
+  <div class="section-tag">🏆 Company Standings &amp; Overall Rank</div>
+  <ul>
+    <li><strong>Store 6974 (DO: Kevin):</strong> <span class="badge-gold">#1 OVERALL IN TEAM WOW</span> &mdash; Top-ranked store in the entire company (Score: 234.15).</li>
+    <li><strong>4 Dallas Stores in Top 10 Company Overall:</strong>
+      <ul>
+        <li><strong>Store 6974</strong> &mdash; #1 in Company (DO: Kevin)</li>
+        <li><strong>Store 8071</strong> &mdash; #5 in Company (DO: Kevin)</li>
+        <li><strong>Store 6977</strong> &mdash; #6 in Company (DO: Kevin)</li>
+        <li><strong>Store 6917</strong> &mdash; #7 in Company (DO: Vicente)</li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- SPEED & SERVICE -->
+  <div class="section-tag">⚡ Speed &amp; Load Times (Dallas Dominates)</div>
+  <ul>
+    <li><strong>Load &lt; 1 Minute:</strong> Dallas swept the <strong>top 4 spots in the entire company</strong>!
+      <ul>
+        <li><strong>Store 6928:</strong> <span class="badge-gold">#1 in Company</span> &mdash; 49.6% of orders loaded under 1 minute.</li>
+        <li><strong>Store 6816:</strong> #2 in Company &mdash; 43.5%</li>
+        <li><strong>Store 6579:</strong> #3 in Company &mdash; 41.2%</li>
+        <li><strong>Store 6910:</strong> #4 in Company &mdash; 40.2%</li>
+      </ul>
+    </li>
+    <li><strong>Carryout Load Time:</strong>
+      <ul>
+        <li><strong>Store 6910:</strong> <span class="badge-gold">#1 in Company</span> &mdash; 2.0 min average load time.</li>
+        <li><strong>Store 6816 &amp; Store 6928:</strong> Tied for #2 in Company &mdash; 2.2 min.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- SAFETY & ACCURACY -->
+  <div class="section-tag">🛡️ Delivery Safety &amp; Accuracy</div>
+  <ul>
+    <li><strong>0.00% Triples:</strong> 6 Dallas stores ran with <strong>zero triple deliveries</strong> for the period (Rank 1 in Company):
+      <br><em>Stores 6977, 6816, 8791, 6910, 6579, and 6836</em>.
+    </li>
+    <li><strong>Food Variance:</strong>
+      <ul>
+        <li><strong>Store 6910:</strong> <span class="badge-gold">#1 in Company</span> &mdash; 0.00 Food Variance!</li>
+        <li><strong>Store 8023:</strong> #6 in Company &mdash; 0.001</li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- GROWTH & SATISFACTION -->
+  <div class="section-tag">📈 Sales Growth &amp; Customer Service</div>
+  <ul>
+    <li><strong>AOT (Answer on Time):</strong> Dallas stores took 5 of the top 9 spots across Team Wow:
+      <ul>
+        <li><strong>Store 6974:</strong> #2 in Company &mdash; 98.5% AOT</li>
+        <li><strong>Store 6984:</strong> #4 in Company &mdash; 96.5% AOT</li>
+        <li><strong>Store 8149:</strong> #5 in Company &mdash; 96.1% AOT</li>
+        <li><strong>Store 6977:</strong> #8 in Company &mdash; 95.1% AOT</li>
+        <li><strong>Store 8071:</strong> #9 in Company &mdash; 94.6% AOT</li>
+      </ul>
+    </li>
+    <li><strong>Customer Satisfaction (VOC):</strong>
+      <ul>
+        <li><strong>Store 6579:</strong> #2 in Company &mdash; 83.3% VOC</li>
+        <li><strong>Store 6916:</strong> #3 in Company &mdash; 80.0% VOC</li>
+      </ul>
+    </li>
+    <li><strong>Sales Growth (PCYA):</strong>
+      <ul>
+        <li><strong>Store 6386:</strong> #3 in Company &mdash; +10.70% PCYA</li>
+        <li><strong>Store 8791:</strong> #4 in Company &mdash; +10.10% PCYA</li>
+        <li><strong>Store 6923:</strong> #8 in Company &mdash; +8.10% PCYA</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="toast" id="toast">✅ Formatted Notes Copied to Clipboard!</div>
+
+<script>
+async function copyNotes() {
+  const el = document.getElementById('notesContent');
+  const btn = document.getElementById('copyBtn');
+  const toast = document.getElementById('toast');
+  
+  try {
+    const htmlBlob = new Blob([el.outerHTML], { type: 'text/html' });
+    const textBlob = new Blob([el.innerText], { type: 'text/plain' });
+    const item = new ClipboardItem({
+      'text/html': htmlBlob,
+      'text/plain': textBlob
+    });
+    
+    await navigator.clipboard.write([item]);
+    btn.innerText = '✅ Copied!';
+    toast.style.display = 'block';
+    setTimeout(() => {
+      btn.innerText = '📋 Copy Formatted Notes';
+      toast.style.display = 'none';
+    }, 2500);
+  } catch (err) {
+    // Fallback
+    const range = document.createRange();
+    range.selectNode(el);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+    btn.innerText = '✅ Copied!';
+    toast.style.display = 'block';
+    setTimeout(() => {
+      btn.innerText = '📋 Copy Formatted Notes';
+      toast.style.display = 'none';
+    }, 2500);
+  }
+}
+</script>
+
+</body>
+</html>
