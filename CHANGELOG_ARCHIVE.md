@@ -64,8 +64,25 @@ This archive preserves past editions, foundational releases, and architectural u
 * **Beta Tester Welcome Popup Retired:** Streamlined the login experience on the [Training Dashboard](https://tw-dallas.github.io/TW-Career-Path/LMS_Files/lms_dashboard.html) by removing the legacy beta tester welcome modal.
 * **Learning Hub Lobby Card Photography & Dynamic Layout:** Replaced placeholder icons with high-res store photography (`LMS_Cover.jpg` and `Library_cover.png`) optimized for fast store Wi-Fi, added dynamic zero-scroll responsive scaling, and introduced a `"← Back to Lobby"` navigation link on the Training Dashboard navbar.
 
+---
+
+## 📮 Edition 5 Archive (September 17, 2026)
+
+### 🍕 Fresh Out of the Oven (New Features & Content)
+* **Unified Staffing Database Migration (Cloud Foundation):** We have officially begun migrating our entire staffing ecosystem—New-Hire Onboarding, NTO Sign-Ups, Wow Way Training progress, and MIT Rosters—into a single high-performance cloud database. This lays the structural foundation for our upcoming centralized **Trainer Portal**, designed to put all team member training milestones into one seamless space that is easy for GMs, trainers, and leadership to review in real time.
+* **Driver Rewards Portal Refresh & DO Fulfillment Workspace:**
+  * **Driver Mobile App (PWA):** Drivers can now save the [Driver Rewards Portal](https://driver-rewards.pages.dev) directly to their phone's home screen as an app on iPhone and Android.
+  * **Clear Period Goals & History:** Drivers can see their exact delivery counts (towards 100 trips) and safety score (towards 96.0) for the current period, plus an expandable Season History drawer showing all past qualifying periods and earned prizes.
+  * **DO & Manager Prize Workspace:** Managers and DOs have a dedicated online workspace toggle (`[ 🏆 Standings | 🎁 Redemptions ]`) to view driver points and track prize orders in real time. Multiple prize requests from the same driver are neatly grouped into a single card, and DOs can mark prizes as purchased with a single click (`⏳ Pending` / `✓ Purchased`).
+  * **Resource Library Guides:** Added the official updated 2026 Safe Driver Prize Catalog PDF and printer-friendly Manager & Team Member FAQ Guides directly into the [Resource Library](https://tw-dallas.github.io/TW-Career-Path/learning_hub.html).
+
+### 🛠️ Solved Issues & Technical Polish
+* **Module 2 Progress Protection (Instant Cloud Sync):** Training credit for Module 2 is now locked in the exact millisecond a trainee answers the final quiz question correctly—not just when they click the Finish button. If a store laptop lid is closed or a browser session times out, trainees will never lose their progress.
+* **Active Driver Roster Alignment:** Driver standings and search results now automatically cross-reference active store rosters. Over 500 former/inactive staff have been filtered from live leaderboards to keep store views clean, while their historical points remain safely stored for potential re-hires.
+* **Specialty Sauce Scenario Clarity (Module 3 Menu Challenge):** Refined the Spinach & Feta question in the Perfect Pairs challenge to eliminate confusion (*"Several specialty pizzas have no red sauce. Which one features Creamy Alfredo?"*), keeping quiz questions clean, direct, and focused on menu literacy.
+
 ### 💡 Store Pro-Tip of the Week
-* **Report Issues Right on the Page (Instant Tagging & Direct Support):** Click the **`🛠️ Report Issue`** button in the top navigation header of that exact screen. It auto-captures module, step, and screen details with zero guesswork and keeps you and your store GM in the loop.
+* **Print the Trainer and Trainee Handbooks!** Make sure your store has printed copies of both the Trainer Handbook and Trainee Handbook on hand for every new hire! Having physical guides ready at the store allows trainers to easily guide the onboarding process step-by-step and gives new hires a reliable reference on shift. Both handbooks are available anytime in the [Resource Library](https://tw-dallas.github.io/TW-Career-Path/learning_hub.html).
 
 ---
 
