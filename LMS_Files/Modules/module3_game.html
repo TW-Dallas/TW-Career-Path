@@ -80,14 +80,46 @@
             max-width: 350px; 
             box-sizing: border-box; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: transform 0.1s;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        }
+        .draggable-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
         }
         .draggable-pill:active {
             cursor: grabbing;
-            transform: scale(0.95);
+            transform: scale(0.96);
         }
         .draggable-pill.dragging {
-            opacity: 0.5;
+            opacity: 0.45;
+            transform: scale(0.95);
+        }
+        .draggable-pill.selected {
+            background: var(--brand-blue);
+            outline: 3px solid #ffc836;
+            outline-offset: 2px;
+            box-shadow: 0 0 14px rgba(0, 144, 226, 0.6), 0 6px 14px rgba(0,0,0,0.25);
+            transform: translateY(-3px) scale(1.03);
+            animation: pulsePill 1.2s infinite alternate ease-in-out;
+        }
+        @keyframes pulsePill {
+            from { box-shadow: 0 0 8px rgba(0, 144, 226, 0.4); }
+            to { box-shadow: 0 0 18px rgba(255, 200, 54, 0.85); }
+        }
+        .column-wrapper {
+            cursor: pointer;
+            border-radius: 14px;
+            padding: 8px 6px;
+            transition: background-color 0.2s ease, transform 0.15s ease;
+        }
+        .column-wrapper:hover {
+            background-color: rgba(0, 100, 145, 0.04);
+        }
+        .column-wrapper.drag-over .drop-zone,
+        .drop-zone.drag-over {
+            border-color: var(--brand-blue);
+            background-color: var(--crust-light);
+            transform: scale(1.02);
         }
         #success-message {
             display: none;
@@ -147,9 +179,10 @@
         </div>
     </header>
 
-    <div style="text-align: center; margin-bottom: 40px; margin-top: 40px;">
-        <h1 id="round-title" style="color: var(--dark-blue); font-size: 2.5rem; margin-bottom: 10px; font-family: 'PizzaPress'; text-transform: uppercase;">Module 3: Menu Matching</h1>
-        <p style="font-size: 1.2rem; color: var(--crust-deep); font-family: 'OneDotCd-Bold';">Drag the correct ingredients to their matching item.</p>
+    <div style="text-align: center; margin-bottom: 25px; margin-top: 25px;">
+        <h1 id="round-title" style="color: var(--dark-blue); font-size: 2.5rem; margin-bottom: 8px; font-family: 'PizzaPress'; text-transform: uppercase;">Module 3: Menu Matching</h1>
+        <p style="font-size: 1.15rem; color: var(--crust-deep); font-family: 'OneDotCd-Bold'; margin: 0 0 6px 0;">Drag ingredients to the pizza, OR click an ingredient and click the pizza to match!</p>
+        <p style="font-size: 0.95rem; color: #666; font-family: 'OneDotCd'; margin: 0;">💡 Tip: You can complete any 3 of the 4 games in the Game Lobby to unlock Module 4.</p>
     </div>
 
     <div class="game-container">
@@ -250,8 +283,13 @@
             return array;
         }
 
+        let activeDraggingElement = null;
+        let selectedPill = null;
+
         function loadRound(roundIndex) {
             matchedCount = 0;
+            selectedPill = null;
+            activeDraggingElement = null;
             const roundData = gameData[roundIndex];
             document.getElementById('round-title').innerText = roundData.title;
             const dropZonesContainer = document.getElementById('drop-zones-container');
@@ -262,7 +300,12 @@
             roundData.items.forEach(item => {
                 const col = document.createElement('div');
                 col.className = 'column-wrapper';
-                col.innerHTML = `<img src="${item.img}" style="width: 120px; height: 120px; border-radius: 50%;"><h3 style="color: var(--dark-blue);">${item.name}</h3><div class="drop-zone" data-pizza="${item.id}"></div>`;
+                col.setAttribute('data-pizza', item.id);
+                col.innerHTML = `
+                    <img src="${item.img}" style="width: 120px; height: 120px; border-radius: 50%; pointer-events: none; user-select: none;">
+                    <h3 style="color: var(--dark-blue); pointer-events: none; margin: 8px 0 10px 0; font-family: 'PizzaPress', sans-serif;">${item.name}</h3>
+                    <div class="drop-zone" data-pizza="${item.id}"></div>
+                `;
                 dropZonesContainer.appendChild(col);
             });
 
@@ -279,59 +322,120 @@
             attachEventListeners();
         }
 
-        // Prevents the forbidden cursor from appearing while dragging over the background gaps
+        // Prevents default dragover to allow smooth drops everywhere
         document.addEventListener("dragover", (e) => {
             e.preventDefault();
         });
 
+        // Clicking outside any card or pill cancels selection
+        document.addEventListener("click", (e) => {
+            if (!e.target.closest('.draggable-pill') && !e.target.closest('.column-wrapper')) {
+                if (selectedPill) {
+                    selectedPill.classList.remove('selected');
+                    selectedPill = null;
+                }
+            }
+        });
+
+        function handleMatch(targetElement, pillElement) {
+            if (!targetElement || !pillElement) return;
+
+            const col = targetElement.closest('.column-wrapper') || targetElement;
+            const zone = col.querySelector('.drop-zone') || col;
+            if (!zone || zone.classList.contains('correct')) return;
+
+            const targetPizzaId = zone.getAttribute('data-pizza') || col.getAttribute('data-pizza');
+            const matchPizzaId = pillElement.getAttribute('data-match');
+
+            if (targetPizzaId === matchPizzaId) {
+                // Successful Match
+                zone.appendChild(pillElement);
+                zone.classList.add('correct');
+                pillElement.setAttribute('draggable', 'false');
+                pillElement.classList.remove('dragging', 'selected');
+                pillElement.style.cursor = 'default';
+                pillElement.style.pointerEvents = 'none';
+                if (selectedPill === pillElement) selectedPill = null;
+                matchedCount++;
+
+                const header = col.querySelector('h3');
+                const itemName = header ? header.innerText : "Unknown Item";
+                userAnswers[itemName] = pillElement.innerText;
+
+                checkWinCondition();
+            } else {
+                // Incorrect Flash on both zone and column
+                zone.classList.add('incorrect-flash');
+                col.classList.add('incorrect-flash');
+                setTimeout(() => {
+                    zone.classList.remove('incorrect-flash');
+                    col.classList.remove('incorrect-flash');
+                }, 500);
+            }
+        }
+
         function attachEventListeners() {
             const draggables = document.querySelectorAll('.draggable-pill');
-            const dropZones = document.querySelectorAll('.drop-zone');
-            
+            const dropTargets = document.querySelectorAll('.column-wrapper, .drop-zone');
+
             draggables.forEach(draggable => {
+                // Click / Tap to select
+                draggable.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (draggable.getAttribute('draggable') === 'false') return;
+
+                    if (selectedPill === draggable) {
+                        draggable.classList.remove('selected');
+                        selectedPill = null;
+                    } else {
+                        if (selectedPill) selectedPill.classList.remove('selected');
+                        selectedPill = draggable;
+                        draggable.classList.add('selected');
+                    }
+                });
+
+                // HTML5 Drag
                 draggable.addEventListener('dragstart', (e) => {
+                    activeDraggingElement = draggable;
                     draggable.classList.add('dragging');
                     e.dataTransfer.setData('text/plain', draggable.id);
-                    
-                    // ADD THIS LINE: Tells the browser this is a move operation
                     e.dataTransfer.effectAllowed = "move";
                 });
-                draggable.addEventListener('dragend', () => draggable.classList.remove('dragging'));
+
+                draggable.addEventListener('dragend', () => {
+                    draggable.classList.remove('dragging');
+                    setTimeout(() => { activeDraggingElement = null; }, 250);
+                });
             });
 
-            dropZones.forEach(zone => {
-                zone.addEventListener('dragover', e => { 
-                    e.preventDefault(); 
-                    zone.classList.add('drag-over'); 
-                    
-                    // ADD THIS LINE: Tells the cursor to stay as a grab/move pointer
+            dropTargets.forEach(target => {
+                // Click to place selected pill
+                target.addEventListener('click', (e) => {
+                    if (selectedPill) {
+                        e.stopPropagation();
+                        handleMatch(target, selectedPill);
+                    }
+                });
+
+                // Drag & Drop
+                target.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    target.classList.add('drag-over');
                     e.dataTransfer.dropEffect = "move";
                 });
-                zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-                zone.addEventListener('drop', e => {
+
+                target.addEventListener('dragleave', () => {
+                    target.classList.remove('drag-over');
+                });
+
+                target.addEventListener('drop', (e) => {
                     e.preventDefault();
-                    zone.classList.remove('drag-over');
-                    const draggingElement = document.querySelector('.dragging');
-                    if (!draggingElement) return;
-                    
-                    if (zone.getAttribute('data-pizza') === draggingElement.getAttribute('data-match')) {
-                        zone.appendChild(draggingElement);
-                        zone.classList.add('correct');
-                        draggingElement.setAttribute('draggable', 'false');
-                        matchedCount++;
-                        
-                        // --- ANSWER CAPTURING LOGIC ---
-                        const itemName = zone.previousElementSibling ? zone.previousElementSibling.innerText : "Unknown Item";
-                        const itemDesc = draggingElement.innerText;
-                        userAnswers[itemName] = itemDesc;
-                        
-                        checkWinCondition();
-                    } else {
-                        // FLASH RED SEQUENCE: Triggers on incorrect drops
-                        zone.classList.add('incorrect-flash');
-                        setTimeout(() => {
-                            zone.classList.remove('incorrect-flash');
-                        }, 500); // Removes the flash state after 0.5 seconds
+                    target.classList.remove('drag-over');
+                    const droppedEl = activeDraggingElement || 
+                                     document.querySelector('.dragging') || 
+                                     (e.dataTransfer && e.dataTransfer.getData('text/plain') ? document.getElementById(e.dataTransfer.getData('text/plain')) : null);
+                    if (droppedEl) {
+                        handleMatch(target, droppedEl);
                     }
                 });
             });
