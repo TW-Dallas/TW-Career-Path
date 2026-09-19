@@ -1661,6 +1661,48 @@
         }
     }
 
+    #arrow-phone-park {
+        top: 29.5%;
+        left: 83%;
+    }
+
+    #arrow-phone-mute {
+        top: 70.5%;
+        left: 82%;
+    }
+
+    /* Soft illumination for hardware buttons (clean backlight, not an ugly box) */
+    #hb-phone-park,
+    #hb-phone-mute {
+        cursor: pointer;
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    #hb-phone-park:not(.viewed),
+    #hb-phone-mute:not(.viewed) {
+        box-shadow: 0 0 14px rgba(0, 144, 226, 0.6), inset 0 0 8px rgba(0, 144, 226, 0.35);
+        border: 1.5px solid rgba(0, 144, 226, 0.7);
+        animation: phoneButtonPulse 2s infinite ease-in-out;
+    }
+
+    #hb-phone-park.viewed,
+    #hb-phone-mute.viewed {
+        box-shadow: none !important;
+        border: none !important;
+        animation: none !important;
+    }
+
+    @keyframes phoneButtonPulse {
+        0%, 100% {
+            box-shadow: 0 0 8px rgba(0, 144, 226, 0.4), inset 0 0 4px rgba(0, 144, 226, 0.2);
+            border-color: rgba(0, 144, 226, 0.5);
+        }
+        50% {
+            box-shadow: 0 0 16px rgba(0, 144, 226, 0.8), inset 0 0 10px rgba(0, 144, 226, 0.5);
+            border-color: rgba(0, 144, 226, 0.9);
+        }
+    }
+
     /* Tactical Assistance Animations & Highlighting */
     @keyframes regionRadarPulse {
         0% {

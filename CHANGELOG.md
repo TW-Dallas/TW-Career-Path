@@ -12,6 +12,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 
 ### 🛠️ Fixed & Polished (Solved Issues)
 * **Pizza Matcher (Module 3 Game 1) Laptop Optimization:** Added dual-mode controls to Game 1 so trainees on store laptops can now either drag recipe ingredients OR simply click an ingredient to select it, then click the matching pizza! Added an organic smooth-snap animation on ingredient placement, tightened layout dimensions to completely eliminate vertical micro-scroll on standard store laptops (1366x768), and added a reminder that completing any 3 of the 4 games unlocks Module 4.
+* **Phone Hardware Practice (Full Practice Orders):** Fine-tuned the Park and Mute button target areas on the store phone hardware screen. Restored dedicated bouncing guide badges ("👈 PARK" and "👈 MUTE") and introduced gentle hardware key backlights so team members clearly learn where each feature lives without guesswork.
 * **Driver Rewards Search Placeholder:** Updated the name search placeholder from an active team member's name to the classic Domino's dummy name *"Pete Zah"*, preventing unintended employee record lookups during demonstration.
 
 ### ⚠️ On Our Radar (Known Issues & Interim Fixes)
