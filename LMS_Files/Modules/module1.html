@@ -127,8 +127,10 @@
         let quizPassed = false;
         let player;
 
-        // --- TRAINER AUTHORIZATION GATE CHECK ---
-        const isAdmin = localStorage.getItem('tw_admin_mode') === 'true';
+        // --- DEV / ADMIN & TRAINER GATE CHECK ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true' || urlParams.get('unlock') === 'all';
+        const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
         const isMod1Unlocked = localStorage.getItem('tw_mod1_unlocked') === 'true';
         const isMod1Done = localStorage.getItem('mod1_complete') === 'true';
 
@@ -298,9 +300,6 @@
             }
         }
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const isDevAdmin = urlParams.get('admin') === 'true' || urlParams.get('dev') === 'true' || urlParams.get('unlock') === 'all';
-        const isAdmin = isDevAdmin || localStorage.getItem('tw_admin_mode') === 'true';
 
         window.unlockAll = function() {
             videoWatched = true;
