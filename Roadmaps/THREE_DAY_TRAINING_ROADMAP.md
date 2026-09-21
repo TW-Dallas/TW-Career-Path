@@ -28,8 +28,9 @@ Add to Day 1 (POS Stage 4) Slide about headsets.
                   │ ──────────────────────────── │                      │ ──────────────────────────── │
                   │ Track-Specific Block:        │                      │ Track-Specific Block:        │
                   │   • Mod 3: Driver Safety &   │                      │   • Mod 3: RTU / Prep & Bites│
-                  │     Tech (Drivosity/App/Drop)│                      │   • Mod 4: Makeline & Scale  │
-                  │   • Exp 2: Ride-Alongs (3x)  │                      │   • Exp 3: Makeline Drill    │
+                  │     Tech (Drivosity/App/Drop)│                      │   • Exp 3: RTU / Prep Drill  │
+                  │   • Exp 3: Vehicle & Bank    │                      │   • Mod 4: Makeline & Scale  │
+                  │   • Exp 4: Ride-Alongs (3x)  │                      │   • Exp 4: Makeline Drill    │
                   │   • Mod 4: Driver Sign-Off   │                      │   • Mod 5: CSR Sign-Off      │
                   ├──────────────────────────────┤                      ├──────────────────────────────┤
                   │ DAY 3: Road Mastery & Inside │                      │ DAY 3: Inside Rush & Quality │
@@ -99,14 +100,15 @@ Add to Day 1 (POS Stage 4) Slide about headsets.
   * **Clip 2 (`Customer_Concern_Credit_2.mp3`): "Call the Shot"**
     * *Scenario:* Customer calls regarding a wrong delivery order.
     * *Mechanic:* Audio pauses *before* team member responds; student chooses the best response among multiple choices. When submitted, the audio resumes with Bobby saying their exact choice!
-  * **Decision Tree Guide:** When to offer an immediate remake vs. store credit vs. refund policy.
+#### 🔹 Experience 1: Customer Service Roleplay (In-Person with Trainer)
+* Point to Day 2 Trainer Guide for interactive customer recovery roleplay sessions.
 
 #### 🔹 Module 2: Cleaning, Chemical Safety & Sanitation (Online)
 * **Purpose:** Food safety standards, pristine store environment, cross-contamination prevention.
 * **Core Topics:** Handwashing 20-second rule, glove usage triggers, 3-compartment sink setup (Wash / Rinse / Sanitize) & PPM testing, mop sink, chore board routine.
 * **Interactive Mini-Game:** Drag-and-drop sink setup order + chemical bottle identification.
 
-#### 🔹 Experience 1: Hands-on Cleaning Tour & Sinks (In-Person with Trainer)
+#### 🔹 Experience 2: Hands-on Cleaning Tour & Sinks (In-Person with Trainer)
 * Sani-bucket preparation with test strips, 3-compartment sink setup, sweep/mop demo, chemical safety sheet walk-through, chore chart introduction.
 
 ---
@@ -118,7 +120,8 @@ Add to Day 1 (POS Stage 4) Slide about headsets.
 | Stage | Activity | Type | Description & Learning Objectives |
 | :--- | :--- | :--- | :--- |
 | **Mod 3** | **Driver Safety & Delivery Technology** | Online | Safe driving standards, Drivosity scoring criteria (acceleration, braking, cornering, speeding) & rewards, Delivery Experience App setup, Cash Drop procedures, Car-Side delivery standards. |
-| **Exp 2** | **Car-Side & Ride-Along Experience** | In-Person | Set up driver app, bank ($20 change), illuminated car top sign. Check bags for dip cups/drinks/sides. Customer interaction at the door. Excess cash box drops. Complete 3 ride-alongs with trainer, then swap to driver seat. |
+| **Exp 3** | **Vehicle, Bank & Road Prep** | In-Person | Set up driver app, bank ($20 change), illuminated car top sign. Check bags for dip cups/drinks/sides. Customer interaction at the door. Excess cash box drops. |
+| **Exp 4** | **Driver Ride-Along Experience** | In-Person | Complete 3 ride-alongs with trainer, coaching smooth Drivosity habits, routing, and doorstep service. |
 | **Mod 4** | **Driver Day 2 Wrap-Up & Sign-Off** | Online | Review: *"You are the face of Team Wow outside the store. Hot, Fast, Accurate, and Friendly."* Trainer enters secure PIN unlocking Day 3 Driver Track. |
 
 ---
@@ -129,10 +132,10 @@ Add to Day 1 (POS Stage 4) Slide about headsets.
 
 | Stage | Activity | Type | Description & Learning Objectives |
 | :--- | :--- | :--- | :--- |
-| **Mod 3** | **RTU / RTE Procedures & Morning Prep** | Online | Pizza sauce bucket dilution and mixing procedures, Ready-to-Eat (RTE) handling, Pan Pizza & Bread Bites prep (pan oiling, dough stretching, cutting), Day-Dot labeling & shelf-life management. |
-| **Exp 2** | **Hands-on Prep Practice** | In-Person | Location of prep supplies, mixing 1–2 test buckets of sauce with trainer, prepping test pans and orders of parmesan bread bites. |
+| **Mod 3** | **RTU / RTE Procedures & Morning Prep** | Online | Pizza sauce RTU bucket procedures (Ready-To-Use; cut pouch, pour into bucket—no dilution or mixing required), Ready-to-Eat (RTE) glove handling, Pan Pizza & Bread Bites prep (oil pans with brush, dough placement & stretching), Label King Turbo date printing & shelf-life management. |
+| **Exp 3** | **RTU/RTE & PRP Hands-On Practice** | In-Person | Location of prep supplies, demonstrating proper RTU sauce pouch cut and bucket prep (have new hire prep 1–2 test buckets), prepping test pans (brush oiling) and sample orders of parmesan bread bites with Label King Turbo date labels. |
 | **Mod 4** | **Product Training & The Makeline** | Online | Left-to-right makeline layout, topping codes (e.g., P, S, H, K, M, R, C), portion cups, portion scale calibration, anatomy of a 5-Star pizza. Interactive "Name that Topping & Portions" drill. |
-| **Exp 3** | **Makeline Hands-on Walkthrough** | In-Person | Left-to-right ingredient tour, scale and portion cup training, "Name that Topping" speed drill, paired topping practice with skilled trainer. |
+| **Exp 4** | **Makeline Walkthrough & Practice** | In-Person | Left-to-right ingredient tour, scale and portion cup training, "Name that Topping" speed drill, paired topping practice with skilled trainer. |
 | **Mod 5** | **CSR Day 2 Wrap-Up & Sign-Off** | Online | Review: *"You are responsible for what the customer receives. Know it, build it, sell it."* Trainer enters secure PIN unlocking Day 3 CSR Track. |
 
 ---
@@ -147,8 +150,8 @@ Add to Day 1 (POS Stage 4) Slide about headsets.
 | Stage | Activity | Type | Description |
 | :--- | :--- | :--- | :--- |
 | **Mod 0** | **Day 2 Retention Quiz** | Online | Driver safety, Drivosity rules, cash handling, and customer resolution. |
-| **Mod 1** | **Driver RTU / Prep Basics** | Online | Sauce preparation and bread bite prep so drivers can assist during morning/pre-rush. |
-| **Exp 1** | **Hands-on Prep** | In-Person | Prepare 1-2 sauce buckets and bread bites with trainer. |
+| **Mod 1** | **Driver RTU / Prep Basics** | Online | RTU sauce bucket preparation and bread bite prep so drivers can assist during morning/pre-rush. |
+| **Exp 1** | **Hands-on Prep** | In-Person | Prepare 1-2 RTU sauce buckets and sample bread bites with trainer. |
 | **Mod 2** | **Operations Audit (OA) Overview & HTA** | Online | What is OA and why scoring matters, visual guide to passing vs failing product, HTA (Hustle to Arm / Smart Hustle), Bag & Tag, DSS, pre-bagging sides/drinks. |
 | **Exp 2** | **Follow the Order & Road Execution** | In-Person | Follow an order from phone ring through makeline, oven, bagging, and delivery. Execute solo/observed delivery runs. |
 | **Mod 3** | **Final Driver Sign-Off & Graduation** | Online | Comprehensive evaluation checklist. Final Trainer PIN unlocks regular scheduling graduation status! |
