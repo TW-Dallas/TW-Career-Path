@@ -8,9 +8,13 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 *Scheduled: Thursday, September 24, 2026 @ 9:00 AM CST/CDT (Compiled @ 5:00 AM CST/CDT)*
 
 ### 🍕 Fresh Out of the Oven (New Features & Content)
-* *(Awaiting upcoming feature notes)*
+* **Driver Rewards Portal Multi-Market Expansion (Denver & LA Live!):** Expanded the live [Driver Rewards Portal](https://driver-rewards.pages.dev) to fully support **Denver** (788 active drivers) and **Los Angeles** (214 active drivers) alongside Dallas and El Paso. Over 1,900 active delivery drivers across all four markets can now look up their real-time safety scores, period delivery trip counts, and redeem accumulated points.
+* **Driver Rewards 2026 Prize Catalog Quick Access:** Streamlined header navigation with 1-tap access to the complete 2026 Prize Catalog, detailing reward tiers from swag and car wash cards up to $150 Tire Gift Cards.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
+* **Driver Rewards Ledger Period Deduplication & Balance Audit:** Discovered and resolved a telematics casing mismatch that had introduced duplicate period records across 2026 data. Safely deduplicated 184 period rows across 2026 (P1–P9) in Cloudflare D1 and verified past redemptions, restoring 100% mathematical balance integrity.
+* **Automated Weekly Active Roster Ingestion:** Updated the weekly roster sync pipeline to ingest comprehensive store listings directly from corporate reports, automatically filtering out inactive drivers and accurately mapping multi-store delivery runs to primary stores.
+* **Driver Rewards Portal Support Routing:** Streamlined the in-portal "Report Issue" button to route driver inquiries and balance audits directly to **Mike Jacobs (Team Wow Site Support)** for fast turnaround.
 * **Pizza Matcher (Module 3 Game 1) Laptop Optimization:** Added dual-mode controls to Game 1 so trainees on store laptops can now either drag recipe ingredients OR simply click an ingredient to select it, then click the matching pizza! Added an organic smooth-snap animation on ingredient placement, tightened layout dimensions to completely eliminate vertical micro-scroll on standard store laptops (1366x768), and added a reminder that completing any 3 of the 4 games unlocks Module 4.
 * **Phone Hardware Practice (Full Practice Orders):** Fine-tuned the Park and Mute button target areas on the store phone hardware screen. Restored dedicated bouncing guide badges ("👈 PARK" and "👈 MUTE") and introduced gentle hardware key backlights so team members clearly learn where each feature lives without guesswork.
 * **Driver Rewards Search Placeholder:** Updated the name search placeholder from an active team member's name to the classic Domino's dummy name *"Pete Zah"*, preventing unintended employee record lookups during demonstration.
