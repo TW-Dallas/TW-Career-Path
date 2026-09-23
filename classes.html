@@ -919,6 +919,11 @@
                         <input type="tel" id="formPhone" required placeholder="(555) 555-5555">
                     </div>
 
+                    <div class="form-group">
+                        <label>Email Address (for Confirmation & Reminders) *</label>
+                        <input type="email" id="formEmail" required placeholder="name@dominospizza.com">
+                    </div>
+
                     <button type="submit" class="register-btn" id="btnSubmitSignup" style="margin-top: 10px;">
                         <svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
                         Confirm Registration
@@ -939,9 +944,12 @@
                 <h4 style="margin: 0 0 10px 0; font-family: 'Subhead1', sans-serif; font-size: 20px; color: var(--dark-blue);">
                     Congratulations, <span id="successName">Team Member</span>!
                 </h4>
-                <p style="font-size: 16px; margin: 0 0 16px 0; color: var(--crust-burnt);">
+                <p style="font-size: 16px; margin: 0 0 12px 0; color: var(--crust-burnt);">
                     Your spot is confirmed for <strong id="successCourse">Course</strong> on <strong id="successDate">Date</strong>.
                 </p>
+                <div style="background-color: #e8f5e9; border: 1.5px solid #4caf50; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 14px; color: #2e7d32;">
+                    📧 A confirmation email has been sent to <strong id="successEmail">your email</strong>.
+                </div>
 
                 <div style="background-color: #faf2e9; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 16px; text-align: left; margin-bottom: 20px; font-size: 14.5px;">
                     <strong style="color: var(--dark-blue); display: block; margin-bottom: 6px;">Next Steps:</strong>
@@ -1337,6 +1345,7 @@
             const store = document.getElementById('formStore').value.trim();
             const position = document.getElementById('formPosition').value;
             const phone = document.getElementById('formPhone').value.trim();
+            const email = document.getElementById('formEmail').value.trim();
 
             let success = false;
 
@@ -1351,7 +1360,8 @@
                         candidateName: name,
                         storeNum: store,
                         position: position,
-                        phone: phone
+                        phone: phone,
+                        email: email
                     })
                 });
                 const data = await res.json();
@@ -1369,6 +1379,7 @@
                 formData.append('store', store);
                 formData.append('position', position);
                 formData.append('phone', phone);
+                formData.append('email', email);
 
                 await fetch(GAS_API_URL, {
                     method: 'POST',
@@ -1389,6 +1400,7 @@
                 document.getElementById('successName').textContent = name;
                 document.getElementById('successCourse').textContent = courseName;
                 document.getElementById('successDate').textContent = selectedClass ? selectedClass.classDate : 'Scheduled Date';
+                document.getElementById('successEmail').textContent = email;
                 document.getElementById('successModal').classList.add('active');
                 fetchClasses(); // Refresh spot counts
             } else {
