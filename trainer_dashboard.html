@@ -10,84 +10,7 @@
     <script src="LMS_Files/Globals/lms_feedback.js" defer></script>
 
     <style>
-        /* HEADER ACTIONS (MATCHING MAIN PAGE) */
-        .header-actions {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-left: auto;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-        }
-
-        .market-pill {
-            background-color: var(--brand-red) !important;
-            color: var(--crust-base) !important;
-            padding: 5px 12px !important;
-            min-height: 32px !important;
-            box-sizing: border-box !important;
-            border-radius: var(--radius-pill, 20px) !important;
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
-            font-size: 0.82rem !important;
-            font-weight: normal !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.5px !important;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
-            white-space: nowrap !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            line-height: 1 !important;
-        }
-
-        .header-action-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            background: rgba(254, 250, 246, 0.12);
-            color: var(--crust-base) !important;
-            border: 1.5px solid rgba(254, 250, 246, 0.85);
-            padding: 5px 12px;
-            min-height: 32px;
-            box-sizing: border-box;
-            border-radius: var(--radius-pill, 20px);
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
-            font-size: 0.82rem !important;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-            white-space: nowrap;
-            touch-action: manipulation;
-            text-decoration: none;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            font-weight: normal !important;
-            line-height: 1;
-        }
-
-        .header-action-btn:hover {
-            background: var(--brand-red) !important;
-            border-color: var(--brand-red) !important;
-            color: var(--crust-base) !important;
-            transform: translateY(-1px);
-        }
-
-        #beta-feedback-trigger {
-            display: none !important;
-        }
-
-        @media (max-width: 768px) {
-            .header-actions {
-                gap: 5px;
-            }
-            .header-action-btn, .market-pill {
-                padding: 4px 10px !important;
-                min-height: 28px !important;
-                font-size: 0.74rem !important;
-                letter-spacing: 0.3px !important;
-            }
-        }
+        /* DOMINO'S FONTS (Registered font-weight: normal to prevent synthetic bold fallback) */
         @font-face {
             font-family: 'PizzaPress';
             src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
@@ -106,6 +29,7 @@
             font-weight: normal;
         }
 
+        /* MASTER COLOR TOKENS */
         :root {
             --brand-red: #ff0000;
             --med-red: #e70000;
@@ -120,6 +44,9 @@
             --crust-deep: #603913;
             --crust-burnt: #472b10;
             --border-radius: 12px;
+            --radius-pill: 9999px;
+            --success-green: #117a30;
+            --success-green-bg: #eaf7ed;
         }
 
         * {
@@ -137,7 +64,116 @@
             min-height: 100vh;
         }
 
-        /* HEADER: Canonical brand blue header styled by brand_master.css */
+        /* HEADER */
+        .portal-header {
+            background-color: var(--brand-blue);
+            color: white;
+            padding: 10px 24px;
+            border-bottom: 3.5px solid var(--dark-blue);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .portal-header-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .header-brand-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .portal-logo-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .header-text-group h1 {
+            font-family: 'PizzaPress', 'ExtraBlack', serif;
+            font-size: 1.55rem;
+            color: white;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: normal;
+        }
+
+        .header-text-group .subtitle {
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 0.88rem;
+            color: var(--crust-med);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-top: 2px;
+            font-weight: normal;
+        }
+
+        .header-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .market-pill {
+            background-color: var(--brand-red) !important;
+            color: var(--crust-base) !important;
+            padding: 5px 14px !important;
+            min-height: 32px !important;
+            border-radius: var(--radius-pill) !important;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
+            font-size: 0.82rem !important;
+            font-weight: normal !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+        }
+
+        .header-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: rgba(254, 250, 246, 0.15);
+            color: var(--crust-base) !important;
+            border: 1.5px solid rgba(254, 250, 246, 0.85);
+            padding: 5px 14px;
+            min-height: 32px;
+            border-radius: var(--radius-pill);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
+            font-size: 0.82rem !important;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: normal !important;
+            line-height: 1;
+        }
+
+        .header-action-btn:hover {
+            background: var(--brand-red) !important;
+            border-color: var(--brand-red) !important;
+            color: var(--crust-base) !important;
+            transform: translateY(-1px);
+        }
+
+        #beta-feedback-trigger {
+            display: none !important;
+        }
 
         .brand-stripe {
             height: 4px;
@@ -145,44 +181,23 @@
             width: 100%;
         }
 
-        .back-nav {
-            background: var(--crust-light);
-            border-bottom: 1.5px solid var(--crust-med);
-            padding: 8px 24px;
-            font-size: 14.5px;
-        }
-
-        .back-nav a {
-            color: var(--dark-blue);
-            text-decoration: none;
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-weight: normal !important;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .back-nav a:hover {
-            text-decoration: underline;
-        }
-
         main {
-            max-width: 1000px;
+            max-width: 1140px;
             width: 100%;
             margin: 0 auto;
-            padding: 20px 16px 40px;
+            padding: 22px 18px 48px;
             flex: 1 0 auto;
         }
 
-        /* PROTOCOLS ACCORDION */
+        /* ACCORDION */
         .notice-accordion {
             background-color: #eef7fd;
             border: 1.5px solid #bee5eb;
             border-left: 6px solid var(--dark-blue);
             border-radius: var(--border-radius);
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             overflow: hidden;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
         }
 
         .notice-header {
@@ -193,15 +208,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 16px;
+            font-size: 15.5px;
             text-transform: uppercase;
             font-weight: normal !important;
+            user-select: none;
         }
 
         .notice-content {
             display: none;
             padding: 0 18px 14px;
-            font-size: 15px;
+            font-size: 14.5px;
             color: var(--crust-burnt);
             line-height: 1.5;
         }
@@ -210,93 +226,378 @@
             display: block;
         }
 
-        /* CONTROLS CARD */
-        .card {
+        /* CARDS */
+        .brand-card {
             background: white;
             border: 1.5px solid var(--crust-med);
             border-radius: var(--border-radius);
-            padding: 20px;
+            padding: 22px;
             box-shadow: 0 3px 8px rgba(71, 43, 16, 0.05);
             margin-bottom: 24px;
         }
 
+        .card-header-band {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .card-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .card-title {
             font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 17px;
+            font-size: 18px;
             color: var(--dark-blue);
             text-transform: uppercase;
-            margin-bottom: 12px;
+            font-weight: normal !important;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-weight: normal !important;
+            margin: 0;
         }
 
-        select, input[type="text"] {
-            width: 100%;
-            padding: 10px 12px;
+        .card-subtitle {
+            font-size: 13.5px;
+            color: var(--crust-deep);
+            margin-top: 3px;
+        }
+
+        /* SEARCH & FILTER CONTROLS */
+        .search-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+            position: relative;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 16px;
+            color: var(--crust-dark);
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 11px 40px 11px 42px;
+            font-size: 15.5px;
             border: 1.5px solid var(--crust-dark);
-            border-radius: 6px;
+            border-radius: 8px;
             font-family: 'OneDotCd', sans-serif;
             color: var(--crust-burnt);
             background: white;
-            margin-bottom: 12px;
+            transition: all 0.2s ease;
         }
 
-        select:focus, input[type="text"]:focus {
+        .search-input:focus {
             outline: none;
             border-color: var(--brand-blue);
-            box-shadow: 0 0 0 2px rgba(0, 144, 226, 0.2);
+            box-shadow: 0 0 0 3px rgba(0, 144, 226, 0.2);
         }
 
-        .btn-primary {
-            background-color: var(--brand-blue);
-            color: white;
+        .search-clear-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
             border: none;
-            border-radius: 6px;
-            padding: 12px 20px;
+            color: var(--crust-dark);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+            display: none;
+        }
+
+        .search-clear-btn:hover {
+            color: var(--brand-red);
+        }
+
+        /* FILTER PILLS */
+        .filter-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-label {
             font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 16px;
+            font-size: 12px;
             text-transform: uppercase;
+            color: var(--crust-deep);
+            min-width: 65px;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-pill {
+            background: var(--crust-light);
+            border: 1px solid var(--crust-med);
+            color: var(--crust-deep);
+            padding: 5px 12px;
+            border-radius: var(--radius-pill);
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 13px;
             font-weight: normal !important;
             cursor: pointer;
-            width: 100%;
-            transition: background 0.2s;
-            box-shadow: 0 2px 4px rgba(0, 144, 226, 0.25);
+            transition: all 0.15s ease;
+            user-select: none;
         }
 
-        .btn-primary:hover {
-            background-color: var(--dark-blue);
+        .filter-pill:hover {
+            background: var(--crust-med);
+            color: var(--crust-burnt);
         }
 
-        /* ROSTER TABLE */
+        .filter-pill.active {
+            background: var(--dark-blue) !important;
+            color: white !important;
+            border-color: var(--dark-blue) !important;
+            box-shadow: 0 2px 5px rgba(0, 92, 145, 0.25);
+        }
+
+        /* CLASS CARDS CONTAINER */
+        .classes-scroll-container {
+            max-height: 380px;
+            overflow-y: auto;
+            border: 1.5px solid var(--crust-med);
+            border-radius: 8px;
+            padding: 10px;
+            background: var(--crust-base);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .class-card {
+            background: white;
+            border: 1.5px solid var(--crust-med);
+            border-radius: 8px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .class-card:hover {
+            border-color: var(--brand-blue);
+            transform: translateX(3px);
+            box-shadow: 0 3px 8px rgba(0, 144, 226, 0.12);
+        }
+
+        .class-card.selected {
+            background: #f0f8ff;
+            border-color: var(--brand-blue);
+            border-width: 2px;
+            box-shadow: 0 0 0 2px rgba(0, 144, 226, 0.25);
+        }
+
+        .class-card-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .class-date-badge {
+            background: var(--crust-light);
+            border: 1.5px solid var(--crust-med);
+            border-radius: 8px;
+            padding: 6px 10px;
+            text-align: center;
+            min-width: 82px;
+            flex-shrink: 0;
+        }
+
+        .class-card.selected .class-date-badge {
+            background: var(--dark-blue);
+            border-color: var(--dark-blue);
+            color: white;
+        }
+
+        .class-date-badge .badge-month {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--brand-red);
+            letter-spacing: 0.5px;
+            line-height: 1;
+        }
+
+        .class-card.selected .class-date-badge .badge-month {
+            color: #ffd2d2;
+        }
+
+        .class-date-badge .badge-day {
+            font-family: 'PizzaPress', 'ExtraBlack', serif;
+            font-size: 19px;
+            line-height: 1.2;
+            color: var(--dark-blue);
+        }
+
+        .class-card.selected .class-date-badge .badge-day {
+            color: white;
+        }
+
+        .class-date-badge .badge-time {
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 11.5px;
+            color: var(--crust-deep);
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .class-card.selected .class-date-badge .badge-time {
+            color: #eef7fd;
+        }
+
+        .class-info-block {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .class-title-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .class-title {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 16.5px;
+            color: var(--dark-blue);
+            font-weight: normal;
+        }
+
+        .level-badge {
+            background: var(--crust-med);
+            color: var(--crust-burnt);
+            padding: 2px 7px;
+            border-radius: var(--radius-pill);
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .class-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 13.5px;
+            color: var(--crust-deep);
+            flex-wrap: wrap;
+        }
+
+        .class-meta-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .class-card-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .enrolled-badge {
+            padding: 5px 10px;
+            border-radius: var(--radius-pill);
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 12.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        .enrolled-badge.has-spots {
+            background: #eef7fd;
+            color: var(--dark-blue);
+            border: 1px solid #c9e6f8;
+        }
+
+        .enrolled-badge.is-full {
+            background: #fff1f1;
+            color: var(--brand-red);
+            border: 1px solid #f8c8c8;
+        }
+
+        .select-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--crust-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: transparent;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .class-card.selected .select-check {
+            background: var(--brand-blue);
+            border-color: var(--brand-blue);
+            color: white;
+        }
+
+        /* ROSTER CONTAINER */
         .roster-container {
             background: white;
             border: 1.5px solid var(--crust-med);
             border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(71, 43, 16, 0.08);
-            display: none;
+            box-shadow: 0 4px 14px rgba(71, 43, 16, 0.08);
             margin-bottom: 24px;
+            display: none;
         }
 
         .roster-header-banner {
             background: var(--crust-light);
             border-bottom: 2px solid var(--dark-blue);
-            padding: 14px 18px;
+            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 14px;
         }
 
         .roster-header-title {
             font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 18px;
+            font-size: 19px;
             color: var(--dark-blue);
-            font-weight: normal !important;
+            font-weight: normal;
         }
 
         .roster-header-meta {
@@ -305,18 +606,74 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            margin-top: 3px;
         }
 
-        .roster-header-meta img {
-            width: 15px;
-            height: 15px;
-            object-fit: contain;
+        .roster-action-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: var(--radius-pill);
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: normal;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .toolbar-btn-blue {
+            background: var(--brand-blue);
+            color: white;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 144, 226, 0.25);
+        }
+
+        .toolbar-btn-blue:hover {
+            background: var(--dark-blue);
+            transform: translateY(-1px);
+        }
+
+        .toolbar-btn-outline {
+            background: white;
+            color: var(--dark-blue);
+            border: 1.5px solid var(--dark-blue);
+        }
+
+        .toolbar-btn-outline:hover {
+            background: #eef7fd;
+        }
+
+        /* NOTICE CALLOUT IN ROSTER */
+        .roster-notice-bar {
+            background: #fff9e6;
+            border-bottom: 1px solid #fae69e;
+            padding: 10px 18px;
+            font-size: 13.5px;
+            color: #7a5800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* TABLE */
+        .table-responsive {
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 15px;
+            font-size: 14.5px;
             text-align: left;
         }
 
@@ -325,12 +682,13 @@
             color: white;
             font-family: 'OneDotCd-Bold', sans-serif;
             text-transform: uppercase;
-            font-size: 13.5px;
-            font-weight: normal !important;
+            font-size: 13px;
+            font-weight: normal;
+            letter-spacing: 0.5px;
         }
 
         th, td {
-            padding: 12px 14px;
+            padding: 12px 16px;
             border-bottom: 1px solid var(--crust-med);
         }
 
@@ -344,74 +702,42 @@
 
         .candidate-name {
             font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 16px;
+            font-size: 15.5px;
             color: var(--dark-blue);
-            font-weight: normal !important;
+            font-weight: normal;
         }
 
         .status-pill {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
             font-family: 'OneDotCd-Bold', sans-serif;
             font-size: 12px;
-            font-weight: normal !important;
+            font-weight: normal;
             text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
-        .status-registered {
+        .status-expected {
             background: #eef7fd;
             color: var(--dark-blue);
             border: 1px solid #c9e6f8;
         }
 
-        .status-completed {
-            background: var(--dark-blue);
-            color: white;
+        .status-verified {
+            background: var(--success-green-bg);
+            color: var(--success-green);
+            border: 1px solid #c3e6cb;
         }
 
-        .status-noshow {
-            background: #fff1f1;
-            color: var(--brand-red);
-            border: 1px solid #f8c8c8;
-        }
-
-        .action-btn {
-            background: var(--crust-light);
-            border: 1px solid var(--crust-dark);
-            color: var(--crust-burnt);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 12px;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-weight: normal !important;
-            margin-right: 4px;
-        }
-
-        .action-btn:hover {
-            background: var(--crust-med);
-        }
-
-        .action-btn.btn-complete {
-            background: var(--dark-blue);
-            color: white;
-            border-color: var(--dark-blue);
-        }
-
-        .action-btn.btn-noshow {
-            background: var(--brand-red);
-            color: white;
-            border-color: var(--brand-red);
-        }
-
-        /* SEARCH RESULTS MODAL */
+        /* MODALS */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(30, 20, 10, 0.65);
-            backdrop-filter: blur(3px);
+            background: rgba(30, 20, 10, 0.68);
+            backdrop-filter: blur(4px);
             z-index: 1000;
             display: flex;
             align-items: center;
@@ -419,7 +745,7 @@
             padding: 16px;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.2s;
+            transition: opacity 0.2s ease;
         }
 
         .modal-overlay.active {
@@ -430,14 +756,14 @@
         .modal-card {
             background: white;
             border-radius: var(--border-radius);
-            max-width: 700px;
+            max-width: 640px;
             width: 100%;
-            max-height: 85vh;
+            max-height: 88vh;
             display: flex;
             flex-direction: column;
             border: 2px solid var(--crust-med);
             overflow: hidden;
-            box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
         }
 
         .modal-header {
@@ -453,35 +779,153 @@
             font-family: 'OneDotCd-Bold', sans-serif;
             font-size: 18px;
             text-transform: uppercase;
-            font-weight: normal !important;
+            font-weight: normal;
             margin: 0;
         }
 
+        .modal-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
         .modal-body {
-            padding: 18px;
+            padding: 22px;
             overflow-y: auto;
         }
 
+        /* QR CODE MODAL CONTENT */
+        .qr-display-wrap {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-image-frame {
+            background: white;
+            padding: 14px;
+            border: 2px solid var(--crust-med);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin: 14px 0;
+        }
+
+        .qr-image-frame img {
+            width: 240px;
+            height: 240px;
+            display: block;
+        }
+
+        .qr-class-meta {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 17px;
+            color: var(--dark-blue);
+            margin-bottom: 4px;
+        }
+
+        .qr-subtext {
+            font-size: 14px;
+            color: var(--crust-deep);
+            margin-bottom: 16px;
+            max-width: 440px;
+            line-height: 1.4;
+        }
+
+        .qr-url-box {
+            display: flex;
+            width: 100%;
+            max-width: 460px;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .qr-url-input {
+            flex: 1;
+            padding: 9px 12px;
+            font-size: 13.5px;
+            border: 1.5px solid var(--crust-med);
+            border-radius: 6px;
+            background: var(--crust-light);
+            color: var(--crust-burnt);
+            font-family: monospace;
+        }
+
+        /* TOAST */
+        .toast-notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--crust-burnt);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius-pill);
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 14px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .portal-header-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .class-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .class-card-right {
+                width: 100%;
+                justify-content: space-between;
+                padding-top: 8px;
+                border-top: 1px dashed var(--crust-med);
+            }
+            .roster-header-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <!-- BRAND HEADER -->
-    <header>
-        <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo" onerror="this.src='image/tile_blue.png'">
-        <div class="header-text">
-            <h1>Trainer Dashboard</h1>
-            <div class="subtitle">MIT Leadership &amp; Candidate Roster Check-In</div>
-        </div>
-        <div class="header-actions">
-            <div class="market-pill">Dallas Market</div>
-            <a href="classes.html" class="header-action-btn">
-                ← Class Schedule
-            </a>
-            <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
-                🛠️ Report Issue
-            </button>
+    <header class="portal-header">
+        <div class="portal-header-inner">
+            <div class="header-brand-wrap">
+                <img src="New_Logo_v2.png" alt="Team Wow Logo" class="portal-logo-img" onerror="this.src='image/tile_blue.png'">
+                <div class="header-text-group">
+                    <h1>Trainer Dashboard</h1>
+                    <div class="subtitle">MIT Leadership &amp; Candidate Roster Hub</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="market-pill">Dallas Market</div>
+                <a href="classes.html" class="header-action-btn">← Class Schedule</a>
+                <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
+                    🛠️ Report Issue
+                </button>
+            </div>
         </div>
     </header>
 
@@ -496,49 +940,100 @@
             </div>
             <div id="noticeBody" class="notice-content">
                 <p style="margin-bottom: 8px;">
-                    <strong>🛑 Cancellations:</strong> If you have <strong>fewer than 3 enrollments</strong> or need to cancel or reschedule a session, you must get <strong>prior approval from Bobby</strong>. You are responsible for notifying the registered Team Members and their General Managers.
+                    <strong>🛑 Cancellations &amp; Low Enrollment:</strong> If you have <strong>fewer than 3 enrollments</strong> or need to cancel/reschedule a session, you must obtain <strong>prior approval from Bobby</strong>. Trainers are responsible for notifying the registered Team Members and their General Managers.
                 </p>
                 <p style="margin-bottom: 0;">
-                    <strong>📅 Class Schedule Management:</strong> To add, adjust, or reschedule sessions, use the <strong>Admin Hub MIT Scheduler</strong> or contact <strong>Mike</strong>.
+                    <strong>📅 Schedule Management:</strong> To add, adjust, or reschedule sessions, use the <strong>Admin Hub MIT Scheduler</strong> or coordinate with <strong>Mike</strong>.
                 </p>
             </div>
         </div>
 
-        <!-- SELECT CLASS CARD -->
-        <div class="card">
-            <div class="card-title">
-                <span>📋</span> Select an Upcoming Class Session
+        <!-- SELECT CLASS CARD WITH SEARCH & FILTERS -->
+        <div class="brand-card">
+            <div class="card-header-band">
+                <div class="card-title-group">
+                    <h2 class="card-title"><span>📋</span> Select an Upcoming Class Session</h2>
+                </div>
+                <span id="classCountBadge" style="font-family: 'OneDotCd-Bold'; font-size: 13px; color: var(--crust-deep); background: var(--crust-light); padding: 4px 10px; border-radius: var(--radius-pill);">
+                    Loading upcoming sessions...
+                </span>
             </div>
-            <select id="classSelect">
-                <option value="">Loading upcoming class sessions...</option>
-            </select>
-            <button type="button" class="btn-primary" onclick="loadClassRoster()">View &amp; Check-In Roster</button>
+
+            <!-- Instant Search Input -->
+            <div class="search-row">
+                <div class="search-input-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="classSearchInput" class="search-input" placeholder="Search by course name, trainer, training center, or store #..." oninput="handleClassSearch()">
+                    <button type="button" id="searchClearBtn" class="search-clear-btn" onclick="clearClassSearch()">&times;</button>
+                </div>
+            </div>
+
+            <!-- Location & Center Filter Pills -->
+            <div class="filter-section">
+                <div class="filter-row">
+                    <span class="filter-label">Center:</span>
+                    <button type="button" class="filter-pill active" data-filter-type="location" data-val="ALL" onclick="setFilter('location', 'ALL', this)">All Centers</button>
+                    <button type="button" class="filter-pill" data-filter-type="location" data-val="McKinney" onclick="setFilter('location', 'McKinney', this)">McKinney</button>
+                    <button type="button" class="filter-pill" data-filter-type="location" data-val="Mesquite" onclick="setFilter('location', 'Mesquite', this)">Mesquite</button>
+                    <button type="button" class="filter-pill" data-filter-type="location" data-val="Virtual" onclick="setFilter('location', 'Virtual', this)">Virtual</button>
+                </div>
+                <div class="filter-row">
+                    <span class="filter-label">Level:</span>
+                    <button type="button" class="filter-pill active" data-filter-type="level" data-val="ALL" onclick="setFilter('level', 'ALL', this)">All Levels</button>
+                    <button type="button" class="filter-pill" data-filter-type="level" data-val="1" onclick="setFilter('level', '1', this)">Level 1</button>
+                    <button type="button" class="filter-pill" data-filter-type="level" data-val="2" onclick="setFilter('level', '2', this)">Level 2</button>
+                    <button type="button" class="filter-pill" data-filter-type="level" data-val="3" onclick="setFilter('level', '3', this)">Level 3</button>
+                </div>
+            </div>
+
+            <!-- Interactive Scrollable Class Cards -->
+            <div id="classListContainer" class="classes-scroll-container">
+                <div style="padding: 24px; text-align: center; color: var(--crust-deep); font-size: 15px;">
+                    Loading class sessions from Cloudflare D1...
+                </div>
+            </div>
         </div>
 
-        <!-- ROSTER VIEW CONTAINER -->
+        <!-- EXPECTED ROSTER & IN-CLASS ACTION HUB -->
         <div id="rosterContainer" class="roster-container">
             <div class="roster-header-banner">
                 <div>
-                    <div id="rosterClassName" class="roster-header-title">Class Name</div>
+                    <div id="rosterClassName" class="roster-header-title">Class Roster</div>
                     <div id="rosterMetaText" class="roster-header-meta">
-                        <img src="image/custom-emojis/location-base.png" alt="Location">
                         <span id="rosterLocation">Location</span> • 
-                        <span id="rosterDateTime">Date &amp; Time</span>
+                        <span id="rosterDateTime">Date &amp; Time</span> • 
+                        <span id="rosterTrainer">Trainer</span>
                     </div>
                 </div>
-                <div id="rosterCountBadge" class="status-pill status-registered">0 Trainees Enrolled</div>
+                <div class="roster-action-toolbar">
+                    <button type="button" class="toolbar-btn toolbar-btn-blue" onclick="openQrModal()">
+                        🔳 Show In-Class QR Code
+                    </button>
+                    <button type="button" class="toolbar-btn toolbar-btn-outline" onclick="copyCompletionLink()">
+                        📋 Copy Form Link
+                    </button>
+                    <a id="openFormExternalBtn" href="mit_completion.html" target="_blank" class="toolbar-btn toolbar-btn-outline">
+                        ↗️ Open Completion Form
+                    </a>
+                </div>
             </div>
 
-            <div style="overflow-x: auto;">
+            <!-- Ground Truth Explainer Notice -->
+            <div class="roster-notice-bar">
+                <span>💡</span>
+                <span>Pre-registered candidates represent expected rosters. Ground-truth class completion is recorded when attendees scan the QR code and submit the official MIT completion form.</span>
+            </div>
+
+            <div class="table-responsive">
                 <table id="rosterTable">
                     <thead>
                         <tr>
                             <th>Candidate Name</th>
-                            <th>Store</th>
+                            <th>Store #</th>
                             <th>Role / Level</th>
                             <th>Phone</th>
-                            <th>Status</th>
-                            <th>Check-In Action</th>
+                            <th>Email</th>
+                            <th>Attendance Status</th>
                         </tr>
                     </thead>
                     <tbody id="rosterTableBody">
@@ -547,32 +1042,64 @@
                 </table>
             </div>
 
-            <div id="emptyRosterMsg" style="padding: 30px; text-align: center; color: var(--crust-deep); font-size: 16px; display: none;">
-                No candidates currently registered for this session.
+            <div id="emptyRosterMsg" style="padding: 36px 20px; text-align: center; color: var(--crust-deep); font-size: 15.5px; display: none;">
+                No candidates currently pre-registered for this session.<br>
+                <span style="font-size: 13.5px; color: var(--crust-dark); margin-top: 4px; display: inline-block;">
+                    Walk-in candidates can scan the QR code to submit their completion directly.
+                </span>
             </div>
         </div>
 
-        <!-- QUICK HISTORICAL TRAINEE SEARCH CARD -->
-        <div class="card">
-            <div class="card-title">
-                <span>🔍</span> Trainee Class History Lookup
+        <!-- HISTORICAL TRAINEE SEARCH CARD -->
+        <div class="brand-card">
+            <div class="card-header-band">
+                <div class="card-title-group">
+                    <h2 class="card-title"><span>🔍</span> Trainee Class History Lookup</h2>
+                </div>
             </div>
-            <p style="font-size: 14.5px; color: var(--crust-deep); margin-bottom: 12px;">
-                Look up past MIT class history for any team member across Dallas classes.
+            <p style="font-size: 14.5px; color: var(--crust-deep); margin-bottom: 14px;">
+                Look up completed MIT class records and certified dates for any team member across Dallas classes.
             </p>
-            <div style="display: flex; gap: 10px;">
-                <input type="text" id="traineeSearchInput" placeholder="Enter candidate name or store #..." onkeydown="if(event.key==='Enter') executeHistorySearch()">
-                <button type="button" class="btn-primary" style="width: auto; min-width: 120px;" onclick="executeHistorySearch()">Search</button>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <input type="text" id="traineeSearchInput" class="search-input" style="padding: 10px 14px; flex: 1; min-width: 220px;" placeholder="Enter candidate name or store #..." onkeydown="if(event.key==='Enter') executeHistorySearch()">
+                <button type="button" class="toolbar-btn toolbar-btn-blue" style="padding: 10px 22px; font-size: 14px;" onclick="executeHistorySearch()">Search Records</button>
             </div>
         </div>
     </main>
 
-    <!-- SEARCH RESULTS MODAL -->
+    <!-- IN-CLASS QR CODE MODAL -->
+    <div id="qrModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>In-Class Completion QR Code</h3>
+                <button type="button" class="modal-close-btn" onclick="closeQrModal()">&times;</button>
+            </div>
+            <div class="modal-body qr-display-wrap">
+                <div id="qrCourseTitle" class="qr-class-meta">MIT Course</div>
+                <div id="qrCourseSubtitle" style="font-size: 14px; color: var(--crust-deep); margin-bottom: 12px;">Date &amp; Location</div>
+
+                <div class="qr-image-frame">
+                    <img id="qrImage" src="" alt="MIT Completion QR Code">
+                </div>
+
+                <p class="qr-subtext">
+                    Have attendees point their phone camera at this QR code before leaving class to open and submit their official MIT Completion Form.
+                </p>
+
+                <div class="qr-url-box">
+                    <input type="text" id="qrDirectUrl" class="qr-url-input" readonly>
+                    <button type="button" class="toolbar-btn toolbar-btn-blue" style="padding: 8px 14px; font-size: 12px;" onclick="copyQrDirectUrl()">Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HISTORICAL TRAINEE SEARCH RESULTS MODAL -->
     <div id="historyModal" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-header">
                 <h3 id="historyModalTitle">Trainee Class History</h3>
-                <button type="button" onclick="closeHistoryModal()" style="background:none; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
+                <button type="button" class="modal-close-btn" onclick="closeHistoryModal()">&times;</button>
             </div>
             <div class="modal-body" id="historyModalBody">
                 <!-- Search results injected here -->
@@ -580,6 +1107,12 @@
         </div>
     </div>
 
+    <!-- TOAST NOTIFICATION -->
+    <div id="toastNotification" class="toast-notification">
+        <span>✓</span> <span id="toastMessage">Notification message</span>
+    </div>
+
+    <!-- BRAND FOOTER -->
     <footer class="portal-footer">
         <div class="portal-footer-inner">
             <div class="footer-brand">
@@ -599,7 +1132,15 @@
         const GAS_HISTORICAL_URL = "https://script.google.com/macros/s/AKfycbwyjGiK8CCoQWsY1eThGg3_g_8IMw88yq58laaywe0EZYnNcBkvfMCOJW_I2FAqknYKug/exec";
 
         let currentClasses = [];
+        let filteredClasses = [];
         let currentClassId = null;
+        let selectedClassObj = null;
+
+        let activeFilters = {
+            location: 'ALL',
+            level: 'ALL',
+            search: ''
+        };
 
         function toggleNotice() {
             const body = document.getElementById('noticeBody');
@@ -611,8 +1152,10 @@
         window.addEventListener('DOMContentLoaded', fetchTrainerClasses);
 
         async function fetchTrainerClasses() {
-            const select = document.getElementById('classSelect');
-            select.innerHTML = '<option value="">Loading upcoming sessions...</option>';
+            const container = document.getElementById('classListContainer');
+            const countBadge = document.getElementById('classCountBadge');
+
+            container.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--crust-deep); font-size: 15px;">Loading upcoming sessions from Cloudflare D1...</div>';
 
             let classes = [];
 
@@ -621,7 +1164,7 @@
                 const res = await fetch(`${D1_API_URL}?action=getMitClasses&market=Dallas&_t=${Date.now()}`);
                 if (res.ok) {
                     const data = await res.json();
-                    if (data.success && Array.isArray(data.classes)) {
+                    if (data.success && Array.isArray(data.classes) && data.classes.length > 0) {
                         classes = data.classes;
                     }
                 }
@@ -655,9 +1198,6 @@
                 }
             }
 
-            currentClasses = classes;
-            select.innerHTML = '<option value="">-- Choose an Upcoming Session --</option>';
-
             const now = new Date();
             const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
 
@@ -681,42 +1221,170 @@
                 return parseTime(a) - parseTime(b);
             });
 
-            upcoming.forEach(cls => {
-                const opt = document.createElement('option');
-                opt.value = cls.id;
-                opt.text = `${cls.classDate} @ ${cls.startTime || '11:00 AM'} • ${cls.name} (${cls.location} - ${cls.trainer})`;
-                select.appendChild(opt);
-            });
+            currentClasses = upcoming;
+            countBadge.innerText = `${currentClasses.length} Upcoming Sessions`;
+
+            renderClassList();
         }
 
-        async function loadClassRoster() {
-            const select = document.getElementById('classSelect');
-            const classId = select.value;
-            if (!classId) {
-                alert("Please select a class session first.");
+        function setFilter(type, value, btn) {
+            activeFilters[type] = value;
+            document.querySelectorAll(`.filter-pill[data-filter-type="${type}"]`).forEach(el => el.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderClassList();
+        }
+
+        function handleClassSearch() {
+            const query = document.getElementById('classSearchInput').value.trim();
+            activeFilters.search = query;
+            const clearBtn = document.getElementById('searchClearBtn');
+            clearBtn.style.display = query.length > 0 ? 'block' : 'none';
+            renderClassList();
+        }
+
+        function clearClassSearch() {
+            document.getElementById('classSearchInput').value = '';
+            document.getElementById('searchClearBtn').style.display = 'none';
+            activeFilters.search = '';
+            renderClassList();
+        }
+
+        function renderClassList() {
+            const container = document.getElementById('classListContainer');
+            const q = activeFilters.search.toLowerCase();
+
+            filteredClasses = currentClasses.filter(c => {
+                // Location filter
+                if (activeFilters.location !== 'ALL') {
+                    const loc = (c.location || '').toLowerCase();
+                    if (!loc.includes(activeFilters.location.toLowerCase())) return false;
+                }
+                // Level filter
+                if (activeFilters.level !== 'ALL') {
+                    if (String(c.level) !== String(activeFilters.level)) return false;
+                }
+                // Text search (course name, trainer, date, location, or attendee stores)
+                if (q) {
+                    const matchName = (c.name || '').toLowerCase().includes(q);
+                    const matchTrainer = (c.trainer || '').toLowerCase().includes(q);
+                    const matchLoc = (c.location || '').toLowerCase().includes(q);
+                    const matchDate = (c.classDate || '').toLowerCase().includes(q);
+                    const matchAttendees = Array.isArray(c.roster) && c.roster.some(r => 
+                        (r.candidate_name || '').toLowerCase().includes(q) || 
+                        String(r.store_num || '').includes(q)
+                    );
+                    if (!matchName && !matchTrainer && !matchLoc && !matchDate && !matchAttendees) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+            if (filteredClasses.length === 0) {
+                container.innerHTML = `
+                    <div style="padding: 30px 20px; text-align: center; color: var(--crust-deep); font-size: 15px;">
+                        No upcoming sessions found matching your search.
+                    </div>
+                `;
                 return;
             }
 
-            currentClassId = classId;
-            const cls = currentClasses.find(c => String(c.id) === String(classId));
+            container.innerHTML = '';
+            filteredClasses.forEach(cls => {
+                const isSelected = currentClassId && String(cls.id) === String(currentClassId);
+                const parts = (cls.classDate || '').split('/');
+                let monthStr = 'SEP';
+                let dayStr = '01';
+                if (parts.length === 3) {
+                    const d = new Date(parseInt(parts[2], 10), parseInt(parts[0], 10) - 1, parseInt(parts[1], 10));
+                    monthStr = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+                    dayStr = String(d.getDate()).padStart(2, '0');
+                }
 
+                const spotsTaken = cls.spotsTaken || 0;
+                const spotsTotal = cls.spotsTotal || 15;
+                const isFull = spotsTaken >= spotsTotal;
+
+                const card = document.createElement('div');
+                card.className = `class-card ${isSelected ? 'selected' : ''}`;
+                card.id = `classCard_${cls.id}`;
+                card.onclick = () => selectClassSession(cls.id);
+
+                card.innerHTML = `
+                    <div class="class-card-left">
+                        <div class="class-date-badge">
+                            <div class="badge-month">${monthStr}</div>
+                            <div class="badge-day">${dayStr}</div>
+                            <div class="badge-time">${cls.startTime || '11:00 AM'}</div>
+                        </div>
+                        <div class="class-info-block">
+                            <div class="class-title-row">
+                                <span class="class-title">${cls.name}</span>
+                                <span class="level-badge">Level ${cls.level || 1}</span>
+                            </div>
+                            <div class="class-meta-row">
+                                <span class="class-meta-item">
+                                    <img src="image/custom-emojis/location-base.png" alt="Loc" style="width: 14px; height: 14px; object-fit: contain;">
+                                    ${cls.location || 'McKinney'} Center
+                                </span>
+                                <span class="class-meta-item">
+                                    👤 ${cls.trainer || 'Team Wow'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="class-card-right">
+                        <span class="enrolled-badge ${isFull ? 'is-full' : 'has-spots'}">
+                            ${spotsTaken} / ${spotsTotal} Enrolled
+                        </span>
+                        <div class="select-check">✓</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        async function selectClassSession(classId) {
+            currentClassId = String(classId);
+            selectedClassObj = currentClasses.find(c => String(c.id) === currentClassId);
+
+            // Update UI card selection styling
+            document.querySelectorAll('.class-card').forEach(el => el.classList.remove('selected'));
+            const activeCard = document.getElementById(`classCard_${classId}`);
+            if (activeCard) activeCard.classList.add('selected');
+
+            await loadClassRoster(selectedClassObj);
+
+            // Smooth scroll down to roster container
+            const rosterEl = document.getElementById('rosterContainer');
+            if (rosterEl) {
+                rosterEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        async function loadClassRoster(cls) {
             const container = document.getElementById('rosterContainer');
             const tbody = document.getElementById('rosterTableBody');
             const emptyMsg = document.getElementById('emptyRosterMsg');
 
-            document.getElementById('rosterClassName').innerText = cls ? cls.name : 'Class Roster';
-            document.getElementById('rosterLocation').innerText = cls ? cls.location : 'Dallas';
-            document.getElementById('rosterDateTime').innerText = cls ? `${cls.classDate} @ ${cls.startTime || ''}` : '';
-            container.style.display = 'block';
+            document.getElementById('rosterClassName').innerText = cls ? `${cls.name} (Level ${cls.level || 1})` : 'Class Roster';
+            document.getElementById('rosterLocation').innerText = cls ? `${cls.location} Center` : 'Dallas';
+            document.getElementById('rosterDateTime').innerText = cls ? `${cls.classDate} @ ${cls.startTime || '11:00 AM'}` : '';
+            document.getElementById('rosterTrainer').innerText = cls ? `Trainer: ${cls.trainer}` : '';
+            
+            // Set up direct form link
+            const directUrl = `${window.location.origin}/mit_completion.html?classId=${encodeURIComponent(cls.id)}`;
+            document.getElementById('openFormExternalBtn').href = directUrl;
 
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 25px; color: var(--crust-deep);">Loading attendee roster...</td></tr>';
+            container.style.display = 'block';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 25px; color: var(--crust-deep);">Loading expected attendee roster...</td></tr>';
             emptyMsg.style.display = 'none';
 
             let roster = [];
 
             // 1. Fetch from D1
             try {
-                const res = await fetch(`${D1_API_URL}?action=getMitRoster&classId=${encodeURIComponent(classId)}`);
+                const res = await fetch(`${D1_API_URL}?action=getMitRoster&classId=${encodeURIComponent(cls.id)}`);
                 const data = await res.json();
                 if (data.success && Array.isArray(data.roster)) {
                     roster = data.roster;
@@ -728,7 +1396,7 @@
             // 2. Fallback to GAS if D1 is empty
             if (!roster || roster.length === 0) {
                 try {
-                    const res = await fetch(`${GAS_API_URL}?action=getRoster&classId=${encodeURIComponent(classId)}`);
+                    const res = await fetch(`${GAS_API_URL}?action=getRoster&classId=${encodeURIComponent(cls.id)}`);
                     const gasRoster = await res.json();
                     if (Array.isArray(gasRoster)) {
                         roster = gasRoster.map(r => ({
@@ -736,15 +1404,14 @@
                             store_num: r.store,
                             position: r.position,
                             phone: r.phone,
-                            status: 'Registered'
+                            email: r.email,
+                            status: 'Confirmed'
                         }));
                     }
                 } catch (gasErr) {
                     console.error("GAS roster load error:", gasErr);
                 }
             }
-
-            document.getElementById('rosterCountBadge').innerText = `${roster.length} Trainees Enrolled`;
 
             if (roster.length === 0) {
                 tbody.innerHTML = '';
@@ -753,52 +1420,78 @@
             }
 
             tbody.innerHTML = '';
-            roster.forEach((attendee, idx) => {
+            roster.forEach(attendee => {
                 const tr = document.createElement('tr');
-                const status = attendee.status || 'Registered';
-                let statusClass = 'status-registered';
-                if (status === 'Completed' || status === 'Attended') statusClass = 'status-completed';
-                if (status === 'No-Show') statusClass = 'status-noshow';
+                const isCompleted = attendee.status === 'Completed' || attendee.status === 'Attended';
+                const statusBadgeClass = isCompleted ? 'status-verified' : 'status-expected';
+                const statusText = isCompleted ? '✓ Verified Complete' : 'Expected';
 
                 tr.innerHTML = `
-                    <td class="candidate-name">${attendee.candidate_name}</td>
-                    <td>Store #${attendee.store_num}</td>
-                    <td>${attendee.position || 'MIT 1'}</td>
-                    <td><a href="tel:${attendee.phone}" style="color: var(--dark-blue); font-weight: bold; text-decoration: none;">📞 ${attendee.phone}</a></td>
-                    <td><span class="status-pill ${statusClass}" id="statusBadge_${idx}">${status}</span></td>
+                    <td class="candidate-name">${attendee.candidate_name || 'Candidate'}</td>
+                    <td>Store #${attendee.store_num || '---'}</td>
+                    <td>${attendee.position || `MIT ${cls.level || 1}`}</td>
                     <td>
-                        <button type="button" class="action-btn btn-complete" onclick="markAttendance('${attendee.candidate_name}', '${attendee.store_num}', '${attendee.position}', '${attendee.phone}', 'Completed', ${idx})">✓ Present</button>
-                        <button type="button" class="action-btn btn-noshow" onclick="markAttendance('${attendee.candidate_name}', '${attendee.store_num}', '${attendee.position}', '${attendee.phone}', 'No-Show', ${idx})">✕ No-Show</button>
+                        ${attendee.phone ? `<a href="tel:${attendee.phone}" style="color: var(--dark-blue); font-weight: bold; text-decoration: none;">📞 ${attendee.phone}</a>` : '---'}
+                    </td>
+                    <td style="color: var(--crust-deep); font-size: 13.5px;">
+                        ${attendee.email || '---'}
+                    </td>
+                    <td>
+                        <span class="status-pill ${statusBadgeClass}">${statusText}</span>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        async function markAttendance(candidateName, storeNum, position, phone, status, idx) {
-            const badge = document.getElementById(`statusBadge_${idx}`);
-            if (badge) {
-                badge.innerText = status;
-                badge.className = `status-pill ${status === 'Completed' ? 'status-completed' : 'status-noshow'}`;
+        // --- IN-CLASS QR CODE MODAL ---
+        function openQrModal() {
+            if (!selectedClassObj) {
+                alert("Please select a class session first.");
+                return;
             }
 
-            try {
-                await fetch(D1_API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        action: 'saveMitAttendance',
-                        classId: currentClassId,
-                        candidateName: candidateName,
-                        storeNum: storeNum,
-                        position: position,
-                        phone: phone,
-                        status: status
-                    })
-                });
-            } catch (err) {
-                console.warn("Attendance status update error:", err);
-            }
+            const cls = selectedClassObj;
+            const completionUrl = `${window.location.origin}/mit_completion.html?classId=${encodeURIComponent(cls.id)}`;
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(completionUrl)}`;
+
+            document.getElementById('qrCourseTitle').innerText = `${cls.name} (Level ${cls.level || 1})`;
+            document.getElementById('qrCourseSubtitle').innerText = `${cls.classDate} @ ${cls.startTime || '11:00 AM'} • ${cls.location} Center • Trainer: ${cls.trainer}`;
+            document.getElementById('qrImage').src = qrApiUrl;
+            document.getElementById('qrDirectUrl').value = completionUrl;
+
+            document.getElementById('qrModal').classList.add('active');
+        }
+
+        function closeQrModal() {
+            document.getElementById('qrModal').classList.remove('active');
+        }
+
+        function copyCompletionLink() {
+            if (!selectedClassObj) return;
+            const completionUrl = `${window.location.origin}/mit_completion.html?classId=${encodeURIComponent(selectedClassObj.id)}`;
+            navigator.clipboard.writeText(completionUrl).then(() => {
+                showToast("Completion form link copied to clipboard!");
+            }).catch(() => {
+                prompt("Copy this form link:", completionUrl);
+            });
+        }
+
+        function copyQrDirectUrl() {
+            const input = document.getElementById('qrDirectUrl');
+            input.select();
+            document.execCommand('copy');
+            showToast("Direct URL copied to clipboard!");
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            const msgEl = document.getElementById('toastMessage');
+            msgEl.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
 
         // --- HISTORICAL TRAINEE SEARCH ---
@@ -811,7 +1504,7 @@
 
             const modal = document.getElementById('historyModal');
             const body = document.getElementById('historyModalBody');
-            body.innerHTML = '<p style="text-align: center; padding: 25px; color: var(--crust-deep);">Searching class records across Dallas...</p>';
+            body.innerHTML = '<p style="text-align: center; padding: 25px; color: var(--crust-deep);">Searching historical class records across Dallas...</p>';
             modal.classList.add('active');
 
             try {
@@ -819,7 +1512,7 @@
                 const data = await res.json();
 
                 if (data.status === 'success' && Array.isArray(data.data) && data.data.length > 0) {
-                    let html = `<p style="margin-bottom: 12px; font-weight: bold; color: var(--dark-blue);">Found ${data.data.length} class record(s):</p>`;
+                    let html = `<p style="margin-bottom: 12px; font-weight: bold; color: var(--dark-blue);">Found ${data.data.length} completed class record(s):</p>`;
                     html += '<table style="width: 100%; border-collapse: collapse; font-size: 14.5px;">';
                     html += '<thead><tr style="background: var(--dark-blue); color: white;"><th style="padding: 8px 10px;">Name</th><th style="padding: 8px 10px;">Store</th><th style="padding: 8px 10px;">Class Completed</th><th style="padding: 8px 10px;">Date</th></tr></thead><tbody>';
 
