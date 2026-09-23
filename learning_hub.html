@@ -2,41 +2,62 @@
 <html lang="en">
 
 <head>
+    <script>
+        if (window.location.hostname.endsWith('github.io')) {
+            window.location.replace('https://tw-career-path.pages.dev' + window.location.pathname.replace(/^\/TW-Career-Path/, '') + window.location.search);
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Wow Learning Hub</title>
+    <title>Wow Way Training • Team Wow</title>
     <link rel="icon" type="image/png" href="image/tile_blue.png">
-    <script src="LMS_Files/Globals/lms_feedback.js"></script>
+    <link rel="stylesheet" href="https://teamwow-assets.pages.dev/brand_master.css">
+    <script src="LMS_Files/Globals/lms_feedback.js" defer></script>
     <style>
-        /* --- FONT LOADING --- */
+        /* --- MASTER DOMINO'S FONT LOADING --- */
         @font-face {
             font-family: 'PizzaPress';
-            src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
+            src: url('fonts/Dominos%20Sans%20Header%201.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Header 1.ttf') format('truetype');
             font-weight: normal;
+            font-style: normal;
+            font-display: swap;
         }
-
         @font-face {
             font-family: 'Subhead1';
-            src: url('fonts/Dominos Sans Subhead 1.ttf') format('truetype');
+            src: url('fonts/Dominos%20Sans%20Subhead%201.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Subhead 1.ttf') format('truetype');
             font-weight: normal;
+            font-style: normal;
+            font-display: swap;
         }
-
         @font-face {
             font-family: 'Subhead2';
-            src: url('fonts/Dominos Sans Subhead 2.ttf') format('truetype');
+            src: url('fonts/Dominos%20Sans%20Subhead%202.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Subhead 2.ttf') format('truetype');
             font-weight: normal;
+            font-style: normal;
+            font-display: swap;
         }
-
         @font-face {
             font-family: 'OneDotCd-Bold';
-            src: url('fonts/Dominos Sans Bold.ttf') format('truetype');
-            font-weight: bold;
+            src: url('fonts/Dominos%20Sans%20Subhead%201.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Subhead 1.ttf') format('truetype'),
+                 url('fonts/Dominos%20Sans%20Bold.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Bold.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
         }
-
         @font-face {
             font-family: 'OneDotCd';
-            src: url('fonts/Dominos Sans Body.ttf') format('truetype');
+            src: url('fonts/Dominos%20Sans%20Body%20Compact.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Body Compact.ttf') format('truetype'),
+                 url('fonts/Dominos%20Sans%20Body.ttf') format('truetype'),
+                 url('fonts/Dominos Sans Body.ttf') format('truetype');
             font-weight: normal;
+            font-style: normal;
+            font-display: swap;
         }
 
         :root {
@@ -49,6 +70,7 @@
             --dark-blue: #005c91;
 
             /* Crust Palette */
+            --crust-base: #fefaf6;
             --crust-light: #faf2e9;
             --crust-med: #f0decc;
             --crust-dark: #c0a588;
@@ -82,64 +104,60 @@
             min-height: 100dvh;
         }
 
-        /* --- Header --- */
-        header {
-            background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue));
-            color: white;
-            padding: 0.5rem 1rem 0.35rem;
-            text-align: center;
-            border-bottom: 3px solid var(--brand-red);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .logo-container {
-            max-width: 210px;
-            margin: 0 auto 0.1rem;
-        }
-
-        .logo-img {
-            width: 100%;
-            height: auto;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
-        }
-
-        .tagline {
-            font-family: 'PizzaPress', serif;
-            font-size: 0.85rem;
-            letter-spacing: 0.8px;
-            opacity: 0.95;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            margin-top: 1px;
-            text-transform: uppercase;
-        }
-
-        /* --- Navigation Strip --- */
-        .nav-strip {
-            background-color: var(--dark-blue);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.28rem 1rem;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .back-link {
-            color: white;
-            text-decoration: none;
-            font-family: 'Subhead2', sans-serif;
-            font-size: 1.05rem;
+        /* --- Header Actions --- */
+        .header-actions {
+            margin-left: auto;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: var(--transition);
-            cursor: pointer;
+            flex-shrink: 0;
+            order: 2;
         }
 
-        .back-link:hover {
-            color: #88aacc;
-            transform: translateX(-5px);
+        .header-action-btn {
+            background: rgba(254, 250, 246, 0.15);
+            border: 1.5px solid var(--crust-light);
+            color: var(--crust-base) !important;
+            padding: 0.38rem 0.85rem;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            font-size: 0.82rem;
+            font-weight: normal !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .header-action-btn:hover {
+            background: var(--crust-light) !important;
+            color: var(--brand-red) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Suppress floating lms_feedback side tab - the header button is the sole trigger */
+        #beta-feedback-trigger {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .header-actions {
+                gap: 5px;
+            }
+            .header-action-btn {
+                padding: 4px 8px;
+                min-height: 28px;
+                font-size: 0.74rem !important;
+                letter-spacing: 0.3px;
+                gap: 4px;
+            }
         }
 
         /* --- Main Content --- */
@@ -656,31 +674,21 @@
 <body>
 
     <header>
-        <div class="logo-container">
-            <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo-img">
+        <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo">
+        <div class="header-text">
+            <h1>Wow Way Training</h1>
+            <div class="subtitle">Knowledge Base &amp; Training Center</div>
         </div>
-        <p class="tagline">Knowledge Base & Training Center</p>
-    </header>
 
-    <!-- Navigation -->
-    <div class="nav-strip">
-        <div
-            style="max-width: 1000px; margin: 0 auto; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
-            <!-- Dynamic Back Link -->
-            <a id="nav-back-btn" href="index.html" class="back-link">
-                <span id="nav-text">&#8592; Back to Career Path</span>
+        <div class="header-actions">
+            <a id="nav-back-btn" href="index.html" class="header-action-btn">
+                <span id="nav-text">&#8592; Career Path</span>
             </a>
-
-            <!-- Support / Report Issue Button -->
-            <button type="button" id="beta-feedback-trigger-custom"
-                onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null"
-                style="background: rgba(255, 255, 255, 0.12); color: white; border: 1.5px solid rgba(255, 255, 255, 0.4); padding: 6px 14px; border-radius: 20px; font-family: 'Subhead2', sans-serif; font-size: 0.92rem; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: all 0.2s;"
-                onmouseover="this.style.background='var(--brand-red)'; this.style.borderColor='var(--brand-red)'"
-                onmouseout="this.style.background='rgba(255, 255, 255, 0.12)'; this.style.borderColor='rgba(255, 255, 255, 0.4)'">
-                <span style="font-size: 1rem; line-height: 1;">🛠️</span> Report Issue
+            <button type="button" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
+                🛠️ Report Issue
             </button>
         </div>
-    </div>
+    </header>
 
     <main>
 
@@ -814,9 +822,9 @@
 
     </main>
 
-    <footer>
+    <footer class="portal-footer">
         <p>&copy; 2026 Team Wow! | Domino's Pizza</p>
-        <p class="footer-subtext">Powered by Crust & Code</p>
+        <p class="footer-subtext">Talent Acquisition &amp; Training Design</p>
     </footer>
 
     <script>
@@ -957,16 +965,16 @@
             // Show Target & Update Button Text
             if (view === 'lobby') {
                 document.getElementById('view-lobby').classList.remove('hidden');
-                updateNav('exit'); // Shows "Back to Career Path"
+                updateNav('exit'); // Shows "← Career Path"
             } else if (view === 'categories') {
                 document.getElementById('view-categories').classList.remove('hidden');
-                updateNav('back', 'Back to Lobby');
+                updateNav('back', 'Lobby');
             } else if (view === 'list') {
                 document.getElementById('view-resources-list').classList.remove('hidden');
-                updateNav('back', 'Back to Resource Library');
+                updateNav('back', 'Library');
             } else if (view === 'viewer') {
                 document.getElementById('view-viewer').classList.remove('hidden');
-                updateNav('back', 'Back to Resources');
+                updateNav('back', 'Resources');
             }
 
             // Clear frame src when leaving viewer to stop playing videos in the background
@@ -983,12 +991,13 @@
         function updateNav(type, text) {
             const navBtn = document.getElementById('nav-back-btn');
             const navText = document.getElementById('nav-text');
+            if (!navBtn || !navText) return;
 
             if (type === 'exit') {
                 // Turn it into a normal link
                 navBtn.onclick = null;
                 navBtn.href = 'index.html';
-                navText.innerHTML = '&#8592; Back to Career Path';
+                navText.innerHTML = '&#8592; Career Path';
             } else {
                 // Turn it into a Back Button
                 navBtn.href = '#';
@@ -1001,7 +1010,7 @@
             console.log("Current View is:", currentView);
             if (currentView === 'lobby') return;
 
-            e.preventDefault();
+            if (e && e.preventDefault) e.preventDefault();
 
             if (currentView === 'categories') {
                 navigateTo('lobby');
