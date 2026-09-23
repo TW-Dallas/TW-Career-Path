@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        if (window.location.hostname.endsWith('github.io')) {
+            window.location.replace('https://tw-career-path.pages.dev' + window.location.pathname.replace(/^\/TW-Career-Path/, '') + window.location.search);
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Wow Career Path</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="image/tile_blue.png">
+    <link rel="stylesheet" href="https://teamwow-assets.pages.dev/brand_master.css">
     
     <style>
         /* --- MASTER DOMINO'S FONT LOADING --- */
@@ -88,12 +94,13 @@
 
         /* --- Header --- */
         header {
-            background: linear-gradient(135deg, var(--dark-blue), var(--brand-blue));
+            background-color: var(--brand-blue);
             color: var(--crust-base);
             padding: 0.9rem 1rem 0.6rem;
             text-align: center;
             border-bottom: 4px solid var(--brand-red);
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
         }
 
         .logo-container {
@@ -108,13 +115,14 @@
         }
 
         .tagline {
-            font-family: 'PizzaPress', serif;
+            font-family: 'Subhead1', 'PizzaPress', serif;
             font-size: 0.95rem; /* REDUCED from 1.4rem */
             letter-spacing: 1px;
             opacity: 0.95;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
             margin-top: 3px; /* Slight breathing room */
             text-transform: uppercase;
+            font-weight: normal !important;
         }
 
         /* --- Main Content --- */
@@ -246,33 +254,41 @@
             .role-card:nth-child(odd)::before { left: -60px; right: auto; }
         }
 
-        /* Make sure the header knows it is the anchor point */
-        header {
-            position: relative; /* IMPORTANT: This keeps the button inside the blue box */
-        }
-        
-       .learning-btn {
+        /* --- Header Actions --- */
+        .header-actions {
             position: absolute;
             top: 1rem;
             right: 1.5rem;
-            background: rgba(254, 250, 246, 0.15); /* Updated to Crust Base RGB */
-            border: 2px solid var(--crust-light);
-            color: var(--crust-base);
-            padding: 0.45rem 1rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-family: 'OneDotCd-Bold';
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             z-index: 10;
         }
         
-        .learning-btn:hover {
+        .header-action-btn, .learning-btn {
+            background: rgba(254, 250, 246, 0.15); /* Updated to Crust Base RGB */
+            border: 1.5px solid var(--crust-light);
+            color: var(--crust-base);
+            padding: 0.42rem 0.95rem;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            font-size: 0.88rem;
+            font-weight: normal !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            line-height: 1.2;
+        }
+        
+        .header-action-btn:hover, .learning-btn:hover {
             background: var(--crust-light) !important;
             color: var(--brand-red) !important;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
@@ -349,12 +365,15 @@
             color: var(--brand-blue);
         }
 
-        /* Mobile: Un-stick it and center it */
+        /* Mobile: Un-stick actions and center */
         @media (max-width: 768px) {
-            .learning-btn {
-                position: static; /* Stop floating */
-                display: inline-block;
-                margin-top: 1rem; /* Space below tagline */
+            .header-actions {
+                position: static;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-top: 0.75rem;
+                gap: 8px;
             }
         }
 
@@ -393,48 +412,58 @@
         </div>
         <p class="tagline">Growing Leaders. Building Futures.</p>
         
-        <a href="learning_hub.html" class="learning-btn">
-            🎓 Learning Hub
-        </a>
-
+        <div class="header-actions">
+            <a href="learning_hub.html" class="header-action-btn">
+                🎓 Learning Hub
+            </a>
+            <button type="button" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
+                🛠️ Report Issue
+            </button>
+        </div>
     </header>
-        <!-- SUB-NAV STRIP -->
+
+    <!-- SUB-NAV STRIP: CLASS SIGNUPS -->
     <div style="
         background-color: var(--dark-blue);
-        border-bottom: 1px solid rgba(254, 250, 246,0.1);
-        padding: 0.5rem 1rem;
+        border-bottom: 1px solid rgba(254, 250, 246, 0.15);
+        padding: 0.55rem 1rem;
         text-align: center;
         margin-bottom: 1.2rem;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 14px;
     ">
-        <span style="font-family: 'OneDotCd-Bold'; color: #88aacc; font-size: 0.9rem; margin-right: 10px; text-transform: uppercase;">Class Signups:</span>
+        <span style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; color: #88aacc; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.5px;">Class Signups:</span>
         
-                <!-- DALLAS -->
+        <!-- DALLAS -->
         <a href="classes.html" style="
             color: var(--crust-base);
             text-decoration: none;
-            font-family: 'OneDotCd-Bold';
-            margin: 0 5px;
-            font-size: 1rem;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
             border-bottom: 2px solid var(--brand-red);
             padding-bottom: 2px;
+            transition: color 0.15s ease;
         ">DALLAS</a>
 
         <!-- DENVER -->
         <a href="denver_classes.html" style="
             color: var(--crust-base);
             text-decoration: none;
-            font-family: 'OneDotCd-Bold';
-            margin: 0 5px;
-            font-size: 1rem;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
             border-bottom: 2px solid var(--brand-red);
             padding-bottom: 2px;
+            transition: color 0.15s ease;
         ">DENVER</a>
 
-        <!-- INACTIVE MARKETS -->
-        <a href="#" onclick="alert('Coming Soon'); return false;" style="color: rgba(254, 250, 246,0.4); text-decoration: none; font-family: 'OneDotCd-Bold'; margin: 0 5px; font-size: 1rem;">EL PASO</a>
-        <a href="#" onclick="alert('Coming Soon'); return false;" style="color: rgba(254, 250, 246,0.4); text-decoration: none; font-family: 'OneDotCd-Bold'; margin: 0 5px; font-size: 1rem;">LOS ANGELES</a>
-        <a href="#" onclick="alert('Coming Soon'); return false;" style="color: rgba(254, 250, 246,0.4); text-decoration: none; font-family: 'OneDotCd-Bold'; margin: 0 5px; font-size: 1rem;">VIRTUAL</a>
+        <!-- VIRTUAL (INACTIVE / COMING SOON) -->
+        <span style="color: rgba(254, 250, 246, 0.4); font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 0.95rem; letter-spacing: 0.5px; cursor: default;">VIRTUAL</span>
     </div>
 
     <main>
