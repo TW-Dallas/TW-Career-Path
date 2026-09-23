@@ -128,10 +128,21 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        @media (max-width: 600px) {
+        /* Suppress floating lms_feedback side tab - the header button is the sole trigger */
+        #beta-feedback-trigger {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .header-actions {
+                gap: 5px;
+            }
             .header-action-btn {
-                padding: 0.3rem 0.65rem;
-                font-size: 0.75rem;
+                padding: 4px 8px;
+                min-height: 28px;
+                font-size: 0.74rem !important;
+                letter-spacing: 0.3px;
+                gap: 4px;
             }
         }
 
@@ -332,7 +343,7 @@
 
         <div class="header-actions">
             <a href="learning_hub.html" class="header-action-btn">
-                🎓 Learning Hub
+                🎓 Wow Way Hub
             </a>
             <button type="button" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
                 🛠️ Report Issue
