@@ -137,42 +137,7 @@
             min-height: 100vh;
         }
 
-        header {
-            background-color: white;
-            padding: 12px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .header-logo {
-            height: 44px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .header-text h1 {
-            font-family: 'OneDotCd-Bold', 'ExtraBold', sans-serif;
-            font-size: 22px;
-            color: var(--dark-blue);
-            text-transform: uppercase;
-            line-height: 1.1;
-            margin: 0;
-            font-weight: normal !important;
-        }
-
-        .header-text .subtitle {
-            font-size: 14px;
-            color: var(--crust-deep);
-            margin-top: 2px;
-        }
+        /* HEADER: Canonical brand blue header styled by brand_master.css */
 
         .brand-stripe {
             height: 4px;
@@ -497,26 +462,17 @@
             overflow-y: auto;
         }
 
-        footer {
-            background-color: var(--dark-blue);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-family: 'OneDotCd', sans-serif;
-            font-size: 13.5px;
-        }
     </style>
 </head>
 
 <body>
 
+    <!-- BRAND HEADER -->
     <header>
-        <div class="header-left">
-            <img src="New_Logo_v2.png" alt="Team Wow Logo" class="header-logo" onerror="this.src='image/tile_blue.png'">
-            <div class="header-text">
-                <h1>Trainer Dashboard</h1>
-                <div class="subtitle">MIT Leadership &amp; Candidate Roster Check-In</div>
-            </div>
+        <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo" onerror="this.src='image/tile_blue.png'">
+        <div class="header-text">
+            <h1>Trainer Dashboard</h1>
+            <div class="subtitle">MIT Leadership &amp; Candidate Roster Check-In</div>
         </div>
         <div class="header-actions">
             <div class="market-pill">Dallas Market</div>
