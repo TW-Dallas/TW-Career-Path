@@ -4,7 +4,7 @@
 <head>
     <script>
         if (window.location.hostname.endsWith('github.io')) {
-            window.location.replace('https://tw-career-path.pages.dev' + window.location.pathname.replace(/^\/TW-Career-Path/, '') + window.location.search);
+            window.location.replace('https://tw-career-path.pages.dev' + window.location.pathname.replace(/^\/TW-Career-Path/, '') + window.location.search + window.location.hash);
         }
     </script>
     <meta charset="UTF-8">
@@ -734,8 +734,8 @@
     <header>
         <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo">
         <div class="header-text">
-            <h1>Wow Way Hub</h1>
-            <div class="subtitle">Knowledge Base &amp; Training Center</div>
+            <h1 id="header-page-title">Wow Way Hub</h1>
+            <div id="header-page-subtitle" class="subtitle">Knowledge Base &amp; Training Center</div>
         </div>
 
         <div class="header-actions">
@@ -1022,6 +1022,29 @@
         ];
 
         // --- NAVIGATION LOGIC ---
+        const categorySubtitles = {
+            'training': 'Videos, Quizzes & Certification Paths',
+            'managers': 'OA Guides, Inventory, Cash & Labor',
+            'drivers': 'Safety Cards, Vehicle Inspections & Maps',
+            'insiders': 'Build Guides, Makeline Standards & RTU Sauces',
+            'newhire': 'Welcome Packet, Uniforms & First Day Info',
+            'hr': 'Benefits, Payroll & Policy Handbook'
+        };
+
+        function setHeader(title, subtitle, hash) {
+            const h1 = document.getElementById('header-page-title');
+            const sub = document.getElementById('header-page-subtitle');
+            if (h1 && title) h1.textContent = title;
+            if (sub && subtitle) sub.textContent = subtitle;
+            if (title) document.title = `${title} • Team Wow`;
+            if (hash !== undefined) {
+                const targetHash = hash ? ('#' + hash.replace(/^#/, '')) : '';
+                if (window.location.hash !== targetHash) {
+                    history.replaceState(null, '', window.location.pathname + window.location.search + targetHash);
+                }
+            }
+        }
+
         function navigateTo(view) {
             // Hide all
             document.getElementById('view-lobby').classList.add('hidden');
@@ -1029,18 +1052,22 @@
             document.getElementById('view-resources-list').classList.add('hidden');
             document.getElementById('view-viewer').classList.add('hidden');
 
-            // Show Target & Update Button Text
+            // Show Target & Update Header Text & Button Text
             if (view === 'lobby') {
                 document.getElementById('view-lobby').classList.remove('hidden');
+                setHeader('Wow Way Hub', 'Knowledge Base & Training Center', '');
                 updateNav('exit'); // Shows "← Career Path"
             } else if (view === 'categories') {
                 document.getElementById('view-categories').classList.remove('hidden');
+                setHeader('Resource Library', 'Job Aids, Standards & Policy Documents', 'resource');
                 updateNav('back', 'Lobby');
             } else if (view === 'list') {
                 document.getElementById('view-resources-list').classList.remove('hidden');
+                setHeader(activeCategoryTitle || 'Resource Library', categorySubtitles[activeCategoryKey] || 'Resource Library & Standards', activeCategoryKey || 'resource');
                 updateNav('back', 'Library');
             } else if (view === 'viewer') {
                 document.getElementById('view-viewer').classList.remove('hidden');
+                setHeader('Document Viewer', 'Resource Library', undefined);
                 updateNav('back', 'Resources');
             }
 

@@ -2,10 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=wow_way_training.html">
     <script>
-        window.location.replace('wow_way_training.html' + window.location.search + window.location.hash);
+        const targetBase = (window.location.hostname.endsWith('github.io'))
+            ? 'https://tw-career-path.pages.dev/wow_way_training'
+            : 'wow_way_training.html';
+        window.location.replace(targetBase + window.location.search + window.location.hash);
     </script>
+    <meta http-equiv="refresh" content="0; url=wow_way_training.html">
     <title>Redirecting to Wow Way Hub...</title>
 </head>
 <body>
