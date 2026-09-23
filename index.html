@@ -92,12 +92,12 @@
             font-size: 1.1rem;
         }
 
-        /* --- Header Actions (Matching Driver Rewards) --- */
+        /* --- Header Actions --- */
         .header-actions {
             margin-left: auto;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex-shrink: 0;
             order: 2;
         }
@@ -106,23 +106,25 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            background: rgba(254, 250, 246, 0.15);
+            gap: 5px;
+            background: rgba(254, 250, 246, 0.12);
             color: var(--crust-base) !important;
-            border: 1.5px solid rgba(254, 250, 246, 0.4);
-            padding: 6px 14px;
-            min-height: 36px;
+            border: 1.5px solid rgba(254, 250, 246, 0.85);
+            padding: 5px 12px;
+            min-height: 32px;
             border-radius: var(--radius-pill, 20px);
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
-            font-size: 0.88rem !important;
+            font-size: 0.82rem !important;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
             white-space: nowrap;
             touch-action: manipulation;
             text-decoration: none;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
             font-weight: normal !important;
+            line-height: 1;
         }
 
         .header-action-btn:hover {
@@ -139,16 +141,14 @@
 
         @media (max-width: 768px) {
             .header-actions {
-                gap: 6px;
+                gap: 5px;
             }
             .header-action-btn {
-                padding: 4px 10px;
-                min-height: 30px;
-                font-size: 0.78rem !important;
+                padding: 3px 8px;
+                min-height: 26px;
+                font-size: 0.72rem !important;
+                letter-spacing: 0.3px;
                 gap: 4px;
-            }
-            .header-action-btn img {
-                height: 14px !important;
             }
         }
 
@@ -351,8 +351,8 @@
             <a href="wow_way_training.html" class="header-action-btn">
                 🎓 Wow Way Hub
             </a>
-            <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn header-support-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
-                <img src="image/support_gear.png" alt="Report Issue" style="height: 18px; width: auto; object-fit: contain;">Report Issue
+            <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
+                🛠️ Report Issue
             </button>
         </div>
     </header>
