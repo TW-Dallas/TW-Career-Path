@@ -8,7 +8,72 @@
     <link rel="icon" type="image/png" href="image/tile_blue.png">
     <link rel="stylesheet" href="https://teamwow-assets.pages.dev/brand_master.css">
 
+    <script src="LMS_Files/Globals/lms_feedback.js" defer></script>
     <style>
+        /* HEADER ACTIONS (MATCHING MAIN PAGE & DRIVER REWARDS) */
+        .header-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .header-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: rgba(254, 250, 246, 0.15);
+            color: var(--crust-base) !important;
+            border: 1.5px solid rgba(254, 250, 246, 0.4);
+            padding: 6px 14px;
+            min-height: 36px;
+            border-radius: 20px;
+            font-family: 'Subhead1', sans-serif !important;
+            font-size: 0.88rem !important;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            white-space: nowrap;
+            touch-action: manipulation;
+            text-decoration: none;
+            letter-spacing: 0.3px;
+        }
+
+        .header-action-btn img {
+            height: 18px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-action-btn:hover {
+            background: var(--brand-red) !important;
+            border-color: var(--brand-red) !important;
+            color: var(--crust-base) !important;
+            transform: translateY(-1px);
+        }
+
+        #beta-feedback-trigger {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .header-actions {
+                gap: 5px;
+            }
+            .header-action-btn {
+                padding: 4px 10px;
+                min-height: 28px;
+                font-size: 0.78rem !important;
+                gap: 4px;
+            }
+            .header-action-btn img {
+                height: 14px !important;
+            }
+        }
+    </style>
         :root {
             --brand-red: #ff0000;
             --dark-red: #910000;
@@ -354,17 +419,18 @@
         }
 
         .register-btn.btn-future {
-            background-color: var(--crust-med);
-            color: var(--crust-deep);
-            border: 1.5px dashed var(--crust-dark);
-            box-shadow: none;
+            background-color: var(--crust-light) !important;
+            color: var(--crust-deep) !important;
+            border: 1.5px solid var(--crust-dark) !important;
+            box-shadow: none !important;
             cursor: not-allowed;
         }
 
         .register-btn.btn-closed {
-            background-color: #e5e5e5;
-            color: #888888;
-            box-shadow: none;
+            background-color: var(--crust-med) !important;
+            color: var(--crust-dark) !important;
+            border: 1.5px solid var(--crust-med) !important;
+            box-shadow: none !important;
             cursor: not-allowed;
         }
 
@@ -518,9 +584,9 @@
         }
 
         .register-btn:disabled {
-            background-color: #ccc;
             cursor: not-allowed;
             box-shadow: none;
+            transform: none;
         }
 
         .register-btn svg {
@@ -703,14 +769,22 @@
 </head>
 
 <body>
-    <!-- BRAND HEADER (IDENTICAL TO ORIENTATION.HTML) -->
+    <!-- BRAND HEADER -->
     <header>
         <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo" onerror="this.src='image/tile_blue.png'">
         <div class="header-text">
             <h1>MIT Leadership Classes</h1>
-            <div class="subtitle">Operations Training &amp; Management Development • Dallas Market</div>
+            <div class="subtitle">Operations Training &amp; Management Development</div>
         </div>
-        <div class="market-pill">Dallas Market</div>
+        <div class="header-actions">
+            <div class="market-pill">Dallas Market</div>
+            <a href="trainer_dashboard.html" class="header-action-btn">
+                <img src="image/custom-emojis/manager_lock.png" alt="Lock">Trainer Portal
+            </a>
+            <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
+                <img src="image/custom-emojis/support_gear.png" alt="Report Issue">Report Issue
+            </button>
+        </div>
     </header>
 
     <!-- SIGNATURE RED ACCENT STRIPE -->
@@ -775,7 +849,7 @@
             </div>
             <div class="footer-meta">
                 <p class="footer-copy">&copy; 2026 Team Wow, Inc. All rights reserved.</p>
-                <p class="footer-crust-code">Powered by Crust &amp; Code • <a href="trainer_dashboard.html" style="color: rgba(255,255,255,0.5); text-decoration: none;">🔒 Trainer Portal</a></p>
+                <p class="footer-crust-code">Powered by Crust &amp; Code</p>
             </div>
         </div>
     </footer>
@@ -1142,23 +1216,17 @@
                 let btnText = "Select This Class";
                 let btnClass = "";
                 let isDisabled = false;
-                let deadlineLabel = "Signup Deadline";
-                let deadlineText = "";
-                let isUrgent = false;
+                let deadlineHTML = "";
 
                 if (cls._status === 'future') {
                     const openStr = cls._openDate ? cls._openDate.toLocaleDateString("en-US", { month: 'numeric', day: 'numeric' }) : '';
                     btnText = `Opens ${openStr}`;
                     isDisabled = true;
                     btnClass = "btn-future";
-                    deadlineLabel = "Opening Date";
-                    deadlineText = `Signups Open ${openStr}`;
                 } else if (cls._status === 'closed') {
                     btnText = "Signup Closed";
                     isDisabled = true;
                     btnClass = "btn-closed";
-                    deadlineLabel = "Status";
-                    deadlineText = "Registration Closed";
                 } else {
                     if (isFull) {
                         btnText = "Class Full";
@@ -1166,16 +1234,15 @@
                     }
                     if (cls._closeDate) {
                         const closeStr = cls._closeDate.toLocaleDateString("en-US", { month: 'short', day: 'numeric' });
-                        deadlineLabel = "Sign Up By";
-                        deadlineText = closeStr;
                         const daysLeft = Math.ceil((cls._closeDate.getTime() - todayStart) / 86400000);
-                        if (daysLeft >= 0 && daysLeft <= 2) {
-                            isUrgent = true;
-                            deadlineText += ` (${daysLeft === 0 ? 'Today!' : daysLeft + 'd left'})`;
-                        }
-                    } else {
-                        deadlineLabel = "Status";
-                        deadlineText = "Open for Signup";
+                        const isUrgent = daysLeft >= 0 && daysLeft <= 2;
+                        const urgentTag = isUrgent ? ` (${daysLeft === 0 ? 'Today!' : daysLeft + 'd left'})` : '';
+                        deadlineHTML = `
+                            <div class="card-deadline ${isUrgent ? 'urgent' : ''}">
+                                <span class="deadline-lbl">Sign Up By:</span>
+                                <span class="deadline-val">${closeStr}${urgentTag}</span>
+                            </div>
+                        `;
                     }
                 }
 
@@ -1210,10 +1277,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="card-deadline ${isUrgent ? 'urgent' : ''}">
-                            <span class="deadline-lbl">${deadlineLabel}:</span>
-                            <span class="deadline-val">${deadlineText}</span>
-                        </div>
+                        ${deadlineHTML}
                         <button type="button" class="register-btn ${btnClass}" ${isDisabled ? 'disabled' : ''} onclick="openSignupModal('${cls.id}')">
                             ${cls._status === 'active' && !isFull ? '<svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>' : ''}
                             ${btnText}

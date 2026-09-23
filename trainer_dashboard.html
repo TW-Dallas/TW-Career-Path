@@ -7,8 +7,72 @@
     <title>Trainer Dashboard • Team Wow Dallas</title>
     <link rel="icon" type="image/png" href="image/tile_blue.png">
     <link rel="stylesheet" href="https://teamwow-assets.pages.dev/brand_master.css">
+    <script src="LMS_Files/Globals/lms_feedback.js" defer></script>
 
     <style>
+        /* HEADER ACTIONS (MATCHING MAIN PAGE) */
+        .header-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .header-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: rgba(254, 250, 246, 0.15);
+            color: var(--crust-base) !important;
+            border: 1.5px solid rgba(254, 250, 246, 0.4);
+            padding: 6px 14px;
+            min-height: 36px;
+            border-radius: 20px;
+            font-family: 'Subhead1', sans-serif !important;
+            font-size: 0.88rem !important;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            white-space: nowrap;
+            touch-action: manipulation;
+            text-decoration: none;
+            letter-spacing: 0.3px;
+        }
+
+        .header-action-btn img {
+            height: 18px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-action-btn:hover {
+            background: var(--brand-red) !important;
+            border-color: var(--brand-red) !important;
+            color: var(--crust-base) !important;
+            transform: translateY(-1px);
+        }
+
+        #beta-feedback-trigger {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .header-actions {
+                gap: 5px;
+            }
+            .header-action-btn {
+                padding: 4px 10px;
+                min-height: 28px;
+                font-size: 0.78rem !important;
+                gap: 4px;
+            }
+            .header-action-btn img {
+                height: 14px !important;
+            }
+        }
         @font-face {
             font-family: 'PizzaPress';
             src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
@@ -436,16 +500,21 @@
             <img src="New_Logo_v2.png" alt="Team Wow Logo" class="header-logo" onerror="this.src='image/tile_blue.png'">
             <div class="header-text">
                 <h1>Trainer Dashboard</h1>
-                <div class="subtitle">MIT Leadership &amp; Candidate Roster Check-In • Dallas Market</div>
+                <div class="subtitle">MIT Leadership &amp; Candidate Roster Check-In</div>
             </div>
+        </div>
+        <div class="header-actions">
+            <div class="market-pill">Dallas Market</div>
+            <a href="classes.html" class="header-action-btn">
+                ← Class Schedule
+            </a>
+            <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
+                <img src="image/custom-emojis/support_gear.png" alt="Report Issue">Report Issue
+            </button>
         </div>
     </header>
 
     <div class="brand-stripe"></div>
-
-    <div class="back-nav">
-        <a href="classes.html">&larr; Back to Class Schedule</a>
-    </div>
 
     <main>
         <!-- PROTOCOLS ACCORDION -->
@@ -540,9 +609,17 @@
         </div>
     </div>
 
-    <footer>
-        <p style="margin: 0 0 4px 0;">&copy; 2026 Team Wow • Domino's Pizza</p>
-        <p style="margin: 0; font-size: 12px; opacity: 0.7;">Powered by Crust &amp; Code</p>
+    <footer class="portal-footer">
+        <div class="portal-footer-inner">
+            <div class="footer-brand">
+                <span class="footer-title">Team Wow • Domino's Pizza</span>
+                <span class="footer-subtitle">MIT Leadership Development &amp; Management Training</span>
+            </div>
+            <div class="footer-meta">
+                <p class="footer-copy">&copy; 2026 Team Wow, Inc. All rights reserved.</p>
+                <p class="footer-crust-code">Powered by Crust &amp; Code</p>
+            </div>
+        </div>
     </footer>
 
     <script>
