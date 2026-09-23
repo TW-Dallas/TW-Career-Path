@@ -93,36 +93,56 @@
         }
 
         /* --- Header --- */
-        header {
-            background-color: var(--brand-blue);
-            color: var(--crust-base);
-            padding: 0.9rem 1rem 0.6rem;
-            text-align: center;
-            border-bottom: 4px solid var(--brand-red);
+        header.career-header {
+            background-color: var(--brand-blue) !important;
+            color: var(--crust-base) !important;
+            padding: 0.8rem 1rem 0.6rem !important;
+            border-bottom: 4px solid var(--brand-red) !important;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            position: relative;
+            position: relative !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-direction: row !important;
+            min-height: 82px;
+        }
+
+        .header-center-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 0 auto;
         }
 
         .logo-container {
-            max-width: 270px;
-            margin: 0 auto 0.15rem;
+            max-width: 250px;
+            margin: 0 auto;
+            line-height: 1;
         }
         
         .logo-img {
             width: 100%;
-            height: auto;
+            max-height: 44px;
+            object-fit: contain;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+            display: block;
+            margin: 0 auto;
         }
 
         .tagline {
-            font-family: 'Subhead1', 'PizzaPress', serif;
-            font-size: 0.95rem; /* REDUCED from 1.4rem */
-            letter-spacing: 1px;
+            font-family: 'Subhead1', 'PizzaPress', serif !important;
+            font-size: 0.92rem !important;
+            letter-spacing: 1px !important;
+            color: var(--crust-base) !important;
             opacity: 0.95;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            margin-top: 3px; /* Slight breathing room */
+            margin-top: 4px !important;
             text-transform: uppercase;
             font-weight: normal !important;
+            text-align: center !important;
+            width: 100%;
         }
 
         /* --- Main Content --- */
@@ -256,23 +276,25 @@
 
         /* --- Header Actions --- */
         .header-actions {
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            position: absolute !important;
+            right: 1.5rem !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            margin: 0 !important;
             z-index: 10;
         }
         
         .header-action-btn, .learning-btn {
             background: rgba(254, 250, 246, 0.15); /* Updated to Crust Base RGB */
             border: 1.5px solid var(--crust-light);
-            color: var(--crust-base);
+            color: var(--crust-base) !important;
             padding: 0.42rem 0.95rem;
             border-radius: 9999px;
             text-decoration: none;
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             transition: all 0.2s ease;
@@ -283,6 +305,7 @@
             gap: 6px;
             cursor: pointer;
             line-height: 1.2;
+            white-space: nowrap;
         }
         
         .header-action-btn:hover, .learning-btn:hover {
@@ -367,13 +390,22 @@
 
         /* Mobile: Un-stick actions and center */
         @media (max-width: 768px) {
+            header.career-header {
+                flex-direction: column !important;
+                padding: 10px 14px !important;
+                gap: 8px !important;
+                min-height: auto !important;
+            }
+
             .header-actions {
-                position: static;
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-                margin-top: 0.75rem;
-                gap: 8px;
+                position: static !important;
+                transform: none !important;
+                display: flex !important;
+                justify-content: center !important;
+                flex-wrap: wrap !important;
+                margin-top: 6px !important;
+                gap: 8px !important;
+                width: 100% !important;
             }
         }
 
@@ -406,11 +438,13 @@
 </head>
 <body>
     
-    <header>
-        <div class="logo-container">
-            <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo-img">
+    <header class="career-header">
+        <div class="header-center-brand">
+            <div class="logo-container">
+                <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo-img">
+            </div>
+            <p class="tagline">Growing Leaders. Building Futures.</p>
         </div>
-        <p class="tagline">Growing Leaders. Building Futures.</p>
         
         <div class="header-actions">
             <a href="learning_hub.html" class="header-action-btn">
