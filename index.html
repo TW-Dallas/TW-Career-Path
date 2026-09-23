@@ -92,40 +92,44 @@
             font-size: 1.1rem;
         }
 
-        /* --- Header Actions --- */
+        /* --- Header Actions (Matching Driver Rewards) --- */
         .header-actions {
             margin-left: auto;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            flex-shrink: 0;
+            order: 2;
         }
 
         .header-action-btn {
-            background: rgba(254, 250, 246, 0.15);
-            border: 1.5px solid var(--crust-light);
-            color: var(--crust-base) !important;
-            padding: 0.38rem 0.85rem;
-            border-radius: 9999px;
-            text-decoration: none;
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.2s ease;
-            font-size: 0.82rem;
-            font-weight: normal !important;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
+            background: rgba(254, 250, 246, 0.15);
+            color: var(--crust-base) !important;
+            border: 1.5px solid rgba(254, 250, 246, 0.4);
+            padding: 6px 14px;
+            min-height: 36px;
+            border-radius: var(--radius-pill, 20px);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
+            font-size: 0.88rem !important;
             cursor: pointer;
-            line-height: 1.2;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
             white-space: nowrap;
+            touch-action: manipulation;
+            text-decoration: none;
+            letter-spacing: 0.3px;
+            font-weight: normal !important;
         }
 
         .header-action-btn:hover {
-            background: var(--crust-light) !important;
-            color: var(--brand-red) !important;
+            background: var(--brand-red) !important;
+            border-color: var(--brand-red) !important;
+            color: var(--crust-base) !important;
             transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
         /* Suppress floating lms_feedback side tab - the header button is the sole trigger */
@@ -135,14 +139,16 @@
 
         @media (max-width: 768px) {
             .header-actions {
-                gap: 5px;
+                gap: 6px;
             }
             .header-action-btn {
-                padding: 4px 8px;
-                min-height: 28px;
-                font-size: 0.74rem !important;
-                letter-spacing: 0.3px;
+                padding: 4px 10px;
+                min-height: 30px;
+                font-size: 0.78rem !important;
                 gap: 4px;
+            }
+            .header-action-btn img {
+                height: 14px !important;
             }
         }
 
@@ -342,11 +348,11 @@
         </div>
 
         <div class="header-actions">
-            <a href="learning_hub.html" class="header-action-btn">
-                🎓 Wow Way Training
+            <a href="wow_way_training.html" class="header-action-btn">
+                🎓 Wow Way Hub
             </a>
-            <button type="button" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
-                🛠️ Report Issue
+            <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn header-support-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
+                <img src="image/support_gear.png" alt="Report Issue" style="height: 18px; width: auto; object-fit: contain;">Report Issue
             </button>
         </div>
     </header>
