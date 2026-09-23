@@ -9,6 +9,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 
 ### 🍕 Fresh Out of the Oven (New Features & Content)
 * **Driver Rewards Portal Multi-Market Expansion (Denver & LA Live!):** Expanded the live [Driver Rewards Portal](https://driver-rewards.pages.dev) to fully support **Denver** (788 active drivers) and **Los Angeles** (214 active drivers) alongside Dallas and El Paso. Over 1,900 active delivery drivers across all four markets can now look up their real-time safety scores, period delivery trip counts, and redeem accumulated points.
+* **Trainer Dashboard & MIT Leadership Hub Overhaul:** Rebuilt the Dallas Trainer Dashboard with an instant type-to-filter class search bar and quick center/level filter pills, replacing the legacy dropdown with interactive session cards. Pre-registered candidates are now explicitly categorized as an Expected Roster, removing ambiguous check-in buttons in favor of an official, scannable **In-Class MIT Completion QR Code** and online completion portal (`mit_completion.html`) logging verified attendance directly to Cloudflare D1.
 * **Driver Rewards 2026 Prize Catalog Quick Access:** Streamlined header navigation with 1-tap access to the complete 2026 Prize Catalog, detailing reward tiers from swag and car wash cards up to $150 Tire Gift Cards.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
