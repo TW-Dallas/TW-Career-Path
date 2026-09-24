@@ -77,18 +77,6 @@
             display: none !important;
         }
 
-        @media (max-width: 768px) {
-            .header-actions {
-                gap: 5px;
-            }
-            .header-action-btn, .market-pill {
-                padding: 4px 10px !important;
-                min-height: 28px !important;
-                font-size: 0.74rem !important;
-                letter-spacing: 0.3px !important;
-            }
-        }
-
         :root {
             --brand-red: #ff0000;
             --dark-red: #910000;
@@ -786,10 +774,12 @@
 <body>
     <!-- BRAND HEADER -->
     <header>
-        <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo" onerror="this.src='image/tile_blue.png'">
-        <div class="header-text">
-            <h1>MIT Leadership Classes</h1>
-            <div class="subtitle">Operations Training &amp; Management Development</div>
+        <div class="header-left">
+            <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo" onerror="this.src='image/tile_blue.png'">
+            <div class="header-text">
+                <h1>MIT Leadership Classes</h1>
+                <div class="subtitle">Operations Training &amp; Management Development</div>
+            </div>
         </div>
         <div class="header-actions">
             <div class="market-pill">Dallas Market</div>
