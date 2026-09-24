@@ -343,20 +343,11 @@
             flex-wrap: wrap;
         }
 
-        .filter-label {
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 12px;
-            text-transform: uppercase;
-            color: var(--crust-deep);
-            min-width: 65px;
-            letter-spacing: 0.5px;
-        }
-
         .filter-pill {
             background: var(--crust-light);
             border: 1px solid var(--crust-med);
             color: var(--crust-deep);
-            padding: 5px 12px;
+            padding: 5px 14px;
             border-radius: var(--radius-pill);
             font-family: 'OneDotCd-Bold', sans-serif;
             font-size: 13px;
@@ -376,6 +367,16 @@
             color: white !important;
             border-color: var(--dark-blue) !important;
             box-shadow: 0 2px 5px rgba(0, 92, 145, 0.25);
+        }
+
+        @media (max-width: 600px) {
+            .filter-row {
+                gap: 6px;
+            }
+            .filter-pill {
+                padding: 4px 11px;
+                font-size: 12.5px;
+            }
         }
 
         /* CLASS CARDS CONTAINER */
@@ -905,7 +906,9 @@
     <header class="portal-header">
         <div class="portal-header-inner">
             <div class="header-brand-wrap">
-                <img src="New_Logo_v2.png" alt="Team Wow Logo" class="portal-logo-img" onerror="this.src='image/tile_blue.png'">
+                <a href="index.html" class="logo-link" title="Back to Career Path">
+                    <img src="New_Logo_v2.png" alt="Team Wow Logo" class="portal-logo-img" onerror="this.src='image/tile_blue.png'">
+                </a>
                 <div class="header-text-group">
                     <h1>Trainer Dashboard</h1>
                     <div class="subtitle">MIT Leadership &amp; Candidate Roster Hub</div>
@@ -955,22 +958,20 @@
             <div class="search-row">
                 <div class="search-input-wrapper">
                     <span class="search-icon">🔍</span>
-                    <input type="text" id="classSearchInput" class="search-input" placeholder="Search by course name, trainer, training center, or store #..." oninput="handleClassSearch()">
+                    <input type="text" id="classSearchInput" class="search-input" placeholder="Search by course name, trainer, location, or store #..." oninput="handleClassSearch()">
                     <button type="button" id="searchClearBtn" class="search-clear-btn" onclick="clearClassSearch()">&times;</button>
                 </div>
             </div>
 
-            <!-- Location & Center Filter Pills -->
+            <!-- Location & Level Filter Pills -->
             <div class="filter-section">
                 <div class="filter-row">
-                    <span class="filter-label">Center:</span>
-                    <button type="button" class="filter-pill active" data-filter-type="location" data-val="ALL" onclick="setFilter('location', 'ALL', this)">All Centers</button>
+                    <button type="button" class="filter-pill active" data-filter-type="location" data-val="ALL" onclick="setFilter('location', 'ALL', this)">All</button>
                     <button type="button" class="filter-pill" data-filter-type="location" data-val="McKinney" onclick="setFilter('location', 'McKinney', this)">McKinney</button>
                     <button type="button" class="filter-pill" data-filter-type="location" data-val="Mesquite" onclick="setFilter('location', 'Mesquite', this)">Mesquite</button>
                     <button type="button" class="filter-pill" data-filter-type="location" data-val="Virtual" onclick="setFilter('location', 'Virtual', this)">Virtual</button>
                 </div>
                 <div class="filter-row">
-                    <span class="filter-label">Level:</span>
                     <button type="button" class="filter-pill active" data-filter-type="level" data-val="ALL" onclick="setFilter('level', 'ALL', this)">All Levels</button>
                     <button type="button" class="filter-pill" data-filter-type="level" data-val="1" onclick="setFilter('level', '1', this)">Level 1</button>
                     <button type="button" class="filter-pill" data-filter-type="level" data-val="2" onclick="setFilter('level', '2', this)">Level 2</button>
@@ -1317,7 +1318,7 @@
                             <div class="class-meta-row">
                                 <span class="class-meta-item">
                                     <img src="image/custom-emojis/location-base.png" alt="Loc" style="width: 14px; height: 14px; object-fit: contain;">
-                                    ${cls.location || 'McKinney'} Center
+                                    ${(cls.location || 'McKinney').replace(/\s*Center\s*/gi, '').trim()}
                                 </span>
                                 <span class="class-meta-item">
                                     👤 ${cls.trainer || 'Team Wow'}
@@ -1360,7 +1361,7 @@
             const emptyMsg = document.getElementById('emptyRosterMsg');
 
             document.getElementById('rosterClassName').innerText = cls ? `${cls.name} (Level ${cls.level || 1})` : 'Class Roster';
-            document.getElementById('rosterLocation').innerText = cls ? `${cls.location} Center` : 'Dallas';
+            document.getElementById('rosterLocation').innerText = cls ? (cls.location || 'Dallas').replace(/\s*Center\s*/gi, '').trim() : 'Dallas';
             document.getElementById('rosterDateTime').innerText = cls ? `${cls.classDate} @ ${cls.startTime || '11:00 AM'}` : '';
             document.getElementById('rosterTrainer').innerText = cls ? `Trainer: ${cls.trainer}` : '';
             
@@ -1448,7 +1449,8 @@
             const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(completionUrl)}`;
 
             document.getElementById('qrCourseTitle').innerText = `${cls.name} (Level ${cls.level || 1})`;
-            document.getElementById('qrCourseSubtitle').innerText = `${cls.classDate} @ ${cls.startTime || '11:00 AM'} • ${cls.location} Center • Trainer: ${cls.trainer}`;
+            const cleanLoc = (cls.location || 'Dallas').replace(/\s*Center\s*/gi, '').trim();
+            document.getElementById('qrCourseSubtitle').innerText = `${cls.classDate} @ ${cls.startTime || '11:00 AM'} • ${cleanLoc} • Trainer: ${cls.trainer}`;
             document.getElementById('qrImage').src = qrApiUrl;
             document.getElementById('qrDirectUrl').value = completionUrl;
 

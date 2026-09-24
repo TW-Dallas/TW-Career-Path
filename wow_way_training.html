@@ -104,64 +104,9 @@
             min-height: 100dvh;
         }
 
-        /* --- Header Actions --- */
-        .header-actions {
-            margin-left: auto;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-            order: 2;
-        }
-
-        .header-action-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            background: rgba(254, 250, 246, 0.12);
-            color: var(--crust-base) !important;
-            border: 1.5px solid rgba(254, 250, 246, 0.85);
-            padding: 5px 12px;
-            min-height: 32px;
-            border-radius: var(--radius-pill, 20px);
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
-            font-size: 0.82rem !important;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-            white-space: nowrap;
-            touch-action: manipulation;
-            text-decoration: none;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            font-weight: normal !important;
-            line-height: 1;
-        }
-
-        .header-action-btn:hover {
-            background: var(--brand-red) !important;
-            border-color: var(--brand-red) !important;
-            color: var(--crust-base) !important;
-            transform: translateY(-1px);
-        }
-
         /* Suppress floating lms_feedback side tab - the header button is the sole trigger */
         #beta-feedback-trigger {
             display: none !important;
-        }
-
-        @media (max-width: 768px) {
-            .header-actions {
-                gap: 5px;
-            }
-            .header-action-btn {
-                padding: 3px 8px;
-                min-height: 26px;
-                font-size: 0.72rem !important;
-                letter-spacing: 0.3px;
-                gap: 4px;
-            }
         }
 
         /* --- Main Content --- */
@@ -732,10 +677,14 @@
 <body>
 
     <header>
-        <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo">
-        <div class="header-text">
-            <h1 id="header-page-title">Wow Way Hub</h1>
-            <div id="header-page-subtitle" class="subtitle">Knowledge Base &amp; Training Center</div>
+        <div class="header-left">
+            <a href="index.html" class="logo-link" title="Back to Career Path">
+                <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo">
+            </a>
+            <div class="header-text">
+                <h1 id="header-page-title">Wow Way Hub</h1>
+                <div id="header-page-subtitle" class="subtitle">Knowledge Base &amp; Training Center</div>
+            </div>
         </div>
 
         <div class="header-actions">
