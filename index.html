@@ -134,6 +134,10 @@
             transform: translateY(-1px);
         }
 
+        .header-action-btn .btn-text-short {
+            display: none;
+        }
+
         /* Suppress floating lms_feedback side tab - the header button is the sole trigger */
         #beta-feedback-trigger {
             display: none !important;
@@ -144,11 +148,60 @@
                 gap: 5px;
             }
             .header-action-btn {
-                padding: 3px 8px;
-                min-height: 26px;
-                font-size: 0.72rem !important;
+                padding: 4px 8px;
+                min-height: 28px;
+                font-size: 0.74rem !important;
                 letter-spacing: 0.3px;
                 gap: 4px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            header {
+                flex-wrap: wrap;
+                padding: 8px 12px 10px 12px;
+                row-gap: 8px;
+            }
+            .header-left {
+                width: 100%;
+                gap: 10px;
+            }
+            .header-logo, .logo {
+                height: 32px;
+            }
+            .header-text h1 {
+                font-size: 1.35rem !important;
+            }
+            .header-text .subtitle {
+                font-size: 0.74rem !important;
+            }
+            .header-actions {
+                width: 100%;
+                margin-left: 0;
+                justify-content: space-between;
+                gap: 6px;
+            }
+            .header-action-btn {
+                flex: 1 1 0;
+                padding: 4px 6px;
+                min-height: 28px;
+                font-size: 0.70rem !important;
+                letter-spacing: 0.2px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .header-action-btn .btn-text-full {
+                display: none;
+            }
+            .header-action-btn .btn-text-short {
+                display: inline;
+            }
+            .header-action-btn {
+                font-size: 0.68rem !important;
+                padding: 4px 3px;
+                gap: 3px;
             }
         }
 
@@ -341,18 +394,23 @@
 <body>
     
     <header>
-        <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo">
-        <div class="header-text">
-            <h1>Career Path</h1>
-            <div class="subtitle">Growing Leaders. Building Futures.</div>
+        <div class="header-left">
+            <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo">
+            <div class="header-text">
+                <h1>Career Path</h1>
+                <div class="subtitle">Growing Leaders. Building Futures.</div>
+            </div>
         </div>
 
         <div class="header-actions">
-            <a href="wow_way_training.html" class="header-action-btn">
-                🎓 Wow Way Hub
+            <a href="https://driver-rewards.pages.dev" target="_blank" class="header-action-btn" title="Driver Rewards Portal">
+                <span>🚗</span> <span class="btn-text-full">Driver Rewards</span><span class="btn-text-short">Rewards</span>
             </a>
-            <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
-                🛠️ Report Issue
+            <a href="wow_way_training.html" class="header-action-btn" title="The Wow Way Training Hub">
+                <span>🎓</span> <span class="btn-text-full">Wow Way Hub</span><span class="btn-text-short">Wow Way</span>
+            </a>
+            <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null" title="Report an Issue">
+                <span>🛠️</span> <span class="btn-text-full">Report Issue</span><span class="btn-text-short">Support</span>
             </button>
         </div>
     </header>
