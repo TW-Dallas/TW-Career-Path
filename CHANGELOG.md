@@ -8,34 +8,31 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 *Scheduled: Thursday, September 24, 2026 @ 9:00 AM CST/CDT (Compiled @ 5:00 AM CST/CDT)*
 
 ### 🍕 Fresh Out of the Oven (New Features & Content)
-* **New MIT Trainer Dashboard (Building the Virtual Class Foundation):** Rebuilt the Dallas Trainer Dashboard with instant search, level filters, and interactive class cards! More importantly, this redesign lays the architectural groundwork for our upcoming **Virtual Class section**. Because virtual classes will feature cross-market trainers and multi-market participation, having an easy-to-read schedule and a rock-solid sign-up and roster system is crucial. We are testing and verifying the system in Dallas first, and once confirmed, we will arrange the upcoming Virtual Classes and push them live!
-* **Active Driver Roster Filtering (Driver Rewards):** Cleaned up the Driver Rewards leaderboards across all markets! The portal now automatically cross-references active store rosters, filtering out team members who have moved on while safely preserving their historical points in our database should they ever return. Leaderboards now strictly display active drivers competing for points and prizes!
-* **Driver Rewards Quick Access in Header Navigation:** Added a direct shortcut to Driver Rewards right in the main header navigation, making it effortless for store leaders and drivers to jump straight into standings and reward redemptions from anywhere across our platform.
-* **Platform Visual Refresh & Standardized Navigation:** Alongside our high-speed system migration, our core portals have received a full visual polish! We've standardized key controls across the board—placing **Login** and **Support / Report Issue** consistently in the top right-hand corner of every upgraded page for quick, uniform access.
-* **New Custom Wow Way Learner Credentials (Coming Soon):** We are retiring the old Google Form used for generating Wow Way Learner credentials and replacing it with a custom, built-in portal form directly on the Career Path site matching the Team Wow design standard.
-  * **Market Rollout:** **LA and El Paso** will utilize the new Credential Generator directly via the website. **Dallas and Denver** will continue their streamlined process of providing the setup link directly to new hires at the conclusion of their NTO (Orientation) class.
+* **New MIT Trainer Dashboard (Dallas Pilot):** Rebuilt with instant search and class filter cards. This pilots the new signup and roster framework for our upcoming multi-market **Virtual Classes**!
+* **Active Driver Standings Filtering:** Standings across all markets now automatically filter out inactive drivers while safely preserving their historical points in the database.
+* **Driver Rewards Header Shortcut:** Added a direct 1-tap shortcut to Driver Rewards in the top site header so store teams can jump straight into standings and prizes.
+* **Platform Visual Refresh:** Upgraded portals received a visual polish, standardizing **Login** and **Support / Report Issue** in the top right of every screen.
+* **New Custom Learner Credentials Form (Coming Soon):** Retiring the old Google Form for a custom Career Path form. **LA & El Paso** will generate credentials online; **Dallas & Denver** will continue providing links at NTO graduation.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
-* **Driver Rewards Balance Adjustment:** A sharp-eyed team member pointed out a discrepancy in their period point totals. I was able to track down the underlying glitch, clean up duplicate period entries, and get driver balances corrected. Please keep jumping into the portal to celebrate and reward your safe drivers—and keep submitting tickets whenever you spot something that looks off!
-* **POS Simulator — Store Phone Practice Guides:** Added clear glowing cues and guide badges for the **Park** and **Mute** buttons on the store phone simulator so team members learn exactly where each key lives during full practice orders.
-* **Pizza Matcher (Module 3) Laptop Friendly Controls:** If a new hire is practicing on a store laptop and having trouble dragging toppings on a trackpad, they can now simply click an ingredient and click the pizza to place it! Added smoother snapping and adjusted sizing so the entire game fits comfortably on store screens without awkward scrolling.
-* **Day 1 Welcome Video Loading Fix:** Fixed an issue where the welcome video on Day 1 Module 1 could get stuck on the loading screen on certain store computers. Videos now start playing immediately the moment a trainer enters their PIN.
+* **Driver Rewards Balance Adjustment:** Resolved a duplicate period glitch flagged by a store team member—balances are corrected! Keep rewarding your safe drivers and submitting tickets.
+* **POS Simulator — Store Phone Practice:** Added glowing cues and guide badges for **Park** and **Mute** buttons on full practice orders.
+* **Pizza Matcher (Module 3) Laptop Controls:** Added click-to-place controls for easier play on store laptop trackpads, plus smoother ingredient snapping and no vertical scrolling.
+* **Day 1 Welcome Video Loading:** Fixed a stall on Day 1 Module 1—welcome videos now start playing immediately upon Trainer PIN entry.
 
 ### ⚠️ On Our Radar (Known Issues & Interim Fixes)
-* **High-Speed Cloudflare Upgrade:** We are actively migrating our training and portal sites over to Cloudflare. This upgrade will significantly cut down on slow load times, eliminate timeout crashes during peak store hours, and deliver a much faster, smoother experience across all stores.
-* **POS Station Graphic Typo:** A minor grammar typo (*"We hiring delivery drivers"*) remains visible on the background terminal screenshot in introductory practice screens. A graphic touch-up is queued for an upcoming asset refresh.
+* **High-Speed Cloudflare Upgrade:** Actively migrating all training portals to Cloudflare to slash load times and eliminate peak-hour timeout crashes.
+* **POS Station Graphic Typo:** A minor screenshot typo (*"We hiring delivery drivers"*) is queued for replacement in an upcoming graphic refresh.
 
 ### 🔜 On the Horizon (Upcoming Content & Rollouts)
-* **The Wow Way Trainer Class (~65% Complete!):** The Day 2 Trainer Packet is officially complete and integrated into the presentation deck! We are putting the finishing touches on the class materials before moving into filming.
-  * **Mandatory Certification for All Credentialed Trainers:** Once scheduled, this virtual class will be **required for all team members who currently hold trainer credentials**. 
-  * Class schedules will be announced as we near completion.
-  * Trainers will have a communicated grace period to attend and get certified before trainer credentials are paused, ensuring everyone coaching our new hires is fully aligned with the Wow Way standard.
-* **Day 2 Content Development:** The shared core portion of Day 2 is officially complete! Development has now expanded into the role-specific tracks: creation of content for the CSR track is being organized by Bobby, while content for the Driver track is being organized by Mike.
-* **Denver Staffing Tracker Refresh:** A complete refresh of the Denver Staffing Tracker website is actively underway! The new portal will be fully available to GMs and DOs by P10W4.
+* **The Wow Way Trainer Class (~65% Complete!):** Day 2 Trainer Packet is merged into the presentation deck as we prep filming!
+  * *Note for Trainers:* Once scheduled, this virtual class will be **mandatory for all active credentialed trainers** (grace period provided before credentials pause).
+* **Day 2 Content Development:** Shared core modules are complete! Track-specific builds are underway: Bobby leading CSR, Mike leading Driver.
+* **Denver Staffing Tracker Refresh:** Rebuild underway for GMs and DOs; launching by **P10W4**.
 
 ### 💡 Store Pro-Tip of the Week
-* **Module 3 Practice Arcade — Complete Any 3 of 4 to Unlock!**  
-  In the Day 3 Menu Practice Arcade, trainees only need to complete **any 3 of the 4 practice games** to unlock Module 4! If a new hire is practicing on a laptop trackpad and finds one game tricky, they can pick the three challenges they enjoy most to earn their checkmark and head into the register simulator.
+* **Module 3 Practice Arcade — Any 3 of 4 Unlocks!**  
+  Trainees only need to finish **any 3 of the 4 practice games** to unlock Module 4! If a new hire is on a store laptop trackpad, they can pick their favorite 3 challenges to advance straight to the register.
 
 ---
 
