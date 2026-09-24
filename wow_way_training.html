@@ -688,8 +688,8 @@
         </div>
 
         <div class="header-actions">
-            <a id="nav-back-btn" href="index.html" class="header-action-btn">
-                <span id="nav-text">&#8592; Career Path</span>
+            <a id="nav-back-btn" href="#" class="header-action-btn" style="display: none;">
+                <span id="nav-text">&#8592; Back</span>
             </a>
             <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn"
                 onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
@@ -1037,14 +1037,14 @@
             if (!navBtn || !navText) return;
 
             if (type === 'exit') {
-                // Turn it into a normal link
+                // Main Lobby: Hide button since Team Wow logo links directly to Career Path
+                navBtn.style.display = 'none';
                 navBtn.onclick = null;
-                navBtn.href = 'index.html';
-                navText.innerHTML = '&#8592; Career Path';
             } else {
-                // Turn it into a Back Button
+                // Sub-views: Show back button to drill backwards within the Hub
+                navBtn.style.display = 'inline-flex';
                 navBtn.href = '#';
-                navBtn.onclick = handleBack; // This overwrites any previous click logic automatically
+                navBtn.onclick = handleBack;
                 navText.innerHTML = '&#8592; ' + text;
             }
         }

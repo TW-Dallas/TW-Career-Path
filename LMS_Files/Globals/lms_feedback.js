@@ -377,12 +377,57 @@
             height: 100vh;
             background: linear-gradient(145deg, #005c91 0%, #002e4d 100%);
             z-index: 99999999;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 24px;
+            padding: 20px;
             box-sizing: border-box;
             font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
             text-align: center;
+            overflow-y: auto;
+        }
+
+        .mobile-blocker-back-link {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            margin-bottom: 18px;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mobile-blocker-back-link:hover,
+        .mobile-blocker-back-link:active {
+            transform: scale(0.96);
+            opacity: 0.9;
+        }
+
+        .mobile-blocker-logo {
+            height: 52px;
+            width: auto;
+            max-width: 170px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.45));
+            margin-bottom: 8px;
+        }
+
+        .mobile-blocker-back-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(254, 250, 246, 0.16);
+            border: 1.5px solid rgba(254, 250, 246, 0.85);
+            color: #fefaf6;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            font-family: 'OneDotCd-Bold', 'Subhead1', sans-serif;
+            font-size: 0.84rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
         }
 
         .global-mobile-card {
@@ -479,6 +524,10 @@
     const mobileBlockerHTML = isLmsTrainingPage() ? `
         <!-- Global Universal Mobile Blocker -->
         <div id="global-mobile-blocker">
+            <a href="/wow_way_training.html" class="mobile-blocker-back-link" title="Return to Wow Way Hub" onclick="if(window.history.length > 1) { window.history.back(); return false; }">
+                <img src="/New_Logo_v2.png" alt="Team Wow Logo" class="mobile-blocker-logo" onerror="this.src='https://teamwow-assets.pages.dev/image/logos/New_Logo_v2.png'">
+                <span class="mobile-blocker-back-pill">&#8592; Return to Hub</span>
+            </a>
             <div class="global-mobile-card">
                 <div style="font-size: 3.2rem; margin-bottom: 6px; user-select: none;">💻</div>
                 <h2>Store Laptop Required</h2>
