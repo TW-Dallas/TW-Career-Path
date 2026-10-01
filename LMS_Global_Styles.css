@@ -40,9 +40,9 @@
     }
 
     header {
-        background-color: white; /* Keeps the top header background white */
-        padding: 20px 0;
-        text-align: center;
+        background-color: var(--brand-blue);
+        border-bottom: 4px solid var(--brand-red);
+        color: var(--crust-base);
     }
 
     .logo-container {
