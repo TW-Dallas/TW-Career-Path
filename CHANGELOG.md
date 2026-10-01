@@ -21,7 +21,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Credit Card Payment Practice in the POS Simulator:** Several store teams have suggested finding a way to let trainees practice credit card payments on orders. Because live payment terminals and PIN pads cannot be processed remotely outside the store network, we are actively designing an interactive simulated payment flow so new hires can practice end-to-end checkout safely.
 
 ### 👀 On the Horizon (Upcoming Content & Rollouts)
-* **The Wow Way Trainer Class Video Production:** With Day 2 and Day 3 packets locked in, slide decks and filming prep are underway. Keep an eye out for scheduling announcements—this virtual certification will be rolling out soon for all active store trainers.
+* **The Wow Way Trainer Class (~85% Complete!):** The presentation slide deck is officially complete, with Day 2 and Day 3 Trainer Packets fully integrated! Filming and video content production are the final pieces now underway before launch. Keep an eye out for scheduling announcements—this virtual certification will be rolling out soon for all active store trainers.
 * **Denver Staffing Hub Progress:** Ongoing behind-the-scenes infrastructure upgrades to unify multi-market hiring and onboarding pipelines.
 
 ### 💡 Store Pro-Tip of the Week
