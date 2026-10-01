@@ -631,6 +631,61 @@
             box-shadow: 0 5px 12px rgba(0, 92, 145, 0.35);
         }
 
+        /* ─── Secondary Utility Action Row ────────────────────────────────────────── */
+        .login-secondary-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .secondary-action-pill {
+            flex: 1 1 0;
+            min-width: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            background: rgba(0, 144, 226, 0.05);
+            border: 1.5px solid rgba(0, 119, 189, 0.28);
+            color: var(--dark-blue);
+            padding: 8px 6px;
+            border-radius: var(--radius-pill, 50px);
+            font-family: 'Subhead1', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.25px;
+            text-transform: uppercase;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            line-height: 1;
+        }
+
+        .secondary-action-pill:hover {
+            background: rgba(0, 144, 226, 0.12);
+            border-color: var(--brand-blue);
+            color: var(--brand-blue);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 144, 226, 0.15);
+        }
+
+        .secondary-action-pill:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 440px) {
+            .login-secondary-actions {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .secondary-action-pill {
+                width: 100%;
+                padding: 9px 12px;
+            }
+        }
+
         /* --- Support Modal Styles --- */
 
         #supportSubmitBtn {
@@ -797,31 +852,17 @@
             </div>
             <button id="login-btn" class="btn" onclick="authenticateUser()">Sign In</button>
 
-            <button type="button" onclick="promptExecutiveAccess()"
-                style="margin-top: 10px; width: 100%; background: rgba(0, 144, 226, 0.05); color: var(--dark-blue); border: 2px dashed var(--brand-blue); padding: 8px 12px; border-radius: 50px; font-family: 'Subhead1', sans-serif; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; gap: 6px;"
-                onmouseover="this.style.background='rgba(0, 144, 226, 0.12)'; this.style.transform='translateY(-1px)';"
-                onmouseout="this.style.background='rgba(0, 144, 226, 0.05)'; this.style.transform='none';">
-                <span>👑</span> <span>Executive Review Access</span> <span>🔒</span>
-            </button>
-
-            <!-- Need Credentials & Registration Links -->
-            <div
-                style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(0, 0, 0, 0.08); display: flex; flex-direction: column; gap: 6px; text-align: center;">
-                <a href="javascript:void(0)" onclick="openRosterModal()"
-                    style="color: var(--brand-blue); font-family: 'Subhead1', sans-serif; font-size: 0.88rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.2px;"
-                    onmouseover="this.style.color='var(--dark-blue)'; this.style.textDecoration='underline';"
-                    onmouseout="this.style.color='var(--brand-blue)'; this.style.textDecoration='none';">
-                    <span>Need Learner Credentials? Click here</span>
-                    <span style="font-size: 0.85rem;">↗</span>
-                </a>
-
-                <a href="javascript:void(0)" onclick="openTrainerPinModal()"
-                    style="color: var(--crust-deep); font-family: 'Subhead2', sans-serif; font-size: 0.86rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.2px;"
-                    onmouseover="this.style.color='var(--brand-blue)'; this.style.textDecoration='underline';"
-                    onmouseout="this.style.color='var(--crust-deep)'; this.style.textDecoration='none';">
-                    <span>Manager / Trainer PIN Registration</span>
-                    <span style="font-size: 0.85rem;">↗</span>
-                </a>
+            <!-- Secondary Utility Row (Credentials, Trainer PIN, Executive Access) -->
+            <div class="login-secondary-actions">
+                <button type="button" class="secondary-action-pill" onclick="openRosterModal()" title="Look up or verify learner login credentials">
+                    <span>✉️</span> <span>Credentials</span>
+                </button>
+                <button type="button" class="secondary-action-pill" onclick="openTrainerPinModal()" title="Register or verify Manager / Trainer PIN">
+                    <span>🔑</span> <span>Trainer PIN</span>
+                </button>
+                <button type="button" class="secondary-action-pill" onclick="promptExecutiveAccess()" title="Executive Review & Master Course Access">
+                    <span>👑</span> <span>Executive</span>
+                </button>
             </div>
         </div>
 
