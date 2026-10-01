@@ -18,6 +18,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 ### ⚠️ On Our Radar (Known Issues & Quick Interim Fixes)
 * **POS Simulator Call Dialogue Update (Thin Crust vs. Domino™):** In one of our interactive phone order practice calls, the customer dialogue refers to a thin crust pizza as *"the square one."* With the official rollout of the new rectangular **Domino™ Detroit Style** crust, this description can cause confusion for trainees. 
   * *The Fix:* We are retiring that phone call and rebuilding the practice order to seamlessly incorporate both the **new Domino™ crust** and the **new Lava Cakes**!
+* **Credit Card Payment Practice in the POS Simulator:** Several store teams have suggested finding a way to let trainees practice credit card payments on orders. Because live payment terminals and PIN pads cannot be processed remotely outside the store network, we are actively designing an interactive simulated payment flow so new hires can practice end-to-end checkout safely.
 
 ### 👀 On the Horizon (Upcoming Content & Rollouts)
 * **The Wow Way Trainer Class Video Production:** With Day 2 and Day 3 packets locked in, slide decks and filming prep are underway. Keep an eye out for scheduling announcements—this virtual certification will be rolling out soon for all active store trainers.
