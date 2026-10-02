@@ -219,14 +219,6 @@
             color: white;
         }
 
-        .legend-strip {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-family: 'Subhead2', sans-serif;
-            font-size: 12.5px;
-        }
-
         .btn-trainer-dir {
             background-color: transparent;
             border: 1.5px solid var(--dark-blue);
@@ -820,12 +812,7 @@
                 <button type="button" class="filter-btn" onclick="filterByLocation('Mesquite', this)">Mesquite</button>
             </div>
 
-            <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-                <div class="legend-strip">
-                    <span style="color: var(--brand-blue); font-weight: bold;">● Level 1 (4 Wks)</span>
-                    <span style="color: var(--crust-deep); font-weight: bold;">● Level 2 (8 Wks)</span>
-                    <span style="color: var(--brand-red); font-weight: bold;">● Level 3 (12 Wks)</span>
-                </div>
+            <div>
                 <button type="button" class="btn-trainer-dir" onclick="openTrainerModal()">
                     📖 Trainer Directory
                 </button>
