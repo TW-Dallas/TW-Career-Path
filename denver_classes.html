@@ -33,6 +33,7 @@
             text-transform: uppercase !important;
             letter-spacing: 0.5px !important;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+            white-space: nowrap !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
@@ -43,8 +44,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            background-color: transparent !important;
+            gap: 5px;
+            background: rgba(254, 250, 246, 0.12);
             color: var(--crust-base) !important;
             border: 1.5px solid rgba(254, 250, 246, 0.85);
             padding: 5px 12px;
@@ -97,379 +98,361 @@
             box-sizing: border-box;
         }
 
-        /* DOMINO'S FONTS FALLBACK DEFINITIONS */
-        @font-face {
-            font-family: 'PizzaPress';
-            src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
-            font-weight: normal;
-        }
-
-        @font-face {
-            font-family: 'OneDotCd-Bold';
-            src: url('fonts/Dominos Sans Bold.ttf') format('truetype');
-            font-weight: normal;
-        }
-
-        @font-face {
-            font-family: 'OneDotCd';
-            src: url('fonts/Dominos Sans Body.ttf') format('truetype');
-            font-weight: normal;
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'OneDotCd', 'Body', -apple-system, sans-serif;
+            font-family: 'Condensed', sans-serif;
             background-color: var(--bg-color);
             color: var(--crust-burnt);
-            margin: 0;
-            padding: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        /* HEADER */
-        .portal-header {
-            background-color: var(--brand-blue);
-            color: white;
-            padding: 8px 24px;
-            border-bottom: 3.5px solid var(--dark-blue);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-        }
-
-        .portal-header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-        }
-
-        .header-brand-wrap {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .portal-logo-img {
-            height: 38px;
-            width: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-        }
-
-        .header-text-group h1 {
-            font-family: 'PizzaPress', 'Header1', serif;
-            font-size: 1.45rem;
-            color: white;
-            line-height: 1.1;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 0;
-            font-weight: normal;
-        }
-
-        .header-text-group .subtitle {
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 0.82rem;
-            color: var(--crust-med);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-top: 2px;
-            font-weight: normal;
-        }
-
-        /* BRAND STRIPE */
-        .brand-stripe {
-            height: 4px;
-            background: linear-gradient(90deg, var(--brand-red) 0%, #e70000 100%);
-            width: 100%;
-        }
-
-        /* MAP LINKS BAR */
-        .map-banner-bar {
+        /* TRAINING CENTERS INFO STRIP */
+        .info-strip {
             background-color: var(--crust-light);
-            border-bottom: 1px solid var(--crust-med);
-            padding: 8px 16px;
-            text-align: center;
-        }
-
-        .map-links {
-            display: inline-flex;
+            border-bottom: 1.5px solid var(--crust-med);
+            padding: 7px 20px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
             flex-wrap: wrap;
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 0.88rem;
+            gap: 22px;
+            font-size: 15.5px;
+            color: var(--crust-deep);
+            font-family: 'Subhead2', sans-serif;
+            flex: 0 0 auto;
         }
 
-        .map-link {
+        .info-strip-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .info-strip-item img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+        }
+
+        .info-strip-item a {
             color: var(--dark-blue);
             text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: color 0.15s ease;
+            font-weight: bold;
         }
 
-        .map-link:hover {
-            color: var(--brand-red);
+        .info-strip-item a:hover {
             text-decoration: underline;
-        }
-
-        .map-separator {
-            color: var(--crust-dark);
         }
 
         /* MAIN CONTAINER */
         main {
-            max-width: 1200px;
+            max-width: 1350px;
             width: 100%;
             margin: 0 auto;
-            padding: 24px 20px 48px;
+            padding: 16px 20px 40px;
             flex: 1 0 auto;
+            box-sizing: border-box;
         }
 
-        /* FILTER CONTROLS */
-        .controls-bar {
+        /* CONTROLS & FILTER BAR */
+        .controls-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
             flex-wrap: wrap;
             gap: 12px;
+            margin-bottom: 14px;
+            background-color: var(--crust-light);
+            border: 1.5px solid var(--crust-med);
+            border-radius: var(--border-radius);
+            padding: 10px 16px;
         }
 
-        .filters-group {
+        .filter-buttons {
             display: flex;
+            align-items: center;
             gap: 8px;
             flex-wrap: wrap;
         }
 
-        .filter-btn {
-            background-color: white;
+        .filter-title {
+            font-family: 'Subhead1', sans-serif;
+            font-size: 13px;
             color: var(--dark-blue);
-            border: 2px solid var(--dark-blue);
-            border-radius: 50px;
-            padding: 6px 16px;
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 13.5px;
-            cursor: pointer;
-            transition: all 0.2s;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            font-weight: normal;
+            margin-right: 4px;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 1.5px solid var(--crust-dark);
+            color: var(--crust-deep);
+            border-radius: 50px;
+            padding: 6px 14px;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 13px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
         .filter-btn:hover {
-            background-color: var(--crust-light);
+            background-color: var(--crust-base);
+            border-color: var(--dark-blue);
+            color: var(--dark-blue);
         }
 
         .filter-btn.active {
             background-color: var(--dark-blue);
+            border-color: var(--dark-blue);
             color: white;
         }
 
-        /* POLICY NOTICE */
-        .policy-card {
-            background: #fff8f6;
-            border-left: 5px solid var(--brand-red);
-            border: 1.5px solid var(--crust-med);
-            border-left: 5px solid var(--brand-red);
-            border-radius: 8px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
-            color: var(--crust-burnt);
-            box-shadow: 0 2px 8px rgba(71, 43, 16, 0.05);
+        .btn-trainer-dir {
+            background-color: transparent;
+            border: 1.5px solid var(--dark-blue);
+            color: var(--dark-blue);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 12.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        .policy-title {
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 15px;
-            color: var(--dark-red);
+        .btn-trainer-dir:hover {
+            background-color: var(--dark-blue);
+            color: white;
+        }
+
+        /* SECTION HEADER */
+        .section-header {
+            margin-bottom: 14px;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--crust-med);
+            padding-bottom: 6px;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-family: 'ExtraBlack', serif;
+            font-size: 23px;
+            color: var(--med-blue);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: normal;
         }
 
-        .policy-list {
-            margin: 0;
-            padding-left: 20px;
+        .section-header span {
             font-size: 14.5px;
-            line-height: 1.5;
+            color: var(--crust-deep);
+            font-family: 'Subhead2', sans-serif;
         }
 
-        .policy-list li {
-            margin-bottom: 4px;
-        }
-
-        /* GRID */
+        /* CLASS GRID - 4 per row on desktop, 1 on mobile */
         .class-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 22px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
+            align-items: stretch;
         }
 
         /* CLASS CARD */
         .class-card {
-            background-color: white;
-            border: 1.5px solid var(--crust-med);
+            background: var(--crust-light);
             border-radius: var(--border-radius);
-            overflow: hidden;
+            border: 1.5px solid var(--crust-med);
+            border-top: 4px solid var(--brand-blue);
+            box-shadow: 0 4px 12px rgba(71, 43, 16, 0.06);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 3px 10px rgba(71, 43, 16, 0.06);
+            overflow: hidden;
             transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
+        }
+
+        .class-card.coming-soon {
+            opacity: 0.92;
+        }
+
+        .class-card.closed {
+            opacity: 0.65;
         }
 
         .class-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(71, 43, 16, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(71, 43, 16, 0.12);
         }
 
         .card-top {
-            padding: 12px 16px;
             background-color: var(--crust-light);
             border-bottom: 1px solid var(--crust-med);
+            padding: 10px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .date-badge {
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 15px;
-            color: var(--dark-blue);
-            text-transform: uppercase;
-            font-weight: normal;
-        }
-
-        .level-tag {
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 12px;
-            padding: 3px 9px;
-            border-radius: 4px;
+            background-color: var(--brand-blue);
             color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            font-weight: normal;
+            box-shadow: 0 2px 5px rgba(0, 144, 226, 0.25);
         }
-
-        .level-1 { background-color: var(--brand-blue); }
-        .level-2 { background-color: #d97706; }
-        .level-3 { background-color: var(--brand-red); }
 
         .spots-badge {
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: bold;
             padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: normal;
-        }
-
-        .spots-open {
-            background-color: #eaf7ed;
-            color: #117a30;
-            border: 1px solid #c3e6cb;
-        }
-
-        .spots-full {
-            background-color: #fce8e6;
-            color: #c5221f;
-            border: 1px solid #f5c6cb;
-        }
-
-        .card-body {
-            padding: 18px 16px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-time {
-            font-size: 13.5px;
-            color: var(--crust-dark);
-            margin-bottom: 4px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             gap: 5px;
+        }
+
+        .spots-available {
+            background-color: #eef7fd;
+            color: var(--dark-blue);
+            border: 1px solid #c9e6f8;
+        }
+
+        .spots-low {
+            background-color: #fff1f1;
+            color: var(--dark-red);
+            border: 1px solid #f8c8c8;
+        }
+
+        .spots-full {
+            background-color: #f5f5f5;
+            color: #777777;
+            border: 1px solid #dddddd;
+        }
+
+        .card-deadline {
+            font-size: 12.5px;
+            font-family: 'Subhead1', sans-serif;
+            color: var(--crust-deep);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .card-deadline .deadline-lbl {
+            text-transform: uppercase;
+            font-size: 11px;
+            color: #888;
+        }
+
+        .card-deadline .deadline-val {
             font-weight: bold;
+            color: var(--dark-blue);
+        }
+
+        .card-deadline.urgent .deadline-val {
+            color: var(--dark-red);
+        }
+
+        .register-btn.btn-future {
+            background-color: var(--crust-light) !important;
+            color: var(--crust-deep) !important;
+            border: 1.5px solid var(--crust-dark) !important;
+            box-shadow: none !important;
+            cursor: not-allowed;
+        }
+
+        .register-btn.btn-closed {
+            background-color: var(--crust-med) !important;
+            color: var(--crust-dark) !important;
+            border: 1.5px solid var(--crust-med) !important;
+            box-shadow: none !important;
+            cursor: not-allowed;
+        }
+
+        .card-body {
+            padding: 10px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .card-time {
+            font-size: 17px;
+            font-weight: bold;
+            color: var(--dark-blue);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Subhead1', sans-serif;
         }
 
         .card-time svg {
-            width: 14px;
-            height: 14px;
-            fill: var(--crust-dark);
+            width: 17px;
+            height: 17px;
+            fill: var(--brand-blue);
+            flex-shrink: 0;
         }
 
         .card-title {
-            font-family: 'Header2', 'OneDotCd-Bold', sans-serif;
-            font-size: 21px;
-            color: var(--crust-burnt);
-            margin: 0 0 10px 0;
-            line-height: 1.15;
-            font-weight: normal;
+            font-size: 17px;
+            font-weight: bold;
+            color: var(--crust-deep);
+            margin: 0;
+            font-family: 'Subhead1', sans-serif;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .card-location-meta {
             font-size: 14px;
             color: var(--crust-deep);
-            margin-bottom: 14px;
             display: flex;
             align-items: center;
             gap: 6px;
+            margin-top: 1px;
         }
 
-        .card-location-meta svg, .card-location-meta img {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
+        .card-location-meta img {
+            width: 15px;
+            height: 15px;
+            object-fit: contain;
         }
 
-        .card-deadline {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: var(--crust-dark);
-            background-color: var(--crust-light);
-            padding: 5px 8px;
-            border-radius: 6px;
-            margin-top: auto;
-            margin-bottom: 12px;
-            border: 1px dashed var(--crust-med);
-        }
-
-        .card-deadline.urgent {
-            background-color: #fff8f6;
-            color: var(--dark-red);
-            border-color: #ffccd0;
-            font-weight: bold;
-        }
-
-        .card-deadline .deadline-lbl {
-            font-family: 'Subhead1', sans-serif;
-            text-transform: uppercase;
-        }
-
-        /* ROSTER BOX */
+        /* ROSTER BOX (WHO'S ATTENDING) */
         .roster-box {
-            background-color: var(--crust-light);
-            border-radius: 8px;
-            padding: 10px 12px;
-            margin-bottom: 14px;
+            background-color: var(--crust-base);
             border: 1px solid var(--crust-med);
+            border-radius: 8px;
+            padding: 8px 10px;
+            margin-top: 4px;
+            display: flex;
+            flex-direction: column;
         }
 
         .roster-header {
             font-size: 11.5px;
-            font-family: 'OneDotCd-Bold', sans-serif;
+            font-weight: bold;
             text-transform: uppercase;
             color: var(--crust-deep);
             letter-spacing: 0.5px;
@@ -490,10 +473,12 @@
             display: flex;
             flex-wrap: wrap;
             gap: 5px;
-            min-height: 38px;
+            min-height: 48px;
             max-height: 90px;
             overflow-y: auto;
             padding-right: 4px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--crust-dark) transparent;
         }
 
         .roster-chip {
@@ -504,18 +489,19 @@
             border: 1px solid var(--crust-med);
             color: var(--dark-blue);
             font-size: 12px;
-            padding: 3px 8px;
+            line-height: 1;
+            padding: 4.5px 8px 2.5px 8px;
             border-radius: 8px;
-            font-family: 'OneDotCd-Bold', sans-serif;
+            font-weight: bold;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
             white-space: nowrap;
         }
 
         .roster-empty {
-            font-size: 12px;
+            font-size: 12.5px;
             color: #888;
             font-style: italic;
-            padding: 4px 0;
+            padding: 8px 0;
         }
 
         /* CARD FOOTER */
@@ -532,8 +518,9 @@
             border: none;
             border-radius: 50px;
             padding: 10px 14px;
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-family: 'Subhead1', sans-serif;
             font-size: 15px;
+            font-weight: bold;
             letter-spacing: 0.5px;
             text-transform: uppercase;
             cursor: pointer;
@@ -543,7 +530,6 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            font-weight: normal;
         }
 
         .register-btn:hover:not(:disabled) {
@@ -555,18 +541,12 @@
             cursor: not-allowed;
             box-shadow: none;
             transform: none;
-            background-color: var(--crust-dark);
         }
 
-        .btn-closed {
-            background-color: #666 !important;
-            color: #ccc !important;
-        }
-
-        .btn-future {
-            background-color: #eee !important;
-            color: #777 !important;
-            border: 1px solid #ccc !important;
+        .register-btn svg {
+            width: 15px;
+            height: 15px;
+            fill: white;
         }
 
         /* LOADING SPINNER */
@@ -593,7 +573,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* MODAL */
+        /* MODAL STYLES */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -644,11 +624,10 @@
 
         .modal-header h3 {
             margin: 0;
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-family: 'Subhead1', sans-serif;
             font-size: 21px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            font-weight: normal;
         }
 
         .modal-close-btn {
@@ -670,418 +649,287 @@
         }
 
         .selected-class-summary {
-            background-color: white;
-            border-left: 5px solid var(--brand-blue);
-            border-radius: 6px;
-            padding: 14px 16px;
+            background-color: var(--crust-base);
+            border: 1.5px solid var(--brand-blue);
+            border-radius: 8px;
+            padding: 14px 18px;
             margin-bottom: 20px;
-            border: 1px solid var(--crust-med);
-            border-left: 5px solid var(--brand-blue);
         }
 
-        .selected-class-summary h4 {
-            margin: 0 0 6px 0;
-            font-family: 'Header2', 'OneDotCd-Bold', sans-serif;
-            font-size: 18px;
-            color: var(--dark-blue);
-            font-weight: normal;
-        }
-
-        .summary-meta-line {
-            font-size: 14px;
-            color: var(--crust-deep);
-            margin-bottom: 4px;
-        }
-
-        .form-row {
-            margin-bottom: 16px;
-        }
-
-        .form-row label {
+        .selected-class-summary strong {
             display: block;
-            font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif;
-            font-size: 14px;
+            font-size: 19px;
             color: var(--dark-blue);
+            margin-bottom: 4px;
+            font-family: 'Subhead1', sans-serif;
+        }
+
+        .selected-class-summary div {
+            font-size: 15px;
+            color: var(--crust-deep);
+            margin-bottom: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-family: 'Subhead1', sans-serif;
+            color: var(--dark-blue);
+            margin-bottom: 5px;
             text-transform: uppercase;
-            margin-bottom: 6px;
-            font-weight: normal;
+            letter-spacing: 0.5px;
         }
 
-        .form-row label span.req {
-            color: var(--brand-red);
-        }
-
-        .form-input {
+        .form-group input, .form-group select {
             width: 100%;
-            padding: 10px 14px;
+            padding: 11px 14px;
             border: 1.5px solid var(--crust-dark);
             border-radius: 8px;
-            font-family: 'OneDotCd', sans-serif;
-            font-size: 16px;
+            font-size: 17px;
+            font-family: 'Condensed', sans-serif;
             color: var(--crust-burnt);
-            background-color: white;
-            box-sizing: border-box;
+            background-color: var(--crust-base);
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
-        .form-input:focus {
+        .form-group input:focus, .form-group select:focus {
             outline: none;
             border-color: var(--brand-blue);
             box-shadow: 0 0 0 3px rgba(0, 144, 226, 0.2);
+            background-color: #ffffff;
         }
 
-        .modal-footer {
-            padding: 16px 22px;
-            background-color: var(--crust-light);
-            border-top: 1px solid var(--crust-med);
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-        }
-
-        .btn-cancel {
-            background: transparent;
-            color: var(--crust-deep);
-            border: 1.5px solid var(--crust-dark);
-            border-radius: 50px;
-            padding: 9px 20px;
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 14px;
-            text-transform: uppercase;
-            cursor: pointer;
-            font-weight: normal;
-        }
-
-        .btn-cancel:hover {
-            background-color: var(--crust-med);
-        }
-
-        .btn-submit-signup {
-            background-color: var(--brand-red);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 10px 24px;
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 15px;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 0 3px 6px rgba(255, 0, 0, 0.25);
-            font-weight: normal;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .btn-submit-signup:hover:not(:disabled) {
-            background-color: var(--dark-red);
-        }
-
-        .btn-submit-signup:disabled {
-            background-color: var(--crust-dark);
-            cursor: not-allowed;
-        }
-
-        /* SUCCESS MODAL */
-        .success-box {
-            text-align: center;
-            padding: 24px 10px;
-        }
-
-        .success-icon {
-            width: 60px;
-            height: 60px;
-            background-color: #eaf7ed;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            border: 2px solid #c3e6cb;
-        }
-
-        .success-icon svg {
-            width: 32px;
-            height: 32px;
-            fill: #117a30;
-        }
-
-        .success-box h3 {
-            font-family: 'Header1', 'PizzaPress', serif;
-            font-size: 24px;
-            color: var(--dark-blue);
-            margin: 0 0 10px 0;
-            text-transform: uppercase;
-            font-weight: normal;
-        }
-
-        .success-details {
-            background-color: white;
-            border: 1px dashed var(--dark-blue);
-            border-radius: 8px;
-            padding: 14px 18px;
-            margin: 18px 0;
-            text-align: left;
-            font-size: 15px;
-        }
-
-        /* FOOTER */
-        .portal-footer {
-            background-color: var(--crust-light);
-            border-top: 2px solid var(--crust-med);
-            padding: 24px 16px;
-            margin-top: auto;
-            text-align: center;
-        }
-
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .footer-copy {
-            font-size: 13.5px;
-            color: var(--crust-burnt);
-            margin: 0;
-        }
-
-        .footer-crust {
-            font-size: 12px;
-            color: var(--crust-dark);
-            margin: 0;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 16px;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-        }
-
-        .footer-links a {
-            color: var(--dark-blue);
-            text-decoration: none;
-        }
-
-        .footer-links a:hover {
-            color: var(--brand-red);
+        @media (max-width: 600px) {
+            main {
+                padding: 10px 12px 40px;
+            }
+            .class-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .info-strip {
+                flex-direction: column;
+                gap: 6px;
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            .controls-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
 
 <body>
-
-    <!-- PORTAL HEADER -->
-    <header class="portal-header">
-        <div class="portal-header-inner">
-            <div class="header-brand-wrap">
-                <img src="New_Logo_v2.png" alt="Team Wow Logo" class="portal-logo-img" onerror="this.src='image/tile_blue.png'">
-                <div class="header-text-group">
-                    <h1>MIT Leadership Classes</h1>
-                    <div class="subtitle">Manager in Training Curriculum &bull; Denver Market</div>
-                </div>
+    <!-- BRAND HEADER -->
+    <header>
+        <div class="header-left">
+            <a href="index.html" class="logo-link" title="Back to Career Path">
+                <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo" onerror="this.src='image/tile_blue.png'">
+            </a>
+            <div class="header-text">
+                <h1>MIT Leadership Classes</h1>
+                <div class="subtitle">Operations Training &amp; Management Development</div>
             </div>
-            <div class="header-actions">
-                <div class="market-pill">Denver Market</div>
-                <a href="index.html" class="header-action-btn">← Main Menu</a>
-                <a href="learning_hub.html" class="header-action-btn">🎓 Learning Hub</a>
-                <a href="denver_mit_completion.html" class="header-action-btn" style="background-color: var(--brand-red) !important; border-color: var(--brand-red) !important;">✓ Record Completion</a>
-                <button type="button" class="header-action-btn" onclick="openTrainerModal()">📞 Need Help?</button>
-            </div>
+        </div>
+        <div class="header-actions">
+            <div class="market-pill">Denver Market</div>
+            <a href="denver_trainer_dashboard.html" class="header-action-btn">
+                🔒 Trainer Portal
+            </a>
+            <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
+                🛠️ Report Issue
+            </button>
         </div>
     </header>
 
+    <!-- SIGNATURE RED ACCENT STRIPE -->
     <div class="brand-stripe"></div>
 
-    <!-- MAPS LINK BAR -->
-    <div class="map-banner-bar">
-        <div class="map-links">
-            <a href="https://maps.app.goo.gl/dUM9APNsXSVBnEnA9" target="_blank" rel="noopener noreferrer" class="map-link">
-                📍 Academy Training Center (300 E 88th Ave, Thornton, CO)
-            </a>
-            <span class="map-separator">•</span>
-            <a href="https://maps.app.goo.gl/MSyj9TJfJPZ7BMq29" target="_blank" rel="noopener noreferrer" class="map-link">
-                📍 Parker Training Store
-            </a>
-            <span class="map-separator">•</span>
-            <a href="https://maps.app.goo.gl/CyLHstt3t1qQ8V5c6" target="_blank" rel="noopener noreferrer" class="map-link">
-                📍 Boulder Training Store
-            </a>
+    <!-- TRAINING CENTERS INFO STRIP -->
+    <div class="info-strip">
+        <div class="info-strip-item">
+            <img src="image/custom-emojis/location-base.png" alt="Location">
+            <span><strong>Academy:</strong> <a href="https://maps.app.goo.gl/dUM9APNsXSVBnEnA9" target="_blank" rel="noopener noreferrer">300 E 88th Ave, Thornton, CO</a></span>
+        </div>
+        <div class="info-strip-item">
+            <img src="image/custom-emojis/location-base.png" alt="Location">
+            <span><strong>Parker:</strong> <a href="https://maps.app.goo.gl/MSyj9TJfJPZ7BMq29" target="_blank" rel="noopener noreferrer">Parker Training Store</a></span>
+        </div>
+        <div class="info-strip-item">
+            <img src="image/custom-emojis/location-base.png" alt="Location">
+            <span><strong>Boulder:</strong> <a href="https://maps.app.goo.gl/CyLHstt3t1qQ8V5c6" target="_blank" rel="noopener noreferrer">Boulder Training Store</a></span>
         </div>
     </div>
 
     <!-- MAIN BODY -->
     <main>
-        <!-- CONTROLS & FILTER -->
-        <div class="controls-bar">
-            <div class="filters-group">
-                <button class="filter-btn active" onclick="filterByLocation('ALL', this)">All Classes</button>
-                <button class="filter-btn" onclick="filterByLocation('Academy', this)">Academy (Thornton)</button>
-                <button class="filter-btn" onclick="filterByLocation('Parker', this)">Parker</button>
-                <button class="filter-btn" onclick="filterByLocation('Boulder', this)">Boulder</button>
-                <button class="filter-btn" onclick="filterByLocation('Virtual', this)">Virtual</button>
+        <!-- FILTER CONTROLS & LEVEL LEGEND -->
+        <div class="controls-row">
+            <div class="filter-buttons">
+                <span class="filter-title">Location:</span>
+                <button type="button" class="filter-btn active" onclick="filterByLocation('ALL', this)">All Classes</button>
+                <button type="button" class="filter-btn" onclick="filterByLocation('Academy', this)">Academy</button>
+                <button type="button" class="filter-btn" onclick="filterByLocation('Parker', this)">Parker</button>
+                <button type="button" class="filter-btn" onclick="filterByLocation('Boulder', this)">Boulder</button>
+                <button type="button" class="filter-btn" onclick="filterByLocation('Virtual', this)">Virtual</button>
             </div>
-            <div style="font-size: 13.5px; color: var(--crust-dark); font-family: 'Subhead1', sans-serif;">
-                <span id="classCountDisplay">Loading sessions...</span>
+
+            <div>
+                <button type="button" class="btn-trainer-dir" onclick="openTrainerModal()">
+                    📖 Trainer Directory
+                </button>
             </div>
         </div>
 
-        <!-- ATTENDANCE POLICY CARD -->
-        <div class="policy-card">
-            <div class="policy-title">
-                ⚠️ Denver MIT Class Attendance &amp; Guidelines Policy
-            </div>
-            <ul class="policy-list">
-                <li><strong>Arrival:</strong> Arrive <strong>10 minutes early</strong> in full uniform with notepad and pen ready. Late arrivals (>5 minutes without prior notice) are not admitted.</li>
-                <li><strong>Cancellations:</strong> If you cannot attend, you must notify your assigned Trainer or Steve at least <strong>1 hour</strong> prior to start.</li>
-                <li><strong>No Call / No Show:</strong> Unexcused absences will result in a formal written documentation.</li>
-                <li><strong>GM Coordination:</strong> Immediately notify your General Manager upon signing up so they can coordinate your in-store schedule.</li>
-            </ul>
+        <div class="section-header">
+            <h2>Available Class Sessions</h2>
+            <span id="sessionCountText">Showing upcoming sessions</span>
         </div>
 
         <!-- LOADING STATE -->
         <div id="loadingSchedule" class="loading-container">
             <div class="spinner"></div>
-            <div>Loading Denver MIT schedule from Cloudflare D1...</div>
+            Loading available class sessions...
         </div>
 
-        <!-- CLASSES GRID -->
-        <div id="classGrid" class="class-grid" style="display: none;">
-            <!-- Rendered by JavaScript -->
-        </div>
+        <!-- CLASS GRID -->
+        <div id="classGrid" class="class-grid" style="display: none;"></div>
     </main>
 
-    <!-- FOOTER -->
+    <!-- BRANDED FOOTER -->
     <footer class="portal-footer">
-        <div class="footer-inner">
-            <div class="footer-links">
-                <a href="denver_mit_completion.html">MIT Class Completion Form</a>
-                <span>&bull;</span>
-                <a href="denver_trainer_dashboard.html">🔒 Trainer Portal</a>
+        <div class="portal-footer-inner">
+            <div class="footer-brand">
+                <span class="footer-title">Team Wow • Domino's Pizza</span>
+                <span class="footer-subtitle">MIT Leadership Development &amp; Management Training</span>
             </div>
-            <p class="footer-copy">&copy; 2026 Team Wow, Inc. All rights reserved.</p>
-            <p class="footer-crust">Powered by Crust &amp; Code &bull; Cloudflare D1 Native</p>
+            <div class="footer-meta">
+                <p class="footer-copy">&copy; 2026 Team Wow, Inc. All rights reserved.</p>
+                <p class="footer-crust-code">Powered by Crust &amp; Code</p>
+            </div>
         </div>
     </footer>
 
-    <!-- SIGNUP MODAL -->
+    <!-- 1. SIGNUP REGISTRATION MODAL -->
     <div id="signupModal" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-header">
-                <h3>Register for MIT Class</h3>
+                <h3 id="signupModalTitle">Confirm MIT Class Registration</h3>
                 <button type="button" class="modal-close-btn" onclick="closeSignupModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="selected-class-summary">
-                    <h4 id="summaryCourseName">Course Title</h4>
-                    <div id="summaryClassDate" class="summary-meta-line">📅 Date: --</div>
-                    <div id="summaryClassTime" class="summary-meta-line">🕒 Time: --</div>
-                    <div id="summaryClassLocation" class="summary-meta-line">📍 Location: --</div>
+                    <strong id="summaryCourseName">Class Name</strong>
+                    <div id="summaryClassDate">Date</div>
+                    <div id="summaryClassTime">Time</div>
+                    <div id="summaryClassLocation">Location</div>
                 </div>
 
                 <form id="signupForm" onsubmit="submitRegistration(event)">
-                    <input type="hidden" id="formClassId" name="classId">
-                    <input type="hidden" id="formCourseName" name="courseName">
+                    <input type="hidden" id="formClassId">
+                    <input type="hidden" id="formCourseName">
 
-                    <div class="form-row">
-                        <label for="formName">Full Name <span class="req">*</span></label>
-                        <input type="text" id="formName" class="form-input" placeholder="First and Last Name" required>
+                    <div class="form-group">
+                        <label>Full Legal Name (as on ID) *</label>
+                        <input type="text" id="formName" required placeholder="First and Last Name">
                     </div>
 
-                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-                        <div>
-                            <label for="formStore">Store # <span class="req">*</span></label>
-                            <input type="number" id="formStore" class="form-input" placeholder="e.g. 6514" required>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div class="form-group">
+                            <label>Store Number *</label>
+                            <input type="text" id="formStore" required placeholder="e.g. 6514">
                         </div>
-                        <div>
-                            <label for="formPosition">Position <span class="req">*</span></label>
-                            <select id="formPosition" class="form-input" required>
+
+                        <div class="form-group">
+                            <label>Role / Position *</label>
+                            <select id="formPosition" required>
                                 <option value="MIT 1">MIT 1</option>
                                 <option value="MIT 2">MIT 2</option>
                                 <option value="MIT 3">MIT 3</option>
-                                <option value="Assistant Manager">Assistant Manager</option>
-                                <option value="General Manager">General Manager</option>
-                                <option value="CSR / Insider">CSR / Insider</option>
-                                <option value="Delivery Expert">Delivery Expert</option>
+                                <option value="Assistant Manager">Assistant Manager (AM)</option>
+                                <option value="Shift Leader">Shift Leader</option>
+                                <option value="CSR">CSR</option>
+                                <option value="Driver">Delivery Expert</option>
+                                <option value="GM">General Manager</option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <label for="formPhone">Mobile Phone <span class="req">*</span></label>
-                        <input type="tel" id="formPhone" class="form-input" placeholder="(555) 000-0000" required>
+                    <div class="form-group">
+                        <label>Cell Phone Number *</label>
+                        <input type="tel" id="formPhone" required placeholder="(555) 555-5555">
                     </div>
 
-                    <div class="form-row">
-                        <label for="formEmail">Email Address <span class="req">*</span></label>
-                        <input type="email" id="formEmail" class="form-input" placeholder="name@dominospizza.com" required>
+                    <div class="form-group">
+                        <label>Email Address (for Confirmation & Reminders) *</label>
+                        <input type="email" id="formEmail" required placeholder="name@dominospizza.com">
                     </div>
 
-                    <div class="modal-footer" style="padding: 16px 0 0 0; background: none; border-top: 1px solid var(--crust-med);">
-                        <button type="button" class="btn-cancel" onclick="closeSignupModal()">Cancel</button>
-                        <button type="submit" id="btnSubmitSignup" class="btn-submit-signup">
-                            <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: white;"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-                            Confirm Registration
-                        </button>
-                    </div>
+                    <button type="submit" class="register-btn" id="btnSubmitSignup" style="margin-top: 10px;">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                        Confirm Registration
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- SUCCESS MODAL -->
+    <!-- 2. SUCCESS CONFIRMATION MODAL -->
     <div id="successModal" class="modal-overlay">
-        <div class="modal-card" style="max-width: 480px;">
-            <div class="modal-body success-box">
-                <div class="success-icon">
-                    <svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-                </div>
+        <div class="modal-card">
+            <div class="modal-header">
                 <h3>Registration Confirmed!</h3>
-                <p style="color: var(--crust-deep); font-size: 15px; margin: 0 0 12px 0;">
-                    You are registered for class. Your spot is reserved.
+                <button type="button" class="modal-close-btn" onclick="closeSuccessModal()">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align: center; padding: 28px 20px;">
+                <h4 style="margin: 0 0 10px 0; font-family: 'Subhead1', sans-serif; font-size: 20px; color: var(--dark-blue);">
+                    Congratulations, <span id="successName">Team Member</span>!
+                </h4>
+                <p style="font-size: 16px; margin: 0 0 12px 0; color: var(--crust-burnt);">
+                    Your spot is confirmed for <strong id="successCourse">Course</strong> on <strong id="successDate">Date</strong>.
                 </p>
-
-                <div class="success-details">
-                    <div><strong>Candidate:</strong> <span id="successName">--</span></div>
-                    <div style="margin-top: 4px;"><strong>Class:</strong> <span id="successCourse">--</span></div>
-                    <div style="margin-top: 4px;"><strong>Date:</strong> <span id="successDate">--</span></div>
-                    <div style="margin-top: 4px;"><strong>Confirmation Sent:</strong> <span id="successEmail">--</span></div>
+                <div style="background-color: #e8f5e9; border: 1.5px solid #4caf50; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 14px; color: #2e7d32;">
+                    📧 A confirmation email has been sent to <strong id="successEmail">your email</strong>.
                 </div>
 
-                <p style="font-size: 13.5px; color: var(--crust-dark); margin: 0 0 20px 0;">
-                    Please notify your store GM immediately so they can update your shift schedule.
-                </p>
+                <div style="background-color: #faf2e9; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 16px; text-align: left; margin-bottom: 20px; font-size: 14.5px;">
+                    <strong style="color: var(--dark-blue); display: block; margin-bottom: 6px;">Next Steps:</strong>
+                    <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
+                        <li>Notify your store General Manager of your scheduled class date.</li>
+                        <li>Arrive 10 minutes before class with pen and notepad ready.</li>
+                        <li>If you need to reschedule, notify your trainer or Steve at least 24 hours in advance.</li>
+                    </ul>
+                </div>
 
-                <button type="button" class="register-btn" onclick="closeSuccessModal()" style="max-width: 200px; margin: 0 auto;">
+                <button type="button" class="register-btn" onclick="closeSuccessModal()" style="width: 100%;">
                     Done
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- TRAINER DIRECTORY MODAL -->
+    <!-- 3. TRAINER DIRECTORY MODAL -->
     <div id="trainerModal" class="modal-overlay">
-        <div class="modal-card" style="max-width: 500px;">
+        <div class="modal-card" style="max-width: 600px;">
             <div class="modal-header">
-                <h3>Denver Trainer Directory</h3>
+                <h3>📖 Denver Trainer Directory</h3>
                 <button type="button" class="modal-close-btn" onclick="closeTrainerModal()">&times;</button>
             </div>
-            <div class="modal-body" style="padding: 16px 20px;">
-                <p style="font-size: 14px; color: var(--crust-deep); margin: 0 0 16px 0;">
-                    Need assistance or running late? Contact your assigned Denver trainer or leadership:
-                </p>
+            <div class="modal-body">
+                <p style="margin-bottom: 14px; color: var(--crust-deep); font-size: 14px;">Tap any trainer or support contact's number to call or text directly.</p>
 
-                <div style="background-color: white; border: 1px solid var(--crust-med); border-radius: 8px; padding: 14px; margin-bottom: 12px;">
-                    <div style="font-family: 'OneDotCd-Bold', sans-serif; font-size: 15px; color: var(--dark-blue); margin-bottom: 8px;">
-                        🧑‍🏫 Denver Trainers
+                <!-- DENVER TRAINERS -->
+                <div style="margin-bottom: 14px; background: white; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 12px 14px;">
+                    <div style="font-family: 'Subhead1'; font-size: 13.5px; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <img src="image/custom-emojis/location-base.png" alt="Location" style="width: 15px; height: 15px;"> Denver Trainers
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14.5px;">
                         <div>Aaron: <a href="tel:9709859676" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(970) 985-9676</a></div>
                         <div>Jake: <a href="tel:5128276435" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(512) 827-6435</a></div>
                         <div>Jeff: <a href="tel:3038847453" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(303) 884-7453</a></div>
@@ -1091,11 +939,12 @@
                     </div>
                 </div>
 
-                <div style="background-color: white; border: 1px solid var(--crust-med); border-radius: 8px; padding: 14px;">
-                    <div style="font-family: 'OneDotCd-Bold', sans-serif; font-size: 15px; color: var(--dark-blue); margin-bottom: 8px;">
+                <!-- OFFICE & LEADERSHIP -->
+                <div style="background: white; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 12px 14px;">
+                    <div style="font-family: 'Subhead1'; font-size: 13.5px; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
                         🏢 Office &amp; Operations Support
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14.5px;">
                         <div>Steve: <a href="tel:3032044272" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(303) 204-4272</a></div>
                         <div>Janet: <a href="tel:3039898390" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(303) 989-8390</a></div>
                         <div>Jenny: <a href="tel:7193138403" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(719) 313-8403</a></div>
@@ -1249,31 +1098,35 @@
             renderClassGrid();
         }
 
-        function formatAttendeeName(rawName) {
-            if (!rawName) return '';
-            const parts = String(rawName).trim().split(/\s+/);
-            if (parts.length === 1) return parts[0];
-            return `${parts[0]} ${parts[parts.length - 1].charAt(0)}.`;
+        function formatAttendeeName(fullName) {
+            if (!fullName) return "";
+            const parts = fullName.trim().split(/\s+/);
+            if (parts.length > 1) {
+                return `${parts[0]} ${parts[parts.length - 1].charAt(0)}.`;
+            }
+            return parts[0];
         }
 
         function renderClassGrid() {
             const grid = document.getElementById('classGrid');
+            const countTag = document.getElementById('sessionCountText');
             grid.innerHTML = '';
 
-            let filtered = classesData;
-            if (currentLocationFilter !== 'ALL') {
-                filtered = classesData.filter(cls => {
-                    const loc = (cls.location || '').toLowerCase();
-                    return loc.includes(currentLocationFilter.toLowerCase());
-                });
-            }
+            const filtered = classesData.filter(c => {
+                if (currentLocationFilter === 'ALL') return true;
+                return (c.location || '').toLowerCase().includes(currentLocationFilter.toLowerCase());
+            });
 
-            document.getElementById('classCountDisplay').textContent = `${filtered.length} Session${filtered.length === 1 ? '' : 's'} Available`;
+            const activeCount = filtered.filter(c => c._status === 'active').length;
+            if (countTag) {
+                countTag.innerText = `Showing ${filtered.length} session${filtered.length === 1 ? '' : 's'} (${activeCount} open for signup)`;
+            }
 
             if (filtered.length === 0) {
                 grid.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--crust-dark); font-size: 16px;">
-                        No upcoming class sessions found for the selected location filter.
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; color: var(--crust-deep); font-size: 17px; background: white; border-radius: var(--border-radius); border: 1.5px solid var(--crust-med);">
+                        There are currently no open MIT leadership sessions for ${currentLocationFilter}.<br>
+                        <span style="font-size: 15px; color: #777;">Please select "All Classes" or check back soon.</span>
                     </div>
                 `;
                 return;
@@ -1284,21 +1137,35 @@
 
             filtered.forEach(cls => {
                 const card = document.createElement('div');
-                card.className = 'class-card';
+                card.className = `class-card ${cls._status === 'future' ? 'coming-soon' : ''} ${cls._status === 'closed' ? 'closed' : ''}`;
 
-                const classTime = parseClassDate(cls.classDate);
-                const d = classTime ? new Date(classTime) : new Date();
-                const dayName = d.toLocaleDateString("en-US", { weekday: 'short' });
-                const dateDisplay = `${dayName}, ${cls.classDate}`;
+                const totalSpots = cls.spotsTotal || cls.capacity || 15;
+                const takenSpots = cls.spotsTaken !== undefined ? cls.spotsTaken : (cls.attendees ? cls.attendees.length : 0);
+                const remaining = Math.max(0, totalSpots - takenSpots);
 
-                const timeRange = `${cls.startTime || '11:00 AM'}${cls.endTime ? ' – ' + cls.endTime : ''}`;
+                let spotsClass = 'spots-available';
+                let spotsText = `${remaining} Spots Available`;
+                let isFull = remaining <= 0;
 
-                const spotsLeft = (typeof cls.spotsLeft === 'number') ? cls.spotsLeft : Math.max(0, (cls.spotsTotal || 15) - (cls.spotsTaken || 0));
-                const isFull = spotsLeft <= 0;
-                const spotsClass = isFull ? 'spots-full' : 'spots-open';
-                const spotsText = isFull ? 'Class Full' : `${spotsLeft} Spot${spotsLeft === 1 ? '' : 's'} Left`;
+                if (isFull) {
+                    spotsClass = 'spots-full';
+                    spotsText = 'Class Full';
+                } else if (remaining <= 3) {
+                    spotsClass = 'spots-low';
+                    spotsText = `Only ${remaining} Left`;
+                }
 
-                const lvlClass = `level-${cls.level || 1}`;
+                // Format Day and Date e.g. "WED, OCT 7"
+                const parts = (cls.classDate || '').split('/');
+                let dateDisplay = cls.classDate;
+                if (parts.length === 3) {
+                    const d = new Date(parseInt(parts[2], 10), parseInt(parts[0], 10) - 1, parseInt(parts[1], 10));
+                    const weekday = d.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
+                    const month = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+                    dateDisplay = `${weekday}, ${month} ${d.getDate()}`;
+                }
+
+                const timeRange = (cls.startTime || "11:00 AM") + (cls.endTime ? ` – ${cls.endTime}` : "");
 
                 // Roster box (attendees)
                 const attendees = cls.attendees || [];
@@ -1342,15 +1209,12 @@
                     }
                 }
 
-                const cleanLocation = (cls.location || 'Academy').trim();
+                const cleanLocation = (cls.location || 'Academy').replace(/\s*Center\s*/gi, '').trim();
 
                 card.innerHTML = `
                     <div class="card-top">
                         <span class="date-badge">${dateDisplay}</span>
-                        <div style="display: flex; gap: 6px; align-items: center;">
-                            <span class="level-tag ${lvlClass}">Level ${cls.level || 1}</span>
-                            <span class="spots-badge ${spotsClass}">${spotsText}</span>
-                        </div>
+                        <span class="spots-badge ${spotsClass}">${spotsText}</span>
                     </div>
                     <div class="card-body">
                         <div class="card-time">
@@ -1361,23 +1225,21 @@
                             <span>${cls.name}</span>
                         </h3>
                         <div class="card-location-meta">
-                            <span>📍 ${cleanLocation} • Trainer: <strong>${cls.trainer || 'Team Wow'}</strong></span>
+                            <img src="image/custom-emojis/location-base.png" alt="Location">
+                            <span>${cleanLocation} • Trainer: <strong>${cls.trainer || 'Team Wow'}</strong></span>
                         </div>
                         <div class="roster-box">
                             <div class="roster-header">
                                 <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                                 <span>Who's Attending:</span>
                             </div>
-                            <div class="roster-chips">
-                                ${rosterHTML}
-                            </div>
+                            <div class="roster-chips">${rosterHTML}</div>
                         </div>
-                        ${deadlineHTML}
                     </div>
                     <div class="card-footer">
-                        <button type="button" class="register-btn ${btnClass}" 
-                                onclick="openSignupModal('${cls.id}')" 
-                                ${isDisabled ? 'disabled' : ''}>
+                        ${deadlineHTML}
+                        <button type="button" class="register-btn ${btnClass}" ${isDisabled ? 'disabled' : ''} onclick="openSignupModal('${cls.id}')">
+                            ${cls._status === 'active' && !isFull ? '<svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>' : ''}
                             ${btnText}
                         </button>
                     </div>
@@ -1395,10 +1257,10 @@
             document.getElementById('formClassId').value = classId;
             document.getElementById('formCourseName').value = selectedClass.name;
 
-            document.getElementById('summaryCourseName').textContent = `${selectedClass.name} (Level ${selectedClass.level || 1})`;
+            document.getElementById('summaryCourseName').textContent = selectedClass.name;
             document.getElementById('summaryClassDate').textContent = `📅 Date: ${selectedClass.classDate}`;
             document.getElementById('summaryClassTime').textContent = `🕒 Time: ${selectedClass.startTime || '11:00 AM'}${selectedClass.endTime ? ' – ' + selectedClass.endTime : ''}`;
-            document.getElementById('summaryClassLocation').textContent = `📍 Location: ${selectedClass.location || 'Academy'} • Trainer: ${selectedClass.trainer || 'Team Wow'}`;
+            document.getElementById('summaryClassLocation').textContent = `📍 Location: ${(selectedClass.location || 'Academy').replace(/\s*Center\s*/gi, '').trim()} • Trainer: ${selectedClass.trainer}`;
 
             document.getElementById('signupModal').classList.add('active');
         }
@@ -1468,7 +1330,7 @@
                 console.warn("GAS registration error:", gasErr);
             }
 
-            btn.innerHTML = `<svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: white;"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> Confirm Registration`;
+            btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> Confirm Registration`;
             btn.disabled = false;
 
             closeSignupModal();
