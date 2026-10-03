@@ -45,6 +45,9 @@
             --crust-burnt: #472b10;
             --border-radius: 12px;
             --radius-pill: 9999px;
+            --radius-md: 8px;
+            --radius-sm: 6px;
+            --red-soft-bg: #fff1f1;
             --success-green: #117a30;
             --success-green-bg: #eaf7ed;
         }
@@ -55,6 +58,7 @@
             padding: 0;
         }
 
+        /* Page Layout & Viewport Lock */
         body {
             font-family: 'OneDotCd', 'Condensed', sans-serif;
             background-color: var(--crust-base);
@@ -62,15 +66,18 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            margin: 0;
         }
 
         /* HEADER */
         .portal-header {
+            flex-shrink: 0;
             background-color: var(--brand-blue);
             color: white;
-            padding: 10px 20px;
+            padding: 8px 20px;
             border-bottom: 4px solid var(--brand-red);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            z-index: 100;
         }
 
         .portal-header-inner {
@@ -174,50 +181,240 @@
             display: none !important;
         }
 
-        main {
-            max-width: 1140px;
+        .brand-stripe {
+            flex-shrink: 0;
+            height: 4px;
+            background: var(--brand-red);
+        }
+
+        .portal-footer {
+            flex-shrink: 0;
+            padding: 6px 20px !important;
+        }
+
+        /* Main Container Base */
+        .app-container {
             width: 100%;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 22px 18px 48px;
-            flex: 1 0 auto;
+            box-sizing: border-box;
+            padding: 10px 18px;
+        }
+
+        /* Desktop Viewport Locked Layout (Zero Page Scroll, Side-by-Side Containers Stretched to Footer) */
+        @media (min-width: 1025px) {
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+
+            body {
+                height: 100vh;
+                max-height: 100vh;
+                overflow: hidden; /* Desktop page never scrolls! */
+            }
+
+            .app-container {
+                flex: 1 1 0;
+                min-height: 0; /* Critical for inner scrolling */
+                display: flex;
+                flex-direction: column;
+                padding: 8px 18px 8px;
+                gap: 8px;
+            }
+
+            .notice-accordion {
+                flex-shrink: 0;
+                margin-bottom: 0 !important;
+            }
+
+            .dashboard-grid {
+                flex: 1 1 0;
+                min-height: 0;
+                display: grid;
+                grid-template-columns: 1.15fr 1fr;
+                gap: 14px;
+                height: 100%;
+                align-items: stretch;
+            }
+
+            .dashboard-col {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                min-height: 0;
+            }
+
+            .column-left {
+                gap: 0;
+            }
+
+            .column-right {
+                gap: 10px;
+            }
+
+            /* Left Card: Stretches dynamically to the footer */
+            #panel-class-selection {
+                flex: 1 1 0;
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 0;
+                padding: 12px 14px;
+            }
+
+            #panel-class-selection .card-header-band {
+                flex-shrink: 0;
+                margin-bottom: 6px;
+            }
+
+            #panel-class-selection .search-row {
+                flex-shrink: 0;
+                margin-bottom: 6px;
+            }
+
+            #panel-class-selection .filter-section {
+                flex-shrink: 0;
+                margin-bottom: 8px;
+                gap: 5px;
+            }
+
+            #classListContainer {
+                flex: 1 1 0;
+                min-height: 0;
+                overflow-y: auto;
+            }
+
+            /* Right Cards: Roster Hub on top, History Lookup at bottom */
+            #rosterContainer {
+                flex: 1 1 0;
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 0;
+                overflow: hidden;
+            }
+
+            #rosterActiveView {
+                flex: 1 1 0;
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+            }
+
+            #rosterActiveView .table-responsive {
+                flex: 1 1 0;
+                min-height: 0;
+                overflow-y: auto;
+                overflow-x: auto;
+            }
+
+            #panel-history-search {
+                flex-shrink: 0;
+                margin-bottom: 0;
+                padding: 10px 14px;
+            }
+        }
+
+        /* Mobile Viewport: Natural Flow (No Nested Scroll Containers) */
+        @media (max-width: 1024px) {
+            body {
+                height: auto;
+                max-height: none;
+                overflow: visible;
+                min-height: 100vh;
+            }
+
+            .app-container {
+                height: auto;
+                max-height: none;
+                overflow: visible;
+                padding: 12px 14px;
+            }
+
+            .notice-accordion {
+                margin-bottom: 12px;
+            }
+
+            .dashboard-grid {
+                display: flex;
+                flex-direction: column;
+                height: auto;
+                max-height: none;
+                gap: 14px;
+            }
+
+            .dashboard-col {
+                height: auto;
+                max-height: none;
+            }
+
+            #panel-class-selection {
+                height: auto !important;
+                max-height: none !important;
+                margin-bottom: 0;
+            }
+
+            #classListContainer {
+                max-height: none !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+
+            #rosterContainer {
+                height: auto !important;
+                max-height: none !important;
+                margin-bottom: 0;
+            }
+
+            #rosterActiveView {
+                height: auto !important;
+                max-height: none !important;
+            }
+
+            #rosterActiveView .table-responsive {
+                max-height: none !important;
+                height: auto !important;
+                overflow-y: visible !important;
+                overflow-x: auto !important;
+            }
+
+            #panel-history-search {
+                margin-bottom: 0;
+            }
         }
 
         /* ACCORDION */
         .notice-accordion {
             background-color: #eef7fd;
             border: 1.5px solid #bee5eb;
-            border-left: 6px solid var(--brand-blue);
+            border-left: 6px solid var(--dark-blue);
             border-radius: var(--border-radius);
-            margin-bottom: 22px;
+            margin-bottom: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
         }
 
         .notice-header {
-            padding: 14px 18px;
+            padding: 9px 16px;
             cursor: pointer;
-            font-family: 'OneDotCd-Bold', sans-serif;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
             color: var(--dark-blue);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 1.05rem;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: normal !important;
             user-select: none;
-            transition: background 0.2s;
-        }
-
-        .notice-header:hover {
-            background-color: #e2f2fc;
         }
 
         .notice-content {
             display: none;
-            padding: 16px 20px;
-            border-top: 1px solid #bee5eb;
-            background-color: #f6fbfe;
-            font-size: 0.98rem;
-            line-height: 1.55;
+            padding: 0 16px 10px;
+            font-size: 13.5px;
             color: var(--crust-burnt);
+            line-height: 1.45;
         }
 
         .notice-content.open {
@@ -226,23 +423,21 @@
 
         /* CARDS */
         .brand-card {
-            background-color: var(--crust-light);
+            background: white;
             border: 1.5px solid var(--crust-med);
             border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 22px;
-            box-shadow: 0 4px 12px rgba(71, 43, 16, 0.05);
+            padding: 14px 16px;
+            box-shadow: 0 2px 6px rgba(71, 43, 16, 0.05);
+            box-sizing: border-box;
         }
 
         .card-header-band {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
-            border-bottom: 2px solid var(--crust-med);
-            padding-bottom: 10px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
         .card-title-group {
@@ -252,72 +447,88 @@
         }
 
         .card-title {
-            font-family: 'PizzaPress', 'ExtraBlack', serif;
-            font-size: 1.28rem;
-            color: var(--med-blue);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 16.5px;
+            color: var(--dark-blue);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 0;
+            font-weight: normal !important;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            margin: 0;
+            line-height: 1.1;
         }
 
-        /* SEARCH INPUT */
+        .card-subtitle {
+            font-size: 12.5px;
+            color: var(--crust-deep);
+            margin-top: 2px;
+        }
+
+        /* SEARCH & FILTER CONTROLS */
         .search-row {
-            margin-bottom: 14px;
+            display: flex;
+            gap: 8px;
+            position: relative;
         }
 
         .search-input-wrapper {
             position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px 38px 10px 38px;
-            border: 1.5px solid var(--crust-dark);
-            border-radius: 8px;
-            font-family: 'OneDotCd', sans-serif;
-            font-size: 1rem;
-            background: white;
-            color: var(--crust-burnt);
-            transition: border-color 0.2s;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--brand-blue);
-            box-shadow: 0 0 0 3px rgba(0, 144, 226, 0.15);
+            flex: 1;
         }
 
         .search-icon {
             position: absolute;
-            left: 12px;
-            font-size: 16px;
-            color: var(--crust-deep);
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: var(--crust-dark);
             pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 7px 32px 7px 32px;
+            font-size: 13.5px;
+            border: 1.5px solid var(--crust-dark);
+            border-radius: 6px;
+            font-family: 'OneDotCd', sans-serif;
+            color: var(--crust-burnt);
+            background: white;
+            outline: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .search-input:focus {
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 2px rgba(0, 144, 226, 0.2);
         }
 
         .search-clear-btn {
             position: absolute;
-            right: 10px;
-            background: transparent;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
             border: none;
-            color: var(--crust-deep);
-            font-size: 18px;
+            color: var(--crust-dark);
+            font-size: 16px;
             cursor: pointer;
-            padding: 4px 8px;
+            padding: 2px;
             display: none;
+        }
+
+        .search-clear-btn:hover {
+            color: var(--brand-red);
         }
 
         /* FILTER PILLS */
         .filter-section {
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 16px;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .filter-row {
@@ -328,142 +539,178 @@
         }
 
         .filter-pill {
-            background-color: white;
-            border: 1.5px solid var(--crust-dark);
+            background: var(--crust-light);
+            border: 1px solid var(--crust-med);
             color: var(--crust-deep);
-            padding: 6px 14px;
+            padding: 3px 10px;
             border-radius: var(--radius-pill);
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 0.86rem;
-            text-transform: uppercase;
+            font-size: 11.5px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s ease;
             user-select: none;
+            line-height: 1.1;
         }
 
         .filter-pill:hover {
-            border-color: var(--brand-blue);
-            color: var(--dark-blue);
+            background: var(--crust-med);
+            color: var(--crust-burnt);
         }
 
         .filter-pill.active {
-            background-color: var(--brand-blue);
-            border-color: var(--brand-blue);
-            color: white;
-            box-shadow: 0 2px 6px rgba(0, 144, 226, 0.25);
+            background: var(--dark-blue) !important;
+            color: white !important;
+            border-color: var(--dark-blue) !important;
+            box-shadow: 0 1px 4px rgba(0, 92, 145, 0.25);
         }
 
-        /* CLASS CARDS CONTAINER */
+        /* CLASS CARDS CONTAINER (Compact Fit: 6-8 sessions before scroll) */
         .classes-scroll-container {
-            max-height: 480px;
-            overflow-y: auto;
             border: 1.5px solid var(--crust-med);
             border-radius: 8px;
-            background: white;
-            padding: 8px;
+            padding: 6px;
+            background: var(--crust-base);
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--crust-dark) transparent;
+            gap: 6px;
+            box-sizing: border-box;
         }
 
         .class-card {
+            background: white;
             border: 1.5px solid var(--crust-med);
             border-radius: 8px;
-            padding: 12px 16px;
-            background: var(--crust-light);
-            cursor: pointer;
-            transition: all 0.18s ease;
+            padding: 7px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            border-left: 5px solid var(--brand-blue);
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+            min-height: 58px;
+            box-sizing: border-box;
         }
 
         .class-card:hover {
-            background: #fff8f0;
-            border-color: var(--crust-dark);
-            transform: translateX(2px);
+            border-color: var(--brand-blue);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 144, 226, 0.12);
         }
 
         .class-card.selected {
-            background: #edf7ff;
+            background: #f0f8ff;
             border-color: var(--brand-blue);
-            border-left: 5px solid var(--brand-blue);
-            box-shadow: 0 2px 8px rgba(0, 144, 226, 0.2);
+            border-width: 2px;
+            box-shadow: 0 0 0 2px rgba(0, 144, 226, 0.2);
         }
 
         .class-card-left {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 10px;
+            min-width: 0;
             flex: 1;
         }
 
         .class-date-badge {
-            background-color: var(--brand-blue);
-            color: white;
+            background: var(--crust-light);
+            border: 1.5px solid var(--crust-med);
             border-radius: 6px;
-            padding: 6px 10px;
+            padding: 3px 6px;
             text-align: center;
-            min-width: 64px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-width: 52px;
+            flex-shrink: 0;
         }
 
-        .badge-month {
+        .class-card.selected .class-date-badge {
+            background: var(--dark-blue);
+            border-color: var(--dark-blue);
+            color: white;
+        }
+
+        .class-date-badge .badge-month {
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
-            line-height: 1;
+            color: var(--brand-red);
             letter-spacing: 0.5px;
-        }
-
-        .badge-day {
-            font-family: 'PizzaPress', 'ExtraBlack', serif;
-            font-size: 18px;
-            line-height: 1.1;
-            margin: 2px 0;
-        }
-
-        .badge-time {
-            font-size: 10.5px;
-            opacity: 0.92;
             line-height: 1;
+        }
+
+        .class-card.selected .class-date-badge .badge-month {
+            color: #ffd2d2;
+        }
+
+        .class-date-badge .badge-day {
+            font-family: 'PizzaPress', 'ExtraBlack', serif;
+            font-size: 17px;
+            line-height: 1.1;
+            color: var(--dark-blue);
+        }
+
+        .class-card.selected .class-date-badge .badge-day {
+            color: white;
+        }
+
+        .class-date-badge .badge-time {
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 9.5px;
+            color: var(--crust-deep);
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .class-card.selected .class-date-badge .badge-time {
+            color: #eef7fd;
         }
 
         .class-info-block {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
+            min-width: 0;
+            flex: 1;
         }
 
         .class-title-row {
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 2px;
         }
 
         .class-title {
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 1.15rem;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 14.5px;
             color: var(--dark-blue);
-            line-height: 1.2;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .level-badge {
+            background: var(--crust-med);
+            color: var(--crust-burnt);
+            padding: 1px 6px;
+            border-radius: var(--radius-pill);
+            font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif;
+            font-size: 10px;
+            text-transform: uppercase;
+            flex-shrink: 0;
         }
 
         .class-meta-row {
             display: flex;
             align-items: center;
-            gap: 14px;
-            font-size: 0.92rem;
+            gap: 10px;
+            font-size: 12px;
             color: var(--crust-deep);
-            flex-wrap: wrap;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .class-meta-item {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 4px;
         }
@@ -471,140 +718,146 @@
         .class-card-right {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            flex-shrink: 0;
         }
 
         .enrolled-badge {
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 0.88rem;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: var(--radius-pill);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
             white-space: nowrap;
         }
 
         .enrolled-badge.has-spots {
-            background-color: #eef7fd;
+            background: #eef7fd;
             color: var(--dark-blue);
             border: 1px solid #c9e6f8;
         }
 
         .enrolled-badge.is-full {
-            background-color: #fff1f1;
-            color: var(--dark-red);
+            background: #fff1f1;
+            color: var(--brand-red);
             border: 1px solid #f8c8c8;
         }
 
         .select-check {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            border: 2px solid var(--crust-dark);
+            border: 1.5px solid var(--crust-dark);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
             color: transparent;
-            transition: all 0.2s;
+            font-size: 11px;
+            transition: all 0.2s ease;
         }
 
         .class-card.selected .select-check {
-            background-color: var(--brand-blue);
+            background: var(--brand-blue);
             border-color: var(--brand-blue);
             color: white;
         }
 
         /* ROSTER CONTAINER */
         .roster-container {
-            display: none;
             background: white;
-            border-radius: var(--border-radius);
             border: 1.5px solid var(--crust-med);
-            box-shadow: 0 4px 16px rgba(71, 43, 16, 0.08);
-            margin-bottom: 24px;
-            overflow: hidden;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 6px rgba(71, 43, 16, 0.04);
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            padding: 0;
         }
 
         .roster-header-banner {
-            background-color: var(--crust-light);
-            border-bottom: 2px solid var(--crust-med);
-            padding: 16px 20px;
+            background: var(--crust-light);
+            border-bottom: 2px solid var(--dark-blue);
+            padding: 10px 14px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 14px;
+            align-items: center;
             flex-wrap: wrap;
+            gap: 10px;
         }
 
         .roster-header-title {
-            font-family: 'PizzaPress', 'ExtraBlack', serif;
-            font-size: 1.35rem;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 16.5px;
             color: var(--dark-blue);
-            text-transform: uppercase;
+            font-weight: bold;
         }
 
         .roster-header-meta {
-            font-size: 0.95rem;
+            font-size: 12px;
             color: var(--crust-deep);
-            margin-top: 3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 2px;
         }
 
         .roster-action-toolbar {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
         .toolbar-btn {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 6px;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: var(--radius-pill);
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 0.88rem;
+            font-size: 12px;
             text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.18s ease;
+            transition: all 0.15s ease;
             text-decoration: none;
             line-height: 1;
         }
 
         .toolbar-btn-blue {
-            background-color: var(--brand-blue);
+            background: var(--brand-blue);
             color: white;
             border: none;
-            box-shadow: 0 2px 6px rgba(0, 144, 226, 0.25);
+            box-shadow: 0 1px 3px rgba(0, 144, 226, 0.25);
         }
 
         .toolbar-btn-blue:hover {
-            background-color: var(--dark-blue);
+            background: var(--dark-blue);
             transform: translateY(-1px);
         }
 
         .toolbar-btn-outline {
-            background-color: white;
+            background: white;
             color: var(--dark-blue);
             border: 1.5px solid var(--dark-blue);
         }
 
         .toolbar-btn-outline:hover {
-            background-color: #f0f7fd;
+            background: #eef7fd;
         }
 
+        /* NOTICE CALLOUT IN ROSTER */
         .roster-notice-bar {
-            background-color: #fff9e6;
-            border-bottom: 1px solid #ffeeba;
-            padding: 10px 18px;
-            font-size: 0.92rem;
-            color: #856404;
+            background: #eef7fd;
+            border-bottom: 1px solid #bee5eb;
+            padding: 6px 14px;
+            font-size: 12px;
+            color: var(--dark-blue);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
-        /* ROSTER TABLE */
+        /* TABLE */
         .table-responsive {
             overflow-x: auto;
         }
@@ -612,68 +865,73 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.98rem;
+            font-size: 13.5px;
+            text-align: left;
         }
 
-        th {
-            background-color: #fcf8f3;
-            color: var(--crust-deep);
+        thead {
+            background-color: var(--dark-blue);
+            color: white;
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
             text-transform: uppercase;
-            font-size: 0.82rem;
+            font-size: 12px;
+            font-weight: normal;
             letter-spacing: 0.5px;
-            text-align: left;
-            padding: 12px 16px;
-            border-bottom: 2px solid var(--crust-med);
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
-        td {
-            padding: 12px 16px;
+        th, td {
+            padding: 9px 12px;
             border-bottom: 1px solid var(--crust-med);
-            vertical-align: middle;
         }
 
-        tr:hover td {
-            background-color: #fcfbfa;
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--crust-base);
         }
 
         .candidate-name {
-            font-family: 'OneDotCd-Bold', sans-serif;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 14px;
             color: var(--dark-blue);
-            font-size: 1.05rem;
         }
 
         .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 10px;
+            padding: 3px 9px;
             border-radius: var(--radius-pill);
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 0.82rem;
+            font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif;
+            font-size: 11.5px;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            display: inline-block;
         }
 
         .status-verified {
-            background-color: var(--success-green-bg);
-            color: var(--success-green);
-            border: 1px solid #b7e4c7;
+            background: #eef7fd;
+            color: var(--dark-blue);
+            border: 1px solid #bee5eb;
         }
 
         .status-expected {
-            background-color: #fff8e6;
-            color: #996500;
-            border: 1px solid #ffe299;
+            background: var(--crust-light);
+            color: var(--crust-burnt);
+            border: 1px solid var(--crust-med);
         }
 
         /* MODALS */
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(30, 20, 10, 0.65);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 46, 77, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -691,207 +949,131 @@
         .modal-card {
             background: white;
             border-radius: var(--border-radius);
-            max-width: 640px;
+            max-width: 520px;
             width: 100%;
-            max-height: 88vh;
+            border: 2px solid var(--crust-med);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            border: 2px solid var(--crust-med);
-            overflow: hidden;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+            max-height: 90vh;
         }
 
         .modal-header {
             background: var(--dark-blue);
             color: white;
-            padding: 14px 18px;
+            padding: 12px 18px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--brand-red);
         }
 
         .modal-header h3 {
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 18px;
-            text-transform: uppercase;
-            font-weight: normal;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 17px;
             margin: 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .modal-close-btn {
             background: none;
             border: none;
             color: white;
-            font-size: 24px;
+            font-size: 22px;
             cursor: pointer;
             line-height: 1;
+            padding: 0 4px;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--brand-red);
         }
 
         .modal-body {
-            padding: 22px;
+            padding: 20px;
             overflow-y: auto;
         }
 
-        /* QR CODE MODAL CONTENT */
         .qr-display-wrap {
-            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        .qr-image-frame {
-            background: white;
-            padding: 14px;
-            border: 2px solid var(--crust-med);
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            margin: 14px 0;
-        }
-
-        .qr-image-frame img {
-            width: 240px;
-            height: 240px;
-            display: block;
+            text-align: center;
         }
 
         .qr-class-meta {
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 17px;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 16px;
             color: var(--dark-blue);
             margin-bottom: 4px;
         }
 
+        .qr-image-frame {
+            background: white;
+            padding: 12px;
+            border: 2px solid var(--crust-med);
+            border-radius: 8px;
+            margin: 12px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .qr-image-frame img {
+            width: 220px;
+            height: 220px;
+            display: block;
+        }
+
         .qr-subtext {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--crust-deep);
-            margin-bottom: 16px;
-            max-width: 440px;
+            max-width: 360px;
             line-height: 1.4;
+            margin-bottom: 14px;
         }
 
         .qr-url-box {
             display: flex;
-            width: 100%;
-            max-width: 460px;
             gap: 8px;
-            margin-top: 6px;
+            width: 100%;
+            max-width: 360px;
         }
 
         .qr-url-input {
             flex: 1;
-            padding: 9px 12px;
-            font-size: 13.5px;
-            border: 1.5px solid var(--crust-med);
+            padding: 7px 10px;
+            font-size: 12.5px;
+            border: 1px solid var(--crust-dark);
             border-radius: 6px;
             background: var(--crust-light);
             color: var(--crust-burnt);
-            font-family: monospace;
         }
 
-        /* TOAST NOTIFICATION */
+        /* TOAST */
         .toast-notification {
             position: fixed;
             bottom: 24px;
             right: 24px;
-            background-color: var(--dark-blue);
+            background: var(--crust-burnt);
             color: white;
-            padding: 12px 22px;
-            border-radius: 8px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            padding: 10px 18px;
+            border-radius: var(--radius-pill);
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 0.94rem;
+            font-size: 13px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            z-index: 2000;
             display: flex;
             align-items: center;
             gap: 8px;
-            z-index: 2000;
+            transform: translateY(100px);
             opacity: 0;
-            pointer-events: none;
-            transform: translateY(12px);
-            transition: all 0.25s ease;
+            transition: all 0.3s ease;
         }
 
         .toast-notification.show {
-            opacity: 1;
-            pointer-events: auto;
             transform: translateY(0);
-        }
-
-        /* BRAND FOOTER */
-        .portal-footer {
-            background-color: var(--dark-blue);
-            color: white;
-            padding: 24px 20px;
-            margin-top: auto;
-            border-top: 4px solid var(--brand-red);
-        }
-
-        .portal-footer-inner {
-            max-width: 1140px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .footer-brand {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .footer-title {
-            font-family: 'PizzaPress', serif;
-            font-size: 1.15rem;
-            letter-spacing: 0.5px;
-        }
-
-        .footer-subtitle {
-            font-size: 0.82rem;
-            color: var(--crust-med);
-        }
-
-        .footer-meta {
-            text-align: right;
-            font-size: 0.8rem;
-            color: var(--crust-med);
-        }
-
-        @media (max-width: 768px) {
-            .portal-header-inner {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-            .header-actions {
-                width: 100%;
-                justify-content: flex-start;
-            }
-            .class-card {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .class-card-right {
-                width: 100%;
-                justify-content: space-between;
-                border-top: 1px solid var(--crust-med);
-                padding-top: 8px;
-                margin-top: 4px;
-            }
-            .roster-header-banner {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .roster-action-toolbar {
-                width: 100%;
-            }
-            .toolbar-btn {
-                flex: 1;
-            }
-            .footer-meta {
-                text-align: left;
-            }
+            opacity: 1;
         }
     </style>
 </head>
@@ -929,7 +1111,7 @@
     <div class="brand-stripe"></div>
 
     <!-- TRAINER PIN AUTHENTICATION GATE OVERLAY -->
-    <div id="trainerPinOverlay" class="modal-overlay" style="display: flex; z-index: 999999; backdrop-filter: blur(8px); background: rgba(0, 46, 77, 0.90);">
+    <div id="trainerPinOverlay" class="modal-overlay active" style="display: flex; z-index: 999999; backdrop-filter: blur(8px); background: rgba(0, 46, 77, 0.90);">
         <div class="modal-card" style="max-width: 440px; margin: auto; border: 3px solid var(--crust-med); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
             <div class="modal-header" style="background: var(--dark-blue); border-bottom: 4px solid var(--brand-red); text-align: center; justify-content: center; position: relative;">
                 <h3 style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 19px; letter-spacing: 0.5px;">🔒 MIT Trainer Portal Login</h3>
@@ -964,7 +1146,7 @@
         </div>
     </div>
 
-    <main>
+    <main class="app-container">
         <!-- PROTOCOLS ACCORDION -->
         <div class="notice-accordion">
             <div class="notice-header" onclick="toggleNotice()">
@@ -972,123 +1154,142 @@
                 <span id="accordionArrow">▼</span>
             </div>
             <div id="noticeBody" class="notice-content">
-                <p style="margin-bottom: 8px;">
-                    <strong>🛑 Cancellations &amp; Low Enrollment:</strong> If you have <strong>fewer than 3 enrollments</strong> or need to cancel/reschedule a session, you must obtain <strong>prior approval from Steve</strong>. Trainers are responsible for notifying the registered Team Members and their General Managers.
+                <p style="margin-bottom: 6px;">
+                    <strong>🛑 Cancellations &amp; Low Enrollment:</strong> If you have <strong>fewer than 3 enrollments</strong> or need to cancel/reschedule a session, you must obtain <strong>prior approval from Bobby</strong>. Trainers are responsible for notifying the registered Team Members and their General Managers.
                 </p>
                 <p style="margin-bottom: 0;">
-                    <strong>📅 Schedule Management:</strong> To add, adjust, or reschedule sessions, use the <strong>Admin Hub MIT Scheduler</strong> or coordinate with <strong>Mike</strong>.
+                    <strong>📅 Schedule Management:</strong> To add, adjust, or reschedule sessions, coordinate with <strong>Mike</strong> or use the <strong>Admin Hub MIT Scheduler</strong>.
                 </p>
             </div>
         </div>
 
-        <!-- SELECT CLASS CARD WITH SEARCH & FILTERS -->
-        <div class="brand-card">
-            <div class="card-header-band">
-                <div class="card-title-group">
-                    <h2 class="card-title"><span>📋</span> Select an Upcoming Class Session</h2>
-                </div>
-                <span id="classCountBadge" style="font-family: 'OneDotCd-Bold'; font-size: 13px; color: var(--crust-deep); background: var(--crust-light); padding: 4px 10px; border-radius: var(--radius-pill);">
-                    Loading upcoming sessions...
-                </span>
-            </div>
-
-            <!-- Instant Search Input -->
-            <div class="search-row">
-                <div class="search-input-wrapper">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" id="classSearchInput" class="search-input" placeholder="Search by course name, trainer, location, or store #..." oninput="handleClassSearch()">
-                    <button type="button" id="searchClearBtn" class="search-clear-btn" onclick="clearClassSearch()">&times;</button>
-                </div>
-            </div>
-
-            <!-- Location Filter Pills (Denver Market) -->
-            <div class="filter-section">
-                <div class="filter-row">
-                    <button type="button" class="filter-pill active" data-filter-type="location" data-val="ALL" onclick="setFilter('location', 'ALL', this)">All</button>
-                    <button type="button" class="filter-pill" data-filter-type="location" data-val="Academy" onclick="setFilter('location', 'Academy', this)">Academy</button>
-                    <button type="button" class="filter-pill" data-filter-type="location" data-val="Parker" onclick="setFilter('location', 'Parker', this)">Parker</button>
-                    <button type="button" class="filter-pill" data-filter-type="location" data-val="Boulder" onclick="setFilter('location', 'Boulder', this)">Boulder</button>
-                    <button type="button" class="filter-pill" data-filter-type="location" data-val="Virtual" onclick="setFilter('location', 'Virtual', this)">Virtual</button>
-                </div>
-            </div>
-
-            <!-- Interactive Scrollable Class Cards -->
-            <div id="classListContainer" class="classes-scroll-container">
-                <div style="padding: 24px; text-align: center; color: var(--crust-deep); font-size: 15px;">
-                    Loading class sessions from Cloudflare D1...
-                </div>
-            </div>
-        </div>
-
-        <!-- EXPECTED ROSTER & IN-CLASS ACTION HUB -->
-        <div id="rosterContainer" class="roster-container">
-            <div class="roster-header-banner">
-                <div>
-                    <div id="rosterClassName" class="roster-header-title">Class Roster</div>
-                    <div id="rosterMetaText" class="roster-header-meta">
-                        <span id="rosterLocation">Location</span> • 
-                        <span id="rosterDateTime">Date &amp; Time</span> • 
-                        <span id="rosterTrainer">Trainer</span>
+        <div class="dashboard-grid">
+            <!-- Left Column: Class Selection Stretched to Footer -->
+            <div class="dashboard-col column-left">
+                <section class="brand-card" id="panel-class-selection">
+                    <div class="card-header-band">
+                        <div class="card-title-group">
+                            <h2 class="card-title"><span>📋</span> Select an Upcoming Class Session</h2>
+                        </div>
+                        <span id="classCountBadge" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 12px; color: var(--crust-deep); background: var(--crust-light); padding: 3px 8px; border-radius: var(--radius-pill);">
+                            Loading upcoming sessions...
+                        </span>
                     </div>
-                </div>
-                <div class="roster-action-toolbar">
-                    <button type="button" class="toolbar-btn toolbar-btn-blue" onclick="openQrModal()">
-                        🔳 Show In-Class QR Code
-                    </button>
-                    <button type="button" class="toolbar-btn toolbar-btn-outline" onclick="copyCompletionLink()">
-                        📋 Copy Form Link
-                    </button>
-                    <a id="openFormExternalBtn" href="denver_mit_completion.html" target="_blank" class="toolbar-btn toolbar-btn-outline">
-                        ↗️ Open Completion Form
-                    </a>
-                </div>
+
+                    <!-- Instant Search Input -->
+                    <div class="search-row">
+                        <div class="search-input-wrapper">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="classSearchInput" class="search-input" placeholder="Search by course name, trainer, location, or store #..." oninput="handleClassSearch()">
+                            <button type="button" id="searchClearBtn" class="search-clear-btn" onclick="clearClassSearch()">&times;</button>
+                        </div>
+                    </div>
+
+                    <!-- Location Filter Pills (Denver Market) -->
+                    <div class="filter-section">
+                        <div class="filter-row">
+                            <button type="button" class="filter-pill active" data-filter-type="location" data-val="ALL" onclick="setFilter('location', 'ALL', this)">All</button>
+                            <button type="button" class="filter-pill" data-filter-type="location" data-val="Academy" onclick="setFilter('location', 'Academy', this)">Academy</button>
+                            <button type="button" class="filter-pill" data-filter-type="location" data-val="Parker" onclick="setFilter('location', 'Parker', this)">Parker</button>
+                            <button type="button" class="filter-pill" data-filter-type="location" data-val="Boulder" onclick="setFilter('location', 'Boulder', this)">Boulder</button>
+                            <button type="button" class="filter-pill" data-filter-type="location" data-val="Virtual" onclick="setFilter('location', 'Virtual', this)">Virtual</button>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Scrollable Class Cards (Stretched to Footer) -->
+                    <div id="classListContainer" class="classes-scroll-container">
+                        <div style="padding: 24px; text-align: center; color: var(--crust-deep); font-size: 14px;">
+                            Loading class sessions from Cloudflare D1...
+                        </div>
+                    </div>
+                </section>
             </div>
 
-            <!-- Ground Truth Explainer Notice -->
-            <div class="roster-notice-bar">
-                <span>💡</span>
-                <span>Pre-registered candidates represent expected rosters. Ground-truth class completion is recorded when attendees scan the QR code and submit the official MIT completion form.</span>
-            </div>
+            <!-- Right Column: Roster Hub & Trainee Search -->
+            <div class="dashboard-col column-right">
+                <!-- EXPECTED ROSTER & IN-CLASS ACTION HUB -->
+                <section id="rosterContainer" class="brand-card roster-container">
+                    <!-- Default Empty / Placeholder State -->
+                    <div id="rosterPlaceholder" style="flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 28px 20px; color: var(--crust-deep); background: var(--crust-light);">
+                        <div style="font-size: 36px; margin-bottom: 10px; line-height: 1;">📋</div>
+                        <h3 style="font-family: 'PizzaPress', 'ExtraBlack', serif; font-size: 18px; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 6px;">Select a Class Session</h3>
+                        <p style="font-size: 13.5px; max-width: 320px; line-height: 1.45; color: var(--crust-deep); margin: 0;">
+                            Choose an upcoming session from the schedule on the left to view the candidate roster, display the in-class QR code, or copy the completion link.
+                        </p>
+                    </div>
 
-            <div class="table-responsive">
-                <table id="rosterTable">
-                    <thead>
-                        <tr>
-                            <th>Candidate Name</th>
-                            <th>Store #</th>
-                            <th>Role / Position</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>Attendance Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rosterTableBody">
-                        <!-- Populated dynamically -->
-                    </tbody>
-                </table>
-            </div>
+                    <!-- Active View (shown once a class is selected) -->
+                    <div id="rosterActiveView" style="display: none;">
+                        <div class="roster-header-banner">
+                            <div>
+                                <div id="rosterClassName" class="roster-header-title">Class Roster</div>
+                                <div id="rosterMetaText" class="roster-header-meta">
+                                    <span id="rosterLocation">Location</span> • 
+                                    <span id="rosterDateTime">Date &amp; Time</span> • 
+                                    <span id="rosterTrainer">Trainer</span>
+                                </div>
+                            </div>
+                            <div class="roster-action-toolbar">
+                                <button type="button" class="toolbar-btn toolbar-btn-blue" onclick="openQrModal()">
+                                    🔳 In-Class QR
+                                </button>
+                                <button type="button" class="toolbar-btn toolbar-btn-outline" onclick="copyCompletionLink()">
+                                    📋 Copy Link
+                                </button>
+                                <a id="openFormExternalBtn" href="mit_completion.html" target="_blank" class="toolbar-btn toolbar-btn-outline">
+                                    ↗️ Open Form
+                                </a>
+                            </div>
+                        </div>
 
-            <div id="emptyRosterMsg" style="padding: 36px 20px; text-align: center; color: var(--crust-deep); font-size: 15.5px; display: none;">
-                No candidates currently pre-registered for this session.<br>
-                <span style="font-size: 13.5px; color: var(--crust-dark); margin-top: 4px; display: inline-block;">
-                    Walk-in candidates can scan the QR code to submit their completion directly.
-                </span>
-            </div>
-        </div>
+                        <!-- Ground Truth Explainer Notice -->
+                        <div class="roster-notice-bar">
+                            <span>💡</span>
+                            <span>Pre-registered candidates represent expected rosters. Ground-truth completion is recorded via QR scan.</span>
+                        </div>
 
-        <!-- HISTORICAL TRAINEE SEARCH CARD -->
-        <div class="brand-card">
-            <div class="card-header-band">
-                <div class="card-title-group">
-                    <h2 class="card-title"><span>🔍</span> Trainee Class History Lookup</h2>
-                </div>
-            </div>
-            <p style="font-size: 14.5px; color: var(--crust-deep); margin-bottom: 14px;">
-                Look up completed MIT class records and certified dates for any team member across Denver classes.
-            </p>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <input type="text" id="traineeSearchInput" class="search-input" style="padding: 10px 14px; flex: 1; min-width: 220px;" placeholder="Enter candidate name or store #..." onkeydown="if(event.key==='Enter') executeHistorySearch()">
-                <button type="button" class="toolbar-btn toolbar-btn-blue" style="padding: 10px 22px; font-size: 14px;" onclick="executeHistorySearch()">Search Records</button>
+                        <div class="table-responsive">
+                            <table id="rosterTable">
+                                <thead>
+                                    <tr>
+                                        <th>Candidate Name</th>
+                                        <th>Store #</th>
+                                        <th>Role / Level</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rosterTableBody">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="emptyRosterMsg" style="padding: 28px 20px; text-align: center; color: var(--crust-deep); font-size: 14.5px; display: none;">
+                            No candidates currently pre-registered for this session.<br>
+                            <span style="font-size: 13px; color: var(--crust-dark); margin-top: 4px; display: inline-block;">
+                                Walk-in candidates can scan the QR code to submit their completion directly.
+                            </span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- HISTORICAL TRAINEE SEARCH CARD (Bottom Right) -->
+                <section class="brand-card" id="panel-history-search">
+                    <div class="card-header-band" style="margin-bottom: 6px;">
+                        <div class="card-title-group">
+                            <h2 class="card-title" style="font-size: 16px;"><span>🔍</span> Trainee Class History Lookup</h2>
+                        </div>
+                    </div>
+                    <p style="font-size: 13px; color: var(--crust-deep); margin-bottom: 8px;">
+                        Look up completed MIT records and certified dates across Denver classes.
+                    </p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <input type="text" id="traineeSearchInput" class="search-input" style="flex: 1; min-width: 180px;" placeholder="Enter candidate name or store #..." onkeydown="if(event.key==='Enter') executeHistorySearch()">
+                        <button type="button" class="toolbar-btn toolbar-btn-blue" style="padding: 7px 16px; font-size: 12.5px;" onclick="executeHistorySearch()">Search Records</button>
+                    </div>
+                </section>
             </div>
         </div>
     </main>
@@ -1184,8 +1385,12 @@
                 }
             }
 
-            // Locked state
-            document.getElementById('trainerPinOverlay').style.display = 'flex';
+            // Locked state: show overlay with .active
+            const overlay = document.getElementById('trainerPinOverlay');
+            if (overlay) {
+                overlay.style.display = 'flex';
+                overlay.classList.add('active');
+            }
             setTimeout(() => {
                 const input = document.getElementById('trainerPinInput');
                 if (input) input.focus();
@@ -1242,7 +1447,11 @@
         }
 
         function unlockTrainerDashboard(trainerName, role) {
-            document.getElementById('trainerPinOverlay').style.display = 'none';
+            const overlay = document.getElementById('trainerPinOverlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+                overlay.style.display = 'none';
+            }
             const badge = document.getElementById('trainerAuthBadge');
             const nameEl = document.getElementById('authTrainerName');
             const lockBtn = document.getElementById('btnLockPortal');
@@ -1465,10 +1674,12 @@
 
             await loadClassRoster(selectedClassObj);
 
-            // Smooth scroll down to roster container
-            const rosterEl = document.getElementById('rosterContainer');
-            if (rosterEl) {
-                rosterEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            // If mobile view, scroll to roster container smoothly
+            if (window.innerWidth <= 1024) {
+                const rosterEl = document.getElementById('rosterContainer');
+                if (rosterEl) {
+                    rosterEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             }
         }
 
