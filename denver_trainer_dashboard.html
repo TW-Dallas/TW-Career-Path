@@ -1093,12 +1093,6 @@
                 </div>
             </div>
             <div class="header-actions">
-                <div id="trainerAuthBadge" class="header-action-btn" style="display: none; background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.4); cursor: default;">
-                    👤 <span id="authTrainerName">Trainer</span>
-                </div>
-                <button type="button" id="btnLockPortal" class="header-action-btn" style="display: none; background: var(--dark-red); border-color: var(--dark-red);" onclick="lockPortalSession()">
-                    🔒 Lock
-                </button>
                 <a href="denver_classes.html" class="header-action-btn">← Class Schedule</a>
                 <div class="market-pill">Denver Market</div>
                 <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
@@ -1374,7 +1368,7 @@
                     const auth = JSON.parse(authDataRaw);
                     // 12-hour session lifespan
                     if (auth.timestamp && (Date.now() - auth.timestamp < 12 * 3600 * 1000)) {
-                        unlockTrainerDashboard(auth.name, auth.role);
+                        unlockTrainerDashboard();
                         fetchTrainerClasses();
                         return;
                     }
@@ -1409,18 +1403,13 @@
                 return;
             }
 
-            // Instant Master Bypass (0ms latency, clean executive role)
+            // Instant Master Bypass (0ms latency)
             if (pin === "9999" || pin === "TW2026!exec") {
-                const displayName = "Mike Jacobs";
-                const displayRole = "Executive";
                 sessionStorage.setItem('tw_mit_trainer_auth', JSON.stringify({
-                    name: displayName,
-                    store: "Corporate",
-                    market: "All Markets",
-                    role: displayRole,
+                    authenticated: true,
                     timestamp: Date.now()
                 }));
-                unlockTrainerDashboard(displayName, displayRole);
+                unlockTrainerDashboard();
                 fetchTrainerClasses();
                 return;
             }
@@ -1435,20 +1424,11 @@
                 const data = await res.json();
 
                 if (data && data.success) {
-                    let finalName = data.trainerName;
-                    let finalRole = data.role || 'Trainer';
-                    if (finalName.toLowerCase().includes("master override") || finalName.toLowerCase().includes("executive override")) {
-                        finalName = "Mike Jacobs";
-                        finalRole = "Executive";
-                    }
                     sessionStorage.setItem('tw_mit_trainer_auth', JSON.stringify({
-                        name: finalName,
-                        store: data.trainerStore,
-                        market: data.trainerMarket,
-                        role: finalRole,
+                        authenticated: true,
                         timestamp: Date.now()
                     }));
-                    unlockTrainerDashboard(finalName, finalRole);
+                    unlockTrainerDashboard();
                     fetchTrainerClasses();
                 } else {
                     errMsg.innerText = data.error || "Incorrect Trainer PIN. Access Denied.";
@@ -1466,24 +1446,12 @@
             }
         }
 
-        function unlockTrainerDashboard(trainerName, role) {
+        function unlockTrainerDashboard() {
             const overlay = document.getElementById('trainerPinOverlay');
             if (overlay) {
                 overlay.classList.remove('active');
                 overlay.style.display = 'none';
             }
-            const badge = document.getElementById('trainerAuthBadge');
-            const nameEl = document.getElementById('authTrainerName');
-            const lockBtn = document.getElementById('btnLockPortal');
-            if (badge && nameEl) {
-                let display = `${trainerName} (${role})`;
-                if (trainerName.toLowerCase().includes("master override") || trainerName.toLowerCase().includes("executive override")) {
-                    display = "Mike Jacobs (Executive)";
-                }
-                nameEl.innerText = display;
-                badge.style.display = 'inline-flex';
-            }
-            if (lockBtn) lockBtn.style.display = 'inline-block';
         }
 
         function lockPortalSession() {
