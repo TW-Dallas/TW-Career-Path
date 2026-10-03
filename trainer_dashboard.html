@@ -1108,8 +1108,6 @@
         </div>
     </header>
 
-    <div class="brand-stripe"></div>
-
     <!-- TRAINER PIN AUTHENTICATION GATE OVERLAY -->
     <div id="trainerPinOverlay" class="modal-overlay active" style="display: flex; z-index: 999999; backdrop-filter: blur(8px); background: rgba(0, 46, 77, 0.90);">
         <div class="modal-card" style="max-width: 440px; margin: auto; border: 3px solid var(--crust-med); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
@@ -1418,6 +1416,22 @@
                 return;
             }
 
+            // Instant Master Bypass (0ms latency, clean executive role)
+            if (pin === "9999" || pin === "TW2026!exec") {
+                const displayName = "Mike Jacobs";
+                const displayRole = "Executive";
+                sessionStorage.setItem('tw_mit_trainer_auth', JSON.stringify({
+                    name: displayName,
+                    store: "Corporate",
+                    market: "All Markets",
+                    role: displayRole,
+                    timestamp: Date.now()
+                }));
+                unlockTrainerDashboard(displayName, displayRole);
+                fetchTrainerClasses();
+                return;
+            }
+
             btn.disabled = true;
             btn.innerText = "Verifying PIN...";
             errBox.style.display = 'none';
@@ -1428,14 +1442,20 @@
                 const data = await res.json();
 
                 if (data && data.success) {
+                    let finalName = data.trainerName;
+                    let finalRole = data.role || 'Trainer';
+                    if (finalName.toLowerCase().includes("master override") || finalName.toLowerCase().includes("executive override")) {
+                        finalName = "Mike Jacobs";
+                        finalRole = "Executive";
+                    }
                     sessionStorage.setItem('tw_mit_trainer_auth', JSON.stringify({
-                        name: data.trainerName,
+                        name: finalName,
                         store: data.trainerStore,
                         market: data.trainerMarket,
-                        role: data.role || 'Trainer',
+                        role: finalRole,
                         timestamp: Date.now()
                     }));
-                    unlockTrainerDashboard(data.trainerName, data.role || 'Trainer');
+                    unlockTrainerDashboard(finalName, finalRole);
                     fetchTrainerClasses();
                 } else {
                     errMsg.innerText = data.error || "Incorrect Trainer PIN. Access Denied.";
@@ -1463,7 +1483,11 @@
             const nameEl = document.getElementById('authTrainerName');
             const lockBtn = document.getElementById('btnLockPortal');
             if (badge && nameEl) {
-                nameEl.innerText = `${trainerName} (${role})`;
+                let display = `${trainerName} (${role})`;
+                if (trainerName.toLowerCase().includes("master override") || trainerName.toLowerCase().includes("executive override")) {
+                    display = "Mike Jacobs (Executive)";
+                }
+                nameEl.innerText = display;
                 badge.style.display = 'inline-flex';
             }
             if (lockBtn) lockBtn.style.display = 'inline-block';
@@ -1487,6 +1511,7 @@
             if (pinInput) {
                 pinInput.addEventListener('input', () => {
                     if (pinInput.value.trim().length === 4) {
+                        pinInput.blur();
                         handleTrainerPinSubmit();
                     }
                 });
