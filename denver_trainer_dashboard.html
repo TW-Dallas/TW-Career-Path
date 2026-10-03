@@ -1246,7 +1246,7 @@
                                     <tr>
                                         <th>Candidate Name</th>
                                         <th>Store #</th>
-                                        <th>Role / Level</th>
+                                        <th>Role</th>
                                         <th>Phone</th>
                                         <th>Email</th>
                                         <th>Status</th>
@@ -1705,7 +1705,6 @@
             const directUrl = `${window.location.origin}/denver_mit_completion.html?classId=${encodeURIComponent(cls.id)}`;
             document.getElementById('openFormExternalBtn').href = directUrl;
 
-            container.style.display = 'block';
             tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 25px; color: var(--crust-deep);">Loading expected attendee roster...</td></tr>';
             emptyMsg.style.display = 'none';
 
@@ -1743,8 +1742,13 @@
             }
 
             if (roster.length === 0) {
-                tbody.innerHTML = '';
-                emptyMsg.style.display = 'block';
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 28px 20px; color: var(--crust-deep); font-size: 14.5px;">
+                    No candidates currently pre-registered for this session.<br>
+                    <span style="font-size: 13px; color: var(--crust-dark); margin-top: 4px; display: inline-block;">
+                        Walk-in candidates can scan the QR code to submit their completion directly.
+                    </span>
+                </td></tr>`;
+                emptyMsg.style.display = 'none';
                 return;
             }
 
