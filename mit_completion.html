@@ -217,11 +217,128 @@
 
         .row-textareas textarea {
             resize: vertical;
-            min-height: 72px;
-            height: 78px;
+            min-height: 52px;
+            height: 60px;
         }
 
-        @media (max-width: 768px) {
+        @media (min-width: 900px) {
+            html, body {
+                height: 100vh;
+                max-height: 100vh;
+                overflow: hidden; /* Desktop page never scrolls! */
+            }
+
+            body {
+                display: flex;
+                flex-direction: column;
+            }
+
+            main {
+                flex: 1 1 0;
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 8px 24px;
+                max-width: 1080px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .brand-card {
+                width: 100%;
+                padding: 14px 20px;
+                margin-bottom: 0;
+            }
+
+            .card-header-band {
+                padding: 6px 12px;
+                margin-bottom: 10px;
+            }
+
+            .band-title {
+                font-size: 15px;
+            }
+
+            .band-subtitle {
+                font-size: 12px;
+            }
+
+            .row-phone-class {
+                gap: 12px;
+                margin-bottom: 8px;
+            }
+
+            .phone-box, .class-box {
+                padding: 8px 12px;
+            }
+
+            .class-box-title {
+                font-size: 15px;
+                margin-bottom: 2px;
+            }
+
+            .class-box-meta {
+                font-size: 12px;
+            }
+
+            .row-candidate-info {
+                gap: 12px;
+                margin-bottom: 8px;
+            }
+
+            .row-textareas {
+                gap: 12px;
+                margin-bottom: 8px;
+            }
+
+            .row-textareas textarea {
+                height: 48px;
+                min-height: 44px;
+                padding: 6px 10px;
+                font-size: 13.5px;
+            }
+
+            .input-label {
+                font-size: 12px;
+                margin-bottom: 2px;
+            }
+
+            .text-input, select {
+                padding: 6px 10px;
+                font-size: 14px;
+            }
+
+            .rating-pills {
+                gap: 8px;
+                margin-top: 4px;
+            }
+
+            .rating-pill {
+                padding: 4px 12px;
+                font-size: 12.5px;
+            }
+
+            .affirm-box {
+                padding: 8px 12px;
+                margin-top: 8px;
+                margin-bottom: 8px;
+            }
+
+            .affirm-label {
+                font-size: 12.5px;
+                line-height: 1.3;
+            }
+
+            .submit-btn {
+                padding: 10px 20px;
+                font-size: 15px;
+                margin-top: 8px;
+            }
+        }
+
+        @media (max-width: 899px) {
             .row-phone-class {
                 grid-template-columns: 1fr;
             }
@@ -638,17 +755,23 @@
                     </div>
                 </div>
 
-                <!-- ROW 5: RATING -->
-                <div style="margin-bottom: 18px;">
-                    <label class="input-label">Session &amp; Trainer Rating <span class="req">*</span></label>
+                <!-- ROW 4: RATING (1-5 OR NONE) -->
+                <div style="margin-bottom: 8px;">
+                    <label class="input-label" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Session &amp; Trainer Rating</span>
+                        <span style="font-size: 11px; color: var(--crust-deep); text-transform: none;">Optional</span>
+                    </label>
                     <div class="rating-pills" id="ratingPills">
-                        <button type="button" class="rating-pill active" onclick="selectRating('⭐⭐⭐⭐⭐ Excellent', this)">⭐⭐⭐⭐⭐ Excellent</button>
-                        <button type="button" class="rating-pill" onclick="selectRating('⭐⭐⭐⭐ Great', this)">⭐⭐⭐⭐ Great</button>
-                        <button type="button" class="rating-pill" onclick="selectRating('⭐⭐⭐ Good', this)">⭐⭐⭐ Good</button>
+                        <button type="button" class="rating-pill" onclick="selectRating('1 ⭐ (Poor)', this)">1 ⭐</button>
+                        <button type="button" class="rating-pill" onclick="selectRating('2 ⭐ (Fair)', this)">2 ⭐</button>
+                        <button type="button" class="rating-pill" onclick="selectRating('3 ⭐ (Good)', this)">3 ⭐</button>
+                        <button type="button" class="rating-pill" onclick="selectRating('4 ⭐ (Great)', this)">4 ⭐</button>
+                        <button type="button" class="rating-pill" onclick="selectRating('5 ⭐ (Excellent)', this)">5 ⭐</button>
+                        <button type="button" class="rating-pill active" onclick="selectRating('No Rating', this)">None</button>
                     </div>
                 </div>
 
-                <!-- ROW 6: ATTENDANCE AFFIRMATION -->
+                <!-- ROW 5: ATTENDANCE AFFIRMATION -->
                 <div class="affirm-box">
                     <input type="checkbox" id="affirmAttendance" required>
                     <label for="affirmAttendance" class="affirm-label">
@@ -699,12 +822,12 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
+    <!-- BRAND MASTER GLOBAL CDN FOOTER -->
     <footer class="portal-footer">
         <div class="portal-footer-inner">
             <div class="footer-brand">
-                <span class="footer-title">Team Wow • Domino's Pizza</span>
-                <span class="footer-subtitle">MIT Leadership Development &amp; Management Training</span>
+                <span class="footer-title">TEAM WOW • DOMINO'S PIZZA</span>
+                <span class="footer-subtitle">Director of Operations Command Center</span>
             </div>
             <div class="footer-meta">
                 <p class="footer-copy">&copy; 2026 Team Wow, Inc. All rights reserved.</p>
@@ -719,7 +842,7 @@
 
         let currentClassId = null;
         let selectedClassObj = null;
-        let selectedRating = "⭐⭐⭐⭐⭐ Excellent";
+        let selectedRating = "No Rating";
         let availableClasses = [];
         let currentMarket = "Dallas";
 
