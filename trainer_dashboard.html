@@ -908,6 +908,12 @@
                 </div>
             </div>
             <div class="header-actions">
+                <div id="trainerAuthBadge" class="header-action-btn" style="display: none; background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.4); cursor: default;">
+                    👤 <span id="authTrainerName">Trainer</span>
+                </div>
+                <button type="button" id="btnLockPortal" class="header-action-btn" style="display: none; background: var(--dark-red); border-color: var(--dark-red);" onclick="lockPortalSession()">
+                    🔒 Lock
+                </button>
                 <a href="classes.html" class="header-action-btn">← Class Schedule</a>
                 <div class="market-pill">Dallas Market</div>
                 <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
@@ -918,6 +924,42 @@
     </header>
 
     <div class="brand-stripe"></div>
+
+    <!-- TRAINER PIN AUTHENTICATION GATE OVERLAY -->
+    <div id="trainerPinOverlay" class="modal-overlay" style="display: flex; z-index: 999999; backdrop-filter: blur(8px); background: rgba(0, 46, 77, 0.90);">
+        <div class="modal-card" style="max-width: 440px; margin: auto; border: 3px solid var(--crust-med); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+            <div class="modal-header" style="background: var(--dark-blue); border-bottom: 4px solid var(--brand-red); text-align: center; justify-content: center; position: relative;">
+                <h3 style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 19px; letter-spacing: 0.5px;">🔒 MIT Trainer Portal Login</h3>
+            </div>
+            <div class="modal-body" style="padding: 26px 24px; text-align: center; background: white;">
+                <p style="font-size: 14.5px; color: var(--crust-deep); margin-bottom: 20px; line-height: 1.45;">
+                    Enter your registered 4-digit <strong>Trainer PIN</strong> to unlock MIT session rosters, attendance verification, and in-class QR certification codes.
+                </p>
+
+                <form id="trainerPinForm" onsubmit="handleTrainerPinSubmit(event)">
+                    <div style="margin-bottom: 16px;">
+                        <input type="password" id="trainerPinInput" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="••••" required autofocus
+                               style="width: 160px; font-size: 32px; letter-spacing: 12px; text-align: center; padding: 10px 14px; border: 2.5px solid var(--crust-med); border-radius: var(--radius-md); font-family: monospace; color: var(--crust-burnt); background: var(--crust-light); outline: none;">
+                    </div>
+
+                    <div id="pinErrorAlert" style="display: none; background: var(--red-soft-bg); border: 1.5px solid var(--dark-red); color: var(--dark-red); padding: 10px 14px; border-radius: 8px; font-size: 13.5px; margin-bottom: 16px; line-height: 1.4; text-align: left;">
+                        <span id="pinErrorMsg">Invalid PIN.</span>
+                    </div>
+
+                    <button type="submit" id="btnUnlockPortal" class="register-btn" style="width: 100%; padding: 12px 20px; font-size: 16px; font-family: 'Subhead1', sans-serif; background-color: var(--brand-red); color: white; border: none; border-radius: var(--radius-pill); cursor: pointer; transition: background-color 0.2s ease;">
+                        Unlock Dashboard
+                    </button>
+                </form>
+
+                <div style="margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--crust-med); font-size: 13px; color: var(--crust-deep);">
+                    <span>Don't have an active Trainer PIN?</span><br>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLS8vmu11QtHzaSbcaZALhTD6ySuEsVq7qMy_HPtGSMaYmdw/viewform" target="_blank" style="color: var(--brand-blue); font-weight: bold; text-decoration: underline; margin-top: 4px; display: inline-block;">
+                        Open Trainer Credential Generator ↗
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <main>
         <!-- PROTOCOLS ACCORDION -->
@@ -1113,6 +1155,7 @@
     </footer>
 
     <script>
+        const AUTH_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec";
         const D1_API_URL = "https://tw-dallas-staffing.pages.dev/api/staffing";
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycby7wgQnR7shWLeL78Fy4f0g0TD-Ch9NgEpIwYnwpUJZYsXvTv0A95IFBGe5k0shg4owEw/exec";
         const GAS_HISTORICAL_URL = "https://script.google.com/macros/s/AKfycbwyjGiK8CCoQWsY1eThGg3_g_8IMw88yq58laaywe0EZYnNcBkvfMCOJW_I2FAqknYKug/exec";
@@ -1128,6 +1171,97 @@
             search: ''
         };
 
+        // --- TRAINER PORTAL PIN AUTHENTICATION ---
+        function checkTrainerAuth() {
+            const authDataRaw = sessionStorage.getItem('tw_mit_trainer_auth');
+            if (authDataRaw) {
+                try {
+                    const auth = JSON.parse(authDataRaw);
+                    // 12-hour session lifespan
+                    if (auth.timestamp && (Date.now() - auth.timestamp < 12 * 3600 * 1000)) {
+                        unlockTrainerDashboard(auth.name, auth.role);
+                        fetchTrainerClasses();
+                        return;
+                    }
+                } catch (e) {
+                    sessionStorage.removeItem('tw_mit_trainer_auth');
+                }
+            }
+
+            // Locked state
+            document.getElementById('trainerPinOverlay').style.display = 'flex';
+            setTimeout(() => {
+                const input = document.getElementById('trainerPinInput');
+                if (input) input.focus();
+            }, 150);
+        }
+
+        async function handleTrainerPinSubmit(e) {
+            if (e) e.preventDefault();
+            const pinInput = document.getElementById('trainerPinInput');
+            const pin = pinInput.value.trim();
+            const btn = document.getElementById('btnUnlockPortal');
+            const errBox = document.getElementById('pinErrorAlert');
+            const errMsg = document.getElementById('pinErrorMsg');
+
+            if (!pin || pin.length < 4) {
+                errMsg.innerText = "Please enter your 4-digit PIN.";
+                errBox.style.display = 'block';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "Verifying PIN...";
+            errBox.style.display = 'none';
+
+            try {
+                const verifyUrl = `${AUTH_SCRIPT_URL}?action=verifyTrainerPin&pin=${encodeURIComponent(pin)}&module=MIT+Trainer+Portal&portal=mit`;
+                const res = await fetch(verifyUrl, { method: 'GET', credentials: 'omit' });
+                const data = await res.json();
+
+                if (data && data.success) {
+                    sessionStorage.setItem('tw_mit_trainer_auth', JSON.stringify({
+                        name: data.trainerName,
+                        store: data.trainerStore,
+                        market: data.trainerMarket,
+                        role: data.role || 'Trainer',
+                        timestamp: Date.now()
+                    }));
+                    unlockTrainerDashboard(data.trainerName, data.role || 'Trainer');
+                    fetchTrainerClasses();
+                } else {
+                    errMsg.innerText = data.error || "Incorrect Trainer PIN. Access Denied.";
+                    errBox.style.display = 'block';
+                    pinInput.value = '';
+                    pinInput.focus();
+                }
+            } catch (err) {
+                console.error("PIN check error:", err);
+                errMsg.innerText = "Connection hiccup verifying PIN. Please try again.";
+                errBox.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Unlock Dashboard";
+            }
+        }
+
+        function unlockTrainerDashboard(trainerName, role) {
+            document.getElementById('trainerPinOverlay').style.display = 'none';
+            const badge = document.getElementById('trainerAuthBadge');
+            const nameEl = document.getElementById('authTrainerName');
+            const lockBtn = document.getElementById('btnLockPortal');
+            if (badge && nameEl) {
+                nameEl.innerText = `${trainerName} (${role})`;
+                badge.style.display = 'inline-flex';
+            }
+            if (lockBtn) lockBtn.style.display = 'inline-block';
+        }
+
+        function lockPortalSession() {
+            sessionStorage.removeItem('tw_mit_trainer_auth');
+            location.reload();
+        }
+
         function toggleNotice() {
             const body = document.getElementById('noticeBody');
             const arrow = document.getElementById('accordionArrow');
@@ -1135,7 +1269,7 @@
             arrow.innerText = body.classList.contains('open') ? '▲' : '▼';
         }
 
-        window.addEventListener('DOMContentLoaded', fetchTrainerClasses);
+        window.addEventListener('DOMContentLoaded', checkTrainerAuth);
 
         async function fetchTrainerClasses() {
             const container = document.getElementById('classListContainer');
