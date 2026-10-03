@@ -666,7 +666,7 @@
                         <div>
                             <div class="class-box-header">
                                 <span class="input-label" style="margin-bottom: 0;">🎓 Class Attended Today</span>
-                                <span id="badgeLevelPill" style="background: var(--dark-blue); color: white; padding: 2px 10px; border-radius: var(--radius-pill); font-family: 'OneDotCd-Bold'; font-size: 11px; text-transform: uppercase;">Level 1</span>
+                                <span style="background: var(--dark-blue); color: white; padding: 2px 10px; border-radius: var(--radius-pill); font-family: 'OneDotCd-Bold'; font-size: 11px; text-transform: uppercase;">Denver</span>
                             </div>
                             <div id="badgeCourseTitle" class="class-box-title">Loading Class Session...</div>
                             <div id="badgeCourseMeta" class="class-box-meta">Detecting session from schedule...</div>
@@ -766,10 +766,6 @@
                     <span id="certClass" class="cert-val">Operations Assessment</span>
                 </div>
                 <div class="cert-row">
-                    <span class="cert-label">Level:</span>
-                    <span id="certLevel" class="cert-val">Level 1</span>
-                </div>
-                <div class="cert-row">
                     <span class="cert-label">Market:</span>
                     <span class="cert-val">Denver Market</span>
                 </div>
@@ -849,7 +845,6 @@
                                 id: String(cls.id || ''),
                                 classDate: `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`,
                                 name: cls.name,
-                                level: cls.level || 1,
                                 location: cls.location || 'Denver Training Center',
                                 trainer: cls.trainer || 'Team Wow',
                                 startTime: d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
@@ -1000,9 +995,8 @@
         }
 
         function populateClassBadge(cls) {
-            document.getElementById('badgeCourseTitle').innerText = `${cls.name} (Level ${cls.level || 1})`;
+            document.getElementById('badgeCourseTitle').innerText = cls.name;
             document.getElementById('badgeCourseMeta').innerText = `📅 ${cls.classDate} @ ${cls.startTime || '11:00 AM'} • 📍 ${cls.location || 'Denver'} • Trainer: ${cls.trainer}`;
-            document.getElementById('badgeLevelPill').innerText = `Level ${cls.level || 1}`;
         }
 
         function onManualClassSelect(classId) {
@@ -1060,7 +1054,7 @@
                 notes: notes,
                 rating: selectedRating,
                 className: selectedClassObj ? selectedClassObj.name : 'MIT Leadership',
-                level: selectedClassObj ? selectedClassObj.level : 1,
+                level: 'N/A',
                 classDate: selectedClassObj ? selectedClassObj.classDate : '',
                 trainerName: selectedClassObj ? selectedClassObj.trainer : ''
             };
@@ -1113,7 +1107,6 @@
 
                 document.getElementById('successTraineeName').innerText = name;
                 document.getElementById('certClass').innerText = selectedClassObj ? selectedClassObj.name : 'MIT Leadership';
-                document.getElementById('certLevel').innerText = selectedClassObj ? `Level ${selectedClassObj.level}` : 'Level 1';
                 document.getElementById('certStore').innerText = `Store #${store}`;
                 document.getElementById('certDate').innerText = selectedClassObj ? selectedClassObj.classDate : 'Today';
 
