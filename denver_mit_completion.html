@@ -229,11 +229,28 @@
             margin-bottom: 16px;
         }
 
+        /* ROW 3: SIDE-BY-SIDE TAKEAWAY (LEFT) & NOTES (RIGHT) */
+        .row-textareas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .row-textareas textarea {
+            resize: vertical;
+            min-height: 72px;
+            height: 78px;
+        }
+
         @media (max-width: 768px) {
             .row-phone-class {
                 grid-template-columns: 1fr;
             }
             .row-candidate-info {
+                grid-template-columns: 1fr;
+            }
+            .row-textareas {
                 grid-template-columns: 1fr;
             }
             .portal-header {
@@ -246,7 +263,7 @@
             background: white;
             border: 1.5px solid var(--crust-med);
             border-radius: var(--border-radius);
-            padding: 24px;
+            padding: 18px 22px;
             box-shadow: 0 4px 14px rgba(71, 43, 16, 0.06);
             margin-bottom: 24px;
         }
@@ -254,9 +271,9 @@
         .card-header-band {
             background: var(--crust-light);
             border-left: 5px solid var(--brand-blue);
-            padding: 12px 16px;
+            padding: 10px 14px;
             border-radius: 6px;
-            margin-bottom: 20px;
+            margin-bottom: 14px;
         }
 
         .band-title {
@@ -575,16 +592,17 @@
                     </div>
                 </div>
 
-                <!-- ROW 3: KEY TAKEAWAY -->
-                <div style="margin-bottom: 16px;">
-                    <label for="keyTakeaway" class="input-label">Key Takeaway / Action Item <span class="req">*</span></label>
-                    <textarea id="keyTakeaway" placeholder="What is 1 key standard, tool, or leadership concept you learned in today's class that you will apply in your store?" required></textarea>
-                </div>
+                <!-- ROW 3: TAKEAWAY (LEFT) & NOTES / SUGGESTIONS (RIGHT) -->
+                <div class="row-textareas">
+                    <div>
+                        <label for="keyTakeaway" class="input-label">Key Takeaway / Action Item <span class="req">*</span></label>
+                        <textarea id="keyTakeaway" placeholder="What is 1 key standard, tool, or leadership concept you learned in today's class that you will apply in your store?" required></textarea>
+                    </div>
 
-                <!-- ROW 4: NOTES / SUGGESTIONS -->
-                <div style="margin-bottom: 16px;">
-                    <label for="classNotes" class="input-label">Notes / Suggestions (Optional)</label>
-                    <textarea id="classNotes" placeholder="Any suggestions, feedback for the trainer, or notes from today's session?"></textarea>
+                    <div>
+                        <label for="classNotes" class="input-label">Notes / Suggestions (Optional)</label>
+                        <textarea id="classNotes" placeholder="Any suggestions, feedback for the trainer, or notes from today's session?"></textarea>
+                    </div>
                 </div>
 
                 <!-- ROW 5: RATING -->
