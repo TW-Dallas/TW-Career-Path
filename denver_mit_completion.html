@@ -68,7 +68,7 @@
             background-color: var(--brand-blue);
             color: white;
             padding: 10px 24px;
-            border-bottom: 3.5px solid var(--dark-blue);
+            border-bottom: 4px solid var(--brand-red);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
 
@@ -481,7 +481,6 @@
             </div>
         </div>
     </header>
-    <div class="brand-stripe"></div>
 
     <main>
         <!-- FORM CONTAINER -->
@@ -509,6 +508,20 @@
             </div>
 
             <form id="attendanceForm" onsubmit="submitAttendance(event)">
+                <!-- STEP 1: PHONE LOOKUP & CANDIDATE INFO -->
+                <div style="background: var(--crust-light); border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;">
+                    <label class="input-label" for="candPhone" style="font-size: 14px; margin-bottom: 4px;">
+                        📱 Enter Mobile Phone <span class="req">*</span>
+                    </label>
+                    <p style="font-size: 12.5px; color: var(--crust-deep); margin: 0 0 8px 0;">
+                        Type your phone number to automatically pull your name, store, and position.
+                    </p>
+                    <input type="tel" id="candPhone" class="text-input" placeholder="(555) 000-0000" required style="font-size: 17px; font-weight: bold; letter-spacing: 0.5px;">
+                    <div id="autofillNotice" style="display: none; margin-top: 8px; font-size: 13px; color: var(--dark-blue); font-weight: bold;">
+                        ✓ Match found! We auto-filled your details below.
+                    </div>
+                </div>
+
                 <div class="form-grid">
                     <div>
                         <label class="input-label" for="candName">Trainee Full Name <span class="req">*</span></label>
@@ -533,14 +546,10 @@
                     </div>
 
                     <div>
-                        <label class="input-label" for="candPhone">Mobile Phone <span class="req">*</span></label>
-                        <input type="tel" id="candPhone" class="text-input" placeholder="(555) 000-0000" required>
+                        <label class="input-label" for="candEmail">Email Address (Optional)</label>
+                        <input type="email" id="candEmail" class="text-input" placeholder="name@dominospizza.com">
                     </div>
-
-                    <div class="form-group-full">
-                        <label class="input-label" for="candEmail">Email Address <span class="req">*</span></label>
-                        <input type="email" id="candEmail" class="text-input" placeholder="name@dominospizza.com" required>
-                    </div>
+                </div>
 
                     <div class="form-group-full">
                         <label class="input-label" for="keyTakeaway">Key Class Takeaway / Learning Point <span class="req">*</span></label>
@@ -628,7 +637,12 @@
         let selectedRating = "⭐⭐⭐⭐⭐ Excellent";
         let availableClasses = [];
 
-        window.addEventListener('DOMContentLoaded', initCompletionPage);
+        let currentRoster = [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initCompletionPage();
+            setupPhoneAutofill();
+        });
 
         async function initCompletionPage() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -676,6 +690,7 @@
 
             if (selectedClassObj) {
                 populateClassBadge(selectedClassObj);
+                fetchClassRoster(selectedClassObj.id);
             } else {
                 // Show session picker dropdown
                 document.getElementById('sessionPickerWrapper').style.display = 'block';
@@ -688,6 +703,69 @@
                     select.appendChild(opt);
                 });
             }
+        }
+
+        async function fetchClassRoster(classId) {
+            if (!classId) return;
+            try {
+                const res = await fetch(`${D1_API_URL}?action=getMitRoster&classId=${encodeURIComponent(classId)}`);
+                const data = await res.json();
+                if (data.success && Array.isArray(data.roster)) {
+                    currentRoster = data.roster;
+                }
+            } catch (e) {
+                console.warn("Failed loading Denver roster for phone autofill:", e);
+            }
+        }
+
+        function setupPhoneAutofill() {
+            const phoneInput = document.getElementById('candPhone');
+            const notice = document.getElementById('autofillNotice');
+            if (!phoneInput) return;
+
+            phoneInput.addEventListener('input', () => {
+                let val = phoneInput.value.replace(/\D/g, '');
+                if (val.length > 10) val = val.substring(0, 10);
+                let formatted = val;
+                if (val.length >= 6) {
+                    formatted = `(${val.substring(0,3)}) ${val.substring(3,6)}-${val.substring(6)}`;
+                } else if (val.length >= 3) {
+                    formatted = `(${val.substring(0,3)}) ${val.substring(3)}`;
+                }
+                phoneInput.value = formatted;
+
+                const clean10 = val.slice(-10);
+                if (clean10.length === 10 && currentRoster.length > 0) {
+                    const match = currentRoster.find(r => {
+                        const rPhone = String(r.phone || '').replace(/\D/g, '').slice(-10);
+                        return rPhone === clean10;
+                    });
+                    if (match) {
+                        if (match.candidate_name) document.getElementById('candName').value = match.candidate_name;
+                        if (match.store_num) document.getElementById('storeNum').value = match.store_num;
+                        if (match.position) {
+                            const posSelect = document.getElementById('candPosition');
+                            for (let opt of posSelect.options) {
+                                if (opt.value.toLowerCase().includes(match.position.toLowerCase()) || match.position.toLowerCase().includes(opt.value.toLowerCase())) {
+                                    posSelect.value = opt.value;
+                                    break;
+                                }
+                            }
+                        }
+                        if (match.email) document.getElementById('candEmail').value = match.email;
+                        if (notice) {
+                            notice.style.display = 'block';
+                            notice.innerText = `✓ Found you, ${match.candidate_name}! Your details have been auto-filled.`;
+                        }
+                        const takeaway = document.getElementById('keyTakeaway');
+                        if (takeaway) takeaway.focus();
+                    } else if (notice) {
+                        notice.style.display = 'none';
+                    }
+                } else if (notice) {
+                    notice.style.display = 'none';
+                }
+            });
         }
 
         function populateClassBadge(cls) {

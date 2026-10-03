@@ -1481,7 +1481,17 @@
             arrow.innerText = body.classList.contains('open') ? '▲' : '▼';
         }
 
-        window.addEventListener('DOMContentLoaded', checkTrainerAuth);
+        window.addEventListener('DOMContentLoaded', () => {
+            checkTrainerAuth();
+            const pinInput = document.getElementById('trainerPinInput');
+            if (pinInput) {
+                pinInput.addEventListener('input', () => {
+                    if (pinInput.value.trim().length === 4) {
+                        handleTrainerPinSubmit();
+                    }
+                });
+            }
+        });
 
         async function fetchTrainerClasses() {
             const container = document.getElementById('classListContainer');

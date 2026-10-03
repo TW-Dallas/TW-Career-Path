@@ -1474,7 +1474,17 @@
             arrow.innerText = body.classList.contains('open') ? '▲' : '▼';
         }
 
-        window.addEventListener('DOMContentLoaded', checkTrainerAuth);
+        window.addEventListener('DOMContentLoaded', () => {
+            checkTrainerAuth();
+            const pinInput = document.getElementById('trainerPinInput');
+            if (pinInput) {
+                pinInput.addEventListener('input', () => {
+                    if (pinInput.value.trim().length === 4) {
+                        handleTrainerPinSubmit();
+                    }
+                });
+            }
+        });
 
         async function fetchTrainerClasses() {
             const container = document.getElementById('classListContainer');
@@ -1685,8 +1695,13 @@
 
         async function loadClassRoster(cls) {
             const container = document.getElementById('rosterContainer');
+            const placeholder = document.getElementById('rosterPlaceholder');
+            const activeView = document.getElementById('rosterActiveView');
             const tbody = document.getElementById('rosterTableBody');
             const emptyMsg = document.getElementById('emptyRosterMsg');
+
+            if (placeholder) placeholder.style.display = 'none';
+            if (activeView) activeView.style.display = 'flex';
 
             document.getElementById('rosterClassName').innerText = cls ? cls.name : 'Class Roster';
             document.getElementById('rosterLocation').innerText = cls ? (cls.location || 'Academy').replace(/\s*Center\s*/gi, '').trim() : 'Academy';
