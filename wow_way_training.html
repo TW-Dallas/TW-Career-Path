@@ -1296,8 +1296,25 @@
         // Run immediately upon script execution + event listeners
         handleHashRouting();
         window.addEventListener('DOMContentLoaded', handleHashRouting);
-        window.addEventListener('load', handleHashRouting);
         window.addEventListener('hashchange', handleHashRouting);
+
+        function promptRecoverTrainerPin() {
+            const input = prompt("Forgot your Trainer PIN?\n\nEnter your Pulse Employee ID, Email, or Full Name to receive your credentials:");
+            if (!input || !input.trim()) return;
+            const url = `https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec?action=recoverTrainerPin&query=${encodeURIComponent(input.trim())}`;
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`✅ Credentials Sent!\n\n${data.message}`);
+                    } else {
+                        alert(`❌ ${data.error}`);
+                    }
+                })
+                .catch(err => {
+                    alert("Unable to reach the recovery service right now. Please email Mike Jacobs (mjacobs@team-wow.com) or Bobby Melton.");
+                });
+        }
     </script>
 
     <!-- TRAINER PIN FORM MODAL (MANUAL TRIGGER) -->
@@ -1317,7 +1334,9 @@
                             Manager & Trainer PIN Registration</h3>
                         <p
                             style="margin: 2px 0 0 0; font-family: 'OneDotCd', sans-serif; font-size: 0.88rem; color: var(--crust-deep);">
-                            Register your individual 4-digit PIN to authorize trainee module unlocks. Employee ID must match your ID in Pulse.</p>
+                            Register your individual 4-digit PIN to authorize trainee module unlocks. Employee ID must match Pulse ID.
+                            <a href="#" onclick="promptRecoverTrainerPin(); return false;" style="color: var(--brand-blue); text-decoration: underline; margin-left: 8px; font-weight: bold;">Forgot PIN?</a>
+                        </p>
                     </div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
