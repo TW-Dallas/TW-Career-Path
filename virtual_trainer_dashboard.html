@@ -1191,7 +1191,6 @@
                             <button type="button" class="filter-pill active" data-filter-type="level" data-val="ALL" onclick="setFilter('level', 'ALL', this)">All Levels</button>
                             <button type="button" class="filter-pill" data-filter-type="level" data-val="1" onclick="setFilter('level', '1', this)">Level 1</button>
                             <button type="button" class="filter-pill" data-filter-type="level" data-val="2" onclick="setFilter('level', '2', this)">Level 2</button>
-                            <button type="button" class="filter-pill" data-filter-type="level" data-val="3" onclick="setFilter('level', '3', this)">Level 3</button>
                         </div>
                     </div>
 
@@ -1367,21 +1366,7 @@
             search: ''
         };
 
-        // Standard Virtual curriculum baseline for preview state
-        const DEFAULT_VIRTUAL_SESSIONS = [
-            { id: 'v-101', name: 'Customer Experience', level: 1, classDate: '10/07/2026', startTime: '6:00 PM', location: 'Live Google Meet', trainer: 'Phu', spotsTaken: 6, spotsTotal: 15 },
-            { id: 'v-102', name: 'Customer Experience', level: 1, classDate: '10/10/2026', startTime: '11:00 AM', location: 'Live Google Meet', trainer: 'Bobby', spotsTaken: 2, spotsTotal: 15 },
-            { id: 'v-103', name: 'Operations Assessment', level: 1, classDate: '10/14/2026', startTime: '6:00 PM', location: 'Live Google Meet', trainer: 'Rebecca', spotsTaken: 1, spotsTotal: 15 },
-            { id: 'v-104', name: 'Operations Assessment', level: 1, classDate: '10/17/2026', startTime: '11:00 AM', location: 'Live Google Meet', trainer: 'Melissa', spotsTaken: 1, spotsTotal: 15 },
-            { id: 'v-105', name: 'Product Quality', level: 1, classDate: '10/21/2026', startTime: '6:00 PM', location: 'Live Google Meet', trainer: 'Chris', spotsTaken: 0, spotsTotal: 15 },
-            { id: 'v-106', name: 'Product Quality', level: 1, classDate: '10/24/2026', startTime: '11:00 AM', location: 'Live Google Meet', trainer: 'Kevin', spotsTaken: 1, spotsTotal: 15 },
-            { id: 'v-201', name: 'Creating a Schedule/Labor Class', level: 2, classDate: '11/04/2026', startTime: '6:00 PM', location: 'Live Google Meet', trainer: 'Nick', spotsTaken: 3, spotsTotal: 15 },
-            { id: 'v-202', name: 'Hard Conversations/Write Ups/Terms', level: 2, classDate: '11/07/2026', startTime: '11:00 AM', location: 'Live Google Meet', trainer: 'Richard', spotsTaken: 4, spotsTotal: 15 },
-            { id: 'v-203', name: 'Food Class', level: 2, classDate: '11/11/2026', startTime: '6:00 PM', location: 'Live Google Meet', trainer: 'Jeff', spotsTaken: 3, spotsTotal: 15 },
-            { id: 'v-204', name: 'Conquer the Rush', level: 2, classDate: '11/14/2026', startTime: '11:00 AM', location: 'Live Google Meet', trainer: 'Jeremy', spotsTaken: 3, spotsTotal: 15 },
-            { id: 'v-205', name: 'PWR & PULSE Reports', level: 2, classDate: '11/18/2026', startTime: '6:00 PM', location: 'Live Google Meet', trainer: 'Jake', spotsTaken: 2, spotsTotal: 15 },
-            { id: 'v-301', name: 'FSE Class', level: 3, classDate: '11/21/2026', startTime: '11:00 AM', location: 'Live Google Meet', trainer: 'Aaron', spotsTaken: 0, spotsTotal: 15 }
-        ];
+        // Active filter state
 
         // --- TRAINER PORTAL PIN AUTHENTICATION ---
         function checkTrainerAuth() {
@@ -1502,17 +1487,12 @@
             }
         });
 
-        // Standard Virtual Multi-Market Curriculum Preview
+        // Standard Virtual Multi-Market Curriculum Preview (Matches virtual_classes.html)
         const VIRTUAL_CURRICULUM_SESSIONS = [
             { id: 'virt-101', name: 'Customer Experience', level: 1, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Bobby Melton', spotsTaken: 0, spotsTotal: 15 },
             { id: 'virt-102', name: 'Operations Assessment', level: 1, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 },
-            { id: 'virt-103', name: 'Product Quality', level: 1, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 },
             { id: 'virt-201', name: 'Creating a Schedule/Labor Class', level: 2, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 },
-            { id: 'virt-202', name: 'Hard Conversations/Write Ups/Terms', level: 2, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 },
-            { id: 'virt-203', name: 'Food Class', level: 2, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 },
-            { id: 'virt-204', name: 'Conquer the Rush', level: 2, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 },
-            { id: 'virt-205', name: 'PWR & PULSE Reports', level: 2, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 },
-            { id: 'virt-301', name: 'FSE Class', level: 3, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 }
+            { id: 'virt-202', name: 'Food Safety & Sanitation', level: 2, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 }
         ];
 
         // --- LOAD VIRTUAL MIT CLASSES ---
@@ -1521,8 +1501,31 @@
             const container = document.getElementById('classListContainer');
             const countBadge = document.getElementById('classCountBadge');
 
-            currentClasses = VIRTUAL_CURRICULUM_SESSIONS;
-            countBadge.innerText = `${currentClasses.length} Preview Sessions`;
+            container.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--crust-deep); font-size: 14px;">Loading virtual sessions...</div>';
+
+            let classes = [];
+
+            // 1. Try D1 first (Virtual Market)
+            try {
+                const res = await fetch(`${D1_API_URL}?action=getMitClasses&market=Virtual&_t=${Date.now()}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && Array.isArray(data.classes) && data.classes.length > 0) {
+                        classes = data.classes;
+                    }
+                }
+            } catch (d1Err) {
+                console.warn("D1 virtual class load error:", d1Err);
+            }
+
+            // 2. If no scheduled classes yet in D1, use the canonical virtual curriculum preview
+            if (!classes || classes.length === 0) {
+                currentClasses = VIRTUAL_CURRICULUM_SESSIONS;
+                countBadge.innerText = `${currentClasses.length} Preview Sessions`;
+            } else {
+                currentClasses = classes;
+                countBadge.innerText = `${currentClasses.length} Scheduled Sessions`;
+            }
 
             renderClassList();
         }
