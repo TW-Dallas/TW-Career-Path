@@ -270,13 +270,7 @@
 
             #panel-class-selection .search-row {
                 flex-shrink: 0;
-                margin-bottom: 6px;
-            }
-
-            #panel-class-selection .filter-section {
-                flex-shrink: 0;
                 margin-bottom: 8px;
-                gap: 5px;
             }
 
             #classListContainer {
@@ -1185,14 +1179,7 @@
                         </div>
                     </div>
 
-                    <!-- Filter Pills -->
-                    <div class="filter-section">
-                        <div class="filter-row">
-                            <button type="button" class="filter-pill active" data-filter-type="level" data-val="ALL" onclick="setFilter('level', 'ALL', this)">All Levels</button>
-                            <button type="button" class="filter-pill" data-filter-type="level" data-val="1" onclick="setFilter('level', '1', this)">Level 1</button>
-                            <button type="button" class="filter-pill" data-filter-type="level" data-val="2" onclick="setFilter('level', '2', this)">Level 2</button>
-                        </div>
-                    </div>
+
 
                     <!-- Interactive Scrollable Class Cards (Stretched to Footer) -->
                     <div id="classListContainer" class="classes-scroll-container">
@@ -1362,7 +1349,6 @@
         let selectedClassObj = null;
 
         let activeFilters = {
-            level: 'ALL',
             search: ''
         };
 
@@ -1487,12 +1473,12 @@
             }
         });
 
-        // Standard Virtual Multi-Market Curriculum Preview (Matches virtual_classes.html)
+        // Virtual Curriculum Placeholders (Topics & Schedules Forming)
         const VIRTUAL_CURRICULUM_SESSIONS = [
-            { id: 'virt-101', name: 'Customer Experience', level: 1, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Bobby Melton', spotsTaken: 0, spotsTotal: 15 },
-            { id: 'virt-102', name: 'Operations Assessment', level: 1, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 },
-            { id: 'virt-201', name: 'Creating a Schedule/Labor Class', level: 2, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 },
-            { id: 'virt-202', name: 'Food Safety & Sanitation', level: 2, classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 }
+            { id: 'virt-pwr', name: 'PWR & PULSE Reports', classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 },
+            { id: 'virt-01', name: 'Virtual MIT Session 1 (Topic Forming)', classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 },
+            { id: 'virt-02', name: 'Virtual MIT Session 2 (Topic Forming)', classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 },
+            { id: 'virt-03', name: 'Virtual MIT Session 3 (Topic Forming)', classDate: 'COMING SOON', startTime: 'Live Google Meet', location: 'Live Google Meet', trainer: 'Team Wow', spotsTaken: 0, spotsTotal: 15 }
         ];
 
         // --- LOAD VIRTUAL MIT CLASSES ---
@@ -1557,10 +1543,6 @@
             const q = activeFilters.search.toLowerCase();
 
             filteredClasses = currentClasses.filter(c => {
-                // Level filter
-                if (activeFilters.level !== 'ALL') {
-                    if (String(c.level) !== String(activeFilters.level)) return false;
-                }
                 // Text search (course name, trainer, date, location)
                 if (q) {
                     const matchName = (c.name || '').toLowerCase().includes(q);
@@ -1577,7 +1559,7 @@
             if (filteredClasses.length === 0) {
                 container.innerHTML = `
                     <div style="padding: 30px 20px; text-align: center; color: var(--crust-deep); font-size: 15px;">
-                        No virtual curriculum sessions found matching your search.
+                        No virtual sessions found matching your search.
                     </div>
                 `;
                 return;
@@ -1602,7 +1584,6 @@
                         <div class="class-info-block">
                             <div class="class-title-row">
                                 <span class="class-title">${cls.name}</span>
-                                <span class="level-badge">Level ${cls.level || 1}</span>
                             </div>
                             <div class="class-meta-row">
                                 <span class="class-meta-item">
