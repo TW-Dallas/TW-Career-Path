@@ -531,25 +531,38 @@
         }
 
         .form-group {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
+        }
+
+        .form-row-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 520px) {
+            .form-row-2col {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
         }
 
         .form-group label {
             display: block;
-            font-size: 14px;
+            font-size: 13.5px;
             font-family: 'Subhead1', sans-serif;
             color: var(--dark-blue);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .form-group input, .form-group select {
             width: 100%;
-            padding: 11px 14px;
+            padding: 9px 12px;
             border: 1.5px solid var(--crust-dark);
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15.5px;
             font-family: 'Condensed', sans-serif;
             color: var(--crust-burnt);
             background-color: var(--crust-base);
@@ -828,7 +841,7 @@
                         <input type="text" id="formName" required placeholder="First and Last Name">
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="form-row-2col">
                         <div class="form-group">
                             <label>Home Market *</label>
                             <select id="formMarket" required>
@@ -845,22 +858,24 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Role / Position *</label>
-                        <select id="formPosition" required>
-                            <option value="MIT 1">MIT 1 (Shift Runner Candidate)</option>
-                            <option value="MIT 2">MIT 2 (Assistant Manager Candidate)</option>
-                            <option value="MIT 3">MIT 3 (General Manager Candidate)</option>
-                            <option value="Assistant Manager">Assistant Manager (AM)</option>
-                            <option value="Shift Leader">Shift Leader</option>
-                            <option value="CSR">CSR / Delivery Expert</option>
-                            <option value="General Manager">General Manager (GM)</option>
-                        </select>
-                    </div>
+                    <div class="form-row-2col">
+                        <div class="form-group">
+                            <label>Role / Position *</label>
+                            <select id="formPosition" required>
+                                <option value="MIT 1">MIT 1 (Shift Runner Candidate)</option>
+                                <option value="MIT 2">MIT 2 (Assistant Manager Candidate)</option>
+                                <option value="MIT 3">MIT 3 (General Manager Candidate)</option>
+                                <option value="Assistant Manager">Assistant Manager (AM)</option>
+                                <option value="Shift Leader">Shift Leader</option>
+                                <option value="CSR">CSR / Delivery Expert</option>
+                                <option value="General Manager">General Manager (GM)</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Cell Phone Number *</label>
-                        <input type="tel" id="formPhone" required placeholder="(555) 555-5555">
+                        <div class="form-group">
+                            <label>Cell Phone Number *</label>
+                            <input type="tel" id="formPhone" required placeholder="(555) 555-5555">
+                        </div>
                     </div>
 
                     <div class="form-group">
