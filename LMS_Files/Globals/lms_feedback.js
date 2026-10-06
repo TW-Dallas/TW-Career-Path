@@ -529,14 +529,21 @@
         </div>
     ` : '';
 
+    let supportIconPath = 'image/custom-emojis/support_gear.png';
+    if (window.location.pathname.includes('/Modules/') || window.location.pathname.includes('/Modules2/')) {
+        supportIconPath = '../../image/custom-emojis/support_gear.png';
+    } else if (window.location.pathname.includes('/LMS_Files/')) {
+        supportIconPath = '../image/custom-emojis/support_gear.png';
+    }
+
     // Build Modal & Mobile Blocker HTML
     const modalHTML = `
-        <button id="beta-feedback-trigger">🛠️ Report Issue</button>
+        <button id="beta-feedback-trigger"><img src="${supportIconPath}" alt="Support" style="width: 14px; height: 14px; object-fit: contain;"> Report Issue</button>
         <div id="beta-feedback-modal">
             <div class="beta-feedback-card">
                 <!-- FORM VIEW -->
                 <div id="beta-feedback-form-view">
-                    <h3>🛠️ Report Issue / Support</h3>
+                    <h3><img src="${supportIconPath}" alt="Support" style="width: 20px; height: 20px; object-fit: contain;"> Report Issue / Support</h3>
                     <p>Found a problem or need help? Let us know!</p>
                     <form id="beta-feedback-form">
                         <div class="beta-feedback-grid">
