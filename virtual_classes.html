@@ -141,7 +141,13 @@
         }
 
         .info-strip-item strong {
+            color: var(--crust-deep);
+            font-weight: bold;
+        }
+
+        .info-strip-item .info-val {
             color: var(--dark-blue);
+            font-weight: bold;
         }
 
         /* MAIN CONTAINER */
@@ -557,11 +563,11 @@
     <div class="info-strip">
         <div class="info-strip-item">
             <img src="image/custom-emojis/location-base.png" alt="Location">
-            <span><strong>Virtual Campus:</strong> Live Interactive Google Meet Sessions</span>
+            <span><strong>Virtual Campus:</strong> <span class="info-val">Live Interactive Google Meet Sessions</span></span>
         </div>
         <div class="info-strip-item">
             <img src="image/custom-emojis/location-base.png" alt="Location">
-            <span><strong>Multi-Market:</strong> Open to Dallas, Denver, El Paso &amp; LA</span>
+            <span><strong>Multi-Market:</strong> <span class="info-val">Open to Dallas, Denver, El Paso &amp; LA</span></span>
         </div>
     </div>
 
