@@ -530,11 +530,19 @@
     ` : '';
 
     let supportIconPath = 'image/custom-emojis/support_gear.png';
-    if (window.location.pathname.includes('/Modules/') || window.location.pathname.includes('/Modules2/')) {
-        supportIconPath = '../../image/custom-emojis/support_gear.png';
-    } else if (window.location.pathname.includes('/LMS_Files/')) {
-        supportIconPath = '../image/custom-emojis/support_gear.png';
-    }
+    try {
+        const scriptEl = document.querySelector('script[src*="lms_feedback.js"]');
+        const scriptSrc = (document.currentScript && document.currentScript.src) || (scriptEl && scriptEl.src) || '';
+        if (scriptSrc) {
+            supportIconPath = scriptSrc
+                .replace(/\/LMS_Files\/Globals\/lms_feedback\.js.*$/, '/image/custom-emojis/support_gear.png')
+                .replace(/\/Globals\/lms_feedback\.js.*$/, '/image/custom-emojis/support_gear.png');
+        } else if (window.location.pathname.includes('/Modules/') || window.location.pathname.includes('/Modules2/')) {
+            supportIconPath = '../../image/custom-emojis/support_gear.png';
+        } else if (window.location.pathname.includes('/LMS_Files/')) {
+            supportIconPath = '../image/custom-emojis/support_gear.png';
+        }
+    } catch (_) {}
 
     // Build Modal & Mobile Blocker HTML
     const modalHTML = `
@@ -543,7 +551,7 @@
             <div class="beta-feedback-card">
                 <!-- FORM VIEW -->
                 <div id="beta-feedback-form-view">
-                    <h3><img src="${supportIconPath}" alt="Support" style="width: 20px; height: 20px; object-fit: contain;"> Report Issue / Support</h3>
+                    <h3><img src="${supportIconPath}" alt="Support" style="width: 24px; height: 24px; object-fit: contain; flex-shrink: 0;"> Report Issue / Support</h3>
                     <p>Found a problem or need help? Let us know!</p>
                     <form id="beta-feedback-form">
                         <div class="beta-feedback-grid">
