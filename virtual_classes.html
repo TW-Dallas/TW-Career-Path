@@ -755,26 +755,33 @@
     <div id="trainerModal" class="modal-overlay">
         <div class="modal-card" style="max-width: 600px;">
             <div class="modal-header">
-                <h3>📖 Virtual Trainer Directory</h3>
+                <h3>📖 Trainer Directory</h3>
                 <button type="button" class="modal-close-btn" onclick="closeTrainerModal()">&times;</button>
             </div>
             <div class="modal-body">
-                <p style="margin-bottom: 14px; color: var(--crust-deep); font-size: 14px;">Training leadership &amp; virtual course facilitators:</p>
+                <p style="margin-bottom: 14px; color: var(--crust-deep); font-size: 14px;">Tap any trainer's number to call or text directly.</p>
 
-                <div style="background: white; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 12px 14px; margin-bottom: 14px;">
+                <!-- LEADERSHIP -->
+                <div style="background-color: #f0f8ff; border: 1.5px solid var(--brand-blue); border-radius: 8px; padding: 12px 14px; margin-bottom: 14px;">
+                    <div style="font-family: 'Subhead1'; font-size: 13.5px; color: var(--dark-blue); text-transform: uppercase;">Team Wow! Coach</div>
+                    <div style="margin-top: 4px; font-size: 16px;">
+                        <strong>Bobby</strong> • <a href="tel:2146094715" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(214) 609-4715</a>
+                    </div>
+                </div>
+
+                <!-- VIRTUAL FACILITATORS -->
+                <div style="background: white; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 12px 14px;">
                     <div style="font-family: 'Subhead1'; font-size: 13.5px; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                        💻 Virtual Facilitators
+                        💻 Virtual Facilitators &amp; Support
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14.5px;">
-                        <div>Mike Jacobs: <a href="tel:4696748855" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(469) 674-8855</a></div>
-                        <div>Bobby Melton: <a href="mailto:bobby@team-wow.com" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">bobby@team-wow.com</a></div>
-                        <div>Steve (Denver): <a href="tel:3032044272" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(303) 204-4272</a></div>
-                        <div>Janet (Denver): <a href="tel:3039898390" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(303) 989-8390</a></div>
+                        <div>Bobby: <a href="tel:2146094715" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(214) 609-4715</a></div>
+                        <div>Mike: <a href="tel:4694005017" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(469) 400-5017</a></div>
                     </div>
                 </div>
             </div>
             <div style="padding: 12px 20px; background-color: var(--crust-med); text-align: center;">
-                <button type="button" class="register-btn" onclick="closeTrainerModal()" style="max-width: 160px; margin: 0 auto; padding: 7px 16px; font-size: 13px; background-color: var(--brand-blue); color: white;">Close Directory</button>
+                <button type="button" class="register-btn" onclick="closeTrainerModal()" style="max-width: 160px; margin: 0 auto; padding: 7px 16px; font-size: 13px; background-color: var(--brand-red); color: white; border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 2px 5px rgba(255, 0, 0, 0.25);">Close Directory</button>
             </div>
         </div>
     </div>
