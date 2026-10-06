@@ -14,6 +14,7 @@ This hub tracks all new store features, system upgrades, bug fixes, and upcoming
 * **Standardized Mobile Header & Navigation Across Portals:** All learning portals now share a unified, responsive header navigation. If a team member accesses a desktop-only simulator on a mobile phone, they’ll now see a clean, one-tap return link to jump right back to the Career Path or Learning Hub lobby without getting stuck.
 
 ### 🛠️ Fixed & Polished (Solved Issues)
+* **Custom High-Resolution System Icons Standardized:** Replaced standard system emojis across all portals and attendance forms with our custom Team Wow high-resolution icons—featuring the custom gear icon for **Report Issue** and branded lock icon for **Manager Login & Trainer Portals**.
 * **MIT Trainer Dashboard Display & Filter Refinements:** Streamlined class filter pills, fixed spacing on desktop screens, and polished mobile header alignment so trainers can quickly find and track MIT rosters without visual clutter.
 * **Learning Hub Resource Library Streamlining:** Cleaned up category card headers and eliminated redundant in-page banners, making it faster to browse job aids, OA reference guides, and printable packets.
 
