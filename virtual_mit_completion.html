@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>MIT Class Completion • Virtual Training Hub</title>
+    <link rel="icon" type="image/png" href="image/tile_blue.png">
+    <link rel="stylesheet" href="https://teamwow-assets.pages.dev/brand_master.css">
+    <script src="LMS_Files/Globals/lms_feedback.js" defer></script>
+
+    <style>
+        /* DOMINO'S FONTS */
+        @font-face {
+            font-family: 'PizzaPress';
+            src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
+            font-weight: normal;
+        }
+
+        @font-face {
+            font-family: 'OneDotCd-Bold';
+            src: url('fonts/Dominos Sans Bold.ttf') format('truetype');
+            font-weight: normal;
+        }
+
+        @font-face {
+            font-family: 'OneDotCd';
+            src: url('fonts/Dominos Sans Body.ttf') format('truetype');
+            font-weight: normal;
+        }
+
+        :root {
+            --brand-red: #ff0000;
+            --med-red: #e70000;
+            --dark-red: #910000;
+            --brand-blue: #0090e2;
+            --med-blue: #0077bd;
+            --dark-blue: #005c91;
+            --crust-base: #fefaf6;
+            --crust-light: #faf2e9;
+            --crust-med: #f0decc;
+            --crust-dark: #c0a588;
+            --crust-deep: #603913;
+            --crust-burnt: #472b10;
+            --border-radius: 12px;
+            --radius-pill: 9999px;
+            --success-green: #117a30;
+            --success-green-bg: #eaf7ed;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'OneDotCd', 'Condensed', sans-serif;
+            background-color: var(--crust-base);
+            color: var(--crust-burnt);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .portal-header {
+            background-color: var(--brand-blue);
+            color: white;
+            padding: 10px 24px;
+            border-bottom: 4px solid var(--brand-red);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .portal-header-inner {
+            width: 100%;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-sizing: border-box;
+        }
+
+        .header-brand-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .portal-logo-img {
+            height: 38px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .header-text-group h1 {
+            font-family: 'PizzaPress', 'ExtraBlack', serif;
+            font-size: 1.45rem;
+            color: white;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: normal;
+        }
+
+        .header-text-group .subtitle {
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 0.85rem;
+            color: var(--crust-med);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-top: 2px;
+            font-weight: normal;
+        }
+
+        .market-pill {
+            background-color: var(--brand-red) !important;
+            color: var(--crust-base) !important;
+            padding: 5px 14px !important;
+            min-height: 32px !important;
+            border-radius: var(--radius-pill) !important;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
+            font-size: 0.82rem !important;
+            font-weight: normal !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+        }
+
+        main {
+            max-width: 960px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 24px 20px 48px;
+            flex: 1 0 auto;
+        }
+
+        /* CARD */
+        .brand-card {
+            background: white;
+            border: 2px solid var(--crust-med);
+            border-radius: var(--border-radius);
+            box-shadow: 0 6px 18px rgba(71, 43, 16, 0.08);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .card-header-band {
+            background: linear-gradient(135deg, var(--med-blue) 0%, var(--dark-blue) 100%);
+            color: white;
+            padding: 16px 20px;
+            border-bottom: 3px solid var(--brand-red);
+        }
+
+        .band-title {
+            font-family: 'PizzaPress', 'ExtraBold', serif;
+            font-size: 1.35rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .band-subtitle {
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 0.95rem;
+            color: #dceaf5;
+        }
+
+        form {
+            padding: 24px;
+        }
+
+        .input-label {
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 13px;
+            color: var(--dark-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .req {
+            color: var(--brand-red);
+        }
+
+        .text-input, select, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid var(--crust-dark);
+            border-radius: 8px;
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 15.5px;
+            color: var(--crust-burnt);
+            background-color: var(--crust-base);
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .text-input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 3px rgba(0, 144, 226, 0.2);
+            background-color: #ffffff;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* ROW 1: PHONE & CLASS */
+        .row-phone-class {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .phone-box {
+            background: #f4f9fd;
+            border: 1.5px solid #c7e1f4;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .class-box {
+            background: var(--crust-light);
+            border: 1.5px solid var(--crust-med);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .class-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .class-box-title {
+            font-family: 'PizzaPress', 'ExtraBold', serif;
+            font-size: 1.15rem;
+            color: var(--dark-blue);
+            text-transform: uppercase;
+            line-height: 1.25;
+            margin-bottom: 4px;
+        }
+
+        .class-box-meta {
+            font-size: 13.5px;
+            color: var(--crust-deep);
+        }
+
+        /* ROW 2: CANDIDATE INFO */
+        .row-candidate-info {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        /* ROW 3: TEXTAREAS */
+        .row-textareas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        /* RATING PILLS */
+        .rating-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .rating-pill {
+            background: var(--crust-light);
+            border: 1.5px solid var(--crust-dark);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-family: 'Subhead2', sans-serif;
+            font-size: 13px;
+            color: var(--crust-burnt);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .rating-pill:hover {
+            border-color: var(--brand-blue);
+            color: var(--brand-blue);
+        }
+
+        .rating-pill.active {
+            background: var(--brand-blue);
+            border-color: var(--brand-blue);
+            color: white;
+            font-weight: bold;
+        }
+
+        /* AFFIRMATION */
+        .affirm-box {
+            background: #fff8e8;
+            border: 1.5px solid #f6cf7d;
+            border-radius: 8px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .affirm-box input[type="checkbox"] {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .affirm-label {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #634300;
+            cursor: pointer;
+        }
+
+        /* SUBMIT BUTTON */
+        .submit-btn {
+            width: 100%;
+            background-color: var(--brand-red);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background-color: var(--dark-red);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(145, 0, 0, 0.3);
+        }
+
+        .submit-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* SUCCESS PANEL */
+        .success-panel {
+            display: none;
+            text-align: center;
+            padding: 40px 24px;
+        }
+
+        .success-icon-badge {
+            width: 70px;
+            height: 70px;
+            background: var(--success-green-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 36px;
+            color: var(--success-green);
+        }
+
+        .success-title {
+            font-family: 'PizzaPress', 'ExtraBold', serif;
+            font-size: 1.7rem;
+            color: var(--dark-blue);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .success-desc {
+            font-size: 16px;
+            color: var(--crust-burnt);
+            max-width: 540px;
+            margin: 0 auto 24px;
+            line-height: 1.5;
+        }
+
+        .cert-card {
+            background: var(--crust-light);
+            border: 2px dashed var(--dark-blue);
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 480px;
+            margin: 0 auto 28px;
+            text-align: left;
+        }
+
+        .cert-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--crust-med);
+            font-size: 14.5px;
+        }
+
+        .cert-row:last-child {
+            border-bottom: none;
+        }
+
+        .cert-label {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            color: var(--crust-deep);
+            text-transform: uppercase;
+        }
+
+        .cert-val {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            color: var(--dark-blue);
+        }
+
+        @media (max-width: 768px) {
+            .row-phone-class {
+                grid-template-columns: 1fr;
+            }
+            .row-candidate-info {
+                grid-template-columns: 1fr 1fr;
+            }
+            .row-textareas {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .row-candidate-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BRAND HEADER -->
+    <header class="portal-header">
+        <div class="portal-header-inner">
+            <div class="header-brand-wrap">
+                <a href="index.html" class="logo-link" title="Back to Career Path">
+                    <img src="New_Logo_v2.png" alt="Team Wow Logo" class="portal-logo-img" onerror="this.src='image/tile_blue.png'">
+                </a>
+                <div class="header-text-group">
+                    <h1>MIT Class Completion</h1>
+                    <div class="subtitle">Virtual Training Attendance Verification</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="market-pill">Virtual Market</div>
+                <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" style="background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.35); color: white; padding: 6px 14px; border-radius: var(--radius-pill); font-family: 'Subhead1', sans-serif; font-size: 13px; cursor: pointer;" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
+                    🛠️ Report Issue
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- FORM PANEL -->
+        <div id="completionCard" class="brand-card">
+            <div class="card-header-band">
+                <h2 class="band-title">🎓 Verify Your Virtual MIT Attendance</h2>
+                <p class="band-subtitle">Complete this official record before leaving today's Google Meet session to log your verified leadership credit into Cloudflare D1.</p>
+            </div>
+
+            <form id="mitForm" onsubmit="handleFormSubmit(event)">
+                <!-- ROW 1: PHONE (LEFT) & VIEW CLASS (RIGHT) -->
+                <div class="row-phone-class">
+                    <!-- ENTER PHONE -->
+                    <div class="phone-box">
+                        <div>
+                            <label for="candPhone" class="input-label" style="font-size: 14px; margin-bottom: 4px;">
+                                📱 Enter Phone Number <span class="req">*</span>
+                            </label>
+                            <p style="font-size: 12.5px; color: var(--crust-deep); margin: 0 0 8px 0;">
+                                Type your phone number to auto-fill your name, store, market, and position.
+                            </p>
+                        </div>
+                        <div>
+                            <input type="tel" id="candPhone" class="text-input" placeholder="(214) 555-0199" required style="font-size: 17px; font-weight: bold; letter-spacing: 0.5px;">
+                            <input type="hidden" id="candEmail" value="">
+                            <div id="autofillNotice" style="display: none; margin-top: 6px; font-size: 12.5px; color: var(--dark-blue); font-weight: bold;">
+                                ✓ Found you, <span id="autofillName"></span>! Details auto-filled.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VIEW CLASS NAME -->
+                    <div class="class-box">
+                        <div>
+                            <div class="class-box-header">
+                                <span class="input-label" style="margin-bottom: 0;">🎓 Class Attended Today</span>
+                                <span id="badgeVirtualPill" style="background: var(--dark-blue); color: white; padding: 2px 10px; border-radius: var(--radius-pill); font-family: 'OneDotCd-Bold'; font-size: 11px; text-transform: uppercase;">Google Meet</span>
+                            </div>
+                            <div id="badgeCourseTitle" class="class-box-title">Loading Class Session...</div>
+                            <div id="badgeCourseMeta" class="class-box-meta">Detecting session from schedule...</div>
+                        </div>
+                        <div style="margin-top: 8px;">
+                            <div id="sessionPickerWrapper" style="display: none; margin-bottom: 6px;">
+                                <select id="manualClassSelect" onchange="onManualClassSelect(this.value)" class="text-input" style="padding: 6px 10px; font-size: 13.5px;">
+                                    <option value="">-- Choose Class Session --</option>
+                                </select>
+                            </div>
+                            <button type="button" id="btnToggleClassPicker" onclick="toggleClassPicker()" style="background: none; border: none; font-size: 12px; color: var(--brand-blue); cursor: pointer; text-decoration: underline; padding: 0;">
+                                Not your class? Change session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ROW 2: CANDIDATE INFO (FULL NAME, MARKET, STORE #, POSITION) -->
+                <div class="row-candidate-info">
+                    <div>
+                        <label for="candName" class="input-label">Full Name <span class="req">*</span></label>
+                        <input type="text" id="candName" class="text-input" placeholder="e.g. John Doe" required>
+                    </div>
+
+                    <div>
+                        <label for="candMarket" class="input-label">Home Market <span class="req">*</span></label>
+                        <select id="candMarket" required>
+                            <option value="Dallas">Dallas</option>
+                            <option value="Denver">Denver</option>
+                            <option value="El Paso">El Paso</option>
+                            <option value="LA">LA</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="storeNum" class="input-label">Store # <span class="req">*</span></label>
+                        <input type="text" id="storeNum" class="text-input" placeholder="e.g. 6876" maxlength="5" pattern="\d{4,5}" required>
+                    </div>
+
+                    <div>
+                        <label for="candPosition" class="input-label">Position / Track <span class="req">*</span></label>
+                        <select id="candPosition" required>
+                            <option value="MIT 1">MIT 1 (Shift Runner Candidate)</option>
+                            <option value="MIT 2">MIT 2 (Assistant Manager Candidate)</option>
+                            <option value="MIT 3">MIT 3 (General Manager Candidate)</option>
+                            <option value="Assistant Manager">Assistant Manager</option>
+                            <option value="General Manager">General Manager</option>
+                            <option value="CSR / DE">CSR / Delivery Expert</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ROW 3: TAKEAWAY & NOTES -->
+                <div class="row-textareas">
+                    <div>
+                        <label for="keyTakeaway" class="input-label">Key Takeaway / Action Item <span class="req">*</span></label>
+                        <textarea id="keyTakeaway" placeholder="What is 1 key standard, tool, or leadership concept you learned in today's virtual class that you will apply in your store?" required></textarea>
+                    </div>
+
+                    <div>
+                        <label for="classNotes" class="input-label">Notes / Suggestions (Optional)</label>
+                        <textarea id="classNotes" placeholder="Any suggestions, feedback for the trainer, or notes from today's session?"></textarea>
+                    </div>
+                </div>
+
+                <!-- ROW 4: RATING -->
+                <div style="margin-bottom: 8px;">
+                    <label class="input-label" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Session &amp; Trainer Rating</span>
+                        <span style="font-size: 11px; color: var(--crust-deep); text-transform: none;">Optional</span>
+                    </label>
+                    <div class="rating-pills" id="ratingPills">
+                        <button type="button" class="rating-pill" onclick="selectRating('1 ⭐ (Poor)', this)">1 ⭐</button>
+                        <button type="button" class="rating-pill" onclick="selectRating('2 ⭐ (Fair)', this)">2 ⭐</button>
+                        <button type="button" class="rating-pill" onclick="selectRating('3 ⭐ (Good)', this)">3 ⭐</button>
+                        <button type="button" class="rating-pill" onclick="selectRating('4 ⭐ (Great)', this)">4 ⭐</button>
+                        <button type="button" class="rating-pill" onclick="selectRating('5 ⭐ (Excellent)', this)">5 ⭐</button>
+                        <button type="button" class="rating-pill active" onclick="selectRating('No Rating', this)">None</button>
+                    </div>
+                </div>
+
+                <!-- ROW 5: ATTENDANCE AFFIRMATION -->
+                <div class="affirm-box">
+                    <input type="checkbox" id="affirmAttendance" required>
+                    <label for="affirmAttendance" class="affirm-label">
+                        I confirm that I attended today's live virtual class session, participated in all exercises, and completed the course curriculum under trainer supervision.
+                    </label>
+                </div>
+
+                <button type="submit" id="btnSubmitForm" class="submit-btn">
+                    <span>✓ Submit Verified Virtual Attendance</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- SUCCESS CARD -->
+        <div id="successCard" class="brand-card success-panel">
+            <div class="success-icon-badge">✓</div>
+            <h2 class="success-title">Virtual Attendance Recorded!</h2>
+            <p class="success-desc">
+                Congratulations, <span id="successTraineeName" style="font-weight: bold; color: var(--dark-blue);">Trainee</span>! Your attendance has been officially written to Cloudflare D1 for career progression and promotion tracking.
+            </p>
+
+            <div class="cert-card">
+                <div class="cert-row">
+                    <span class="cert-label">Class:</span>
+                    <span id="certClass" class="cert-val">Operations Leadership</span>
+                </div>
+                <div class="cert-row">
+                    <span class="cert-label">Platform:</span>
+                    <span class="cert-val">Virtual / Google Meet</span>
+                </div>
+                <div class="cert-row">
+                    <span class="cert-label">Home Market:</span>
+                    <span id="certMarket" class="cert-val">Dallas</span>
+                </div>
+                <div class="cert-row">
+                    <span class="cert-label">Store:</span>
+                    <span id="certStore" class="cert-val">#----</span>
+                </div>
+                <div class="cert-row">
+                    <span class="cert-label">Recorded At:</span>
+                    <span id="certTime" class="cert-val">Just Now</span>
+                </div>
+            </div>
+
+            <p style="font-size: 14px; color: var(--crust-deep); margin-bottom: 20px;">
+                You may safely close this window now or return to the <a href="virtual_classes.html" style="color: var(--dark-blue); font-weight: bold; text-decoration: none;">Virtual Class Schedule</a>.
+            </p>
+        </div>
+    </main>
+
+    <!-- BRANDED FOOTER -->
+    <footer class="portal-footer">
+        <div class="portal-footer-inner">
+            <div class="footer-brand">
+                <span class="footer-title">Team Wow • Domino's Pizza</span>
+                <span class="footer-subtitle">Director of Operations Command Center</span>
+            </div>
+            <div class="footer-meta">
+                <p class="footer-copy">&copy; 2026 Team Wow, Inc. All rights reserved.</p>
+                <p class="footer-crust-code">Powered by Crust &amp; Code</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const D1_API_URL = "https://tw-dallas-staffing.pages.dev/api/staffing";
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycby7wgQnR7shWLeL78Fy4f0g0TD-Ch9NgEpIwYnwpUJZYsXvTv0A95IFBGe5k0shg4owEw/exec";
+
+        let currentClassId = null;
+        let selectedClassObj = null;
+        let selectedRating = "No Rating";
+        let availableClasses = [];
+        let currentRoster = [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initCompletionPage();
+            setupPhoneAutofill();
+        });
+
+        async function initCompletionPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            currentClassId = urlParams.get('classId');
+
+            try {
+                // Fetch virtual classes from D1
+                const res = await fetch(`${D1_API_URL}?action=getMitClasses&market=Virtual&_t=${Date.now()}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && Array.isArray(data.classes)) {
+                        availableClasses = data.classes;
+                    }
+                }
+            } catch (err) {
+                console.warn("Failed fetching virtual classes from D1:", err);
+            }
+
+            // Fallback: If no explicit virtual classes, check Dallas and Denver for virtual sessions
+            if (availableClasses.length === 0) {
+                try {
+                    const [resDal, resDen] = await Promise.allSettled([
+                        fetch(`${D1_API_URL}?action=getMitClasses&market=Dallas&_t=${Date.now()}`).then(r => r.json()),
+                        fetch(`${D1_API_URL}?action=getMitClasses&market=Denver&_t=${Date.now()}`).then(r => r.json())
+                    ]);
+                    const combined = [];
+                    if (resDal.status === 'fulfilled' && resDal.value?.classes) combined.push(...resDal.value.classes);
+                    if (resDen.status === 'fulfilled' && resDen.value?.classes) combined.push(...resDen.value.classes);
+                    availableClasses = combined;
+                } catch (e) {
+                    console.warn("Class fallback error:", e);
+                }
+            }
+
+            // 1. If explicit classId in URL: find it!
+            if (currentClassId && availableClasses.length > 0) {
+                selectedClassObj = availableClasses.find(c => String(c.id) === String(currentClassId));
+            }
+
+            // 2. If NO classId or not found: Auto-detect from today's date
+            if (!selectedClassObj && availableClasses.length > 0) {
+                const now = new Date();
+                const todayM = now.getMonth() + 1;
+                const todayD = now.getDate();
+                const todayY = now.getFullYear();
+
+                const todayClasses = availableClasses.filter(c => {
+                    const parts = (c.classDate || '').split('/');
+                    if (parts.length === 3) {
+                        return parseInt(parts[0], 10) === todayM && parseInt(parts[1], 10) === todayD && parseInt(parts[2], 10) === todayY;
+                    }
+                    return false;
+                });
+
+                if (todayClasses.length > 0) {
+                    selectedClassObj = todayClasses[0];
+                } else {
+                    selectedClassObj = availableClasses[0];
+                }
+            }
+
+            if (selectedClassObj) {
+                currentClassId = selectedClassObj.id;
+                populateClassBadge(selectedClassObj);
+                fetchClassRoster(selectedClassObj.id);
+            }
+
+            // Populate change dropdown
+            const select = document.getElementById('manualClassSelect');
+            if (select) {
+                select.innerHTML = '<option value="">-- Choose Different Class Session --</option>';
+                availableClasses.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.text = `${c.classDate} @ ${c.startTime || '11:00 AM'} • ${c.name} (${c.trainer || 'Team Wow'})`;
+                    if (selectedClassObj && String(c.id) === String(selectedClassObj.id)) {
+                        opt.selected = true;
+                    }
+                    select.appendChild(opt);
+                });
+            }
+        }
+
+        function toggleClassPicker() {
+            const picker = document.getElementById('sessionPickerWrapper');
+            const btn = document.getElementById('btnToggleClassPicker');
+            if (picker.style.display === 'none') {
+                picker.style.display = 'block';
+                btn.innerText = "Hide session list";
+            } else {
+                picker.style.display = 'none';
+                btn.innerText = "Not your class? Change session";
+            }
+        }
+
+        async function fetchClassRoster(classId) {
+            if (!classId) return;
+            try {
+                const res = await fetch(`${D1_API_URL}?action=getClassRoster&classId=${encodeURIComponent(classId)}&_t=${Date.now()}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && Array.isArray(data.roster)) {
+                        currentRoster = data.roster;
+                    }
+                }
+            } catch (err) {
+                console.warn("Could not fetch roster for autofill:", err);
+            }
+        }
+
+        function setupPhoneAutofill() {
+            const phoneInput = document.getElementById('candPhone');
+            const notice = document.getElementById('autofillNotice');
+
+            phoneInput.addEventListener('input', (e) => {
+                let val = e.target.value.replace(/\D/g, '');
+                if (val.length > 10) val = val.substring(0, 10);
+
+                let formatted = val;
+                if (val.length > 6) {
+                    formatted = `(${val.substring(0,3)}) ${val.substring(3,6)}-${val.substring(6)}`;
+                } else if (val.length > 3) {
+                    formatted = `(${val.substring(0,3)}) ${val.substring(3)}`;
+                }
+                phoneInput.value = formatted;
+
+                const clean10 = val.slice(-10);
+                if (clean10.length === 10 && currentRoster.length > 0) {
+                    const match = currentRoster.find(r => {
+                        const rPhone = String(r.phone || '').replace(/\D/g, '').slice(-10);
+                        return rPhone === clean10;
+                    });
+                    if (match) {
+                        if (match.candidate_name) document.getElementById('candName').value = match.candidate_name;
+                        if (match.store_num) document.getElementById('storeNum').value = match.store_num;
+                        if (match.position) {
+                            const posSelect = document.getElementById('candPosition');
+                            for (let opt of posSelect.options) {
+                                if (opt.value.toLowerCase().includes(match.position.toLowerCase()) || match.position.toLowerCase().includes(opt.value.toLowerCase())) {
+                                    posSelect.value = opt.value;
+                                    break;
+                                }
+                            }
+                        }
+                        if (match.market || match.city) {
+                            const mktSelect = document.getElementById('candMarket');
+                            const mktVal = (match.market || match.city || '').toLowerCase();
+                            for (let opt of mktSelect.options) {
+                                if (opt.value.toLowerCase() === mktVal) {
+                                    mktSelect.value = opt.value;
+                                    break;
+                                }
+                            }
+                        }
+                        if (match.email) document.getElementById('candEmail').value = match.email;
+                        if (notice) {
+                            notice.style.display = 'block';
+                            notice.innerText = `✓ Found you, ${match.candidate_name}! Your details have been auto-filled.`;
+                        }
+                        const takeaway = document.getElementById('keyTakeaway');
+                        if (takeaway) takeaway.focus();
+                    } else if (notice) {
+                        notice.style.display = 'none';
+                    }
+                } else if (notice) {
+                    notice.style.display = 'none';
+                }
+            });
+        }
+
+        function populateClassBadge(cls) {
+            document.getElementById('badgeCourseTitle').innerText = cls.name;
+            document.getElementById('badgeCourseMeta').innerText = `📅 ${cls.classDate} @ ${cls.startTime || '11:00 AM'} • 💻 Google Meet • Trainer: ${cls.trainer || 'Team Wow'}`;
+        }
+
+        function onManualClassSelect(classId) {
+            currentClassId = classId;
+            selectedClassObj = availableClasses.find(c => String(c.id) === String(classId));
+            if (selectedClassObj) {
+                populateClassBadge(selectedClassObj);
+                fetchClassRoster(selectedClassObj.id);
+            }
+        }
+
+        function selectRating(val, btn) {
+            selectedRating = val;
+            document.querySelectorAll('.rating-pill').forEach(el => el.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+
+            if (!currentClassId && !selectedClassObj) {
+                alert("Please select the class session you attended.");
+                return;
+            }
+
+            const name = document.getElementById('candName').value.trim();
+            const market = document.getElementById('candMarket').value;
+            const store = document.getElementById('storeNum').value.trim();
+            const position = document.getElementById('candPosition').value;
+            const phone = document.getElementById('candPhone').value.trim();
+            const email = (document.getElementById('candEmail')?.value || '').trim();
+            const takeaway = document.getElementById('keyTakeaway').value.trim();
+            const notes = (document.getElementById('classNotes')?.value || '').trim();
+            const affirm = document.getElementById('affirmAttendance').checked;
+
+            if (!affirm) {
+                alert("Please confirm your class attendance by checking the affirmation box.");
+                return;
+            }
+
+            const submitBtn = document.getElementById('btnSubmitForm');
+            submitBtn.innerText = "Recording Attendance in D1...";
+            submitBtn.disabled = true;
+
+            const payload = {
+                action: 'submitMitCompletion',
+                market: 'Virtual',
+                city: market,
+                classId: currentClassId,
+                candidateName: name,
+                storeNum: store,
+                position: position,
+                phone: phone,
+                email: email,
+                takeaway: takeaway,
+                notes: notes,
+                rating: selectedRating,
+                className: selectedClassObj ? selectedClassObj.name : 'MIT Leadership',
+                level: selectedClassObj ? selectedClassObj.level : 1,
+                classDate: selectedClassObj ? selectedClassObj.classDate : '',
+                delivery_mode: 'Virtual'
+            };
+
+            let success = false;
+
+            // 1. Submit to Cloudflare D1
+            try {
+                const res = await fetch(D1_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (data.success) success = true;
+            } catch (d1Err) {
+                console.warn("D1 completion error:", d1Err);
+            }
+
+            // 2. Parallel / Fallback submission
+            if (!success) {
+                try {
+                    const formData = new URLSearchParams();
+                    for (let key in payload) {
+                        formData.append(key, payload[key]);
+                    }
+                    await fetch(GAS_API_URL, {
+                        method: 'POST',
+                        body: formData,
+                        mode: 'no-cors'
+                    });
+                    success = true;
+                } catch (gasErr) {
+                    console.warn("GAS completion error:", gasErr);
+                }
+            }
+
+            submitBtn.innerText = "✓ Submit Verified Virtual Attendance";
+            submitBtn.disabled = false;
+
+            if (success) {
+                document.getElementById('completionCard').style.display = 'none';
+                const successCard = document.getElementById('successCard');
+                successCard.style.display = 'block';
+
+                document.getElementById('successTraineeName').innerText = name;
+                document.getElementById('certClass').innerText = selectedClassObj ? selectedClassObj.name : 'MIT Leadership';
+                document.getElementById('certMarket').innerText = market;
+                document.getElementById('certStore').innerText = `#${store}`;
+                document.getElementById('certTime').innerText = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                alert("There was an error recording your attendance. Please show your screen to the trainer.");
+            }
+        }
+    </script>
+</body>
+
+</html>

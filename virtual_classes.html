@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Team Wow MIT Leadership Classes • Virtual Training Hub</title>
+    <link rel="icon" type="image/png" href="image/tile_blue.png">
+    <link rel="stylesheet" href="https://teamwow-assets.pages.dev/brand_master.css">
+
+    <script src="LMS_Files/Globals/lms_feedback.js" defer></script>
+    <style>
+        /* HEADER ACTIONS */
+        .header-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .market-pill {
+            background-color: var(--brand-red) !important;
+            color: var(--crust-base) !important;
+            padding: 5px 12px !important;
+            min-height: 32px !important;
+            box-sizing: border-box !important;
+            border-radius: var(--radius-pill, 20px) !important;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
+            font-size: 0.82rem !important;
+            font-weight: normal !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+            white-space: nowrap !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+        }
+
+        .header-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            background: rgba(254, 250, 246, 0.12);
+            color: var(--crust-base) !important;
+            border: 1.5px solid rgba(254, 250, 246, 0.85);
+            padding: 5px 12px;
+            min-height: 32px;
+            box-sizing: border-box;
+            border-radius: var(--radius-pill, 20px);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
+            font-size: 0.82rem !important;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+            white-space: nowrap;
+            touch-action: manipulation;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: normal !important;
+            line-height: 1;
+        }
+
+        .header-action-btn:hover {
+            background: var(--brand-red) !important;
+            border-color: var(--brand-red) !important;
+            color: var(--crust-base) !important;
+            transform: translateY(-1px);
+        }
+
+        #beta-feedback-trigger {
+            display: none !important;
+        }
+
+        :root {
+            --brand-red: #ff0000;
+            --dark-red: #910000;
+            --brand-blue: #0090e2;
+            --med-blue: #0077bd;
+            --dark-blue: #005c91;
+            --crust-base: #fefaf6;
+            --crust-light: #faf2e9;
+            --crust-med: #f0decc;
+            --crust-dark: #c0a588;
+            --crust-deep: #603913;
+            --crust-burnt: #472b10;
+            --bg-color: var(--crust-base);
+            --card-bg: var(--crust-light);
+            --border-radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Condensed', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--crust-burnt);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* VIRTUAL CAMPUS INFO STRIP */
+        .info-strip {
+            background-color: var(--crust-light);
+            border-bottom: 1.5px solid var(--crust-med);
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 24px;
+            font-size: 15px;
+            color: var(--crust-deep);
+            font-family: 'Subhead2', sans-serif;
+            flex: 0 0 auto;
+        }
+
+        .info-strip-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .info-strip-item strong {
+            color: var(--dark-blue);
+        }
+
+        /* MAIN BODY */
+        main {
+            flex: 1 0 auto;
+            max-width: 1240px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 24px 20px 60px;
+        }
+
+        /* CONTROLS ROW */
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+            background: white;
+            padding: 14px 18px;
+            border-radius: var(--border-radius);
+            border: 1.5px solid var(--crust-med);
+            box-shadow: 0 2px 8px rgba(71, 43, 16, 0.05);
+        }
+
+        .filter-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-title {
+            font-family: 'Subhead1', sans-serif;
+            font-size: 14.5px;
+            color: var(--dark-blue);
+            text-transform: uppercase;
+            margin-right: 4px;
+        }
+
+        .filter-btn {
+            background: var(--crust-light);
+            border: 1.5px solid var(--crust-dark);
+            color: var(--crust-burnt);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-family: 'Subhead2', sans-serif;
+            font-size: 13.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--brand-blue);
+            color: var(--brand-blue);
+        }
+
+        .filter-btn.active {
+            background-color: var(--brand-blue);
+            border-color: var(--brand-blue);
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-trainer-dir {
+            background-color: transparent;
+            border: 1.5px solid var(--crust-dark);
+            color: var(--crust-burnt);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-family: 'Subhead2', sans-serif;
+            font-size: 13.5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-trainer-dir:hover {
+            background-color: var(--crust-light);
+            border-color: var(--brand-blue);
+            color: var(--brand-blue);
+        }
+
+        /* SECTION HEADER */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--crust-med);
+            padding-bottom: 8px;
+        }
+
+        .section-header h2 {
+            font-family: 'PizzaPress', 'ExtraBlack', serif;
+            font-size: 24px;
+            color: var(--dark-blue);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-header span {
+            font-family: 'Subhead2', sans-serif;
+            color: var(--crust-deep);
+            font-size: 14.5px;
+        }
+
+        /* CLASS GRID */
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+        }
+
+        .class-card {
+            background: white;
+            border: 2px solid var(--crust-med);
+            border-radius: var(--border-radius);
+            box-shadow: 0 3px 10px rgba(71, 43, 16, 0.06);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+
+        .class-card.coming-soon {
+            opacity: 0.92;
+        }
+
+        .class-card.closed {
+            opacity: 0.65;
+        }
+
+        .class-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(71, 43, 16, 0.12);
+        }
+
+        .card-top {
+            background-color: var(--crust-light);
+            border-bottom: 1px solid var(--crust-med);
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .date-badge {
+            background-color: var(--brand-blue);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0, 144, 226, 0.25);
+        }
+
+        .spots-badge {
+            font-size: 13px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .spots-available {
+            background-color: #eef7fd;
+            color: var(--dark-blue);
+            border: 1px solid #c9e6f8;
+        }
+
+        .spots-low {
+            background-color: #fff1f1;
+            color: var(--dark-red);
+            border: 1px solid #f8c8c8;
+        }
+
+        .spots-full {
+            background-color: #f5f5f5;
+            color: #777777;
+            border: 1px solid #dddddd;
+        }
+
+        .card-body {
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-time {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14.5px;
+            color: var(--crust-deep);
+            font-family: 'Subhead2', sans-serif;
+            margin-bottom: 8px;
+        }
+
+        .card-time svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--med-blue);
+        }
+
+        .card-title {
+            font-family: 'PizzaPress', 'ExtraBold', serif;
+            font-size: 21px;
+            color: var(--dark-blue);
+            margin: 0 0 8px 0;
+            line-height: 1.25;
+            text-transform: uppercase;
+        }
+
+        .card-location-meta {
+            font-size: 14px;
+            color: var(--crust-deep);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-location-meta strong {
+            color: var(--crust-burnt);
+        }
+
+        /* ATTENDEES ROSTER BOX */
+        .roster-box {
+            background-color: var(--crust-light);
+            border: 1px solid var(--crust-med);
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-top: auto;
+            margin-bottom: 12px;
+        }
+
+        .roster-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12.5px;
+            font-family: 'Subhead1', sans-serif;
+            color: var(--dark-blue);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .roster-header svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--med-blue);
+        }
+
+        .roster-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            min-height: 24px;
+        }
+
+        .roster-chip {
+            background: white;
+            border: 1px solid var(--crust-dark);
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 12px;
+            color: var(--crust-burnt);
+            font-family: 'Subhead2', sans-serif;
+        }
+
+        .roster-empty {
+            font-size: 12px;
+            color: #888888;
+            font-style: italic;
+        }
+
+        .card-footer {
+            padding: 0 16px 16px;
+        }
+
+        .card-deadline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fffbf0;
+            border: 1px solid #fae19c;
+            border-radius: 6px;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            font-family: 'Subhead2', sans-serif;
+            color: #8a6508;
+        }
+
+        .card-deadline.urgent {
+            background-color: #fff1f1;
+            border-color: #f8c8c8;
+            color: var(--dark-red);
+            font-weight: bold;
+        }
+
+        .select-btn {
+            width: 100%;
+            background-color: var(--brand-red);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 3px 6px rgba(255, 0, 0, 0.2);
+        }
+
+        .select-btn:hover:not(:disabled) {
+            background-color: var(--dark-red);
+            box-shadow: 0 5px 10px rgba(145, 0, 0, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .select-btn:disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-future {
+            background-color: #e9ecef !important;
+            color: #495057 !important;
+            border: 1.5px dashed #ced4da !important;
+        }
+
+        .btn-closed {
+            background-color: #f1f3f5 !important;
+            color: #868e96 !important;
+        }
+
+        /* LOADING STATE */
+        .loading-container {
+            text-align: center;
+            padding: 60px 20px;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 19px;
+            color: var(--crust-deep);
+        }
+
+        .spinner {
+            border: 4px solid var(--crust-med);
+            border-top: 4px solid var(--brand-blue);
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* MODAL COMMON */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(71, 43, 16, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: white;
+            border-radius: 14px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 16px 40px rgba(71, 43, 16, 0.28);
+            border: 2px solid var(--crust-med);
+            overflow: hidden;
+            animation: modalSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(20px) scale(0.98); }
+            to { transform: translateY(0) scale(1); }
+        }
+
+        .modal-header {
+            background-color: var(--brand-blue);
+            color: white;
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 21px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .modal-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 26px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .modal-body {
+            padding: 22px;
+            overflow-y: auto;
+            flex: 1;
+            font-size: 16px;
+            color: var(--crust-burnt);
+        }
+
+        .selected-class-summary {
+            background-color: #eef7fd;
+            border: 1.5px solid #bee5eb;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--dark-blue);
+        }
+
+        .selected-class-summary strong {
+            display: block;
+            margin-bottom: 4px;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 15px;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-family: 'Subhead1', sans-serif;
+            color: var(--dark-blue);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--crust-dark);
+            border-radius: 8px;
+            font-size: 17px;
+            font-family: 'Condensed', sans-serif;
+            color: var(--crust-burnt);
+            background-color: var(--crust-base);
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 3px rgba(0, 144, 226, 0.2);
+            background-color: #ffffff;
+        }
+
+        .register-btn {
+            width: 100%;
+            background-color: var(--brand-red);
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-family: 'Subhead1', sans-serif;
+            font-size: 17px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 8px rgba(255, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .register-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .register-btn:hover {
+            background-color: var(--dark-red);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 10px 12px 40px;
+            }
+            .class-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .info-strip {
+                flex-direction: column;
+                gap: 6px;
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            .controls-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- BRAND HEADER -->
+    <header>
+        <div class="header-left">
+            <a href="index.html" class="logo-link" title="Back to Career Path">
+                <img src="New_Logo_v2.png" alt="Team Wow Logo" class="logo" onerror="this.src='image/tile_blue.png'">
+            </a>
+            <div class="header-text">
+                <h1>MIT Leadership Classes</h1>
+                <div class="subtitle">Virtual Training Hub • Operations &amp; Management Development</div>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="market-pill">Virtual Market</div>
+            <a href="trainer_dashboard.html" class="header-action-btn">
+                🔒 Trainer Portal
+            </a>
+            <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
+                🛠️ Report Issue
+            </button>
+        </div>
+    </header>
+
+    <!-- SIGNATURE RED ACCENT STRIPE -->
+    <div class="brand-stripe"></div>
+
+    <!-- VIRTUAL CAMPUS INFO STRIP -->
+    <div class="info-strip">
+        <div class="info-strip-item">
+            <span>💻 <strong>Platform:</strong> Live Google Meet Session</span>
+        </div>
+        <div class="info-strip-item">
+            <span>🌎 <strong>Eligibility:</strong> Open to Dallas, Denver, El Paso &amp; LA</span>
+        </div>
+        <div class="info-strip-item">
+            <span>🕒 <strong>Timezone:</strong> Scheduled in CST &amp; MST</span>
+        </div>
+        <div class="info-strip-item">
+            <span>📋 <strong>Requirements:</strong> Working camera, microphone &amp; notebook</span>
+        </div>
+    </div>
+
+    <!-- MAIN BODY -->
+    <main>
+        <!-- FILTER CONTROLS -->
+        <div class="controls-row">
+            <div class="filter-buttons">
+                <span class="filter-title">Session:</span>
+                <button type="button" class="filter-btn active" onclick="filterBySchedule('ALL', this)">All Virtual Sessions</button>
+                <button type="button" class="filter-btn" onclick="filterBySchedule('OPEN', this)">Open for Signup</button>
+            </div>
+
+            <div>
+                <button type="button" class="btn-trainer-dir" onclick="openTrainerModal()">
+                    📖 Virtual Trainer Directory
+                </button>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>Available Virtual Class Sessions</h2>
+            <span id="sessionCountText">Showing upcoming sessions</span>
+        </div>
+
+        <!-- LOADING STATE -->
+        <div id="loadingSchedule" class="loading-container">
+            <div class="spinner"></div>
+            Loading available virtual class sessions...
+        </div>
+
+        <!-- CLASS GRID -->
+        <div id="classGrid" class="class-grid" style="display: none;"></div>
+    </main>
+
+    <!-- BRANDED FOOTER -->
+    <footer class="portal-footer">
+        <div class="portal-footer-inner">
+            <div class="footer-brand">
+                <span class="footer-title">Team Wow • Domino's Pizza</span>
+                <span class="footer-subtitle">MIT Leadership Development &amp; Management Training</span>
+            </div>
+            <div class="footer-meta">
+                <p class="footer-copy">&copy; 2026 Team Wow, Inc. All rights reserved.</p>
+                <p class="footer-crust-code">Powered by Crust &amp; Code</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 1. SIGNUP REGISTRATION MODAL -->
+    <div id="signupModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="signupModalTitle">Confirm Virtual MIT Registration</h3>
+                <button type="button" class="modal-close-btn" onclick="closeSignupModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="selected-class-summary">
+                    <strong id="summaryCourseName">Class Name</strong>
+                    <div id="summaryClassDate">Date</div>
+                    <div id="summaryClassTime">Time</div>
+                    <div id="summaryClassLocation">Virtual Platform</div>
+                </div>
+
+                <form id="signupForm" onsubmit="submitRegistration(event)">
+                    <input type="hidden" id="formClassId">
+                    <input type="hidden" id="formCourseName">
+
+                    <div class="form-group">
+                        <label>Full Legal Name (as on ID) *</label>
+                        <input type="text" id="formName" required placeholder="First and Last Name">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div class="form-group">
+                            <label>Home Market *</label>
+                            <select id="formMarket" required>
+                                <option value="Dallas">Dallas</option>
+                                <option value="Denver">Denver</option>
+                                <option value="El Paso">El Paso</option>
+                                <option value="LA">LA</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Store Number *</label>
+                            <input type="text" id="formStore" required placeholder="e.g. 6876">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Role / Position *</label>
+                        <select id="formPosition" required>
+                            <option value="MIT 1">MIT 1</option>
+                            <option value="MIT 2">MIT 2</option>
+                            <option value="MIT 3">MIT 3</option>
+                            <option value="Assistant Manager">Assistant Manager (AM)</option>
+                            <option value="Shift Leader">Shift Leader</option>
+                            <option value="CSR">CSR</option>
+                            <option value="Driver">Delivery Expert</option>
+                            <option value="GM">General Manager</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cell Phone Number *</label>
+                        <input type="tel" id="formPhone" required placeholder="(555) 555-5555">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address (for Google Meet Link) *</label>
+                        <input type="email" id="formEmail" required placeholder="name@dominospizza.com">
+                    </div>
+
+                    <button type="submit" class="register-btn" id="btnSubmitSignup" style="margin-top: 10px;">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                        Confirm Virtual Registration
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. SUCCESS CONFIRMATION MODAL -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Registration Confirmed!</h3>
+                <button type="button" class="modal-close-btn" onclick="closeSuccessModal()">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align: center; padding: 28px 22px;">
+                <div style="width: 60px; height: 60px; background-color: #eaf7ed; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                    <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; fill: #117a30;"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                </div>
+                <h4 style="font-family: 'PizzaPress', 'ExtraBold', serif; font-size: 24px; color: var(--dark-blue); margin: 0 0 10px; text-transform: uppercase;">
+                    You are registered, <span id="successName">Trainee</span>!
+                </h4>
+                <p style="font-size: 16px; color: var(--crust-burnt); margin: 0 0 20px; line-height: 1.5;">
+                    Your spot is secured for <strong><span id="successCourse">Course</span></strong> on <strong><span id="successDate">Date</span></strong>.
+                    A confirmation with the Google Meet link will be sent to <strong><span id="successEmail">Email</span></strong>.
+                </p>
+
+                <div style="background-color: #faf2e9; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 16px; text-align: left; margin-bottom: 20px; font-size: 14.5px;">
+                    <strong style="color: var(--dark-blue); display: block; margin-bottom: 6px;">Next Steps:</strong>
+                    <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
+                        <li>Notify your store General Manager of your scheduled class date.</li>
+                        <li>Log in 10 minutes early with your camera and microphone enabled.</li>
+                        <li>Have your Domino's MIT workbook and pen ready.</li>
+                        <li>Scan the attendance verification QR code on the final slide to record your official attendance credit.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="register-btn" onclick="closeSuccessModal()" style="width: 100%;">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. TRAINER DIRECTORY MODAL -->
+    <div id="trainerModal" class="modal-overlay">
+        <div class="modal-card" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3>📖 Virtual Trainer Directory</h3>
+                <button type="button" class="modal-close-btn" onclick="closeTrainerModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 14px; color: var(--crust-deep); font-size: 14px;">Contact any trainer or support lead directly if you need assistance with virtual sessions.</p>
+
+                <!-- TRAINING LEADERSHIP -->
+                <div style="margin-bottom: 14px; background: white; border: 1.5px solid var(--crust-med); border-radius: 8px; padding: 12px 14px;">
+                    <div style="font-family: 'Subhead1'; font-size: 13.5px; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        💻 Virtual Facilitators &amp; Leadership
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14.5px;">
+                        <div>Mike Jacobs: <a href="tel:4696748855" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">Training Design</a></div>
+                        <div>Bobby Melton: <a href="mailto:bobby@team-wow.com" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">Executive Training</a></div>
+                        <div>Steve: <a href="tel:3032044272" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(303) 204-4272</a></div>
+                        <div>Janet: <a href="tel:3039898390" style="color: var(--dark-blue); text-decoration: none; font-weight: bold;">(303) 989-8390</a></div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 12px 20px; background-color: var(--crust-med); text-align: center;">
+                <button type="button" class="register-btn" onclick="closeTrainerModal()" style="max-width: 160px; margin: 0 auto; padding: 7px 16px; font-size: 13px;">Close Directory</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const D1_API_URL = "https://tw-dallas-staffing.pages.dev/api/staffing";
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycby7wgQnR7shWLeL78Fy4f0g0TD-Ch9NgEpIwYnwpUJZYsXvTv0A95IFBGe5k0shg4owEw/exec";
+
+        let classesData = [];
+        let currentScheduleFilter = 'ALL';
+        let selectedClass = null;
+
+        function parseClassDate(dateStr) {
+            if (!dateStr) return 0;
+            const parts = String(dateStr).split('/');
+            if (parts.length === 3) {
+                const m = parseInt(parts[0], 10);
+                const d = parseInt(parts[1], 10);
+                let y = parseInt(parts[2], 10);
+                if (y < 100) y += 2000;
+                return new Date(y, m - 1, d).getTime();
+            }
+            const t = Date.parse(dateStr);
+            return isNaN(t) ? 0 : t;
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchClasses);
+
+        async function fetchClasses() {
+            const loading = document.getElementById('loadingSchedule');
+            const grid = document.getElementById('classGrid');
+            loading.style.display = 'block';
+            grid.style.display = 'none';
+
+            let classes = [];
+
+            // 1. Fetch Virtual classes from Cloudflare D1
+            try {
+                const res = await fetch(`${D1_API_URL}?action=getMitClasses&market=Virtual&_t=${Date.now()}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && Array.isArray(data.classes) && data.classes.length > 0) {
+                        classes = data.classes;
+                    }
+                }
+            } catch (d1Err) {
+                console.warn("D1 edge fetch failed, falling back:", d1Err);
+            }
+
+            // 2. Also check Dallas / Denver for sessions flagged with location='Virtual' if D1 Virtual market is empty
+            if (!classes || classes.length === 0) {
+                try {
+                    const [resDal, resDen] = await Promise.allSettled([
+                        fetch(`${D1_API_URL}?action=getMitClasses&market=Dallas&_t=${Date.now()}`).then(r => r.json()),
+                        fetch(`${D1_API_URL}?action=getMitClasses&market=Denver&_t=${Date.now()}`).then(r => r.json())
+                    ]);
+                    const combined = [];
+                    if (resDal.status === 'fulfilled' && resDal.value?.classes) {
+                        combined.push(...resDal.value.classes);
+                    }
+                    if (resDen.status === 'fulfilled' && resDen.value?.classes) {
+                        combined.push(...resDen.value.classes);
+                    }
+                    const virtualMatches = combined.filter(c => (c.location || '').toLowerCase().includes('virtual'));
+                    if (virtualMatches.length > 0) {
+                        classes = virtualMatches;
+                    }
+                } catch (e) {
+                    console.warn("Combined check error:", e);
+                }
+            }
+
+            loading.style.display = 'none';
+            grid.style.display = 'grid';
+
+            const now = new Date();
+            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+
+            // Lifecycle logic
+            const processed = (classes || []).map(cls => {
+                const openDateStr = cls.open_date || cls.openDate;
+                const closeDateStr = cls.close_date || cls.closeDate;
+                const openDate = openDateStr ? new Date(openDateStr) : null;
+                const closeDate = closeDateStr ? new Date(closeDateStr) : null;
+
+                let status = 'active';
+                if (openDate && todayStart < openDate.getTime()) {
+                    status = 'future';
+                } else if (closeDate && todayStart > closeDate.getTime()) {
+                    status = 'closed';
+                }
+
+                return {
+                    ...cls,
+                    _status: status,
+                    _openDate: openDate,
+                    _closeDate: closeDate
+                };
+            }).filter(cls => {
+                if (cls._status === 'future' && cls._openDate) {
+                    const diffTime = Math.abs(cls._openDate.getTime() - todayStart);
+                    if (Math.ceil(diffTime / 86400000) > 45) return false;
+                }
+                if (cls._status === 'closed' && cls._closeDate) {
+                    const diffTime = Math.abs(todayStart - cls._closeDate.getTime());
+                    if (Math.ceil(diffTime / 86400000) > 3) return false;
+                }
+                const classDay = parseClassDate(cls.classDate);
+                if (classDay && classDay < todayStart) {
+                    const diffPast = Math.abs(todayStart - classDay);
+                    if (Math.ceil(diffPast / 86400000) > 3) return false;
+                }
+                return true;
+            });
+
+            processed.sort((a, b) => {
+                const statusOrder = { 'active': 1, 'future': 2, 'closed': 3 };
+                if (statusOrder[a._status] !== statusOrder[b._status]) {
+                    return statusOrder[a._status] - statusOrder[b._status];
+                }
+                return parseClassDate(a.classDate) - parseClassDate(b.classDate);
+            });
+
+            classesData = processed;
+            renderClassGrid();
+        }
+
+        function filterBySchedule(filter, btn) {
+            currentScheduleFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderClassGrid();
+        }
+
+        function formatAttendeeName(fullName) {
+            if (!fullName) return "";
+            const parts = fullName.trim().split(/\s+/);
+            if (parts.length > 1) {
+                return `${parts[0]} ${parts[parts.length - 1].charAt(0)}.`;
+            }
+            return parts[0];
+        }
+
+        function renderClassGrid() {
+            const grid = document.getElementById('classGrid');
+            const countTag = document.getElementById('sessionCountText');
+            grid.innerHTML = '';
+
+            const filtered = classesData.filter(c => {
+                if (currentScheduleFilter === 'OPEN') return c._status === 'active';
+                return true;
+            });
+
+            const activeCount = filtered.filter(c => c._status === 'active').length;
+            if (countTag) {
+                countTag.innerText = `Showing ${filtered.length} session${filtered.length === 1 ? '' : 's'} (${activeCount} open for signup)`;
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 48px 20px; color: var(--crust-deep); font-size: 17px; background: white; border-radius: var(--border-radius); border: 1.5px solid var(--crust-med);">
+                        <div style="font-size: 32px; margin-bottom: 12px;">💻</div>
+                        <strong style="color: var(--dark-blue); font-size: 19px;">No Virtual MIT Sessions Scheduled Right Now</strong><br><br>
+                        Virtual classes from Dallas and Denver are being consolidated into this schedule.<br>
+                        <span style="font-size: 15px; color: #777;">Please check back soon or consult with your store General Manager.</span>
+                    </div>
+                `;
+                return;
+            }
+
+            const now = new Date();
+            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+
+            filtered.forEach(cls => {
+                const card = document.createElement('div');
+                card.className = `class-card ${cls._status === 'future' ? 'coming-soon' : ''} ${cls._status === 'closed' ? 'closed' : ''}`;
+
+                const totalSpots = cls.spotsTotal || cls.capacity || 20;
+                const takenSpots = cls.spotsTaken !== undefined ? cls.spotsTaken : (cls.attendees ? cls.attendees.length : 0);
+                const remaining = Math.max(0, totalSpots - takenSpots);
+
+                let spotsClass = 'spots-available';
+                let spotsText = `${remaining} Spots Available`;
+                let isFull = remaining <= 0;
+
+                if (isFull) {
+                    spotsClass = 'spots-full';
+                    spotsText = 'Class Full';
+                } else if (remaining <= 3) {
+                    spotsClass = 'spots-low';
+                    spotsText = `Only ${remaining} Left`;
+                }
+
+                const parts = (cls.classDate || '').split('/');
+                let dateDisplay = cls.classDate;
+                if (parts.length === 3) {
+                    const d = new Date(parseInt(parts[2], 10), parseInt(parts[0], 10) - 1, parseInt(parts[1], 10));
+                    const weekday = d.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
+                    const month = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+                    dateDisplay = `${weekday}, ${month} ${d.getDate()}`;
+                }
+
+                const timeRange = (cls.startTime || "11:00 AM") + (cls.endTime ? ` – ${cls.endTime}` : "");
+
+                const attendees = cls.attendees || [];
+                let rosterHTML = '';
+                if (attendees.length > 0) {
+                    rosterHTML = attendees.map(name => `<span class="roster-chip">${formatAttendeeName(name)}</span>`).join('');
+                } else {
+                    rosterHTML = `<span class="roster-empty">No attendees registered yet — be the first!</span>`;
+                }
+
+                let btnText = "Select This Class";
+                let btnClass = "";
+                let isDisabled = false;
+                let deadlineHTML = "";
+
+                if (cls._status === 'future') {
+                    const openStr = cls._openDate ? cls._openDate.toLocaleDateString("en-US", { month: 'numeric', day: 'numeric' }) : '';
+                    btnText = `Opens ${openStr}`;
+                    isDisabled = true;
+                    btnClass = "btn-future";
+                } else if (cls._status === 'closed') {
+                    btnText = "Signup Closed";
+                    isDisabled = true;
+                    btnClass = "btn-closed";
+                } else {
+                    if (isFull) {
+                        btnText = "Class Full";
+                        isDisabled = true;
+                    }
+                    if (cls._closeDate) {
+                        const closeStr = cls._closeDate.toLocaleDateString("en-US", { month: 'short', day: 'numeric' });
+                        const daysLeft = Math.ceil((cls._closeDate.getTime() - todayStart) / 86400000);
+                        const isUrgent = daysLeft >= 0 && daysLeft <= 2;
+                        const urgentTag = isUrgent ? ` (${daysLeft === 0 ? 'Today!' : daysLeft + 'd left'})` : '';
+                        deadlineHTML = `
+                            <div class="card-deadline ${isUrgent ? 'urgent' : ''}">
+                                <span class="deadline-lbl">Sign Up By:</span>
+                                <span class="deadline-val">${closeStr}${urgentTag}</span>
+                            </div>
+                        `;
+                    }
+                }
+
+                card.innerHTML = `
+                    <div class="card-top">
+                        <span class="date-badge">${dateDisplay}</span>
+                        <span class="spots-badge ${spotsClass}">${spotsText}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-time">
+                            <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                            <span>${timeRange}</span>
+                        </div>
+                        <h3 class="card-title">
+                            <span>${cls.name}</span>
+                        </h3>
+                        <div class="card-location-meta">
+                            <span>💻 Google Meet • Trainer: <strong>${cls.trainer || 'Team Wow'}</strong></span>
+                        </div>
+                        <div class="roster-box">
+                            <div class="roster-header">
+                                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                                <span>Who's Attending:</span>
+                            </div>
+                            <div class="roster-chips">${rosterHTML}</div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        ${deadlineHTML}
+                        <button type="button" class="select-btn ${btnClass}" ${isDisabled ? 'disabled' : ''} onclick="openSignupModal('${cls.id}')">
+                            ${btnText}
+                        </button>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function openSignupModal(classId) {
+            selectedClass = classesData.find(c => String(c.id) === String(classId));
+            if (!selectedClass) return;
+
+            document.getElementById('formClassId').value = classId;
+            document.getElementById('formCourseName').value = selectedClass.name;
+
+            document.getElementById('summaryCourseName').textContent = selectedClass.name;
+            document.getElementById('summaryClassDate').textContent = `📅 Date: ${selectedClass.classDate}`;
+            document.getElementById('summaryClassTime').textContent = `🕒 Time: ${selectedClass.startTime || '11:00 AM'}${selectedClass.endTime ? ' – ' + selectedClass.endTime : ''}`;
+            document.getElementById('summaryClassLocation').textContent = `💻 Platform: Google Meet • Trainer: ${selectedClass.trainer || 'Team Wow'}`;
+
+            document.getElementById('signupModal').classList.add('active');
+        }
+
+        function closeSignupModal() {
+            document.getElementById('signupModal').classList.remove('active');
+            document.getElementById('signupForm').reset();
+        }
+
+        async function submitRegistration(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmitSignup');
+            btn.innerText = "Submitting...";
+            btn.disabled = true;
+
+            const classId = document.getElementById('formClassId').value;
+            const courseName = document.getElementById('formCourseName').value;
+            const name = document.getElementById('formName').value.trim();
+            const market = document.getElementById('formMarket').value;
+            const store = document.getElementById('formStore').value.trim();
+            const position = document.getElementById('formPosition').value;
+            const phone = document.getElementById('formPhone').value.trim();
+            const email = document.getElementById('formEmail').value.trim();
+
+            let success = false;
+
+            // 1. Submit to Cloudflare D1
+            try {
+                const res = await fetch(D1_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'registerMitCandidate',
+                        market: 'Virtual',
+                        city: market,
+                        classId: classId,
+                        candidateName: name,
+                        storeNum: store,
+                        position: position,
+                        phone: phone,
+                        email: email
+                    })
+                });
+                const data = await res.json();
+                if (data.success) success = true;
+            } catch (d1Err) {
+                console.warn("D1 direct registration error:", d1Err);
+            }
+
+            // 2. Fallback submission
+            if (!success) {
+                try {
+                    const formData = new URLSearchParams();
+                    formData.append('classId', classId);
+                    formData.append('className', courseName);
+                    formData.append('name', name);
+                    formData.append('store', store);
+                    formData.append('position', position);
+                    formData.append('phone', phone);
+                    formData.append('email', email);
+                    formData.append('market', market);
+
+                    await fetch(GAS_API_URL, {
+                        method: 'POST',
+                        body: formData,
+                        mode: 'no-cors'
+                    });
+                    success = true;
+                } catch (gasErr) {
+                    console.warn("GAS registration error:", gasErr);
+                }
+            }
+
+            btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> Confirm Virtual Registration`;
+            btn.disabled = false;
+
+            closeSignupModal();
+
+            if (success) {
+                document.getElementById('successName').textContent = name;
+                document.getElementById('successCourse').textContent = courseName;
+                document.getElementById('successDate').textContent = selectedClass ? selectedClass.classDate : 'Scheduled Date';
+                document.getElementById('successEmail').textContent = email;
+                document.getElementById('successModal').classList.add('active');
+                fetchClasses();
+            } else {
+                alert("There was an error registering for class. Please try again or contact your trainer.");
+            }
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.remove('active');
+        }
+
+        function openTrainerModal() {
+            document.getElementById('trainerModal').classList.add('active');
+        }
+
+        function closeTrainerModal() {
+            document.getElementById('trainerModal').classList.remove('active');
+        }
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSignupModal();
+                closeSuccessModal();
+                closeTrainerModal();
+            }
+        });
+    </script>
+</body>
+
+</html>
