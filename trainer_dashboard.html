@@ -860,10 +860,12 @@
         /* TABLE */
         .table-responsive {
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
+            min-width: 620px;
             border-collapse: collapse;
             font-size: 13.5px;
             text-align: left;
@@ -885,6 +887,7 @@
         th, td {
             padding: 9px 12px;
             border-bottom: 1px solid var(--crust-med);
+            white-space: nowrap;
         }
 
         tr:last-child td {
