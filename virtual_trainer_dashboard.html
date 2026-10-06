@@ -1340,7 +1340,7 @@
 
     <script>
         const AUTH_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec";
-        const D1_API_URL = "https://tw-dallas-staffing.pages.dev/api/staffing";
+        const D1_API_URL = "https://tw-staffing.pages.dev/api/staffing";
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzXSlYLzwAM-QKHdxAyEgH_sdunsFY9zc6I46Wy2mQUSG0RiWvwHMQstDHI2X9lL2e_/exec";
 
         let currentClasses = [];
@@ -1484,34 +1484,10 @@
         // --- LOAD VIRTUAL MIT CLASSES ---
         // Virtual classes and rosters are maintained independently from local training centers (McKinney/Mesquite/Denver)
         async function fetchTrainerClasses() {
-            const container = document.getElementById('classListContainer');
             const countBadge = document.getElementById('classCountBadge');
 
-            container.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--crust-deep); font-size: 14px;">Loading virtual sessions...</div>';
-
-            let classes = [];
-
-            // 1. Try D1 first (Virtual Market)
-            try {
-                const res = await fetch(`${D1_API_URL}?action=getMitClasses&market=Virtual&_t=${Date.now()}`);
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.success && Array.isArray(data.classes) && data.classes.length > 0) {
-                        classes = data.classes;
-                    }
-                }
-            } catch (d1Err) {
-                console.warn("D1 virtual class load error:", d1Err);
-            }
-
-            // 2. If no scheduled classes yet in D1, use the canonical virtual curriculum preview
-            if (!classes || classes.length === 0) {
-                currentClasses = VIRTUAL_CURRICULUM_SESSIONS;
-                countBadge.innerText = `${currentClasses.length} Preview Sessions`;
-            } else {
-                currentClasses = classes;
-                countBadge.innerText = `${currentClasses.length} Scheduled Sessions`;
-            }
+            currentClasses = VIRTUAL_CURRICULUM_SESSIONS;
+            countBadge.innerText = `${currentClasses.length} Preview Sessions`;
 
             renderClassList();
         }
