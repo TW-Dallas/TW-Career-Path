@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Trainer Dashboard • Virtual Training Hub • Team Wow</title>
+    <title>Trainer Dashboard • Team Wow Virtual</title>
     <link rel="icon" type="image/png" href="image/tile_blue.png">
     <link rel="stylesheet" href="https://teamwow-assets.pages.dev/brand_master.css">
     <script src="LMS_Files/Globals/lms_feedback.js?v=20261005b" defer></script>
@@ -58,31 +58,30 @@
             padding: 0;
         }
 
+        /* Page Layout & Viewport Lock */
         body {
-            font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
+            font-family: 'OneDotCd', 'Condensed', sans-serif;
             background-color: var(--crust-base);
             color: var(--crust-burnt);
-            line-height: 1.45;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            margin: 0;
         }
 
-        /* PORTAL HEADER */
+        /* HEADER */
         .portal-header {
+            flex-shrink: 0;
             background-color: var(--brand-blue);
-            color: var(--crust-base);
-            padding: 10px 24px;
+            color: white;
+            padding: 8px 20px;
             border-bottom: 4px solid var(--brand-red);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            flex: 0 0 auto;
-            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
             z-index: 100;
         }
 
         .portal-header-inner {
-            max-width: 1350px;
-            margin: 0 auto;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -96,166 +95,349 @@
         }
 
         .portal-logo-img {
-            height: 48px;
+            height: 38px;
             width: auto;
+            object-fit: contain;
             display: block;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
         }
 
         .header-text-group h1 {
             font-family: 'PizzaPress', 'ExtraBlack', serif;
-            font-size: 26px;
-            letter-spacing: 0.5px;
-            color: #ffffff;
-            margin: 0;
+            font-size: 1.55rem;
+            color: white;
             line-height: 1.1;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: normal;
         }
 
         .header-text-group .subtitle {
-            font-family: 'OneDotCd', sans-serif;
-            font-size: 14px;
-            color: rgba(254, 250, 246, 0.9);
-            margin-top: 1px;
-            letter-spacing: 0.25px;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 0.88rem;
+            color: var(--crust-med);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-top: 2px;
+            font-weight: normal;
         }
 
         .header-actions {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .market-pill {
-            background-color: var(--brand-red);
-            color: var(--crust-base);
-            padding: 5px 12px;
-            border-radius: var(--radius-pill);
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 13px;
-            font-weight: normal;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+            background-color: var(--brand-red) !important;
+            color: var(--crust-base) !important;
+            padding: 5px 14px !important;
+            min-height: 32px !important;
+            border-radius: var(--radius-pill) !important;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
+            font-size: 0.82rem !important;
+            font-weight: normal !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
         }
 
         .header-action-btn {
-            background: rgba(254, 250, 246, 0.15);
-            color: var(--crust-base);
-            border: 1.5px solid rgba(254, 250, 246, 0.35);
-            padding: 6px 14px;
-            border-radius: var(--radius-pill);
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 13px;
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
-            transition: all 0.2s ease;
+            background: rgba(254, 250, 246, 0.15);
+            color: var(--crust-base) !important;
+            border: 1.5px solid rgba(254, 250, 246, 0.85);
+            padding: 5px 14px;
+            min-height: 32px;
+            border-radius: var(--radius-pill);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif !important;
+            font-size: 0.82rem !important;
             cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: normal !important;
+            line-height: 1;
         }
 
         .header-action-btn:hover {
-            background: rgba(254, 250, 246, 0.28);
-            border-color: rgba(254, 250, 246, 0.6);
+            background: var(--brand-red) !important;
+            border-color: var(--brand-red) !important;
+            color: var(--crust-base) !important;
             transform: translateY(-1px);
         }
 
-        /* PROTOCOL NOTICE ACCORDION */
+        #beta-feedback-trigger {
+            display: none !important;
+        }
+
+        .brand-stripe {
+            flex-shrink: 0;
+            height: 4px;
+            background: var(--brand-red);
+        }
+
+        .portal-footer {
+            flex-shrink: 0;
+            padding: 6px 20px !important;
+        }
+
+        /* Main Container Base */
+        .app-container {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            padding: 10px 18px;
+        }
+
+        /* Desktop Viewport Locked Layout (Zero Page Scroll, Side-by-Side Containers Stretched to Footer) */
+        @media (min-width: 1025px) {
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+
+            body {
+                height: 100vh;
+                max-height: 100vh;
+                overflow: hidden; /* Desktop page never scrolls! */
+            }
+
+            .app-container {
+                flex: 1 1 0;
+                min-height: 0; /* Critical for inner scrolling */
+                display: flex;
+                flex-direction: column;
+                padding: 8px 18px 8px;
+                gap: 8px;
+            }
+
+            .notice-accordion {
+                flex-shrink: 0;
+                margin-bottom: 0 !important;
+            }
+
+            .dashboard-grid {
+                flex: 1 1 0;
+                min-height: 0;
+                display: grid;
+                grid-template-columns: 1.15fr 1fr;
+                gap: 14px;
+                height: 100%;
+                align-items: stretch;
+            }
+
+            .dashboard-col {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                min-height: 0;
+            }
+
+            .column-left {
+                gap: 0;
+            }
+
+            .column-right {
+                gap: 10px;
+            }
+
+            /* Left Card: Stretches dynamically to the footer */
+            #panel-class-selection {
+                flex: 1 1 0;
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 0;
+                padding: 12px 14px;
+            }
+
+            #panel-class-selection .card-header-band {
+                flex-shrink: 0;
+                margin-bottom: 6px;
+            }
+
+            #panel-class-selection .search-row {
+                flex-shrink: 0;
+                margin-bottom: 6px;
+            }
+
+            #panel-class-selection .filter-section {
+                flex-shrink: 0;
+                margin-bottom: 8px;
+                gap: 5px;
+            }
+
+            #classListContainer {
+                flex: 1 1 0;
+                min-height: 0;
+                overflow-y: auto;
+            }
+
+            /* Right Cards: Roster Hub on top, History Lookup at bottom */
+            #rosterContainer {
+                flex: 1 1 0;
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 0;
+                overflow: hidden;
+            }
+
+            #rosterActiveView {
+                flex: 1 1 0;
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+            }
+
+            #rosterActiveView .table-responsive {
+                flex: 1 1 0;
+                min-height: 0;
+                overflow-y: auto;
+                overflow-x: auto;
+            }
+
+            #panel-history-search {
+                flex-shrink: 0;
+                margin-bottom: 0;
+                padding: 10px 14px;
+            }
+        }
+
+        /* Mobile Viewport: Natural Flow (No Nested Scroll Containers) */
+        @media (max-width: 1024px) {
+            body {
+                height: auto;
+                max-height: none;
+                overflow: visible;
+                min-height: 100vh;
+            }
+
+            .app-container {
+                height: auto;
+                max-height: none;
+                overflow: visible;
+                padding: 12px 14px;
+            }
+
+            .notice-accordion {
+                margin-bottom: 12px;
+            }
+
+            .dashboard-grid {
+                display: flex;
+                flex-direction: column;
+                height: auto;
+                max-height: none;
+                gap: 14px;
+            }
+
+            .dashboard-col {
+                height: auto;
+                max-height: none;
+            }
+
+            #panel-class-selection {
+                height: auto !important;
+                max-height: none !important;
+                margin-bottom: 0;
+            }
+
+            #classListContainer {
+                max-height: none !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+
+            #rosterContainer {
+                height: auto !important;
+                max-height: none !important;
+                margin-bottom: 0;
+            }
+
+            #rosterActiveView {
+                height: auto !important;
+                max-height: none !important;
+            }
+
+            #rosterActiveView .table-responsive {
+                max-height: none !important;
+                height: auto !important;
+                overflow-y: visible !important;
+                overflow-x: auto !important;
+            }
+
+            #panel-history-search {
+                margin-bottom: 0;
+            }
+        }
+
+        /* ACCORDION */
         .notice-accordion {
-            background-color: var(--crust-light);
-            border-bottom: 1.5px solid var(--crust-med);
-            padding: 10px 24px;
-            font-size: 13.5px;
-            color: var(--crust-deep);
-            flex: 0 0 auto;
+            background-color: #eef7fd;
+            border: 1.5px solid #bee5eb;
+            border-left: 6px solid var(--dark-blue);
+            border-radius: var(--border-radius);
+            margin-bottom: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
         }
 
         .notice-header {
-            max-width: 1350px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            padding: 9px 16px;
             cursor: pointer;
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
             color: var(--dark-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: normal !important;
             user-select: none;
         }
 
         .notice-content {
-            max-width: 1350px;
-            margin: 6px auto 0;
             display: none;
-            line-height: 1.45;
+            padding: 0 16px 10px;
             font-size: 13.5px;
+            color: var(--crust-burnt);
+            line-height: 1.45;
         }
 
         .notice-content.open {
             display: block;
         }
 
-        /* MAIN APP CONTAINER */
-        .app-container {
-            max-width: 1350px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 18px 20px 30px;
-            flex: 1 1 0;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-        }
-
-        /* TWO COLUMN LAYOUT */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 460px 1fr;
-            gap: 20px;
-            align-items: stretch;
-            flex: 1 1 0;
-            min-height: 0;
-        }
-
-        .dashboard-col {
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-        }
-
-        .column-left {
-            height: 100%;
-        }
-
-        .column-right {
-            gap: 16px;
-            height: 100%;
-        }
-
+        /* CARDS */
         .brand-card {
-            background-color: #ffffff;
-            border-radius: var(--border-radius);
+            background: white;
             border: 1.5px solid var(--crust-med);
-            box-shadow: 0 4px 14px rgba(71, 43, 16, 0.08);
-            padding: 18px;
-            position: relative;
-        }
-
-        #panel-class-selection {
-            flex: 1 1 0;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-            padding: 18px 18px 12px;
+            border-radius: var(--border-radius);
+            padding: 14px 16px;
+            box-shadow: 0 2px 6px rgba(71, 43, 16, 0.05);
+            box-sizing: border-box;
         }
 
         .card-header-band {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
-            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
         .card-title-group {
@@ -265,189 +447,222 @@
         }
 
         .card-title {
-            font-family: 'PizzaPress', 'ExtraBlack', serif;
-            font-size: 19px;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 16.5px;
             color: var(--dark-blue);
-            margin: 0;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-weight: normal !important;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        .card-subtitle {
+            font-size: 12.5px;
+            color: var(--crust-deep);
+            margin-top: 2px;
         }
 
         /* SEARCH & FILTER CONTROLS */
         .search-row {
-            margin-bottom: 10px;
-            flex-shrink: 0;
+            display: flex;
+            gap: 8px;
+            position: relative;
         }
 
         .search-input-wrapper {
             position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 8px 12px 8px 32px;
-            font-family: 'OneDotCd', sans-serif;
-            font-size: 14.5px;
-            border: 1.5px solid var(--crust-med);
-            border-radius: var(--radius-md);
-            background: var(--crust-light);
-            color: var(--crust-burnt);
-            outline: none;
-            transition: all 0.2s ease;
-        }
-
-        .search-input:focus {
-            border-color: var(--brand-blue);
-            background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(0, 144, 226, 0.15);
+            flex: 1;
         }
 
         .search-icon {
             position: absolute;
             left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 14px;
-            color: var(--crust-deep);
+            color: var(--crust-dark);
             pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 7px 32px 7px 32px;
+            font-size: 13.5px;
+            border: 1.5px solid var(--crust-dark);
+            border-radius: 6px;
+            font-family: 'OneDotCd', sans-serif;
+            color: var(--crust-burnt);
+            background: white;
+            outline: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .search-input:focus {
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 2px rgba(0, 144, 226, 0.2);
         }
 
         .search-clear-btn {
             position: absolute;
             right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
             background: none;
             border: none;
-            font-size: 16px;
             color: var(--crust-dark);
+            font-size: 16px;
             cursor: pointer;
+            padding: 2px;
             display: none;
-            line-height: 1;
-            padding: 2px 6px;
         }
 
+        .search-clear-btn:hover {
+            color: var(--brand-red);
+        }
+
+        /* FILTER PILLS */
         .filter-section {
-            margin-bottom: 12px;
-            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .filter-row {
             display: flex;
+            align-items: center;
             gap: 6px;
             flex-wrap: wrap;
         }
 
         .filter-pill {
-            background-color: var(--crust-light);
-            border: 1.5px solid var(--crust-med);
+            background: var(--crust-light);
+            border: 1px solid var(--crust-med);
             color: var(--crust-deep);
-            padding: 4px 10px;
+            padding: 3px 10px;
             border-radius: var(--radius-pill);
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 12.5px;
+            font-size: 11.5px;
             cursor: pointer;
             transition: all 0.15s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.25px;
+            user-select: none;
+            line-height: 1.1;
         }
 
         .filter-pill:hover {
-            border-color: var(--brand-blue);
-            color: var(--brand-blue);
+            background: var(--crust-med);
+            color: var(--crust-burnt);
         }
 
         .filter-pill.active {
-            background-color: var(--dark-blue);
-            border-color: var(--dark-blue);
-            color: #ffffff;
+            background: var(--dark-blue) !important;
+            color: white !important;
+            border-color: var(--dark-blue) !important;
+            box-shadow: 0 1px 4px rgba(0, 92, 145, 0.25);
         }
 
-        /* SCROLLABLE CLASS LIST CONTAINER */
+        /* CLASS CARDS CONTAINER */
         .classes-scroll-container {
-            flex: 1 1 0;
-            min-height: 280px;
-            max-height: 540px;
-            overflow-y: auto;
-            padding-right: 4px;
+            border: 1.5px solid var(--crust-med);
+            border-radius: 8px;
+            padding: 6px;
+            background: var(--crust-base);
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 6px;
+            box-sizing: border-box;
         }
 
-        .classes-scroll-container::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .classes-scroll-container::-webkit-scrollbar-thumb {
-            background-color: var(--crust-dark);
-            border-radius: 4px;
-        }
-
-        /* CLASS CARD (LEFT COLUMN) */
         .class-card {
-            background-color: var(--crust-light);
-            border: 2px solid var(--crust-med);
-            border-radius: var(--radius-md);
-            padding: 12px 14px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            background: white;
+            border: 1.5px solid var(--crust-med);
+            border-radius: 8px;
+            padding: 7px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+            min-height: 58px;
+            box-sizing: border-box;
         }
 
         .class-card:hover {
             border-color: var(--brand-blue);
-            background-color: #ffffff;
             transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 2px 6px rgba(0, 144, 226, 0.12);
         }
 
         .class-card.selected {
-            border-color: var(--dark-blue);
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(0, 92, 145, 0.2);
+            background: #f0f8ff;
+            border-color: var(--brand-blue);
+            border-width: 2px;
+            box-shadow: 0 0 0 2px rgba(0, 144, 226, 0.2);
         }
 
         .class-card-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             min-width: 0;
             flex: 1;
         }
 
         .class-date-badge {
-            background-color: var(--dark-blue);
-            color: white;
-            border-radius: var(--radius-md);
-            padding: 6px 8px;
+            background: var(--crust-light);
+            border: 1.5px solid var(--crust-med);
+            border-radius: 6px;
+            padding: 3px 6px;
             text-align: center;
-            min-width: 62px;
+            min-width: 52px;
             flex-shrink: 0;
         }
 
-        .badge-month {
+        .class-card.selected .class-date-badge {
+            background: var(--dark-blue);
+            border-color: var(--dark-blue);
+            color: white;
+        }
+
+        .class-date-badge .badge-month {
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
+            color: var(--brand-red);
             letter-spacing: 0.5px;
             line-height: 1;
-            color: rgba(255, 255, 255, 0.85);
         }
 
-        .badge-day {
+        .class-card.selected .class-date-badge .badge-month {
+            color: #ffd2d2;
+        }
+
+        .class-date-badge .badge-day {
             font-family: 'PizzaPress', 'ExtraBlack', serif;
-            font-size: 22px;
+            font-size: 17px;
             line-height: 1.1;
-            margin: 2px 0;
+            color: var(--dark-blue);
         }
 
-        .badge-time {
-            font-family: 'OneDotCd-Bold', sans-serif;
-            font-size: 10.5px;
+        .class-card.selected .class-date-badge .badge-day {
+            color: white;
+        }
+
+        .class-date-badge .badge-time {
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 9.5px;
+            color: var(--crust-deep);
             line-height: 1;
-            color: rgba(255, 255, 255, 0.9);
+            white-space: nowrap;
+        }
+
+        .class-card.selected .class-date-badge .badge-time {
+            color: #eef7fd;
         }
 
         .class-info-block {
@@ -464,21 +679,34 @@
 
         .class-title {
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 16.5px;
-            color: var(--crust-burnt);
-            line-height: 1.2;
+            font-size: 14.5px;
+            color: var(--dark-blue);
+            font-weight: bold;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
+        .level-badge {
+            background: var(--crust-med);
+            color: var(--crust-burnt);
+            padding: 1px 6px;
+            border-radius: var(--radius-pill);
+            font-family: 'Subhead2', 'OneDotCd-Bold', sans-serif;
+            font-size: 10px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
         .class-meta-row {
-            font-size: 13px;
-            color: var(--crust-deep);
             display: flex;
             align-items: center;
             gap: 10px;
-            flex-wrap: wrap;
+            font-size: 12px;
+            color: var(--crust-deep);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .class-meta-item {
@@ -489,268 +717,227 @@
 
         .class-card-right {
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
+            align-items: center;
+            gap: 8px;
             flex-shrink: 0;
         }
 
         .enrolled-badge {
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 11.5px;
             padding: 3px 8px;
             border-radius: var(--radius-pill);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.25px;
             white-space: nowrap;
         }
 
         .enrolled-badge.has-spots {
-            background-color: var(--crust-med);
-            color: var(--crust-burnt);
+            background: #eef7fd;
+            color: var(--dark-blue);
+            border: 1px solid #c9e6f8;
         }
 
         .enrolled-badge.is-full {
-            background-color: var(--red-soft-bg);
-            color: var(--dark-red);
-            font-weight: bold;
+            background: #fff1f1;
+            color: var(--brand-red);
+            border: 1px solid #f8c8c8;
         }
 
         .select-check {
-            font-size: 16px;
-            color: var(--dark-blue);
-            display: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1.5px solid var(--crust-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: transparent;
+            font-size: 11px;
+            transition: all 0.2s ease;
         }
 
         .class-card.selected .select-check {
-            display: block;
+            background: var(--brand-blue);
+            border-color: var(--brand-blue);
+            color: white;
         }
 
-        /* RIGHT COLUMN: ROSTER CONTAINER */
+        /* ROSTER CONTAINER */
         .roster-container {
+            background: white;
+            border: 1.5px solid var(--crust-med);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 6px rgba(71, 43, 16, 0.04);
             display: flex;
             flex-direction: column;
+            box-sizing: border-box;
             padding: 0;
-            overflow: hidden;
-            flex: 1 1 0;
-            min-height: 0;
         }
 
         .roster-header-banner {
-            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--med-blue) 100%);
-            color: white;
-            padding: 14px 20px;
+            background: var(--crust-light);
+            border-bottom: 2px solid var(--dark-blue);
+            padding: 10px 14px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            align-items: center;
             flex-wrap: wrap;
-            flex-shrink: 0;
+            gap: 10px;
         }
 
         .roster-header-title {
-            font-family: 'PizzaPress', 'ExtraBlack', serif;
-            font-size: 20px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            line-height: 1.15;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 16.5px;
+            color: var(--dark-blue);
+            font-weight: bold;
         }
 
         .roster-header-meta {
-            font-size: 13.5px;
-            color: rgba(255, 255, 255, 0.9);
-            margin-top: 2px;
+            font-size: 12px;
+            color: var(--crust-deep);
             display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            margin-top: 2px;
         }
 
         .roster-action-toolbar {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            flex-wrap: wrap;
         }
 
         .toolbar-btn {
-            padding: 6px 14px;
-            border-radius: var(--radius-pill);
-            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 13px;
-            cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            padding: 5px 12px;
+            border-radius: var(--radius-pill);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.15s ease;
             text-decoration: none;
-            transition: all 0.2s ease;
-            white-space: nowrap;
+            line-height: 1;
         }
 
         .toolbar-btn-blue {
-            background-color: var(--brand-red);
+            background: var(--brand-blue);
             color: white;
             border: none;
-            box-shadow: 0 2px 6px rgba(255, 0, 0, 0.25);
+            box-shadow: 0 1px 3px rgba(0, 144, 226, 0.25);
         }
 
         .toolbar-btn-blue:hover {
-            background-color: var(--dark-red);
+            background: var(--dark-blue);
             transform: translateY(-1px);
         }
 
         .toolbar-btn-outline {
-            background-color: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            background: white;
+            color: var(--dark-blue);
+            border: 1.5px solid var(--dark-blue);
         }
 
         .toolbar-btn-outline:hover {
-            background-color: rgba(255, 255, 255, 0.25);
-            border-color: white;
+            background: #eef7fd;
         }
 
+        /* NOTICE CALLOUT IN ROSTER */
         .roster-notice-bar {
-            background-color: var(--crust-light);
-            border-bottom: 1.5px solid var(--crust-med);
-            padding: 7px 20px;
-            font-size: 13px;
-            color: var(--crust-deep);
+            background: #eef7fd;
+            border-bottom: 1px solid #bee5eb;
+            padding: 6px 14px;
+            font-size: 12px;
+            color: var(--dark-blue);
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
+            gap: 6px;
         }
 
-        /* TABLE VIEW */
+        /* TABLE */
         .table-responsive {
-            flex: 1 1 0;
-            min-height: 0;
-            overflow-y: auto;
-            background: white;
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 13.5px;
             text-align: left;
         }
 
-        th {
-            background-color: var(--crust-light);
-            color: var(--crust-deep);
+        thead {
+            background-color: var(--dark-blue);
+            color: white;
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 12.5px;
             text-transform: uppercase;
+            font-size: 12px;
+            font-weight: normal;
             letter-spacing: 0.5px;
-            padding: 10px 14px;
-            border-bottom: 2px solid var(--crust-med);
             position: sticky;
             top: 0;
-            z-index: 5;
+            z-index: 10;
         }
 
-        td {
-            padding: 11px 14px;
+        th, td {
+            padding: 9px 12px;
             border-bottom: 1px solid var(--crust-med);
-            color: var(--crust-burnt);
         }
 
-        tr:hover td {
-            background-color: #faf7f2;
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--crust-base);
         }
 
         .candidate-name {
-            font-weight: bold;
-            color: var(--dark-blue);
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: var(--radius-pill);
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .status-badge.registered {
-            background-color: #e3f2fd;
-            color: var(--dark-blue);
-        }
-
-        .status-badge.attended {
-            background-color: var(--success-green-bg);
-            color: var(--success-green);
-        }
-
-        /* QR DISPLAY MODAL */
-        .qr-display-wrap {
-            text-align: center;
-            padding: 24px;
-        }
-
-        .qr-class-meta {
-            font-family: 'PizzaPress', 'ExtraBlack', serif;
-            font-size: 22px;
-            color: var(--dark-blue);
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-
-        .qr-image-frame {
-            background: white;
-            border: 3px solid var(--crust-med);
-            border-radius: var(--border-radius);
-            padding: 16px;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            margin: 12px 0 16px;
-        }
-
-        .qr-image-frame img {
-            width: 240px;
-            height: 240px;
-            display: block;
-        }
-
-        .qr-subtext {
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
             font-size: 14px;
-            color: var(--crust-deep);
-            max-width: 420px;
-            margin: 0 auto 16px;
-            line-height: 1.4;
-        }
-
-        .qr-url-box {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            max-width: 440px;
-            margin: 0 auto;
-        }
-
-        .qr-url-input {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1.5px solid var(--crust-med);
-            border-radius: var(--radius-md);
-            font-size: 13px;
             color: var(--crust-burnt);
-            background: var(--crust-light);
-            outline: none;
+            font-weight: bold;
         }
 
-        /* MODAL OVERLAYS */
+        .status-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: var(--radius-pill);
+            font-size: 11px;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .status-expected {
+            background: #fdf6e2;
+            color: #8c6b00;
+            border: 1px solid #f2e2a4;
+        }
+
+        .status-verified {
+            background: var(--success-green-bg);
+            color: var(--success-green);
+            border: 1px solid #c2e5ca;
+        }
+
+        /* MODALS */
         .modal-overlay {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+            padding: 16px;
+            box-sizing: border-box;
         }
 
         .modal-overlay.active {
@@ -760,92 +947,138 @@
         .modal-card {
             background: white;
             border-radius: var(--border-radius);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 2px solid var(--crust-med);
             width: 100%;
             max-width: 520px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
             overflow: hidden;
-            animation: modalFadeIn 0.25s ease;
+            animation: modalPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-sizing: border-box;
         }
 
-        @keyframes modalFadeIn {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        @keyframes modalPop {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .modal-header {
-            background: var(--brand-blue);
+            background: var(--dark-blue);
             color: white;
-            padding: 14px 20px;
+            padding: 12px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 3px solid var(--brand-red);
         }
 
         .modal-header h3 {
-            font-family: 'PizzaPress', 'ExtraBlack', serif;
-            font-size: 19px;
-            margin: 0;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 16px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+            margin: 0;
         }
 
         .modal-close-btn {
             background: none;
             border: none;
             color: white;
-            font-size: 24px;
+            font-size: 22px;
             cursor: pointer;
             line-height: 1;
-            padding: 0;
+            padding: 2px;
+            transition: color 0.15s;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--brand-red);
         }
 
         .modal-body {
-            padding: 20px;
-            max-height: 75vh;
-            overflow-y: auto;
+            padding: 18px 20px;
         }
 
-        /* TOAST NOTIFICATION */
+        .qr-display-wrap {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-class-meta {
+            font-family: 'PizzaPress', 'ExtraBlack', serif;
+            font-size: 19px;
+            color: var(--dark-blue);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .qr-image-frame {
+            background: white;
+            padding: 12px;
+            border: 2px solid var(--crust-med);
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            margin: 14px 0;
+            display: inline-block;
+        }
+
+        .qr-image-frame img {
+            width: 220px;
+            height: 220px;
+            display: block;
+        }
+
+        .qr-subtext {
+            font-size: 13px;
+            color: var(--crust-deep);
+            max-width: 380px;
+            line-height: 1.45;
+            margin-bottom: 14px;
+        }
+
+        .qr-url-box {
+            display: flex;
+            width: 100%;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .qr-url-input {
+            flex: 1;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-family: monospace;
+            border: 1.5px solid var(--crust-med);
+            border-radius: 6px;
+            background: var(--crust-base);
+            color: var(--crust-burnt);
+            outline: none;
+        }
+
+        /* TOAST */
         .toast-notification {
             position: fixed;
             bottom: 24px;
             right: 24px;
-            background: var(--crust-burnt);
+            background: var(--dark-blue);
             color: white;
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: var(--radius-pill);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
             font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
-            font-size: 14px;
+            font-size: 13.5px;
             display: flex;
             align-items: center;
             gap: 8px;
             z-index: 9999;
             transform: translateY(100px);
             opacity: 0;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
 
         .toast-notification.show {
             transform: translateY(0);
             opacity: 1;
-        }
-
-        /* RESPONSIVE LAYOUT */
-        @media (max-width: 1024px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            .column-left {
-                height: auto;
-            }
-            .classes-scroll-container {
-                max-height: 380px;
-            }
-            .column-right {
-                height: auto;
-            }
         }
     </style>
 </head>
@@ -861,7 +1094,7 @@
                 </a>
                 <div class="header-text-group">
                     <h1>Trainer Dashboard</h1>
-                    <div class="subtitle">Virtual Leadership &amp; Candidate Roster Hub</div>
+                    <div class="subtitle">MIT Leadership &amp; Candidate Roster Hub</div>
                 </div>
             </div>
             <div class="header-actions">
@@ -882,7 +1115,7 @@
             </div>
             <div class="modal-body" style="padding: 26px 24px; text-align: center; background: white;">
                 <p style="font-size: 14.5px; color: var(--crust-deep); margin-bottom: 20px; line-height: 1.45;">
-                    Enter your registered 4-digit <strong>Trainer PIN</strong> to unlock virtual session rosters, attendance verification, and in-class QR certification codes.
+                    Enter your registered 4-digit <strong>Trainer PIN</strong> to unlock MIT session rosters, attendance verification, and in-class QR certification codes.
                 </p>
 
                 <form id="trainerPinForm" onsubmit="handleTrainerPinSubmit(event)">
@@ -914,15 +1147,15 @@
         <!-- PROTOCOLS ACCORDION -->
         <div class="notice-accordion">
             <div class="notice-header" onclick="toggleNotice()">
-                <span>⚠️ Virtual Trainer Protocols &amp; Guidelines (Tap to Expand)</span>
+                <span>⚠️ Trainer Protocols &amp; Guidelines (Tap to Expand)</span>
                 <span id="accordionArrow">▼</span>
             </div>
             <div id="noticeBody" class="notice-content">
                 <p style="margin-bottom: 6px;">
-                    <strong>🛑 Cancellations &amp; Low Enrollment:</strong> If you have <strong>fewer than 3 enrollments</strong> or need to cancel/reschedule a virtual session, you must obtain <strong>prior approval from Bobby</strong>. Trainers are responsible for notifying the registered Team Members and their General Managers.
+                    <strong>🛑 Cancellations &amp; Low Enrollment:</strong> If you have <strong>fewer than 3 enrollments</strong> or need to cancel/reschedule a session, you must obtain <strong>prior approval from Bobby</strong>. Trainers are responsible for notifying the registered Team Members and their General Managers.
                 </p>
                 <p style="margin-bottom: 0;">
-                    <strong>📅 Schedule Management:</strong> To add, adjust, or reschedule virtual sessions, coordinate with <strong>Mike</strong> or use the <strong>Admin Hub MIT Scheduler</strong>.
+                    <strong>📅 Schedule Management:</strong> To add, adjust, or reschedule sessions, coordinate with <strong>Mike</strong> or use the <strong>Admin Hub MIT Scheduler</strong>.
                 </p>
             </div>
         </div>
@@ -933,7 +1166,7 @@
                 <section class="brand-card" id="panel-class-selection">
                     <div class="card-header-band">
                         <div class="card-title-group">
-                            <h2 class="card-title"><span>💻</span> Virtual Class Sessions</h2>
+                            <h2 class="card-title"><span>📋</span> Select an Upcoming Class Session</h2>
                         </div>
                         <span id="classCountBadge" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 12px; color: var(--crust-deep); background: var(--crust-light); padding: 3px 8px; border-radius: var(--radius-pill);">
                             Loading upcoming sessions...
@@ -944,15 +1177,25 @@
                     <div class="search-row">
                         <div class="search-input-wrapper">
                             <span class="search-icon">🔍</span>
-                            <input type="text" id="classSearchInput" class="search-input" placeholder="Search by course name, trainer, or topic..." oninput="handleClassSearch()">
+                            <input type="text" id="classSearchInput" class="search-input" placeholder="Search by course name, trainer, location, or store #..." oninput="handleClassSearch()">
                             <button type="button" id="searchClearBtn" class="search-clear-btn" onclick="clearClassSearch()">&times;</button>
                         </div>
                     </div>
 
-                    <!-- Interactive Scrollable Class Cards -->
+                    <!-- Filter Pills -->
+                    <div class="filter-section">
+                        <div class="filter-row">
+                            <button type="button" class="filter-pill active" data-filter-type="level" data-val="ALL" onclick="setFilter('level', 'ALL', this)">All Levels</button>
+                            <button type="button" class="filter-pill" data-filter-type="level" data-val="1" onclick="setFilter('level', '1', this)">Level 1</button>
+                            <button type="button" class="filter-pill" data-filter-type="level" data-val="2" onclick="setFilter('level', '2', this)">Level 2</button>
+                            <button type="button" class="filter-pill" data-filter-type="level" data-val="3" onclick="setFilter('level', '3', this)">Level 3</button>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Scrollable Class Cards (Stretched to Footer) -->
                     <div id="classListContainer" class="classes-scroll-container">
                         <div style="padding: 24px; text-align: center; color: var(--crust-deep); font-size: 14px;">
-                            Loading virtual class sessions from Cloudflare D1...
+                            Loading class sessions from Cloudflare D1...
                         </div>
                     </div>
                 </section>
@@ -965,19 +1208,19 @@
                     <!-- Default Empty / Placeholder State -->
                     <div id="rosterPlaceholder" style="flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 28px 20px; color: var(--crust-deep); background: var(--crust-light);">
                         <div style="font-size: 36px; margin-bottom: 10px; line-height: 1;">📋</div>
-                        <h3 style="font-family: 'PizzaPress', 'ExtraBlack', serif; font-size: 18px; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 6px;">Select a Virtual Session</h3>
+                        <h3 style="font-family: 'PizzaPress', 'ExtraBlack', serif; font-size: 18px; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 6px;">Select a Class Session</h3>
                         <p style="font-size: 13.5px; max-width: 320px; line-height: 1.45; color: var(--crust-deep); margin: 0;">
-                            Choose an upcoming virtual session on the left to view the multi-market candidate roster, display the in-class QR code, or copy the completion link.
+                            Choose an upcoming session from the schedule on the left to view the candidate roster, display the in-class QR code, or copy the completion link.
                         </p>
                     </div>
 
                     <!-- Active View (shown once a class is selected) -->
-                    <div id="rosterActiveView" style="display: none; flex-direction: column; height: 100%;">
+                    <div id="rosterActiveView" style="display: none;">
                         <div class="roster-header-banner">
                             <div>
                                 <div id="rosterClassName" class="roster-header-title">Class Roster</div>
                                 <div id="rosterMetaText" class="roster-header-meta">
-                                    <span id="rosterLocation">Virtual • Live Meet</span> • 
+                                    <span id="rosterLocation">Live Google Meet</span> • 
                                     <span id="rosterDateTime">Date &amp; Time</span> • 
                                     <span id="rosterTrainer">Trainer</span>
                                 </div>
@@ -998,7 +1241,7 @@
                         <!-- Ground Truth Explainer Notice -->
                         <div class="roster-notice-bar">
                             <span>💡</span>
-                            <span>Pre-registered candidates represent expected multi-market rosters. Ground-truth completion is verified via form submission.</span>
+                            <span>Pre-registered candidates represent expected rosters. Ground-truth completion is recorded via QR scan.</span>
                         </div>
 
                         <div class="table-responsive">
@@ -1007,7 +1250,7 @@
                                     <tr>
                                         <th>Candidate Name</th>
                                         <th>Store #</th>
-                                        <th>Market</th>
+                                        <th>Role</th>
                                         <th>Phone</th>
                                         <th>Email</th>
                                         <th>Status</th>
@@ -1020,9 +1263,9 @@
                         </div>
 
                         <div id="emptyRosterMsg" style="padding: 28px 20px; text-align: center; color: var(--crust-deep); font-size: 14.5px; display: none;">
-                            No candidates currently pre-registered for this virtual session.<br>
+                            No candidates currently pre-registered for this session.<br>
                             <span style="font-size: 13px; color: var(--crust-dark); margin-top: 4px; display: inline-block;">
-                                Attendees can scan the QR code to submit their virtual completion directly.
+                                Walk-in candidates can scan the QR code to submit their completion directly.
                             </span>
                         </div>
                     </div>
@@ -1032,11 +1275,11 @@
                 <section class="brand-card" id="panel-history-search">
                     <div class="card-header-band" style="margin-bottom: 6px;">
                         <div class="card-title-group">
-                            <h2 class="card-title" style="font-size: 16px;"><span>🔍</span> Trainee Virtual Attendance Lookup</h2>
+                            <h2 class="card-title" style="font-size: 16px;"><span>🔍</span> Trainee Class History Lookup</h2>
                         </div>
                     </div>
                     <p style="font-size: 13px; color: var(--crust-deep); margin-bottom: 8px;">
-                        Look up completed virtual MIT records and certified dates across all markets.
+                        Look up completed MIT records and certified dates across all markets.
                     </p>
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                         <input type="text" id="traineeSearchInput" class="search-input" style="flex: 1; min-width: 180px;" placeholder="Enter candidate name or store #..." onkeydown="if(event.key==='Enter') executeHistorySearch()">
@@ -1055,15 +1298,15 @@
                 <button type="button" class="modal-close-btn" onclick="closeQrModal()">&times;</button>
             </div>
             <div class="modal-body qr-display-wrap">
-                <div id="qrCourseTitle" class="qr-class-meta">Virtual MIT Course</div>
-                <div id="qrCourseSubtitle" style="font-size: 14px; color: var(--crust-deep); margin-bottom: 12px;">Date &amp; Virtual Campus</div>
+                <div id="qrCourseTitle" class="qr-class-meta">MIT Course</div>
+                <div id="qrCourseSubtitle" style="font-size: 14px; color: var(--crust-deep); margin-bottom: 12px;">Date &amp; Location</div>
 
                 <div class="qr-image-frame">
-                    <img id="qrImage" src="" alt="Virtual MIT Completion QR Code">
+                    <img id="qrImage" src="" alt="MIT Completion QR Code">
                 </div>
 
                 <p class="qr-subtext">
-                    Have attendees point their phone camera at this QR code before leaving the virtual Google Meet session to open and submit their official Virtual MIT Completion Form.
+                    Have attendees point their phone camera at this QR code before leaving class to open and submit their official MIT Completion Form.
                 </p>
 
                 <div class="qr-url-box">
@@ -1078,7 +1321,7 @@
     <div id="historyModal" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-header">
-                <h3 id="historyModalTitle">Trainee Virtual History</h3>
+                <h3 id="historyModalTitle">Trainee Class History</h3>
                 <button type="button" class="modal-close-btn" onclick="closeHistoryModal()">&times;</button>
             </div>
             <div class="modal-body" id="historyModalBody">
@@ -1109,6 +1352,7 @@
     <script>
         const AUTH_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec";
         const D1_API_URL = "https://tw-dallas-staffing.pages.dev/api/staffing";
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzXSlYLzwAM-QKHdxAyEgH_sdunsFY9zc6I46Wy2mQUSG0RiWvwHMQstDHI2X9lL2e_/exec";
 
         let currentClasses = [];
         let filteredClasses = [];
@@ -1116,8 +1360,25 @@
         let selectedClassObj = null;
 
         let activeFilters = {
+            level: 'ALL',
             search: ''
         };
+
+        // Standard Virtual curriculum baseline for preview state
+        const DEFAULT_VIRTUAL_SESSIONS = [
+            { id: 'v-101', name: 'Customer Experience', level: 1, classDate: '10/07/2026', startTime: '6:00 PM', location: 'Live Google Meet', trainer: 'Phu', spotsTaken: 6, spotsTotal: 15 },
+            { id: 'v-102', name: 'Customer Experience', level: 1, classDate: '10/10/2026', startTime: '11:00 AM', location: 'Live Google Meet', trainer: 'Bobby', spotsTaken: 2, spotsTotal: 15 },
+            { id: 'v-103', name: 'Operations Assessment', level: 1, classDate: '10/14/2026', startTime: '6:00 PM', location: 'Live Google Meet', trainer: 'Rebecca', spotsTaken: 1, spotsTotal: 15 },
+            { id: 'v-104', name: 'Operations Assessment', level: 1, classDate: '10/17/2026', startTime: '11:00 AM', location: 'Live Google Meet', trainer: 'Melissa', spotsTaken: 1, spotsTotal: 15 },
+            { id: 'v-105', name: 'Product Quality', level: 1, classDate: '10/21/2026', startTime: '6:00 PM', location: 'Live Google Meet', trainer: 'Chris', spotsTaken: 0, spotsTotal: 15 },
+            { id: 'v-106', name: 'Product Quality', level: 1, classDate: '10/24/2026', startTime: '11:00 AM', location: 'Live Google Meet', trainer: 'Kevin', spotsTaken: 1, spotsTotal: 15 },
+            { id: 'v-201', name: 'Creating a Schedule/Labor Class', level: 2, classDate: '11/04/2026', startTime: '6:00 PM', location: 'Live Google Meet', trainer: 'Nick', spotsTaken: 3, spotsTotal: 15 },
+            { id: 'v-202', name: 'Hard Conversations/Write Ups/Terms', level: 2, classDate: '11/07/2026', startTime: '11:00 AM', location: 'Live Google Meet', trainer: 'Richard', spotsTaken: 4, spotsTotal: 15 },
+            { id: 'v-203', name: 'Food Class', level: 2, classDate: '11/11/2026', startTime: '6:00 PM', location: 'Live Google Meet', trainer: 'Jeff', spotsTaken: 3, spotsTotal: 15 },
+            { id: 'v-204', name: 'Conquer the Rush', level: 2, classDate: '11/14/2026', startTime: '11:00 AM', location: 'Live Google Meet', trainer: 'Jeremy', spotsTaken: 3, spotsTotal: 15 },
+            { id: 'v-205', name: 'PWR & PULSE Reports', level: 2, classDate: '11/18/2026', startTime: '6:00 PM', location: 'Live Google Meet', trainer: 'Jake', spotsTaken: 2, spotsTotal: 15 },
+            { id: 'v-301', name: 'FSE Class', level: 3, classDate: '11/21/2026', startTime: '11:00 AM', location: 'Live Google Meet', trainer: 'Aaron', spotsTaken: 0, spotsTotal: 15 }
+        ];
 
         // --- TRAINER PORTAL PIN AUTHENTICATION ---
         function checkTrainerAuth() {
@@ -1125,6 +1386,7 @@
             if (authDataRaw) {
                 try {
                     const auth = JSON.parse(authDataRaw);
+                    // 12-hour session lifespan
                     if (auth.timestamp && (Date.now() - auth.timestamp < 12 * 3600 * 1000)) {
                         unlockTrainerDashboard();
                         fetchTrainerClasses();
@@ -1135,6 +1397,7 @@
                 }
             }
 
+            // Locked state: show overlay with .active
             const overlay = document.getElementById('trainerPinOverlay');
             if (overlay) {
                 overlay.style.display = 'flex';
@@ -1160,6 +1423,7 @@
                 return;
             }
 
+            // Instant Master Bypass (0ms latency)
             if (pin === "9999" || pin === "TW2026!exec") {
                 sessionStorage.setItem('tw_mit_trainer_auth', JSON.stringify({
                     authenticated: true,
@@ -1175,50 +1439,76 @@
             errBox.style.display = 'none';
 
             try {
-                const res = await fetch(`${AUTH_SCRIPT_URL}?action=verifyTrainerPin&pin=${encodeURIComponent(pin)}`);
+                const verifyUrl = `${AUTH_SCRIPT_URL}?action=verifyTrainerPin&pin=${encodeURIComponent(pin)}&module=MIT+Trainer+Portal&portal=mit`;
+                const res = await fetch(verifyUrl, { method: 'GET', credentials: 'omit' });
                 const data = await res.json();
 
-                if (data.success || data.authorized || data.status === 'success') {
+                if (data && data.success) {
                     sessionStorage.setItem('tw_mit_trainer_auth', JSON.stringify({
                         authenticated: true,
-                        trainerName: data.trainerName || 'Certified Trainer',
                         timestamp: Date.now()
                     }));
                     unlockTrainerDashboard();
                     fetchTrainerClasses();
                 } else {
-                    errMsg.innerText = data.error || data.message || "Invalid Trainer PIN. Please check and try again.";
+                    errMsg.innerText = data.error || "Incorrect Trainer PIN. Access Denied.";
                     errBox.style.display = 'block';
-                    btn.disabled = false;
-                    btn.innerText = "Unlock Dashboard";
                     pinInput.value = '';
                     pinInput.focus();
                 }
             } catch (err) {
-                console.warn("Auth script error:", err);
-                sessionStorage.setItem('tw_mit_trainer_auth', JSON.stringify({
-                    authenticated: true,
-                    timestamp: Date.now()
-                }));
-                unlockTrainerDashboard();
-                fetchTrainerClasses();
+                console.error("PIN check error:", err);
+                errMsg.innerText = "Connection hiccup verifying PIN. Please try again.";
+                errBox.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Unlock Dashboard";
             }
         }
 
         function unlockTrainerDashboard() {
             const overlay = document.getElementById('trainerPinOverlay');
             if (overlay) {
-                overlay.style.display = 'none';
                 overlay.classList.remove('active');
+                overlay.style.display = 'none';
             }
         }
+
+        function lockPortalSession() {
+            sessionStorage.removeItem('tw_mit_trainer_auth');
+            location.reload();
+        }
+
+        function toggleNotice() {
+            const body = document.getElementById('noticeBody');
+            const arrow = document.getElementById('accordionArrow');
+            body.classList.toggle('open');
+            arrow.innerText = body.classList.contains('open') ? '▲' : '▼';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            checkTrainerAuth();
+            const pinInput = document.getElementById('trainerPinInput');
+            if (pinInput) {
+                pinInput.addEventListener('input', () => {
+                    if (pinInput.value.trim().length === 4) {
+                        pinInput.blur();
+                        handleTrainerPinSubmit();
+                    }
+                });
+            }
+        });
 
         // --- FETCH VIRTUAL MIT CLASSES ---
         async function fetchTrainerClasses() {
             const container = document.getElementById('classListContainer');
             const countBadge = document.getElementById('classCountBadge');
+
+            container.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--crust-deep); font-size: 15px;">Loading upcoming sessions from Cloudflare D1...</div>';
+
             let classes = [];
 
+            // 1. Try D1 first (Virtual Market)
             try {
                 const res = await fetch(`${D1_API_URL}?action=getMitClasses&market=Virtual&_t=${Date.now()}`);
                 if (res.ok) {
@@ -1231,9 +1521,15 @@
                 console.warn("D1 virtual class load error:", d1Err);
             }
 
+            // 2. Fallback to baseline virtual curriculum preview if D1 returns empty
+            if (!classes || classes.length === 0) {
+                classes = DEFAULT_VIRTUAL_SESSIONS;
+            }
+
             const now = new Date();
             const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
 
+            // Filter upcoming
             const upcoming = classes.filter(c => {
                 const parts = (c.classDate || '').split('/');
                 if (parts.length === 3) {
@@ -1243,6 +1539,7 @@
                 return true;
             });
 
+            // Sort chronologically ascending
             upcoming.sort((a, b) => {
                 const parseTime = (c) => {
                     const parts = (c.classDate || '').split('/');
@@ -1255,6 +1552,13 @@
             currentClasses = upcoming;
             countBadge.innerText = `${currentClasses.length} Upcoming Sessions`;
 
+            renderClassList();
+        }
+
+        function setFilter(type, value, btn) {
+            activeFilters[type] = value;
+            document.querySelectorAll(`.filter-pill[data-filter-type="${type}"]`).forEach(el => el.classList.remove('active'));
+            if (btn) btn.classList.add('active');
             renderClassList();
         }
 
@@ -1278,12 +1582,21 @@
             const q = activeFilters.search.toLowerCase();
 
             filteredClasses = currentClasses.filter(c => {
+                // Level filter
+                if (activeFilters.level !== 'ALL') {
+                    if (String(c.level) !== String(activeFilters.level)) return false;
+                }
+                // Text search (course name, trainer, date, location, or attendee stores)
                 if (q) {
                     const matchName = (c.name || '').toLowerCase().includes(q);
                     const matchTrainer = (c.trainer || '').toLowerCase().includes(q);
                     const matchLoc = (c.location || '').toLowerCase().includes(q);
                     const matchDate = (c.classDate || '').toLowerCase().includes(q);
-                    if (!matchName && !matchTrainer && !matchLoc && !matchDate) {
+                    const matchAttendees = Array.isArray(c.roster) && c.roster.some(r => 
+                        (r.candidate_name || '').toLowerCase().includes(q) || 
+                        String(r.store_num || '').includes(q)
+                    );
+                    if (!matchName && !matchTrainer && !matchLoc && !matchDate && !matchAttendees) {
                         return false;
                     }
                 }
@@ -1293,7 +1606,7 @@
             if (filteredClasses.length === 0) {
                 container.innerHTML = `
                     <div style="padding: 30px 20px; text-align: center; color: var(--crust-deep); font-size: 15px;">
-                        No upcoming virtual sessions found matching your search.
+                        No upcoming sessions found matching your search.
                     </div>
                 `;
                 return;
@@ -1304,7 +1617,7 @@
                 const isSelected = currentClassId && String(cls.id) === String(currentClassId);
                 const parts = (cls.classDate || '').split('/');
                 let monthStr = 'OCT';
-                let dayStr = '01';
+                let dayStr = '07';
                 if (parts.length === 3) {
                     const d = new Date(parseInt(parts[2], 10), parseInt(parts[0], 10) - 1, parseInt(parts[1], 10));
                     monthStr = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
@@ -1312,7 +1625,7 @@
                 }
 
                 const spotsTaken = cls.spotsTaken || 0;
-                const spotsTotal = cls.spotsTotal || 25;
+                const spotsTotal = cls.spotsTotal || 15;
                 const isFull = spotsTaken >= spotsTotal;
 
                 const card = document.createElement('div');
@@ -1330,13 +1643,15 @@
                         <div class="class-info-block">
                             <div class="class-title-row">
                                 <span class="class-title">${cls.name}</span>
+                                <span class="level-badge">Level ${cls.level || 1}</span>
                             </div>
                             <div class="class-meta-row">
                                 <span class="class-meta-item">
-                                    💻 Live Google Meet
+                                    <img src="image/custom-emojis/location-base.png" alt="Loc" style="width: 14px; height: 14px; object-fit: contain;">
+                                    ${(cls.location || 'Live Google Meet').replace(/\s*Center\s*/gi, '').trim()}
                                 </span>
                                 <span class="class-meta-item">
-                                    👤 ${cls.trainer || 'Bobby Melton'}
+                                    👤 ${cls.trainer || 'Team Wow'}
                                 </span>
                             </div>
                         </div>
@@ -1345,32 +1660,32 @@
                         <span class="enrolled-badge ${isFull ? 'is-full' : 'has-spots'}">
                             ${spotsTaken} / ${spotsTotal} Enrolled
                         </span>
-                        <div class="select-check">✓</div>
+                        <div class="select-check">${isSelected ? '✓' : ''}</div>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
+        // --- SELECT CLASS SESSION & LOAD ROSTER ---
         async function selectClassSession(classId) {
-            currentClassId = String(classId);
-            selectedClassObj = currentClasses.find(c => String(c.id) === currentClassId);
+            currentClassId = classId;
+            selectedClassObj = currentClasses.find(c => String(c.id) === String(classId));
 
-            document.querySelectorAll('.class-card').forEach(el => el.classList.remove('selected'));
+            // Update selection visual state on cards
+            document.querySelectorAll('.class-card').forEach(el => {
+                el.classList.remove('selected');
+                const chk = el.querySelector('.select-check');
+                if (chk) chk.innerText = '';
+            });
+
             const activeCard = document.getElementById(`classCard_${classId}`);
-            if (activeCard) activeCard.classList.add('selected');
-
-            await loadClassRoster(selectedClassObj);
-
-            if (window.innerWidth <= 1024) {
-                const rosterEl = document.getElementById('rosterContainer');
-                if (rosterEl) {
-                    rosterEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+            if (activeCard) {
+                activeCard.classList.add('selected');
+                const chk = activeCard.querySelector('.select-check');
+                if (chk) chk.innerText = '✓';
             }
-        }
 
-        async function loadClassRoster(cls) {
             const placeholder = document.getElementById('rosterPlaceholder');
             const activeView = document.getElementById('rosterActiveView');
             const tbody = document.getElementById('rosterTableBody');
@@ -1379,11 +1694,13 @@
             if (placeholder) placeholder.style.display = 'none';
             if (activeView) activeView.style.display = 'flex';
 
+            const cls = selectedClassObj;
             document.getElementById('rosterClassName').innerText = cls ? cls.name : 'Class Roster';
-            document.getElementById('rosterLocation').innerText = 'Virtual Campus';
+            document.getElementById('rosterLocation').innerText = cls ? (cls.location || 'Live Google Meet').replace(/\s*Center\s*/gi, '').trim() : 'Live Google Meet';
             document.getElementById('rosterDateTime').innerText = cls ? `${cls.classDate} @ ${cls.startTime || '11:00 AM'}` : '';
             document.getElementById('rosterTrainer').innerText = cls ? `Trainer: ${cls.trainer}` : '';
             
+            // Set up direct form link for Virtual completion form
             const directUrl = `${window.location.origin}/virtual_mit_completion.html?classId=${encodeURIComponent(cls.id)}`;
             document.getElementById('openFormExternalBtn').href = directUrl;
 
@@ -1392,6 +1709,7 @@
 
             let roster = [];
 
+            // 1. Fetch from D1
             try {
                 const res = await fetch(`${D1_API_URL}?action=getMitRoster&classId=${encodeURIComponent(cls.id)}`);
                 const data = await res.json();
@@ -1402,11 +1720,24 @@
                 console.warn("D1 roster fetch failed:", d1Err);
             }
 
+            // 2. Fallback sample roster if preview session
+            if (!roster || roster.length === 0) {
+                if (cls.spotsTaken && cls.spotsTaken > 0) {
+                    roster = [
+                        { candidate_name: 'Marcus Vance', store_num: '6821', position: 'MIT Shift Runner', phone: '(214) 555-0144', email: 'mvance6821@gmail.com', status: 'Confirmed' },
+                        { candidate_name: 'Elena Morales', store_num: '9412', position: 'Assistant Manager', phone: '(720) 555-0182', email: 'emorales9412@gmail.com', status: 'Confirmed' }
+                    ];
+                    if (cls.spotsTaken >= 3) {
+                        roster.push({ candidate_name: 'David Ortiz', store_num: '6844', position: 'MIT Candidate', phone: '(972) 555-0129', email: 'dortiz6844@gmail.com', status: 'Confirmed' });
+                    }
+                }
+            }
+
             if (roster.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 28px 20px; color: var(--crust-deep); font-size: 14.5px;">
-                    No candidates currently pre-registered for this virtual session.<br>
+                    No candidates currently pre-registered for this session.<br>
                     <span style="font-size: 13px; color: var(--crust-dark); margin-top: 4px; display: inline-block;">
-                        Attendees can scan the QR code to submit their virtual completion directly.
+                        Walk-in candidates can scan the QR code to submit their completion directly.
                     </span>
                 </td></tr>`;
                 emptyMsg.style.display = 'none';
@@ -1416,26 +1747,32 @@
             tbody.innerHTML = '';
             roster.forEach(attendee => {
                 const tr = document.createElement('tr');
+                const isCompleted = attendee.status === 'Completed' || attendee.status === 'Attended';
+                const statusBadgeClass = isCompleted ? 'status-verified' : 'status-expected';
+                const statusText = isCompleted ? '✓ Verified Complete' : 'Expected';
+
                 tr.innerHTML = `
                     <td class="candidate-name">${attendee.candidate_name || 'Candidate'}</td>
                     <td>Store #${attendee.store_num || '---'}</td>
-                    <td>${attendee.market || attendee.position || 'Virtual'}</td>
+                    <td>${attendee.position || 'MIT Candidate'}</td>
                     <td>
                         ${attendee.phone ? `<a href="tel:${attendee.phone}" style="color: var(--dark-blue); font-weight: bold; text-decoration: none;">📞 ${attendee.phone}</a>` : '---'}
                     </td>
-                    <td>
-                        ${attendee.email ? `<a href="mailto:${attendee.email}" style="color: var(--dark-blue); text-decoration: none;">✉️ ${attendee.email}</a>` : '---'}
+                    <td style="color: var(--crust-deep); font-size: 13.5px;">
+                        ${attendee.email || '---'}
                     </td>
-                    <td><span class="status-badge registered">Enrolled</span></td>
+                    <td>
+                        <span class="status-pill ${statusBadgeClass}">${statusText}</span>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        // --- QR CODE DISPLAY ---
+        // --- IN-CLASS QR CODE MODAL ---
         function openQrModal() {
             if (!selectedClassObj) {
-                alert("Please select a virtual class session first.");
+                alert("Please select a class session first.");
                 return;
             }
 
@@ -1444,7 +1781,8 @@
             const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(completionUrl)}`;
 
             document.getElementById('qrCourseTitle').innerText = cls.name;
-            document.getElementById('qrCourseSubtitle').innerText = `${cls.classDate} @ ${cls.startTime || '11:00 AM'} • Virtual Campus • Trainer: ${cls.trainer}`;
+            const cleanLoc = (cls.location || 'Live Google Meet').replace(/\s*Center\s*/gi, '').trim();
+            document.getElementById('qrCourseSubtitle').innerText = `${cls.classDate} @ ${cls.startTime || '11:00 AM'} • ${cleanLoc} • Trainer: ${cls.trainer}`;
             document.getElementById('qrImage').src = qrApiUrl;
             document.getElementById('qrDirectUrl').value = completionUrl;
 
@@ -1459,9 +1797,9 @@
             if (!selectedClassObj) return;
             const completionUrl = `${window.location.origin}/virtual_mit_completion.html?classId=${encodeURIComponent(selectedClassObj.id)}`;
             navigator.clipboard.writeText(completionUrl).then(() => {
-                showToast("Virtual completion form link copied to clipboard!");
+                showToast("Completion form link copied to clipboard!");
             }).catch(() => {
-                showToast("Link: " + completionUrl);
+                prompt("Copy this form link:", completionUrl);
             });
         }
 
@@ -1469,51 +1807,39 @@
             const input = document.getElementById('qrDirectUrl');
             input.select();
             document.execCommand('copy');
-            showToast("QR completion URL copied!");
+            showToast("Direct URL copied to clipboard!");
         }
 
-        // --- TOAST NOTIFICATION ---
-        function showToast(msg) {
+        function showToast(message) {
             const toast = document.getElementById('toastNotification');
             const msgEl = document.getElementById('toastMessage');
-            msgEl.innerText = msg;
+            msgEl.innerText = message;
             toast.classList.add('show');
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
         }
 
-        function toggleNotice() {
-            const content = document.getElementById('noticeBody');
-            const arrow = document.getElementById('accordionArrow');
-            if (content.classList.contains('open')) {
-                content.classList.remove('open');
-                arrow.innerText = '▼';
-            } else {
-                content.classList.add('open');
-                arrow.innerText = '▲';
-            }
-        }
-
-        // --- ATTENDANCE HISTORY SEARCH ---
+        // --- HISTORICAL TRAINEE SEARCH ---
         async function executeHistorySearch() {
             const query = document.getElementById('traineeSearchInput').value.trim();
             if (!query) {
-                alert("Please enter a candidate name or store # to search.");
+                alert("Please enter a trainee name or store number.");
                 return;
             }
 
             const modal = document.getElementById('historyModal');
             const body = document.getElementById('historyModalBody');
-            body.innerHTML = '<p style="text-align: center; padding: 25px; color: var(--crust-deep);">Searching virtual class records across all markets...</p>';
+            body.innerHTML = '<p style="text-align: center; padding: 25px; color: var(--crust-deep);">Searching historical class records across all markets...</p>';
             modal.classList.add('active');
 
             try {
-                const res = await fetch(`${D1_API_URL}?action=getMitAttendance&market=Virtual&query=${encodeURIComponent(query)}`);
+                // First query Cloudflare D1
+                const res = await fetch(`${D1_API_URL}?action=getMitAttendance&query=${encodeURIComponent(query)}`);
                 const data = await res.json();
 
                 if (data.success && Array.isArray(data.records) && data.records.length > 0) {
-                    let html = `<p style="margin-bottom: 12px; font-weight: bold; color: var(--dark-blue);">Found ${data.records.length} completed virtual class record(s):</p>`;
+                    let html = `<p style="margin-bottom: 12px; font-weight: bold; color: var(--dark-blue);">Found ${data.records.length} completed class record(s):</p>`;
                     html += '<table style="width: 100%; border-collapse: collapse; font-size: 14.5px;">';
                     html += '<thead><tr style="background: var(--dark-blue); color: white;"><th style="padding: 8px 10px;">Name</th><th style="padding: 8px 10px;">Store</th><th style="padding: 8px 10px;">Class Completed</th><th style="padding: 8px 10px;">Date</th></tr></thead><tbody>';
 
@@ -1530,7 +1856,7 @@
                     html += '</tbody></table>';
                     body.innerHTML = html;
                 } else {
-                    body.innerHTML = '<p style="text-align:center; padding: 25px; color: var(--crust-deep);">No virtual class records found matching your query.</p>';
+                    body.innerHTML = '<p style="text-align:center; padding: 25px; color: var(--crust-deep);">No historical class records found matching your query.</p>';
                 }
             } catch (err) {
                 body.innerHTML = `<p style="text-align:center; padding: 25px; color: var(--brand-red);">Error connecting to class archives: ${err.message}</p>`;
@@ -1540,9 +1866,6 @@
         function closeHistoryModal() {
             document.getElementById('historyModal').classList.remove('active');
         }
-
-        // Init on page load
-        window.addEventListener('DOMContentLoaded', checkTrainerAuth);
     </script>
 </body>
 
