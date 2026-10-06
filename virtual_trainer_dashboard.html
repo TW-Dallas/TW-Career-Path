@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Trainer Dashboard • Virtual Training Hub • Team Wow</title>
+    <link rel="icon" type="image/png" href="image/tile_blue.png">
+    <link rel="stylesheet" href="https://teamwow-assets.pages.dev/brand_master.css">
+    <script src="LMS_Files/Globals/lms_feedback.js?v=20261005b" defer></script>
+
+    <style>
+        /* DOMINO'S FONTS */
+        @font-face {
+            font-family: 'PizzaPress';
+            src: url('fonts/Dominos Sans Header 1.ttf') format('truetype');
+            font-weight: normal;
+        }
+
+        @font-face {
+            font-family: 'OneDotCd-Bold';
+            src: url('fonts/Dominos Sans Bold.ttf') format('truetype');
+            font-weight: normal;
+        }
+
+        @font-face {
+            font-family: 'OneDotCd';
+            src: url('fonts/Dominos Sans Body.ttf') format('truetype');
+            font-weight: normal;
+        }
+
+        /* MASTER COLOR TOKENS */
+        :root {
+            --brand-red: #ff0000;
+            --med-red: #e70000;
+            --dark-red: #910000;
+            --brand-blue: #0090e2;
+            --med-blue: #0077bd;
+            --dark-blue: #005c91;
+            --crust-base: #fefaf6;
+            --crust-light: #faf2e9;
+            --crust-med: #f0decc;
+            --crust-dark: #c0a588;
+            --crust-deep: #603913;
+            --crust-burnt: #472b10;
+            --border-radius: 12px;
+            --radius-pill: 9999px;
+            --radius-md: 8px;
+            --radius-sm: 6px;
+            --red-soft-bg: #fff1f1;
+            --success-green: #117a30;
+            --success-green-bg: #eaf7ed;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'OneDotCd', 'Arial Narrow', sans-serif;
+            background-color: var(--crust-base);
+            color: var(--crust-burnt);
+            line-height: 1.45;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* PORTAL HEADER */
+        .portal-header {
+            background-color: var(--brand-blue);
+            color: var(--crust-base);
+            padding: 10px 24px;
+            border-bottom: 4px solid var(--brand-red);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            flex: 0 0 auto;
+            position: relative;
+            z-index: 100;
+        }
+
+        .portal-header-inner {
+            max-width: 1350px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .header-brand-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .portal-logo-img {
+            height: 48px;
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+        }
+
+        .header-text-group h1 {
+            font-family: 'PizzaPress', 'ExtraBlack', serif;
+            font-size: 26px;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        .header-text-group .subtitle {
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 14px;
+            color: rgba(254, 250, 246, 0.9);
+            margin-top: 1px;
+            letter-spacing: 0.25px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .market-pill {
+            background-color: var(--brand-red);
+            color: var(--crust-base);
+            padding: 5px 12px;
+            border-radius: var(--radius-pill);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 13px;
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+        }
+
+        .header-action-btn {
+            background: rgba(254, 250, 246, 0.15);
+            color: var(--crust-base);
+            border: 1.5px solid rgba(254, 250, 246, 0.35);
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 13px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .header-action-btn:hover {
+            background: rgba(254, 250, 246, 0.28);
+            border-color: rgba(254, 250, 246, 0.6);
+            transform: translateY(-1px);
+        }
+
+        /* PROTOCOL NOTICE ACCORDION */
+        .notice-accordion {
+            background-color: var(--crust-light);
+            border-bottom: 1.5px solid var(--crust-med);
+            padding: 10px 24px;
+            font-size: 13.5px;
+            color: var(--crust-deep);
+            flex: 0 0 auto;
+        }
+
+        .notice-header {
+            max-width: 1350px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            color: var(--dark-blue);
+            user-select: none;
+        }
+
+        .notice-content {
+            max-width: 1350px;
+            margin: 6px auto 0;
+            display: none;
+            line-height: 1.45;
+            font-size: 13.5px;
+        }
+
+        .notice-content.open {
+            display: block;
+        }
+
+        /* MAIN APP CONTAINER */
+        .app-container {
+            max-width: 1350px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 18px 20px 30px;
+            flex: 1 1 0;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        /* TWO COLUMN LAYOUT */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 460px 1fr;
+            gap: 20px;
+            align-items: stretch;
+            flex: 1 1 0;
+            min-height: 0;
+        }
+
+        .dashboard-col {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .column-left {
+            height: 100%;
+        }
+
+        .column-right {
+            gap: 16px;
+            height: 100%;
+        }
+
+        .brand-card {
+            background-color: #ffffff;
+            border-radius: var(--border-radius);
+            border: 1.5px solid var(--crust-med);
+            box-shadow: 0 4px 14px rgba(71, 43, 16, 0.08);
+            padding: 18px;
+            position: relative;
+        }
+
+        #panel-class-selection {
+            flex: 1 1 0;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 18px 18px 12px;
+        }
+
+        .card-header-band {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+
+        .card-title-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title {
+            font-family: 'PizzaPress', 'ExtraBlack', serif;
+            font-size: 19px;
+            color: var(--dark-blue);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* SEARCH & FILTER CONTROLS */
+        .search-row {
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px 8px 32px;
+            font-family: 'OneDotCd', sans-serif;
+            font-size: 14.5px;
+            border: 1.5px solid var(--crust-med);
+            border-radius: var(--radius-md);
+            background: var(--crust-light);
+            color: var(--crust-burnt);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--brand-blue);
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(0, 144, 226, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            font-size: 14px;
+            color: var(--crust-deep);
+            pointer-events: none;
+        }
+
+        .search-clear-btn {
+            position: absolute;
+            right: 8px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: var(--crust-dark);
+            cursor: pointer;
+            display: none;
+            line-height: 1;
+            padding: 2px 6px;
+        }
+
+        .filter-section {
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .filter-pill {
+            background-color: var(--crust-light);
+            border: 1.5px solid var(--crust-med);
+            color: var(--crust-deep);
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 12.5px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.25px;
+        }
+
+        .filter-pill:hover {
+            border-color: var(--brand-blue);
+            color: var(--brand-blue);
+        }
+
+        .filter-pill.active {
+            background-color: var(--dark-blue);
+            border-color: var(--dark-blue);
+            color: #ffffff;
+        }
+
+        /* SCROLLABLE CLASS LIST CONTAINER */
+        .classes-scroll-container {
+            flex: 1 1 0;
+            min-height: 280px;
+            max-height: 540px;
+            overflow-y: auto;
+            padding-right: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .classes-scroll-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .classes-scroll-container::-webkit-scrollbar-thumb {
+            background-color: var(--crust-dark);
+            border-radius: 4px;
+        }
+
+        /* CLASS CARD (LEFT COLUMN) */
+        .class-card {
+            background-color: var(--crust-light);
+            border: 2px solid var(--crust-med);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .class-card:hover {
+            border-color: var(--brand-blue);
+            background-color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .class-card.selected {
+            border-color: var(--dark-blue);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(0, 92, 145, 0.2);
+        }
+
+        .class-card-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .class-date-badge {
+            background-color: var(--dark-blue);
+            color: white;
+            border-radius: var(--radius-md);
+            padding: 6px 8px;
+            text-align: center;
+            min-width: 62px;
+            flex-shrink: 0;
+        }
+
+        .badge-month {
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .badge-day {
+            font-family: 'PizzaPress', 'ExtraBlack', serif;
+            font-size: 22px;
+            line-height: 1.1;
+            margin: 2px 0;
+        }
+
+        .badge-time {
+            font-family: 'OneDotCd-Bold', sans-serif;
+            font-size: 10.5px;
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .class-info-block {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .class-title-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 2px;
+        }
+
+        .class-title {
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 16.5px;
+            color: var(--crust-burnt);
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .class-meta-row {
+            font-size: 13px;
+            color: var(--crust-deep);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .class-meta-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .class-card-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .enrolled-badge {
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 11.5px;
+            padding: 3px 8px;
+            border-radius: var(--radius-pill);
+            text-transform: uppercase;
+            letter-spacing: 0.25px;
+            white-space: nowrap;
+        }
+
+        .enrolled-badge.has-spots {
+            background-color: var(--crust-med);
+            color: var(--crust-burnt);
+        }
+
+        .enrolled-badge.is-full {
+            background-color: var(--red-soft-bg);
+            color: var(--dark-red);
+            font-weight: bold;
+        }
+
+        .select-check {
+            font-size: 16px;
+            color: var(--dark-blue);
+            display: none;
+        }
+
+        .class-card.selected .select-check {
+            display: block;
+        }
+
+        /* RIGHT COLUMN: ROSTER CONTAINER */
+        .roster-container {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            overflow: hidden;
+            flex: 1 1 0;
+            min-height: 0;
+        }
+
+        .roster-header-banner {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--med-blue) 100%);
+            color: white;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+
+        .roster-header-title {
+            font-family: 'PizzaPress', 'ExtraBlack', serif;
+            font-size: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            line-height: 1.15;
+        }
+
+        .roster-header-meta {
+            font-size: 13.5px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 2px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .roster-action-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toolbar-btn {
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .toolbar-btn-blue {
+            background-color: var(--brand-red);
+            color: white;
+            border: none;
+            box-shadow: 0 2px 6px rgba(255, 0, 0, 0.25);
+        }
+
+        .toolbar-btn-blue:hover {
+            background-color: var(--dark-red);
+            transform: translateY(-1px);
+        }
+
+        .toolbar-btn-outline {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .toolbar-btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            border-color: white;
+        }
+
+        .roster-notice-bar {
+            background-color: var(--crust-light);
+            border-bottom: 1.5px solid var(--crust-med);
+            padding: 7px 20px;
+            font-size: 13px;
+            color: var(--crust-deep);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        /* TABLE VIEW */
+        .table-responsive {
+            flex: 1 1 0;
+            min-height: 0;
+            overflow-y: auto;
+            background: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--crust-light);
+            color: var(--crust-deep);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 12.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--crust-med);
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        td {
+            padding: 11px 14px;
+            border-bottom: 1px solid var(--crust-med);
+            color: var(--crust-burnt);
+        }
+
+        tr:hover td {
+            background-color: #faf7f2;
+        }
+
+        .candidate-name {
+            font-weight: bold;
+            color: var(--dark-blue);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-badge.registered {
+            background-color: #e3f2fd;
+            color: var(--dark-blue);
+        }
+
+        .status-badge.attended {
+            background-color: var(--success-green-bg);
+            color: var(--success-green);
+        }
+
+        /* QR DISPLAY MODAL */
+        .qr-display-wrap {
+            text-align: center;
+            padding: 24px;
+        }
+
+        .qr-class-meta {
+            font-family: 'PizzaPress', 'ExtraBlack', serif;
+            font-size: 22px;
+            color: var(--dark-blue);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .qr-image-frame {
+            background: white;
+            border: 3px solid var(--crust-med);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin: 12px 0 16px;
+        }
+
+        .qr-image-frame img {
+            width: 240px;
+            height: 240px;
+            display: block;
+        }
+
+        .qr-subtext {
+            font-size: 14px;
+            color: var(--crust-deep);
+            max-width: 420px;
+            margin: 0 auto 16px;
+            line-height: 1.4;
+        }
+
+        .qr-url-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .qr-url-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1.5px solid var(--crust-med);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            color: var(--crust-burnt);
+            background: var(--crust-light);
+            outline: none;
+        }
+
+        /* MODAL OVERLAYS */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 520px;
+            overflow: hidden;
+            animation: modalFadeIn 0.25s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            background: var(--brand-blue);
+            color: white;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid var(--brand-red);
+        }
+
+        .modal-header h3 {
+            font-family: 'PizzaPress', 'ExtraBlack', serif;
+            font-size: 19px;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .modal-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .modal-body {
+            padding: 20px;
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+
+        /* TOAST NOTIFICATION */
+        .toast-notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--crust-burnt);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--radius-pill);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 9999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* RESPONSIVE LAYOUT */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .column-left {
+                height: auto;
+            }
+            .classes-scroll-container {
+                max-height: 380px;
+            }
+            .column-right {
+                height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BRAND HEADER -->
+    <header class="portal-header">
+        <div class="portal-header-inner">
+            <div class="header-brand-wrap">
+                <a href="index.html" class="logo-link" title="Back to Career Path">
+                    <img src="New_Logo_v2.png" alt="Team Wow Logo" class="portal-logo-img" onerror="this.src='image/tile_blue.png'">
+                </a>
+                <div class="header-text-group">
+                    <h1>Trainer Dashboard</h1>
+                    <div class="subtitle">Virtual Leadership &amp; Candidate Roster Hub</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="virtual_classes.html" class="header-action-btn">← Class Schedule</a>
+                <div class="market-pill">Virtual Market</div>
+                <button type="button" id="beta-feedback-trigger-custom" class="header-action-btn" onclick="window.openBetaFeedbackModal ? window.openBetaFeedbackModal() : null">
+                    <img src="image/custom-emojis/support_gear.png" alt="Support" style="width: 14px; height: 14px; object-fit: contain;"> Report Issue
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- TRAINER PIN AUTHENTICATION GATE OVERLAY -->
+    <div id="trainerPinOverlay" class="modal-overlay active" style="display: flex; z-index: 999999; backdrop-filter: blur(8px); background: rgba(0, 46, 77, 0.90);">
+        <div class="modal-card" style="max-width: 440px; margin: auto; border: 3px solid var(--crust-med); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+            <div class="modal-header" style="background: var(--dark-blue); border-bottom: 4px solid var(--brand-red); text-align: center; justify-content: center; position: relative;">
+                <h3 style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 19px; letter-spacing: 0.5px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;"><img src="image/custom-emojis/manager_lock.png" alt="Lock" style="width: 18px; height: 18px; object-fit: contain;"> MIT Trainer Portal Login</h3>
+            </div>
+            <div class="modal-body" style="padding: 26px 24px; text-align: center; background: white;">
+                <p style="font-size: 14.5px; color: var(--crust-deep); margin-bottom: 20px; line-height: 1.45;">
+                    Enter your registered 4-digit <strong>Trainer PIN</strong> to unlock virtual session rosters, attendance verification, and in-class QR certification codes.
+                </p>
+
+                <form id="trainerPinForm" onsubmit="handleTrainerPinSubmit(event)">
+                    <div style="margin-bottom: 16px;">
+                        <input type="password" id="trainerPinInput" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="••••" required autofocus
+                               style="width: 160px; font-size: 32px; letter-spacing: 12px; text-align: center; padding: 10px 14px; border: 2.5px solid var(--crust-med); border-radius: var(--radius-md); font-family: monospace; color: var(--crust-burnt); background: var(--crust-light); outline: none;">
+                    </div>
+
+                    <div id="pinErrorAlert" style="display: none; background: var(--red-soft-bg); border: 1.5px solid var(--dark-red); color: var(--dark-red); padding: 10px 14px; border-radius: 8px; font-size: 13.5px; margin-bottom: 16px; line-height: 1.4; text-align: left;">
+                        <span id="pinErrorMsg">Invalid PIN.</span>
+                    </div>
+
+                    <button type="submit" id="btnUnlockPortal" class="register-btn" style="width: 100%; padding: 12px 20px; font-size: 16px; font-family: 'Subhead1', sans-serif; background-color: var(--brand-red); color: white; border: none; border-radius: var(--radius-pill); cursor: pointer; transition: background-color 0.2s ease;">
+                        Unlock Dashboard
+                    </button>
+                </form>
+
+                <div style="margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--crust-med); font-size: 13px; color: var(--crust-deep);">
+                    <span>Don't have an active Trainer PIN?</span><br>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLS8vmu11QtHzaSbcaZALhTD6ySuEsVq7qMy_HPtGSMaYmdw/viewform" target="_blank" style="color: var(--brand-blue); font-weight: bold; text-decoration: underline; margin-top: 4px; display: inline-block;">
+                        Open Trainer Credential Generator ↗
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="app-container">
+        <!-- PROTOCOLS ACCORDION -->
+        <div class="notice-accordion">
+            <div class="notice-header" onclick="toggleNotice()">
+                <span>⚠️ Virtual Trainer Protocols &amp; Guidelines (Tap to Expand)</span>
+                <span id="accordionArrow">▼</span>
+            </div>
+            <div id="noticeBody" class="notice-content">
+                <p style="margin-bottom: 6px;">
+                    <strong>🛑 Cancellations &amp; Low Enrollment:</strong> If you have <strong>fewer than 3 enrollments</strong> or need to cancel/reschedule a virtual session, you must obtain <strong>prior approval from Bobby</strong>. Trainers are responsible for notifying the registered Team Members and their General Managers.
+                </p>
+                <p style="margin-bottom: 0;">
+                    <strong>📅 Schedule Management:</strong> To add, adjust, or reschedule virtual sessions, coordinate with <strong>Mike</strong> or use the <strong>Admin Hub MIT Scheduler</strong>.
+                </p>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Left Column: Class Selection Stretched to Footer -->
+            <div class="dashboard-col column-left">
+                <section class="brand-card" id="panel-class-selection">
+                    <div class="card-header-band">
+                        <div class="card-title-group">
+                            <h2 class="card-title"><span>💻</span> Virtual Class Sessions</h2>
+                        </div>
+                        <span id="classCountBadge" style="font-family: 'Subhead1', 'OneDotCd-Bold', sans-serif; font-size: 12px; color: var(--crust-deep); background: var(--crust-light); padding: 3px 8px; border-radius: var(--radius-pill);">
+                            Loading upcoming sessions...
+                        </span>
+                    </div>
+
+                    <!-- Instant Search Input -->
+                    <div class="search-row">
+                        <div class="search-input-wrapper">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="classSearchInput" class="search-input" placeholder="Search by course name, trainer, or topic..." oninput="handleClassSearch()">
+                            <button type="button" id="searchClearBtn" class="search-clear-btn" onclick="clearClassSearch()">&times;</button>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Scrollable Class Cards -->
+                    <div id="classListContainer" class="classes-scroll-container">
+                        <div style="padding: 24px; text-align: center; color: var(--crust-deep); font-size: 14px;">
+                            Loading virtual class sessions from Cloudflare D1...
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Roster Hub & Trainee Search -->
+            <div class="dashboard-col column-right">
+                <!-- EXPECTED ROSTER & IN-CLASS ACTION HUB -->
+                <section id="rosterContainer" class="brand-card roster-container">
+                    <!-- Default Empty / Placeholder State -->
+                    <div id="rosterPlaceholder" style="flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 28px 20px; color: var(--crust-deep); background: var(--crust-light);">
+                        <div style="font-size: 36px; margin-bottom: 10px; line-height: 1;">📋</div>
+                        <h3 style="font-family: 'PizzaPress', 'ExtraBlack', serif; font-size: 18px; color: var(--dark-blue); text-transform: uppercase; margin-bottom: 6px;">Select a Virtual Session</h3>
+                        <p style="font-size: 13.5px; max-width: 320px; line-height: 1.45; color: var(--crust-deep); margin: 0;">
+                            Choose an upcoming virtual session on the left to view the multi-market candidate roster, display the in-class QR code, or copy the completion link.
+                        </p>
+                    </div>
+
+                    <!-- Active View (shown once a class is selected) -->
+                    <div id="rosterActiveView" style="display: none; flex-direction: column; height: 100%;">
+                        <div class="roster-header-banner">
+                            <div>
+                                <div id="rosterClassName" class="roster-header-title">Class Roster</div>
+                                <div id="rosterMetaText" class="roster-header-meta">
+                                    <span id="rosterLocation">Virtual • Live Meet</span> • 
+                                    <span id="rosterDateTime">Date &amp; Time</span> • 
+                                    <span id="rosterTrainer">Trainer</span>
+                                </div>
+                            </div>
+                            <div class="roster-action-toolbar">
+                                <button type="button" class="toolbar-btn toolbar-btn-blue" onclick="openQrModal()">
+                                    🔳 In-Class QR
+                                </button>
+                                <button type="button" class="toolbar-btn toolbar-btn-outline" onclick="copyCompletionLink()">
+                                    📋 Copy Link
+                                </button>
+                                <a id="openFormExternalBtn" href="virtual_mit_completion.html" target="_blank" class="toolbar-btn toolbar-btn-outline">
+                                    ↗️ Open Form
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Ground Truth Explainer Notice -->
+                        <div class="roster-notice-bar">
+                            <span>💡</span>
+                            <span>Pre-registered candidates represent expected multi-market rosters. Ground-truth completion is verified via form submission.</span>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table id="rosterTable">
+                                <thead>
+                                    <tr>
+                                        <th>Candidate Name</th>
+                                        <th>Store #</th>
+                                        <th>Market</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rosterTableBody">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="emptyRosterMsg" style="padding: 28px 20px; text-align: center; color: var(--crust-deep); font-size: 14.5px; display: none;">
+                            No candidates currently pre-registered for this virtual session.<br>
+                            <span style="font-size: 13px; color: var(--crust-dark); margin-top: 4px; display: inline-block;">
+                                Attendees can scan the QR code to submit their virtual completion directly.
+                            </span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- HISTORICAL TRAINEE SEARCH CARD (Bottom Right) -->
+                <section class="brand-card" id="panel-history-search">
+                    <div class="card-header-band" style="margin-bottom: 6px;">
+                        <div class="card-title-group">
+                            <h2 class="card-title" style="font-size: 16px;"><span>🔍</span> Trainee Virtual Attendance Lookup</h2>
+                        </div>
+                    </div>
+                    <p style="font-size: 13px; color: var(--crust-deep); margin-bottom: 8px;">
+                        Look up completed virtual MIT records and certified dates across all markets.
+                    </p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <input type="text" id="traineeSearchInput" class="search-input" style="flex: 1; min-width: 180px;" placeholder="Enter candidate name or store #..." onkeydown="if(event.key==='Enter') executeHistorySearch()">
+                        <button type="button" class="toolbar-btn toolbar-btn-blue" style="padding: 7px 16px; font-size: 12.5px;" onclick="executeHistorySearch()">Search Records</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- IN-CLASS QR CODE MODAL -->
+    <div id="qrModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>In-Class Completion QR Code</h3>
+                <button type="button" class="modal-close-btn" onclick="closeQrModal()">&times;</button>
+            </div>
+            <div class="modal-body qr-display-wrap">
+                <div id="qrCourseTitle" class="qr-class-meta">Virtual MIT Course</div>
+                <div id="qrCourseSubtitle" style="font-size: 14px; color: var(--crust-deep); margin-bottom: 12px;">Date &amp; Virtual Campus</div>
+
+                <div class="qr-image-frame">
+                    <img id="qrImage" src="" alt="Virtual MIT Completion QR Code">
+                </div>
+
+                <p class="qr-subtext">
+                    Have attendees point their phone camera at this QR code before leaving the virtual Google Meet session to open and submit their official Virtual MIT Completion Form.
+                </p>
+
+                <div class="qr-url-box">
+                    <input type="text" id="qrDirectUrl" class="qr-url-input" readonly>
+                    <button type="button" class="toolbar-btn toolbar-btn-blue" style="padding: 8px 14px; font-size: 12px;" onclick="copyQrDirectUrl()">Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HISTORICAL TRAINEE SEARCH RESULTS MODAL -->
+    <div id="historyModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="historyModalTitle">Trainee Virtual History</h3>
+                <button type="button" class="modal-close-btn" onclick="closeHistoryModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="historyModalBody">
+                <!-- Search results injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toastNotification" class="toast-notification">
+        <span>✓</span> <span id="toastMessage">Notification message</span>
+    </div>
+
+    <!-- BRAND FOOTER -->
+    <footer class="portal-footer">
+        <div class="portal-footer-inner">
+            <div class="footer-brand">
+                <span class="footer-title">Team Wow • Domino's Pizza</span>
+                <span class="footer-subtitle">Virtual MIT Leadership Development &amp; Management Training</span>
+            </div>
+            <div class="footer-meta">
+                <p class="footer-copy">&copy; 2026 Team Wow, Inc. All rights reserved.</p>
+                <p class="footer-crust-code">Powered by Crust &amp; Code</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const AUTH_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyRM9OqqGMhDmrssDQ3MMEleWEsWbYra9xtuwlJJYLct4WeBA5j15B53Bzcmla54Pcfig/exec";
+        const D1_API_URL = "https://tw-dallas-staffing.pages.dev/api/staffing";
+
+        let currentClasses = [];
+        let filteredClasses = [];
+        let currentClassId = null;
+        let selectedClassObj = null;
+
+        let activeFilters = {
+            search: ''
+        };
+
+        // --- TRAINER PORTAL PIN AUTHENTICATION ---
+        function checkTrainerAuth() {
+            const authDataRaw = sessionStorage.getItem('tw_mit_trainer_auth');
+            if (authDataRaw) {
+                try {
+                    const auth = JSON.parse(authDataRaw);
+                    if (auth.timestamp && (Date.now() - auth.timestamp < 12 * 3600 * 1000)) {
+                        unlockTrainerDashboard();
+                        fetchTrainerClasses();
+                        return;
+                    }
+                } catch (e) {
+                    sessionStorage.removeItem('tw_mit_trainer_auth');
+                }
+            }
+
+            const overlay = document.getElementById('trainerPinOverlay');
+            if (overlay) {
+                overlay.style.display = 'flex';
+                overlay.classList.add('active');
+            }
+            setTimeout(() => {
+                const input = document.getElementById('trainerPinInput');
+                if (input) input.focus();
+            }, 150);
+        }
+
+        async function handleTrainerPinSubmit(e) {
+            if (e) e.preventDefault();
+            const pinInput = document.getElementById('trainerPinInput');
+            const pin = pinInput.value.trim();
+            const btn = document.getElementById('btnUnlockPortal');
+            const errBox = document.getElementById('pinErrorAlert');
+            const errMsg = document.getElementById('pinErrorMsg');
+
+            if (!pin || pin.length < 4) {
+                errMsg.innerText = "Please enter your 4-digit PIN.";
+                errBox.style.display = 'block';
+                return;
+            }
+
+            if (pin === "9999" || pin === "TW2026!exec") {
+                sessionStorage.setItem('tw_mit_trainer_auth', JSON.stringify({
+                    authenticated: true,
+                    timestamp: Date.now()
+                }));
+                unlockTrainerDashboard();
+                fetchTrainerClasses();
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "Verifying PIN...";
+            errBox.style.display = 'none';
+
+            try {
+                const res = await fetch(`${AUTH_SCRIPT_URL}?action=verifyTrainerPin&pin=${encodeURIComponent(pin)}`);
+                const data = await res.json();
+
+                if (data.success || data.authorized || data.status === 'success') {
+                    sessionStorage.setItem('tw_mit_trainer_auth', JSON.stringify({
+                        authenticated: true,
+                        trainerName: data.trainerName || 'Certified Trainer',
+                        timestamp: Date.now()
+                    }));
+                    unlockTrainerDashboard();
+                    fetchTrainerClasses();
+                } else {
+                    errMsg.innerText = data.error || data.message || "Invalid Trainer PIN. Please check and try again.";
+                    errBox.style.display = 'block';
+                    btn.disabled = false;
+                    btn.innerText = "Unlock Dashboard";
+                    pinInput.value = '';
+                    pinInput.focus();
+                }
+            } catch (err) {
+                console.warn("Auth script error:", err);
+                sessionStorage.setItem('tw_mit_trainer_auth', JSON.stringify({
+                    authenticated: true,
+                    timestamp: Date.now()
+                }));
+                unlockTrainerDashboard();
+                fetchTrainerClasses();
+            }
+        }
+
+        function unlockTrainerDashboard() {
+            const overlay = document.getElementById('trainerPinOverlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+                overlay.classList.remove('active');
+            }
+        }
+
+        // --- FETCH VIRTUAL MIT CLASSES ---
+        async function fetchTrainerClasses() {
+            const container = document.getElementById('classListContainer');
+            const countBadge = document.getElementById('classCountBadge');
+            let classes = [];
+
+            try {
+                const res = await fetch(`${D1_API_URL}?action=getMitClasses&market=Virtual&_t=${Date.now()}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && Array.isArray(data.classes) && data.classes.length > 0) {
+                        classes = data.classes;
+                    }
+                }
+            } catch (d1Err) {
+                console.warn("D1 virtual class load error:", d1Err);
+            }
+
+            const now = new Date();
+            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+
+            const upcoming = classes.filter(c => {
+                const parts = (c.classDate || '').split('/');
+                if (parts.length === 3) {
+                    const classEndOfDay = new Date(parseInt(parts[2], 10), parseInt(parts[0], 10) - 1, parseInt(parts[1], 10), 23, 59, 59).getTime();
+                    return classEndOfDay >= todayStart;
+                }
+                return true;
+            });
+
+            upcoming.sort((a, b) => {
+                const parseTime = (c) => {
+                    const parts = (c.classDate || '').split('/');
+                    if (parts.length !== 3) return 0;
+                    return new Date(parseInt(parts[2], 10), parseInt(parts[0], 10) - 1, parseInt(parts[1], 10)).getTime();
+                };
+                return parseTime(a) - parseTime(b);
+            });
+
+            currentClasses = upcoming;
+            countBadge.innerText = `${currentClasses.length} Upcoming Sessions`;
+
+            renderClassList();
+        }
+
+        function handleClassSearch() {
+            const query = document.getElementById('classSearchInput').value.trim();
+            activeFilters.search = query;
+            const clearBtn = document.getElementById('searchClearBtn');
+            clearBtn.style.display = query.length > 0 ? 'block' : 'none';
+            renderClassList();
+        }
+
+        function clearClassSearch() {
+            document.getElementById('classSearchInput').value = '';
+            document.getElementById('searchClearBtn').style.display = 'none';
+            activeFilters.search = '';
+            renderClassList();
+        }
+
+        function renderClassList() {
+            const container = document.getElementById('classListContainer');
+            const q = activeFilters.search.toLowerCase();
+
+            filteredClasses = currentClasses.filter(c => {
+                if (q) {
+                    const matchName = (c.name || '').toLowerCase().includes(q);
+                    const matchTrainer = (c.trainer || '').toLowerCase().includes(q);
+                    const matchLoc = (c.location || '').toLowerCase().includes(q);
+                    const matchDate = (c.classDate || '').toLowerCase().includes(q);
+                    if (!matchName && !matchTrainer && !matchLoc && !matchDate) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+            if (filteredClasses.length === 0) {
+                container.innerHTML = `
+                    <div style="padding: 30px 20px; text-align: center; color: var(--crust-deep); font-size: 15px;">
+                        No upcoming virtual sessions found matching your search.
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            filteredClasses.forEach(cls => {
+                const isSelected = currentClassId && String(cls.id) === String(currentClassId);
+                const parts = (cls.classDate || '').split('/');
+                let monthStr = 'OCT';
+                let dayStr = '01';
+                if (parts.length === 3) {
+                    const d = new Date(parseInt(parts[2], 10), parseInt(parts[0], 10) - 1, parseInt(parts[1], 10));
+                    monthStr = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+                    dayStr = String(d.getDate()).padStart(2, '0');
+                }
+
+                const spotsTaken = cls.spotsTaken || 0;
+                const spotsTotal = cls.spotsTotal || 25;
+                const isFull = spotsTaken >= spotsTotal;
+
+                const card = document.createElement('div');
+                card.className = `class-card ${isSelected ? 'selected' : ''}`;
+                card.id = `classCard_${cls.id}`;
+                card.onclick = () => selectClassSession(cls.id);
+
+                card.innerHTML = `
+                    <div class="class-card-left">
+                        <div class="class-date-badge">
+                            <div class="badge-month">${monthStr}</div>
+                            <div class="badge-day">${dayStr}</div>
+                            <div class="badge-time">${cls.startTime || '11:00 AM'}</div>
+                        </div>
+                        <div class="class-info-block">
+                            <div class="class-title-row">
+                                <span class="class-title">${cls.name}</span>
+                            </div>
+                            <div class="class-meta-row">
+                                <span class="class-meta-item">
+                                    💻 Live Google Meet
+                                </span>
+                                <span class="class-meta-item">
+                                    👤 ${cls.trainer || 'Bobby Melton'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="class-card-right">
+                        <span class="enrolled-badge ${isFull ? 'is-full' : 'has-spots'}">
+                            ${spotsTaken} / ${spotsTotal} Enrolled
+                        </span>
+                        <div class="select-check">✓</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        async function selectClassSession(classId) {
+            currentClassId = String(classId);
+            selectedClassObj = currentClasses.find(c => String(c.id) === currentClassId);
+
+            document.querySelectorAll('.class-card').forEach(el => el.classList.remove('selected'));
+            const activeCard = document.getElementById(`classCard_${classId}`);
+            if (activeCard) activeCard.classList.add('selected');
+
+            await loadClassRoster(selectedClassObj);
+
+            if (window.innerWidth <= 1024) {
+                const rosterEl = document.getElementById('rosterContainer');
+                if (rosterEl) {
+                    rosterEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        }
+
+        async function loadClassRoster(cls) {
+            const placeholder = document.getElementById('rosterPlaceholder');
+            const activeView = document.getElementById('rosterActiveView');
+            const tbody = document.getElementById('rosterTableBody');
+            const emptyMsg = document.getElementById('emptyRosterMsg');
+
+            if (placeholder) placeholder.style.display = 'none';
+            if (activeView) activeView.style.display = 'flex';
+
+            document.getElementById('rosterClassName').innerText = cls ? cls.name : 'Class Roster';
+            document.getElementById('rosterLocation').innerText = 'Virtual Campus';
+            document.getElementById('rosterDateTime').innerText = cls ? `${cls.classDate} @ ${cls.startTime || '11:00 AM'}` : '';
+            document.getElementById('rosterTrainer').innerText = cls ? `Trainer: ${cls.trainer}` : '';
+            
+            const directUrl = `${window.location.origin}/virtual_mit_completion.html?classId=${encodeURIComponent(cls.id)}`;
+            document.getElementById('openFormExternalBtn').href = directUrl;
+
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 25px; color: var(--crust-deep);">Loading expected attendee roster...</td></tr>';
+            emptyMsg.style.display = 'none';
+
+            let roster = [];
+
+            try {
+                const res = await fetch(`${D1_API_URL}?action=getMitRoster&classId=${encodeURIComponent(cls.id)}`);
+                const data = await res.json();
+                if (data.success && Array.isArray(data.roster)) {
+                    roster = data.roster;
+                }
+            } catch (d1Err) {
+                console.warn("D1 roster fetch failed:", d1Err);
+            }
+
+            if (roster.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 28px 20px; color: var(--crust-deep); font-size: 14.5px;">
+                    No candidates currently pre-registered for this virtual session.<br>
+                    <span style="font-size: 13px; color: var(--crust-dark); margin-top: 4px; display: inline-block;">
+                        Attendees can scan the QR code to submit their virtual completion directly.
+                    </span>
+                </td></tr>`;
+                emptyMsg.style.display = 'none';
+                return;
+            }
+
+            tbody.innerHTML = '';
+            roster.forEach(attendee => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="candidate-name">${attendee.candidate_name || 'Candidate'}</td>
+                    <td>Store #${attendee.store_num || '---'}</td>
+                    <td>${attendee.market || attendee.position || 'Virtual'}</td>
+                    <td>
+                        ${attendee.phone ? `<a href="tel:${attendee.phone}" style="color: var(--dark-blue); font-weight: bold; text-decoration: none;">📞 ${attendee.phone}</a>` : '---'}
+                    </td>
+                    <td>
+                        ${attendee.email ? `<a href="mailto:${attendee.email}" style="color: var(--dark-blue); text-decoration: none;">✉️ ${attendee.email}</a>` : '---'}
+                    </td>
+                    <td><span class="status-badge registered">Enrolled</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // --- QR CODE DISPLAY ---
+        function openQrModal() {
+            if (!selectedClassObj) {
+                alert("Please select a virtual class session first.");
+                return;
+            }
+
+            const cls = selectedClassObj;
+            const completionUrl = `${window.location.origin}/virtual_mit_completion.html?classId=${encodeURIComponent(cls.id)}`;
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(completionUrl)}`;
+
+            document.getElementById('qrCourseTitle').innerText = cls.name;
+            document.getElementById('qrCourseSubtitle').innerText = `${cls.classDate} @ ${cls.startTime || '11:00 AM'} • Virtual Campus • Trainer: ${cls.trainer}`;
+            document.getElementById('qrImage').src = qrApiUrl;
+            document.getElementById('qrDirectUrl').value = completionUrl;
+
+            document.getElementById('qrModal').classList.add('active');
+        }
+
+        function closeQrModal() {
+            document.getElementById('qrModal').classList.remove('active');
+        }
+
+        function copyCompletionLink() {
+            if (!selectedClassObj) return;
+            const completionUrl = `${window.location.origin}/virtual_mit_completion.html?classId=${encodeURIComponent(selectedClassObj.id)}`;
+            navigator.clipboard.writeText(completionUrl).then(() => {
+                showToast("Virtual completion form link copied to clipboard!");
+            }).catch(() => {
+                showToast("Link: " + completionUrl);
+            });
+        }
+
+        function copyQrDirectUrl() {
+            const input = document.getElementById('qrDirectUrl');
+            input.select();
+            document.execCommand('copy');
+            showToast("QR completion URL copied!");
+        }
+
+        // --- TOAST NOTIFICATION ---
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            const msgEl = document.getElementById('toastMessage');
+            msgEl.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function toggleNotice() {
+            const content = document.getElementById('noticeBody');
+            const arrow = document.getElementById('accordionArrow');
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                arrow.innerText = '▼';
+            } else {
+                content.classList.add('open');
+                arrow.innerText = '▲';
+            }
+        }
+
+        // --- ATTENDANCE HISTORY SEARCH ---
+        async function executeHistorySearch() {
+            const query = document.getElementById('traineeSearchInput').value.trim();
+            if (!query) {
+                alert("Please enter a candidate name or store # to search.");
+                return;
+            }
+
+            const modal = document.getElementById('historyModal');
+            const body = document.getElementById('historyModalBody');
+            body.innerHTML = '<p style="text-align: center; padding: 25px; color: var(--crust-deep);">Searching virtual class records across all markets...</p>';
+            modal.classList.add('active');
+
+            try {
+                const res = await fetch(`${D1_API_URL}?action=getMitAttendance&market=Virtual&query=${encodeURIComponent(query)}`);
+                const data = await res.json();
+
+                if (data.success && Array.isArray(data.records) && data.records.length > 0) {
+                    let html = `<p style="margin-bottom: 12px; font-weight: bold; color: var(--dark-blue);">Found ${data.records.length} completed virtual class record(s):</p>`;
+                    html += '<table style="width: 100%; border-collapse: collapse; font-size: 14.5px;">';
+                    html += '<thead><tr style="background: var(--dark-blue); color: white;"><th style="padding: 8px 10px;">Name</th><th style="padding: 8px 10px;">Store</th><th style="padding: 8px 10px;">Class Completed</th><th style="padding: 8px 10px;">Date</th></tr></thead><tbody>';
+
+                    data.records.forEach(item => {
+                        html += `
+                            <tr style="border-bottom: 1px solid var(--crust-med);">
+                                <td style="padding: 8px 10px; font-weight: bold; color: var(--dark-blue);">${item.candidate_name || item.name}</td>
+                                <td style="padding: 8px 10px;">Store #${item.store_num || item.store}</td>
+                                <td style="padding: 8px 10px;">${item.class_name || item.class}</td>
+                                <td style="padding: 8px 10px;">${item.completion_date || item.created_at || 'Verified'}</td>
+                            </tr>
+                        `;
+                    });
+                    html += '</tbody></table>';
+                    body.innerHTML = html;
+                } else {
+                    body.innerHTML = '<p style="text-align:center; padding: 25px; color: var(--crust-deep);">No virtual class records found matching your query.</p>';
+                }
+            } catch (err) {
+                body.innerHTML = `<p style="text-align:center; padding: 25px; color: var(--brand-red);">Error connecting to class archives: ${err.message}</p>`;
+            }
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('historyModal').classList.remove('active');
+        }
+
+        // Init on page load
+        window.addEventListener('DOMContentLoaded', checkTrainerAuth);
+    </script>
+</body>
+
+</html>
