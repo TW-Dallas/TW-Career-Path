@@ -90,7 +90,6 @@
             --crust-deep: #603913;
             --crust-burnt: #472b10;
             --bg-color: var(--crust-base);
-            --card-bg: var(--crust-light);
             --border-radius: 12px;
         }
 
@@ -113,7 +112,7 @@
             min-height: 100vh;
         }
 
-        /* INFO STRIP (MATCHING DALLAS & DENVER EXACTLY) */
+        /* INFO STRIP */
         .info-strip {
             background-color: var(--crust-light);
             border-bottom: 1.5px solid var(--crust-med);
@@ -145,7 +144,7 @@
             color: var(--dark-blue);
         }
 
-        /* MAIN CONTAINER (1350px FOR PRECISE 4-CARD DESKTOP GRID) */
+        /* MAIN CONTAINER */
         main {
             max-width: 1350px;
             width: 100%;
@@ -155,7 +154,7 @@
             box-sizing: border-box;
         }
 
-        /* CONTROLS & FILTER BAR (EXACT CLONE OF CLASSES.HTML) */
+        /* CONTROLS & FILTER BAR */
         .controls-row {
             display: flex;
             justify-content: space-between;
@@ -196,12 +195,6 @@
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.2s;
-        }
-
-        .filter-btn:hover {
-            background-color: var(--crust-base);
-            border-color: var(--dark-blue);
-            color: var(--dark-blue);
         }
 
         .filter-btn.active {
@@ -256,7 +249,7 @@
             font-family: 'Subhead2', sans-serif;
         }
 
-        /* CLASS GRID - EXACT 4 PER ROW ON DESKTOP */
+        /* CLASS GRID - 4 CARDS PER ROW ACROSS DESKTOP */
         .class-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -264,9 +257,9 @@
             align-items: stretch;
         }
 
-        /* CLASS CARD (EXACT REPLICA OF CLASSES.HTML) */
+        /* CLASS CARD - PURE WHITE BACKGROUND FOR CRISP CONTRAST */
         .class-card {
-            background: var(--crust-light);
+            background: #ffffff;
             border-radius: var(--border-radius);
             border: 1.5px solid var(--crust-med);
             border-top: 4px solid var(--brand-blue);
@@ -279,12 +272,12 @@
         }
 
         .class-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 16px rgba(71, 43, 16, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(71, 43, 16, 0.1);
         }
 
         .card-top {
-            background-color: var(--crust-light);
+            background-color: #ffffff;
             border-bottom: 1px solid var(--crust-med);
             padding: 10px 14px;
             display: flex;
@@ -298,51 +291,37 @@
             padding: 4px 10px;
             border-radius: 6px;
             font-family: 'Subhead1', sans-serif;
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 2px 5px rgba(0, 144, 226, 0.25);
+            box-shadow: 0 2px 5px rgba(0, 144, 226, 0.2);
         }
 
         .spots-badge {
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: bold;
             padding: 3px 8px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             gap: 5px;
-        }
-
-        .spots-available {
             background-color: #eef7fd;
             color: var(--dark-blue);
             border: 1px solid #c9e6f8;
         }
 
-        .spots-low {
-            background-color: #fff1f1;
-            color: var(--dark-red);
-            border: 1px solid #f8c8c8;
-        }
-
-        .spots-full {
-            background-color: #f5f5f5;
-            color: #777777;
-            border: 1px solid #dddddd;
-        }
-
         .card-body {
-            padding: 10px 14px;
+            padding: 12px 14px;
             display: flex;
             flex-direction: column;
             gap: 6px;
             flex: 1;
+            background-color: #ffffff;
         }
 
         .card-time {
-            font-size: 17px;
+            font-size: 15.5px;
             font-weight: bold;
             color: var(--dark-blue);
             display: flex;
@@ -352,8 +331,8 @@
         }
 
         .card-time svg {
-            width: 17px;
-            height: 17px;
+            width: 16px;
+            height: 16px;
             fill: var(--brand-blue);
             flex-shrink: 0;
         }
@@ -370,7 +349,7 @@
         }
 
         .card-location-meta {
-            font-size: 14px;
+            font-size: 13.5px;
             color: var(--crust-deep);
             display: flex;
             align-items: center;
@@ -418,102 +397,46 @@
             display: flex;
             flex-wrap: wrap;
             gap: 5px;
-            min-height: 48px;
-            max-height: 90px;
-            overflow-y: auto;
-            padding-right: 4px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--crust-dark) transparent;
-        }
-
-        .roster-chip {
-            display: inline-flex;
+            min-height: 40px;
             align-items: center;
-            justify-content: center;
-            background-color: white;
-            border: 1px solid var(--crust-med);
-            color: var(--dark-blue);
-            font-size: 12px;
-            line-height: 1;
-            padding: 4.5px 8px 2.5px 8px;
-            border-radius: 8px;
-            font-weight: bold;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-            white-space: nowrap;
         }
 
         .roster-empty {
             font-size: 12.5px;
             color: #888;
             font-style: italic;
-            padding: 8px 0;
         }
 
         /* CARD FOOTER */
         .card-footer {
-            padding: 10px 14px;
-            background-color: var(--crust-light);
+            padding: 12px 14px;
+            background-color: #ffffff;
             border-top: 1px solid var(--crust-med);
-        }
-
-        .card-deadline {
-            font-size: 12.5px;
-            font-family: 'Subhead1', sans-serif;
-            color: var(--crust-deep);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            letter-spacing: 0.3px;
-        }
-
-        .card-deadline .deadline-lbl {
-            text-transform: uppercase;
-            font-size: 11px;
-            color: #888;
-        }
-
-        .card-deadline .deadline-val {
-            font-weight: bold;
-            color: var(--dark-blue);
         }
 
         .register-btn {
             width: 100%;
-            background-color: var(--brand-red);
-            color: white;
-            border: none;
             border-radius: 50px;
             padding: 10px 14px;
             font-family: 'Subhead1', sans-serif;
-            font-size: 15px;
+            font-size: 14.5px;
             font-weight: bold;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 0 3px 6px rgba(255, 0, 0, 0.2);
-            transition: background-color 0.2s, transform 0.1s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
         }
 
-        .register-btn:hover:not(:disabled) {
-            background-color: var(--dark-red);
-            transform: translateY(-1px);
-        }
-
-        .register-btn:disabled {
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
-
-        .register-btn svg {
-            width: 15px;
-            height: 15px;
-            fill: white;
+        /* GREYED-OUT PREVIEW BUTTON */
+        .register-btn.btn-preview {
+            background-color: #e9ecef !important;
+            color: #6c757d !important;
+            border: 1.5px solid #ced4da !important;
+            box-shadow: none !important;
+            cursor: default !important;
+            transform: none !important;
         }
 
         /* MODAL STYLES */
@@ -606,7 +529,7 @@
 </head>
 
 <body>
-    <!-- BRAND HEADER (IDENTICAL TO CLASSES.HTML & DENVER_CLASSES.HTML) -->
+    <!-- BRAND HEADER -->
     <header>
         <div class="header-left">
             <a href="index.html" class="logo-link" title="Back to Career Path">
@@ -665,26 +588,26 @@
             <span id="sessionCountText">Previewing upcoming virtual curriculum</span>
         </div>
 
-        <!-- CLASS GRID (4 CARDS PER ROW ACROSS DESKTOP) -->
+        <!-- CLASS GRID (4 WHITE CARDS ACROSS DESKTOP) -->
         <div id="classGrid" class="class-grid">
 
             <!-- CARD 1: CUSTOMER EXPERIENCE -->
             <div class="class-card">
                 <div class="card-top">
-                    <span class="date-badge">SAT, OCT 10</span>
-                    <span class="spots-badge spots-available">15 Spots Available</span>
+                    <span class="date-badge">COMING SOON</span>
+                    <span class="spots-badge">Preview</span>
                 </div>
                 <div class="card-body">
                     <div class="card-time">
                         <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                        <span>11:00 AM – 1:00 PM</span>
+                        <span>Schedule Forming</span>
                     </div>
                     <div class="card-title">
                         <span>Customer Experience</span>
                     </div>
                     <div class="card-location-meta">
                         <img src="image/custom-emojis/location-base.png" alt="Location">
-                        <span>Virtual • Trainer: Bobby</span>
+                        <span>Virtual • Live Google Meet</span>
                     </div>
                     <div class="roster-box">
                         <div class="roster-header">
@@ -692,17 +615,13 @@
                             <span>Who's Attending:</span>
                         </div>
                         <div class="roster-chips">
-                            <span class="roster-empty">Virtual roster opens soon — be the first!</span>
+                            <span class="roster-empty">Virtual roster opens once schedule is finalized.</span>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <div class="card-deadline">
-                        <span class="deadline-lbl">Sign Up By:</span>
-                        <span class="deadline-val">Oct 9</span>
-                    </div>
-                    <button type="button" class="register-btn" onclick="openPreviewModal('Customer Experience')">
-                        <svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> Select This Class
+                    <button type="button" class="register-btn btn-preview" disabled>
+                        Preview
                     </button>
                 </div>
             </div>
@@ -710,20 +629,20 @@
             <!-- CARD 2: OPERATIONS ASSESSMENT -->
             <div class="class-card">
                 <div class="card-top">
-                    <span class="date-badge">WED, OCT 14</span>
-                    <span class="spots-badge spots-available">15 Spots Available</span>
+                    <span class="date-badge">COMING SOON</span>
+                    <span class="spots-badge">Preview</span>
                 </div>
                 <div class="card-body">
                     <div class="card-time">
                         <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                        <span>6:00 PM – 8:00 PM</span>
+                        <span>Schedule Forming</span>
                     </div>
                     <div class="card-title">
                         <span>Operations Assessment</span>
                     </div>
                     <div class="card-location-meta">
                         <img src="image/custom-emojis/location-base.png" alt="Location">
-                        <span>Virtual • Trainer: Rebecca</span>
+                        <span>Virtual • Live Google Meet</span>
                     </div>
                     <div class="roster-box">
                         <div class="roster-header">
@@ -731,17 +650,13 @@
                             <span>Who's Attending:</span>
                         </div>
                         <div class="roster-chips">
-                            <span class="roster-empty">Virtual roster opens soon — be the first!</span>
+                            <span class="roster-empty">Virtual roster opens once schedule is finalized.</span>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <div class="card-deadline">
-                        <span class="deadline-lbl">Sign Up By:</span>
-                        <span class="deadline-val">Oct 13</span>
-                    </div>
-                    <button type="button" class="register-btn" onclick="openPreviewModal('Operations Assessment')">
-                        <svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> Select This Class
+                    <button type="button" class="register-btn btn-preview" disabled>
+                        Preview
                     </button>
                 </div>
             </div>
@@ -749,20 +664,20 @@
             <!-- CARD 3: CREATING A SCHEDULE / LABOR CLASS -->
             <div class="class-card">
                 <div class="card-top">
-                    <span class="date-badge">TUE, OCT 20</span>
-                    <span class="spots-badge spots-available">15 Spots Available</span>
+                    <span class="date-badge">COMING SOON</span>
+                    <span class="spots-badge">Preview</span>
                 </div>
                 <div class="card-body">
                     <div class="card-time">
                         <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                        <span>11:00 AM – 1:00 PM</span>
+                        <span>Schedule Forming</span>
                     </div>
                     <div class="card-title">
                         <span>Creating a Schedule/Labor Class</span>
                     </div>
                     <div class="card-location-meta">
                         <img src="image/custom-emojis/location-base.png" alt="Location">
-                        <span>Virtual • Trainer: Nick</span>
+                        <span>Virtual • Live Google Meet</span>
                     </div>
                     <div class="roster-box">
                         <div class="roster-header">
@@ -770,17 +685,13 @@
                             <span>Who's Attending:</span>
                         </div>
                         <div class="roster-chips">
-                            <span class="roster-empty">Virtual roster opens soon — be the first!</span>
+                            <span class="roster-empty">Virtual roster opens once schedule is finalized.</span>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <div class="card-deadline">
-                        <span class="deadline-lbl">Sign Up By:</span>
-                        <span class="deadline-val">Oct 19</span>
-                    </div>
-                    <button type="button" class="register-btn" onclick="openPreviewModal('Creating a Schedule/Labor Class')">
-                        <svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> Select This Class
+                    <button type="button" class="register-btn btn-preview" disabled>
+                        Preview
                     </button>
                 </div>
             </div>
@@ -788,20 +699,20 @@
             <!-- CARD 4: FOOD SAFETY & SANITATION -->
             <div class="class-card">
                 <div class="card-top">
-                    <span class="date-badge">TUE, OCT 27</span>
-                    <span class="spots-badge spots-available">15 Spots Available</span>
+                    <span class="date-badge">COMING SOON</span>
+                    <span class="spots-badge">Preview</span>
                 </div>
                 <div class="card-body">
                     <div class="card-time">
                         <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                        <span>10:00 AM – 12:00 PM</span>
+                        <span>Schedule Forming</span>
                     </div>
                     <div class="card-title">
                         <span>Food Safety &amp; Sanitation</span>
                     </div>
                     <div class="card-location-meta">
                         <img src="image/custom-emojis/location-base.png" alt="Location">
-                        <span>Virtual • Trainer: Jeff</span>
+                        <span>Virtual • Live Google Meet</span>
                     </div>
                     <div class="roster-box">
                         <div class="roster-header">
@@ -809,17 +720,13 @@
                             <span>Who's Attending:</span>
                         </div>
                         <div class="roster-chips">
-                            <span class="roster-empty">Virtual roster opens soon — be the first!</span>
+                            <span class="roster-empty">Virtual roster opens once schedule is finalized.</span>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <div class="card-deadline">
-                        <span class="deadline-lbl">Sign Up By:</span>
-                        <span class="deadline-val">Oct 26</span>
-                    </div>
-                    <button type="button" class="register-btn" onclick="openPreviewModal('Food Safety & Sanitation')">
-                        <svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> Select This Class
+                    <button type="button" class="register-btn btn-preview" disabled>
+                        Preview
                     </button>
                 </div>
             </div>
@@ -841,41 +748,7 @@
         </div>
     </footer>
 
-    <!-- PREVIEW / COMING SOON NOTICE MODAL -->
-    <div id="previewModal" class="modal-overlay">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3 id="modalCourseTitle">Virtual MIT Course Preview</h3>
-                <button type="button" class="modal-close-btn" onclick="closePreviewModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div style="background-color: #eef7fd; border: 1.5px solid #bee5eb; border-radius: 8px; padding: 14px; margin-bottom: 16px; color: var(--dark-blue);">
-                    <strong style="font-family: 'Subhead1', sans-serif; text-transform: uppercase; display: block; margin-bottom: 6px;">
-                        📌 Virtual Curriculum in Preparation
-                    </strong>
-                    Live virtual sessions are currently being coordinated between Dallas and Denver training leadership. Dedicated virtual signup rosters will open once dates and Google Meet links are finalized.
-                </div>
-
-                <p style="margin-bottom: 14px;">
-                    In the meantime, store team members can register for in-person classes directly via:
-                </p>
-                <div style="display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap;">
-                    <a href="classes.html" class="register-btn" style="flex: 1; min-width: 140px; text-decoration: none; font-size: 13.5px; padding: 9px 12px;">
-                        📍 Dallas In-Person
-                    </a>
-                    <a href="denver_classes.html" class="register-btn" style="flex: 1; min-width: 140px; text-decoration: none; font-size: 13.5px; padding: 9px 12px; background-color: var(--dark-blue);">
-                        📍 Denver In-Person
-                    </a>
-                </div>
-
-                <button type="button" class="register-btn" onclick="closePreviewModal()" style="background-color: var(--crust-burnt);">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- TRAINER DIRECTORY MODAL (MATCHING CLASSES.HTML) -->
+    <!-- TRAINER DIRECTORY MODAL -->
     <div id="trainerModal" class="modal-overlay">
         <div class="modal-card" style="max-width: 600px;">
             <div class="modal-header">
@@ -898,22 +771,13 @@
                 </div>
             </div>
             <div style="padding: 12px 20px; background-color: var(--crust-med); text-align: center;">
-                <button type="button" class="register-btn" onclick="closeTrainerModal()" style="max-width: 160px; margin: 0 auto; padding: 7px 16px; font-size: 13px;">Close Directory</button>
+                <button type="button" class="register-btn" onclick="closeTrainerModal()" style="max-width: 160px; margin: 0 auto; padding: 7px 16px; font-size: 13px; background-color: var(--brand-blue); color: white;">Close Directory</button>
             </div>
         </div>
     </div>
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        function openPreviewModal(courseName) {
-            document.getElementById('modalCourseTitle').textContent = `${courseName} • Preview`;
-            document.getElementById('previewModal').classList.add('active');
-        }
-
-        function closePreviewModal() {
-            document.getElementById('previewModal').classList.remove('active');
-        }
-
         function openTrainerModal() {
             document.getElementById('trainerModal').classList.add('active');
         }
@@ -924,7 +788,6 @@
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                closePreviewModal();
                 closeTrainerModal();
             }
         });
